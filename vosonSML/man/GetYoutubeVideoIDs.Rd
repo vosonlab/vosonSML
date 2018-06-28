@@ -61,6 +61,6 @@ Use \code{CollectDataYoutube} for collecting YouTube comments data.
 Timothy Graham <timothy.graham@anu.edu.au> & Robert Ackland
 <robert.ackland@anu.edu.au>
 }
-\keyword{vosonSML}
 \keyword{scraping}
+\keyword{vosonSML}
 \keyword{youtube}
