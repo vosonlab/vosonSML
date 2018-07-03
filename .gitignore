@@ -1,3 +1,6 @@
+RData
 .Rhistory
-cred.R
 .Rproj.user
+*.Rproj
+*.Rcheck
+cred.R

@@ -90,7 +90,6 @@ creating ego networks. Currently only Instagram is implemented.
   # Description of actor network
   g_ego_network
 }
-
 }
 \seealso{
 See \code{CollectDataYoutube} and \code{CollectDataTwitter} to

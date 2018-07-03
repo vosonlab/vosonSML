@@ -73,7 +73,7 @@
 #'   # Description of actor network
 #'   g_ego_network
 #' }
-#'
+#' @export
 CreateEgoNetwork <-
 function(dataSource,username,userid,verbose,degreeEgoNet,writeToFile,waitForRateLimit,getFollows)
 {

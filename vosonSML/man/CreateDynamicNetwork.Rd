@@ -94,7 +94,6 @@ networks for incompatible data sources.
   # View descriptive information about the bimodal network
   g_bimodal_facebook
 }
-
 }
 \references{
 Kolaczyk, E. D., Csardi, G. (2014). Statistical analysis of
