@@ -86,7 +86,6 @@
 #'   # View descriptive information about the bimodal network
 #'   g_bimodal_facebook
 #' }
-#' @export
 CreateDynamicNetwork <-
 function(x,writeToFile)
  {

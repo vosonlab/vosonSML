@@ -1,3 +1,4 @@
+#' @export
 CreateDynamicNetwork.facebook <-
 function(x,writeToFile)
 {
