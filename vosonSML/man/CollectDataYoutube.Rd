@@ -2,10 +2,10 @@
 % Please edit documentation in R/CollectDataYoutube.R
 \name{CollectDataYoutube}
 \alias{CollectDataYoutube}
-\title{Note: this function is DEPRECATED and will be removed in a future release.
-Please use the \code{Collect} function}
+\title{Collect YouTube comments data for generating different types of networks}
 \usage{
-CollectDataYoutube(videoIDs, apiKeyYoutube, verbose, writeToFile, maxComments)
+CollectDataYoutube(videoIDs, apiKeyYoutube, verbose = FALSE,
+  writeToFile = FALSE, maxComments)
 }
 \arguments{
 \item{videoIDs}{character vector, specifying one or more YouTube video IDs.
@@ -37,13 +37,11 @@ A data frame object of class \code{dataSource.youtube} that can be
 used for creating unimodal networks (\code{CreateActorNetwork}).
 }
 \description{
-Collect YouTube comments data for generating different types of networks
-}
-\details{
 This function collects YouTube comments data for one or more YouTube videos.
 It structures the data into a data frame of class \code{dataSource.youtube},
 ready for creating networks for further analysis.
-
+}
+\details{
 \code{CollectDataYoutube} collects public comments from YouTube videos,
 using the YouTube API.
 
@@ -77,27 +75,6 @@ comments has 5 'child' or reply comments, then the total number of comments
 collected will be equal to 15. Currently, the user must 'guesstimate' the
 \code{maxResults} value, to collect a number of comments in the order of
 what they require.
-}
-\examples{
-
-\dontrun{
-  # Use your own Google Developer API Key here:
-  myApiKey <- "1234567890"
-
-  # Authenticate with the Google API
-  apiKeyYoutube <- AuthenticateWithYoutubeAPI(apiKeyYoutube=myApiKey)
-
-  # Generate a vector of YouTube video IDs to collect data from
-  # (or use the function `GetYoutubeVideoIDs` to automatically
-  # generate from a plain text file of video URLs)
-  videoIDs <- c("W2GZFeYGU3s","mL27TAJGlWc")
-
-  # Collect the data using function `CollectDataYoutube`
-  myYoutubeData <- CollectDataYoutube(videoIDs,apiKeyYoutube,writeToFile=FALSE)
-
-  # Create an 'actor' network using the function `CreateActorNetwork`
-  g_actor_youtube <- CreateActorNetwork(myYoutubeData)
-}
 }
 \seealso{
 \code{AuthenticateWithYoutubeAPI} must be run first or no data will
