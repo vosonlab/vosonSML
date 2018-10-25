@@ -8,17 +8,15 @@ Authenticate(socialmedia, ...)
 }
 \arguments{
 \item{socialmedia}{character string, social media API to authenticate,
-currently supports "facebook", "youtube", "twitter" and "instagram"}
+currently supports "facebook", "youtube", "twitter", "instagram" and "reddit"}
 
 \item{...}{additional parameters for authentication
 
 \code{facebook}: appID, appSecret
-
 \code{youtube}: apiKey
-
 \code{twitter}: apiKey, apiSecret, accessToken, accessTokenSecret
-
-\code{instagram}: appID, appSecret}
+\code{instagram}: appID, appSecret
+\code{reddit}: app_name, app_key, app_secret, ua, use_token_cache}
 }
 \value{
 credential object with authentication information
@@ -63,7 +61,8 @@ apiKey = my_apiKeyYoutube) \%>\% Collect(videoIDs = videoIDs) \%>\% Create('acto
 \code{\link{AuthenticateWithFacebookAPI}},
 \code{\link{AuthenticateWithInstagramAPI}},
 \code{\link{AuthenticateWithYoutubeAPI}},
-\code{\link{AuthenticateWithTwitterAPI}}, \code{\link{SaveCredential}},
+\code{\link{AuthenticateWithTwitterAPI}},
+\code{\link{SaveCredential}},
 \code{\link{LoadCredential}}
 }
 \author{

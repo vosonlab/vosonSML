@@ -4,8 +4,8 @@
 \alias{CollectDataYoutube}
 \title{Collect YouTube comments data for generating different types of networks}
 \usage{
-CollectDataYoutube(videoIDs, apiKeyYoutube, verbose = FALSE,
-  writeToFile = FALSE, maxComments)
+CollectDataYoutube(videoIDs, apiKeyYoutube, verbose, writeToFile,
+  maxComments)
 }
 \arguments{
 \item{videoIDs}{character vector, specifying one or more YouTube video IDs.

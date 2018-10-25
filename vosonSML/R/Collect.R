@@ -31,8 +31,10 @@
 #' @author Chung-hong Chan <chainsawtiney@@gmail.com>
 #' @seealso \code{CollectDataFromFacebook},
 #' \code{CollectDataFromInstagram},
-#' \code{CollectDataFromYoutube}, \code{CollectDatFromTwitter},
-#' \code{CollectEgoInstagram}
+#' \code{CollectDataFromYoutube},
+#' \code{CollectDataFromTwitter},
+#' \code{CollectEgoInstagram},
+#' \code{CollectDataFromReddit},
 #' @examples
 #'
 #' \dontrun{
@@ -67,6 +69,7 @@ Collect <- function(credential, ego = FALSE, ...) {
                             youtube = youtubeCollector,
                             twitter = twitterCollector,
                             instagram = instagramCollector,
+                            reddit = redditCollector,
                             stop("Unsupported socialmedia")
                             )
     }
@@ -95,4 +98,8 @@ instagramCollector <- function(credential, tag, n, lat, lng, distance, folder, m
 
 instagramEgo <- function(credential, username, userid, verbose, degreeEgoNet, waitForRateLimit, getFollows) {
     return(CollectEgoInstagram(username, userid, verbose, degreeEgoNet, waitForRateLimit, getFollows, credential))
+}
+
+redditCollector <- function(credential, thread_urls, ua, write_to_file) {
+  return(CollectDataReddit(oauth2_token = credential$auth, thread_urls, ua, write_to_file))  
 }

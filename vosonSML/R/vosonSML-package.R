@@ -46,4 +46,5 @@
 #' @importFrom stringr str_extract str_replace_all str_match_all
 #' @importFrom stats 'na.omit'
 #' @importFrom utils "flush.console" head "install.packages" "read.table" "write.csv" "read.csv"
+#' @importFrom RedditExtractoR "user_network"
 NULL
