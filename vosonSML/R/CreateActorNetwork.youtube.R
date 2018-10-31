@@ -30,23 +30,36 @@ CreateActorNetwork.youtube <- function(x, writeToFile) {
   # 8 ReplyToAnotherUser
   # 9 VideoID
   
-  dfRepliesOrParents <- returnedScrapedComments[(which(returnedScrapedComments[, 7] != "None" |    # ParentID
-                                                       returnedScrapedComments[, 8] != "FALSE")),] # ReplyToAnotherUser
-
+  # dfRepliesOrParents <- returnedScrapedComments[(which(returnedScrapedComments[, 7] != "None" |    # ParentID
+  #                                                   returnedScrapedComments[, 8] != "FALSE")),] # ReplyToAnotherUser
+  # dfRepliesOrParents <- returnedScrapedComments
+  df <- returnedScrapedComments
+  
   # delete rows where user has replied in their own thread (???)
   # Just take care of this when SIMPLIFY the graph (i.e. no self loop edges)?
   # dfRepliesOrParents <- dfRepliesOrParents[-(which(dfRepliesOrParents[, 2] == dfRepliesOrParents[, 8])), ]
-
-  if (nrow(dfRepliesOrParents) == 0){
-    cat(paste0("\nOops! There are no user interactions to make a network from.\nPlease find video(s) where users have
-               replied or mentioned other users.\nReturning...\n"))
+  
+  # if (nrow(dfRepliesOrParents) == 0){
+  #   cat(paste0("\nOops! There are no user interactions to make a network from.\nPlease find video(s) where users",
+  #              " have replied or mentioned other users.\nReturning...\n"))
+  #   return()
+  # }
+  
+  # direct comments which are not replies to others to the video id (treating it as a user)
+  # in the graph the user will appear as id VIDEO:XXxxX
+  notReplies <- which(df$ReplyToAnotherUser == "FALSE" & df$ParentID == "None")
+  df$ReplyToAnotherUser[notReplies] <- paste0("VIDEO:", df$VideoID[notReplies])
+  
+  if (nrow(df) == 0) {
+    cat(paste0("\nOops! There are no user comments to make a network from.\nPlease find video(s) where users have",
+               " commented on a video or to each other.\nReturning...\n"))
     return()
   }
 
-  usersTemp <- dfRepliesOrParents[, 2]
-  mentionedUsersTemp <- dfRepliesOrParents[, 8]
-  numMentions <- c(rep(0, length(mentionedUsersTemp)))
-  commentId <- dfRepliesOrParents[, 6]
+  usersTemp <- df[, 2]
+  mentionedUsersTemp <- df[, 8]
+  # numMentions <- c(rep(0, length(mentionedUsersTemp)))
+  commentId <- df[, 6]
 
   # create the "mentions network" dataframe (i.e. pairs of users; node i --(mentions)--> node j)
   # dfActorNetwork1 <- data.frame(usersTemp, mentionedUsersTemp, numMentions)

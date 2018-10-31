@@ -33,8 +33,8 @@ writeOutputFile <- function(data, type, name, msg = TRUE) {
   supported_types <- c("graphml", "csv", "rds")
   
   if (!type %in% supported_types) {
-    cat(paste0("* ", package, " - file output not supported. please choose from:\n  ", paste0(supported_types, 
-                                                                                              collapse = ", "), "\n"))
+    cat(paste0("[", package, "] file output not supported. please choose from: ", paste0(supported_types, 
+                                                                                         collapse = ", "), "\n"))
     return(NA)
   }
   
@@ -57,12 +57,12 @@ writeOutputFile <- function(data, type, name, msg = TRUE) {
            saveRDS(data, file = name))
     
     if (msg) {
-      cat(paste0("* ", package, " - ", type, " file written:\n  "))
+      cat(paste0("[", package, "] ", type, " file written: "))
       cat(path)
     }
   },
   error = function(cond) {
-    cat(paste0("* ", package, " - error writing: ", path, "\n  "))
+    cat(paste0("[", package, "] error writing: ", path, "\n  "))
     message(cond)
     return(NULL)
   })
