@@ -11,13 +11,9 @@ Authenticate(socialmedia, ...)
 currently supports "facebook", "youtube", "twitter" and "instagram"}
 
 \item{...}{additional parameters for authentication
-
 \code{facebook}: appID, appSecret
-
 \code{youtube}: apiKey
-
 \code{twitter}: apiKey, apiSecret, accessToken, accessTokenSecret
-
 \code{instagram}: appID, appSecret}
 }
 \value{
@@ -61,9 +57,10 @@ apiKey = my_apiKeyYoutube) \%>\% Collect(videoIDs = videoIDs) \%>\% Create('acto
 }
 \seealso{
 \code{\link{AuthenticateWithFacebookAPI}},
+ \code{\link{AuthenticateWithYoutubeAPI}},
 \code{\link{AuthenticateWithInstagramAPI}},
-\code{\link{AuthenticateWithYoutubeAPI}},
-\code{\link{AuthenticateWithTwitterAPI}}, \code{\link{SaveCredential}},
+\code{\link{AuthenticateWithTwitterAPI}},
+\code{\link{SaveCredential}},
 \code{\link{LoadCredential}}
 }
 \author{

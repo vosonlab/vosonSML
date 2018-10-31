@@ -16,15 +16,11 @@ Instagram.}
 \item{...}{additional parameters for data collection (refer to
 CollectDataFrom* and CollectEgo* functions)
 
-\code{facebook}: pageName, rangeFrom, rangeTo, verbose, n, writeToFile,
-dynamic
-
+\code{facebook}: pageName, rangeFrom, rangeTo, verbose, n, writeToFile, dynamic
 \code{youtube}: videoIDs, verbose, writeToFile, maxComments
-
 \code{twitter}: searchTerm, numTweets, verbose, writeToFile, language
-
-\code{instagram}: credential, tag, n, lat, lng, distance, folder, mindate,
-maxdate, verbose, sleep, writeToFile, waitForRateLimit
+\code{instagram}: credential, tag, n, lat, lng, distance, folder, mindate, maxdate, verbose, sleep, writeToFile, 
+waitForRateLimit
 
 \code{instagram} with \code{ego} = TRUE: username, userid, verbose,
 degreeEgoNet, waitForRateLimit, getFollows}
@@ -65,7 +61,8 @@ apiKey = my_apiKeyYoutube) \%>\% Collect(videoIDs = videoIDs) \%>\% Create('acto
 \seealso{
 \code{CollectDataFromFacebook},
 \code{CollectDataFromInstagram},
-\code{CollectDataFromYoutube}, \code{CollectDatFromTwitter},
+\code{CollectDataFromYoutube},
+\code{CollectDatFromTwitter},
 \code{CollectEgoInstagram}
 }
 \author{
