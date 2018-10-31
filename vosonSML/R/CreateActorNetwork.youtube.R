@@ -87,8 +87,7 @@ CreateActorNetwork.youtube <- function(x, writeToFile) {
   # make a dataframe of the relations between actors
   # relations <- data.frame(from = unique_dfActorNetwork1[, 1], to = unique_dfActorNetwork1[, 2],
   #                         weight = unique_dfActorNetwork1[, 3])
-  relations <- data.frame(from = dfActorNetwork1[, 1], to = dfActorNetwork1[, 2],
-                          comment_id = dfActorNetwork1[, 3])
+  relations <- data.frame(from = dfActorNetwork1[, 1], to = dfActorNetwork1[, 2], commentId = dfActorNetwork1[, 3])
   
   ##### STEP FOUR #####
 
@@ -102,11 +101,9 @@ CreateActorNetwork.youtube <- function(x, writeToFile) {
   # Make the node labels play nice with Gephi
   V(g)$label <- V(g)$name
 
-  if (writeToFile == "TRUE" | writeToFile == "true" | writeToFile == "T" | writeToFile == TRUE) {
-    # Output the final network to a graphml file, to import directly into Gephi
-    write.graph(g, paste0(format(Sys.time(), "%a_%b_%d_%X_%Y_%Z"), "_YoutubeActorNetwork.graphml"), format="graphml")
-    cat("YouTube actor network was written to current working directory, with filename:\n")
-    cat(paste0(format(Sys.time(), "%a_%b_%d_%X_%Y_%Z"),"_YoutubeActorNetwork.graphml"))
+  # Output the final network to a graphml file, to import directly into Gephi
+  if (isTrueValue(writeToFile)) {
+    writeOutputFile(g, "graphml", "YoutubeActorNetwork")
   }
 
   cat("\nDone!\n") ### DEBUG

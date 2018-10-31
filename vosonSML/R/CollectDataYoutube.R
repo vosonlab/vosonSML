@@ -1,50 +1,49 @@
 #' Collect YouTube comments data for generating different types of networks
 #'
 #' This function collects YouTube comments data for one or more YouTube videos. It structures the data into a data 
-#' frame of class \code{dataSource.youtube}, ready for creating networks for further analysis.
+#' frame of class dataSource.youtube, ready for creating networks for further analysis.
 #'
-#' \code{CollectDataYoutube} collects public comments from YouTube videos, using the YouTube API.
+#' CollectDataYoutube collects public comments from YouTube videos, using the YouTube API.
 #'
 #' The function then finds and maps the relationships of YouTube users who have interacted with each other 
 #' (i.e. user i has replied to user j or mentioned user j in a comment) and structures these relationships into a data 
-#' frame format suitable for creating unimodal networks (\code{CreateActorNetwork}).
+#' frame format suitable for creating unimodal networks (CreateActorNetwork).
 #'
-#' For multiple videos, the user may wish to use the function \code{GetYoutubeVideoIDs}, which creates a character
-#' vector of video IDs from a plain text file of YouTube video URLs, which can then be used for the \code{videoIDs}
-#' argument of the function \code{CollectDataYoutube}.
+#' For multiple videos, the user may wish to use the function GetYoutubeVideoIDs, which creates a character
+#' vector of video IDs from a plain text file of YouTube video URLs, which can then be used for the videoIDs
+#' argument of the function CollectDataYoutube.
 #'
 #' @param videoIDs character vector, specifying one or more YouTube video IDs. For example, if the video URL is 
-#' 'https://www.youtube.com/watch?v=W2GZFeYGU3s', then use \code{videoIDs='W2GZFeYGU3s'}. For multiple videos, the 
-#' function \code{GetYoutubeVideoIDs} can be used to create a vector object suitable as input for \code{videoIDs}.
+#' 'https://www.youtube.com/watch?v=W2GZFeYGU3s', then use videoIDs='W2GZFeYGU3s'. For multiple videos, the 
+#' function GetYoutubeVideoIDs can be used to create a vector object suitable as input for videoIDs.
 #' @param apiKeyYoutube character string, specifying the Google Developer API Key used for authentication.
-#' @param verbose logical. If \code{TRUE} then this function will output runtime information to the console as it 
-#' computes. Useful diagnostic tool for long computations.
-#' @param writeToFile logical. If \code{TRUE} then the data is saved to file in current working directory (CSV format), 
-#' with filename denoting current system time.
+#' @param verbose logical. If TRUE then this function will output runtime information to the console as it 
+#' computes. Useful diagnostic tool for long computations. Default is FALSE.
+#' @param writeToFile logical. If TRUE then the data is saved to file in current working directory (CSV format), 
+#' with filename denoting current system time. Default is FALSE.
 #' @param maxComments numeric integer, specifying how many 'top-level' comments to collect from each video. This value 
 #' *does not* take into account 'reply' comments (i.e. replies to top-level comments), therefore the total number of
-#' comments collected may be higher than \code{maxComments}. By default this function attempts to collect all comments.
+#' comments collected may be higher than maxComments. By default this function attempts to collect all comments.
 #' 
-#' @return A data frame object of class \code{dataSource.youtube} that can be used for creating unimodal networks 
-#' (\code{CreateActorNetwork}).
+#' @return A data frame object of class dataSource.youtube that can be used for creating unimodal networks 
+#' (CreateActorNetwork).
 #' 
-#' @note Currently supported network types: unimodal 'actor' network; \code{CreateActorNetwork}
+#' @note Currently supported network types: unimodal 'actor' network; CreateActorNetwork.
 #'
 #' Data generated using this function is *not* suitable for dynamic networks.
 #' Dynamic YouTube comments networks are not currently implemented in the vosonSML package. This will be implemented in 
 #' a future release.
 #'
-#' Note on \code{maxComments} argument: Due to quirks/specifications of the Google API, it is currently not possible to 
-#' specify the exact number of comments to return from the API using \code{maxResults} argument (i.e.including comments 
+#' Note on maxComments argument: Due to quirks/specifications of the Google API, it is currently not possible to 
+#' specify the exact number of comments to return from the API using maxResults argument (i.e.including comments 
 #' that are replies to top-level comments). Therefore, the number of comments collected is usually somewhat greater than
-#' \code{maxComments}, if a value is specified for this argument. For example, if a video contains 10 top-level 
+#' maxComments, if a value is specified for this argument. For example, if a video contains 10 top-level 
 #' comments, and one of these top-level comments has 5 'child' or reply comments, then the total number of comments
-#' collected will be equal to 15. Currently, the user must 'guesstimate' the \code{maxResults} value, to collect a 
+#' collected will be equal to 15. Currently, the user must 'guesstimate' the maxResults value, to collect a 
 #' number of comments in the order of what they require.
 #' 
 #' @author Timothy Graham <timothy.graham@@anu.edu.au> & Robert Ackland <robert.ackland@@anu.edu.au>
-#' @seealso \code{AuthenticateWithYoutubeAPI} must be run first or no data will be collected.
-#' @keywords youtube data mining SNA
+#' @seealso AuthenticateWithYoutubeAPI must be run first or no data will be collected.
 #'
 #' @noRd
 CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeToFile = FALSE, maxComments) {
@@ -61,7 +60,7 @@ CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeTo
     writeToFile <- FALSE
   }
   
-  if (verbose == "TRUE" | verbose == "true" | verbose == "T" | verbose == TRUE ) {
+  if (isTrueValue(verbose)) {
     verbose <- TRUE
   }
   
@@ -261,12 +260,8 @@ CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeTo
     }
   }
   
-  if (writeToFile == "TRUE" | writeToFile == "true" | writeToFile == "T" | writeToFile == TRUE) {
-    currTime <- format(Sys.time(), "%b_%d_%H_%M_%S_%Y")
-    write.csv(dataCombined, paste0(currTime, "_YoutubeData.csv"))
-    
-    cat("YouTube data was written to current working directory, with filename:\n")
-    cat(paste0(currTime, "_YoutubeData.csv"))
+  if (isTrueValue(writeToFile)) {
+    writeOutputFile(dataCombined, "csv", "YoutubeData")
   }
     
   cat("\nDone!\n")

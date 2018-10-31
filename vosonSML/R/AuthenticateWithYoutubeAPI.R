@@ -10,13 +10,9 @@
 #' @return This is called for its side effect.
 #' 
 #' @note In the future this function will enable users to save the API key in working directory, and the function will 
-#' automatically look for a locally stored key whenever it is called without \code{apiKeyYoutube} argument.
-#' 
-#' @author Timothy Graham <timothy.graham@@anu.edu.au> & Robert Ackland <robert.ackland@@anu.edu.au>
-#' @seealso \code{AuthenticateWithFacebookAPI} and \code{AuthenticateWithTwitterAPI} for other ways to collect social 
-#' media data.
-#' @keywords youtube social media SNA
+#' automatically look for a locally stored key whenever it is called without apiKeyYoutube argument.
 #'
+#' @noRd
 AuthenticateWithYoutubeAPI <- function(apiKeyYoutube) {
   return(apiKeyYoutube)
 }
