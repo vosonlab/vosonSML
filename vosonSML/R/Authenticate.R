@@ -29,7 +29,7 @@
 #' \code{youtube}: apiKey
 #' \code{twitter}: apiKey, apiSecret, accessToken, accessTokenSecret
 #' \code{instagram}: appID, appSecret
-#' \code{reddit}: app_name, app_key, app_secret, ua, use_token_cache
+#' \code{reddit}: app_name, app_key, app_secret, use_token_cache
 #' 
 #' @return credential object with authentication information
 #' @note Currently, \code{Authenticate} with socialmedia = "twitter" generates

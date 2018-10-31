@@ -38,7 +38,7 @@
 #' @import methods
 #' @import httr
 #' @importFrom Hmisc escapeRegex
-#' @importFrom igraph delete.vertices graph.data.frame simplify write.graph V 'V<-'
+#' @importFrom igraph delete.vertices graph.data.frame simplify write.graph V 'V<-' set.graph.attribute
 #' @importFrom Rfacebook fbOAuth getPost getPage getUsers
 #' @importFrom instaR getComments getLikes instaOAuth searchInstagram getUser getFollowers getFollows
 #' @importFrom plyr ldply
