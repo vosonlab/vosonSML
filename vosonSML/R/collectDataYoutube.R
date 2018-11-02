@@ -43,10 +43,10 @@
 #' number of comments in the order of what they require.
 #' 
 #' @author Timothy Graham <timothy.graham@@anu.edu.au> & Robert Ackland <robert.ackland@@anu.edu.au>
-#' @seealso AuthenticateWithYoutubeAPI must be run first or no data will be collected.
+#' @seealso Authenticate must be run first or no data will be collected.
 #'
 #' @noRd
-CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeToFile = FALSE, maxComments) {
+collectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeToFile = FALSE, maxComments) {
   
   if (missing(verbose)) {
     verbose <- FALSE # default to not verbose

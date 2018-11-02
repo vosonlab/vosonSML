@@ -61,7 +61,6 @@ apiKey = my_apiKeyYoutube) \%>\% Collect(videoIDs = videoIDs) \%>\% Create('acto
 \seealso{
 \code{CollectDataFromFacebook},
 \code{CollectDataFromInstagram},
-\code{CollectDataFromYoutube},
 \code{CollectDatFromTwitter},
 \code{CollectEgoInstagram}
 }

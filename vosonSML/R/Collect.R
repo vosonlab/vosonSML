@@ -27,7 +27,6 @@
 #' @author Chung-hong Chan <chainsawtiney@@gmail.com>
 #' @seealso \code{CollectDataFromFacebook},
 #' \code{CollectDataFromInstagram},
-#' \code{CollectDataFromYoutube},
 #' \code{CollectDatFromTwitter},
 #' \code{CollectEgoInstagram}
 #' @examples
@@ -74,7 +73,7 @@ Collect <- function(credential, ego = FALSE, ...) {
 
 youtubeCollector <-
     function(credential, videoIDs, verbose, writeToFile, maxComments) {
-        return(CollectDataYoutube(videoIDs, apiKeyYoutube = credential$auth, verbose, writeToFile, maxComments))
+        return(collectDataYoutube(videoIDs, apiKeyYoutube = credential$auth, verbose, writeToFile, maxComments))
 }
 
 facebookCollector <-
