@@ -57,7 +57,6 @@ apiKey = my_apiKeyYoutube) \%>\% Collect(videoIDs = videoIDs) \%>\% Create('acto
 }
 \seealso{
 \code{\link{AuthenticateWithFacebookAPI}},
- \code{\link{AuthenticateWithYoutubeAPI}},
 \code{\link{AuthenticateWithInstagramAPI}},
 \code{\link{AuthenticateWithTwitterAPI}},
 \code{\link{SaveCredential}},

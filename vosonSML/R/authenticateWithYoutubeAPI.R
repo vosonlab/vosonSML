@@ -13,6 +13,6 @@
 #' automatically look for a locally stored key whenever it is called without apiKeyYoutube argument.
 #'
 #' @noRd
-AuthenticateWithYoutubeAPI <- function(apiKeyYoutube) {
+authenticateWithYoutubeAPI <- function(apiKeyYoutube) {
   return(apiKeyYoutube)
 }

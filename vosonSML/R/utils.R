@@ -1,3 +1,5 @@
+# vosonSML utils
+
 # check for a range of true values
 isTrueValue <- function(x) {
   if (x == "TRUE" || x == "true" || x == "T" || x == TRUE) {
@@ -7,8 +9,10 @@ isTrueValue <- function(x) {
 }
 
 # return a friendly file name with system time prefix
-systemTimeFilename <- function(name_suffix, name_ext, clean = FALSE) {
-  current_time <- Sys.time()
+systemTimeFilename <- function(name_suffix, name_ext, current_time = NULL, clean = FALSE) {
+  if (missing(current_time) || is.null(current_time)) {
+    current_time <- Sys.time()
+  }
   
   if (!missing(clean) && clean == TRUE) {
     name_suffix <- gsub("\\s+", "_", name_suffix, perl = TRUE)
@@ -24,7 +28,7 @@ systemTimeFilename <- function(name_suffix, name_ext, clean = FALSE) {
 
 # write data to file as type
 writeOutputFile <- function(data, type, name, msg = TRUE) {
-  package <- environmentName(environment(writeOutputFile))
+  # package <- environmentName(environment(writeOutputFile))
   
   if (missing(type)) {
     type <- "rds"
@@ -33,8 +37,7 @@ writeOutputFile <- function(data, type, name, msg = TRUE) {
   supported_types <- c("graphml", "csv", "rds")
   
   if (!type %in% supported_types) {
-    cat(paste0("[", package, "] file output not supported. please choose from: ", paste0(supported_types, 
-                                                                                         collapse = ", "), "\n"))
+    cat(paste0("File output not supported. please choose from: ", paste0(supported_types, collapse = ", "), "\n"))
     return(NA)
   }
   
@@ -57,13 +60,13 @@ writeOutputFile <- function(data, type, name, msg = TRUE) {
            saveRDS(data, file = name))
     
     if (msg) {
-      cat(paste0("[", package, "] ", type, " file written: "))
+      cat(paste0(toupper(type), " file written: "))
       cat(path)
     }
   },
-  error = function(cond) {
-    cat(paste0("[", package, "] error writing: ", path, "\n  "))
-    message(cond)
+  error = function(e) {
+    cat(paste0("Error writing: ", path, "\n  "))
+    message(e)
     return(NULL)
   })
 }

@@ -20,7 +20,6 @@
 #' \code{Authenticate} is the first step of the \code{Authenticate},
 #' \code{Collect}, \code{Create} workflow.
 #'
-#'
 #' @param socialmedia character string, social media API to authenticate,
 #' currently supports "facebook", "youtube", "twitter" and "instagram"
 #' @param ... additional parameters for authentication
@@ -38,7 +37,6 @@
 #' 
 #' @author Chung-hong Chan <chainsawtiney@@gmail.com>
 #' @seealso \code{\link{AuthenticateWithFacebookAPI}},
-#'  \code{\link{AuthenticateWithYoutubeAPI}},
 #' \code{\link{AuthenticateWithInstagramAPI}},
 #' \code{\link{AuthenticateWithTwitterAPI}},
 #' \code{\link{SaveCredential}},
@@ -136,7 +134,7 @@ LoadCredential <- function(filename = "credential.RDS") {
 ### As a convention, function starts with lower case shouldn't be exported.
 
 youtubeAuthenticator <- function(apiKey) {
-    return(AuthenticateWithYoutubeAPI(apiKey))
+    return(authenticateWithYoutubeAPI(apiKey))
 }
 
 ### Currently, this Authenticator will return nothing, only for its side effect
