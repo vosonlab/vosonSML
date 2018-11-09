@@ -15,48 +15,40 @@ CreateActorNetwork.youtube <- function(x, writeToFile) {
     writeToFile <- FALSE
   }
 
-  returnedScrapedComments <- x # match the variable names to avoid warnings in package compilation
+  df_comments <- x # match the variable names to avoid warnings in package compilation
 
-  # returnedScrapedComments dataframe columns:
-  # 1 Comment
-  # 2 User
-  # 3 ReplyCount
-  # 4 LikeCount
-  # 5 PublishTime
-  # 6 CommentId
-  # 7 ParentID
-  # 8 ReplyToAnotherUser
-  # 9 VideoID
-  
-  df <- returnedScrapedComments
-  
-  if (nrow(df) == 0) {
+  # df_comments columns:
+  # 1 Comment      4 LikeCount     7 ParentID
+  # 2 User         5 PublishTime   8 ReplyToAnotherUser
+  # 3 ReplyCount   6 CommentId     9 VideoID
+
+  if (nrow(df_comments) == 0) {
     cat(paste0("\nOops! There are no user comments to make a network from.\nPlease find video(s) where users have",
                " commented on a video or to each other.\nReturning...\n"))
     return()
   }
-  
-  # direct comments which are not replies to others to the video id (treating it as a user)
-  # in the graph the user will appear as id VIDEO:XXxxX
-  notReplies <- which(df$ReplyToAnotherUser == "FALSE" & df$ParentID == "None")
-  df$ReplyToAnotherUser[notReplies] <- paste0("VIDEO:", df$VideoID[notReplies])
 
-  usersTemp <- df[, 2]
-  mentionedUsersTemp <- df[, 8]
-  commentId <- df[, 6]
+  # direct comments which are not replies to others to a video id node
+  # in the graph the video nodes will appear as VIDEO:AbCxYz where AbCxYz is the id
+  not_replies <- which(df_comments$ReplyToAnotherUser == "FALSE" & df_comments$ParentID == "None")
+  df_comments$ReplyToAnotherUser[not_replies] <- paste0("VIDEO:", df_comments$VideoID[not_replies])
 
-  # create pairs of users from, to
-  dfActorNetwork1 <- data.frame(usersTemp, mentionedUsersTemp, commentId)
+  comment_users <- df_comments[, 2]
+  mentioned_users <- df_comments[, 8]
+  comment_ids <- df_comments[, 6]
 
-  # make a vector of all the unique actors in the network1
-  actorsNames <- unique(factor(c(as.character(unique(dfActorNetwork1[, 1])), 
-                                 as.character(unique(dfActorNetwork1[, 2])))))  
+  # create network of users that commented on videos as from user, to user, comment id
+  df_actor_network <- data.frame(comment_users, mentioned_users, comment_ids)
+
+  # make a vector of all the unique actors in the network
+  actor_names <- unique(factor(c(as.character(unique(df_actor_network[, 1])),
+                                 as.character(unique(df_actor_network[, 2])))))
 
   # make a dataframe of the relations between actors
-  relations <- data.frame(from = dfActorNetwork1[, 1], to = dfActorNetwork1[, 2], commentId = dfActorNetwork1[, 3])
+  relations <- data.frame(from = df_actor_network[, 1], to = df_actor_network[, 2], commentId = df_actor_network[, 3])
 
   # convert into a graph
-  g <- graph.data.frame(relations, directed = TRUE, vertices = actorsNames)
+  g <- graph.data.frame(relations, directed = TRUE, vertices = actor_names)
 
   # add node labels
   V(g)$label <- V(g)$name
