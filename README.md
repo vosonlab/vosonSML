@@ -6,19 +6,23 @@
 
 `vosonSML` is the `SocialMediaLab` package, renamed. We decided that `SocialMediaLab` was a bit too generic and also we wanted to indicate the connection to the [Virtual Observatory for the Study of Online Networks Lab](http://vosonlab.net), where this package was conceived and created.
 
-vosonSML was created by [Timothy Graham](http://uq.academia.edu/TimGraham) (who is also the maintainer of the package) and [Robert Ackland](https://researchers.anu.edu.au/researchers/ackland-rj).
+vosonSML was created by [Timothy Graham](http://uq.academia.edu/TimGraham) and [Robert Ackland](https://researchers.anu.edu.au/researchers/ackland-rj).
 
-Contributors:
-
-* [Chung-hong Chan](https://github.com/chainsawriot)
+Contributors: [Chung-hong Chan](https://github.com/chainsawriot), Bryan Gertzel
 
 The latest 'official' version of the package can also be found on [CRAN](https://cran.r-project.org/web/packages/vosonSML/index.html).
 
 ### Current known issues
 
+#### Facebook
+
+If you are having trouble getting data from Facebook it is probably due to a number of changes made to the API and authorized apps process in 2018. The changes now require a manually approved app and authentication over secure connections. More information can be found at [Facebook App Registration](https://developers.facebook.com/docs/apps#register) and [Developer Blog](https://developers.facebook.com/blog/post/2018/06/08/enforce-https-facebook-login/), and on github for the [Rfacebook](https://github.com/pablobarbera/Rfacebook/issues) package information.
+
+#### Twitter
+
 If you are getting the error `Error in check_twitter_oauth( )`, please find a [solution here](https://github.com/geoffjentry/twitteR/issues/90).
 
-If you are having trouble getting data from Facebook, it is probably due to a known issue with authentication for the `Rfacebook` package, which [has a solution](https://github.com/vosonlab/vosonSML/issues/28). 
+#### Instagram
 
 Instagram API access is severely limited if you do not have an authorised app, which is significantly harder to obtain nowadays.
 
@@ -68,4 +72,3 @@ This network visualises two weeks of activity on the [Star Wars Facebook page](h
 This network visualises the social network of one user (the 'ego' node) on Instagram. The degree of the network is "2", meaning that it shows *ego + alters* ("followers of ego") and *ego + alters* + *alters of alters of ego* "followers of followers of ego". 'Follows' data are also collected, so this network also shows "users who ego follows" and "users who followers of ego follow".
 
 <img src="http://vosonlab.net/papers/ACSPRIWinter2015/Instagram_ego_network_socialmedialab_example.png" alt="Facebook bimodal network created with vosonSML" width="600" height="600"/>
-

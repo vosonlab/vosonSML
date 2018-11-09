@@ -20,26 +20,25 @@
 #' \code{Authenticate} is the first step of the \code{Authenticate},
 #' \code{Collect}, \code{Create} workflow.
 #'
-#'
 #' @param socialmedia character string, social media API to authenticate,
 #' currently supports "facebook", "youtube", "twitter", "instagram" and "reddit"
 #' @param ... additional parameters for authentication
-#'
 #' \code{facebook}: appID, appSecret
 #' \code{youtube}: apiKey
 #' \code{twitter}: apiKey, apiSecret, accessToken, accessTokenSecret
 #' \code{instagram}: appID, appSecret
 #' \code{reddit}: app_name, app_key, app_secret, use_token_cache
-#' 
+#'
 #' @return credential object with authentication information
+#'
 #' @note Currently, \code{Authenticate} with socialmedia = "twitter" generates
 #' oauth information to be used in the current active session only (i.e.
 #' "side-effect") and no authentication-related information will be stored in
 #' the returned \code{credential} object.
+#'
 #' @author Chung-hong Chan <chainsawtiney@@gmail.com>
 #' @seealso \code{\link{AuthenticateWithFacebookAPI}},
 #' \code{\link{AuthenticateWithInstagramAPI}},
-#' \code{\link{AuthenticateWithYoutubeAPI}},
 #' \code{\link{AuthenticateWithTwitterAPI}},
 #' \code{\link{SaveCredential}},
 #' \code{\link{LoadCredential}}
@@ -92,7 +91,6 @@ Authenticate <- function(socialmedia, ...) {
 #' the input \code{credential}, useful for working as a filter between the
 #' \code{Authenticate} and \code{Collect}.
 #'
-#'
 #' @aliases LoadCredential SaveCredential
 #' @param credential \code{credential} object
 #' @param filename character, filename to be saved to or restored from
@@ -138,7 +136,7 @@ LoadCredential <- function(filename = "credential.RDS") {
 ### As a convention, function starts with lower case shouldn't be exported.
 
 youtubeAuthenticator <- function(apiKey) {
-  return(AuthenticateWithYoutubeAPI(apiKey))
+  return(authenticateWithYoutubeAPI(apiKey))
 }
 
 ### Currently, this Authenticator will return nothing, only for its side effect
@@ -161,4 +159,3 @@ instagramAuthenticator <- function(appID, appSecret) {
 redditAuthenticator <- function(app_name, app_key, app_secret, ua, use_token_cache) {
   return(AuthenticateWithRedditAPI(app_name, app_key, app_secret, use_token_cache))
 }
-
