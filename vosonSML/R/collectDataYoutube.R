@@ -1,70 +1,52 @@
 #' Collect YouTube comments data for generating different types of networks
 #'
-#' This function collects YouTube comments data for one or more YouTube videos.
-#' It structures the data into a data frame of class \code{dataSource.youtube},
-#' ready for creating networks for further analysis.
+#' This function collects YouTube comments data for one or more YouTube videos. It structures the data into a data 
+#' frame of class dataSource.youtube, ready for creating networks for further analysis.
 #'
-#' \code{CollectDataYoutube} collects public comments from YouTube videos,
-#' using the YouTube API.
+#' CollectDataYoutube collects public comments from YouTube videos, using the YouTube API.
 #'
-#' The function then finds and maps the relationships of YouTube users who have
-#' interacted with each other (i.e. user i has replied to user j or mentioned
-#' user j in a comment) and structures these relationships into a data frame
-#' format suitable for creating unimodal networks (\code{CreateActorNetwork}).
+#' The function then finds and maps the relationships of YouTube users who have interacted with each other 
+#' (i.e. user i has replied to user j or mentioned user j in a comment) and structures these relationships into a data 
+#' frame format suitable for creating unimodal networks (CreateActorNetwork).
 #'
-#' For multiple videos, the user may wish to use the function
-#' \code{GetYoutubeVideoIDs}, which creates a character vector of video IDs
-#' from a plain text file of YouTube video URLs, which can then be used for the
-#' \code{videoIDs} argument of the function \code{CollectDataYoutube}.
+#' For multiple videos, the user may wish to use the function GetYoutubeVideoIDs, which creates a character
+#' vector of video IDs from a plain text file of YouTube video URLs, which can then be used for the videoIDs
+#' argument of the function CollectDataYoutube.
 #'
-#' @param videoIDs character vector, specifying one or more YouTube video IDs.
-#' For example, if the video URL is
-#' 'https://www.youtube.com/watch?v=W2GZFeYGU3s', then use
-#' \code{videoIDs='W2GZFeYGU3s'}. For multiple videos, the function
-#' \code{GetYoutubeVideoIDs} can be used to create a vector object suitable as
-#' input for \code{videoIDs}.
-#' @param apiKeyYoutube character string, specifying the Google Developer API
-#' Key used for authentication.
-#' @param verbose logical. If \code{TRUE} then this function will output
-#' runtime information to the console as it computes. Useful diagnostic tool
-#' for long computations. Default is \code{FALSE}.
-#' @param writeToFile logical. If \code{TRUE} then the data is saved to file in
-#' current working directory (CSV format), with filename denoting current
-#' system time. Default is \code{FALSE}.
-#' @param maxComments numeric integer, specifying how many 'top-level' comments
-#' to collect from each video. This value *does not* take into account 'reply'
-#' comments (i.e. replies to top-level comments), therefore the total number of
-#' comments collected may be higher than \code{maxComments}. By default this
-#' function attempts to collect all comments.
-#' @return A data frame object of class \code{dataSource.youtube} that can be
-#' used for creating unimodal networks (\code{CreateActorNetwork}).
-#' @note Currently supported network types:
-#'
-#' - unimodal 'actor' network; \code{CreateActorNetwork}
+#' @param videoIDs character vector, specifying one or more YouTube video IDs. For example, if the video URL is 
+#' 'https://www.youtube.com/watch?v=W2GZFeYGU3s', then use videoIDs='W2GZFeYGU3s'. For multiple videos, the 
+#' function GetYoutubeVideoIDs can be used to create a vector object suitable as input for videoIDs.
+#' @param apiKeyYoutube character string, specifying the Google Developer API Key used for authentication.
+#' @param verbose logical. If TRUE then this function will output runtime information to the console as it 
+#' computes. Useful diagnostic tool for long computations. Default is FALSE.
+#' @param writeToFile logical. If TRUE then the data is saved to file in current working directory (CSV format), 
+#' with filename denoting current system time. Default is FALSE.
+#' @param maxComments numeric integer, specifying how many 'top-level' comments to collect from each video. This value 
+#' *does not* take into account 'reply' comments (i.e. replies to top-level comments), therefore the total number of
+#' comments collected may be higher than maxComments. By default this function attempts to collect all comments.
+#' 
+#' @return A data frame object of class dataSource.youtube that can be used for creating unimodal networks 
+#' (CreateActorNetwork).
+#' 
+#' @note Currently supported network types: unimodal 'actor' network; CreateActorNetwork.
 #'
 #' Data generated using this function is *not* suitable for dynamic networks.
-#' Dynamic YouTube comments networks are not currently implemented in the
-#' vosonSML package. This will be implemented in a future release.
+#' Dynamic YouTube comments networks are not currently implemented in the vosonSML package. This will be implemented in 
+#' a future release.
 #'
-#' Note on \code{maxComments} argument: Due to quirks/specifications of the
-#' Google API, it is currently not possible to specify the exact number of
-#' comments to return from the API using \code{maxResults} argument (i.e.
-#' including comments that are replies to top-level comments). Therefore, the
-#' number of comments collected is usually somewhat greater than
-#' \code{maxComments}, if a value is specified for this argument. For example,
-#' if a video contains 10 top-level comments, and one of these top-level
-#' comments has 5 'child' or reply comments, then the total number of comments
-#' collected will be equal to 15. Currently, the user must 'guesstimate' the
-#' \code{maxResults} value, to collect a number of comments in the order of
-#' what they require.
-#' @author Timothy Graham <timothy.graham@@anu.edu.au> & Robert Ackland
-#' <robert.ackland@@anu.edu.au>
-#' @seealso \code{AuthenticateWithYoutubeAPI} must be run first or no data will
-#' be collected.
-#' @keywords youtube data mining SNA
+#' Note on maxComments argument: Due to quirks/specifications of the Google API, it is currently not possible to 
+#' specify the exact number of comments to return from the API using maxResults argument (i.e.including comments 
+#' that are replies to top-level comments). Therefore, the number of comments collected is usually somewhat greater than
+#' maxComments, if a value is specified for this argument. For example, if a video contains 10 top-level 
+#' comments, and one of these top-level comments has 5 'child' or reply comments, then the total number of comments
+#' collected will be equal to 15. Currently, the user must 'guesstimate' the maxResults value, to collect a 
+#' number of comments in the order of what they require.
 #' 
-CollectDataYoutube <-
-function(videoIDs, apiKeyYoutube, verbose, writeToFile, maxComments) {
+#' @author Timothy Graham <timothy.graham@@anu.edu.au> & Robert Ackland <robert.ackland@@anu.edu.au>
+#' @seealso Authenticate must be run first or no data will be collected.
+#'
+#' @noRd
+collectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeToFile = FALSE, maxComments) {
   
   if (missing(verbose)) {
     verbose <- FALSE # default to not verbose
@@ -78,17 +60,19 @@ function(videoIDs, apiKeyYoutube, verbose, writeToFile, maxComments) {
     writeToFile <- FALSE
   }
   
-  if (verbose=="TRUE" | verbose=="true" | verbose=="T" | verbose==TRUE ) {
+  if (isTrueValue(verbose)) {
     verbose <- TRUE
   }
   
   if (missing(apiKeyYoutube)) {
-    cat("Error. Argument `apiKeyYoutube` is missing. Please specify a valid API key to collect data (i.e. your Google Developer API Key).\n")
+    cat(paste0("Error. Argument `apiKeyYoutube` is missing. Please specify a valid API key to collect data (i.e. your",
+               " Google Developer API Key).\n"))
     return(NA)
   }
   
   if (missing(videoIDs)) {
-    cat("Error. Argument `videoIDs` is missing.\nPlease specify a vector of video IDs to collect data from.\n Hint: to do this you can use the `GetYoutubeVideoIDs` function in this package.")
+    cat(paste0("Error. Argument `videoIDs` is missing.\nPlease specify a vector of video IDs to collect data from.\n",
+               "Hint: to do this you can use the `GetYoutubeVideoIDs` function in this package."))
     return(NA)
   }
   
@@ -96,23 +80,20 @@ function(videoIDs, apiKeyYoutube, verbose, writeToFile, maxComments) {
     
   # Start data collection
   
-  # Create a dataframe to iteratively store comments from all the videos
-  # that the user wants to scrape (i.e. specified in videoIDs)
-  # uses 'dummy' data in first row (which is removed later)
-  dataCombined <- data.frame(
-    Comment = "foo",
-    User = "bar",
-    ReplyCount = "99999999",
-    LikeCount = "99999999",
-    PublishTime = "timestamp",
-    CommentId = "99999999123456789",
-    ParentID = "foobar",
-    ReplyToAnotherUser = "FALSE",
-    VideoID = "foobarfoobar",
-    stringsAsFactors=FALSE)
+  # Create a dataframe to iteratively store comments from all the videos that the user wants to scrape 
+  # (i.e. specified in videoIDs) uses 'dummy' data in first row (which is removed later)
+  dataCombined <- data.frame(Comment = "foo",
+                             User = "bar",
+                             ReplyCount = "99999999",
+                             LikeCount = "99999999",
+                             PublishTime = "timestamp",
+                             CommentId = "99999999123456789",
+                             ParentID = "foobar",
+                             ReplyToAnotherUser = "FALSE",
+                             VideoID = "foobarfoobar",
+                             stringsAsFactors = FALSE)
   
   # Iterate through the videos in videoIDs, adding to dataCombined.
-    
   for (k in 1:length(videoIDs)) {
     cat(paste0("Collecting video number: ", k, " of ", length(videoIDs), "\n", sep = "")) # DEBUG
     cat("---------------------------------------------------------------\n")
@@ -130,17 +111,17 @@ function(videoIDs, apiKeyYoutube, verbose, writeToFile, maxComments) {
     }
     
     tempData <- lapply(rObj$data, function(x) {
-      data.frame(
-        Comment = x$snippet$topLevelComment$snippet$textDisplay,
-        User = x$snippet$topLevelComment$snippet$authorDisplayName,
-        ReplyCount = x$snippet$totalReplyCount,
-        LikeCount = x$snippet$topLevelComment$snippet$likeCount,
-        PublishTime = x$snippet$topLevelComment$snippet$publishedAt,
-        CommentId = x$snippet$topLevelComment$id,
-        ParentID = "None",
-        ReplyToAnotherUser = "FALSE",
-        VideoID = videoIDs[k], # actual reference to API data is: x$snippet$topLevelComment$snippet$videoIDs[k],
-        stringsAsFactors = FALSE)
+      data.frame(Comment = x$snippet$topLevelComment$snippet$textDisplay,
+                 User = x$snippet$topLevelComment$snippet$authorDisplayName,
+                 ReplyCount = x$snippet$totalReplyCount,
+                 LikeCount = x$snippet$topLevelComment$snippet$likeCount,
+                 PublishTime = x$snippet$topLevelComment$snippet$publishedAt,
+                 CommentId = x$snippet$topLevelComment$id,
+                 ParentID = "None",
+                 ReplyToAnotherUser = "FALSE",
+                 VideoID = videoIDs[k], # actual reference to API data is: 
+                                        # x$snippet$topLevelComment$snippet$videoIDs[k]
+                 stringsAsFactors = FALSE)
     })
     
     core_df <- do.call("rbind", tempData)
@@ -153,33 +134,30 @@ function(videoIDs, apiKeyYoutube, verbose, writeToFile, maxComments) {
     commentIDs_with_replies <- core_df[which(core_df$ReplyCount > 0), ] # column 6
     commentIDs_with_replies <- commentIDs_with_replies$CommentId
     
-    cat(paste0("** Collecting replies for ", length(commentIDs_with_replies), " threads with replies. Please be patient.\n", sep = "")) # commentIDs
+    cat(paste0("** Collecting replies for ", length(commentIDs_with_replies), 
+               " threads with replies. Please be patient.\n", sep = "")) # commentIDs
     
     base_url <- "https://www.googleapis.com/youtube/v3/comments"
     
     # 'dummy' first row of dataframe, for DEBUG purposes (fix later..)
-    dataRepliesAll <- data.frame(
-      Comment = "foo",
-      User = "bar",
-      ReplyCount = "99999999",
-      LikeCount = "99999999",
-      PublishTime = "timestamp",
-      CommentId = "99999999123456789",
-      ParentID = "foobar",
-      ReplyToAnotherUser = "FALSE",
-      VideoID = videoIDs[k], # API DOESN'T SEEM TO RETURN HERE, no matter anyway
-      stringsAsFactors = FALSE)
-    
+    dataRepliesAll <- data.frame(Comment = "foo",
+                                 User = "bar",
+                                 ReplyCount = "99999999",
+                                 LikeCount = "99999999",
+                                 PublishTime = "timestamp",
+                                 CommentId = "99999999123456789",
+                                 ParentID = "foobar",
+                                 ReplyToAnotherUser = "FALSE",
+                                 VideoID = videoIDs[k], # API DOESN'T SEEM TO RETURN HERE, no matter anyway
+                                 stringsAsFactors = FALSE)
+
     # for each thread
     total_replies <- 0
     for (i in 1:length(commentIDs_with_replies)) { # commentIDs
-      
-      api_opts <- list(
-        part = "snippet",
-        textFormat = "plainText",
-        parentId=commentIDs_with_replies[i], # commentIDs
-        key = apiKey
-      )
+      api_opts <- list(part = "snippet",
+                       textFormat = "plainText",
+                       parentId=commentIDs_with_replies[i], # commentIDs
+                       key = apiKey)
       
       init_results <- httr::content(httr::GET(base_url, query = api_opts)) # TODO: should die when there is error
       
@@ -200,17 +178,16 @@ function(videoIDs, apiKeyYoutube, verbose, writeToFile, maxComments) {
       total_replies <- total_replies + num_items
       
       tempDataReplies <- lapply(init_results$items, function(x) {
-        data.frame(
-          Comment = x$snippet$textDisplay,
-          User = x$snippet$authorDisplayName,
-          ReplyCount = 0, # there is no ReplyCount returned for replies (API specs)
-          LikeCount = x$snippet$likeCount,
-          PublishTime = x$snippet$publishedAt,
-          CommentId = x$id,
-          ParentID = x$snippet$parentId,
-          ReplyToAnotherUser = "FALSE",
-          VideoID = videoIDs[k], # API DOESN'T SEEM TO RETURN HERE, not that it matters
-          stringsAsFactors=FALSE)
+        data.frame(Comment = x$snippet$textDisplay,
+                   User = x$snippet$authorDisplayName,
+                   ReplyCount = 0, # there is no ReplyCount returned for replies (API specs)
+                   LikeCount = x$snippet$likeCount,
+                   PublishTime = x$snippet$publishedAt,
+                   CommentId = x$id,
+                   ParentID = x$snippet$parentId,
+                   ReplyToAnotherUser = "FALSE",
+                   VideoID = videoIDs[k], # API DOESN'T SEEM TO RETURN HERE, not that it matters
+                   stringsAsFactors = FALSE)
       })
       
       tempDataRepliesBinded <- do.call("rbind", tempDataReplies)
@@ -232,7 +209,6 @@ function(videoIDs, apiKeyYoutube, verbose, writeToFile, maxComments) {
     
     # APPEND TO THE OVERALL DATAFRAME (I.E. MULTIPLE VIDEO COMMENTS)
     dataCombined <- rbind(dataCombined, dataCombinedTemp)
-    
   }
     
   cat(paste0("** Total comments collected for all videos ", nrow(dataCombined)-1, ".\n", sep = ""))
@@ -272,24 +248,20 @@ function(videoIDs, apiKeyYoutube, verbose, writeToFile, maxComments) {
   
   ## Map the comment replies within PARENT COMMENT THREADS into dataframe
   
-  parentsTemp <- which(dataCombined[,7]!="None" & dataCombined[,8]=="FALSE")
+  parentsTemp <- which(dataCombined[, 7] != "None" & dataCombined[, 8] == "FALSE")
   
   if (length(parentsTemp) != 0) {
-    for (i in 1:nrow(dataCombined[parentsTemp,])) {
+    for (i in 1:nrow(dataCombined[parentsTemp, ])) {
       
       # take the 1st match - we could try to scrape MULTIPLE REPLIES/MENTIONS, but would require re-think.
-      tempMatch <- which(dataCombined[parentsTemp[i], 7]==dataCombined[, 6])[1] 
+      tempMatch <- which(dataCombined[parentsTemp[i], 7] == dataCombined[, 6])[1] 
       dataCombined[parentsTemp[i], 8] <- dataCombined[tempMatch, 2]
       
     }
   }
   
-  if (writeToFile=="TRUE" | writeToFile=="true" | writeToFile=="T" | writeToFile==TRUE) {
-    currTime <- format(Sys.time(), "%b_%d_%H_%M_%S_%Y")
-    write.csv(dataCombined,paste0(currTime,"_YoutubeData.csv"))
-    
-    cat("YouTube data was written to current working directory, with filename:\n")
-    cat(paste0(currTime,"_YoutubeData.csv"))
+  if (isTrueValue(writeToFile)) {
+    writeOutputFile(dataCombined, "csv", "YoutubeData")
   }
     
   cat("\nDone!\n")
@@ -297,7 +269,7 @@ function(videoIDs, apiKeyYoutube, verbose, writeToFile, maxComments) {
   #############################################################################
   # return dataframe to environment
   
-  class(dataCombined) <- append(class(dataCombined),c("dataSource","youtube"))
+  class(dataCombined) <- append(class(dataCombined), c("dataSource", "youtube"))
   
   return(dataCombined)
   
@@ -307,7 +279,7 @@ function(videoIDs, apiKeyYoutube, verbose, writeToFile, maxComments) {
 ## Set up a class and methods/functions for scraping
 
 yt_scraper <- setRefClass(
-  "yt_scraper",
+  "yt_scraper", 
   fields = list(
     base_url = "character",
     api_opts = "list",
@@ -326,7 +298,7 @@ yt_scraper <- setRefClass(
       # set default api request options
       opts <- api_opts
       
-      if (is.null(nextPageToken) || length(trimws(nextPageToken)) == 0L || trimws(nextPageToken) == "") {
+      if (is.null(nextPageToken) | length(trimws(nextPageToken)) == 0L | trimws(nextPageToken) == "") {
         if (page_count >= 1) {
           if (verbose) {
             cat(paste0("-- No nextPageToken. Returning. page_count is: ", page_count, "\n"))
@@ -367,13 +339,13 @@ yt_scraper <- setRefClass(
     scrape_all = function(maxComments) {
       cat(paste0("** video Id: ", api_opts$videoId ,"\n", sep = ""))
       if (verbose) {
-        cat(paste0("   [results per page: ", api_opts$maxResults, " | max comments per video: ", maxComments, "]\n\n", sep = ""))
+        cat(paste0("   [results per page: ", api_opts$maxResults, " | max comments per video: ", maxComments, "]\n\n", 
+                   sep = ""))
       }
       
       thread_count <- 0
       
       while (TRUE) {
-        
         # collect threads for current page
         thread_count <- scrape()
         
@@ -381,12 +353,13 @@ yt_scraper <- setRefClass(
           cat(paste0("-- Collected threads from page: ", thread_count, "\n\n", sep = ""))
         }        
         
-        if (thread_count == 0 || length(data) > maxComments) {
+        if (thread_count == 0 | length(data) > maxComments) {
           done <<- TRUE
           nextPageToken <<- ""
           
           if (length(data) > maxComments) {
-            cat(paste0("-- API returned more than max comments. Results truncated to first ", maxComments, " threads.\n", sep = ""))
+            cat(paste0("-- API returned more than max comments. Results truncated to first ", maxComments, 
+                       " threads.\n", sep = ""))
             
             data <<- data[1:maxComments]
           }
@@ -406,14 +379,13 @@ yt_scraper <- setRefClass(
     
     initialize = function(videoIDs, apiKey, k, verbose = FALSE) {
       base_url <<- "https://www.googleapis.com/youtube/v3/commentThreads/"
-      api_opts <<- list(
-        part = "snippet",
-        maxResults = 100,
-        textFormat = "plainText",
-        videoId = videoIDs[k],
-        key = apiKey,
-        fields = "items,nextPageToken",
-        orderBy = "published")
+      api_opts <<- list(part = "snippet",
+                        maxResults = 100,
+                        textFormat = "plainText",
+                        videoId = videoIDs[k],
+                        key = apiKey,
+                        fields = "items,nextPageToken",
+                        orderBy = "published")
       page_count <<- 0
       nextPageToken <<- ""
       data <<- list()
@@ -442,8 +414,7 @@ yt_scraper <- setRefClass(
             LikeCount = x$snippet$topLevelComment$snippet$likeCount,
             PublishTime = x$snippet$topLevelComment$snippet$publishedAt,
             CommentId = x$snippet$topLevelComment$id,
-            stringsAsFactors=FALSE)
-          
+            stringsAsFactors = FALSE)
         })
         core_df <<- do.call("rbind", sub_data)
       } else {

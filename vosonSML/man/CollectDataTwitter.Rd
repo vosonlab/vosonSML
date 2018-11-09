@@ -5,8 +5,9 @@
 \title{Note: this function is DEPRECATED and will be removed in a future release.
 Please use the \code{Collect} function}
 \usage{
-CollectDataTwitter(searchTerm, numTweets, verbose, writeToFile, language, since,
-  until, locale, geocode, sinceID, maxID, resultType, retryOnRateLimit)
+CollectDataTwitter(searchTerm, numTweets, verbose, writeToFile, language,
+  since, until, locale, geocode, sinceID, maxID, resultType,
+  retryOnRateLimit)
 }
 \arguments{
 \item{searchTerm}{character string, specifying a search term or phrase (e.g.

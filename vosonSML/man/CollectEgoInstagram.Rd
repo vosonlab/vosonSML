@@ -5,8 +5,8 @@
 \title{Note: this function is DEPRECATED and will be removed in a future release.
 Please use the \code{Collect} function}
 \usage{
-CollectEgoInstagram(username, userid, verbose, degreeEgoNet, waitForRateLimit,
-  getFollows, credential = NULL)
+CollectEgoInstagram(username, userid, verbose, degreeEgoNet,
+  waitForRateLimit, getFollows, credential = NULL)
 }
 \arguments{
 \item{username}{character vector, specifying a set of usernames who will be
