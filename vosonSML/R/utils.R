@@ -23,7 +23,7 @@ systemTimeFilename <- function(name_suffix, name_ext, current_time = NULL, clean
     name_ext <- gsub("\\.", "", name_ext, perl = TRUE)    
   }
   
-  file_name <- paste0(format(current_time, "%Y-%m-%d_%H-%M-%S"), "_", name_suffix, ".", name_ext, sep = "")
+  file_name <- paste0(format(current_time, "%Y-%m-%d_%H%M%S"), "-", name_suffix, ".", name_ext, sep = "")
 }
 
 # write data to file as type
