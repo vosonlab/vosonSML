@@ -96,5 +96,5 @@ instagramEgo <- function(credential, username, userid, verbose, degreeEgoNet, wa
 }
 
 redditCollector <- function(credential, thread_urls, ua, write_to_file) {
-  return(CollectDataReddit(oauth2_token = credential$auth, thread_urls, ua, write_to_file))
+  return(collectDataReddit(oauth2_token = credential$auth, thread_urls, ua, write_to_file))
 }

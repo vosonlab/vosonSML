@@ -6,10 +6,11 @@
 #' @param thread_urls A vector of reddit thread url's to collect data from.
 #' @param ua Character string containing a user-agent string to use in the get request.
 #' @param write_to_file Boolean. If the data should be written to file. 
-#' @return A data frame object of class \code{dataSource.reddit} that can be used for creating unimodal 
-#' networks (\code{CreateActorNetwork}).
+#' @return A data frame object of class dataSource.reddit that can be used for creating unimodal 
+#' networks (CreateActorNetwork).
 #' 
-CollectDataReddit <- function(oauth2_token, thread_urls, ua, write_to_file) {
+#' @noRd
+collectDataReddit <- function(oauth2_token, thread_urls, ua, write_to_file) {
 
   if (missing(oauth2_token)) {
     cat("Error. Argument `oauth2_token` is missing.\nPlease provide an authentication token.\n")
@@ -21,8 +22,13 @@ CollectDataReddit <- function(oauth2_token, thread_urls, ua, write_to_file) {
     return(NA)
   }
   
+  if (!is.vector(thread_urls) || length(thread_urls) < 1) {
+    cat("Error. Please provide a vector of one or more reddit thread urls.\n")
+    return(NA)    
+  }
+  
   if (missing(ua)) {
-    ua <- "httr oauth"
+    ua <- "httr request"
   }
   
   if (missing(write_to_file)) {
@@ -35,12 +41,8 @@ CollectDataReddit <- function(oauth2_token, thread_urls, ua, write_to_file) {
   # parse the json results
   resp_parsed <- content(reddit_response, "parsed")
   
-  if (write_to_file == TRUE) {
-    current_time <- format(Sys.time(), "%b_%d_%H_%M_%S_%Y")
-    save_file_name <- paste0(current_time, "_RedditData.rds")
-    saveRDS(resp_parsed, file = save_file_name)
-    
-    cat(paste0("Reddit collection data was written to working directory, with filename:\n", save_file_name, "\n"))
+  if (isTrueValue(write_to_file)) {
+    writeOutputFile(resp_parsed, "rds", "RedditRawData")
   }
   
   # create a dataframe
@@ -68,27 +70,24 @@ CollectDataReddit <- function(oauth2_token, thread_urls, ua, write_to_file) {
   
   thread_df$id = 1:nrow(thread_df)
   
-  if (write_to_file == TRUE) {
-    current_time <- format(Sys.time(), "%b_%d_%H_%M_%S_%Y")
-    save_file_name <- paste0(current_time, "_RedditData.csv")
-    write.csv(thread_df, save_file_name)
-    
-    cat(paste0("Reddit dataframe CSV was written to working directory, with filename:\n", save_file_name, "\n"))
+  if (isTrueValue(write_to_file)) {
+    writeOutputFile(thread_df, "csv", "RedditData")
   }
   
   class(thread_df) <- append(class(thread_df), c("dataSource", "reddit"))
   
-  cat("\n")
+  cat("\nDone!\n")
   
   return(thread_df)
 }
 
+# convert from unix timestamp
 reddit_utc2datetime <- function(utc_ts) {
   as.POSIXct(as.numeric(utc_ts), origin = "1970-01-01", tz = "GMT")
 }
 
+# modified from GetAttribute by @ivan-rivera
 # https://github.com/cran/RedditExtractoR/blob/master/R/reddit_content.R
-# GetAttribute by @ivan-rivera
 get_node_attribute <- function(node, field){
   node_attribute <- node$data[[field]]
   replies <- node$data$replies
@@ -102,8 +101,8 @@ get_node_attribute <- function(node, field){
   return(list(node_attribute, lapply(reply_nodes, function(x) { get_node_attribute(x, field) })))
 }
 
+# modified from get.structure by @ivan-rivera
 # https://github.com/cran/RedditExtractoR/blob/master/R/reddit_content.R
-# get.structure by @ivan-rivera
 get_thread_structure <- function(node, depth = 0) {
   if(is.null(node)) {
     return(list())

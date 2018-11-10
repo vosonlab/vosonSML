@@ -15,7 +15,8 @@
 #' @param use_token_cache Boolean. Use cached authentication token if found.
 #' @return Reddit authentication token.
 #' 
-AuthenticateWithRedditAPI <- function(app_name, app_key, app_secret, use_token_cache) {
+#' @noRd
+authenticateWithRedditAPI <- function(app_name, app_key, app_secret, use_token_cache) {
 
   if (missing(app_name)) {
     app_name <- "reddit"

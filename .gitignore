@@ -41,3 +41,4 @@ cred.R
 *.rds
 *.csv
 *.graphml
+.Rproj.user
