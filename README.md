@@ -6,9 +6,7 @@
 
 `vosonSML` is the `SocialMediaLab` package, renamed. We decided that `SocialMediaLab` was a bit too generic and also we wanted to indicate the connection to the [Virtual Observatory for the Study of Online Networks Lab](http://vosonlab.net), where this package was conceived and created.
 
-vosonSML was created by [Timothy Graham](http://uq.academia.edu/TimGraham) and [Robert Ackland](https://researchers.anu.edu.au/researchers/ackland-rj).
-
-Contributors: [Chung-hong Chan](https://github.com/chainsawriot), Bryan Gertzel
+vosonSML was created by [Timothy Graham](http://uq.academia.edu/TimGraham) and [Robert Ackland](https://researchers.anu.edu.au/researchers/ackland-rj), with major contributions by [Chung-hong Chan](https://github.com/chainsawriot) and Bryan Gertzel.
 
 The latest 'official' version of the package can also be found on [CRAN](https://cran.r-project.org/web/packages/vosonSML/index.html).
 
