@@ -6,7 +6,7 @@ Description: A suite of tools for collecting and constructing networks from soci
 Type: Package
 Imports: tm, stringr, twitteR, RCurl, bitops, rjson, plyr, igraph, Rfacebook (>= 0.6.15), Hmisc, data.table, httpuv, instaR, methods, httr
 Suggests: magrittr, testthat
-Author: Timothy Graham & Robert Ackland with contribution from Chung-hong Chan & Bryan Gertzel
+Author: Timothy Graham & Robert Ackland with contributions from Bryan Gertzel & Chung-hong Chan
 Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
 License: GPL (>= 2)
 RoxygenNote: 6.1.0
