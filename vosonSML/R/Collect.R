@@ -19,17 +19,18 @@
 #' \code{twitter}: searchTerm, numTweets, verbose, writeToFile, language
 #' \code{instagram}: credential, tag, n, lat, lng, distance, folder, mindate, maxdate, verbose, sleep, writeToFile,
 #' waitForRateLimit
-#'
+#' \code{reddit}: thread_urls, wait_time, write_to_file
+#' 
 #' \code{instagram} with \code{ego} = TRUE: username, userid, verbose,
 #' degreeEgoNet, waitForRateLimit, getFollows
 #' @return A data.frame object of class \code{dataSource.*} that can be used
 #' with \code{Create}.
 #' @author Chung-hong Chan <chainsawtiney@@gmail.com>
-#' @seealso \code{CollectDataFromFacebook},
-#' \code{CollectDataFromInstagram},
-#' \code{CollectDataFromTwitter},
+#' @seealso \code{CollectDataFacebook},
+#' \code{CollectDataInstagram},
+#' \code{CollectDataTwitter},
 #' \code{CollectEgoInstagram},
-#' \code{CollectDataFromReddit},
+#' \code{CollectDataReddit},
 #' @examples
 #'
 #' \dontrun{
@@ -95,6 +96,6 @@ instagramEgo <- function(credential, username, userid, verbose, degreeEgoNet, wa
     return(CollectEgoInstagram(username, userid, verbose, degreeEgoNet, waitForRateLimit, getFollows, credential))
 }
 
-redditCollector <- function(credential, thread_urls, ua, write_to_file) {
-  return(collectDataReddit(oauth2_token = credential$auth, thread_urls, ua, write_to_file))
+redditCollector <- function(credential, thread_urls, wait_time, write_to_file) {
+  return(collectDataReddit(thread_urls, wait_time, write_to_file))
 }

@@ -12,7 +12,7 @@ Create(dataSource, type = "actor", ...)
 \item{type}{character, type of network to be created, currently supports "actor", "bimodal", "dynamic", "semantic" 
 and "ego"}
 
-\item{...}{additional parameters for Create*Network functions}
+\item{...}{additional parameters for create*Network functions}
 }
 \value{
 an igraph graph object

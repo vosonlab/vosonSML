@@ -24,7 +24,5 @@ which is then 'piped' to the \code{\link{Create}} function, resulting in a netwo
 for analysis.
 }
 \author{
-Timothy Graham, Robert Ackland, with contributions from Chung-hong Chan and Bryan Gertzel
-
-Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
+Created by Timothy Graham and Robert Ackland, with major contributions by Chung-hong Chan and Bryan Gertzel.
 }

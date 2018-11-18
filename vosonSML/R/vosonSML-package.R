@@ -19,9 +19,7 @@
 #' @name vosonSML-package
 #' @aliases vosonSML-package vosonSML
 #' @docType package
-#' @author Timothy Graham, Robert Ackland, with contributions from Chung-hong Chan and Bryan Gertzel
-#' 
-#' Maintainer: Bryan Gertzel <bryan.gertzel@@anu.edu.au>
+#' @author Created by Timothy Graham and Robert Ackland, with major contributions by Chung-hong Chan and Bryan Gertzel.
 #' @import tm
 #' @import RCurl
 #' @import bitops
@@ -40,7 +38,7 @@
 #' @importFrom stringr str_extract str_replace_all str_match_all
 #' @importFrom stats 'na.omit'
 #' @importFrom utils "flush.console" head "install.packages" "read.table" "write.csv" "read.csv"
-#' @importFrom RedditExtractoR user_network
+#' @importFrom RedditExtractoR reddit_content user_network
 #' @importFrom magrittr '%>%'
 #' @importFrom dplyr rename group_by summarise ungroup
 #' @importFrom rlang '.data'

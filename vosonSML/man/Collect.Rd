@@ -21,6 +21,7 @@ CollectDataFrom* and CollectEgo* functions)
 \code{twitter}: searchTerm, numTweets, verbose, writeToFile, language
 \code{instagram}: credential, tag, n, lat, lng, distance, folder, mindate, maxdate, verbose, sleep, writeToFile,
 waitForRateLimit
+\code{reddit}: thread_urls, wait_time, write_to_file
 
 \code{instagram} with \code{ego} = TRUE: username, userid, verbose,
 degreeEgoNet, waitForRateLimit, getFollows}
@@ -59,11 +60,11 @@ apiKey = my_apiKeyYoutube) \%>\% Collect(videoIDs = videoIDs) \%>\% Create('acto
 }
 }
 \seealso{
-\code{CollectDataFromFacebook},
-\code{CollectDataFromInstagram},
-\code{CollectDataFromTwitter},
+\code{CollectDataFacebook},
+\code{CollectDataInstagram},
+\code{CollectDataTwitter},
 \code{CollectEgoInstagram},
-\code{CollectDataFromReddit},
+\code{CollectDataReddit},
 }
 \author{
 Chung-hong Chan <chainsawtiney@gmail.com>

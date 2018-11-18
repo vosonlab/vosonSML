@@ -3,7 +3,6 @@
 \name{SaveCredential}
 \alias{SaveCredential}
 \alias{LoadCredential}
-\alias{LoadCredential}
 \title{Save and load credential information}
 \usage{
 SaveCredential(credential, filename = "credential.RDS")

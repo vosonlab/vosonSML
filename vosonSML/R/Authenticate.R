@@ -157,5 +157,6 @@ instagramAuthenticator <- function(appID, appSecret) {
 }
 
 redditAuthenticator <- function(app_name, app_key, app_secret, ua, use_token_cache) {
-  return(authenticateWithRedditAPI(app_name, app_key, app_secret, use_token_cache))
+  # return(authenticateWithRedditAPI(app_name, app_key, app_secret, use_token_cache))
+  return(NULL)
 }
