@@ -2,9 +2,9 @@
 #'
 #' Uses RedditExtractoR::reddit_content to collect user and comment data for thread urls.
 #' 
-#' @param threadUrls Character string vector. Reddit thread url's to collect data from.
-#' @param waitTime Numeric integer. Time in seconds to wait in-between url collection requests.
-#' @param writeToFile Boolean. If the data should be written to file. 
+#' @param threadUrls character string vector. Reddit thread url's to collect data from.
+#' @param waitTime numeric integer. Time in seconds to wait in-between url collection requests.
+#' @param writeToFile logical. If the data should be written to file. 
 #' 
 #' @note The reddit API endpoint used for thread collection has maximum limit of 500 comments per thread url.
 #' 
