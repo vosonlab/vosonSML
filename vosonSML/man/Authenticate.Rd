@@ -15,7 +15,7 @@ currently supports "facebook", "youtube", "twitter", "instagram" and "reddit"}
 \code{youtube}: apiKey
 \code{twitter}: apiKey, apiSecret, accessToken, accessTokenSecret
 \code{instagram}: appID, appSecret
-\code{reddit}: app_name, app_key, app_secret, use_token_cache}
+\code{reddit}: appName, appKey, appSecret, useTokenCache}
 }
 \value{
 credential object with authentication information

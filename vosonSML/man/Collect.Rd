@@ -21,7 +21,7 @@ CollectDataFrom* and CollectEgo* functions)
 \code{twitter}: searchTerm, numTweets, verbose, writeToFile, language
 \code{instagram}: credential, tag, n, lat, lng, distance, folder, mindate, maxdate, verbose, sleep, writeToFile,
 waitForRateLimit
-\code{reddit}: thread_urls, wait_time, write_to_file
+\code{reddit}: threadUrls, waitTime, writeToFile
 
 \code{instagram} with \code{ego} = TRUE: username, userid, verbose,
 degreeEgoNet, waitForRateLimit, getFollows}
@@ -58,6 +58,7 @@ videoIDs <- c("W2GZFeYGU3s","mL27TAJGlWc")
 Authenticate("youtube",
 apiKey = my_apiKeyYoutube) \%>\% Collect(videoIDs = videoIDs) \%>\% Create('actor')
 }
+
 }
 \seealso{
 \code{CollectDataFacebook},

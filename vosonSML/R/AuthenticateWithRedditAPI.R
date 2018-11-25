@@ -1,4 +1,4 @@
-#' Reddit API Authentication.
+#' Reddit API authentication.
 #'
 #' Oauth2 based authentication with the Reddit API that returns an authentication token.
 #' 
@@ -9,26 +9,26 @@
 #'
 #' Reddit oauth tokens are only valid for one hour and using cached token will subsequently produce 401 errors.
 #' 
-#' @param app_name Character string containing the reddit app name associated with the API key.
-#' @param app_key  Character string containing the app key.
-#' @param app_secret  Character string containing the app secret.
-#' @param use_token_cache Boolean. Use cached authentication token if found.
-#' @return Reddit authentication token.
+#' @param appName Character string containing the reddit app name associated with the API key.
+#' @param appKey  Character string containing the app key.
+#' @param appSecret  Character string containing the app secret.
+#' @param useTokenCache Boolean. Use cached authentication token if found.
 #' 
-#' @noRd
-authenticateWithRedditAPI <- function(app_name, app_key, app_secret, use_token_cache) {
+#' @return a reddit authentication token
+#'
+AuthenticateWithRedditAPI <- function(appName, appKey, appSecret, useTokenCache) {
 
-  if (missing(app_name)) {
-    app_name <- "reddit"
+  if (missing(appName)) {
+    appName <- "reddit"
   }
   
-  if (missing(app_key) | missing(app_secret)) {
+  if (missing(appKey) | missing(appSecret)) {
     cat("Error. One or more API credentials are missing.\nPlease specify these.\n")
     return()
   }
 
-  if (missing(use_token_cache)) {
-    use_token_cache <- FALSE
+  if (missing(useTokenCache)) {
+    useTokenCache <- FALSE
   }
   
   # sets up oauth2 for reddit
@@ -37,14 +37,14 @@ authenticateWithRedditAPI <- function(app_name, app_key, app_secret, use_token_c
     access = "https://www.reddit.com/api/v1/access_token"
   )
 
-  reddit_app <- httr::oauth_app(app_name, key = app_key, secret = app_secret)
+  reddit_app <- httr::oauth_app(appName, key = appKey, secret = appSecret)
   
   reddit_token <- httr::oauth2.0_token(reddit_endpoint, reddit_app,
                                        user_params = list(duration = "permanent"),
                                        scope = c("read"),
                                        use_basic_auth = TRUE,
                                        config_init = user_agent("httr oauth"),
-                                       cache = use_token_cache)
+                                       cache = useTokenCache)
 
   return(reddit_token)
 }

@@ -8,8 +8,6 @@
 #' @param cleanText logical. If non-alphanumeric, non-punctuation, and non-space characters should be removed from the 
 #' included text attribute data. Default is TRUE
 #' @param writeToFile logical. If the igraph network graph should be written to file.
-#' 
-#' @return an igraph object of the actor network
 #'
 #' @note Can create three types of network graphs:
 #' * Directed graph with subreddit, thread_ids and comment ids as edge attributes - default option
@@ -18,6 +16,8 @@
 #' 
 #' Comment ids as edge attributes in graphs refer to the Collect dataframe comment id not reddits comment id 
 #' If "Forbidden control character 0x19 found in igraph_i_xml_escape, Invalid value" then set cleanText = TRUE
+#' 
+#' @return an igraph object of the actor network
 #' 
 CreateActorNetwork.reddit <- function(x, weightEdges, includeTextData, cleanText, writeToFile) {
   

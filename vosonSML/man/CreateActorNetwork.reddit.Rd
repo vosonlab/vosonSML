@@ -4,16 +4,18 @@
 \alias{CreateActorNetwork.reddit}
 \title{Creates a reddit actor network from collected threads}
 \usage{
-\method{CreateActorNetwork}{reddit}(x, includeTextData, cleanText,
-  writeToFile)
+\method{CreateActorNetwork}{reddit}(x, weightEdges, includeTextData,
+  cleanText, writeToFile)
 }
 \arguments{
 \item{x}{a dataframe as vosonSML class object containing collected social network data}
 
-\item{includeTextData}{logical. If the igraph network edges should include the text attribute.}
+\item{weightEdges}{logical. Combines and weights directed edges. Can't be used with includeTextData.}
+
+\item{includeTextData}{logical. If the igraph network edges should include the comment text as attribute.}
 
 \item{cleanText}{logical. If non-alphanumeric, non-punctuation, and non-space characters should be removed from the 
-included text attribute data.}
+included text attribute data. Default is TRUE}
 
 \item{writeToFile}{logical. If the igraph network graph should be written to file.}
 }
@@ -21,5 +23,14 @@ included text attribute data.}
 an igraph object of the actor network
 }
 \description{
-Uses RedditExtractoR::user_network to create an igraph actor network with posts as edge attribute.
+Uses RedditExtractoR::user_network to create an igraph directed actor network with comment ids as edge attribute.
+}
+\note{
+Can create three types of network graphs:
+* Directed graph with subreddit, thread_ids and comment ids as edge attributes - default option
+* Directed graph with weighted edges (without comment ids) - weightEdges = TRUE
+* Directed graph with comment text included as edge attribute - includeTextData = TRUE
+
+Comment ids as edge attributes in graphs refer to the Collect dataframe comment id not reddits comment id 
+If "Forbidden control character 0x19 found in igraph_i_xml_escape, Invalid value" then set cleanText = TRUE
 }

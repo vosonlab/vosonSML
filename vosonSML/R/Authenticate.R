@@ -27,7 +27,7 @@
 #' \code{youtube}: apiKey
 #' \code{twitter}: apiKey, apiSecret, accessToken, accessTokenSecret
 #' \code{instagram}: appID, appSecret
-#' \code{reddit}: app_name, app_key, app_secret, use_token_cache
+#' \code{reddit}: appName, appKey, appSecret, useTokenCache
 #'
 #' @return credential object with authentication information
 #'
@@ -156,7 +156,7 @@ instagramAuthenticator <- function(appID, appSecret) {
   return(AuthenticateWithInstagramAPI(appID, appSecret))
 }
 
-redditAuthenticator <- function(app_name, app_key, app_secret, ua, use_token_cache) {
-  # return(authenticateWithRedditAPI(app_name, app_key, app_secret, use_token_cache))
+redditAuthenticator <- function(appName, appKey, appSecret, useTokenCache) {
+  # return(AuthenticateWithRedditAPI(appName, appKey, appSecret, useTokenCache))
   return(NULL)
 }

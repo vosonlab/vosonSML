@@ -19,7 +19,7 @@
 #' \code{twitter}: searchTerm, numTweets, verbose, writeToFile, language
 #' \code{instagram}: credential, tag, n, lat, lng, distance, folder, mindate, maxdate, verbose, sleep, writeToFile,
 #' waitForRateLimit
-#' \code{reddit}: thread_urls, wait_time, write_to_file
+#' \code{reddit}: threadUrls, waitTime, writeToFile
 #' 
 #' \code{instagram} with \code{ego} = TRUE: username, userid, verbose,
 #' degreeEgoNet, waitForRateLimit, getFollows
@@ -52,6 +52,7 @@
 #' Authenticate("youtube",
 #' apiKey = my_apiKeyYoutube) %>% Collect(videoIDs = videoIDs) %>% Create('actor')
 #' }
+#' 
 #' @export
 Collect <- function(credential, ego = FALSE, ...) {
     if (ego) {
@@ -96,6 +97,6 @@ instagramEgo <- function(credential, username, userid, verbose, degreeEgoNet, wa
     return(CollectEgoInstagram(username, userid, verbose, degreeEgoNet, waitForRateLimit, getFollows, credential))
 }
 
-redditCollector <- function(credential, thread_urls, wait_time, write_to_file) {
-  return(collectDataReddit(thread_urls, wait_time, write_to_file))
+redditCollector <- function(credential, threadUrls, waitTime, writeToFile) {
+  return(CollectDataReddit(threadUrls, waitTime, writeToFile))
 }
