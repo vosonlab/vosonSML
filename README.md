@@ -2,7 +2,7 @@
 
 ## What does this package do?
 
-`vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms (Instagram, Facebook, Twitter, and YouTube) and generating different types of networks for analysis.
+`vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms (Twitter, YouTube, Reddit, Instagram and Facebook) and generating different types of networks for analysis.
 
 `vosonSML` is the `SocialMediaLab` package, renamed. We decided that `SocialMediaLab` was a bit too generic and also we wanted to indicate the connection to the [Virtual Observatory for the Study of Online Networks Lab](http://vosonlab.net), where this package was conceived and created.
 
@@ -18,7 +18,7 @@ If you are having trouble getting data from Facebook it is probably due to a num
 
 #### Twitter
 
-If you are getting the error `Error in check_twitter_oauth( )`, please find a [solution here](https://github.com/geoffjentry/twitteR/issues/90).
+If you are getting the error `Error in check_twitter_oauth()`, please find a [solution here](https://github.com/geoffjentry/twitteR/issues/90).
 
 #### Instagram
 
@@ -26,7 +26,7 @@ Instagram API access is severely limited if you do not have an authorised app, w
 
 ### Special thanks
 
-This package would not be possible without key packages by other authors in the R community, particularly: [igraph](https://github.com/igraph/rigraph), [Rfacebook](https://github.com/pablobarbera/Rfacebook), [instaR](https://github.com/pablobarbera/instaR), [twitteR](https://github.com/geoffjentry/twitteR), [data.table](https://github.com/Rdatatable/data.table), [tm](https://cran.r-project.org/web/packages/tm/index.html), and [httr](https://github.com/hadley/httr).
+This package would not be possible without key packages by other authors in the R community, particularly: [igraph](https://github.com/igraph/rigraph), [twitteR](https://github.com/geoffjentry/twitteR), [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [instaR](https://github.com/pablobarbera/instaR), [Rfacebook](https://github.com/pablobarbera/Rfacebook), [data.table](https://github.com/Rdatatable/data.table), [tm](https://cran.r-project.org/web/packages/tm/index.html), and [httr](https://github.com/hadley/httr).
 
 ## Getting started
 
@@ -36,23 +36,37 @@ The [vosonSML page on the VOSON website](http://vosonlab.net/vosonSML) also has 
 
 ## Using Magrittr's pipe interface
 
-The process of authentication, data collection and creating social network can be expressed with the 3 verb functions: *Authenticate*, *Collect* and *Create*. The following are some of the examples from the package documentation expressed with the pipe interface.
+The process of authentication, data collection and creating social network is now expressed with the 3 verb functions: *Authenticate*, *Collect* and *Create*. The following are some of the examples from the package documentation using the pipe interface.
 
-```{r}
-require(magrittr)
+```R
+library(magrittr)
+library(vosonSML)
+
 # Authenticate with youtube, Collect data from youtube and Create an actor network
-Authenticate("youtube", apiKey= apiKey) %>% Collect(videoIDs = videoIDs) %>% Create("Actor")
+actorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>% 
+                Collect(videoIDs = myYoutubeVideoIds) %>% Create("actor")
 
-# Authenticate with facebook, archive the API credential, Collect data about Starwars Page and Create a bimodal network
-# You can use facebook, FaCebooK or Facebook in the datasource field
-Authenticate("Facebook", appID = appID, appSecret = appSecret) %>% SaveCredential("FBCredential.RDS") %>% Collect(pageName="StarWars", rangeFrom="2015-05-01",rangeTo="2015-06-03") %>% Create("Bimodal")
+# Authenticate with twitter, Collect 150 tweets for the "#auspol" hashtag and Create a semantic network
+semanticNetwork <- Authenticate("twitter", apiKey = myTwitAPIKey, apiSecret = myTwitAPISecret, 
+                                accessToken = myTwitAccessToken, 
+                                accessTokenSecret = myTwitAccessTokenSecret) %>% 
+                   Collect(searchTerm = "#auspol", numTweets = 150) %>% Create("semantic")
 
-# Authenticate with Twitter, Collect data about #auspol and Create a semantic network
-Authenticate("twitter", apiKey=myapikey, apiSecret=myapisecret,accessToken=myaccesstoken, accessTokenSecret=myaccesstokensecret) %>% Collect(searchTerm="#auspol", numTweets=150) %>% Create("Semantic")
+# Collect reddit threads and Create an actor network with comment text as edge attribute
+actorCommentsNetwork <- Authenticate("reddit") %>% 
+                        Collect(thread_urls = myThreadUrls, wait_time = 5) %>% 
+                        Create("actor", includeTextData = TRUE)
+ 
+# Authenticate with facebook, archive the API credential, Collect data about the "Starwars" Page and 
+# Create a bimodal network
+bimodalNetwork <- Authenticate("facebook", appID = myFacebookAppId, appSecret = myFacebookAppSecret) %>% 
+                  SaveCredential("FBCredential.RDS") %>% 
+                  Collect(pageName = "StarWars", rangeFrom = "2015-05-01", rangeTo = "2015-06-03") %>% 
+                  Create("bimodal")
 
-# Create Instagram Ego Network
-myUsernames <- 
-Authenticate("instagram", appID = myAppId, appSecret = myAppSecret) %>% Collect(ego = TRUE, username = c("adam_kinzinger","senatorreid")) %>% Create
+# Create an instagram ego network for provided users
+egoNetwork <- Authenticate("instagram", appID = myInstaAppId, appSecret = myInstaAppSecret) %>% 
+              Collect(ego = TRUE, username = c("adam_kinzinger", "senatorreid")) %>% Create()
 ```
 
 ## Example networks
