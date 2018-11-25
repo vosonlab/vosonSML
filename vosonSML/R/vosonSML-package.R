@@ -40,6 +40,6 @@
 #' @importFrom utils "flush.console" head "install.packages" "read.table" "write.csv" "read.csv"
 #' @importFrom RedditExtractoR reddit_content user_network
 #' @importFrom magrittr '%>%'
-#' @importFrom dplyr rename group_by summarise ungroup
+#' @importFrom dplyr rename group_by summarise ungroup left_join select mutate filter coalesce row_number
 #' @importFrom rlang '.data'
 NULL

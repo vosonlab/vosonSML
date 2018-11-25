@@ -32,6 +32,10 @@ collectDataReddit <- function(thread_urls, wait_time = 5, write_to_file) {
   # make the get request for the reddit thread url
   threads_df <- RedditExtractoR::reddit_content(thread_urls, wait_time)
   
+  # add thread id to df, extracted from url
+  threads_df$thread_id <- gsub("^(.*)?/comments/([0-9A-Za-z]{6})?/.*?(/)?$", "\\2", 
+                               threads_df$URL, ignore.case = TRUE, perl = TRUE)
+  
   if (isTrueValue(write_to_file)) {
     writeOutputFile(threads_df, "csv", "RedditData")
   }
