@@ -54,7 +54,7 @@ semanticNetwork <- Authenticate("twitter", apiKey = myTwitAPIKey, apiSecret = my
 
 # Collect reddit threads and Create an actor network with comment text as edge attribute
 actorCommentsNetwork <- Authenticate("reddit") %>% 
-                        Collect(thread_urls = myThreadUrls, wait_time = 5) %>% 
+                        Collect(threadUrls = myThreadUrls, waitTime = 5) %>% 
                         Create("actor", includeTextData = TRUE)
  
 # Authenticate with facebook, archive the API credential, Collect data about the "Starwars" Page and 
