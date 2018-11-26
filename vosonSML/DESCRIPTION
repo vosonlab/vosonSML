@@ -1,12 +1,18 @@
 Package: vosonSML
-Version: 0.23.5
-Date: 2018-11-01
+Version: 0.24.0
 Title: Tools for Collecting Social Media Data and Generating Networks for Analysis
-Description: A suite of tools for collecting and constructing networks from social media data. Provides easy-to-use functions for collecting data across popular platforms (Instagram, Facebook, Twitter, and YouTube) and generating different types of networks for analysis.
+Description: A suite of tools for collecting and constructing networks from social media data.
+    Provides easy-to-use functions for collecting data across popular platforms (Instagram,
+    Facebook, Twitter, YouTube and Reddit) and generating different types of networks for analysis.
 Type: Package
-Imports: tm, stringr, twitteR, RCurl, bitops, rjson, plyr, igraph, Rfacebook (>= 0.6.15), Hmisc, data.table, httpuv, instaR, methods, httr
-Suggests: magrittr, testthat
-Author: Timothy Graham & Robert Ackland with contributions from Bryan Gertzel & Chung-hong Chan
+Imports: tm, stringr, twitteR, RCurl, bitops, rjson, plyr, igraph (>= 1.2.2), Rfacebook (>= 0.6.15), 
+    Hmisc, data.table, httpuv, instaR, methods, httr, RedditExtractoR (>= 2.1.2), magrittr, 
+    dplyr (>= 0.7.8), rlang (>= 0.3.0.1)
+Depends: R (>= 3.2.0)
+Suggests: testthat
+Encoding: UTF-8
+Author: Timothy Graham, Robert Ackland, Chung-hong Chan, Bryan Gertzel
 Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
 License: GPL (>= 2)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
+NeedsCompilation: no

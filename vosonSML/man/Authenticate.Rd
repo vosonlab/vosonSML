@@ -8,13 +8,14 @@ Authenticate(socialmedia, ...)
 }
 \arguments{
 \item{socialmedia}{character string, social media API to authenticate,
-currently supports "facebook", "youtube", "twitter" and "instagram"}
+currently supports "facebook", "youtube", "twitter", "instagram" and "reddit"}
 
 \item{...}{additional parameters for authentication
 \code{facebook}: appID, appSecret
 \code{youtube}: apiKey
 \code{twitter}: apiKey, apiSecret, accessToken, accessTokenSecret
-\code{instagram}: appID, appSecret}
+\code{instagram}: appID, appSecret
+\code{reddit}: appName, appKey, appSecret, useTokenCache}
 }
 \value{
 credential object with authentication information

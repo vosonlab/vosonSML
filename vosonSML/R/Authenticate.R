@@ -21,20 +21,21 @@
 #' \code{Collect}, \code{Create} workflow.
 #'
 #' @param socialmedia character string, social media API to authenticate,
-#' currently supports "facebook", "youtube", "twitter" and "instagram"
+#' currently supports "facebook", "youtube", "twitter", "instagram" and "reddit"
 #' @param ... additional parameters for authentication
 #' \code{facebook}: appID, appSecret
 #' \code{youtube}: apiKey
 #' \code{twitter}: apiKey, apiSecret, accessToken, accessTokenSecret
 #' \code{instagram}: appID, appSecret
-#' 
+#' \code{reddit}: appName, appKey, appSecret, useTokenCache
+#'
 #' @return credential object with authentication information
-#' 
+#'
 #' @note Currently, \code{Authenticate} with socialmedia = "twitter" generates
 #' oauth information to be used in the current active session only (i.e.
 #' "side-effect") and no authentication-related information will be stored in
 #' the returned \code{credential} object.
-#' 
+#'
 #' @author Chung-hong Chan <chainsawtiney@@gmail.com>
 #' @seealso \code{\link{AuthenticateWithFacebookAPI}},
 #' \code{\link{AuthenticateWithInstagramAPI}},
@@ -64,17 +65,18 @@
 #' }
 #' @export
 Authenticate <- function(socialmedia, ...) {
-    authenticator <- switch(tolower(socialmedia),
-                            facebook = facebookAuthenticator,
-                            youtube = youtubeAuthenticator,
-                            twitter = twitterAuthenticator,
-                            instagram = instagramAuthenticator,
-                            stop("Unknown socialmedia")
-                            )
-    auth <- authenticator(...)
-    credential <- list(socialmedia = tolower(socialmedia), auth = auth)
-    class(credential) <- append(class(credential), "credential")
-    return(credential)
+  authenticator <- switch(tolower(socialmedia),
+                          facebook = facebookAuthenticator,
+                          youtube = youtubeAuthenticator,
+                          twitter = twitterAuthenticator,
+                          instagram = instagramAuthenticator,
+                          reddit = redditAuthenticator,
+                          stop("Unknown socialmedia")
+                          )
+  auth <- authenticator(...)
+  credential <- list(socialmedia = tolower(socialmedia), auth = auth)
+  class(credential) <- append(class(credential), "credential")
+  return(credential)
 }
 
 ### For the side effect of saving the credential into a file.
@@ -114,19 +116,19 @@ Authenticate <- function(socialmedia, ...) {
 #' }
 #' @export
 SaveCredential <- function(credential, filename = "credential.RDS") {
-    if (credential$socialmedia == "twitter") {
-        warning("Credential created for Twitter will not be saved.")
-    } else {
-        saveRDS(credential, filename)
-    }
-    return(credential)
+  if (credential$socialmedia == "twitter") {
+    warning("Credential created for Twitter will not be saved.")
+  } else {
+    saveRDS(credential, filename)
+  }
+  return(credential)
 }
 
 #' @rdname SaveCredential
 #' @export
 LoadCredential <- function(filename = "credential.RDS") {
-    credential <- readRDS(filename)
-    return(credential)
+  credential <- readRDS(filename)
+  return(credential)
 }
 
 ### *Authenticator functions should not be exported. It is just a bunch of helper functions to bridge the AuthenticateWith* functions with Authenticate(), but with datasource as the first argument and always return an auth object
@@ -134,7 +136,7 @@ LoadCredential <- function(filename = "credential.RDS") {
 ### As a convention, function starts with lower case shouldn't be exported.
 
 youtubeAuthenticator <- function(apiKey) {
-    return(authenticateWithYoutubeAPI(apiKey))
+  return(authenticateWithYoutubeAPI(apiKey))
 }
 
 ### Currently, this Authenticator will return nothing, only for its side effect
@@ -142,14 +144,19 @@ youtubeAuthenticator <- function(apiKey) {
 ### i.e. cannot use SaveCredential and LoadCredential!
 
 twitterAuthenticator <- function(apiKey, apiSecret, accessToken, accessTokenSecret, createToken) {
-    AuthenticateWithTwitterAPI(api_key = apiKey, api_secret = apiSecret, access_token = accessToken, access_token_secret = accessTokenSecret, createToken = createToken) # ah, only for its side effect, really bad design decision, twitteR!
-    return(NULL)
+  AuthenticateWithTwitterAPI(api_key = apiKey, api_secret = apiSecret, access_token = accessToken, access_token_secret = accessTokenSecret, createToken = createToken) # ah, only for its side effect, really bad design decision, twitteR!
+  return(NULL)
 }
 
 facebookAuthenticator <- function(appID, appSecret, extendedPermissions = FALSE) {
-    return(AuthenticateWithFacebookAPI(appID, appSecret, extended_permissions = extendedPermissions, useCachedToken = FALSE))
+  return(AuthenticateWithFacebookAPI(appID, appSecret, extended_permissions = extendedPermissions, useCachedToken = FALSE))
 }
 
 instagramAuthenticator <- function(appID, appSecret) {
-    return(AuthenticateWithInstagramAPI(appID, appSecret))
+  return(AuthenticateWithInstagramAPI(appID, appSecret))
+}
+
+redditAuthenticator <- function(appName, appKey, appSecret, useTokenCache) {
+  # return(AuthenticateWithRedditAPI(appName, appKey, appSecret, useTokenCache))
+  return(NULL)
 }

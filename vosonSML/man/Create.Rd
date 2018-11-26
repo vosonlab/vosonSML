@@ -4,57 +4,51 @@
 \alias{Create}
 \title{Create networks from social media data}
 \usage{
-Create(dataSource, type = "Actor", ...)
+Create(dataSource, type = "actor", ...)
 }
 \arguments{
 \item{dataSource}{a data frame of class \code{dataSource}}
 
-\item{type}{character, type of network to be created, currently supports
-"actor", "bimodal", "dynamic", "semantic" and "ego"}
+\item{type}{character, type of network to be created, currently supports "actor", "bimodal", "dynamic", "semantic" 
+and "ego"}
 
-\item{...}{additional parameters for Create*Network functions}
+\item{...}{additional parameters for create*Network functions}
 }
 \value{
-An igraph graph object
+an igraph graph object
 }
 \description{
-This function creates networks from social media data (i.e. from data frames
-of class \code{dataSource}. \code{Create} is the final step of the
-\code{Authenticate}, \code{Collect}, \code{Create} workflow. This function is
-a convenient UI wrapper to the core Create*Network family of functions.
+This function creates networks from social media data (i.e. from data frames of class \code{dataSource}. 
+\code{Create} is the final step of the \code{Authenticate}, \code{Collect}, \code{Create} workflow. This function is
+a convenient UI wrapper to the core create*Network family of functions.
 }
 \details{
-Note: when creating Twitter networks, the user information
-can be collected separately using the \code{\link{PopulateUserInfo}} function
-and stored into the network as vertex attributes (this involves additional
+Note: when creating Twitter networks, the user information can be collected separately using the 
+\code{\link{PopulateUserInfo}} function and stored into the network as vertex attributes (this involves additional
 calls to the Twitter API).
 }
 \examples{
-
 \dontrun{
 require(magrittr)
-## Instagram ego network example
-myAppID <- "123456789098765"
-myAppSecret <- "abc123abc123abc123abc123abc123ab"
-myUsernames <- c("senjohnmccain","obama")
 
-Authenticate("instagram",
-appID = myAappId,
-appSecret = myAppSecret) \%>\% Collect(ego = TRUE,
-username = myUsernames) \%>\% Create
+## instagram ego network example
 
-## YouTube actor network example
-my_apiKeyYoutube <- "314159265358979qwerty"
-videoIDs <- c("W2GZFeYGU3s","mL27TAJGlWc")
+my_app_id     <- "123456789098765"
+my_app_secret <- "abc123abc123abc123abc123abc123ab"
+my_usernames  <- c("senjohnmccain", "obama")
 
-Authenticate("youtube",
-apiKey = my_apiKeyYoutube) \%>\% Collect(videoIDs = videoIDs) \%>\% Create('actor')
+my_ego_network <- Authenticate("instagram", appID = my_app_id, appSecret = my_app_secret) \%>\% 
+  Collect(ego = TRUE, username = my_usernames) \%>\% Create
+
+## youtube actor network example
+
+my_api_key   <- "314159265358979qwerty"
+my_video_ids <- c("W2GZFeYGU3s","mL27TAJGlWc")
+
+my_actor_network <- Authenticate("youtube", apiKey = my_api_key) \%>\% 
+  Collect(videoIDs = my_video_ids) \%>\% Create('actor')
+
 }
-}
-\seealso{
-\code{\link{CreateActorNetwork}},
-\code{\link{CreateBimodalNetwork}}, \code{\link{CreateDynamicNetwork}},
-\code{\link{CreateSemanticNetwork}}, \code{\link{CreateEgoNetworkFromData}}
 }
 \author{
 Chung-hong Chan <chainsawtiney@gmail.com>

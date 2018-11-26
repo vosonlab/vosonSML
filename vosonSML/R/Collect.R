@@ -17,18 +17,20 @@
 #' \code{facebook}: pageName, rangeFrom, rangeTo, verbose, n, writeToFile, dynamic
 #' \code{youtube}: videoIDs, verbose, writeToFile, maxComments
 #' \code{twitter}: searchTerm, numTweets, verbose, writeToFile, language
-#' \code{instagram}: credential, tag, n, lat, lng, distance, folder, mindate, maxdate, verbose, sleep, writeToFile, 
+#' \code{instagram}: credential, tag, n, lat, lng, distance, folder, mindate, maxdate, verbose, sleep, writeToFile,
 #' waitForRateLimit
-#'
+#' \code{reddit}: threadUrls, waitTime, writeToFile
+#' 
 #' \code{instagram} with \code{ego} = TRUE: username, userid, verbose,
 #' degreeEgoNet, waitForRateLimit, getFollows
 #' @return A data.frame object of class \code{dataSource.*} that can be used
 #' with \code{Create}.
 #' @author Chung-hong Chan <chainsawtiney@@gmail.com>
-#' @seealso \code{CollectDataFromFacebook},
-#' \code{CollectDataFromInstagram},
-#' \code{CollectDatFromTwitter},
-#' \code{CollectEgoInstagram}
+#' @seealso \code{CollectDataFacebook},
+#' \code{CollectDataInstagram},
+#' \code{CollectDataTwitter},
+#' \code{CollectEgoInstagram},
+#' \code{CollectDataReddit},
 #' @examples
 #'
 #' \dontrun{
@@ -50,6 +52,7 @@
 #' Authenticate("youtube",
 #' apiKey = my_apiKeyYoutube) %>% Collect(videoIDs = videoIDs) %>% Create('actor')
 #' }
+#' 
 #' @export
 Collect <- function(credential, ego = FALSE, ...) {
     if (ego) {
@@ -63,6 +66,7 @@ Collect <- function(credential, ego = FALSE, ...) {
                             youtube = youtubeCollector,
                             twitter = twitterCollector,
                             instagram = instagramCollector,
+                            reddit = redditCollector,
                             stop("Unsupported socialmedia")
                             )
     }
@@ -91,4 +95,8 @@ instagramCollector <- function(credential, tag, n, lat, lng, distance, folder, m
 
 instagramEgo <- function(credential, username, userid, verbose, degreeEgoNet, waitForRateLimit, getFollows) {
     return(CollectEgoInstagram(username, userid, verbose, degreeEgoNet, waitForRateLimit, getFollows, credential))
+}
+
+redditCollector <- function(credential, threadUrls, waitTime, writeToFile) {
+  return(CollectDataReddit(threadUrls, waitTime, writeToFile))
 }
