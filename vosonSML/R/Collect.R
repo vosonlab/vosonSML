@@ -77,7 +77,7 @@ Collect <- function(credential, ego = FALSE, ...) {
 
 youtubeCollector <-
     function(credential, videoIDs, verbose, writeToFile, maxComments) {
-        return(collectDataYoutube(videoIDs, apiKeyYoutube = credential$auth, verbose, writeToFile, maxComments))
+        return(CollectDataYoutube(videoIDs, apiKeyYoutube = credential$auth, verbose, writeToFile, maxComments))
 }
 
 facebookCollector <-

@@ -79,64 +79,12 @@ Authenticate <- function(socialmedia, ...) {
   return(credential)
 }
 
-### For the side effect of saving the credential into a file.
-### Useful to cache the Credential to a file and then re-use it in the future session.
-### i.e. Authenticate %>% SaveCredential %>% Collect
-### and then, LoadCredential %>% Collect
-
-#' Save and load credential information
-#'
-#' Functions to save and load credential information. Currently, credential
-#' information will be stored as a RDS file. \code{SaveCredential} will return
-#' the input \code{credential}, useful for working as a filter between the
-#' \code{Authenticate} and \code{Collect}.
-#'
-#' @aliases LoadCredential SaveCredential
-#' @param credential \code{credential} object
-#' @param filename character, filename to be saved to or restored from
-#' @return \code{credential} object
-#' @note \code{credential} created from \code{Authenticate} with socialmedia =
-#' 'twitter' will not be saved by SaveCredential
-#' @examples
-#'
-#' \dontrun{
-#' require(magrittr)
-#' myAppID <- "123456789098765"
-#' myAppSecret <- "abc123abc123abc123abc123abc123ab"
-#' myUsernames <- c("senjohnmccain","obama")
-#'
-#' Authenticate("instagram",
-#' appID = myAppId,
-#' appSecret = myAppSecret) %>% SaveCredential("instagramCred.RDS") %>% Collect(ego = TRUE,
-#' username = myUsernames) %>% Create
-#'
-#' ## Load the previously saved credential information
-#' LoadCredential("instagramCred.RDS") %>% Collect(tag="obama",
-#' distance=5000, n=100) %>% Create("bimodal")
-#' }
-#' @export
-SaveCredential <- function(credential, filename = "credential.RDS") {
-  if (credential$socialmedia == "twitter") {
-    warning("Credential created for Twitter will not be saved.")
-  } else {
-    saveRDS(credential, filename)
-  }
-  return(credential)
-}
-
-#' @rdname SaveCredential
-#' @export
-LoadCredential <- function(filename = "credential.RDS") {
-  credential <- readRDS(filename)
-  return(credential)
-}
-
 ### *Authenticator functions should not be exported. It is just a bunch of helper functions to bridge the AuthenticateWith* functions with Authenticate(), but with datasource as the first argument and always return an auth object
 
 ### As a convention, function starts with lower case shouldn't be exported.
 
 youtubeAuthenticator <- function(apiKey) {
-  return(authenticateWithYoutubeAPI(apiKey))
+  return(AuthenticateWithYoutubeAPI(apiKey))
 }
 
 ### Currently, this Authenticator will return nothing, only for its side effect

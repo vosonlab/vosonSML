@@ -46,7 +46,7 @@
 #' @seealso Authenticate must be run first or no data will be collected.
 #'
 #' @noRd
-collectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeToFile = FALSE, maxComments) {
+CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeToFile = FALSE, maxComments) {
   
   if (missing(verbose)) {
     verbose <- FALSE # default to not verbose
@@ -244,7 +244,7 @@ collectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeTo
   usernamesCleaned <- escapeRegex(usernamesCleaned)
   
   # NEW WAY (OPTIMISED - better, faster, stronger...)
-  dataCombined$ReplyToAnotherUser <- searchCommentsForMentions(commentsTextCleaned, usernamesCleaned)
+  dataCombined$ReplyToAnotherUser <- SearchCommentsForMentions(commentsTextCleaned, usernamesCleaned)
   
   ## Map the comment replies within PARENT COMMENT THREADS into dataframe
   

@@ -28,8 +28,7 @@ systemTimeFilename <- function(name_suffix, name_ext, current_time = NULL, clean
 
 # write data to file as type
 writeOutputFile <- function(data, type, name, msg = TRUE) {
-  # package <- environmentName(environment(writeOutputFile))
-  
+
   if (missing(type)) {
     type <- "rds"
   }
@@ -69,4 +68,19 @@ writeOutputFile <- function(data, type, name, msg = TRUE) {
     message(e)
     return(NULL)
   })
+}
+
+# installs and loads a package if necessary
+EnsurePackage <- function(x) {
+  x <- as.character(x)
+  if (!require(x, character.only = TRUE)) {
+    install.packages(pkgs = x, repos = "http://cran.r-project.org")
+    require(x, character.only = TRUE)
+  }
+}
+
+quiet <-function(x) {
+  sink(tempfile())
+  on.exit(sink())
+  invisible(force(x))
 }

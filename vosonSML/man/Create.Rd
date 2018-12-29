@@ -24,8 +24,8 @@ a convenient UI wrapper to the core create*Network family of functions.
 }
 \details{
 Note: when creating Twitter networks, the user information can be collected separately using the 
-\code{\link{PopulateUserInfo}} function and stored into the network as vertex attributes (this involves additional
-calls to the Twitter API).
+\code{\link{PopulateUserInfoTwitter}} function and stored into the network as vertex attributes (this involves 
+additional calls to the Twitter API).
 }
 \examples{
 \dontrun{
