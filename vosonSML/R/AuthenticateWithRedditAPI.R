@@ -12,14 +12,14 @@
 #' @param appName character string containing the reddit app name associated with the API key.
 #' @param appKey  character string containing the app key.
 #' @param appSecret  character string containing the app secret.
-#' @param useTokenCache logical. Use cached authentication token if found.
+#' @param useCachedToken logical. Use cached authentication token if found.
 #' 
 #' @return a reddit authentication token
 #'
-AuthenticateWithRedditAPI <- function(appName, appKey, appSecret, useTokenCache) {
+AuthenticateWithRedditAPI <- function(appName, appKey, appSecret, useCachedToken) {
 
   if (missing(appName)) {
-    appName <- "reddit"
+    appName <- "vosonSML-reddit"
   }
   
   if (missing(appKey) | missing(appSecret)) {
@@ -27,8 +27,8 @@ AuthenticateWithRedditAPI <- function(appName, appKey, appSecret, useTokenCache)
     return()
   }
 
-  if (missing(useTokenCache)) {
-    useTokenCache <- FALSE
+  if (missing(useCachedToken)) {
+    useCachedToken <- FALSE
   }
   
   # sets up oauth2 for reddit
@@ -44,7 +44,7 @@ AuthenticateWithRedditAPI <- function(appName, appKey, appSecret, useTokenCache)
                                        scope = c("read"),
                                        use_basic_auth = TRUE,
                                        config_init = user_agent("httr oauth"),
-                                       cache = useTokenCache)
+                                       cache = useCachedToken)
 
   return(reddit_token)
 }

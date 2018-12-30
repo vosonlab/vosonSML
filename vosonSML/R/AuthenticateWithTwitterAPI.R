@@ -1,89 +1,62 @@
-#' Note: this function is DEPRECATED and will be removed in a future release.
-#' Please use the \code{Authenticate} function
+#' Note: this function is DEPRECATED. Please use the \code{\link{Authenticate}} function.
 #'
-#' Twitter API Authentication
+#' Twitter API authentication
 #'
-#' Oauth based authentication with the Twitter API
+#' Oauth based authentication using the Twitter API.
 #'
-#' In order to collect data from Twitter, the user must first authenticate with
-#' Twitter's Application Programming Interface (API).
+#' In order to collect data from Twitter, the user must first authenticate with Twitter's API. This requires setting up 
+#' an app on Twitter. A useful guide to creating an app can be found in the rtweet documentation: 
+#' https://rtweet.info/articles/auth.html#creating-a-twitter-app
 #'
-#' This requires setting up an App on Twitter. An excellent guide to achieving
-#' this can be found at:
-#' http://thinktostart.com/twitter-authentification-with-r/
-#'
-#' @param api_key character string specifying the 'API key' used for
-#' authentication.
-#' @param api_secret character string specifying the 'API secret' used for
-#' authentication.
-#' @param access_token character string specifying the 'access token' used for
-#' authentication.
-#' @param access_token_secret character string specifying the 'access token
-#' secret' used for authentication.
-#' @param createToken logical. !! NOT PROPERLY IMPLEMENTED YET.
-#' @return This is called for its side effect.
-#' @author Timothy Graham <timothy.graham@@anu.edu.au> & Robert Ackland
-#' <robert.ackland@@anu.edu.au>
-#' @seealso \code{AuthenticateWithFacebookAPI} and
-#' \code{AuthenticateWithYouTubeAPI} for other ways to collect social media
-#' data.
-#' @keywords twitter social media SNA
-#' @examples
-#'
-#' \dontrun{
-#'   # Firstly specify your API credentials
-#'   my_api_key <- "1234567890qwerty"
-#'   my_api_secret <- "1234567890qwerty"
-#'   my_access_token <- "1234567890qwerty"
-#'   my_access_token_secret <- "1234567890qwerty"
-#'
-#'   AuthenticateWithTwitterAPI(api_key=my_api_key, api_secret=my_api_secret,
-#'     access_token=my_access_token, access_token_secret=my_access_token_secret)
-#' }
-#' @export
-AuthenticateWithTwitterAPI <-
-function(api_key, api_secret, access_token, access_token_secret, createToken) {
+#' @param appName Character string. Specifies the twitter registered app name associated with API keys.
+#' @param apiKey Character string. Specifies the app 'API key' used for authentication.
+#' @param apiSecret Character string. Specifies the app 'API secret'.
+#' @param accessToken Character string. Specifies the app 'access token'.
+#' @param accessTokenSecret Character string. Specifies the app 'access token secret'.
+#' @param useCachedToken Logical. If \code{TRUE} uses cached API token if found otherwise creates one.
+#' 
+#' @return twitter_oauth. Returns a twitter oauth token object.
+#' 
+#' @seealso \code{\link{Authenticate}}
+#' @keywords authenticate twitter
+#' 
+AuthenticateWithTwitterAPI <- function(appName, apiKey, apiSecret, accessToken, accessTokenSecret,
+                                        useCachedToken) {
 
-  # EnsurePackage("tm") # we only load packages as required (i.e. if user authenticate with twitter, then we load packages for twitter data collection/analysis)
-  # EnsurePackage("stringr")
-  # EnsurePackage("twitteR")
-  # EnsurePackage("RCurl")
-  # EnsurePackage("bitops")
-  # EnsurePackage("rjson")
-  # EnsurePackage("plyr")
-  # EnsurePackage("igraph")
-
-  if (missing(api_key) | missing(api_secret) | missing(access_token) | missing(access_token_secret)) {
+  if (missing(apiKey) | missing(apiSecret) | missing(accessToken) | missing(accessTokenSecret)) {
     cat("Error. One or more API credentials arguments are missing.\nPlease specify these. \n")
-    return()
+    return(NULL)
   }
-
-  # We avoid the popup prompt about cached authentication,
-  # and instead include a `createToken` argument in the function,
-  # and directly set the options parameter for the "httr" package.
-  # (And default to no token if the argument is missing)
-
-  origOptions <- options("httr_oauth_cache") # original options setting
-
-  if (missing(createToken)) {
-    createToken <- FALSE # default to no token
+  
+  if (missing(appName)) {
+    appName <- "vosonSML-twitter"
   }
-
-  if (createToken=="TRUE" | createToken=="true" | createToken=="T" | createToken==TRUE) {
-    createToken <- TRUE # handling user input
+  
+  twitter_oauth <- NULL
+  token_file_name <- ".twitter_oauth_token"
+  
+  if (useCachedToken) {
+    if (file.exists(token_file_name)) {
+      cat("\nCached twitter token was found (using cached token).\n")
+      twitter_oauth <- LoadCredential(token_file_name)
+      # todo: check loaded token is valid before returning
+      return(twitter_oauth)
+    } else {
+      cat("\nOAuth token not found. A token will be created and saved to working directory.\n")
+    }
   }
-
-  if (createToken) {
-    options(httr_oauth_cache=T)
+  
+  twitter_oauth <- rtweet::create_token(
+    app = appName,
+    consumer_key = apiKey,
+    consumer_secret = apiSecret,
+    access_token = accessToken,
+    access_secret = accessTokenSecret,
+    set_renv = FALSE)
+  
+  if (useCachedToken) {
+    SaveCredential(twitter_oauth, filename = token_file_name)
   }
-  else {
-    options(httr_oauth_cache=F)
-  }
-
-  setup_twitter_oauth(api_key,api_secret,access_token,access_token_secret)
-
-  options(httr_oauth_cache=origOptions) # reset options back to the original setting
-
-  return()
-
+  
+  return(twitter_oauth)
 }

@@ -7,49 +7,72 @@
 Create(dataSource, type = "actor", ...)
 }
 \arguments{
-\item{dataSource}{a data frame of class \code{dataSource}}
+\item{dataSource}{A data frame of class \code{dataSource}.}
 
-\item{type}{character, type of network to be created, currently supports "actor", "bimodal", "dynamic", "semantic" 
-and "ego"}
+\item{type}{Character string. Type of network to be created, can be \code{"actor"}, \code{"bimodal"},
+\code{"dynamic"}, \code{"semantic"} or \code{"ego"}.}
 
-\item{...}{additional parameters for create*Network functions}
+\item{...}{Additional parameters for network creation for appropriate \code{socialmedia} and network \code{type}.
+Refer to Create*Network functions for more details.
+\describe{
+  \item{twitter|actor:}{\code{[writeToFile]}}
+  \item{youtube|actor:}{\code{[writeToFile]}}
+  \item{reddit|actor:}{\code{[weightEdges, includeTextData, cleanText, writeToFile]}}
+  \item{twitter|bimodal:}{\code{[writeToFile, removeTermsOrHashtags]}}
+  \item{instagram|bimodal:}{\code{[writeToFile, ...]}}
+  \item{facebook|bimodal:}{\code{[writeToFile, removeTermsOrHashtags, ...]}}
+  \item{facebook|dynamic:}{\code{[writeToFile]}}
+  \item{twitter|semantic:}{\code{[writeToFile, termFreq, hashtagFreq, removeTermsOrHashtags,}\cr
+                           \code{stopwordsEnglish]}}
+  \item{instagram|ego:}{[writeToFile]}
+}}
 }
 \value{
-an igraph graph object
+An \code{igraph} graph object.
 }
 \description{
-This function creates networks from social media data (i.e. from data frames of class \code{dataSource}. 
+This function creates networks from social media data (i.e. from data frames of class \code{dataSource}.
 \code{Create} is the final step of the \code{Authenticate}, \code{Collect}, \code{Create} workflow. This function is
-a convenient UI wrapper to the core create*Network family of functions.
+a convenient UI wrapper to the core Create*Network family of functions.
 }
 \details{
-Note: when creating Twitter networks, the user information can be collected separately using the 
-\code{\link{PopulateUserInfoTwitter}} function and stored into the network as vertex attributes (this involves 
+Note: when creating Twitter networks, the user information can be collected separately using the
+\code{\link{PopulateUserInfoTwitter}} function and stored into the network as vertex attributes (this involves
 additional calls to the Twitter API).
 }
 \examples{
 \dontrun{
 require(magrittr)
 
-## instagram ego network example
-
-my_app_id     <- "123456789098765"
-my_app_secret <- "abc123abc123abc123abc123abc123ab"
-my_usernames  <- c("senjohnmccain", "obama")
-
-my_ego_network <- Authenticate("instagram", appID = my_app_id, appSecret = my_app_secret) \%>\% 
-  Collect(ego = TRUE, username = my_usernames) \%>\% Create
-
 ## youtube actor network example
 
-my_api_key   <- "314159265358979qwerty"
-my_video_ids <- c("W2GZFeYGU3s","mL27TAJGlWc")
+myYoutubeAPIKey <- "xxxxxxxxxxxxxxxxxxxxxx"
+listYoutubeVideoIDs <- c("W2GZFeYGU3s", "mL27TAJGlWc")
 
-my_actor_network <- Authenticate("youtube", apiKey = my_api_key) \%>\% 
-  Collect(videoIDs = my_video_ids) \%>\% Create('actor')
+myActorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) \%>\%
+  Collect(videoIDs = listYoutubeVideoIDs) \%>\% Create("actor")
+
+## instagram ego network example
+
+myInstaAppID <- "xxxxxxxxxxx"
+myInstaAppSecret <- "xxxxxxxxxxxxxxxxxxxxxx"
+listInstaUsernames <- c("senjohnmccain", "obama")
+
+myEgoNetwork <- Authenticate("instagram", appID = myInstaAppID, appSecret = myInstaAppSecret) \%>\%
+  Collect(ego = TRUE, username = listInstaUsernames) \%>\% Create("ego")
+}
 
 }
+\seealso{
+\code{\link{Authenticate}}, \code{\link{Collect}}
 }
-\author{
-Chung-hong Chan <chainsawtiney@gmail.com>
-}
+\keyword{actor}
+\keyword{bimodal}
+\keyword{create}
+\keyword{dynamic}
+\keyword{ego}
+\keyword{facebook}
+\keyword{instagram}
+\keyword{semantic}
+\keyword{twitter}
+\keyword{youtube}

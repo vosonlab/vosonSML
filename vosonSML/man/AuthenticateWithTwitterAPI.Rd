@@ -2,66 +2,39 @@
 % Please edit documentation in R/AuthenticateWithTwitterAPI.R
 \name{AuthenticateWithTwitterAPI}
 \alias{AuthenticateWithTwitterAPI}
-\title{Note: this function is DEPRECATED and will be removed in a future release.
-Please use the \code{Authenticate} function}
+\title{Note: this function is DEPRECATED. Please use the \code{\link{Authenticate}} function.}
 \usage{
-AuthenticateWithTwitterAPI(api_key, api_secret, access_token,
-  access_token_secret, createToken)
+AuthenticateWithTwitterAPI(appName, apiKey, apiSecret, accessToken,
+  accessTokenSecret, useCachedToken)
 }
 \arguments{
-\item{api_key}{character string specifying the 'API key' used for
-authentication.}
+\item{appName}{Character string. Specifies the twitter registered app name associated with API keys.}
 
-\item{api_secret}{character string specifying the 'API secret' used for
-authentication.}
+\item{apiKey}{Character string. Specifies the app 'API key' used for authentication.}
 
-\item{access_token}{character string specifying the 'access token' used for
-authentication.}
+\item{apiSecret}{Character string. Specifies the app 'API secret'.}
 
-\item{access_token_secret}{character string specifying the 'access token
-secret' used for authentication.}
+\item{accessToken}{Character string. Specifies the app 'access token'.}
 
-\item{createToken}{logical. !! NOT PROPERLY IMPLEMENTED YET.}
+\item{accessTokenSecret}{Character string. Specifies the app 'access token secret'.}
+
+\item{useCachedToken}{Logical. If \code{TRUE} uses cached API token if found otherwise creates one.}
 }
 \value{
-This is called for its side effect.
+twitter_oauth. Returns a twitter oauth token object.
 }
 \description{
-Twitter API Authentication
+Twitter API authentication
 }
 \details{
-Oauth based authentication with the Twitter API
+Oauth based authentication using the Twitter API.
 
-In order to collect data from Twitter, the user must first authenticate with
-Twitter's Application Programming Interface (API).
-
-This requires setting up an App on Twitter. An excellent guide to achieving
-this can be found at:
-http://thinktostart.com/twitter-authentification-with-r/
-}
-\examples{
-
-\dontrun{
-  # Firstly specify your API credentials
-  my_api_key <- "1234567890qwerty"
-  my_api_secret <- "1234567890qwerty"
-  my_access_token <- "1234567890qwerty"
-  my_access_token_secret <- "1234567890qwerty"
-
-  AuthenticateWithTwitterAPI(api_key=my_api_key, api_secret=my_api_secret,
-    access_token=my_access_token, access_token_secret=my_access_token_secret)
-}
+In order to collect data from Twitter, the user must first authenticate with Twitter's API. This requires setting up 
+an app on Twitter. A useful guide to creating an app can be found in the rtweet documentation: 
+https://rtweet.info/articles/auth.html#creating-a-twitter-app
 }
 \seealso{
-\code{AuthenticateWithFacebookAPI} and
-\code{AuthenticateWithYouTubeAPI} for other ways to collect social media
-data.
+\code{\link{Authenticate}}
 }
-\author{
-Timothy Graham <timothy.graham@anu.edu.au> & Robert Ackland
-<robert.ackland@anu.edu.au>
-}
-\keyword{SNA}
-\keyword{media}
-\keyword{social}
+\keyword{authenticate}
 \keyword{twitter}

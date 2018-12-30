@@ -5,9 +5,9 @@
 \alias{LoadCredential}
 \title{Save and load credential information}
 \usage{
-SaveCredential(credential, filename = "credential.RDS")
+SaveCredential(credential, filename)
 
-LoadCredential(filename = "credential.RDS")
+LoadCredential(filename)
 }
 \arguments{
 \item{credential}{A \code{credential} object.}
@@ -19,12 +19,8 @@ A \code{credential} object.
 }
 \description{
 Functions to save and load credential information. Currently, credential information will be stored as a RDS file. 
-\code{SaveCredential} will return the input \code{credential}, useful for working as a filter between the 
+\code{SaveCredential} will return the input \code{credential}, useful for working as a filter between 
 \code{Authenticate} and \code{Collect}.
-}
-\note{
-A \code{credential} created from \code{Authenticate} with \code{socialmedia = "twitter"} will not be saved by 
-\code{SaveCredential}.
 }
 \examples{
 \dontrun{

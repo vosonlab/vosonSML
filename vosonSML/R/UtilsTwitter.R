@@ -123,3 +123,44 @@ PreprocessTweets <- function(df) {
   
   return(df.new)
 }
+
+# accepts a df to add or increment a field value with count
+networkStats <- function(df, field, count, edge, print) {
+  if (missing(print)) {
+    print <- FALSE
+  }
+  
+  if (missing(edge)) {
+    edge <- FALSE
+  }
+  
+  if (print == TRUE) {
+    if (!is.null(df) & nrow(df) > 0) {
+      lf <- lc <- 0
+      for (i in 1:nrow(df)) {
+        lf <- ifelse(nchar(df$field[i]) > lf, nchar(df$field[i]), lf)
+        lc <- ifelse(nchar(df$count[i]) > lc, nchar(df$count[i]), lc)
+      }
+      
+      for (i in 1:nrow(df)) {
+        lfm <- lf
+        if (nchar(df$field[i]) != lf) {
+          lfm <-lf + 1
+        }
+        line <- paste0(df$field[i], paste0(replicate(lfm - nchar(df$field[i]), ""), collapse = " "), " | ")
+        line <- paste0(line, df$count[i], paste0(replicate(lc - nchar(df$count[i]), ""), collapse = " "), "\n")
+        cat(line)
+      }
+    }
+    
+    return(TRUE)
+  }
+  
+  if (is.null(df)) {
+    df  <- data.frame("field" = character(0), "count" = character(0), "edge_count" = character(0), 
+                      stringsAsFactors = FALSE)
+  }
+  df <- rbind(df, list(field = field, count = count, edge_count = edge), stringsAsFactors = FALSE)
+  
+  return(df)
+}
