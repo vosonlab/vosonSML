@@ -36,6 +36,7 @@
 #' @param stopwordsEnglish Logical. If \code{TRUE} then English stopwords are removed from the tweets (e.g. words such 
 #' as 'the' or 'and'). Using \code{FALSE} may be helpful non-English data sets. The default is \code{TRUE} (i.e. 
 #' stopwords will be removed).
+#' @param ... Additional parameters to pass to the network creation method.
 #' 
 #' @return An igraph graph object, with weighted edges.
 #' 
@@ -51,7 +52,7 @@
 #' @seealso \code{CollectDataTwitter}
 #' @keywords SNA semantic network igraph social media
 #' 
-CreateSemanticNetwork <- function(x, writeToFile, termFreq, hashtagFreq, removeTermsOrHashtags, stopwordsEnglish) {
+CreateSemanticNetwork <- function(x, writeToFile, termFreq, hashtagFreq, removeTermsOrHashtags, stopwordsEnglish, ...) {
   
   if (missing(writeToFile)) {
     writeToFile <- FALSE

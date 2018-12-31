@@ -164,3 +164,17 @@ networkStats <- function(df, field, count, edge, print) {
   
   return(df)
 }
+
+printTwitterRateLimit <- function(token) {
+  rtlimit <- rtweet::rate_limit(token, "search/tweets")
+  remaining <- rtlimit[["remaining"]] * 100
+  reset <- rtlimit[["reset"]]
+  reset <- as.numeric(reset, "secs")
+  cat(paste0("remaining search num / 15 mins: ", remaining, "\n"))
+  cat(paste0("reset: ", reset, " secs\n"))
+}
+
+getRemainingSearchNum <- function(token) {
+  rtlimit <- rtweet::rate_limit(token, "search/tweets")
+  remaining <- rtlimit[["remaining"]] * 100
+}

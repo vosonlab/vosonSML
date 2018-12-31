@@ -25,6 +25,7 @@
 #' the search term or hashtag that was used to collect the data (i.e. remove the corresponding vertex in the graph). 
 #' For example, a value of "#auspol" means that if there is a vertex with the exact name "#auspol" then this vertex 
 #' will be removed.
+#' @param ... Additional parameters to pass to the network creation method.
 #' 
 #' @return An igraph graph object, with weighted and directed edges.
 #' 
@@ -37,7 +38,7 @@
 #' @seealso \code{CollectDataFacebook}, \code{CollectDataTwitter}
 #' @keywords SNA bimodal network igraph social media
 #' 
-CreateBimodalNetwork <- function(x, writeToFile, removeTermsOrHashtags) {
+CreateBimodalNetwork <- function(x, writeToFile, removeTermsOrHashtags, ...) {
   
   if (missing(writeToFile)) {
     writeToFile <- FALSE

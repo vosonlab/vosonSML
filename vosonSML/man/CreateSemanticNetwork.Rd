@@ -5,7 +5,7 @@
 \title{Creates a semantic network from social media data (semantic relationships between concepts)}
 \usage{
 CreateSemanticNetwork(x, writeToFile, termFreq, hashtagFreq,
-  removeTermsOrHashtags, stopwordsEnglish)
+  removeTermsOrHashtags, stopwordsEnglish, ...)
 }
 \arguments{
 \item{x}{A data frame of class \code{dataSource}. For Twitter data, it is also possible to provide a *list* of data 
@@ -34,6 +34,8 @@ will be removed.}
 \item{stopwordsEnglish}{Logical. If \code{TRUE} then English stopwords are removed from the tweets (e.g. words such 
 as 'the' or 'and'). Using \code{FALSE} may be helpful non-English data sets. The default is \code{TRUE} (i.e. 
 stopwords will be removed).}
+
+\item{...}{Additional parameters to pass to the network creation method.}
 }
 \value{
 An igraph graph object, with weighted edges.

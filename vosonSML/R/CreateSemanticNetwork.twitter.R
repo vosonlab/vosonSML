@@ -1,5 +1,5 @@
 CreateSemanticNetwork.twitter <- function(x, writeToFile, termFreq, hashtagFreq, removeTermsOrHashtags, 
-                                          stopwordsEnglish) {
+                                          stopwordsEnglish, verbose) {
   
   if (missing(writeToFile)) {
     writeToFile <- FALSE
@@ -27,6 +27,10 @@ CreateSemanticNetwork.twitter <- function(x, writeToFile, termFreq, hashtagFreq,
     removeTermsOrHashtags <- "foobar"
   }
   
+  if (missing(verbose)) {
+    verbose <- FALSE
+  }
+  
   df <- x # match the variable names (this must be used to avoid warnings in package compilation)
   
   # if `df` is a list of dataframes, then need to convert these into one dataframe
@@ -37,6 +41,8 @@ CreateSemanticNetwork.twitter <- function(x, writeToFile, termFreq, hashtagFreq,
   
   # now create the dfSemanticNetwork3, a dataframe of relations between hashtags and terms (i.e. hashtag i and term j 
   # both occurred in same tweet (weight = n occurrences))
+  
+  df_stats <- networkStats(NULL, "collected tweets", nrow(df))
   
   cat("Generating twitter semantic network...\n")
   flush.console()
@@ -75,17 +81,20 @@ CreateSemanticNetwork.twitter <- function(x, writeToFile, termFreq, hashtagFreq,
   # because each cell in this column contains a LIST, itself containing 1 or more char vectors (which are unique 
   # hashtags found in the tweet text; empty if no hashtags used).
   # so, need to extract each list item out, and put it into its own row in a new dataframe
-  
+  count <- 0
   for (i in 1:nrow(df)) {
     if (length(df$hashtags[[i]]) > 0) { # skip any rows where NO HASHTAGS were used
       for (j in 1:length(df$hashtags[[i]])) {
+        count <- count + 1
         #commonTermsTemp <- c(commonTermsTemp, df$from_user[i])
         hashtagsUsedTemp <- c(hashtagsUsedTemp, df$hashtags[[i]][j])
       }
     }
   } # try and vectorise this in future work to improve speed
+  df_stats <- networkStats(df_stats, "raw hashtags", count, FALSE)
   
   hashtagsUsedTemp <- unique(hashtagsUsedTemp)
+  df_stats <- networkStats(df_stats, "unique hashtags", length(hashtagsUsedTemp), FALSE)
   
   hashtagsUsedTempFrequency <- c()
   
@@ -101,6 +110,7 @@ CreateSemanticNetwork.twitter <- function(x, writeToFile, termFreq, hashtagFreq,
   
   # this defaults to top 50% hashtags
   hashtagsUsedTemp <- names(head(vTemp, (length(vTemp) / 100) * hashtagFreq))
+  df_stats <- networkStats(df_stats, paste0("top ", hashtagFreq , "% hashtags"), length(hashtagsUsedTemp), FALSE)
   
   # we need to remove all punctuation EXCEPT HASHES (!) (e.g. both #auspol and auspol will appear in data)
   df$text <- gsub("[^[:alnum:][:space:]#]", "", df$text)
@@ -145,6 +155,7 @@ CreateSemanticNetwork.twitter <- function(x, writeToFile, termFreq, hashtagFreq,
   # N will need to be adjusted according to network / user requirements
   mTemp <- as.matrix(tdm)
   vTemp <- sort(rowSums(mTemp), decreasing = TRUE)
+  df_stats <- networkStats(df_stats, paste0("common terms"), length(vTemp), FALSE)
   
   ## the default finds top 5% terms
   commonTerms <- names(head(vTemp, (length(vTemp) / 100) * termFreq))
@@ -153,6 +164,7 @@ CreateSemanticNetwork.twitter <- function(x, writeToFile, termFreq, hashtagFreq,
   if (length(toDel) > 0) {
     commonTerms <- commonTerms[-toDel] # delete these junk terms
   }
+  df_stats <- networkStats(df_stats, paste0("top ", termFreq , "% terms"), length(commonTerms), FALSE)
   
   # create the "semantic hashtag-term network" dataframe (i.e. pairs of hashtags / terms)
   
@@ -211,6 +223,8 @@ CreateSemanticNetwork.twitter <- function(x, writeToFile, termFreq, hashtagFreq,
   actorsFixed <- rbind(as.character(unique_dfSemanticNetwork3[, 1]), as.character(unique_dfSemanticNetwork3[, 2]))
   actorsFixed <- as.factor(actorsFixed)
   actorsFixed <- unique(actorsFixed)
+  df_stats <- networkStats(df_stats, "unique entities (nodes)", length(actorsFixed))
+  df_stats <- networkStats(df_stats, "relations (edges)", nrow(relations))
   
   # convert into a graph
   suppressWarnings(g <- graph.data.frame(relations, directed = FALSE, vertices = actorsFixed))
@@ -224,13 +238,20 @@ CreateSemanticNetwork.twitter <- function(x, writeToFile, termFreq, hashtagFreq,
   # remove the search term / hashtags, if user specified it
   if (removeTermsOrHashtags[1] != "foobar") {
     # we force to lowercase because all terms/hashtags are already converted to lowercase
-    toDel <- match(tolower(removeTermsOrHashtags),V(g)$name)
+    toDel <- match(tolower(removeTermsOrHashtags), V(g)$name)
     
     # in case of user error (i.e. trying to delete terms/hashtags that don't exist in the data)
     toDel <- toDel[!is.na(toDel)]
     
     g <- delete.vertices(g, toDel)
+    
+    df_stats <- networkStats(df_stats, "entities after terms/hashtags removed", vcount(g))
   }
+  
+  # print stats
+  if (verbose) {
+    networkStats(df_stats, print = TRUE) 
+  }  
   
   if (isTrueValue(writeToFile)) {
     writeOutputFile(g, "graphml", "TwitterSemanticNetwork")

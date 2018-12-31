@@ -4,7 +4,7 @@
 \alias{CreateBimodalNetwork}
 \title{Create bimodal networks from social media data}
 \usage{
-CreateBimodalNetwork(x, writeToFile, removeTermsOrHashtags)
+CreateBimodalNetwork(x, writeToFile, removeTermsOrHashtags, ...)
 }
 \arguments{
 \item{x}{A data frame of class \code{dataSource}. For Twitter data, it is also possible to provide a *list* of data 
@@ -20,6 +20,8 @@ hashtags (i.e. vertices with matching 'name') should be removed from the bimodal
 the search term or hashtag that was used to collect the data (i.e. remove the corresponding vertex in the graph). 
 For example, a value of "#auspol" means that if there is a vertex with the exact name "#auspol" then this vertex 
 will be removed.}
+
+\item{...}{Additional parameters to pass to the network creation method.}
 }
 \value{
 An igraph graph object, with weighted and directed edges.

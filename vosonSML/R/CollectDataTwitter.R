@@ -56,6 +56,10 @@ CollectDataTwitter <- function(authToken, searchTerm, searchType, numTweets, inc
     return(NA)
   }
   
+  if (missing(searchTerm)) {
+    searchTerm <- ""
+  }
+  
   if (missing(numTweets)) {
     numTweets <- 100
   }
@@ -75,6 +79,9 @@ CollectDataTwitter <- function(authToken, searchTerm, searchType, numTweets, inc
   if (missing(verbose)) {
     verbose <- FALSE
   }
+  
+  searchTerm <- trimws(searchTerm)
+  cat(paste0("Collecting tweets", ifelse(searchTerm == "", "", paste0(" for search term: ", searchTerm)), "...\n"))
   
   rtlimit <- rtweet::rate_limit(authToken, "search/tweets")
   remaining <- rtlimit[["remaining"]] * 100
@@ -99,6 +106,8 @@ CollectDataTwitter <- function(authToken, searchTerm, searchType, numTweets, inc
   
   tweets_df <- do.call(rtweet::search_tweets, collect_parameters)
   
+  cat(paste0("Collected ", nrow(tweets_df), " tweets.\n"))
+  
   # flatten hashtags
   # tweets_df$hashtags <- paste0(unlist(tweets_df$hashtags), collapse = ',')
   # all of the lists in the data make csv output less than ideal
@@ -106,6 +115,8 @@ CollectDataTwitter <- function(authToken, searchTerm, searchType, numTweets, inc
   if (isTrueValue(writeToFile)) {
     writeOutputFile(tweets_df, "rds", "TwitterData")
   }
+  
+  cat("\nDone!\n")
   
   class(tweets_df) <- append(class(tweets_df), c("dataSource", "twitter"))
   
