@@ -7,7 +7,7 @@
 #' graphml format. The file name will contain the current system time. Default is \code{FALSE}.
 #' @param verbose Output additional information about the network creation. Default is \code{FALSE}.
 #' 
-#' @return An igraph object containing the actor network.
+#' @return A list containing an igraph object, the relations and users data frames of the the actor network.
 #'
 #' @noRd
 CreateActorNetwork.twitter <- function(x, writeToFile, verbose) {
@@ -172,14 +172,14 @@ CreateActorNetwork.twitter <- function(x, writeToFile, verbose) {
     networkStats(df_stats, print = TRUE) 
   }
   
-  relations <- data.frame(
+  df_relations <- data.frame(
     from = dataCombined$from,
     to = dataCombined$to,
     edge_type = dataCombined$edge_type,
     timestamp = dataCombined$timestamp,
     status_id = dataCombined$status_id)
   
-  g <- graph.data.frame(relations, directed = TRUE, vertices = df_users)
+  g <- graph.data.frame(df_relations, directed = TRUE, vertices = df_users)
   
   V(g)$screen_name <- ifelse(is.na(V(g)$screen_name), paste0("ID:", V(g)$name), V(g)$screen_name)
   V(g)$label <- V(g)$screen_name
@@ -191,5 +191,11 @@ CreateActorNetwork.twitter <- function(x, writeToFile, verbose) {
   cat("\nDone!\n")
   flush.console()
   
-  return(g)
+  function_output <- list(
+    "relations" = df_relations,
+    "users" = df_users,
+    "graph" = g
+  )
+  
+  return(function_output)
 }

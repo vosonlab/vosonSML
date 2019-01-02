@@ -36,9 +36,9 @@ This function creates networks from social media data (i.e. from data frames of 
 a convenient UI wrapper to the core Create*Network family of functions.
 }
 \details{
-Note: when creating Twitter networks, the user information can be collected separately using the
-\code{\link{PopulateUserInfoTwitter}} function and stored into the network as vertex attributes (this involves
-additional calls to the Twitter API).
+Note: when creating twitter networks, a network with additional user information can be generated using the
+\code{\link{GraphUserInfoTwitter}} function. Additional calls can be made to the Twitter API to get information
+about users that became nodes during network creation.
 }
 \examples{
 \dontrun{

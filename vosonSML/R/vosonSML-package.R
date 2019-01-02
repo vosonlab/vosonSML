@@ -34,8 +34,7 @@
 #' @importFrom Rfacebook fbOAuth getPost getPage getUsers
 #' @importFrom instaR getComments getLikes instaOAuth searchInstagram getUser getFollowers getFollows
 #' @importFrom plyr ldply
-#' @importFrom rtweet create_token rate_limit search_tweets
-#' @importFrom twitteR lookupUsers twListToDF
+#' @importFrom rtweet create_token rate_limit search_tweets users_data lookup_users
 #' @importFrom stringr str_extract str_replace_all str_match_all
 #' @importFrom stats 'na.omit'
 #' @importFrom utils "flush.console" head "install.packages" "read.table" "write.csv" "read.csv"

@@ -4,9 +4,9 @@
 #' \code{Create} is the final step of the \code{Authenticate}, \code{Collect}, \code{Create} workflow. This function is
 #' a convenient UI wrapper to the core Create*Network family of functions.
 #'
-#' Note: when creating Twitter networks, the user information can be collected separately using the
-#' \code{\link{PopulateUserInfoTwitter}} function and stored into the network as vertex attributes (this involves
-#' additional calls to the Twitter API).
+#' Note: when creating twitter networks, a network with additional user information can be generated using the
+#' \code{\link{GraphUserInfoTwitter}} function. Additional calls can be made to the Twitter API to get information
+#' about users that became nodes during network creation.
 #'
 #' @param dataSource A data frame of class \code{dataSource}.
 #' @param type Character string. Type of network to be created, can be \code{"actor"}, \code{"bimodal"},
