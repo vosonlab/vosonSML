@@ -9,10 +9,14 @@
 #' @param lookup_missing_users Logical. Request user information for any users missing from df_collect. Default 
 #' is \code{TRUE}.
 #' @param twitter_token An twitter authentication token from \code{Authenticate}.
-#' @param writeToFile Logical. If \code{TRUE} a data frame of user information will be saved to file. Default 
-#' is \code{FALSE}.
-#' 
-#' @return An igraph object of the twitter network with user node attributes.
+#' @param writeToFile Logical. If \code{TRUE} a data frame of user information and the resulting network graph will 
+#' be saved to file. Default is \code{FALSE}.
+#'
+#' @note Only supports twitter actor network at this time. Bimodal network support will require the filtering 
+#' of twitter user ids from nodes of other types.
+#'
+#' @return A list containing a dataframe with user information and an igraph object of the twitter network with 
+#' user node attributes.
 #'
 #' @export
 GraphUserInfoTwitter <- function(df_collect, df_relations, df_users, lookup_missing_users = TRUE, 
@@ -27,6 +31,8 @@ GraphUserInfoTwitter <- function(df_collect, df_relations, df_users, lookup_miss
   
   user_id <- NULL
   
+  cat("Creating twitter network graph with user information as node attributes.\n")
+  
   df_users_info <- rtweet::users_data(df_collect) %>% dplyr::distinct(user_id, .keep_all = TRUE)
   df_missing_users <- suppressWarnings(dplyr::anti_join(df_users, df_users_info, by = "user_id")) %>% 
     dplyr::distinct(user_id, .keep_all = TRUE)
@@ -36,11 +42,15 @@ GraphUserInfoTwitter <- function(df_collect, df_relations, df_users, lookup_miss
     if (missing(twitter_token) | is.null(twitter_token)) {
       cat("Please supply rtweet twitter authentication token to look up missing users info.\n")
     } else {
+      cat(paste0("Fetching user information for ", nrow(df_missing_users), " users.\n"))
+      
       # 90000 users per 15 mins with unused rate limit
       df_lookup_data <- rtweet::lookup_users(df_missing_users$user_id, parse = TRUE, 
                                              token = twitter_token$auth)
       df_missing_users_info <- rtweet::users_data(df_lookup_data)      
     }
+  } else {
+    cat("No additional users information fetched.\n")
   }
   
   if (!is.null(df_missing_users_info)) {
@@ -56,7 +66,21 @@ GraphUserInfoTwitter <- function(df_collect, df_relations, df_users, lookup_miss
   df_users_info_all <- df_users_info_all %>% dplyr::rename("display_name" = .data$name, 
                                                            "name" = .data$user_id)
   g <- suppressWarnings(graph_from_data_frame(df_relations, directed = TRUE, vertices = df_users_info_all))
+
+  V(g)$screen_name <- ifelse(is.na(V(g)$screen_name), paste0("ID:", V(g)$name), V(g)$screen_name)
   V(g)$label <- V(g)$screen_name
   
-  return(g)
+  if (writeToFile) {
+    writeOutputFile(g, "graphml", "TwitterUserNetwork")
+  }
+  
+  cat("\nDone!\n")
+  flush.console()
+  
+  function_output <- list(
+    "users" = df_users_info_all,
+    "graph" = g
+  )
+  
+  return(function_output)
 }
