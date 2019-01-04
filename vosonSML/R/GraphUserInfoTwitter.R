@@ -73,7 +73,8 @@ GraphUserInfoTwitter <- function(df_collect, df_relations, df_users, lookup_miss
   
   # fix numeric cols type and replacing na's for convenience
   # col names ending in "count"
-  df_users_info_all %<>% mutate_at(vars(ends_with("count")), funs(ifelse(is.na(.), as.integer(0), as.integer(.))))
+  df_users_info_all %<>% mutate_at(vars(ends_with("count")), funs(ifelse(is.na(.data$.), as.integer(0), 
+                                                                         as.integer(.data$.))))
   
   if (!is.null(df_missing_users_info) & writeToFile) {
     writeOutputFile(df_users_info_all, "rds", "TwitterUserInfo")

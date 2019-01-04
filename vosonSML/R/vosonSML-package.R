@@ -39,8 +39,8 @@
 #' @importFrom stats 'na.omit'
 #' @importFrom utils "flush.console" head "install.packages" "read.table" "write.csv" "read.csv"
 #' @importFrom RedditExtractoR reddit_content user_network
-#' @importFrom magrittr '%>%'
+#' @importFrom magrittr '%>%' '%<>%'
 #' @importFrom dplyr rename group_by summarise ungroup left_join select mutate filter coalesce row_number
-#' distinct anti_join mutate_all mutate_at
+#' distinct anti_join mutate_all mutate_at ends_with vars funs
 #' @importFrom rlang '.data'
 NULL
