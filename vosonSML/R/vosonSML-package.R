@@ -41,6 +41,6 @@
 #' @importFrom RedditExtractoR reddit_content user_network
 #' @importFrom magrittr '%>%'
 #' @importFrom dplyr rename group_by summarise ungroup left_join select mutate filter coalesce row_number
-#' distinct anti_join
+#' distinct anti_join mutate_all mutate_at
 #' @importFrom rlang '.data'
 NULL

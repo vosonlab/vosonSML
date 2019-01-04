@@ -33,8 +33,11 @@ GraphUserInfoTwitter <- function(df_collect, df_relations, df_users, lookup_miss
   
   cat("Creating twitter network graph with user information as node attributes.\n")
   
+  df_users %<>% dplyr::mutate_all(as.character) # changes all col types to character
+  
   df_users_info <- rtweet::users_data(df_collect) %>% dplyr::distinct(user_id, .keep_all = TRUE)
-  df_missing_users <- suppressWarnings(dplyr::anti_join(df_users, df_users_info, by = "user_id")) %>% 
+  df_users_info %<>% dplyr::mutate_all(as.character) # changes all col types to character
+  df_missing_users <- dplyr::anti_join(df_users, df_users_info, by = "user_id") %>% 
     dplyr::distinct(user_id, .keep_all = TRUE)
   
   df_missing_users_info <- NULL
@@ -47,7 +50,14 @@ GraphUserInfoTwitter <- function(df_collect, df_relations, df_users, lookup_miss
       # 90000 users per 15 mins with unused rate limit
       df_lookup_data <- rtweet::lookup_users(df_missing_users$user_id, parse = TRUE, 
                                              token = twitter_token$auth)
-      df_missing_users_info <- rtweet::users_data(df_lookup_data)      
+      df_missing_users_info <- rtweet::users_data(df_lookup_data)
+      cat(paste0("User information collected for ", nrow(df_missing_users_info), " users.\n"))
+      
+      if (nrow(df_missing_users) != nrow(df_missing_users_info)) {
+        cat("Collected user records does not match the number requested. Adding incomplete records back in.\n")
+        df_not_collected <- dplyr::anti_join(df_missing_users, df_missing_users_info, by = "user_id")
+        df_missing_users_info <- dplyr::bind_rows(df_missing_users_info, df_not_collected)
+      }
     }
   } else {
     cat("No additional users information fetched.\n")
@@ -55,17 +65,21 @@ GraphUserInfoTwitter <- function(df_collect, df_relations, df_users, lookup_miss
   
   if (!is.null(df_missing_users_info)) {
     df_users_info_all <- rbind(df_users_info, df_missing_users_info)
-    
-    if (writeToFile) {
-      writeOutputFile(df_users_info_all, "rds", "TwitterUserInfo")
-    }
   } else {
-    df_users_info_all <- suppressWarnings(dplyr::bind_rows(df_users_info, df_missing_users))
+    df_users_info_all <- dplyr::bind_rows(df_users_info, df_missing_users)
   }
   
-  df_users_info_all <- df_users_info_all %>% dplyr::rename("display_name" = .data$name, 
-                                                           "name" = .data$user_id)
-  g <- suppressWarnings(graph_from_data_frame(df_relations, directed = TRUE, vertices = df_users_info_all))
+  df_users_info_all %<>% dplyr::rename("display_name" = .data$name, "name" = .data$user_id)
+  
+  # fix numeric cols type and replacing na's for convenience
+  # col names ending in "count"
+  df_users_info_all %<>% mutate_at(vars(ends_with("count")), funs(ifelse(is.na(.), as.integer(0), as.integer(.))))
+  
+  if (!is.null(df_missing_users_info) & writeToFile) {
+    writeOutputFile(df_users_info_all, "rds", "TwitterUserInfo")
+  }
+  
+  g <- graph_from_data_frame(df_relations, directed = TRUE, vertices = df_users_info_all)
 
   V(g)$screen_name <- ifelse(is.na(V(g)$screen_name), paste0("ID:", V(g)$name), V(g)$screen_name)
   V(g)$label <- V(g)$screen_name
