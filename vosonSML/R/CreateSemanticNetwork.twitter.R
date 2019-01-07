@@ -1,34 +1,14 @@
-CreateSemanticNetwork.twitter <- function(x, writeToFile, termFreq, hashtagFreq, removeTermsOrHashtags, 
-                                          stopwordsEnglish, verbose) {
-  
-  if (missing(writeToFile)) {
-    writeToFile <- FALSE
-  }
-  
-  if (missing(stopwordsEnglish)) {
-    stopwordsEnglish <- TRUE # default to true, because most English users will probably want this
-  }
-  
-  if (missing(termFreq)) {
-    termFreq <- 5 # default to the top 5% most frequent terms. reduces size of graph.
-  }
-  
-  # default to the top 50% hashtags. reduces size of graph. hashtags are 50% because they are much less frequent 
-  # than terms.
-  if (missing(hashtagFreq)) {
-    hashtagFreq <- 50
-  }
-  
+CreateSemanticNetwork.twitter <- function(x, writeToFile = FALSE, termFreq = 5, hashtagFreq = 50, 
+                                          removeTermsOrHashtags, stopwordsEnglish = TRUE, verbose = FALSE) {
+
+  # default to the top 5% most frequent terms. reduces size of graph
+  # default to the top 50% hashtags. reduces size of graph. hashtags are 50% because they are much less 
+  # frequent than terms.
+
   if (!missing(removeTermsOrHashtags)) {
     removeTermsOrHashtags <- as.vector(removeTermsOrHashtags) #coerce to vector... to be sure
-  }
-  
-  if (missing(removeTermsOrHashtags)) {
+  } else {
     removeTermsOrHashtags <- "foobar"
-  }
-  
-  if (missing(verbose)) {
-    verbose <- FALSE
   }
   
   df <- x # match the variable names (this must be used to avoid warnings in package compilation)
@@ -249,15 +229,11 @@ CreateSemanticNetwork.twitter <- function(x, writeToFile, termFreq, hashtagFreq,
   }
   
   # print stats
-  if (verbose) {
-    networkStats(df_stats, print = TRUE) 
-  }  
+  if (verbose) { networkStats(df_stats, print = TRUE) }
   
-  if (isTrueValue(writeToFile)) {
-    writeOutputFile(g, "graphml", "TwitterSemanticNetwork")
-  }
+  if (writeToFile) { writeOutputFile(g, "graphml", "TwitterSemanticNetwork") }
   
-  cat("\nDone.")
+  cat("Done.\n")
   flush.console()
   
   return(g)

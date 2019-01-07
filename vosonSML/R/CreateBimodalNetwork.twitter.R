@@ -1,10 +1,6 @@
-CreateBimodalNetwork.twitter <- function(x, writeToFile, removeTermsOrHashtags, verbose) {
+CreateBimodalNetwork.twitter <- function(x, writeToFile = FALSE, removeTermsOrHashtags, verbose = FALSE) {
   
   from <- to <- edge_type <- timestamp <- status_id <- NULL
-  
-  if (missing(writeToFile)) {
-    writeToFile <- FALSE
-  }
   
   if (!missing(removeTermsOrHashtags)) {
     removeTermsOrHashtags <- as.vector(removeTermsOrHashtags) # coerce to vector to be sure
@@ -12,10 +8,6 @@ CreateBimodalNetwork.twitter <- function(x, writeToFile, removeTermsOrHashtags, 
   
   if (missing(removeTermsOrHashtags)) {
     removeTermsOrHashtags <- "#fake_hashtag_foobar42_1234567890"
-  }
-
-  if (missing(verbose)) {
-    verbose <- FALSE
   }
   
   df <- x
@@ -107,11 +99,9 @@ CreateBimodalNetwork.twitter <- function(x, writeToFile, removeTermsOrHashtags, 
   
   V(g)$label <- V(g)$display_name
   
-  if (writeToFile) {
-    writeOutputFile(g, "graphml", "TwitterBimodalNetwork")
-  }
+  if (writeToFile) { writeOutputFile(g, "graphml", "TwitterBimodalNetwork") }
   
-  cat("\nDone!\n")
+  cat("Done.\n")
   flush.console()
   
   return(g)

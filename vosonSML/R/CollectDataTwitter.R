@@ -48,40 +48,18 @@
 #' @seealso \code{Collect}
 #' @keywords collect twitter
 #' 
-CollectDataTwitter <- function(authToken, searchTerm, searchType, numTweets, includeRetweets, 
-                               retryOnRateLimit, writeToFile, verbose, ...) {
+CollectDataTwitter <- function(authToken = NULL, searchTerm = "", searchType = "recent", numTweets = 100, 
+                               includeRetweets = TRUE, retryOnRateLimit = FALSE, writeToFile = FALSE, 
+                               verbose = FALSE, ...) {
  
-  if (missing(authToken)) {
-    cat("\nOAuth token missing. Please use the Authenticate function to create and supply a token.\n")
-    return(NA)
-  }
-  
-  if (missing(searchTerm)) {
-    searchTerm <- ""
-  }
-  
-  if (missing(numTweets)) {
-    numTweets <- 100
-  }
- 
-  if (missing(includeRetweets)) {
-    includeRetweets <- TRUE
-  }
-  
-  if (missing(retryOnRateLimit)) {
-    retryOnRateLimit <- FALSE
-  }
-  
-  if (missing(writeToFile)) {
-    writeToFile <- FALSE
-  }
- 
-  if (missing(verbose)) {
-    verbose <- FALSE
+  if (!("Token" %in% class(authToken))) { 
+    stop("OAuth token missing. Please use the Authenticate function to create and supply a token.\n", 
+         call. = FALSE)
   }
   
   searchTerm <- trimws(searchTerm)
   cat(paste0("Collecting tweets", ifelse(searchTerm == "", "", paste0(" for search term: ", searchTerm)), "...\n"))
+  flush.console()
   
   rtlimit <- rtweet::rate_limit(authToken, "search/tweets")
   remaining <- rtlimit[["remaining"]] * 100
@@ -91,32 +69,29 @@ CollectDataTwitter <- function(authToken, searchTerm, searchType, numTweets, inc
     retryOnRateLimit <- FALSE
   }
   
-  collect_parameters <- list()
-  collect_parameters[['token']] <- authToken
+  search_params <- list()
+  search_params[['token']] <- authToken
   
-  collect_parameters['q'] <- searchTerm
-  collect_parameters['type'] <- searchType
-  collect_parameters['n'] <- numTweets
-  collect_parameters['include_rts'] <- includeRetweets
-  collect_parameters['retryonratelimit'] <- retryOnRateLimit
-  collect_parameters['verbose'] <- verbose
+  search_params['q'] <- searchTerm
+  search_params['type'] <- searchType
+  search_params['n'] <- numTweets
+  search_params['include_rts'] <- includeRetweets
+  search_params['retryonratelimit'] <- retryOnRateLimit
+  search_params['verbose'] <- verbose
   
+  # additional twitter api params
   dots <- substitute(...())
-  collect_parameters[['...']] <- dots
+  search_params[['...']] <- dots
   
-  tweets_df <- do.call(rtweet::search_tweets, collect_parameters)
+  tweets_df <- do.call(rtweet::search_tweets, search_params)
   
   cat(paste0("Collected ", nrow(tweets_df), " tweets.\n"))
   
-  # flatten hashtags
-  # tweets_df$hashtags <- paste0(unlist(tweets_df$hashtags), collapse = ',')
-  # all of the lists in the data make csv output less than ideal
+  # rds chosen over csv to avoid flattening lists in the data
+  if (writeToFile) { writeOutputFile(tweets_df, "rds", "TwitterData") }
   
-  if (isTrueValue(writeToFile)) {
-    writeOutputFile(tweets_df, "rds", "TwitterData")
-  }
-  
-  cat("\nDone!\n")
+  cat("Done.\n")
+  flush.console()
   
   class(tweets_df) <- append(class(tweets_df), c("dataSource", "twitter"))
   

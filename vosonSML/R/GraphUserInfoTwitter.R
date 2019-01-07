@@ -21,28 +21,20 @@
 #' @export
 GraphUserInfoTwitter <- function(df_collect, df_relations, df_users, lookup_missing_users = TRUE, 
                                  twitter_token = NULL, writeToFile = FALSE) {
-  if (missing(lookup_missing_users)) {
-    lookup_missing_users = FALSE
-  }
-
-  if (missing(writeToFile)) {
-    writeToFile = FALSE
-  }
   
-  user_id <- NULL
-  
-  cat("Creating twitter network graph with user information as node attributes.\n")
+  cat("Creating twitter network graph with user information as node attributes...\n")
+  flush.console()
   
   df_users %<>% dplyr::mutate_all(as.character) # changes all col types to character
   
-  df_users_info <- rtweet::users_data(df_collect) %>% dplyr::distinct(user_id, .keep_all = TRUE)
+  df_users_info <- rtweet::users_data(df_collect) %>% dplyr::distinct(.data$user_id, .keep_all = TRUE)
   df_users_info %<>% dplyr::mutate_all(as.character) # changes all col types to character
   df_missing_users <- dplyr::anti_join(df_users, df_users_info, by = "user_id") %>% 
-    dplyr::distinct(user_id, .keep_all = TRUE)
+    dplyr::distinct(.data$user_id, .keep_all = TRUE)
   
   df_missing_users_info <- NULL
   if (lookup_missing_users) {
-    if (missing(twitter_token) | is.null(twitter_token)) {
+    if (is.null(twitter_token)) {
       cat("Please supply rtweet twitter authentication token to look up missing users info.\n")
     } else {
       cat(paste0("Fetching user information for ", nrow(df_missing_users), " users.\n"))
@@ -73,7 +65,7 @@ GraphUserInfoTwitter <- function(df_collect, df_relations, df_users, lookup_miss
   
   # fix numeric cols type and replacing na's for convenience
   # col names ending in "count"
-  df_users_info_all %<>% mutate_at(vars(ends_with("count")), funs(ifelse(is.na(.data$.), as.integer(0), 
+  df_users_info_all %<>% dplyr::mutate_at(vars(ends_with("count")), funs(ifelse(is.na(.data$.), as.integer(0), 
                                                                          as.integer(.data$.))))
   
   if (!is.null(df_missing_users_info) & writeToFile) {
@@ -85,11 +77,9 @@ GraphUserInfoTwitter <- function(df_collect, df_relations, df_users, lookup_miss
   V(g)$screen_name <- ifelse(is.na(V(g)$screen_name), paste0("ID:", V(g)$name), V(g)$screen_name)
   V(g)$label <- V(g)$screen_name
   
-  if (writeToFile) {
-    writeOutputFile(g, "graphml", "TwitterUserNetwork")
-  }
+  if (writeToFile) { writeOutputFile(g, "graphml", "TwitterUserNetwork") }
   
-  cat("\nDone!\n")
+  cat("Done.\n")
   flush.console()
   
   function_output <- list(

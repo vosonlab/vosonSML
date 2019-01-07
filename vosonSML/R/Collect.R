@@ -86,11 +86,15 @@ Collect <- function(credential, ego = FALSE, ...) {
   return(collector(credential, ...))
 }
 
-twitterCollector <- function(credential, searchTerm, searchType, numTweets, includeRetweets, retryOnRateLimit, 
-                              writeToFile, verbose, ...) {
-  return(CollectDataTwitter(authToken = credential$auth, searchTerm, searchType, numTweets, includeRetweets, 
-                            retryOnRateLimit, writeToFile, verbose, ...))
+twitterCollector <- function(credential, ...) {
+  return(CollectDataTwitter(authToken = credential$auth, ...))
 }
+
+# twitterCollector <- function(credential, searchTerm, searchType, numTweets, includeRetweets, retryOnRateLimit, 
+#                               writeToFile, verbose, ...) {
+#   return(CollectDataTwitter(authToken = credential$auth, searchTerm, searchType, numTweets, includeRetweets, 
+#                             retryOnRateLimit, writeToFile, verbose, ...))
+# }
 
 youtubeCollector <- function(credential, videoIDs, verbose, writeToFile, maxComments) {
   return(CollectDataYoutube(videoIDs, apiKeyYoutube = credential$auth, verbose, writeToFile, maxComments))

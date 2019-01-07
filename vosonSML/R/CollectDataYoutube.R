@@ -25,7 +25,7 @@
 #' *does not* take into account 'reply' comments (i.e. replies to top-level comments), therefore the total number of
 #' comments collected may be higher than maxComments. By default this function attempts to collect all comments.
 #' 
-#' @return A data frame object of class dataSource.youtube that can be used for creating unimodal networks 
+#' @return A dataframe object of class dataSource.youtube that can be used for creating unimodal networks 
 #' (CreateActorNetwork).
 #' 
 #' @note Currently supported network types: unimodal 'actor' network; CreateActorNetwork.
@@ -41,39 +41,19 @@
 #' comments, and one of these top-level comments has 5 'child' or reply comments, then the total number of comments
 #' collected will be equal to 15. Currently, the user must 'guesstimate' the maxResults value, to collect a 
 #' number of comments in the order of what they require.
-#' 
-#' @author Timothy Graham <timothy.graham@@anu.edu.au> & Robert Ackland <robert.ackland@@anu.edu.au>
-#' @seealso Authenticate must be run first or no data will be collected.
 #'
 #' @noRd
-CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeToFile = FALSE, maxComments) {
+CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeToFile = FALSE, 
+                               maxComments = 10000000000000) {
   
-  if (missing(verbose)) {
-    verbose <- FALSE # default to not verbose
+  # maxComments defaults to an arbitrary very large number
+
+  if (missing(videoIDs) || !is.vector(videoIDs) || length(videoIDs) < 1) {
+    stop("Please provide a vector of one or more youtube video ids.\n", call. = FALSE)
   }
-  
-  if (missing(maxComments)) {
-    maxComments <- 10000000000000 # some arbitrary very large number
-  }
-  
-  if (missing(writeToFile)) {
-    writeToFile <- FALSE
-  }
-  
-  if (isTrueValue(verbose)) {
-    verbose <- TRUE
-  }
-  
-  if (missing(apiKeyYoutube)) {
-    cat(paste0("Error. Argument `apiKeyYoutube` is missing. Please specify a valid API key to collect data (i.e. your",
-               " Google Developer API Key).\n"))
-    return(NA)
-  }
-  
-  if (missing(videoIDs)) {
-    cat(paste0("Error. Argument `videoIDs` is missing.\nPlease specify a vector of video IDs to collect data from.\n",
-               "Hint: to do this you can use the `GetYoutubeVideoIDs` function in this package."))
-    return(NA)
+ 
+  if (missing(apiKeyYoutube) || nchar(apiKeyYoutube) < 1) {
+    stop("Please provide a valid youtube api key.\n", call. = FALSE)
   }
   
   apiKey <- apiKeyYoutube # to play nice with existing code
@@ -106,9 +86,7 @@ CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeTo
 
     ## Make a dataframe out of the results
     
-    if (verbose) {
-      cat(paste0("\n** Creating data frame from threads of ", videoIDs[k], ".\n\n", sep = ""))
-    }
+    if (verbose) { cat(paste0("** Creating dataframe from threads of ", videoIDs[k], ".\n", sep = "")) }
     
     tempData <- lapply(rObj$data, function(x) {
       data.frame(Comment = x$snippet$topLevelComment$snippet$textDisplay,
@@ -197,7 +175,7 @@ CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeTo
     
     cat(paste0("\n** Collected replies: ", total_replies, "\n", sep = ""))
     cat(paste0("** Total video comments: ", length(commentIDs) + total_replies, "\n", sep = ""))
-    cat("---------------------------------------------------------------\n\n")
+    cat("---------------------------------------------------------------\n")
     
     ############################## Combine comment threads and replies #############################
       
@@ -222,7 +200,7 @@ CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeTo
   }
 
   if (verbose) {
-    cat("\nCleaning and structuring data. Please be patient.\n")
+    cat("Cleaning and structuring data. Please be patient.\n")
   }
   
   ############################## Map relations between users into dataframe #############################
@@ -260,11 +238,10 @@ CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeTo
     }
   }
   
-  if (isTrueValue(writeToFile)) {
-    writeOutputFile(dataCombined, "csv", "YoutubeData")
-  }
+  if (writeToFile) { writeOutputFile(dataCombined, "csv", "YoutubeData") }
     
-  cat("\nDone!\n")
+  cat("Done.\n")
+  flush.console()
   
   #############################################################################
   # return dataframe to environment
@@ -277,7 +254,6 @@ CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeTo
 }
 
 ## Set up a class and methods/functions for scraping
-
 yt_scraper <- setRefClass(
   "yt_scraper", 
   fields = list(
@@ -339,7 +315,7 @@ yt_scraper <- setRefClass(
     scrape_all = function(maxComments) {
       cat(paste0("** video Id: ", api_opts$videoId ,"\n", sep = ""))
       if (verbose) {
-        cat(paste0("   [results per page: ", api_opts$maxResults, " | max comments per video: ", maxComments, "]\n\n", 
+        cat(paste0("   [results per page: ", api_opts$maxResults, " | max comments per video: ", maxComments, "]\n", 
                    sep = ""))
       }
       
@@ -350,7 +326,7 @@ yt_scraper <- setRefClass(
         thread_count <- scrape()
         
         if (verbose) {
-          cat(paste0("-- Collected threads from page: ", thread_count, "\n\n", sep = ""))
+          cat(paste0("-- Collected threads from page: ", thread_count, "\n", sep = ""))
         }        
         
         if (thread_count == 0 | length(data) > maxComments) {
@@ -364,9 +340,7 @@ yt_scraper <- setRefClass(
             data <<- data[1:maxComments]
           }
           
-          if (verbose) {
-            cat(paste0("-- Done collecting threads.\n\n", sep = "")) 
-          }
+          if (verbose) { cat(paste0("-- Done collecting threads.\n", sep = "")) }
           
           break
         }
@@ -418,7 +392,7 @@ yt_scraper <- setRefClass(
         })
         core_df <<- do.call("rbind", sub_data)
       } else {
-        message("\n`core_df` is already up to date.\n")
+        message("core_df is already up to date.\n")
       }
     }
   )

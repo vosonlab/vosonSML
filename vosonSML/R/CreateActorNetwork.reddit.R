@@ -1,49 +1,30 @@
-#' Creates a reddit actor network from collected threads
-#'
-#' Uses RedditExtractoR::user_network to create an igraph directed actor network with comment ids as edge attribute.
-#'
-#' @param x a dataframe as vosonSML class object containing collected social network data
-#' @param weightEdges logical. Combines and weights directed edges. Can't be used with includeTextData.
-#' @param includeTextData logical. If the igraph network edges should include the comment text as attribute.
-#' @param cleanText logical. If non-alphanumeric, non-punctuation, and non-space characters should be removed from the 
-#' included text attribute data. Default is TRUE
-#' @param writeToFile logical. If the igraph network graph should be written to file.
-#'
-#' @note Can create three types of network graphs:
-#' * Directed graph with subreddit, thread_ids and comment ids as edge attributes - default option
-#' * Directed graph with weighted edges (without comment ids) - weightEdges = TRUE
-#' * Directed graph with comment text included as edge attribute - includeTextData = TRUE
+# Creates a reddit actor network
+# 
+# Uses RedditExtractoR::user_network to create an igraph directed actor network with comment ids as
+# edge attributes.
+#
+#' @param weightEdges Logical. Combines and weights directed network edges. Default is \code{FALSE}.
+#' @param textData Logical. If the igraph network should include the comment text as an edge attribute. 
+#' Cannot be used with the \code{weightEdges} parameter. Default is \code{FALSE}.
+#' @param cleanText Logical. If non-alphanumeric, non-punctuation, and non-space characters should be removed from the 
+#' included text attribute data. Only applies if \code{textData = TRUE}. Default is \code{TRUE}.
 #' 
-#' Comment ids as edge attributes in graphs refer to the Collect dataframe comment id not reddits comment id 
-#' If "Forbidden control character 0x19 found in igraph_i_xml_escape, Invalid value" then set cleanText = TRUE
+#' @return A reddit actor network as igraph object.
 #' 
-#' @return an igraph object of the actor network
-#' 
-CreateActorNetwork.reddit <- function(x, weightEdges, includeTextData, cleanText, writeToFile) {
-  
-  if (missing(writeToFile) || writeToFile != TRUE) {
-    writeToFile <- FALSE
-  }
-
-  if (missing(weightEdges) || weightEdges != TRUE) {
-    weightEdges <- FALSE
-  }
-  
-  # if weightEdges then includeTextData set FALSE
-  if (missing(includeTextData) || includeTextData != TRUE || weightEdges == TRUE) {
-    includeTextData <- FALSE
-  }
+#' @rdname CreateActorNetwork
+#' @export
+CreateActorNetwork.reddit <- function(x, weightEdges = FALSE, textData = FALSE, cleanText = TRUE, 
+                                      writeToFile = FALSE, ...) {
   
   # default cleanText = TRUE as reddit comments often contain forbidden XML control characters
-  if (missing(cleanText) || cleanText != FALSE) {
-    cleanText <- TRUE
-  } else {
-    cleanText <- FALSE
-  }
   
-  if (includeTextData == FALSE) {
-    cleanText <- FALSE
-  }
+  # if weightEdges then textData set FALSE
+  if (weightEdges) { textData <- FALSE }
+  
+  if (textData == FALSE) { cleanText <- FALSE }
+  
+  cat("Generating reddit actor network...\n")
+  flush.console()
   
   # append string to file name to indicate different graph types, only used if writeToFile = TRUE
   appendToName <- ""
@@ -55,17 +36,30 @@ CreateActorNetwork.reddit <- function(x, weightEdges, includeTextData, cleanText
   # modified from RedditExtractoR::user_network to include the df comment id, subreddit and thread id as edge 
   # attributes to support post-processing. author of sender_receiver_df, node_df, and edge_df @ivan-rivera.
   include_author <- TRUE
-  sender_receiver_df <-
-    thread_df %>% 
+  
+  # select cols and rename id and user
+  sender_receiver_df <- thread_df %>% 
     dplyr::select(.data$id, .data$subreddit, .data$thread_id, .data$structure, .data$user, .data$author, 
                   .data$comment) %>% 
-    dplyr::rename("comment_id" = .data$id, "sender" = .data$user) %>%
+    dplyr::rename("comment_id" = .data$id, "sender" = .data$user)
+  
+  sender_receiver_df %<>%
+    # response_to = "" if structure doesnt have underscore in it
+    # else structure minus last digit '1_1_2' response_to = '1_1' 
     dplyr::mutate(response_to = ifelse(!grepl("_", .data$structure), "", gsub("_\\d+$", "", .data$structure))) %>%
+    
+    # select structure and user from original df
+    # rename structure to response_to and user to receiver
+    # left join sender_receiver_df to response_to, receiver by response_to
     dplyr::left_join(thread_df %>% 
                      dplyr::select(.data$structure, .data$user) %>%
                      dplyr::rename("response_to" = .data$structure, "receiver" = .data$user),
-                     by = "response_to") %>% 
+                     by = "response_to")
+  
+  sender_receiver_df %<>%
+    # inserts author into missing receiver values
     dplyr::mutate(receiver = dplyr::coalesce(.data$receiver, ifelse(include_author, .data$author, ""))) %>%
+    # filter out when sender and receiver same, or if either deleted or empty string
     dplyr::filter(.data$sender != .data$receiver, 
                   !(.data$sender %in% c("[deleted]", "")), 
                   !(.data$receiver %in% c("[deleted]", ""))) %>% 
@@ -93,22 +87,24 @@ CreateActorNetwork.reddit <- function(x, weightEdges, includeTextData, cleanText
 
   # weight edges network graph
   if (weightEdges) {
+    # drop comment id and text
     edge_df$comment_id <- edge_df$title <- NULL
-    edge_df <- edge_df %>% dplyr::group_by(.data$from, .data$to) %>% 
-               dplyr::summarise(weight = sum(.data$weight)) %>% dplyr::ungroup()  
+    edge_df %<>% dplyr::group_by(.data$from, .data$to) %>% 
+                 dplyr::summarise(weight = sum(.data$weight)) %>% dplyr::ungroup()  
   
     appendToName <- "Weighted"
   # include comment text as edge attribute network graph
-  } else if (includeTextData) {
+  } else if (textData) {
     edge_df$weight <- NULL
     
     # rename the edge attribute containing the thread comment
-    edge_df <- edge_df %>% dplyr::rename("vosonTxt_comment" = .data$title)
+    edge_df %<>% dplyr::rename("vosonTxt_comment" = .data$title)
     
     # problem control characters encountered in reddit text
     # edge_df$vosonTxt_comment <- gsub("[\x01\x05\x18\x19\x1C]", "", edge_df$vosonTxt_comment, perl = TRUE)
     appendToName <- "Txt"
     
+    # remove any characters that are not in punctuation, alphanumeric classes or spaces
     if (cleanText) {
       edge_df$vosonTxt_comment <- gsub("[^[:punct:]^[:alnum:]^\\s]", "", edge_df$vosonTxt_comment, perl = TRUE)
       appendToName <- "CleanTxt"
@@ -129,7 +125,7 @@ CreateActorNetwork.reddit <- function(x, weightEdges, includeTextData, cleanText
     writeOutputFile(g, "graphml", name)
   }
   
-  cat("\nDone!\n")
+  cat("Done.\n")
   flush.console()
   
   return(g)

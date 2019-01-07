@@ -1,27 +1,21 @@
-#' Create Twitter actor network
-#'
-#' Creates an actor network from collected tweets.
-#'
-#' @param x A dataframe containing tweet data collected and structured by \code{CollectDataTwitter}.
-#' @param writeToFile Logical. If \code{TRUE} then igraph data is saved to a file in the current working directory in 
-#' graphml format. The file name will contain the current system time. Default is \code{FALSE}.
-#' @param verbose Output additional information about the network creation. Default is \code{FALSE}.
+# Create twitter actor network
+# 
+# Creates an actor network from collected tweets.
+#
+#' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
 #' 
-#' @return A list containing an igraph object, the relations and users data frames of the the actor network.
-#'
-#' @noRd
-CreateActorNetwork.twitter <- function(x, writeToFile, verbose) {
+#' @note For twitter data, actor networks can be created from multiple data frames (i.e. datasets collected individually
+#' using \code{Collect} method. Simply create a list of the data frames that you wish to create a network from.
+#' For example, \code{myList <- list(myTwitterData1, myTwitterData2, myTwitterData3)}
+#' 
+#' @return A twitter actor network as list containing a relations dataframe, users dataframe and igraph object.
+#' 
+#' @rdname CreateActorNetwork
+#' @export
+CreateActorNetwork.twitter <- function(x, writeToFile = FALSE, verbose = FALSE, ...) {
 
   from <- to <- edge_type <- timestamp <- status_id <- NULL
   is_retweet <- is_quote <- mentions_user_id <- reply_to_user_id <- NULL
-  
-  if (missing(writeToFile)) {
-    writeToFile <- FALSE
-  }
- 
-  if (missing(verbose)) {
-    verbose <- FALSE
-  }
   
   df <- x
   df <- data.table(df)
@@ -168,9 +162,7 @@ CreateActorNetwork.twitter <- function(x, writeToFile, verbose) {
   df_stats <- networkStats(df_stats, "edges", sum(df_stats$count[df_stats$edge_count == TRUE]))
   
   # print stats
-  if (verbose) {
-    networkStats(df_stats, print = TRUE) 
-  }
+  if (verbose) { networkStats(df_stats, print = TRUE) }
   
   df_relations <- data.frame(
     from = dataCombined$from,
@@ -184,11 +176,9 @@ CreateActorNetwork.twitter <- function(x, writeToFile, verbose) {
   V(g)$screen_name <- ifelse(is.na(V(g)$screen_name), paste0("ID:", V(g)$name), V(g)$screen_name)
   V(g)$label <- V(g)$screen_name
   
-  if (writeToFile) {
-    writeOutputFile(g, "graphml", "TwitterActorNetwork")
-  }
+  if (writeToFile) { writeOutputFile(g, "graphml", "TwitterActorNetwork") }
   
-  cat("\nDone!\n")
+  cat("Done.\n")
   flush.console()
   
   function_output <- list(

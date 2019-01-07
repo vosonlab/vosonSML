@@ -1,60 +1,27 @@
 #' Create networks from social media data
 #'
-#' This function creates networks from social media data (i.e. from data frames of class \code{dataSource}.
-#' \code{Create} is the final step of the \code{Authenticate}, \code{Collect}, \code{Create} workflow. This function is
-#' a convenient UI wrapper to the core Create*Network family of functions.
+#' This function creates networks from social media data (i.e. collected from dataframes of class \code{social media}).
+#' \code{Create} is the final step of the \code{Authenticate}, \code{Collect}, \code{Create} workflow. This function 
+#' is a wrapper for the Create*Network S3 methods.
 #'
-#' Note: when creating twitter networks, a network with additional user information can be generated using the
-#' \code{\link{GraphUserInfoTwitter}} function. Additional calls can be made to the Twitter API to get information
-#' about users that became nodes during network creation.
+#' @param dataSource Social media data collected using the \code{Collect} method.
+#' @param type Character string. Type of network to be created, can be \code{actor}, \code{bimodal},
+#' \code{dynamic}, \code{semantic} or \code{ego}.
+#' @param ... Additional parameters for network creation for appropriate \code{social media} and network \code{type}. 
+#' Refer to S3 methods \code{social media} type for default parameters.
 #'
-#' @param dataSource A data frame of class \code{dataSource}.
-#' @param type Character string. Type of network to be created, can be \code{"actor"}, \code{"bimodal"},
-#' \code{"dynamic"}, \code{"semantic"} or \code{"ego"}.
-#' @param ... Additional parameters for network creation for appropriate \code{socialmedia} and network \code{type}.
-#' Refer to Create*Network functions for more details.
-#' \describe{
-#'   \item{twitter|actor:}{\code{[writeToFile]}}
-#'   \item{youtube|actor:}{\code{[writeToFile]}}
-#'   \item{reddit|actor:}{\code{[weightEdges, includeTextData, cleanText, writeToFile]}}
-#'   \item{twitter|bimodal:}{\code{[writeToFile, removeTermsOrHashtags]}}
-#'   \item{instagram|bimodal:}{\code{[writeToFile, ...]}}
-#'   \item{facebook|bimodal:}{\code{[writeToFile, removeTermsOrHashtags, ...]}}
-#'   \item{facebook|dynamic:}{\code{[writeToFile]}}
-#'   \item{twitter|semantic:}{\code{[writeToFile, termFreq, hashtagFreq, removeTermsOrHashtags,}\cr
-#'                            \code{stopwordsEnglish]}}
-#'   \item{instagram|ego:}{[writeToFile]}
-#' }
+#' @return Network data containing an igraph object.
 #'
-#' @return An \code{igraph} graph object.
-#'
-#' @seealso \code{\link{Authenticate}}, \code{\link{Collect}}
-#' @keywords create actor bimodal dynamic semantic ego twitter youtube instagram facebook
-#'
-#' @examples
-#' \dontrun{
-#' require(magrittr)
-#'
-#' ## youtube actor network example
-#'
-#' myYoutubeAPIKey <- "xxxxxxxxxxxxxxxxxxxxxx"
-#' listYoutubeVideoIDs <- c("W2GZFeYGU3s", "mL27TAJGlWc")
-#'
-#' myActorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>%
-#'   Collect(videoIDs = listYoutubeVideoIDs) %>% Create("actor")
-#'
-#' ## instagram ego network example
-#'
-#' myInstaAppID <- "xxxxxxxxxxx"
-#' myInstaAppSecret <- "xxxxxxxxxxxxxxxxxxxxxx"
-#' listInstaUsernames <- c("senjohnmccain", "obama")
-#'
-#' myEgoNetwork <- Authenticate("instagram", appID = myInstaAppID, appSecret = myInstaAppSecret) %>%
-#'   Collect(ego = TRUE, username = listInstaUsernames) %>% Create("ego")
-#' }
+#' @note When creating twitter networks, a network with additional user information can be generated using the
+#' \code{\link{GraphUserInfoTwitter}} function. Additional calls can be made to the twitter API to get information
+#' about users that were identified as nodes during network creation.
+#' 
+#' @seealso \code{\link{CreateActorNetwork}}, \code{\link{CreateBimodalNetwork}}, \code{\link{CreateSemanticNetwork}}
+#' @keywords create actor bimodal semantic network
 #'
 #' @export
 Create <- function(dataSource, type = "actor", ...) {
+  # if ego is in the class list
   if (inherits(dataSource, "ego")) {
     return(CreateEgoNetworkFromData(dataSource)) # you cannot create actor out of ego data
   }
@@ -67,7 +34,10 @@ Create <- function(dataSource, type = "actor", ...) {
                     ego = CreateEgoNetworkFromData,
                     stop("Unknown Type"))
   
+  # calls method mapped to type with parameters passed to create
   networkToReturn <- creator(dataSource, ...)
+  
+  # creates class as vector that adds network results class and vosonSML class attributes
   class(networkToReturn) <- append(class(networkToReturn), c("vosonSML"))
   
   return(networkToReturn)

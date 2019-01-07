@@ -4,8 +4,10 @@
 \alias{CollectDataTwitter}
 \title{Note: this function is DEPRECATED. Please use the \code{\link{Collect}} function.}
 \usage{
-CollectDataTwitter(authToken, searchTerm, searchType, numTweets,
-  includeRetweets, retryOnRateLimit, writeToFile, verbose, ...)
+CollectDataTwitter(authToken = NULL, searchTerm = "",
+  searchType = "recent", numTweets = 100, includeRetweets = TRUE,
+  retryOnRateLimit = FALSE, writeToFile = FALSE, verbose = FALSE,
+  ...)
 }
 \arguments{
 \item{authToken}{Twitter oauth token created by rtweet.}
