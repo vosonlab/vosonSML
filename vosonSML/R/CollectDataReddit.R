@@ -11,23 +11,13 @@
 #' @return A data frame object of class dataSource.reddit that can be used for creating unimodal 
 #' networks (CreateActorNetwork).
 #' 
-CollectDataReddit <- function(threadUrls, waitTime = 5, writeToFile) {
+CollectDataReddit <- function(threadUrls, waitTime = 5, writeToFile = FALSE) {
   
-  if (missing(threadUrls)) {
-    cat("Error. Argument `threadUrls` is missing.\nPlease provide a reddit thread url.\n")
-    return(NA)
+  if (missing(threadUrls) || !is.vector(threadUrls) || length(threadUrls) < 1) {
+    stop("Please provide a vector of one or more reddit thread urls.\n", call. = FALSE)
   }
 
-  if (!is.vector(threadUrls) || length(threadUrls) < 1) {
-    cat("Error. Please provide a vector of one or more reddit thread urls.\n")
-    return(NA)    
-  }
-  
-  if (missing(writeToFile)) {
-    writeToFile <- FALSE
-  }
-
-  cat("\nCollecting thread data for reddit urls:\n")
+  cat("Collecting thread data for reddit urls...\n")
   
   # make the get request for the reddit thread url
   threads_df <- RedditExtractoR::reddit_content(threadUrls, waitTime)
@@ -36,13 +26,12 @@ CollectDataReddit <- function(threadUrls, waitTime = 5, writeToFile) {
   threads_df$thread_id <- gsub("^(.*)?/comments/([0-9A-Za-z]{6})?/.*?(/)?$", "\\2", 
                                threads_df$URL, ignore.case = TRUE, perl = TRUE)
   
-  if (isTrueValue(writeToFile)) {
-    writeOutputFile(threads_df, "csv", "RedditData")
-  }
+  if (writeToFile) { writeOutputFile(threads_df, "csv", "RedditData") }
   
   class(threads_df) <- append(class(threads_df), c("dataSource", "reddit"))
   
-  cat("\nDone!\n")
+  cat("Done.\n")
+  flush.console()
   
   return(threads_df)
 }

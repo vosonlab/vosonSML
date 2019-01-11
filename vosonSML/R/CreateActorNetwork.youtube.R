@@ -1,19 +1,12 @@
-#' Create YouTube Actor Network
-#'
-#' Creates a unimodal actor network based on comments and replies to one or more youtube videos.
-#'
-#' @param x dataframe containing comments data collected and structured by CollectDataYoutube.
-#' @param writeToFile boolean, if TRUE then igraph data is saved to a file in the current working directory in 
-#' graphml format. The file name will contain the current system time. Default is FALSE.
+# Create youtube actor network
+# 
+# Creates a unimodal actor network based on comments and replies to one or more youtube videos.
+#
+#' @return A youtube actor network as igraph object.
 #' 
-#' @return igraph object containing the actor network with edge attribute comment id
-#' 
-#' @noRd
-CreateActorNetwork.youtube <- function(x, writeToFile) {
-
-  if (missing(writeToFile)) {
-    writeToFile <- FALSE
-  }
+#' @rdname CreateActorNetwork
+#' @export
+CreateActorNetwork.youtube <- function(x, writeToFile = FALSE, ...) {
 
   df_comments <- x # match the variable names to avoid warnings in package compilation
 
@@ -22,12 +15,14 @@ CreateActorNetwork.youtube <- function(x, writeToFile) {
   # 2 User         5 PublishTime   8 ReplyToAnotherUser
   # 3 ReplyCount   6 CommentId     9 VideoID
 
+  cat("Generating youtube actor network...\n")
+  flush.console()
+  
   if (nrow(df_comments) == 0) {
-    cat(paste0("\nOops! There are no user comments to make a network from.\nPlease find video(s) where users have",
-               " commented on a video or to each other.\nReturning...\n"))
-    return()
+    stop(paste0("There are no user comments to make a network from, please check that the videos selected ",
+               "for collection have comments.\n"), call. = FALSE)
   }
-
+  
   # direct comments which are not replies to others to a video id node
   # in the graph the video nodes will appear as VIDEO:AbCxYz where AbCxYz is the id
   not_replies <- which(df_comments$ReplyToAnotherUser == "FALSE" & df_comments$ParentID == "None")
@@ -54,11 +49,9 @@ CreateActorNetwork.youtube <- function(x, writeToFile) {
   V(g)$label <- V(g)$name
 
   # output the final network to a graphml file
-  if (isTrueValue(writeToFile)) {
-    writeOutputFile(g, "graphml", "YoutubeActorNetwork")
-  }
+  if (writeToFile) { writeOutputFile(g, "graphml", "YoutubeActorNetwork") }
 
-  cat("\nDone!\n")
+  cat("Done.\n")
   flush.console()
 
   return(g)

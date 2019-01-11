@@ -28,13 +28,13 @@
 #'      rangeTo="2015-03-02", writeToFile=TRUE)
 #'
 #' # Import the data (that was saved to disk in the previous step)
-#' myStarWarsData <- importData("2015-03-01_to_2015-03-02_StarWars_FacebookData.csv","facebook")
+#' myStarWarsData <- ImportData("2015-03-01_to_2015-03-02_StarWars_FacebookData.csv","facebook")
 #'
 #' # Create a network using the imported dataframe object
 #' myNetwork <- myStarWarsData %>% Create("Bimodal")
 #' }
 #' @export
-importData <- function(file,dataSource) {
+ImportData <- function(file, dataSource) {
   df <- read.csv(file)
   #if(all(colnames(df)==c("X","from","to","edgeType","postType","postLink","postTimestamp","commentText","commentTimestamp"))) {
   #  class(df) <- c("data.table","data.frame","dataSource","facebook")

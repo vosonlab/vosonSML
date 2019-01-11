@@ -4,7 +4,7 @@
 \alias{CollectDataReddit}
 \title{Collect reddit thread data}
 \usage{
-CollectDataReddit(threadUrls, waitTime = 5, writeToFile)
+CollectDataReddit(threadUrls, waitTime = 5, writeToFile = FALSE)
 }
 \arguments{
 \item{threadUrls}{character string vector. Reddit thread url's to collect data from.}

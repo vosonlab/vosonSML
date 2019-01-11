@@ -4,7 +4,7 @@
 \alias{AuthenticateWithRedditAPI}
 \title{Reddit API authentication.}
 \usage{
-AuthenticateWithRedditAPI(appName, appKey, appSecret, useTokenCache)
+AuthenticateWithRedditAPI(appName, appKey, appSecret, useCachedToken)
 }
 \arguments{
 \item{appName}{character string containing the reddit app name associated with the API key.}
@@ -13,7 +13,7 @@ AuthenticateWithRedditAPI(appName, appKey, appSecret, useTokenCache)
 
 \item{appSecret}{character string containing the app secret.}
 
-\item{useTokenCache}{logical. Use cached authentication token if found.}
+\item{useCachedToken}{logical. Use cached authentication token if found.}
 }
 \value{
 a reddit authentication token

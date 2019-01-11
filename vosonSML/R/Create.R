@@ -1,50 +1,31 @@
 #' Create networks from social media data
 #'
-#' This function creates networks from social media data (i.e. from data frames of class \code{dataSource}. 
-#' \code{Create} is the final step of the \code{Authenticate}, \code{Collect}, \code{Create} workflow. This function is
-#' a convenient UI wrapper to the core create*Network family of functions.
+#' This function creates networks from social media data (i.e. collected from dataframes of class \code{social media}).
+#' \code{Create} is the final step of the \code{Authenticate}, \code{Collect}, \code{Create} workflow. This function 
+#' is a wrapper for the Create*Network S3 methods.
 #'
-#' Note: when creating Twitter networks, the user information can be collected separately using the 
-#' \code{\link{PopulateUserInfo}} function and stored into the network as vertex attributes (this involves additional
-#' calls to the Twitter API).
+#' @param dataSource Social media data collected using the \code{Collect} method.
+#' @param type Character string. Type of network to be created, can be \code{actor}, \code{bimodal},
+#' \code{dynamic}, \code{semantic} or \code{ego}.
+#' @param ... Additional parameters for network creation for appropriate \code{social media} and network \code{type}. 
+#' Refer to S3 methods \code{social media} type for default parameters.
 #'
-#' @param dataSource a data frame of class \code{dataSource}
-#' @param type character, type of network to be created, currently supports "actor", "bimodal", "dynamic", "semantic" 
-#' and "ego"
-#' @param ... additional parameters for create*Network functions
-#' @return an igraph graph object
+#' @return Network data containing an igraph object.
+#'
+#' @note When creating twitter networks, a network with additional user information can be generated using the
+#' \code{\link{GraphUserInfoTwitter}} function. Additional calls can be made to the twitter API to get information
+#' about users that were identified as nodes during network creation.
 #' 
-#' @author Chung-hong Chan <chainsawtiney@@gmail.com>
-#' 
-#' @examples
-#' \dontrun{
-#' require(magrittr)
-#' 
-#' ## instagram ego network example
-#' 
-#' my_app_id     <- "123456789098765"
-#' my_app_secret <- "abc123abc123abc123abc123abc123ab"
-#' my_usernames  <- c("senjohnmccain", "obama")
+#' @seealso \code{\link{CreateActorNetwork}}, \code{\link{CreateBimodalNetwork}}, \code{\link{CreateSemanticNetwork}}
+#' @keywords create actor bimodal semantic network
 #'
-#' my_ego_network <- Authenticate("instagram", appID = my_app_id, appSecret = my_app_secret) %>% 
-#'   Collect(ego = TRUE, username = my_usernames) %>% Create
-#'
-#' ## youtube actor network example
-#'
-#' my_api_key   <- "314159265358979qwerty"
-#' my_video_ids <- c("W2GZFeYGU3s","mL27TAJGlWc")
-#'
-#' my_actor_network <- Authenticate("youtube", apiKey = my_api_key) %>% 
-#'   Collect(videoIDs = my_video_ids) %>% Create('actor')
-#'
-#' }
 #' @export
 Create <- function(dataSource, type = "actor", ...) {
-  
+  # if ego is in the class list
   if (inherits(dataSource, "ego")) {
-    return(CreateEgoNetworkFromData(dataSource)) ## you cannot create actor out of ego data
+    return(CreateEgoNetworkFromData(dataSource)) # you cannot create actor out of ego data
   }
-
+  
   creator <- switch(tolower(type),
                     actor = CreateActorNetwork,
                     bimodal = CreateBimodalNetwork,
@@ -52,9 +33,12 @@ Create <- function(dataSource, type = "actor", ...) {
                     semantic = CreateSemanticNetwork,
                     ego = CreateEgoNetworkFromData,
                     stop("Unknown Type"))
-
-  network_to_return <- creator(dataSource, ...)
-  class(network_to_return) <- append(class(network_to_return), c("vosonSML"))
-
-  return(network_to_return)
+  
+  # calls method mapped to type with parameters passed to create
+  networkToReturn <- creator(dataSource, ...)
+  
+  # creates class as vector that adds network results class and vosonSML class attributes
+  class(networkToReturn) <- append(class(networkToReturn), c("vosonSML"))
+  
+  return(networkToReturn)
 }
