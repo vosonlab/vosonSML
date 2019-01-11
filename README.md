@@ -1,4 +1,4 @@
-# vosonSML [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML) ![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML) ![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML) [![Rdoc](http://www.rdocumentation.org/badges/version/vosonSML)](http://www.rdocumentation.org/packages/vosonSML)
+# vosonSML <img src="vosonSML/man/figures/logo.png" width="140px" align="right"/> [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML) ![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML) ![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML) [![Rdoc](http://www.rdocumentation.org/badges/version/vosonSML)](http://www.rdocumentation.org/packages/vosonSML)
 
 ## What does this package do?
 
