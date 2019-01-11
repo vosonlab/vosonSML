@@ -12,11 +12,11 @@
 #' For multiple videos, the user may wish to use the function GetYoutubeVideoIDs, which creates a character
 #' vector of video IDs from a plain text file of YouTube video URLs, which can then be used for the videoIDs
 #' argument of the function CollectDataYoutube.
-#'
+#' 
+#' @param apiKey character string, specifying the Google Developer API Key used for authentication.
 #' @param videoIDs character vector, specifying one or more YouTube video IDs. For example, if the video URL is 
 #' 'https://www.youtube.com/watch?v=W2GZFeYGU3s', then use videoIDs='W2GZFeYGU3s'. For multiple videos, the 
 #' function GetYoutubeVideoIDs can be used to create a vector object suitable as input for videoIDs.
-#' @param apiKeyYoutube character string, specifying the Google Developer API Key used for authentication.
 #' @param verbose logical. If TRUE then this function will output runtime information to the console as it 
 #' computes. Useful diagnostic tool for long computations. Default is FALSE.
 #' @param writeToFile logical. If TRUE then the data is saved to file in current working directory (CSV format), 
@@ -42,8 +42,7 @@
 #' collected will be equal to 15. Currently, the user must 'guesstimate' the maxResults value, to collect a 
 #' number of comments in the order of what they require.
 #'
-#' @noRd
-CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeToFile = FALSE, 
+CollectDataYoutube <- function(apiKey, videoIDs, verbose = FALSE, writeToFile = FALSE, 
                                maxComments = 10000000000000) {
   
   # maxComments defaults to an arbitrary very large number
@@ -52,11 +51,9 @@ CollectDataYoutube <- function(videoIDs, apiKeyYoutube, verbose = FALSE, writeTo
     stop("Please provide a vector of one or more youtube video ids.\n", call. = FALSE)
   }
  
-  if (missing(apiKeyYoutube) || nchar(apiKeyYoutube) < 1) {
+  if (missing(apiKey) || nchar(apiKey) < 1) {
     stop("Please provide a valid youtube api key.\n", call. = FALSE)
   }
-  
-  apiKey <- apiKeyYoutube # to play nice with existing code
     
   # Start data collection
   

@@ -33,7 +33,7 @@ AuthenticateWithTwitterAPI <- function(appName, apiKey, apiSecret, accessToken, 
   }
   
   twitter_oauth <- NULL
-  token_file_name <- ".twitter_oauth_token"
+  token_file_name <- ".twitter-oauth"
   
   if (useCachedToken) {
     if (file.exists(token_file_name)) {

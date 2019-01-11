@@ -96,9 +96,13 @@ twitterCollector <- function(credential, ...) {
 #                             retryOnRateLimit, writeToFile, verbose, ...))
 # }
 
-youtubeCollector <- function(credential, videoIDs, verbose, writeToFile, maxComments) {
-  return(CollectDataYoutube(videoIDs, apiKeyYoutube = credential$auth, verbose, writeToFile, maxComments))
+youtubeCollector <- function(credential, ...) {
+  return(CollectDataYoutube(apiKey = credential$auth, ...))
 }
+
+# youtubeCollector <- function(credential, videoIDs, verbose, writeToFile, maxComments) {
+#   return(CollectDataYoutube(videoIDs, apiKeyYoutube = credential$auth, verbose, writeToFile, maxComments))
+# }
 
 redditCollector <- function(credential, threadUrls, waitTime, writeToFile) {
   return(CollectDataReddit(threadUrls, waitTime, writeToFile))
