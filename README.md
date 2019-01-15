@@ -1,86 +1,68 @@
-# vosonSML [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML) ![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML) ![Downloads](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML) [![Rdoc](http://www.rdocumentation.org/badges/version/vosonSML)](http://www.rdocumentation.org/packages/vosonSML)
+# vosonSML <img src="vosonSML/man/figures/logo.png" width="140px" align="right"/>
+![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=yellow)
+![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg)
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
+![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)
 
-## What does this package do?
-
-`vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms (Twitter, YouTube, Reddit, Instagram and Facebook) and generating different types of networks for analysis.
+`vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
 
 `vosonSML` is the `SocialMediaLab` package, renamed. We decided that `SocialMediaLab` was a bit too generic and also we wanted to indicate the connection to the [Virtual Observatory for the Study of Online Networks Lab](http://vosonlab.net), where this package was conceived and created.
 
-vosonSML was created by [Timothy Graham](http://uq.academia.edu/TimGraham) and [Robert Ackland](https://researchers.anu.edu.au/researchers/ackland-rj), with major contributions by [Chung-hong Chan](https://github.com/chainsawriot) and Bryan Gertzel.
+`vosonSML` was created by [Timothy Graham](http://uq.academia.edu/TimGraham) and [Robert Ackland](https://researchers.anu.edu.au/researchers/ackland-rj), with major contributions by [Chung-hong Chan](https://github.com/chainsawriot) and Bryan Gertzel.
 
-The latest 'official' version of the package can also be found on [CRAN](https://cran.r-project.org/web/packages/vosonSML/index.html).
+### Supported Social Media
 
-### Current known issues
+`vosonSML` currently features the collection of data and generation of networks from `twitter`, `youtube` and `reddit`. 
 
-#### Facebook
+Unfortunately we are no longer able to maintain `facebook` and `instagram` collection, however these features will still be available in [releases](https://github.com/vosonlab/vosonSML/releases) prior to version `0.25.0`.
 
-If you are having trouble getting data from Facebook it is probably due to a number of changes made to the API and authorized apps process in 2018. The changes now require a manually approved app and authentication over secure connections. More information can be found at [Facebook App Registration](https://developers.facebook.com/docs/apps#register) and [Developer Blog](https://developers.facebook.com/blog/post/2018/06/08/enforce-https-facebook-login/), and on github for the [Rfacebook](https://github.com/pablobarbera/Rfacebook/issues) package information.
+## Installation
 
-#### Twitter
+Install the current version from Github:
+```R
+# requires the devtools package
+devtools::install_github("vosonlab/vosonSML", subdir = "vosonSML")
+```
 
-If you are getting the error `Error in check_twitter_oauth()`, please find a [solution here](https://github.com/geoffjentry/twitteR/issues/90).
-
-#### Instagram
-
-Instagram API access is severely limited if you do not have an authorised app, which is significantly harder to obtain nowadays.
-
-### Special thanks
-
-This package would not be possible without key packages by other authors in the R community, particularly: [igraph](https://github.com/igraph/rigraph), [twitteR](https://github.com/geoffjentry/twitteR), [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [instaR](https://github.com/pablobarbera/instaR), [Rfacebook](https://github.com/pablobarbera/Rfacebook), [data.table](https://github.com/Rdatatable/data.table), [tm](https://cran.r-project.org/web/packages/tm/index.html), and [httr](https://github.com/hadley/httr).
+Install vosonSML from CRAN:
+```R
+install.packages("vosonSML", dependencies = TRUE)
+```
 
 ## Getting started
 
-For detailed information and examples, please refer to the [vosonSML documentation](https://github.com/vosonlab/vosonSML/blob/master/vosonSML.pdf).
+The [vosonSML page on the VOSON website](http://vosonlab.net/vosonSML) has several "how to" guides, including an "Absolute Beginners Guide to vosonSML" tutorial aimed at people with little or no programming experience.
 
-The [vosonSML page on the VOSON website](http://vosonlab.net/vosonSML) also has several "how to" guides, including an "Absolute Beginners Guide to vosonSML" tutorial aimed at people with little or no programming experience.
+### Usage
 
-## Using Magrittr's pipe interface
-
-The process of authentication, data collection and creating social network is now expressed with the 3 verb functions: *Authenticate*, *Collect* and *Create*. The following are some of the examples from the package documentation using the pipe interface.
+The process of authentication, data collection and creating social network in vosonSML is expressed with the three verb functions: *Authenticate*, *Collect* and *Create*. The following are some examples:
 
 ```R
 library(magrittr)
 library(vosonSML)
 
-# Authenticate with youtube, Collect data from youtube and Create an actor network
-actorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>% 
-                Collect(videoIDs = myYoutubeVideoIds) %>% Create("actor")
+# Authenticate with youtube, Collect comment data from videos and then Create an actor network
+actorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>%
+                Collect(videoIDs = myYoutubeVideoIds) %>%
+                Create("actor", writeToFile = TRUE)
 
-# Authenticate with twitter, Collect 150 tweets for the "#auspol" hashtag and Create a semantic network
-semanticNetwork <- Authenticate("twitter", apiKey = myTwitAPIKey, apiSecret = myTwitAPISecret, 
-                                accessToken = myTwitAccessToken, 
-                                accessTokenSecret = myTwitAccessTokenSecret) %>% 
-                   Collect(searchTerm = "#auspol", numTweets = 150) %>% Create("semantic")
+# Authenticate with twitter, Collect 100 tweets for the '#auspol' hashtag and Create a 
+# semantic network
+semanticNetwork <- Authenticate("twitter", appName = myTwitAppName,
+                                apiKey = myTwitAPIKey, apiSecret = myTwitAPISecret,
+                                accessToken = myTwitAccessToken,
+                                accessTokenSecret = myTwitAccessTokenSecret) %>%
+                   Collect(searchTerm = "#auspol", searchType = "recent", 
+                           numTweets = 100, includeRetweets = FALSE, retryOnRateLimit = TRUE) %>%
+                   Create("semantic", writeToFile = TRUE)
 
 # Collect reddit threads and Create an actor network with comment text as edge attribute
-actorCommentsNetwork <- Authenticate("reddit") %>% 
-                        Collect(threadUrls = myThreadUrls, waitTime = 5) %>% 
-                        Create("actor", includeTextData = TRUE)
- 
-# Authenticate with facebook, archive the API credential, Collect data about the "Starwars" Page and 
-# Create a bimodal network
-bimodalNetwork <- Authenticate("facebook", appID = myFacebookAppId, appSecret = myFacebookAppSecret) %>% 
-                  SaveCredential("FBCredential.RDS") %>% 
-                  Collect(pageName = "StarWars", rangeFrom = "2015-05-01", rangeTo = "2015-06-03") %>% 
-                  Create("bimodal")
-
-# Create an instagram ego network for provided users
-egoNetwork <- Authenticate("instagram", appID = myInstaAppId, appSecret = myInstaAppSecret) %>% 
-              Collect(ego = TRUE, username = c("adam_kinzinger", "senatorreid")) %>% Create()
+actorCommentsNetwork <- Authenticate("reddit") %>%
+                        Collect(threadUrls = myThreadUrls, waitTime = 5) %>%
+                        Create("actor", includeTextData = TRUE, writeToFile = TRUE)
 ```
+For more detailed information and examples, please refer to the [vosonSML documentation](https://github.com/vosonlab/vosonSML/blob/master/vosonSML.pdf).
 
-## Example networks
+## Special thanks
 
-The following networks were created in vosonSML and visualised using the [Gephi software](http://gephi.github.io/).
-
-##### Facebook bimodal network (Star Wars page)
-
-This network visualises two weeks of activity on the [Star Wars Facebook page](https://www.facebook.com/StarWarsAUNZ/?brand_redir=169299103121699). Nodes (vertices) represent either users or posts, and node ties (edges) represent either 'likes' or comments. Nodes are sized by out-degree and coloured by modularity cluster.
-
-<img src="http://vosonlab.net/papers/ACSPRIWinter2015/Facebook_bimodal_network_socialmedialab_Star_Wars.png" alt="Facebook bimodal network created with vosonSML" width="600" height="600"/>
-
-##### Instagram ego network
-
-This network visualises the social network of one user (the 'ego' node) on Instagram. The degree of the network is "2", meaning that it shows *ego + alters* ("followers of ego") and *ego + alters* + *alters of alters of ego* "followers of followers of ego". 'Follows' data are also collected, so this network also shows "users who ego follows" and "users who followers of ego follow".
-
-<img src="http://vosonlab.net/papers/ACSPRIWinter2015/Instagram_ego_network_socialmedialab_example.png" alt="Facebook bimodal network created with vosonSML" width="600" height="600"/>
+This package would not be possible without key packages by other authors in the R community, particularly: [igraph](https://github.com/igraph/rigraph), [rtweet](https://github.com/mkearney/rtweet), [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [data.table](https://github.com/Rdatatable/data.table), [tm](https://cran.r-project.org/web/packages/tm/index.html), [magrittr](https://cran.r-project.org/web/packages/magrittr/), [httr](https://github.com/hadley/httr) and [dplyr](https://github.com/hadley/dplyr).
