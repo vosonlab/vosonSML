@@ -1,56 +1,32 @@
 #' Create bimodal networks from social media data
 #'
-#' This function creates a bimodal network from social media data (i.e. from data frames of class \code{dataSource}, or 
-#' for Twitter data it is also possible to provide a *list* of data frames), with edges representing relationships 
-#' between actors of two different types (e.g. Facebook users and Facebook posts, with edges representing whether a 
-#' user has commented or 'liked' a post).
-#'
-#' This function creates a (directed and weighted) bimodal network from a data frame of class \code{dataSource} (which 
-#' are created using the 'CollectData' family of functions in the vosonSML package), or a *list* of Twitter data 
-#' frames collected using \code{CollectDataTwitter} function.
-#'
-#' The resulting network is an igraph graph object. This graph object is bimodal because edges represent relationships 
-#' between vertices of two different types. For example, in a bimodal Facebook network, vertices represent Facebook 
-#' users or Facebook posts, and edges represent whether a user has commented or 'liked' a post. Edges are directed and 
-#' weighted (e.g. if user i has commented n times on post j, then the weight of this directed edge equals n).
+#' This function creates a directed and weighted bimodal network from a data frame of class \code{dataSource} (as 
+#' created by the CollectData functions).
 #'
 #' @param x A data frame of class \code{dataSource}. For Twitter data, it is also possible to provide a *list* of data 
-#' frames (i.e. data frames that inherit class \code{dataSource} and \code{twitter}). Only lists of Twitter data 
-#' frames are supported at this time. If a list of data frames is provided, then the function binds these row-wise and 
-#' computes over the entire data set.
-#' @param writeToFile Logical. If \code{TRUE} then the network is saved to file in current working directory (GRAPHML 
-#' format), with filename denoting the current date/time and the type of network.
+#' frames (i.e. data frames that inherit class \code{dataSource} and \code{twitter}).
+#' @param ... Additional parameters to pass to the network creation method.
+#' 
 #' @param removeTermsOrHashtags Character string. Default is none. Otherwise this argument specifies which terms or 
 #' hashtags (i.e. vertices with matching 'name') should be removed from the bimodal network. This is useful to remove
 #' the search term or hashtag that was used to collect the data (i.e. remove the corresponding vertex in the graph). 
 #' For example, a value of "#auspol" means that if there is a vertex with the exact name "#auspol" then this vertex 
 #' will be removed.
-#' @param ... Additional parameters to pass to the network creation method.
+#' @param writeToFile Logical. If \code{TRUE} then the network is saved to file in current working directory (graphml 
+#' format), with filename denoting the current datetime and the type of network.
 #' 
-#' @return An igraph graph object, with weighted and directed edges.
+#' @note Supported data sources: \code{twitter}
 #' 
-#' @note Supported data sources: \code{facebook}, \code{twitter}
-#'
-#' For Twitter data, bimodal networks can be created from multiple data frames (i.e. datasets collected individually 
-#' using CollectDataTwitter). Simply create a list of the data frames that you wish to create a network from. For
-#' example, \code{myList <- list(myTwitterData1, myTwitterData2, myTwitterData3)}.
+#' @seealso \code{\link{Create}}
+#' @keywords create bimodal network twitter
 #' 
-#' @seealso \code{CollectDataFacebook}, \code{CollectDataTwitter}
-#' @keywords SNA bimodal network igraph social media
-#' 
-CreateBimodalNetwork <- function(x, writeToFile, removeTermsOrHashtags, ...) {
-  
-  if (missing(writeToFile)) {
-    writeToFile <- FALSE
-  }
-  
-  if (!missing(removeTermsOrHashtags)) {
-    removeTermsOrHashtags <- as.vector(removeTermsOrHashtags) # coerce to vector to be sure
-  }
-  
-  if (missing(removeTermsOrHashtags)) {
-    removeTermsOrHashtags <- "foobar"
-  }
-  
+#' @export
+CreateBimodalNetwork <- function(x, ...) {
+  # searches the class list of x for matching method
   UseMethod("CreateBimodalNetwork", x)
+}
+
+# default function
+CreateBimodalNetwork.default <- function(x, ...) {
+  cat("Cannot create bimodal network using this type of data.\n")
 }

@@ -1,13 +1,21 @@
-CreateBimodalNetwork.twitter <- function(x, writeToFile = FALSE, removeTermsOrHashtags, verbose = FALSE) {
+# Create twitter bimodal network
+# 
+# Creates a bimodal network from collected tweets.
+#
+#' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
+#' 
+#' @return A twitter bimodal network as igraph object.
+#' 
+#' @rdname CreateBimodalNetwork
+#' @export
+CreateBimodalNetwork.twitter <- function(x, removeTermsOrHashtags = NULL, writeToFile = FALSE, verbose = FALSE, ...) {
   
   from <- to <- edge_type <- timestamp <- status_id <- NULL
-  
-  if (!missing(removeTermsOrHashtags)) {
-    removeTermsOrHashtags <- as.vector(removeTermsOrHashtags) # coerce to vector to be sure
-  }
-  
-  if (missing(removeTermsOrHashtags)) {
+
+  if (is.null(removeTermsOrHashtags)) {
     removeTermsOrHashtags <- "#fake_hashtag_foobar42_1234567890"
+  } else {
+    removeTermsOrHashtags <- as.vector(removeTermsOrHashtags) # coerce to vector to be sure
   }
   
   df <- x
@@ -15,15 +23,14 @@ CreateBimodalNetwork.twitter <- function(x, writeToFile = FALSE, removeTermsOrHa
 
   df_stats <- networkStats(NULL, "collected tweets", nrow(df))
 
-  # create dfBimodalNetwork2, a dataframe of relations between users and hashtags (i.e. user i "tweeted" hashtag j)
   cat("Generating twitter bimodal network...\n")
   flush.console()
 
   df_entities <- data.table("entity_id" = character(0), "display_name" = character(0))
 
-  # for speed we will pre-allocate dataCombined to a very large size (more rows than needed)
+  # for speed we will pre-allocate dt_combined to a very large size (more rows than needed)
   # and after everything is finished we will delete the unused rows
-  dataCombined <- data.table(
+  dt_combined <- data.table(
     from = as.character(c(rep("NA_f00", 20000000))),
     to = as.character(c(rep("NA_f00", 20000000))),
     edge_type = as.character(c(rep("NA_f00", 20000000))),
@@ -31,9 +38,9 @@ CreateBimodalNetwork.twitter <- function(x, writeToFile = FALSE, removeTermsOrHa
     status_id = as.character(c(rep("NA_f00", 20000000)))
   )
   
-  setkey(dataCombined, from) # set the key value of the data table
+  setkey(dt_combined, from) # set the key value of the data table
   
-  nextEmptyRow <- 1 # so we can update rows in 'dataCombined' in a relatively efficient way
+  nextEmptyRow <- 1 # so we can update rows in 'dt_combined' in a relatively efficient way
   
   # we only need to do the 'hashtag' data (currently)
   count <- 0
@@ -51,23 +58,23 @@ CreateBimodalNetwork.twitter <- function(x, writeToFile = FALSE, removeTermsOrHa
         
         tag <- paste0("#", df$hashtags[[i]][j])
         
-        dataCombined[nextEmptyRow, from:= as.character(df$user_id[i][[1]])]
-        dataCombined[nextEmptyRow, to := as.character(tag)]
-        dataCombined[nextEmptyRow, edge_type := as.character("hashtag")]
-        dataCombined[nextEmptyRow, timestamp := as.character(df$created_at[i][[1]])]
-        dataCombined[nextEmptyRow, status_id := as.character(df$status_id[i][[1]])]
+        dt_combined[nextEmptyRow, from:= as.character(df$user_id[i][[1]])]
+        dt_combined[nextEmptyRow, to := as.character(tag)]
+        dt_combined[nextEmptyRow, edge_type := as.character("hashtag")]
+        dt_combined[nextEmptyRow, timestamp := as.character(df$created_at[i][[1]])]
+        dt_combined[nextEmptyRow, status_id := as.character(df$status_id[i][[1]])]
         
         df_entities <- rbind(df_entities, list(tag, tag), stringsAsFactors = FALSE)
 
         hashtag_count = hashtag_count + 1 
-        nextEmptyRow <- nextEmptyRow + 1 # increment the row to update in `dataCombined`
+        nextEmptyRow <- nextEmptyRow + 1 # increment the row to update in `dt_combined`
       }
     }
   }
   df_stats <- networkStats(df_stats, "tweets with hashtags", count, TRUE)
   df_stats <- networkStats(df_stats, "hashtags", hashtag_count, TRUE)
   
-  dataCombined <- dataCombined[edge_type != "NA_f00"]
+  dt_combined <- dt_combined[edge_type != "NA_f00"]
   
   df_entities <- unique(df_entities)
   
@@ -78,11 +85,11 @@ CreateBimodalNetwork.twitter <- function(x, writeToFile = FALSE, removeTermsOrHa
   }
   
   relations <- data.frame(
-    from = dataCombined$from,
-    to = dataCombined$to,
-    edge_type = dataCombined$edge_type,
-    timestamp = dataCombined$timestamp,
-    status_id = dataCombined$status_id)
+    from = dt_combined$from,
+    to = dt_combined$to,
+    edge_type = dt_combined$edge_type,
+    timestamp = dt_combined$timestamp,
+    status_id = dt_combined$status_id)
   
   g <- graph.data.frame(relations, directed = TRUE, vertices = df_entities)
   

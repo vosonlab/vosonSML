@@ -20,7 +20,7 @@ CreateActorNetwork.youtube <- function(x, writeToFile = FALSE, ...) {
   
   if (nrow(df_comments) == 0) {
     stop(paste0("There are no user comments to make a network from, please check that the videos selected ",
-               "for collection have comments.\n"), call. = FALSE)
+               "for collection have comments."), call. = FALSE)
   }
   
   # direct comments which are not replies to others to a video id node

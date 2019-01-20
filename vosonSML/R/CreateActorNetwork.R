@@ -8,10 +8,13 @@
 #'
 #' @param x Collected social media data with \code{social media} class attribute.
 #' @param ... Additional parameters to pass to the network creation method.
+#' 
 #' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
 #'
+#' @note Supported data sources: \code{twitter}, \code{youtube}, \code{reddit}
+#'
 #' @seealso \code{\link{Create}}
-#' @keywords create actor twitter youtube reddit
+#' @keywords create actor network twitter youtube reddit
 #'
 #' @export
 CreateActorNetwork <- function(x, ...) {
@@ -19,12 +22,7 @@ CreateActorNetwork <- function(x, ...) {
   UseMethod("CreateActorNetwork", x)
 }
 
-#' @rdname CreateActorNetwork
-#' @export
+# default function
 CreateActorNetwork.default <- function(x, ...) {
   cat("Cannot create actor network using this type of data.\n")
-  
-  if (inherits(x, "temporal")) {
-    cat("The data you supplied is temporal. Please use the CreateDynamicNetwork function for temporal data.\n")
-  }
 }

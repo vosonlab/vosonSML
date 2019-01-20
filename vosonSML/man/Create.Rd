@@ -9,8 +9,7 @@ Create(dataSource, type = "actor", ...)
 \arguments{
 \item{dataSource}{Social media data collected using the \code{Collect} method.}
 
-\item{type}{Character string. Type of network to be created, can be \code{actor}, \code{bimodal},
-\code{dynamic}, \code{semantic} or \code{ego}.}
+\item{type}{Character string. Type of network to be created, can be \code{actor}, \code{bimodal} or \code{semantic}.}
 
 \item{...}{Additional parameters for network creation for appropriate \code{social media} and network \code{type}. 
 Refer to S3 methods \code{social media} type for default parameters.}

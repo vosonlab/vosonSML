@@ -31,8 +31,6 @@
 #' @importFrom Hmisc escapeRegex
 #' @importFrom igraph delete.vertices graph.data.frame simplify write.graph V 'V<-' set.graph.attribute vcount
 #' graph_from_data_frame delete_vertex_attr set_graph_attr
-#' @importFrom Rfacebook fbOAuth getPost getPage getUsers
-#' @importFrom instaR getComments getLikes instaOAuth searchInstagram getUser getFollowers getFollows
 #' @importFrom plyr ldply
 #' @importFrom rtweet create_token rate_limit search_tweets users_data lookup_users
 #' @importFrom stringr str_extract str_replace_all str_match_all

@@ -52,7 +52,8 @@ The function then finds and maps the relationships of entities of interest in th
 (\code{CreateActorNetwork}), bimodal networks (\code{CreateBimodalNetwork}), and semantic networks 
 (\code{CreateSemanticNetwork}).
 
-The maximum number of tweets for a single call of \code{CollectDataTwitter} is 1500.
+The maximum number of tweets for a single call of \code{CollectDataTwitter} is 18000 as per the twitter standard
+API rate limits. Only returns tweets for the last 6 to 9 days.
 
 Language support is available, using the \code{language} parameter. The user can restrict tweets returned to a 
 particular language, using the ISO 639-1 code. For example, restricting to English would use \code{language="en"}. 
@@ -64,8 +65,6 @@ containing either term (or both). For more information see the Twitter API docum
 }
 \note{
 Supported network types: \code{actor}, \code{bimodal}, \code{semantic}
-
-Data generated using this function is *not* suitable for dynamic networks.
 }
 \seealso{
 \code{Collect}

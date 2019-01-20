@@ -1,14 +1,24 @@
-CreateSemanticNetwork.twitter <- function(x, writeToFile = FALSE, termFreq = 5, hashtagFreq = 50, 
-                                          removeTermsOrHashtags, stopwordsEnglish = TRUE, verbose = FALSE) {
+#' Create twitter semantic network
+#' 
+#' Creates a semantic network from collected tweets.
+#'
+#' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
+#'
+#' @return A twitter semantic network as igraph object.
+#' 
+#' @rdname CreateSemanticNetwork
+#' @export
+CreateSemanticNetwork.twitter <- function(x, removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE, termFreq = 5, 
+                                          hashtagFreq = 50, writeToFile = FALSE, verbose = FALSE, ...) {
 
   # default to the top 5% most frequent terms. reduces size of graph
   # default to the top 50% hashtags. reduces size of graph. hashtags are 50% because they are much less 
   # frequent than terms.
 
-  if (!missing(removeTermsOrHashtags)) {
-    removeTermsOrHashtags <- as.vector(removeTermsOrHashtags) #coerce to vector... to be sure
-  } else {
+  if (is.null(removeTermsOrHashtags)) {
     removeTermsOrHashtags <- "foobar"
+  } else {
+    removeTermsOrHashtags <- as.vector(removeTermsOrHashtags) # coerce to vector
   }
   
   df <- x # match the variable names (this must be used to avoid warnings in package compilation)

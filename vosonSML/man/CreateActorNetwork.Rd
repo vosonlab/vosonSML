@@ -4,15 +4,12 @@
 %   R/CreateActorNetwork.youtube.R
 \name{CreateActorNetwork}
 \alias{CreateActorNetwork}
-\alias{CreateActorNetwork.default}
 \alias{CreateActorNetwork.reddit}
 \alias{CreateActorNetwork.twitter}
 \alias{CreateActorNetwork.youtube}
 \title{Create an actor network from social media data}
 \usage{
 CreateActorNetwork(x, ...)
-
-\method{CreateActorNetwork}{default}(x, ...)
 
 \method{CreateActorNetwork}{reddit}(x, weightEdges = FALSE,
   textData = FALSE, cleanText = TRUE, writeToFile = FALSE, ...)
@@ -54,15 +51,14 @@ comments, an interaction is defined as a 'reply' from user i to user j, given 'c
 returned as an igraph object.
 }
 \note{
-For twitter data, actor networks can be created from multiple data frames (i.e. datasets collected individually
-using \code{Collect} method. Simply create a list of the data frames that you wish to create a network from.
-For example, \code{myList <- list(myTwitterData1, myTwitterData2, myTwitterData3)}
+Supported data sources: \code{twitter}, \code{youtube}, \code{reddit}
 }
 \seealso{
 \code{\link{Create}}
 }
 \keyword{actor}
 \keyword{create}
+\keyword{network}
 \keyword{reddit}
 \keyword{twitter}
 \keyword{youtube}

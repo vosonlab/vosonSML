@@ -5,8 +5,7 @@
 #' is a wrapper for the Create*Network S3 methods.
 #'
 #' @param dataSource Social media data collected using the \code{Collect} method.
-#' @param type Character string. Type of network to be created, can be \code{actor}, \code{bimodal},
-#' \code{dynamic}, \code{semantic} or \code{ego}.
+#' @param type Character string. Type of network to be created, can be \code{actor}, \code{bimodal} or \code{semantic}.
 #' @param ... Additional parameters for network creation for appropriate \code{social media} and network \code{type}. 
 #' Refer to S3 methods \code{social media} type for default parameters.
 #'
@@ -21,18 +20,11 @@
 #'
 #' @export
 Create <- function(dataSource, type = "actor", ...) {
-  # if ego is in the class list
-  if (inherits(dataSource, "ego")) {
-    return(CreateEgoNetworkFromData(dataSource)) # you cannot create actor out of ego data
-  }
-  
   creator <- switch(tolower(type),
                     actor = CreateActorNetwork,
                     bimodal = CreateBimodalNetwork,
-                    dynamic = CreateDynamicNetwork,
                     semantic = CreateSemanticNetwork,
-                    ego = CreateEgoNetworkFromData,
-                    stop("Unknown Type"))
+                    stop("Create called with unsupported network type.", call. = FALSE))
   
   # calls method mapped to type with parameters passed to create
   networkToReturn <- creator(dataSource, ...)

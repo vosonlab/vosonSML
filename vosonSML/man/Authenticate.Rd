@@ -8,16 +8,14 @@ Authenticate(socialmedia, ...)
 }
 \arguments{
 \item{socialmedia}{Character string. Identifier for social media API to authenticate.\cr
-Supports: \code{"twitter"}, \code{"youtube"}, \code{"reddit"}, \code{"instagram"} and \code{"facebook"}.}
+Supports: \code{"twitter"}, \code{"youtube"}, \code{"reddit"}.}
 
 \item{...}{Additional parameters for authentication appropriate to \code{socialmedia} identifier.
 \describe{
-  \item{twitter:}{\code{[appName], apiKey, apiSecret, accessToken, 
-                        accessTokenSecret, [useCachedToken]}}
+  \item{twitter:}{\code{[appName], apiKey, apiSecret, accessToken, accessTokenSecret,}\cr
+                  \code{[useCachedToken]}}
   \item{youtube:}{\code{apiKey}}
-  \item{reddit:}{\code{[appName], appKey, appSecret, [useCachedToken]}}
-  \item{instagram:}{\code{appID, appSecret, [useCachedToken]}}
-  \item{facebook:}{\code{appID, appSecret, [extendedPermissions, useCachedToken]}}
+  \item{reddit:}{\code{No credentials required.}}
 }}
 }
 \value{
@@ -29,44 +27,11 @@ APIs. A \code{credential} object is a S3 object with the authentication-related 
 and the information on the social media that grant authentication. \code{Authenticate} is the first step of the
 \code{Authenticate}, \code{\link{Collect}} and \code{\link{Create}} workflow.
 }
-\note{
-Currently, \code{Authenticate} with \code{socialmedia = "twitter"} generates OAuth information to be used in
-the current active session only (i.e. "side-effect") and no authentication-related information will be stored in the
-returned \code{credential} object.
-
-For other social network API's it's useful to cache the credential to a file and then re-use it in future sessions.
-Refer to \code{\link{SaveCredential}} and \code{\link{LoadCredential}} to do this.
-}
-\examples{
-\dontrun{
-require(magrittr)
-
-## youtube actor network example
-
-myYoutubeAPIKey <- "xxxxxxxxxxxxxxxxxxxxxx"
-listYoutubeVideoIDs <- c("W2GZFeYGU3s", "mL27TAJGlWc")
-
-myActorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) \%>\%
-  Collect(videoIDs = listYoutubeVideoIDs) \%>\% Create("actor")
-
-## instagram ego network example
-
-myInstaAppID <- "xxxxxxxxxxx"
-myInstaAppSecret <- "xxxxxxxxxxxxxxxxxxxxxx"
-listInstaUsernames <- c("senjohnmccain", "obama")
-
-myEgoNetwork <- Authenticate("instagram", appID = myInstaAppID, appSecret = myInstaAppSecret) \%>\%
-  Collect(ego = TRUE, username = listInstaUsernames) \%>\% Create("ego")
-}
-
-}
 \seealso{
-\code{\link{SaveCredential}}, \code{\link{Collect}}, \code{\link{Create}}
+\code{\link{Collect}}, \code{\link{Create}}
 }
 \keyword{authenticate}
 \keyword{credential}
-\keyword{facebook}
-\keyword{instagram}
 \keyword{reddit}
 \keyword{twitter}
 \keyword{youtube}
