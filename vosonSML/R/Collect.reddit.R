@@ -4,14 +4,12 @@
 #' 
 #' @param threadUrls character string vector. Reddit thread url's to collect data from.
 #' @param waitTime numeric integer. Time in seconds to wait in-between url collection requests.
-#' @param writeToFile logical. If the data should be written to file.
 #' 
 #' @note The reddit API endpoint used for thread collection has maximum limit of 500 comments per thread url.
 #' 
-#' @return A data frame object of class dataSource.reddit that can be used for creating unimodal 
-#' networks (CreateActorNetwork).
-#' 
-CollectDataReddit <- function(threadUrls, waitTime = 5, writeToFile = FALSE) {
+#' @rdname Collect
+#' @export
+Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = FALSE, ...) {
   
   if (missing(threadUrls) || !is.vector(threadUrls) || length(threadUrls) < 1) {
     stop("Please provide a vector of one or more reddit thread urls.\n", call. = FALSE)

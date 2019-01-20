@@ -13,26 +13,14 @@
 #' vector of video IDs from a plain text file of YouTube video URLs, which can then be used for the videoIDs
 #' argument of the function CollectDataYoutube.
 #' 
-#' @param apiKey character string, specifying the Google Developer API Key used for authentication.
-#' @param videoIDs character vector, specifying one or more YouTube video IDs. For example, if the video URL is 
-#' 'https://www.youtube.com/watch?v=W2GZFeYGU3s', then use videoIDs='W2GZFeYGU3s'. For multiple videos, the 
+#' @param videoIDs Character vector. Specifies one or more youtube video IDs. For example, if the video URL is 
+#' 'https://www.youtube.com/watch?v=W2GZFeYGU3s', then use \code{videoIDs = 'W2GZFeYGU3s'}. For multiple videos, the 
 #' function GetYoutubeVideoIDs can be used to create a vector object suitable as input for videoIDs.
-#' @param verbose logical. If TRUE then this function will output runtime information to the console as it 
-#' computes. Useful diagnostic tool for long computations. Default is FALSE.
-#' @param writeToFile logical. If TRUE then the data is saved to file in current working directory (CSV format), 
-#' with filename denoting current system time. Default is FALSE.
-#' @param maxComments numeric integer, specifying how many 'top-level' comments to collect from each video. This value 
+#' @param maxComments Numeric integer. Specifies how many 'top-level' comments to collect from each video. This value 
 #' *does not* take into account 'reply' comments (i.e. replies to top-level comments), therefore the total number of
 #' comments collected may be higher than maxComments. By default this function attempts to collect all comments.
 #' 
-#' @return A dataframe object of class dataSource.youtube that can be used for creating unimodal networks 
-#' (CreateActorNetwork).
-#' 
 #' @note Currently supported network types: unimodal 'actor' network; CreateActorNetwork.
-#'
-#' Data generated using this function is *not* suitable for dynamic networks.
-#' Dynamic YouTube comments networks are not currently implemented in the vosonSML package. This will be implemented in 
-#' a future release.
 #'
 #' Note on maxComments argument: Due to quirks/specifications of the Google API, it is currently not possible to 
 #' specify the exact number of comments to return from the API using maxResults argument (i.e.including comments 
@@ -42,17 +30,20 @@
 #' collected will be equal to 15. Currently, the user must 'guesstimate' the maxResults value, to collect a 
 #' number of comments in the order of what they require.
 #'
-CollectDataYoutube <- function(apiKey, videoIDs, verbose = FALSE, writeToFile = FALSE, 
-                               maxComments = 10000000000000) {
+#' @rdname Collect
+#' @export
+Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile = FALSE, 
+                            maxComments = 10000000000000, ...) {
   
   # maxComments defaults to an arbitrary very large number
-
-  if (missing(videoIDs) || !is.vector(videoIDs) || length(videoIDs) < 1) {
-    stop("Please provide a vector of one or more youtube video ids.\n", call. = FALSE)
+  
+  apiKey <- credential$auth
+  if (is.null(apiKey) || nchar(apiKey) < 1) {
+    stop("Please provide a valid youtube api key.", call. = FALSE)
   }
- 
-  if (missing(apiKey) || nchar(apiKey) < 1) {
-    stop("Please provide a valid youtube api key.\n", call. = FALSE)
+  
+  if (missing(videoIDs) || !is.vector(videoIDs) || length(videoIDs) < 1) {
+    stop("Please provide a vector of one or more youtube video ids.", call. = FALSE)
   }
     
   # Start data collection
