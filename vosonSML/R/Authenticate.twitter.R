@@ -46,7 +46,6 @@ Authenticate.twitter <- function(socialmedia, appName, apiKey, apiSecret, access
   }
   
   credential <- list(socialmedia = "twitter", auth = twitter_oauth)
-  class(credential) <- append(class(credential), list("credential", "twitter"))
-  
+  class(credential) <- append(class(credential), c("credential", "twitter"))
   return(credential)
 }

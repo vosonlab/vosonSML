@@ -235,7 +235,6 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
   # return dataframe to environment
   
   class(dataCombined) <- append(class(dataCombined), c("dataSource", "youtube"))
-  
   return(dataCombined)
   
   #############################################################################

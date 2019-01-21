@@ -8,7 +8,6 @@ Authenticate.youtube <- function(socialmedia, apiKey, ...) {
   }
   
   credential <- list(socialmedia = "youtube", auth = apiKey)
-  class(credential) <- append(class(credential), list("credential", "youtube"))
-  
+  class(credential) <- append(class(credential), c("credential", "youtube"))
   return(credential)
 }

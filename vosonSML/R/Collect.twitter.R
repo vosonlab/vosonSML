@@ -74,6 +74,5 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   flush.console()
   
   class(tweets_df) <- append(class(tweets_df), c("dataSource", "twitter"))
-  
   return(tweets_df)
 }
