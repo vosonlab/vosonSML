@@ -26,9 +26,9 @@ Collect(credential, ...)
 
 \item{...}{Additional parameters for data collection by appropriate to credential \code{socialmedia} type.}
 
-\item{threadUrls}{character string vector. Reddit thread url's to collect data from.}
+\item{threadUrls}{Vector. Reddit thread url's to collect data from.}
 
-\item{waitTime}{numeric integer. Time in seconds to wait in-between url collection requests.}
+\item{waitTime}{Numeric integer. Time in seconds to wait in-between url collection requests.}
 
 \item{writeToFile}{Logical. If the collected data should be written to file. Default is \code{FALSE}.}
 

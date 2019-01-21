@@ -21,13 +21,16 @@ Authenticate.twitter <- function(socialmedia, appName, apiKey, apiSecret, access
   
   twitter_oauth <- NULL
   token_file_name <- ".twitter-oauth"
+  credential <- list(socialmedia = "twitter", auth = NULL)
+  class(credential) <- append(class(credential), c("credential", "twitter"))
   
   if (useCachedToken) {
     if (file.exists(token_file_name)) {
       cat("Cached twitter token was found (using cached token).\n")
       twitter_oauth <- LoadCredential(token_file_name)
       # todo: check loaded token is valid before returning
-      return(twitter_oauth)
+      credential$auth <- twitter_oauth
+      return(credential)
     } else {
       cat("OAuth token not found. A token will be created and saved to the working directory.\n")
     }
@@ -45,7 +48,6 @@ Authenticate.twitter <- function(socialmedia, appName, apiKey, apiSecret, access
     SaveCredential(twitter_oauth, filename = token_file_name)
   }
   
-  credential <- list(socialmedia = "twitter", auth = twitter_oauth)
-  class(credential) <- append(class(credential), c("credential", "twitter"))
+  credential$auth <- twitter_oauth
   return(credential)
 }
