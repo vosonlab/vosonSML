@@ -33,6 +33,7 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
                             verbose = FALSE, ...) {
  
   authToken <- credential$auth
+  
   if (!("Token" %in% class(authToken))) { 
     stop("OAuth token missing. Please use the Authenticate function to create and supply a token.", call. = FALSE)
   }
@@ -73,6 +74,7 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   cat("Done.\n")
   flush.console()
   
-  class(tweets_df) <- append(class(tweets_df), c("dataSource", "twitter"))
+  class(tweets_df) <- append(class(tweets_df), c("datasource", "twitter"))
+  
   return(tweets_df)
 }

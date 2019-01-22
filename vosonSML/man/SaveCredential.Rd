@@ -5,14 +5,14 @@
 \alias{LoadCredential}
 \title{Save and load credential information}
 \usage{
-SaveCredential(credential, filename)
+SaveCredential(credential, file)
 
-LoadCredential(filename)
+LoadCredential(file)
 }
 \arguments{
 \item{credential}{A \code{credential} object.}
 
-\item{filename}{Character string. Filename to be saved to or restored from. Default value is \code{credential.RDS}.}
+\item{file}{Character string. File name to be saved to or restored from.}
 }
 \value{
 A \code{credential} object.
@@ -21,25 +21,4 @@ A \code{credential} object.
 Functions to save and load credential information. Currently, credential information will be stored as a RDS file. 
 \code{SaveCredential} will return the input \code{credential}, useful for working as a filter between 
 \code{Authenticate} and \code{Collect}.
-}
-\examples{
-\dontrun{
-require(magrittr)
-
-## save credential example
-
-myIgAppID <- "xxxxxxxxxxx"
-myIgAppSecret <- "xxxxxxxxxxxxxxxxxxxxxx"
-listIgUsernames <- c("senjohnmccain", "obama")
-
-Authenticate("instagram", appID = myIgAppID, appSecret = myIgAppSecret) \%>\% 
-  SaveCredential("instagramCred.RDS") \%>\% 
-  Collect(ego = TRUE, username = listIgUsernames) \%>\% Create()
-
-## load previously saved credential example
-
-LoadCredential("instagramCred.RDS") \%>\% 
-  Collect(tag = "obama", distance = 5000, n = 100) \%>\% Create("bimodal")
-}
-
 }

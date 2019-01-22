@@ -12,7 +12,7 @@
 Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = FALSE, ...) {
   
   if (missing(threadUrls) || !is.vector(threadUrls) || length(threadUrls) < 1) {
-    stop("Please provide a vector of one or more reddit thread urls.\n", call. = FALSE)
+    stop("Please provide a vector of one or more reddit thread urls.", call. = FALSE)
   }
 
   cat("Collecting thread data for reddit urls...\n")
@@ -45,6 +45,7 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
   cat("Done.\n")
   flush.console()
   
-  class(threads_df) <- append(class(threads_df), c("dataSource", "reddit"))
+  class(threads_df) <- append(class(threads_df), c("datasource", "reddit"))
+  
   return(threads_df)
 }

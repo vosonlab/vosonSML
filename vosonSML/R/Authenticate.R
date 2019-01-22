@@ -39,6 +39,7 @@ Authenticate.default <- function(socialmedia, ...) {
   }
   
   # check if function exists for social media type
+  # todo: perhaps search authenticate methods so this can be extensible
   func_name <- paste0("Authenticate", ".", socialmedia)
   if (!exists(func_name, where = asNamespace("vosonSML"), mode = "function")) {
     stop("Unknown social media type passed to authenticate.", call. = FALSE) 

@@ -21,6 +21,7 @@ Authenticate.twitter <- function(socialmedia, appName, apiKey, apiSecret, access
   
   twitter_oauth <- NULL
   token_file_name <- ".twitter-oauth"
+  
   credential <- list(socialmedia = "twitter", auth = NULL)
   class(credential) <- append(class(credential), c("credential", "twitter"))
   
@@ -45,9 +46,10 @@ Authenticate.twitter <- function(socialmedia, appName, apiKey, apiSecret, access
     set_renv = FALSE)
   
   if (useCachedToken) {
-    SaveCredential(twitter_oauth, filename = token_file_name)
+    SaveCredential(twitter_oauth, file = token_file_name)
   }
   
   credential$auth <- twitter_oauth
+  
   return(credential)
 }

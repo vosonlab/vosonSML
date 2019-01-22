@@ -6,14 +6,15 @@
 \alias{CreateBimodalNetwork.twitter}
 \title{Create bimodal networks from social media data}
 \usage{
-CreateBimodalNetwork(x, ...)
+CreateBimodalNetwork(datasource, ...)
 
-\method{CreateBimodalNetwork}{twitter}(x, removeTermsOrHashtags = NULL,
-  writeToFile = FALSE, verbose = FALSE, ...)
+\method{CreateBimodalNetwork}{twitter}(datasource,
+  removeTermsOrHashtags = NULL, writeToFile = FALSE, verbose = FALSE,
+  ...)
 }
 \arguments{
-\item{x}{A data frame of class \code{dataSource}. For Twitter data, it is also possible to provide a *list* of data 
-frames (i.e. data frames that inherit class \code{dataSource} and \code{twitter}).}
+\item{datasource}{An object of class \code{datasource}. For Twitter data, it is also possible to provide a *list* 
+of dataframes (i.e. dataframes that inherit class \code{dataSource} and \code{twitter}).}
 
 \item{...}{Additional parameters to pass to the network creation method.}
 

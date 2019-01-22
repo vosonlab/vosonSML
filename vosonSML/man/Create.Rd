@@ -4,27 +4,27 @@
 \alias{Create}
 \title{Create networks from social media data}
 \usage{
-Create(dataSource, type = "actor", ...)
+Create(datasource, type = "actor", ...)
 }
 \arguments{
-\item{dataSource}{Social media data collected using the \code{Collect} method.}
+\item{datasource}{Collected social media data of class \code{datasource} and \code{socialmedia}.}
 
 \item{type}{Character string. Type of network to be created, can be \code{actor}, \code{bimodal} or \code{semantic}.}
 
-\item{...}{Additional parameters for network creation for appropriate \code{social media} and network \code{type}. 
-Refer to S3 methods \code{social media} type for default parameters.}
+\item{...}{Additional parameters for network creation for appropriate \code{socialmedia} and network \code{type}. 
+Refer to create network S3 methods \code{socialmedia} type for default parameters.}
 }
 \value{
-Network data containing an igraph object.
+Named list containing generated network as igraph object.
 }
 \description{
 This function creates networks from social media data (i.e. collected from dataframes of class \code{social media}).
 \code{Create} is the final step of the \code{Authenticate}, \code{Collect}, \code{Create} workflow. This function 
-is a wrapper for the Create*Network S3 methods.
+is a wrapper for the Create Network S3 methods.
 }
 \note{
 When creating twitter networks, a network with additional user information can be generated using the
-\code{\link{GraphUserInfoTwitter}} function. Additional calls can be made to the twitter API to get information
+\code{\link{EnhanceNetwork.twitter}} function. Additional calls can be made to the twitter API to get information
 about users that were identified as nodes during network creation.
 }
 \seealso{

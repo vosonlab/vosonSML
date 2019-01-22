@@ -1,19 +1,15 @@
-# Create twitter actor network
-# 
-# Creates an actor network from collected tweets.
-#
+#' Create twitter actor network
+#'
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
-#' 
-#' @return A twitter actor network as list containing a relations dataframe, users dataframe and igraph object.
-#' 
+#'
 #' @rdname CreateActorNetwork
 #' @export
-CreateActorNetwork.twitter <- function(x, writeToFile = FALSE, verbose = FALSE, ...) {
+CreateActorNetwork.twitter <- function(datasource, writeToFile = FALSE, verbose = FALSE, ...) {
 
   from <- to <- edge_type <- timestamp <- status_id <- NULL
   is_retweet <- is_quote <- mentions_user_id <- reply_to_user_id <- NULL
   
-  df <- x
+  df <- datasource
   df <- data.table(df)
   
   df_stats <- networkStats(NULL, "collected tweets", nrow(df))
@@ -38,7 +34,8 @@ CreateActorNetwork.twitter <- function(x, writeToFile = FALSE, verbose = FALSE, 
   
   nextEmptyRow <- 1 # so we can update rows in dt_combined in a relatively efficient way
   
-  ## retweets
+  # retweets
+  
   # this creates a retweet edge between:
   # from (user retweeting) -- retweet --> to (user that tweeted)
   count <- 0
@@ -59,7 +56,8 @@ CreateActorNetwork.twitter <- function(x, writeToFile = FALSE, verbose = FALSE, 
   }
   df_stats <- networkStats(df_stats, "retweets", count, TRUE)
   
-  ## quotes
+  # quotes
+  
   # this creates a quote edge between:
   # from (user quoting) -- quote --> to (user being quoted)
   count <- 0
@@ -85,7 +83,8 @@ CreateActorNetwork.twitter <- function(x, writeToFile = FALSE, verbose = FALSE, 
   # and these are then counted
   if_retweet_inlude_mentions <- FALSE
   
-  ## mentions
+  # mentions
+  
   # this creates a mention edge between:
   # from (user tweeting) -- mention / reply mention --> to (user mentioned)
   count <- 0
@@ -128,12 +127,14 @@ CreateActorNetwork.twitter <- function(x, writeToFile = FALSE, verbose = FALSE, 
   df_stats <- networkStats(df_stats, "mentions", mcount, TRUE)
   df_stats <- networkStats(df_stats, "reply mentions", rmcount, TRUE)
   
-  ## replies
+  # replies
+  
   # this creates a reply edge between:
   # from (user replying) -- reply --> to (user being replied to)
   count <- 0
   for (i in 1:nrow(df)) {
-    if (is.na(df[i, reply_to_user_id][[1]])) { next } # we check if there are retweets, if not skip to next row - reply_to
+    # we check if there are retweets, if not skip to next row - reply_to
+    if (is.na(df[i, reply_to_user_id][[1]])) { next } 
     
     count <- count + 1
     
@@ -167,21 +168,24 @@ CreateActorNetwork.twitter <- function(x, writeToFile = FALSE, verbose = FALSE, 
     timestamp = dt_combined$timestamp,
     status_id = dt_combined$status_id)
   
-  g <- graph.data.frame(df_relations, directed = TRUE, vertices = df_users)
+  g <- graph_from_data_frame(df_relations, directed = TRUE, vertices = df_users)
   
   V(g)$screen_name <- ifelse(is.na(V(g)$screen_name), paste0("ID:", V(g)$name), V(g)$screen_name)
   V(g)$label <- V(g)$screen_name
+  g <- set_graph_attr(g, "type", "twitter")
   
   if (writeToFile) { writeOutputFile(g, "graphml", "TwitterActorNetwork") }
   
   cat("Done.\n")
   flush.console()
   
-  function_output <- list(
+  func_output <- list(
     "relations" = df_relations,
     "users" = df_users,
     "graph" = g
   )
   
-  return(function_output)
+  class(func_output) <- append(class(func_output), c("network", "actor", "twitter"))
+  
+  return(func_output)
 }

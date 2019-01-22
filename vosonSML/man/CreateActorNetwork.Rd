@@ -7,51 +7,47 @@
 \alias{CreateActorNetwork.reddit}
 \alias{CreateActorNetwork.twitter}
 \alias{CreateActorNetwork.youtube}
-\title{Create an actor network from social media data}
+\title{Create actor network from social media data}
 \usage{
-CreateActorNetwork(x, ...)
+CreateActorNetwork(datasource, ...)
 
-\method{CreateActorNetwork}{reddit}(x, weightEdges = FALSE,
+\method{CreateActorNetwork}{reddit}(datasource, weightEdges = FALSE,
   textData = FALSE, cleanText = TRUE, writeToFile = FALSE, ...)
 
-\method{CreateActorNetwork}{twitter}(x, writeToFile = FALSE,
+\method{CreateActorNetwork}{twitter}(datasource, writeToFile = FALSE,
   verbose = FALSE, ...)
 
-\method{CreateActorNetwork}{youtube}(x, writeToFile = FALSE, ...)
+\method{CreateActorNetwork}{youtube}(datasource, writeToFile = FALSE,
+  ...)
 }
 \arguments{
-\item{x}{Collected social media data with \code{social media} class attribute.}
+\item{datasource}{Collected social media data with \code{datasource} and \code{socialmedia} class attributes.}
 
 \item{...}{Additional parameters to pass to the network creation method.}
 
-\item{weightEdges}{Logical. Combines and weights directed network edges. Default is \code{FALSE}.}
+\item{weightEdges}{Logical. Combine and weight directed network edges. Default is \code{FALSE}.}
 
-\item{textData}{Logical. If the igraph network should include the comment text as an edge attribute. 
+\item{textData}{Logical. Include comment text as an edge attributes of returned igraph network. 
 Cannot be used with the \code{weightEdges} parameter. Default is \code{FALSE}.}
 
-\item{cleanText}{Logical. If non-alphanumeric, non-punctuation, and non-space characters should be removed from the 
-included text attribute data. Only applies if \code{textData = TRUE}. Default is \code{TRUE}.}
+\item{cleanText}{Logical. Remove non-alphanumeric, non-punctuation, and non-space characters from the comment text 
+data used as edge attributes. Default is \code{TRUE}.}
 
 \item{writeToFile}{Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.}
 
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
 }
-\value{
-A reddit actor network as igraph object.
-
-A twitter actor network as list containing a relations dataframe, users dataframe and igraph object.
-
-A youtube actor network as igraph object.
-}
 \description{
-This function creates an actor network from social media data collected using the \code{Collect} method. Edges in 
-the network represent interactions or relationships between the actors. For example, with twitter data an 
-interaction is defined as a 'mention', reply' or 'retweet' from user i to user j, given 'tweet' m. With youtube 
-comments, an interaction is defined as a 'reply' from user i to user j, given 'comment' m. The resulting network is 
-returned as an igraph object.
+Create actor network from social media data
+
+Create reddit actor network
+
+Create twitter actor network
+
+Create youtube actor network
 }
 \note{
-Supported data sources: \code{twitter}, \code{youtube}, \code{reddit}
+Supported \code{datasource} \code{socialmedia}: \code{twitter}, \code{youtube}, \code{reddit}
 }
 \seealso{
 \code{\link{Create}}

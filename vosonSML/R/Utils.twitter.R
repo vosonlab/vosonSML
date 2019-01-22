@@ -5,52 +5,32 @@ RemoveOddChars <- function(df) {
   return(df)
 }
 
-# for each tweet, extract information related to users
-# such as to_user, rt_user etc.
+# extract information related to users from dataframe such as to_user, rt_user etc.
 ExtractUserInfo <- function(df) {
   
   # extract to_user
-  df$reply_to <- sapply(df$text, function(tweet) TrimHead(str_extract(tweet,"^((\\.)?(@[[:alnum:]_+]*))")))
+  df$reply_to <- sapply(df$text, function(tweet) TrimHead(str_extract(tweet, "^((\\.)?(@[[:alnum:]_+]*))")))
   
   # extract any mentions at all (inc. replies, mentions, etc) 
   # this is a completely new approach - it 'vacuums' up ANY mentions
-  df$users_mentioned <- sapply(df$text, function(tweet) TrimHead(str_match_all(tweet,"@[[:alnum:]_+]*")[[1]]))
+  df$users_mentioned <- sapply(df$text, function(tweet) TrimHead(str_match_all(tweet, "@[[:alnum:]_+]*")[[1]]))
   
   # extract rt_user
-  df$retweet_from <- sapply(df$text, function(tweet) TrimHead(str_extract(tweet,"^[RM]T (@[[:alnum:]_+]*)")))
+  df$retweet_from <- sapply(df$text, function(tweet) TrimHead(str_extract(tweet, "^[RM]T (@[[:alnum:]_+]*)")))
   
   return(df)
 }
 
-# for each tweet, extract any hashtags that a user has used
+# extract any hashtags found in tweet text
 ExtractHashtagInfo <- function(df) {
-  
   df$hashtags_used <- sapply(df$text, function(tweet) regmatches(tweet, gregexpr("#[^#\\s]+(?!\u2026)\\b", 
                                                                                  tweet, perl = T)))
-  
-  # old way:
-  # TrimHead(str_match_all(tweet,"#[[:alnum:]_+]*")[[1]])
-  
-  # new way:
-  # this matches hashtags, but not if the hashtag is "cut off" at the end of the tweet text, denoted by a 'trailing 
-  # ellipsis' character. this avoids the problem of picking up erroneous hashtags that are cut off, e.g. "#ausp..." 
-  # when it should be "#auspol"
-  
-  # horizontalEllipsis <- "\u2026"
-  # horizontalEllipsisFixed <- stri_unescape_unicode(horizontalEllipsis)
-  
-  # patternRegex <- paste0("#[^#\\s]+(?!\\\u2026)\\b")
-  # TrimHead(str_match_all(tweet,paste0("#[[:alnum:]_+^",horizontalEllipsis,"$]*"))[[1]])
-  
   return(df)
 }
 
 # for each tweet, extract url, remove it from the tweet, and put them separately in a new column
 # todo: cannot deal with multiple urls in one tweet right now
 ExtractUrls <- function(df) {
-  # EnsurePackage("stringr")
-  # EnsurePackage("grid")
-  
   # extracts links (quick and dirty)
   # wish to have something like http://daringfireball.net/2009/11/liberal_regex_for_matching_urls
   df$links <- sapply(df$text,function(tweet) str_extract(tweet,("http[^[:blank:]]+")))
@@ -74,66 +54,58 @@ RemoveOddCharsUserInfo <- function(actorsInfoDF) {
   return(actorsInfoDF)
 }
 
-# trim functions
-
-# remove users, i.e. "@user", in a tweet
+# remove twitter users from text e.g @user
 TrimUsers <- function(x) {
-  str_replace_all(x, '(@[[:alnum:]_]*)', '')
+  str_replace_all(x, "(@[[:alnum:]_]*)", "")
 }
 
-# remove urls in a tweet
+# remove urls from text
 TrimUrls <- function(x) {
-  str_replace_all(x, 'http[^[:blank:]]+', '')
+  str_replace_all(x, "http[^[:blank:]]+", "")
 }
 
 # remove odd charactors
 TrimOddChar <- function(x) {
-  iconv(x, to = 'utf-8')
+  iconv(x, to = "utf-8")
 }
 
-# remove odd charactors
+# remove odd charactors on macos
 TrimOddCharMac <- function(x) {
-  iconv(x, to = 'utf-8-mac')
+  iconv(x, to = "utf-8-mac")
 }
 
-# remove starting @, .@, RT @, MT @, etc.
+# remove leading @ part from tweet text e.g ".@", "RT @", "MT @" etc.
 TrimHead <- function(x) {
-  sub('^(.*)?@', '', x)
+  sub("^(.*)?@", "", x)
 }
 
-# remove hashtags, i.e. "#tag", in a tweet
+# remove hashtags from text e.g #tag
 TrimHashtags <- function(x) {
-  str_replace_all(x, '(#[[:alnum:]_]*)', '')
+  str_replace_all(x, "(#[[:alnum:]_]*)", "")
 }
 
 # remove @ from text
 TrimAt <- function(x) {
-  sub('@', '', x)
+  sub("@", "", x)
 }
 
+# batch perform tweet preprocessing tasks
 PreprocessTweets <- function(df) {
-  # Perform a few preprocessing tasks
-  
   # removing odd characters
-  df.new <- RemoveOddChars(df)
-  # extract user info and add to df
-  df.new <- ExtractUserInfo(df.new)
-  # extract urls and add to df
-  df.new <- ExtractUrls(df.new)
+  df_new <- RemoveOddChars(df)
   
-  return(df.new)
+  # extract user info and add to df
+  df_new <- ExtractUserInfo(df_new)
+  
+  # extract urls and add to df
+  df_new <- ExtractUrls(df_new)
+  
+  return(df_new)
 }
 
 # accepts a df to add or increment a field value with count
-networkStats <- function(df, field, count, edge, print) {
-  if (missing(print)) {
-    print <- FALSE
-  }
-  
-  if (missing(edge)) {
-    edge <- FALSE
-  }
-  
+# if param print is TRUE then prints formatted field values
+networkStats <- function(df, field, count, edge = FALSE, print = FALSE) {
   if (print == TRUE) {
     if (!is.null(df) & nrow(df) > 0) {
       lf <- lc <- 0
@@ -165,6 +137,7 @@ networkStats <- function(df, field, count, edge, print) {
   return(df)
 }
 
+# print twitter api rate limit and reset time for tweet search
 printTwitterRateLimit <- function(token) {
   rtlimit <- rtweet::rate_limit(token, "search/tweets")
   remaining <- rtlimit[["remaining"]] * 100
@@ -174,6 +147,7 @@ printTwitterRateLimit <- function(token) {
   cat(paste0("reset: ", reset, " secs\n"))
 }
 
+# get remaining twitter api rate limit for tweet search
 getRemainingSearchNum <- function(token) {
   rtlimit <- rtweet::rate_limit(token, "search/tweets")
   remaining <- rtlimit[["remaining"]] * 100

@@ -1,11 +1,11 @@
 #' Creates a semantic network from social media data
 #'
-#' This function creates a directed and weighted semantic network from a data frame of class \code{dataSource} (as 
+#' This function creates a directed and weighted semantic network from a dataframe of class \code{datasource} (as 
 #' created by the CollectData functions). These networks describe the semantic relationships between concepts. For 
 #' example in twitter the concepts can be significant words or terms (hashtags) extracted from the text corpus of the 
 #' data (tweets).
 #'
-#' @param x A data frame of class \code{dataSource}.
+#' @param datasource A dataframe of class \code{datasource}.
 #' @param ... Additional parameters to pass to the network creation method.
 #' 
 #' @param removeTermsOrHashtags Character string vector. Default is none. Otherwise this argument specifies which terms 
@@ -32,12 +32,12 @@
 #' @keywords create semantic network twitter
 #' 
 #' @export
-CreateSemanticNetwork <- function(x, ...) {
-  # searches the class list of x for matching method
-  UseMethod("CreateSemanticNetwork", x)
+CreateSemanticNetwork <- function(datasource, ...) {
+  # searches the class list of datasource for matching method
+  UseMethod("CreateSemanticNetwork", datasource)
 }
 
 # default function
-CreateSemanticNetwork.default <- function(x, ...) {
-  cat("Cannot create semantic network using this type of data.\n")
+CreateSemanticNetwork.default <- function(datasource, ...) {
+  stop("Unknown social media data passed to create semantic network.", call. = FALSE)
 }

@@ -8,8 +8,8 @@
 #' 
 #' @rdname CreateSemanticNetwork
 #' @export
-CreateSemanticNetwork.twitter <- function(x, removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE, termFreq = 5, 
-                                          hashtagFreq = 50, writeToFile = FALSE, verbose = FALSE, ...) {
+CreateSemanticNetwork.twitter <- function(datasource, removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE, 
+                                          termFreq = 5, hashtagFreq = 50, writeToFile = FALSE, verbose = FALSE, ...) {
 
   # default to the top 5% most frequent terms. reduces size of graph
   # default to the top 50% hashtags. reduces size of graph. hashtags are 50% because they are much less 
@@ -21,7 +21,7 @@ CreateSemanticNetwork.twitter <- function(x, removeTermsOrHashtags = NULL, stopw
     removeTermsOrHashtags <- as.vector(removeTermsOrHashtags) # coerce to vector
   }
   
-  df <- x # match the variable names (this must be used to avoid warnings in package compilation)
+  df <- datasource # match the variable names (this must be used to avoid warnings in package compilation)
   
   # if `df` is a list of dataframes, then need to convert these into one dataframe
   suppressWarnings(
@@ -217,7 +217,7 @@ CreateSemanticNetwork.twitter <- function(x, removeTermsOrHashtags = NULL, stopw
   df_stats <- networkStats(df_stats, "relations (edges)", nrow(relations))
   
   # convert into a graph
-  suppressWarnings(g <- graph.data.frame(relations, directed = FALSE, vertices = actorsFixed))
+  suppressWarnings(g <- graph_from_data_frame(relations, directed = FALSE, vertices = actorsFixed))
   
   # we need to simplify the graph because multiple use of same term in one tweet will cause self-loops, etc
   # g <- simplify(g)
@@ -246,5 +246,11 @@ CreateSemanticNetwork.twitter <- function(x, removeTermsOrHashtags = NULL, stopw
   cat("Done.\n")
   flush.console()
   
-  return(g)
+  func_output <- list(
+    "graph" = g
+  )
+  
+  class(func_output) <- append(class(func_output), c("network", "semantic", "twitter"))
+  
+  return(func_output)
 }

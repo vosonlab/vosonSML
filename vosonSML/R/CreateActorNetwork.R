@@ -1,28 +1,23 @@
-#' Create an actor network from social media data
+#' Create actor network from social media data
 #'
-#' This function creates an actor network from social media data collected using the \code{Collect} method. Edges in 
-#' the network represent interactions or relationships between the actors. For example, with twitter data an 
-#' interaction is defined as a 'mention', reply' or 'retweet' from user i to user j, given 'tweet' m. With youtube 
-#' comments, an interaction is defined as a 'reply' from user i to user j, given 'comment' m. The resulting network is 
-#' returned as an igraph object.
-#'
-#' @param x Collected social media data with \code{social media} class attribute.
+#' @param datasource Collected social media data with \code{datasource} and \code{socialmedia} class attributes.
 #' @param ... Additional parameters to pass to the network creation method.
 #' 
 #' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
 #'
-#' @note Supported data sources: \code{twitter}, \code{youtube}, \code{reddit}
+#' @note Supported \code{datasource} \code{socialmedia}: \code{twitter}, \code{youtube}, \code{reddit}
 #'
 #' @seealso \code{\link{Create}}
 #' @keywords create actor network twitter youtube reddit
 #'
 #' @export
-CreateActorNetwork <- function(x, ...) {
-  # searches the class list of x for matching method
-  UseMethod("CreateActorNetwork", x)
+CreateActorNetwork <- function(datasource, ...) {
+  # searches the class list of data for matching method
+  UseMethod("CreateActorNetwork", datasource)
 }
 
 # default function
-CreateActorNetwork.default <- function(x, ...) {
-  cat("Cannot create actor network using this type of data.\n")
+#' @export
+CreateActorNetwork.default <- function(datasource, ...) {
+  stop("Unknown social media data passed to create actor network.", call. = FALSE)
 }

@@ -8,7 +8,8 @@
 #' 
 #' @rdname CreateBimodalNetwork
 #' @export
-CreateBimodalNetwork.twitter <- function(x, removeTermsOrHashtags = NULL, writeToFile = FALSE, verbose = FALSE, ...) {
+CreateBimodalNetwork.twitter <- function(datasource, removeTermsOrHashtags = NULL, writeToFile = FALSE, 
+                                         verbose = FALSE, ...) {
   
   from <- to <- edge_type <- timestamp <- status_id <- NULL
 
@@ -18,7 +19,7 @@ CreateBimodalNetwork.twitter <- function(x, removeTermsOrHashtags = NULL, writeT
     removeTermsOrHashtags <- as.vector(removeTermsOrHashtags) # coerce to vector to be sure
   }
   
-  df <- x
+  df <- datasource
   df <- data.table(df)
 
   df_stats <- networkStats(NULL, "collected tweets", nrow(df))
@@ -91,7 +92,7 @@ CreateBimodalNetwork.twitter <- function(x, removeTermsOrHashtags = NULL, writeT
     timestamp = dt_combined$timestamp,
     status_id = dt_combined$status_id)
   
-  g <- graph.data.frame(relations, directed = TRUE, vertices = df_entities)
+  g <- graph_from_data_frame(relations, directed = TRUE, vertices = df_entities)
   
   V(g)$display_name <- ifelse(is.na(V(g)$display_name), paste0("ID:", V(g)$name), V(g)$display_name)
   
@@ -111,5 +112,11 @@ CreateBimodalNetwork.twitter <- function(x, removeTermsOrHashtags = NULL, writeT
   cat("Done.\n")
   flush.console()
   
-  return(g)
+  func_output <- list(
+    "graph" = g
+  )
+  
+  class(func_output) <- append(class(func_output), c("network", "bimodal", "twitter"))
+  
+  return(func_output)
 }

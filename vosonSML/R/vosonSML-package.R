@@ -29,7 +29,7 @@
 #' @import methods
 #' @import httr
 #' @importFrom Hmisc escapeRegex
-#' @importFrom igraph delete.vertices graph.data.frame simplify write.graph V 'V<-' vcount
+#' @importFrom igraph delete.vertices simplify write.graph V 'V<-' vcount
 #' graph_from_data_frame delete_vertex_attr set_graph_attr
 #' @importFrom rtweet create_token rate_limit search_tweets users_data lookup_users
 #' @importFrom stringr str_extract str_replace_all str_match_all

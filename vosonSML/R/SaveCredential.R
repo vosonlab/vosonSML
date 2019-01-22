@@ -7,45 +7,27 @@
 #' @aliases SaveCredential LoadCredential
 #' 
 #' @param credential A \code{credential} object.
-#' @param filename Character string. Filename to be saved to or restored from. Default value is \code{credential.RDS}.
+#' @param file Character string. File name to be saved to or restored from.
 #' 
 #' @return A \code{credential} object.
 #' 
-#' @examples
-#' \dontrun{
-#' require(magrittr)
-#' 
-#' ## save credential example
-#' 
-#' myIgAppID <- "xxxxxxxxxxx"
-#' myIgAppSecret <- "xxxxxxxxxxxxxxxxxxxxxx"
-#' listIgUsernames <- c("senjohnmccain", "obama")
-#'
-#' Authenticate("instagram", appID = myIgAppID, appSecret = myIgAppSecret) %>% 
-#'   SaveCredential("instagramCred.RDS") %>% 
-#'   Collect(ego = TRUE, username = listIgUsernames) %>% Create()
-#'
-#' ## load previously saved credential example
-#' 
-#' LoadCredential("instagramCred.RDS") %>% 
-#'   Collect(tag = "obama", distance = 5000, n = 100) %>% Create("bimodal")
-#' }
-#' 
 #' @export
-SaveCredential <- function(credential, filename) {
-  if (missing(credential) || missing(filename)) {
-    stop("please supply a credential object and credential file name to save.")
+SaveCredential <- function(credential, file) {
+  if (missing(credential) || missing(file)) {
+    stop("Please supply a credential object and credential file name to save.", .call = FALSE)
   }  
-  saveRDS(credential, filename)
+  saveRDS(credential, file)
+  
   return(credential)
 }
 
 #' @rdname SaveCredential
 #' @export
-LoadCredential <- function(filename) {
-  if (missing(filename)) {
-    stop("please supply a credential file name to load.")
+LoadCredential <- function(file) {
+  if (missing(file)) {
+    stop("Please supply a credential file name to load.", .call = FALSE)
   }    
-  credential <- readRDS(filename)
+  credential <- readRDS(file)
+  
   return(credential)
 }

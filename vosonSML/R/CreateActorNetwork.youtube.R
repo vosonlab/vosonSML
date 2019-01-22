@@ -1,25 +1,16 @@
-# Create youtube actor network
-# 
-# Creates a unimodal actor network based on comments and replies to one or more youtube videos.
-#
-#' @return A youtube actor network as igraph object.
-#' 
+#' Create youtube actor network
+#'
 #' @rdname CreateActorNetwork
 #' @export
-CreateActorNetwork.youtube <- function(x, writeToFile = FALSE, ...) {
+CreateActorNetwork.youtube <- function(datasource, writeToFile = FALSE, ...) {
 
-  df_comments <- x # match the variable names to avoid warnings in package compilation
-
-  # df_comments columns:
-  # 1 Comment      4 LikeCount     7 ParentID
-  # 2 User         5 PublishTime   8 ReplyToAnotherUser
-  # 3 ReplyCount   6 CommentId     9 VideoID
+  df_comments <- datasource # match the variable names to avoid warnings in package compilation
 
   cat("Generating youtube actor network...\n")
   flush.console()
   
   if (nrow(df_comments) == 0) {
-    stop(paste0("There are no user comments to make a network from, please check that the videos selected ",
+    stop(paste0("There are no user comments in the data. Please check that the videos selected ",
                "for collection have comments."), call. = FALSE)
   }
   
@@ -43,10 +34,11 @@ CreateActorNetwork.youtube <- function(x, writeToFile = FALSE, ...) {
   relations <- data.frame(from = df_actor_network[, 1], to = df_actor_network[, 2], commentId = df_actor_network[, 3])
 
   # convert into a graph
-  g <- graph.data.frame(relations, directed = TRUE, vertices = actor_names)
+  g <- graph_from_data_frame(relations, directed = TRUE, vertices = actor_names)
 
   # add node labels
   V(g)$label <- V(g)$name
+  g <- set_graph_attr(g, "type", "youtube")
 
   # output the final network to a graphml file
   if (writeToFile) { writeOutputFile(g, "graphml", "YoutubeActorNetwork") }
@@ -54,5 +46,11 @@ CreateActorNetwork.youtube <- function(x, writeToFile = FALSE, ...) {
   cat("Done.\n")
   flush.console()
 
-  return(g)
+  func_output <- list(
+    "graph" = g
+  )
+  
+  class(func_output) <- append(class(func_output), c("network", "actor", "youtube"))
+  
+  return(func_output)
 }

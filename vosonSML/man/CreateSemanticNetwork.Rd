@@ -6,14 +6,15 @@
 \alias{CreateSemanticNetwork.twitter}
 \title{Creates a semantic network from social media data}
 \usage{
-CreateSemanticNetwork(x, ...)
+CreateSemanticNetwork(datasource, ...)
 
-\method{CreateSemanticNetwork}{twitter}(x, removeTermsOrHashtags = NULL,
-  stopwordsEnglish = TRUE, termFreq = 5, hashtagFreq = 50,
-  writeToFile = FALSE, verbose = FALSE, ...)
+\method{CreateSemanticNetwork}{twitter}(datasource,
+  removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE,
+  termFreq = 5, hashtagFreq = 50, writeToFile = FALSE,
+  verbose = FALSE, ...)
 }
 \arguments{
-\item{x}{A data frame of class \code{dataSource}.}
+\item{datasource}{A dataframe of class \code{datasource}.}
 
 \item{...}{Additional parameters to pass to the network creation method.}
 
@@ -45,7 +46,7 @@ format), with filename denoting the current datetime and the type of network.}
 A twitter semantic network as igraph object.
 }
 \description{
-This function creates a directed and weighted semantic network from a data frame of class \code{dataSource} (as 
+This function creates a directed and weighted semantic network from a dataframe of class \code{datasource} (as 
 created by the CollectData functions). These networks describe the semantic relationships between concepts. For 
 example in twitter the concepts can be significant words or terms (hashtags) extracted from the text corpus of the 
 data (tweets).
