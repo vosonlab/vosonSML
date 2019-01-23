@@ -4,7 +4,7 @@
 \alias{Create}
 \title{Create networks from social media data}
 \usage{
-Create(datasource, type = "actor", ...)
+Create(datasource, type, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data of class \code{datasource} and \code{socialmedia}.}
@@ -24,11 +24,11 @@ is a wrapper for the Create Network S3 methods.
 }
 \note{
 When creating twitter networks, a network with additional user information can be generated using the
-\code{\link{EnhanceNetwork.twitter}} function. Additional calls can be made to the twitter API to get information
+\code{\link{AddUserData.twitter}} function. Additional calls can be made to the twitter API to get information
 about users that were identified as nodes during network creation.
 }
 \seealso{
-\code{\link{CreateActorNetwork}}, \code{\link{CreateBimodalNetwork}}, \code{\link{CreateSemanticNetwork}}
+\code{\link{Create.actor}}, \code{\link{Create.bimodal}}, \code{\link{Create.semantic}}
 }
 \keyword{actor}
 \keyword{bimodal}

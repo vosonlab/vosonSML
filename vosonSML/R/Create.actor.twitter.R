@@ -2,10 +2,10 @@
 #'
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
 #'
-#' @rdname CreateActorNetwork
+#' @rdname Create.actor
 #' @export
-CreateActorNetwork.twitter <- function(datasource, writeToFile = FALSE, verbose = FALSE, ...) {
-
+Create.actor.twitter <- function(datasource, type, writeToFile = FALSE, verbose = FALSE, ...) {
+  
   from <- to <- edge_type <- timestamp <- status_id <- NULL
   is_retweet <- is_quote <- mentions_user_id <- reply_to_user_id <- NULL
   

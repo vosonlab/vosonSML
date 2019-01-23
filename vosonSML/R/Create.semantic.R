@@ -5,7 +5,8 @@
 #' example in twitter the concepts can be significant words or terms (hashtags) extracted from the text corpus of the 
 #' data (tweets).
 #'
-#' @param datasource A dataframe of class \code{datasource}.
+#' @param datasource A dataframe of class \code{datasource} and class of a social media type.
+#' @param type Character string. Type of network to be created.
 #' @param ... Additional parameters to pass to the network creation method.
 #' 
 #' @param removeTermsOrHashtags Character string vector. Default is none. Otherwise this argument specifies which terms 
@@ -31,13 +32,14 @@
 #' @seealso \code{\link{Create}}
 #' @keywords create semantic network twitter
 #' 
+#' @rdname Create.semantic
+#' @method Create semantic
 #' @export
-CreateSemanticNetwork <- function(datasource, ...) {
-  # searches the class list of datasource for matching method
-  UseMethod("CreateSemanticNetwork", datasource)
+Create.semantic <- function(datasource, type, ...) {
+  UseMethod("Create.semantic", datasource)
 }
 
-# default function
-CreateSemanticNetwork.default <- function(datasource, ...) {
-  stop("Unknown social media data passed to create semantic network.", call. = FALSE)
+#' @export
+Create.semantic.default <- function(datasource, type, ...) {
+  stop("Unknown datasource passed to create semantic network.", call. = FALSE) 
 }

@@ -5,11 +5,11 @@
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
 #' 
 #' @return A twitter bimodal network as igraph object.
-#' 
-#' @rdname CreateBimodalNetwork
+#'
+#' @rdname Create.bimodal
 #' @export
-CreateBimodalNetwork.twitter <- function(datasource, removeTermsOrHashtags = NULL, writeToFile = FALSE, 
-                                         verbose = FALSE, ...) {
+Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, writeToFile = FALSE, 
+                                   verbose = FALSE, ...) {
   
   from <- to <- edge_type <- timestamp <- status_id <- NULL
 

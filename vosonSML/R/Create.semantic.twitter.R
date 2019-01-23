@@ -6,10 +6,10 @@
 #'
 #' @return A twitter semantic network as igraph object.
 #' 
-#' @rdname CreateSemanticNetwork
+#' @rdname Create.semantic
 #' @export
-CreateSemanticNetwork.twitter <- function(datasource, removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE, 
-                                          termFreq = 5, hashtagFreq = 50, writeToFile = FALSE, verbose = FALSE, ...) {
+Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE, 
+                                    termFreq = 5, hashtagFreq = 50, writeToFile = FALSE, verbose = FALSE, ...) {
 
   # default to the top 5% most frequent terms. reduces size of graph
   # default to the top 50% hashtags. reduces size of graph. hashtags are 50% because they are much less 

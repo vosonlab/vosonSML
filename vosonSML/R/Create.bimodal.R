@@ -3,8 +3,8 @@
 #' This function creates a directed and weighted bimodal network from a data frame of class \code{dataSource} (as 
 #' created by the CollectData functions).
 #'
-#' @param datasource An object of class \code{datasource}. For Twitter data, it is also possible to provide a *list* 
-#' of dataframes (i.e. dataframes that inherit class \code{dataSource} and \code{twitter}).
+#' @param datasource A dataframe of class \code{datasource} and class of a social media type.
+#' @param type Character string. Type of network to be created.
 #' @param ... Additional parameters to pass to the network creation method.
 #' 
 #' @param removeTermsOrHashtags Character string. Default is none. Otherwise this argument specifies which terms or 
@@ -19,14 +19,15 @@
 #' 
 #' @seealso \code{\link{Create}}
 #' @keywords create bimodal network twitter
-#' 
+#'
+#' @rdname Create.bimodal
+#' @method Create bimodal
 #' @export
-CreateBimodalNetwork <- function(datasource, ...) {
-  # searches the class list of datasource for matching method
-  UseMethod("CreateBimodalNetwork", datasource)
+Create.bimodal <- function(datasource, type, ...) {
+  UseMethod("Create.bimodal", datasource)
 }
 
-# default function
-CreateBimodalNetwork.default <- function(datasource, ...) {
-  stop("Unknown social media data passed to create bimodal network.", call. = FALSE)
+#' @export
+Create.bimodal.default <- function(datasource, type, ...) {
+  stop("Unknown datasource passed to create bimodal network.", call. = FALSE) 
 }

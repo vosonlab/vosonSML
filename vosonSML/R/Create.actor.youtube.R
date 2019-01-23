@@ -1,8 +1,8 @@
 #' Create youtube actor network
 #'
-#' @rdname CreateActorNetwork
+#' @rdname Create.actor
 #' @export
-CreateActorNetwork.youtube <- function(datasource, writeToFile = FALSE, ...) {
+Create.actor.youtube <- function(datasource, type, writeToFile = FALSE, ...) {
 
   df_comments <- datasource # match the variable names to avoid warnings in package compilation
 

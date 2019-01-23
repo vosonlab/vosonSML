@@ -12,25 +12,35 @@
 #' @return Named list containing generated network as igraph object.
 #'
 #' @note When creating twitter networks, a network with additional user information can be generated using the
-#' \code{\link{EnhanceNetwork.twitter}} function. Additional calls can be made to the twitter API to get information
+#' \code{\link{AddUserData.twitter}} function. Additional calls can be made to the twitter API to get information
 #' about users that were identified as nodes during network creation.
 #' 
-#' @seealso \code{\link{CreateActorNetwork}}, \code{\link{CreateBimodalNetwork}}, \code{\link{CreateSemanticNetwork}}
+#' @seealso \code{\link{Create.actor}}, \code{\link{Create.bimodal}}, \code{\link{Create.semantic}}
 #' @keywords create actor bimodal semantic network
 #'
 #' @export
-Create <- function(datasource, type = "actor", ...) {
-  creator <- switch(tolower(type),
-                    actor = CreateActorNetwork,
-                    bimodal = CreateBimodalNetwork,
-                    semantic = CreateSemanticNetwork,
-                    stop("Unknown network type passed to create.", call. = FALSE))
+Create <- function(datasource, type, ...) {
+  # searches the class list of datasource for matching method
+  UseMethod("Create", type)
+}
+
+#' @export
+Create.default <- function(datasource, type, ...) {
+  # check if network type is a character string
+  if (!is.character(type)) {
+    stop("Create network type should be a character string.", call. = FALSE) 
+  }
   
-  # calls method mapped to type with parameters passed to create
-  network_result <- creator(datasource, ...)
+  # check if function exists for network type
+  # todo: perhaps search create methods so this can be extensible
+  func_name <- paste0("Create", ".", type)
+  if (!exists(func_name, where = asNamespace("vosonSML"), mode = "function")) {
+    stop("Unknown network type passed to create.", call. = FALSE) 
+  }
   
-  # creates class as vector that adds network results class and vosonsml class attributes
-  class(network_result) <- append(class(network_result), c("vosonsml"))
+  # add social media type to value class list
+  class(type) <- append(class(type), type)
   
-  return(network_result)
+  # call authenticate
+  Create(datasource, type, ...)
 }

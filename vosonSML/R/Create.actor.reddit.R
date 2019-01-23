@@ -6,10 +6,10 @@
 #' @param cleanText Logical. Remove non-alphanumeric, non-punctuation, and non-space characters from the comment text 
 #' data used as edge attributes. Default is \code{TRUE}.
 #' 
-#' @rdname CreateActorNetwork
+#' @rdname Create.actor
 #' @export
-CreateActorNetwork.reddit <- function(datasource, weightEdges = FALSE, textData = FALSE, cleanText = TRUE, 
-                                      writeToFile = FALSE, ...) {
+Create.actor.reddit <- function(datasource, type, weightEdges = FALSE, textData = FALSE, cleanText = TRUE, 
+                                writeToFile = FALSE, ...) {
 
   # cleanText is default to TRUE as reddit comments often contain forbidden XML control characters
 

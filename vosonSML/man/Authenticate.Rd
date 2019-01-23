@@ -6,7 +6,7 @@
 \alias{Authenticate.reddit}
 \alias{Authenticate.twitter}
 \alias{Authenticate.youtube}
-\title{Create a credential to access social media APIs}
+\title{Create a credential object to access social media APIs}
 \usage{
 Authenticate(socialmedia, ...)
 
@@ -18,31 +18,32 @@ Authenticate(socialmedia, ...)
 \method{Authenticate}{youtube}(socialmedia, apiKey, ...)
 }
 \arguments{
-\item{socialmedia}{Character string. Identifier for social media API to authenticate with.\cr
-Supports: \code{"twitter"}, \code{"youtube"}, \code{"reddit"}.}
+\item{socialmedia}{Character string. Identifier for social media API to authenticate with. Supported social media
+are \code{"twitter"}, \code{"youtube"} and \code{"reddit"}.}
 
-\item{...}{Additional parameters for authentication appropriate to \code{socialmedia} identifier.}
+\item{...}{Additional parameters for authentication as required by the social media API. Refer to usage for S3 
+methods for class \code{socialmedia}.}
 
-\item{appName}{Character string. Specifies the registered app name associated with API keys.}
+\item{appName}{Character string. Some API have a registered app name associated with API keys.}
 
-\item{apiKey}{Character string. Specifies the app API key used for authentication.}
+\item{apiKey}{Character string. API key used for authentication.}
 
-\item{apiSecret}{Character string. Specifies the app API secret.}
+\item{apiSecret}{Character string. API secret.}
 
-\item{accessToken}{Character string. Specifies the app access token.}
+\item{accessToken}{Character string. API access token.}
 
-\item{accessTokenSecret}{Character string. Specifies the app access token secret.}
+\item{accessTokenSecret}{Character string. API access token secret.}
 
-\item{useCachedToken}{Logical. Use cached API token if found otherwise creates one. Default is \code{TRUE}.}
+\item{useCachedToken}{Logical. Use cached access token if found otherwise create one. Default is \code{TRUE}.}
 }
 \value{
-A \code{credential} object with authentication information.
+A \code{credential} object containing an access token or key with class name of \code{socialmedia}.
 }
 \description{
 \code{Authenticate} creates a \code{credential} object that enables R to make authenticated calls to social media
-APIs. A \code{credential} object is a S3 object with the authentication-related information such as access tokens
-and the information on the social media that grant authentication. \code{Authenticate} is the first step of the
-\code{Authenticate}, \code{\link{Collect}} and \code{\link{Create}} workflow.
+APIs. A \code{credential} object is a S3 object containing authentication related information such as an access 
+token or key, and a class name identifying the social media that grants authentication. \code{Authenticate} is the 
+first step of the \code{Authenticate}, \code{\link{Collect}} and \code{\link{Create}} workflow.
 }
 \details{
 Twitter authentication uses OAuth and requires Application-user authentication API keys as described here: 
@@ -52,6 +53,32 @@ Youtube authentication uses OAuth2 and requires a Google Developer API key as de
 \url{https://developers.google.com/youtube/v3/docs/}
 
 Reddit does not require authentication in this version of vosonSML.
+}
+\examples{
+\dontrun{
+## twitter authentication
+
+myAppName <- "vosonSML"
+myAPIKey <- "xXxxXxXXxxXx"
+myAPISecret <- "xXxxXxXXxxXx"
+myAccessToken <- "xXxxXxXXxxXx"
+myAccessTokenSecret <- "xXxxXxXXxxXx"
+
+myTwitterAuth <- Authenticate("twitter", appName = myAppName, apiKey = myAPIKey,
+  apiSecret = myAPISecret, accessToken = myAccessToken,
+  accessTokenSecret = myAccessTokenSecret, useCachedToken = TRUE)
+
+## youtube authentication
+
+myAPIKey <- "xXxxXxXXxxXx"
+
+myYoutubeAuth <- Authenticate("youtube", apiKey = myAPIKey)
+  
+## reddit authentication
+
+myRedditAuth <- Authenticate("reddit")
+}
+
 }
 \seealso{
 \code{\link{Collect}}, \code{\link{Create}}
