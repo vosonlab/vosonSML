@@ -22,7 +22,7 @@ GetYoutubeVideoIDs <- function(urls = NULL, file = NULL) {
   }
   
   if (!is.null(urls)) {
-    video_ids <- append(video_ids, sapply(urls, GetYoutubeVideoID(url)))
+    video_ids <- append(video_ids, sapply(urls, GetYoutubeVideoID, USE.NAMES = FALSE))
   }
   
   if (!is.null(file)) {
@@ -35,7 +35,7 @@ GetYoutubeVideoIDs <- function(urls = NULL, file = NULL) {
     
     if (!is.null(video_ids_file)) {
       video_ids_file <- as.vector(video_ids_file$V1)
-      video_ids <- append(video_ids, sapply(urls, GetYoutubeVideoID(url)))
+      video_ids <- append(video_ids, sapply(urls, GetYoutubeVideoID, USE.NAMES = FALSE))
     }
   }
   

@@ -1,9 +1,9 @@
 #' Twitter API authentication
 #' 
 #' @param appName Character string. Some API have a registered app name associated with API keys.
-#' @param apiSecret Character string. API secret.
-#' @param accessToken Character string. API access token.
-#' @param accessTokenSecret Character string. API access token secret.
+#' @param apiSecret Character string. API secret to authenticate.
+#' @param accessToken Character string. API access token to authenticate.
+#' @param accessTokenSecret Character string. API access token secret to authenticate.
 #' @param useCachedToken Logical. Use cached access token if found otherwise create one. Default is \code{TRUE}.
 #' 
 #' @rdname Authenticate

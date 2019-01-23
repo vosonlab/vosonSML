@@ -18,7 +18,7 @@
 #' @param ... Additional parameters for authentication as required by the social media API. Refer to usage for S3 
 #' methods for class \code{socialmedia}.
 #' 
-#' @param apiKey Character string. API key used for authentication.
+#' @param apiKey Character string. API key to authenticate.
 #' 
 #' @return A \code{credential} object containing an access token or key with class name of \code{socialmedia}.
 #'
@@ -26,15 +26,13 @@
 #' \dontrun{
 #' ## twitter authentication
 #' 
-#' myAppName <- "vosonSML"
-#' myAPIKey <- "xXxxXxXXxxXx"
-#' myAPISecret <- "xXxxXxXXxxXx"
-#' myAccessToken <- "xXxxXxXXxxXx"
-#' myAccessTokenSecret <- "xXxxXxXXxxXx"
+#' myKeys <- list(appName = "vosonSML", apiKey = "xXxxXxXXxxXx",
+#'   apiSecret = "xXxxXxXXxxXx", accessToken = "xXxxXxXXxxXx",
+#'   accessTokenSecret = "xXxxXxXXxxXx")
 #' 
-#' myTwitterAuth <- Authenticate("twitter", appName = myAppName, apiKey = myAPIKey,
-#'   apiSecret = myAPISecret, accessToken = myAccessToken,
-#'   accessTokenSecret = myAccessTokenSecret, useCachedToken = TRUE)
+#' myTwitterAuth <- Authenticate("twitter", appName = myKeys$appName, 
+#'   apiKey = myKeys$apiKey, apiSecret = myKeys$apiSecret, accessToken = myKeys$accessToken, 
+#'   accessTokenSecret = myKeys$accessTokenSecret, useCachedToken = TRUE)
 #' 
 #' ## youtube authentication
 #' 

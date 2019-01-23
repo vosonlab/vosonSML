@@ -26,13 +26,13 @@ methods for class \code{socialmedia}.}
 
 \item{appName}{Character string. Some API have a registered app name associated with API keys.}
 
-\item{apiKey}{Character string. API key used for authentication.}
+\item{apiKey}{Character string. API key to authenticate.}
 
-\item{apiSecret}{Character string. API secret.}
+\item{apiSecret}{Character string. API secret to authenticate.}
 
-\item{accessToken}{Character string. API access token.}
+\item{accessToken}{Character string. API access token to authenticate.}
 
-\item{accessTokenSecret}{Character string. API access token secret.}
+\item{accessTokenSecret}{Character string. API access token secret to authenticate.}
 
 \item{useCachedToken}{Logical. Use cached access token if found otherwise create one. Default is \code{TRUE}.}
 }
@@ -58,15 +58,13 @@ Reddit does not require authentication in this version of vosonSML.
 \dontrun{
 ## twitter authentication
 
-myAppName <- "vosonSML"
-myAPIKey <- "xXxxXxXXxxXx"
-myAPISecret <- "xXxxXxXXxxXx"
-myAccessToken <- "xXxxXxXXxxXx"
-myAccessTokenSecret <- "xXxxXxXXxxXx"
+myKeys <- list(appName = "vosonSML", apiKey = "xXxxXxXXxxXx",
+  apiSecret = "xXxxXxXXxxXx", accessToken = "xXxxXxXXxxXx",
+  accessTokenSecret = "xXxxXxXXxxXx")
 
-myTwitterAuth <- Authenticate("twitter", appName = myAppName, apiKey = myAPIKey,
-  apiSecret = myAPISecret, accessToken = myAccessToken,
-  accessTokenSecret = myAccessTokenSecret, useCachedToken = TRUE)
+myTwitterAuth <- Authenticate("twitter", appName = myKeys$appName, 
+  apiKey = myKeys$apiKey, apiSecret = myKeys$apiSecret, accessToken = myKeys$accessToken, 
+  accessTokenSecret = myKeys$accessTokenSecret, useCachedToken = TRUE)
 
 ## youtube authentication
 

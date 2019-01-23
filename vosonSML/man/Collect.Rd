@@ -24,13 +24,14 @@ Collect(credential, ...)
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate}.}
 
-\item{...}{Additional parameters for data collection by appropriate to credential \code{socialmedia} type.}
+\item{...}{Additional parameters for data collection appropriate to \code{socialmedia} type. Refer to usage for 
+S3 methods for class \code{socialmedia}.}
 
 \item{threadUrls}{Vector. Reddit thread url's to collect data from.}
 
 \item{waitTime}{Numeric integer. Time in seconds to wait in-between url collection requests.}
 
-\item{writeToFile}{Logical. If the collected data should be written to file. Default is \code{FALSE}.}
+\item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
 
 \item{searchTerm}{Character string. Specifies a search term or phrase (e.g. "Australian politics") or hashtag (e.g. 
 "#auspol"). Many query operators are available - see the Twitter documentation for more information: 
@@ -45,7 +46,7 @@ https://dev.twitter.com/rest/public/search}
 
 \item{retryOnRateLimit}{Logical. Default is \code{FALSE}.}
 
-\item{verbose}{Logical. Outputs additional information about the data collection. Default is \code{FALSE}.}
+\item{verbose}{Logical. Output additional information about the data collection. Default is \code{FALSE}.}
 
 \item{videoIDs}{Character vector. Specifies one or more youtube video IDs. For example, if the video URL is 
 'https://www.youtube.com/watch?v=W2GZFeYGU3s', then use \code{videoIDs = 'W2GZFeYGU3s'}. For multiple videos, the 
@@ -59,10 +60,9 @@ comments collected may be higher than maxComments. By default this function atte
 A data.frame object of class \code{dataSource} that can be used with \code{Create}.
 }
 \description{
-This function collects data from social media APIs, and structures the data into a data frame of class
-\code{dataSource}, ready for creating networks for further analysis. \code{Collect} is the second step of the
-\code{Authenticate}, \code{Collect}, \code{Create} workflow. This function is a convenient UI wrapper to the core
-CollectDataFrom* family of functions.
+This function collects data from social media and structures it into a dataframe that can be used for creating 
+networks for further analysis. \code{Collect} is the second step of the \code{Authenticate}, \code{Collect}, 
+\code{Create} workflow.
 
 Uses RedditExtractoR::reddit_content to collect user and comment data for thread urls.
 
@@ -109,6 +109,34 @@ maxComments, if a value is specified for this argument. For example, if a video 
 comments, and one of these top-level comments has 5 'child' or reply comments, then the total number of comments
 collected will be equal to 15. Currently, the user must 'guesstimate' the maxResults value, to collect a 
 number of comments in the order of what they require.
+}
+\examples{
+\dontrun{
+## twitter data collection
+
+# search and collect 100 recent tweets for the hashtag #auspol
+myTwitterData <- myTwitterAuth \%>\% 
+  Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100, verbose = TRUE, 
+          includeRetweets = FALSE, retryOnRateLimit = TRUE, writeToFile = TRUE)
+
+## youtube data collection
+
+# create a list of youtube video ids to collect on
+videoIDs <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xXXxxxXx"))
+
+# collect all comments for the youtube videos 
+myYoutubeData <- myYoutubeAuth \%>\% 
+  Collect(videoIDs = videoIDs, writeToFile = TRUE, verbose = FALSE)
+  
+## reddit data collection
+
+# reddit threads to collect on
+threadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xXxXXx/x_xxxx_xxxxxxxxx/")
+
+myRedditData <- myRedditAuth \%>\%
+  Collect(threadUrls = threadUrls, waitTime = 3, writeToFile = TRUE)
+}
+
 }
 \seealso{
 \code{\link{Authenticate}}, \code{\link{Create}}
