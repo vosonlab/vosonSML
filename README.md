@@ -51,7 +51,8 @@ actorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>%
 semanticNetwork <- Authenticate("twitter", appName = myTwitAppName,
                                 apiKey = myTwitAPIKey, apiSecret = myTwitAPISecret,
                                 accessToken = myTwitAccessToken,
-                                accessTokenSecret = myTwitAccessTokenSecret) %>%
+                                accessTokenSecret = myTwitAccessTokenSecret,
+                                useCachedToken = TRUE) %>%
                    Collect(searchTerm = "#auspol", searchType = "recent", 
                            numTweets = 100, includeRetweets = FALSE, retryOnRateLimit = TRUE) %>%
                    Create("semantic", writeToFile = TRUE)
