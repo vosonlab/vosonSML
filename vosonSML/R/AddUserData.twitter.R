@@ -76,7 +76,7 @@ AddUserData.twitter <- function(collectData, networkData, lookupMissingUsers = T
                                                                          as.integer(.data$.))))
   
   if (!is.null(df_missing_users_info) & writeToFile) {
-    writeOutputFile(df_users_info_all, "rds", "TwitterUserInfo")
+    writeOutputFile(df_users_info_all, "rds", "TwitterUserData")
   }
   
   g <- graph_from_data_frame(dfRelations, directed = TRUE, vertices = df_users_info_all)
@@ -89,10 +89,10 @@ AddUserData.twitter <- function(collectData, networkData, lookupMissingUsers = T
   cat("Done.\n")
   flush.console()
   
-  function_output <- list(
+  func_output <- list(
     "users" = df_users_info_all,
     "graph" = g
   )
   
-  return(function_output)
+  return(func_output)
 }

@@ -46,21 +46,36 @@ actorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>%
                 Collect(videoIDs = myYoutubeVideoIds) %>%
                 Create("actor", writeToFile = TRUE)
 
-# Authenticate with twitter, Collect 100 tweets for the '#auspol' hashtag and Create a 
-# semantic network
-semanticNetwork <- Authenticate("twitter", appName = myTwitAppName,
-                                apiKey = myTwitAPIKey, apiSecret = myTwitAPISecret,
-                                accessToken = myTwitAccessToken,
-                                accessTokenSecret = myTwitAccessTokenSecret,
-                                useCachedToken = TRUE) %>%
-                   Collect(searchTerm = "#auspol", searchType = "recent", 
-                           numTweets = 100, includeRetweets = FALSE, retryOnRateLimit = TRUE) %>%
-                   Create("semantic", writeToFile = TRUE)
+# Authenticate with twitter, Collect 100 tweets for the '#auspol' hashtag and Create an 
+# actor and semantic network
+twitterAuth <- Authenticate("twitter", appName = myTwitAppName,
+                             apiKey = myTwitAPIKey, apiSecret = myTwitAPISecret,
+                             accessToken = myTwitAccessToken,
+                             accessTokenSecret = myTwitAccessTokenSecret,
+                             useCachedToken = TRUE)
+                             
+twitterData <- twitterAuth %>%
+               Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100, 
+                       includeRetweets = FALSE, retryOnRateLimit = TRUE, writeToFile = TRUE, 
+                       verbose = TRUE)
 
-# Collect reddit threads and Create an actor network with comment text as edge attribute
-actorCommentsNetwork <- Authenticate("reddit") %>%
-                        Collect(threadUrls = myThreadUrls, waitTime = 5) %>%
-                        Create("actor", includeTextData = TRUE, writeToFile = TRUE)
+actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TRUE)
+
+actorGraph <- actorNetwork$graph # igraph network graph
+
+# Optional step to add additional twitter user info to actor network graph as node attributes 
+actorNetWithUserAttr <- AddUserData.twitter(twitterData, actorNetwork,
+                                            lookupMissingUsers = TRUE, 
+                                            twitterAuth = twitterAuth, writeToFile = TRUE)
+
+actorGraphWithUserAttr <- actorNetWithUserAttr$graph # igraph network graph
+
+semanticNetwork <- twitterData %>% Create("semantic", writeToFile = TRUE)
+
+# Collect reddit comment threads and Create an actor network with comment text as edge attribute
+actorNetwork <- Authenticate("reddit") %>%
+                Collect(threadUrls = myThreadUrls, waitTime = 5) %>%
+                Create("actor", includeTextData = TRUE, writeToFile = TRUE)
 ```
 For more detailed information and examples, please refer to the [vosonSML documentation](https://github.com/vosonlab/vosonSML/blob/master/vosonSML.pdf).
 
