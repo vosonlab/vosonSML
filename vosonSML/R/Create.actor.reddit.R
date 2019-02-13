@@ -1,12 +1,35 @@
-#' Create reddit actor network
+#' @title Create reddit actor network
 #' 
+#' @description Creates a reddit actor network from thread comments on subreddits. Users who have commented on a thread 
+#' are actor nodes and comment replies to each other are represented as directed edges. Optionally a graph with edge 
+#' weights (\code{weight}) or edge text attributes (\code{vosonTxt_comment}) can be created.
+#' 
+#' @param datasource Collected social media data with \code{"datasource"} and \code{"reddit"} class names.
+#' @param type Character string. Type of network to be created, set to \code{"actor"}.
 #' @param weightEdges Logical. Combine and weight directed network edges. Default is \code{FALSE}.
-#' @param textData Logical. Include comment text as an edge attributes of returned igraph network. 
-#' Cannot be used with the \code{weightEdges} parameter. Default is \code{FALSE}.
-#' @param cleanText Logical. Remove non-alphanumeric, non-punctuation, and non-space characters from the comment text 
-#' data used as edge attributes. Default is \code{TRUE}.
+#' @param textData Logical. Include comment text as an edge attributes of returned igraph network. Is set to 
+#' \code{FALSE} if the \code{weightEdges} parameter is \code{TRUE} as text merging is not supported. Default is 
+#' \code{FALSE}.
+#' @param cleanText Logical. Simple removal of non-alphanumeric, non-punctuation, and non-space characters from 
+#' the comment text data applied as graph edge attribute. Not suitable in some cases requiring capture of utf or emoji 
+#' characters. Implemented to support basic text analysis and to prevent reddit specific XML control character errors 
+#' in the graphml files created by this function. Alternatively custom cleaning of text data can be performed on the 
+#' \code{datasource} dataframe before being passed to this function. Default is \code{TRUE}.
+#' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
+#' @param ... Additional parameters passed to function. Not used in this method.
+#'
+#' @return Named list containing generated network as igraph object \code{$graph}.
 #' 
-#' @rdname Create.actor
+#' @examples
+#' \dontrun{
+#' # create a reddit actor network graph with comment text as edge attributes
+#' actorNetwork <- redditData %>% 
+#'   Create("actor", includeTextData = TRUE, writeToFile = TRUE)
+#' 
+#' # igraph object
+#' # actorNetwork$graph
+#' }
+#' 
 #' @export
 Create.actor.reddit <- function(datasource, type, weightEdges = FALSE, textData = FALSE, cleanText = TRUE, 
                                 writeToFile = FALSE, ...) {

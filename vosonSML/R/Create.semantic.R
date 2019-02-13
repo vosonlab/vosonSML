@@ -31,8 +31,9 @@
 #' 
 #' @seealso \code{\link{Create}}
 #' @keywords create semantic network twitter
-#' 
-#' @rdname Create.semantic
+#'
+#' @noRd 
+# @rdname Create.semantic
 #' @method Create semantic
 #' @export
 Create.semantic <- function(datasource, type, ...) {

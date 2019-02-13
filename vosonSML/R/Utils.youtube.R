@@ -1,17 +1,20 @@
-#' Extract the ids from a list of youtube video urls
+#' @title Extract the ids from a list of youtube video URLs
 #'
-#' This function reads youtube video urls from a list and or a text file and converts them to a vector of video ids. 
-#' For example, url "https://www.youtube.com/watch?v=73I5dRucCds" returns the id "73I5dRucCds". This function can be 
-#' used to create a vector for the youtube \code{Collect} methods \code{videoIDs} parameter.
+#' @description This function reads youtube video urls from a list and or a text file and converts them to a vector of 
+#' video ids. For example, URL \code{https://www.youtube.com/watch?v=73I5dRucCds} returns the id \code{73I5dRucCds}. 
+#' This function can be used to create a vector for the youtube \code{\link{Collect.youtube}} functions \code{videoIDs} 
+#' parameter.
 #' 
-#' @param urls Character vector. List of youtube urls.
-#' @param file Character string. Text file containing youtube urls.
+#' @note Accepts youtube URL formats \code{https://youtu.be/xxxxxxxx} and 
+#' \code{https://www.youtube.com/watch?v=xxxxxxxx}.
+#' 
+#' @param urls Character vector. List of youtube URLs.
+#' @param file Character string. Text file containing youtube URLs.
 #' 
 #' @return A vector of youtube video ids as character strings that were extracted from input video urls.
 #' 
-#' @seealso \code{Collect}
-#' @keywords collect youtube video id
-#' 
+#' @aliases GetYoutubeVideoIDs
+#' @name vosonSML::GetYoutubeVideoIDs
 #' @export
 GetYoutubeVideoIDs <- function(urls = NULL, file = NULL) {
   video_ids <- c()

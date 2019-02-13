@@ -1,6 +1,26 @@
-#' Create youtube actor network
-#'
-#' @rdname Create.actor
+#' @title Create youtube actor network
+#' 
+#' @description Creates a youtube actor network from comment threads on youtube videos. Users who have made comments to 
+#' a video (top-level comments) and users who have replied to those comments are actor nodes. The comments are 
+#' represented as directed edges between the actors. The video id is also included as an actor node, representative of 
+#' the videos publisher with top-level comments as directed edges towards them. 
+#' 
+#' @param datasource Collected social media data with \code{"datasource"} and \code{"youtube"} class names.
+#' @param type Character string. Type of network to be created, set to \code{"actor"}.
+#' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
+#' @param ... Additional parameters passed to function. Not used in this method.
+#' 
+#' @return Named list containing generated network as igraph object \code{$graph}.
+#' 
+#' @examples
+#' \dontrun{
+#' # create a youtube actor network graph
+#' actorNetwork <- youtubeData %>% Create("actor", writeToFile = TRUE)
+#' 
+#' # igraph object
+#' # actorNetwork$graph
+#' }
+#' 
 #' @export
 Create.actor.youtube <- function(datasource, type, writeToFile = FALSE, ...) {
 

@@ -1,13 +1,26 @@
-#' Collect reddit thread data
+#' @title Collect reddit thread data
 #'
-#' Uses RedditExtractoR::reddit_content to collect user and comment data for thread urls.
-#' 
-#' @param threadUrls Vector. Reddit thread url's to collect data from.
-#' @param waitTime Numeric integer. Time in seconds to wait in-between url collection requests.
+#' @description Uses RedditExtractoR::reddit_content to collect user and comment data for thread urls.
 #' 
 #' @note The reddit API endpoint used for thread collection has maximum limit of 500 comments per thread url.
 #' 
-#' @rdname Collect
+#' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.
+#' @param threadUrls Vector. Reddit thread url's to collect data from.
+#' @param waitTime Numeric integer. Time in seconds to wait in-between url collection requests.
+#' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
+#' @param ... Additional parameters passed to function. Not used in this method.
+#' 
+#' @return A data.frame object with class names \code{"datasource"} and \code{"reddit"}.
+#' 
+#' @examples
+#' \dontrun{
+#' # subreddit url to collect threads from
+#' threadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
+#' 
+#' myRedditData <- redditAuth %>%
+#'   Collect(threadUrls = threadUrls, waitTime = 3, writeToFile = TRUE)
+#' }
+#' 
 #' @export
 Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = FALSE, ...) {
   

@@ -1,8 +1,34 @@
-#' Create twitter actor network
-#'
+#' @title Create twitter actor network
+#' 
+#' @description Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who 
+#' have tweeted / retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges 
+#' of different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted 
+#' without relations to other users will appear in the network graph as isolate nodes.
+#' 
+#' @note When creating twitter actor networks, a network with additional user information can be generated using the
+#' \code{\link{AddUserData.twitter}} function. Additional calls can be made to the twitter API to get information
+#' about users that were identified as nodes during network creation but did not tweet (meaning no user profile 
+#' information was initially collected for them).
+#' 
+#' @param datasource Collected social media data with \code{"datasource"} and \code{"twitter"} class names.
+#' @param type Character string. Type of network to be created, set to \code{"actor"}.
+#' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
-#'
-#' @rdname Create.actor
+#' @param ... Additional parameters passed to function. Not used in this method.
+#' 
+#' @return Named list containing dataframes with the relations between actors (directed edges) \code{$relations},
+#' the actors (including isolates) \code{$users} and generated actor network as igraph object \code{$graph}.
+#' 
+#' @examples
+#' \dontrun{
+#' # create a twitter actor network graph and output to console additional information 
+#' # during network creation (verbose)
+#' actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TRUE)
+#' 
+#' # igraph object
+#' # actorNetwork$graph
+#' }
+#' 
 #' @export
 Create.actor.twitter <- function(datasource, type, writeToFile = FALSE, verbose = FALSE, ...) {
   

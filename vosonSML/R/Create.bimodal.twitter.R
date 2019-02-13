@@ -1,12 +1,22 @@
-# Create twitter bimodal network
-# 
-# Creates a bimodal network from collected tweets.
-#
+#' @title Create twitter bimodal network
+#' 
+#' @description Creates a bimodal network from collected tweets.
+#'
+#' @param datasource Collected social media data with \code{datasource} and \code{socialmedia} class attributes.
+#' @param type Character string. Type of network to be created.
+#' @param removeTermsOrHashtags Character string. Default is none. Otherwise this argument specifies which terms or 
+#' hashtags (i.e. vertices with matching 'name') should be removed from the bimodal network. This is useful to remove
+#' the search term or hashtag that was used to collect the data (i.e. remove the corresponding vertex in the graph). 
+#' For example, a value of "#auspol" means that if there is a vertex with the exact name "#auspol" then this vertex 
+#' will be removed.
+#' @param writeToFile Logical. If \code{TRUE} then the network is saved to file in current working directory (graphml 
+#' format), with filename denoting the current datetime and the type of network.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
+#' @param ... Additional parameters to pass to the network creation method.
 #' 
 #' @return A twitter bimodal network as igraph object.
-#'
-#' @rdname Create.bimodal
+#' 
+# @rdname Create.bimodal
 #' @export
 Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, writeToFile = FALSE, 
                                    verbose = FALSE, ...) {

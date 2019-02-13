@@ -12,15 +12,13 @@ tools to create unimodal, multimodal, and semantic networks. Excellent packages 
 \pkg{RedditExtractoR} and \pkg{igraph} were drawn on to provide an integrated work flow for creating different 
 types of networks out of social media data. Creating networks from online social media is often non-trivial and time 
 consuming. This package simplifies such tasks so users can focus on analysis.
-}
-\details{
-vosonSML uses a straightforward S3 class system. Data collected with this package produces \code{data.table} objects
-(extension of class \code{data.frame}) that are assigned the class \code{datasource}. Additionally,
-\code{datasource} objects are attributed a class identifying the source of data, e.g. \code{twitter} or
-\code{youtube}. In this way \code{datasource} objects are fast, easy to work with, and can be used as input to
-easily construct different kinds of networks. For example, the function \code{Collect} can be used to collect
-twitter data, which is then passed to the \code{Create} function resulting in a twitter network (as igraph object)
-that is ready for analysis.
+
+vosonSML uses a straightforward S3 class system. Data collected with this package produces \code{data.frame} 
+inheritable objects that are assigned the class \code{datasource}. Additionally, \code{datasource} objects are 
+attributed a class identifying the source of data, e.g. \code{twitter} or \code{youtube}. In this way 
+\code{datasource} objects are fast, easy to work with, and can be used as input toceasily construct different kinds 
+of networks. For example, the function \code{Collect} can be used to collectctwitter data, which is then passed to 
+the \code{Create} function resulting in a twitter network (as igraph object) that is ready for analysis.
 }
 \author{
 Created by Timothy Graham and Robert Ackland, with major contributions by Chung-hong Chan and Bryan Gertzel.

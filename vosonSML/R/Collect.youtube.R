@@ -1,36 +1,41 @@
-#' Collect YouTube comments data for generating different types of networks
+#' @title Collect youtube comments data for generating different types of networks
 #'
-#' This function collects YouTube comments data for one or more YouTube videos. It structures the data into a data 
-#' frame of class dataSource.youtube, ready for creating networks for further analysis.
-#'
-#' CollectDataYoutube collects public comments from YouTube videos, using the YouTube API.
-#'
-#' The function then finds and maps the relationships of YouTube users who have interacted with each other 
-#' (i.e. user i has replied to user j or mentioned user j in a comment) and structures these relationships into a data 
-#' frame format suitable for creating unimodal networks (CreateActorNetwork).
-#'
-#' For multiple videos, the user may wish to use the function GetYoutubeVideoIDs, which creates a character
-#' vector of video IDs from a plain text file of YouTube video URLs, which can then be used for the videoIDs
-#' argument of the function CollectDataYoutube.
+#' @description This function collects public comments data for one or more youtube videos using the Google Data API. 
+#' It then structures the data into a dataframe of class \code{"datasource"} and \code{"youtube"} for use in subsequent 
+#' network creation with the \code{\link{Create}} function.
 #' 
+#' @note Due to specifications of the Google Data API it is currently not efficient to specify the exact number of 
+#' comments to return from the API using \code{maxComments} parameter. The \code{maxComments} parameter is applied to
+#' top-level comments only and not the replies to these comments. As such the number of comments collected is usually 
+#' greater than expected. For example, if \code{maxComments} is set to 10 and one of the videos 10 top-level comments 
+#' has 5 reply comments then the total number of comments collected will be 15 for that video. Comments data for 
+#' multiple youtube videos can be requested in a single operation, \code{maxComments} is applied to each individual 
+#' video and not the combined total of comments.
+#' 
+#' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"youtube"}.
 #' @param videoIDs Character vector. Specifies one or more youtube video IDs. For example, if the video URL is 
-#' 'https://www.youtube.com/watch?v=W2GZFeYGU3s', then use \code{videoIDs = 'W2GZFeYGU3s'}. For multiple videos, the 
-#' function GetYoutubeVideoIDs can be used to create a vector object suitable as input for videoIDs.
-#' @param maxComments Numeric integer. Specifies how many 'top-level' comments to collect from each video. This value 
-#' *does not* take into account 'reply' comments (i.e. replies to top-level comments), therefore the total number of
-#' comments collected may be higher than maxComments. By default this function attempts to collect all comments.
+#' \code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use \code{videoIDs = c("xxxxxxxxxxx")}. For multiple videos 
+#' the function \code{\link{GetYoutubeVideoIDs}} can be used to create a vector object suitable as input for videoIDs.
+#' @param verbose Logical. Output additional information about the data collection. Default is \code{FALSE}.
+#' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
+#' @param maxComments Numeric integer. Specifies how many top-level comments to collect from each video. This value 
+#' does not consider replies to top-level comments. The total number of comments returned for a video will usually be 
+#' greater than \code{maxComments} depending on the number of reply comments present.
+#' @param ... Additional parameters passed to function. Not used in this method.
 #' 
-#' @note Currently supported network types: unimodal 'actor' network; CreateActorNetwork.
-#'
-#' Note on maxComments argument: Due to quirks/specifications of the Google API, it is currently not possible to 
-#' specify the exact number of comments to return from the API using maxResults argument (i.e.including comments 
-#' that are replies to top-level comments). Therefore, the number of comments collected is usually somewhat greater than
-#' maxComments, if a value is specified for this argument. For example, if a video contains 10 top-level 
-#' comments, and one of these top-level comments has 5 'child' or reply comments, then the total number of comments
-#' collected will be equal to 15. Currently, the user must 'guesstimate' the maxResults value, to collect a 
-#' number of comments in the order of what they require.
-#'
-#' @rdname Collect
+#' @return A data.frame object with class names \code{"datasource"} and \code{"youtube"}.
+#' 
+#' @examples
+#' \dontrun{
+#' # create a list of youtube video ids to collect on
+#' videoIDs <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx", 
+#'                                  "https://youtu.be/xxxxxxxx"))
+#' 
+#' # collect approximately 200 threads/comments for the youtube video
+#' youtubeData <- youtubeAuth %>% 
+#'   Collect(videoIDs = videoIDs, writeToFile = TRUE, verbose = FALSE, maxComments = 200)
+#' }
+#' 
 #' @export
 Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile = FALSE, 
                             maxComments = 10000000000000, ...) {

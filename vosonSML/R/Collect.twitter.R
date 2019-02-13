@@ -1,13 +1,13 @@
-#' Collect data from twitter for generating different types of networks
+#' @title Collect data from twitter for generating different types of networks
 #'
-#' This function collects data from twitter based on hashtags or search terms, and structures the data into a data 
+#' @description This function collects data from twitter based on hashtags or search terms, and structures the data into a data 
 #' frame of class \code{dataSource, twitter}, ready for creating networks for further analysis. Relationships are then 
 #' mapped for entities of interest in the data (e.g. users, terms, hashtags) and structured into a data frame format 
 #' suitable for creating unimodal networks (\code{CreateActorNetwork}), bimodal networks (\code{CreateBimodalNetwork}), 
 #' and semantic networks (\code{CreateSemanticNetwork}).
 #'
 #' The maximum number of tweets for a single call of \code{CollectDataTwitter} is 18000 as per the twitter standard
-#' API rate limits. This API only returns tweets for the last 6 to 9 days.
+#' API rate limits. The standard API only returns tweets for the last 6 to 9 days.
 #'
 #' Language support is available, using the \code{language} parameter. The user can restrict tweets returned to a 
 #' particular language, using the ISO 639-1 code. For example, restricting to English would use \code{language="en"}. 
@@ -16,7 +16,8 @@
 #' A variety of query operators are available through the twitter API. For example, "love OR hate" returns any tweets 
 #' containing either term (or both). For more information see the twitter API documentation (under the heading
 #' 'Query Operators'): https://dev.twitter.com/rest/public/search
-#'
+#' 
+#' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"twitter"}.
 #' @param searchTerm Character string. Specifies a search term or phrase (e.g. "Australian politics") or hashtag (e.g. 
 #' "#auspol"). Many query operators are available - see the Twitter documentation for more information: 
 #' https://dev.twitter.com/rest/public/search
@@ -25,8 +26,20 @@
 #' @param numTweets Numeric. Specifies how many tweets to be collected. Defaults is \code{100}.
 #' @param includeRetweets Logical. Specifies if the search should filter out retweets. Defaults is \code{TRUE}.
 #' @param retryOnRateLimit Logical. Default is \code{FALSE}.
+#' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information about the data collection. Default is \code{FALSE}.
+#' @inheritDotParams rtweet::search_tweets -token -q -n -type -include_rts -retryonratelimit -verbose
 #' 
-#' @rdname Collect
+#' @return A data.frame object with class names \code{"datasource"} and \code{"twitter"}.
+#' 
+#' @examples
+#' \dontrun{
+#' # search and collect 100 recent tweets for the hashtag #auspol
+#' myTwitterData <- twitterAuth %>% 
+#'   Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100, verbose = TRUE, 
+#'           includeRetweets = FALSE, retryOnRateLimit = TRUE, writeToFile = TRUE)
+#' }
+#' 
 #' @export
 Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", numTweets = 100, 
                             includeRetweets = TRUE, retryOnRateLimit = FALSE, writeToFile = FALSE, 

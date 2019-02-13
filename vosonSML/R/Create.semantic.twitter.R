@@ -6,7 +6,7 @@
 #'
 #' @return A twitter semantic network as igraph object.
 #' 
-#' @rdname Create.semantic
+# @rdname Create.semantic
 #' @export
 Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE, 
                                     termFreq = 5, hashtagFreq = 50, writeToFile = FALSE, verbose = FALSE, ...) {

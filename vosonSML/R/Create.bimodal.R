@@ -16,11 +16,9 @@
 #' format), with filename denoting the current datetime and the type of network.
 #' 
 #' @note Supported data sources: \code{twitter}
-#' 
-#' @seealso \code{\link{Create}}
-#' @keywords create bimodal network twitter
 #'
-#' @rdname Create.bimodal
+#' @noRd
+# @rdname Create.bimodal
 #' @method Create bimodal
 #' @export
 Create.bimodal <- function(datasource, type, ...) {

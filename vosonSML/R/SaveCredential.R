@@ -11,6 +11,7 @@
 #' 
 #' @return A \code{credential} object.
 #' 
+#' @name vosonSML::SaveCredential
 #' @export
 SaveCredential <- function(credential, file) {
   if (missing(credential) || missing(file)) {
@@ -21,7 +22,7 @@ SaveCredential <- function(credential, file) {
   return(credential)
 }
 
-#' @rdname SaveCredential
+#' @name vosonSML::SaveCredential
 #' @export
 LoadCredential <- function(file) {
   if (missing(file)) {
