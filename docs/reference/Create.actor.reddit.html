@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Twitter API authentication — Authenticate.twitter • vosonSML</title>
+<title>Create reddit actor network — Create.actor.reddit • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,10 +37,11 @@
 
 
 
-<meta property="og:title" content="Twitter API authentication — Authenticate.twitter" />
+<meta property="og:title" content="Create reddit actor network — Create.actor.reddit" />
 
-<meta property="og:description" content="Twitter authentication uses OAuth and requires Application-user authentication API keys as described here: 
-https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
+<meta property="og:description" content="Creates a reddit actor network from thread comments on subreddits. Users who have commented on a thread 
+are actor nodes and comment replies to each other are represented as directed edges. Optionally a graph with edge 
+weights (weight) or edge text attributes (vosonTxt_comment) can be created." />
 
 <meta property="og:image" content="http://vosonlab.github.io/vosonSML/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -73,7 +74,7 @@ https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
       </span>
     </div>
 
@@ -109,54 +110,55 @@ https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Twitter API authentication</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Authenticate.twitter.R'><code>R/Authenticate.twitter.R</code></a></small>
-    <div class="hidden name"><code>Authenticate.twitter.Rd</code></div>
+    <h1>Create reddit actor network</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.actor.reddit.R'><code>R/Create.actor.reddit.R</code></a></small>
+    <div class="hidden name"><code>Create.actor.reddit.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Twitter authentication uses OAuth and requires Application-user authentication API keys as described here: 
-<a href='https://developer.twitter.com/en/docs/basics/authentication/overview/oauth'>https://developer.twitter.com/en/docs/basics/authentication/overview/oauth</a>.</p>
+    <p>Creates a reddit actor network from thread comments on subreddits. Users who have commented on a thread 
+are actor nodes and comment replies to each other are represented as directed edges. Optionally a graph with edge 
+weights (<code>weight</code>) or edge text attributes (<code>vosonTxt_comment</code>) can be created.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for twitter</span>
-<span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='no'>socialmedia</span>, <span class='no'>appName</span>, <span class='no'>apiKey</span>, <span class='no'>apiSecret</span>,
-  <span class='no'>accessToken</span>, <span class='no'>accessTokenSecret</span>, <span class='kw'>useCachedToken</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for actor.reddit</span>
+<span class='fu'><a href='Create.html'>Create</a></span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='kw'>weightEdges</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>textData</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>cleanText</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>socialmedia</th>
-      <td><p>Character string. Identifier for social media API to authenticate, set to <code>"twitter"</code>.</p></td>
+      <th>datasource</th>
+      <td><p>Collected social media data with <code>"datasource"</code> and <code>"reddit"</code> class names.</p></td>
     </tr>
     <tr>
-      <th>appName</th>
-      <td><p>Character string. Registered twitter app name associated with the API keys.</p></td>
+      <th>type</th>
+      <td><p>Character string. Type of network to be created, set to <code>"actor"</code>.</p></td>
     </tr>
     <tr>
-      <th>apiKey</th>
-      <td><p>Character string. API key to authenticate.</p></td>
+      <th>weightEdges</th>
+      <td><p>Logical. Combine and weight directed network edges. Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>apiSecret</th>
-      <td><p>Character string. API secret to authenticate.</p></td>
+      <th>textData</th>
+      <td><p>Logical. Include comment text as an edge attributes of returned igraph network. Is set to 
+<code>FALSE</code> if the <code>weightEdges</code> parameter is <code>TRUE</code> as text merging is not supported. Default is 
+<code>FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>accessToken</th>
-      <td><p>Character string. API access token to authenticate.</p></td>
+      <th>cleanText</th>
+      <td><p>Logical. Simple removal of non-alphanumeric, non-punctuation, and non-space characters from 
+the comment text data applied as graph edge attribute. Not suitable in some cases requiring capture of utf or emoji 
+characters. Implemented to support basic text analysis and to prevent reddit specific XML control character errors 
+in the graphml files created by this function. Alternatively custom cleaning of text data can be performed on the 
+<code>datasource</code> dataframe before being passed to this function. Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
-      <th>accessTokenSecret</th>
-      <td><p>Character string. API access token secret to authenticate.</p></td>
-    </tr>
-    <tr>
-      <th>useCachedToken</th>
-      <td><p>Logical. Use cached access token if found otherwise create one. The cached token file is 
-named <code>.twitter-oauth</code> and saved to the working directory.To refresh the cached token this file has to be 
-manually deleted. Default is <code>TRUE</code>.</p></td>
+      <th>writeToFile</th>
+      <td><p>Logical. Save network data to a file in the current working directory. Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -166,20 +168,17 @@ manually deleted. Default is <code>TRUE</code>.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>credential</code> object containing an access token <code>$auth</code> and social media type descriptor 
-<code>$socialmedia</code> set to <code>"twitter"</code>. Object has the class names <code>"credential"</code> and <code>"twitter"</code>.</p>
+    <p>Named list containing generated network as igraph object <code>$graph</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># twitter authentication with api keys</span>
-<span class='no'>myKeys</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>appName</span> <span class='kw'>=</span> <span class='st'>"vosonSML"</span>, <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>,
-  <span class='kw'>apiSecret</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>, <span class='kw'>accessToken</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>,
-  <span class='kw'>accessTokenSecret</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>)
+<span class='co'># create a reddit actor network graph with comment text as edge attributes</span>
+<span class='no'>actorNetwork</span> <span class='kw'>&lt;-</span> <span class='no'>redditData</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='Create.html'>Create</a></span>(<span class='st'>"actor"</span>, <span class='kw'>includeTextData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='no'>twitterAuth</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='st'>"twitter"</span>, <span class='kw'>appName</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>appName</span>,
-  <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>apiKey</span>, <span class='kw'>apiSecret</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>apiSecret</span>, <span class='kw'>accessToken</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>accessToken</span>,
-  <span class='kw'>accessTokenSecret</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>accessTokenSecret</span>, <span class='kw'>useCachedToken</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># igraph object</span>
+<span class='co'># actorNetwork$graph</span>
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>

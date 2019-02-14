@@ -1,4 +1,4 @@
-# vosonSML <img src="vosonSML/man/figures/logo.png" width="140px" align="right"/>
+# vosonSML <img src="man/figures/logo.png" width="140px" align="right"/>
 ![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
 ![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
@@ -92,7 +92,7 @@ actorNetwork <- Authenticate("reddit") %>%
                 Collect(threadUrls = myThreadUrls, waitTime = 5) %>%
                 Create("actor", includeTextData = TRUE, writeToFile = TRUE)
 ```
-For more detailed information and examples, please refer to the [Reference](vosonSML/docs/reference/index.html) section.
+For more detailed information and examples, please refer to the [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) section.
 
 ## Special thanks
 

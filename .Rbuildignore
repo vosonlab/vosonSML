@@ -11,4 +11,5 @@
 ^\.twitter-oauth$
 ^README.md$
 ^docs$
+^pkgdown$
 ^_pkgdown\.yml$

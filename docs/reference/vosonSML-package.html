@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Youtube API authentication — Authenticate.youtube • vosonSML</title>
+<title>Collection and network analysis of social media data — vosonSML-package • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,10 +37,21 @@
 
 
 
-<meta property="og:title" content="Youtube API authentication — Authenticate.youtube" />
+<meta property="og:title" content="Collection and network analysis of social media data — vosonSML-package" />
 
-<meta property="og:description" content="Youtube authentication uses OAuth2 and requires a Google Developer API key as described here:
-https://developers.google.com/youtube/v3/docs/." />
+<meta property="og:description" content="The goal of the vosonSML package is to provide a suite of easy-to-use tools for collecting data 
+from social media and generating different types of networks suited to Social Network Analysis (SNA) and text 
+analytics. It offers tools to create unimodal, multimodal, and semantic networks. Excellent packages such as 
+rtweet, RedditExtractoR, magrittr, dplyr and igraph were drawn on to provide an 
+integrated work flow for creating different types of networks out of social media data. Creating networks from 
+online social media is often non-trivial and time consuming. This package simplifies such tasks so users can focus 
+on analysis.
+vosonSML uses a straightforward S3 class system. Data collected with this package produces data.frame 
+inheritable objects that are assigned the class &quot;datasource&quot;. Additionally, &quot;datasource&quot; objects are 
+attributed a class identifying the source of data, such as &quot;twitter&quot; or &quot;youtube&quot;. In this way 
+datasource objects are fast, easy to work with, and can be used as input to easily construct different kinds 
+of networks. For example, the function Collect can be used to collect twitter data, which is then passed to 
+the Create function resulting in a twitter network (as igraph object) that is ready for analysis." />
 
 <meta property="og:image" content="http://vosonlab.github.io/vosonSML/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -73,7 +84,7 @@ https://developers.google.com/youtube/v3/docs/." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
       </span>
     </div>
 
@@ -109,63 +120,39 @@ https://developers.google.com/youtube/v3/docs/." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Youtube API authentication</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Authenticate.youtube.R'><code>R/Authenticate.youtube.R</code></a></small>
-    <div class="hidden name"><code>Authenticate.youtube.Rd</code></div>
+    <h1>Collection and network analysis of social media data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/vosonSML-package.R'><code>R/vosonSML-package.R</code></a></small>
+    <div class="hidden name"><code>vosonSML-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Youtube authentication uses OAuth2 and requires a Google Developer API key as described here:
-<a href='https://developers.google.com/youtube/v3/docs/'>https://developers.google.com/youtube/v3/docs/</a>.</p>
+    <p>The goal of the <span class="pkg">vosonSML</span> package is to provide a suite of easy-to-use tools for collecting data 
+from social media and generating different types of networks suited to Social Network Analysis (SNA) and text 
+analytics. It offers tools to create unimodal, multimodal, and semantic networks. Excellent packages such as 
+<span class="pkg">rtweet</span>, <span class="pkg">RedditExtractoR</span>, <span class="pkg">magrittr</span>, <span class="pkg">dplyr</span> and <span class="pkg">igraph</span> were drawn on to provide an 
+integrated work flow for creating different types of networks out of social media data. Creating networks from 
+online social media is often non-trivial and time consuming. This package simplifies such tasks so users can focus 
+on analysis.</p>
+<p><span class="pkg">vosonSML</span> uses a straightforward S3 class system. Data collected with this package produces <code>data.frame</code> 
+inheritable objects that are assigned the class <code>"datasource"</code>. Additionally, <code>"datasource"</code> objects are 
+attributed a class identifying the source of data, such as <code>"twitter"</code> or <code>"youtube"</code>. In this way 
+<code>datasource</code> objects are fast, easy to work with, and can be used as input to easily construct different kinds 
+of networks. For example, the function <code>Collect</code> can be used to collect twitter data, which is then passed to 
+the <code>Create</code> function resulting in a twitter network (as igraph object) that is ready for analysis.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for youtube</span>
-<span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='no'>socialmedia</span>, <span class='no'>apiKey</span>, <span class='no'>...</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>socialmedia</th>
-      <td><p>Character string. Identifier for social media API to authenticate, set to <code>"youtube"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>apiKey</th>
-      <td><p>Character string. Google developer API key to authenticate.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>Additional parameters passed to function. Not used in this method.</p></td>
-    </tr>
-    </table>
-    
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+        
 
-    <p>A <code>credential</code> object containing an api key <code>$auth</code> and social media type descriptor 
-<code>$socialmedia</code> set to <code>"youtube"</code>. Object has the class names <code>"credential"</code> and <code>"youtube"</code>.</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># youtube authentication with google developer api key</span>
-<span class='no'>myAPIKey</span> <span class='kw'>&lt;-</span> <span class='st'>"xxxxxxxxxxxx"</span>
-
-<span class='no'>youtubeAuth</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='st'>"youtube"</span>, <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='no'>myAPIKey</span>)
-<span class='co'># }</span><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
+    <h2>Author</h2>
+    <p>Created by Timothy Graham and Robert Ackland, with major contributions by Chung-hong Chan and Bryan Gertzel.</p>
   </div>
 </div>
 

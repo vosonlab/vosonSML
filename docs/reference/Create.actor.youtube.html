@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Collect comments data from reddit threads — Collect.reddit • vosonSML</title>
+<title>Create youtube actor network — Create.actor.youtube • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,10 +37,12 @@
 
 
 
-<meta property="og:title" content="Collect comments data from reddit threads — Collect.reddit" />
+<meta property="og:title" content="Create youtube actor network — Create.actor.youtube" />
 
-<meta property="og:description" content="Collects comments made by users on one or more specified subreddit conversation threads and structures 
-the data into a dataframe with the class names &quot;datasource&quot; and &quot;reddit&quot;." />
+<meta property="og:description" content="Creates a youtube actor network from comment threads on youtube videos. Users who have made comments to 
+a video (top-level comments) and users who have replied to those comments are actor nodes. The comments are 
+represented as directed edges between the actors. The video id is also included as an actor node, representative of 
+the videos publisher with top-level comments as directed edges towards them." />
 
 <meta property="og:image" content="http://vosonlab.github.io/vosonSML/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -73,7 +75,7 @@ the data into a dataframe with the class names &quot;datasource&quot; and &quot;
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
       </span>
     </div>
 
@@ -109,40 +111,38 @@ the data into a dataframe with the class names &quot;datasource&quot; and &quot;
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Collect comments data from reddit threads</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Collect.reddit.R'><code>R/Collect.reddit.R</code></a></small>
-    <div class="hidden name"><code>Collect.reddit.Rd</code></div>
+    <h1>Create youtube actor network</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.actor.youtube.R'><code>R/Create.actor.youtube.R</code></a></small>
+    <div class="hidden name"><code>Create.actor.youtube.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Collects comments made by users on one or more specified subreddit conversation threads and structures 
-the data into a dataframe with the class names <code>"datasource"</code> and <code>"reddit"</code>.</p>
+    <p>Creates a youtube actor network from comment threads on youtube videos. Users who have made comments to 
+a video (top-level comments) and users who have replied to those comments are actor nodes. The comments are 
+represented as directed edges between the actors. The video id is also included as an actor node, representative of 
+the videos publisher with top-level comments as directed edges towards them.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for reddit</span>
-<span class='fu'><a href='Collect.html'>Collect</a></span>(<span class='no'>credential</span>, <span class='no'>threadUrls</span>, <span class='kw'>waitTime</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for actor.youtube</span>
+<span class='fu'><a href='Create.html'>Create</a></span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>credential</th>
-      <td><p>A <code>credential</code> object generated from <code>Authenticate</code> with class name <code>"reddit"</code>.</p></td>
+      <th>datasource</th>
+      <td><p>Collected social media data with <code>"datasource"</code> and <code>"youtube"</code> class names.</p></td>
     </tr>
     <tr>
-      <th>threadUrls</th>
-      <td><p>Character vector. Reddit thread urls to collect data from.</p></td>
-    </tr>
-    <tr>
-      <th>waitTime</th>
-      <td><p>Numeric integer. Time in seconds to wait in-between url collection requests.</p></td>
+      <th>type</th>
+      <td><p>Character string. Type of network to be created, set to <code>"actor"</code>.</p></td>
     </tr>
     <tr>
       <th>writeToFile</th>
-      <td><p>Logical. Write collected data to file. Default is <code>FALSE</code>.</p></td>
+      <td><p>Logical. Save network data to a file in the current working directory. Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -152,20 +152,16 @@ the data into a dataframe with the class names <code>"datasource"</code> and <co
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>data.frame</code> object with class names <code>"datasource"</code> and <code>"reddit"</code>.</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>The reddit web endpoint used for collection has maximum limit of 500 comments per thread url.</p>
+    <p>Named list containing generated network as igraph object <code>$graph</code>.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># subreddit url to collect threads from</span>
-<span class='no'>threadUrls</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>)
+<span class='co'># create a youtube actor network graph</span>
+<span class='no'>actorNetwork</span> <span class='kw'>&lt;-</span> <span class='no'>youtubeData</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Create.html'>Create</a></span>(<span class='st'>"actor"</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-<span class='no'>redditData</span> <span class='kw'>&lt;-</span> <span class='no'>redditAuth</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='Collect.html'>Collect</a></span>(<span class='kw'>threadUrls</span> <span class='kw'>=</span> <span class='no'>threadUrls</span>, <span class='kw'>waitTime</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># igraph object</span>
+<span class='co'># actorNetwork$graph</span>
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
@@ -175,8 +171,6 @@ the data into a dataframe with the class names <code>"datasource"</code> and <co
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

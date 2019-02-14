@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create twitter actor network — Create.actor.twitter • vosonSML</title>
+<title>Create a credential object to access social media APIs — Authenticate • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,12 +37,14 @@
 
 
 
-<meta property="og:title" content="Create twitter actor network — Create.actor.twitter" />
+<meta property="og:title" content="Create a credential object to access social media APIs — Authenticate" />
 
-<meta property="og:description" content="Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who 
-have tweeted / retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges 
-of different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted 
-without relations to other users will appear in the network graph as isolate nodes." />
+<meta property="og:description" content="Authenticate creates a credential object that enables R to make authenticated calls to social media
+APIs. A credential object is a S3 object containing authentication related information such as an access 
+token or key, and a class name identifying the social media that grants authentication. Authenticate is the 
+first step of the Authenticate, Collect and Create workflow.
+Refer to Authenticate.twitter, Authenticate.youtube and 
+Authenticate.reddit for parameters and usage." />
 
 <meta property="og:image" content="http://vosonlab.github.io/vosonSML/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -75,7 +77,7 @@ without relations to other users will appear in the network graph as isolate nod
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
       </span>
     </div>
 
@@ -111,84 +113,46 @@ without relations to other users will appear in the network graph as isolate nod
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create twitter actor network</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.actor.twitter.R'><code>R/Create.actor.twitter.R</code></a></small>
-    <div class="hidden name"><code>Create.actor.twitter.Rd</code></div>
+    <h1>Create a credential object to access social media APIs</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Authenticate.R'><code>R/Authenticate.R</code></a></small>
+    <div class="hidden name"><code>Authenticate.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who 
-have tweeted / retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges 
-of different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted 
-without relations to other users will appear in the network graph as isolate nodes.</p>
+    <p><code>Authenticate</code> creates a <code>credential</code> object that enables R to make authenticated calls to social media
+APIs. A <code>credential</code> object is a S3 object containing authentication related information such as an access 
+token or key, and a class name identifying the social media that grants authentication. <code>Authenticate</code> is the 
+first step of the <code>Authenticate</code>, <code><a href='Collect.html'>Collect</a></code> and <code><a href='Create.html'>Create</a></code> workflow.</p>
+<p>Refer to <code><a href='Authenticate.twitter.html'>Authenticate.twitter</a></code>, <code><a href='Authenticate.youtube.html'>Authenticate.youtube</a></code> and 
+<code><a href='Authenticate.reddit.html'>Authenticate.reddit</a></code> for parameters and usage.</p>
     
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for actor.twitter</span>
-<span class='fu'><a href='Create.html'>Create</a></span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>Authenticate</span>(<span class='no'>socialmedia</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>datasource</th>
-      <td><p>Collected social media data with <code>"datasource"</code> and <code>"twitter"</code> class names.</p></td>
-    </tr>
-    <tr>
-      <th>type</th>
-      <td><p>Character string. Type of network to be created, set to <code>"actor"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>writeToFile</th>
-      <td><p>Logical. Save network data to a file in the current working directory. Default is <code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>verbose</th>
-      <td><p>Logical. Output additional information about the network creation. Default is <code>FALSE</code>.</p></td>
+      <th>socialmedia</th>
+      <td><p>Character string. Identifier for social media API to authenticate with. Supported social media
+are <code>"twitter"</code>, <code>"youtube"</code> and <code>"reddit"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional parameters passed to function. Not used in this method.</p></td>
+      <td><p>Optional parameters to pass to functions providied by supporting R packages that are used for social media 
+API access.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Named list containing dataframes with the relations between actors (directed edges) <code>$relations</code>,
-the actors (including isolates) <code>$users</code> and generated actor network as igraph object <code>$graph</code>.</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>When creating twitter actor networks, a network with additional user information can be generated using the
-<code><a href='vosonSML-colon-colon-AddUserData.twitter.html'>AddUserData.twitter</a></code> function. Additional calls can be made to the twitter API to get information
-about users that were identified as nodes during network creation but did not tweet (meaning no user profile 
-information was initially collected for them).</p>
-    
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># create a twitter actor network graph and output to console additional information </span>
-<span class='co'># during network creation (verbose)</span>
-<span class='no'>actorNetwork</span> <span class='kw'>&lt;-</span> <span class='no'>twitterData</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Create.html'>Create</a></span>(<span class='st'>"actor"</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-
-<span class='co'># igraph object</span>
-<span class='co'># actorNetwork$graph</span>
-<span class='co'># }</span><div class='input'>
-</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
-      <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
-      
-      <li><a href="#examples">Examples</a></li>
-    </ul>
+                </ul>
 
   </div>
 </div>

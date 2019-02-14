@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract the ids from a list of youtube video URLs — vosonSML::GetYoutubeVideoIDs • vosonSML</title>
+<title>Twitter API authentication — Authenticate.twitter • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,12 +37,10 @@
 
 
 
-<meta property="og:title" content="Extract the ids from a list of youtube video URLs — vosonSML::GetYoutubeVideoIDs" />
+<meta property="og:title" content="Twitter API authentication — Authenticate.twitter" />
 
-<meta property="og:description" content="This function reads youtube video urls from a list and or a text file and converts them to a vector of 
-video ids. For example, URL https://www.youtube.com/watch?v=73I5dRucCds returns the id 73I5dRucCds. 
-This function can be used to create a vector for the youtube Collect.youtube functions videoIDs 
-parameter." />
+<meta property="og:description" content="Twitter authentication uses OAuth and requires Application-user authentication API keys as described here: 
+https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
 
 <meta property="og:image" content="http://vosonlab.github.io/vosonSML/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -75,7 +73,7 @@ parameter." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
       </span>
     </div>
 
@@ -111,45 +109,79 @@ parameter." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract the ids from a list of youtube video URLs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Utils.youtube.R'><code>R/Utils.youtube.R</code></a></small>
-    <div class="hidden name"><code>vosonSML-colon-colon-GetYoutubeVideoIDs.Rd</code></div>
+    <h1>Twitter API authentication</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Authenticate.twitter.R'><code>R/Authenticate.twitter.R</code></a></small>
+    <div class="hidden name"><code>Authenticate.twitter.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function reads youtube video urls from a list and or a text file and converts them to a vector of 
-video ids. For example, URL <code>https://www.youtube.com/watch?v=73I5dRucCds</code> returns the id <code>73I5dRucCds</code>. 
-This function can be used to create a vector for the youtube <code><a href='Collect.youtube.html'>Collect.youtube</a></code> functions <code>videoIDs</code> 
-parameter.</p>
+    <p>Twitter authentication uses OAuth and requires Application-user authentication API keys as described here: 
+<a href='https://developer.twitter.com/en/docs/basics/authentication/overview/oauth'>https://developer.twitter.com/en/docs/basics/authentication/overview/oauth</a>.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>GetYoutubeVideoIDs</span>(<span class='kw'>urls</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for twitter</span>
+<span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='no'>socialmedia</span>, <span class='no'>appName</span>, <span class='no'>apiKey</span>, <span class='no'>apiSecret</span>,
+  <span class='no'>accessToken</span>, <span class='no'>accessTokenSecret</span>, <span class='kw'>useCachedToken</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>urls</th>
-      <td><p>Character vector. List of youtube URLs.</p></td>
+      <th>socialmedia</th>
+      <td><p>Character string. Identifier for social media API to authenticate, set to <code>"twitter"</code>.</p></td>
     </tr>
     <tr>
-      <th>file</th>
-      <td><p>Character string. Text file containing youtube URLs.</p></td>
+      <th>appName</th>
+      <td><p>Character string. Registered twitter app name associated with the API keys.</p></td>
+    </tr>
+    <tr>
+      <th>apiKey</th>
+      <td><p>Character string. API key to authenticate.</p></td>
+    </tr>
+    <tr>
+      <th>apiSecret</th>
+      <td><p>Character string. API secret to authenticate.</p></td>
+    </tr>
+    <tr>
+      <th>accessToken</th>
+      <td><p>Character string. API access token to authenticate.</p></td>
+    </tr>
+    <tr>
+      <th>accessTokenSecret</th>
+      <td><p>Character string. API access token secret to authenticate.</p></td>
+    </tr>
+    <tr>
+      <th>useCachedToken</th>
+      <td><p>Logical. Use cached access token if found otherwise create one. The cached token file is 
+named <code>.twitter-oauth</code> and saved to the working directory.To refresh the cached token this file has to be 
+manually deleted. Default is <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters passed to function. Not used in this method.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of youtube video ids as character strings that were extracted from input video urls.</p>
-    
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>Accepts youtube URL formats <code>https://youtu.be/xxxxxxxx</code> and 
-<code>https://www.youtube.com/watch?v=xxxxxxxx</code>.</p>
+    <p>A <code>credential</code> object containing an access token <code>$auth</code> and social media type descriptor 
+<code>$socialmedia</code> set to <code>"twitter"</code>. Object has the class names <code>"credential"</code> and <code>"twitter"</code>.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># twitter authentication with api keys</span>
+<span class='no'>myKeys</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>appName</span> <span class='kw'>=</span> <span class='st'>"vosonSML"</span>, <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>,
+  <span class='kw'>apiSecret</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>, <span class='kw'>accessToken</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>,
+  <span class='kw'>accessTokenSecret</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>)
+
+<span class='no'>twitterAuth</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='st'>"twitter"</span>, <span class='kw'>appName</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>appName</span>,
+  <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>apiKey</span>, <span class='kw'>apiSecret</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>apiSecret</span>, <span class='kw'>accessToken</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>accessToken</span>,
+  <span class='kw'>accessTokenSecret</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>accessTokenSecret</span>, <span class='kw'>useCachedToken</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -157,9 +189,9 @@ parameter.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-
-      <li><a href="#note">Note</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

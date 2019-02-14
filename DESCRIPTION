@@ -1,5 +1,5 @@
 Package: vosonSML
-Version: 0.26.1
+Version: 0.26.2
 Title: Tools for Collecting Social Media Data and Generating Networks for Analysis
 Description: A suite of tools for collecting and constructing networks from social media data.
     Provides easy-to-use functions for collecting data across popular platforms (Twitter, YouTube 
@@ -12,7 +12,7 @@ Depends: R (>= 3.2.0)
 Encoding: UTF-8
 Author: Timothy Graham, Robert Ackland, Chung-hong Chan, Bryan Gertzel
 Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
-License: GPL (>= 3)
+License: GPL (>= 3) + file LICENSE
 RoxygenNote: 6.1.1
 NeedsCompilation: no
 URL: https://github.com/vosonlab/vosonSML

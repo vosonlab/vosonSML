@@ -1,6 +1,6 @@
 ## Test environments
-* MacOS X, R 3.5.1
-* Windows 10, R 3.5.1
+* MacOS X, R 3.5.2
+* Windows 10, R 3.5.2
 
 ## R CMD check results
 0 errors | 0 warnings

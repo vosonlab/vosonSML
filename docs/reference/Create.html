@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Collect data from social media for generating networks — Collect • vosonSML</title>
+<title>Create networks from social media data — Create • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,13 +37,16 @@
 
 
 
-<meta property="og:title" content="Collect data from social media for generating networks — Collect" />
+<meta property="og:title" content="Create networks from social media data — Create" />
 
-<meta property="og:description" content="This function collects data from social media and structures it into a dataframe that can be used for 
-creating networks for further analysis. Collect is the second step of the Authenticate, 
-Collect, and Create workflow.
-Refer to Collect.twitter, Collect.youtube and 
-Collect.reddit for parameters and usage." />
+<meta property="og:description" content="This function creates networks from social media data as produced from Collect. 
+Create is the final step of the Authenticate, Collect and Create workflow.
+There are three types of networks that can be created from collected data: actor, bimodal or 
+semantic.
+For actor networks refer to Create.actor.twitter, Create.actor.youtube and 
+Create.actor.reddit for parameters and usage.
+For bimodal and semantic networks refer to Create.bimodal.twitter and 
+Create.semantic.twitter functions for parameters and usage respectively." />
 
 <meta property="og:image" content="http://vosonlab.github.io/vosonSML/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -76,7 +79,7 @@ Collect.reddit for parameters and usage." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
       </span>
     </div>
 
@@ -112,34 +115,42 @@ Collect.reddit for parameters and usage." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Collect data from social media for generating networks</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Collect.R'><code>R/Collect.R</code></a></small>
-    <div class="hidden name"><code>Collect.Rd</code></div>
+    <h1>Create networks from social media data</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.R'><code>R/Create.R</code></a></small>
+    <div class="hidden name"><code>Create.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>This function collects data from social media and structures it into a dataframe that can be used for 
-creating networks for further analysis. <code>Collect</code> is the second step of the <code><a href='Authenticate.html'>Authenticate</a></code>, 
-<code>Collect</code>, and <code><a href='Create.html'>Create</a></code> workflow.</p>
-<p>Refer to <code><a href='Collect.twitter.html'>Collect.twitter</a></code>, <code><a href='Collect.youtube.html'>Collect.youtube</a></code> and 
-<code><a href='Collect.reddit.html'>Collect.reddit</a></code> for parameters and usage.</p>
+    <p>This function creates networks from social media data as produced from <code><a href='Collect.html'>Collect</a></code>. 
+<code>Create</code> is the final step of the <code><a href='Authenticate.html'>Authenticate</a></code>, <code><a href='Collect.html'>Collect</a></code> and <code>Create</code> workflow.</p>
+<p>There are three types of networks that can be created from collected data: <code>actor</code>, <code>bimodal</code> or 
+<code>semantic</code>.</p>
+<p>For <code>actor</code> networks refer to <code><a href='Create.actor.twitter.html'>Create.actor.twitter</a></code>, <code><a href='Create.actor.youtube.html'>Create.actor.youtube</a></code> and 
+<code><a href='Create.actor.reddit.html'>Create.actor.reddit</a></code> for parameters and usage.</p>
+<p>For <code>bimodal</code> and <code>semantic</code> networks refer to <code><a href='Create.bimodal.twitter.html'>Create.bimodal.twitter</a></code> and 
+<code><a href='Create.semantic.twitter.html'>Create.semantic.twitter</a></code> functions for parameters and usage respectively.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>Collect</span>(<span class='no'>credential</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>Create</span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>credential</th>
-      <td><p>A <code>credential</code> object generated from <code>Authenticate</code>.</p></td>
+      <th>datasource</th>
+      <td><p>Collected social media data of class <code>"datasource"</code> and <code>socialmedia</code>.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Character string. Type of network to be created, can be <code>"actor"</code>, <code>"bimodal"</code> or 
+<code>"semantic"</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Optional parameters to pass to functions providied by supporting R packages that are used for social media 
-API collection.</p></td>
+      <td><p>Optional parameters to pass to functions providied by supporting R packages that are used for social 
+media network creation.</p></td>
     </tr>
     </table>
     

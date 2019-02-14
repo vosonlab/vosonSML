@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Save and load credential information — vosonSML::SaveCredential • vosonSML</title>
+<title>Reddit API authentication — Authenticate.reddit • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -37,11 +37,9 @@
 
 
 
-<meta property="og:title" content="Save and load credential information — vosonSML::SaveCredential" />
+<meta property="og:title" content="Reddit API authentication — Authenticate.reddit" />
 
-<meta property="og:description" content="Functions to save and load credential information. Currently, credential information will be stored as a RDS file. 
-SaveCredential will return the input credential, useful for working as a filter between 
-Authenticate and Collect." />
+<meta property="og:description" content="Reddit does not require authentication in this version of vosonSML." />
 
 <meta property="og:image" content="http://vosonlab.github.io/vosonSML/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -74,7 +72,7 @@ Authenticate and Collect." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
       </span>
     </div>
 
@@ -110,41 +108,51 @@ Authenticate and Collect." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Save and load credential information</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/SaveCredential.R'><code>R/SaveCredential.R</code></a></small>
-    <div class="hidden name"><code>vosonSML-colon-colon-SaveCredential.Rd</code></div>
+    <h1>Reddit API authentication</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Authenticate.reddit.R'><code>R/Authenticate.reddit.R</code></a></small>
+    <div class="hidden name"><code>Authenticate.reddit.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Functions to save and load credential information. Currently, credential information will be stored as a RDS file. 
-<code>SaveCredential</code> will return the input <code>credential</code>, useful for working as a filter between 
-<code>Authenticate</code> and <code>Collect</code>.</p>
+    <p>Reddit does not require authentication in this version of vosonSML.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>SaveCredential</span>(<span class='no'>credential</span>, <span class='no'>file</span>)
-
-<span class='fu'>LoadCredential</span>(<span class='no'>file</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for reddit</span>
+<span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='no'>socialmedia</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>credential</th>
-      <td><p>A <code>credential</code> object.</p></td>
+      <th>socialmedia</th>
+      <td><p>Character string. Identifier for social media API to authenticate, set to <code>"reddit"</code>.</p></td>
     </tr>
     <tr>
-      <th>file</th>
-      <td><p>Character string. File name to be saved to or restored from.</p></td>
+      <th>...</th>
+      <td><p>Additional parameters passed to function. Not used in this method.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>credential</code> object.</p>
+    <p>A <code>credential</code> object containing a <code>$auth = NULL</code> value and social media type descriptor 
+<code>$socialmedia</code> set to <code>"reddit"</code>. Object has the class names <code>"credential"</code> and <code>"reddit"</code>.</p>
+    
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>Even though reddit does not require authentication in this version of vosonSML the <code>Authenticate</code> 
+function must still be called to set the <code>socialmedia</code> identifier. This is used to route to the appropriate 
+social media <code>Collect</code> function.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># reddit authentication</span>
+<span class='no'>redditAuth</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='st'>"reddit"</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -152,7 +160,11 @@ Authenticate and Collect." />
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+
+      <li><a href="#note">Note</a></li>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>
