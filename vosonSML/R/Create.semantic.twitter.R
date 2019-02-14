@@ -1,12 +1,42 @@
-#' Create twitter semantic network
+#' @title Create twitter semantic network
 #' 
-#' Creates a semantic network from collected tweets.
+#' @description Creates a semantic network from tweets returned from the twitter search query. Semantic networks 
+#' describe the semantic relationships between concepts. In this network the concepts are significant words and terms 
+#' (hashtags) extracted from the text corpus of the tweet data, and actors represented as nodes. Network edges are 
+#' weighted and represent usage of frequently occurring terms and hashtags by the actors.
 #'
+#' @param datasource Collected social media data with \code{"datasource"} and \code{"twitter"} class names.
+#' @param type Character string. Type of network to be created, set to \code{"semantic"}.
+#' @param removeTermsOrHashtags Character vector. Terms or hashtags to remove from the semantic network. For example, 
+#' this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
+#' nodes with matching name. Default is \code{NULL} to remove none.
+#' @param stopwordsEnglish Logical. Removes English stopwords from the tweet data. Default is \code{TRUE}.
+#' @param termFreq Numeric integer. Specifies the percentage of most frequent terms to include. For example, a 
+#' \code{termFreq = 20} means that the 20 percent most frequently occurring \code{terms} will be included in the 
+#' semantic network as nodes. A larger percentage will increase the number of nodes and therefore the size of graph. 
+#' The default value is \code{5}, meaning the top 5 percent most frequent terms are used.
+#' @param hashtagFreq Numeric integer. Specifies the percentage of most frequent \code{hashtags} to include. For 
+#' example, a \code{hashtagFreq = 80} means that the 80 percent most frequently occurring hashtags will be included 
+#' in the semantic network as nodes. The default value is \code{50}.
+#' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
-#'
-#' @return A twitter semantic network as igraph object.
+#' @param ... Additional parameters passed to function. Not used in this method.
 #' 
-# @rdname Create.semantic
+#' @return Named list containing semantic network as igraph object \code{$graph}.
+#' 
+#' @examples
+#' \dontrun{
+#' # create a twitter semantic network graph removing the hashtag '#auspol' and using the
+#' # top 2% frequently occurring terms and 10% frequently occurring hashtags as additional 
+#' # concepts or nodes
+#' semanticNetwork <- twitterData %>% 
+#'                    Create("semantic", removeTermsOrHashtags = c("#auspol"), termFreq = 2,
+#'                           hashtagFreq = 10, writeToFile = TRUE, verbose = TRUE)
+#' 
+#' # igraph object
+#' # semanticNetwork$graph
+#' }
+#' 
 #' @export
 Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE, 
                                     termFreq = 5, hashtagFreq = 50, writeToFile = FALSE, verbose = FALSE, ...) {

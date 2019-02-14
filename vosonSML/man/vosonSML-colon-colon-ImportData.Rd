@@ -20,6 +20,3 @@ A dataframe with datasource class attributes usable by create network functions.
 \description{
 Import collected data previously saved to file
 }
-\seealso{
-\code{\link{Collect}}
-}

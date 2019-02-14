@@ -179,7 +179,8 @@ Create.actor.twitter <- function(datasource, type, writeToFile = FALSE, verbose 
   dt_combined <- dt_combined[edge_type != "NA_f00"]
   
   # make a vector of all the unique actors in the network
-  df_users <- unique(df_users)
+  # df_users <- unique(df_users)
+  df_users %<>% distinct(.data$user_id, .keep_all = TRUE)
   
   df_stats <- networkStats(df_stats, "nodes", nrow(df_users))
   df_stats <- networkStats(df_stats, "edges", sum(df_stats$count[df_stats$edge_count == TRUE]))

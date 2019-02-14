@@ -6,7 +6,6 @@
 #' 
 #' @return A dataframe with datasource class attributes usable by create network functions.
 #' 
-#' @seealso \code{\link{Collect}}
 #' @name vosonSML::ImportData
 #' @export
 ImportData <- function(file, type = "csv", datasource) {

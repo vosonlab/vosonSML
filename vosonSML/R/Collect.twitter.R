@@ -1,26 +1,31 @@
-#' @title Collect data from twitter for generating different types of networks
+#' @title Collect tweet data from twitter search
 #'
-#' @description This function collects data from twitter based on hashtags or search terms, and structures the data into a data 
-#' frame of class \code{dataSource, twitter}, ready for creating networks for further analysis. Relationships are then 
-#' mapped for entities of interest in the data (e.g. users, terms, hashtags) and structured into a data frame format 
-#' suitable for creating unimodal networks (\code{CreateActorNetwork}), bimodal networks (\code{CreateBimodalNetwork}), 
-#' and semantic networks (\code{CreateSemanticNetwork}).
+#' @description This function collects tweet data based on search terms and structures the data into a dataframe with 
+#' the class names \code{"datasource"} and \code{"twitter"}.
 #'
-#' The maximum number of tweets for a single call of \code{CollectDataTwitter} is 18000 as per the twitter standard
-#' API rate limits. The standard API only returns tweets for the last 6 to 9 days.
+#' The twitter Standard search API sets a rate limit of 180 requests every 15 minutes. A maximum of 100 tweets can be 
+#' collected per search request meaning the maximum number of tweets per operation is 18000 / 15 minutes. More tweets 
+#' can be collected by using \code{retryOnRateLimit = TRUE} parameter which will cause the collection to pause if the 
+#' rate limit is reached and resume when the rate limit resets (in approximately 15 minutes). Alternatively the twitter 
+#' API parameter \code{since_id} can be used in a later session to resume a twitter search collection from the last 
+#' tweet previously collected as tweet status id's are sequential. The Standard API only returns tweets for the last 
+#' 7 days.
+#' 
+#' All of the search query operators available through the twitter API can be used in the \code{searchTerm} field. 
+#' For example, to search for tweets containing the term \code{"love"} or \code{"hate"} the \code{"OR"} operator can be 
+#' used in the term field: \code{searchTerm = "love OR hate"}. For more information refer to the twitter API 
+#' documentation for query operators: \url{https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators}.
 #'
-#' Language support is available, using the \code{language} parameter. The user can restrict tweets returned to a 
-#' particular language, using the ISO 639-1 code. For example, restricting to English would use \code{language="en"}. 
-#' The full list of codes is available here: https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes.
-#'
-#' A variety of query operators are available through the twitter API. For example, "love OR hate" returns any tweets 
-#' containing either term (or both). For more information see the twitter API documentation (under the heading
-#' 'Query Operators'): https://dev.twitter.com/rest/public/search
+#' @note Additional parameters passed to this function in the ellipsis \code{...} will also be passed to the Twitter 
+#' search API request. Most parameters have been covered but a complete list can be found here: 
+#' \url{https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets}
+#' A useful additional parameter is \code{language} allowing the user can restrict tweets returned to a particular 
+#' language using an ISO 639-1 code. For example, to restrict a search to tweets in English the value 
+#' \code{language = "en"} can be passed to this function.
 #' 
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"twitter"}.
-#' @param searchTerm Character string. Specifies a search term or phrase (e.g. "Australian politics") or hashtag (e.g. 
-#' "#auspol"). Many query operators are available - see the Twitter documentation for more information: 
-#' https://dev.twitter.com/rest/public/search
+#' @param searchTerm Character string. Specifies a twitter search term. For example, \code{"Australian politics"} or 
+#' the hashtag \code{"#auspol"}.
 #' @param searchType Character string. Returns filtered tweets as per search type \code{recent}, \code{mixed} or 
 #' \code{popular}. Default type is \code{recent}.
 #' @param numTweets Numeric. Specifies how many tweets to be collected. Defaults is \code{100}.

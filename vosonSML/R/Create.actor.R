@@ -7,6 +7,7 @@ Create.actor <- function(datasource, type, ...) {
   UseMethod("Create.actor", datasource)
 }
 
+#' @noRd
 #' @export
 Create.actor.default <- function(datasource, type, ...) {
   stop("Unknown datasource passed to create.", call. = FALSE) 

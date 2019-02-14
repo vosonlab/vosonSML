@@ -2,7 +2,7 @@
 % Please edit documentation in R/Collect.reddit.R
 \name{Collect.reddit}
 \alias{Collect.reddit}
-\title{Collect reddit thread data}
+\title{Collect comments data from reddit threads}
 \usage{
 \method{Collect}{reddit}(credential, threadUrls, waitTime = 5,
   writeToFile = FALSE, ...)
@@ -10,7 +10,7 @@
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.}
 
-\item{threadUrls}{Vector. Reddit thread url's to collect data from.}
+\item{threadUrls}{Character vector. Reddit thread urls to collect data from.}
 
 \item{waitTime}{Numeric integer. Time in seconds to wait in-between url collection requests.}
 
@@ -19,20 +19,21 @@
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-A data.frame object with class names \code{"datasource"} and \code{"reddit"}.
+A \code{data.frame} object with class names \code{"datasource"} and \code{"reddit"}.
 }
 \description{
-Uses RedditExtractoR::reddit_content to collect user and comment data for thread urls.
+Collects comments made by users on one or more specified subreddit conversation threads and structures 
+the data into a dataframe with the class names \code{"datasource"} and \code{"reddit"}.
 }
 \note{
-The reddit API endpoint used for thread collection has maximum limit of 500 comments per thread url.
+The reddit web endpoint used for collection has maximum limit of 500 comments per thread url.
 }
 \examples{
 \dontrun{
 # subreddit url to collect threads from
 threadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
 
-myRedditData <- redditAuth \%>\%
+redditData <- redditAuth \%>\%
   Collect(threadUrls = threadUrls, waitTime = 3, writeToFile = TRUE)
 }
 

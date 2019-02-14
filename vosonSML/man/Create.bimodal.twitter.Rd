@@ -9,26 +9,39 @@
   ...)
 }
 \arguments{
-\item{datasource}{Collected social media data with \code{datasource} and \code{socialmedia} class attributes.}
+\item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
 
-\item{type}{Character string. Type of network to be created.}
+\item{type}{Character string. Type of network to be created, set to \code{"bimodal"}.}
 
-\item{removeTermsOrHashtags}{Character string. Default is none. Otherwise this argument specifies which terms or 
-hashtags (i.e. vertices with matching 'name') should be removed from the bimodal network. This is useful to remove
-the search term or hashtag that was used to collect the data (i.e. remove the corresponding vertex in the graph). 
-For example, a value of "#auspol" means that if there is a vertex with the exact name "#auspol" then this vertex 
-will be removed.}
+\item{removeTermsOrHashtags}{Character vector. Terms or hashtags to remove from the bimodal network. For example, 
+this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
+nodes with matching name. Default is \code{NULL} to remove none.}
 
-\item{writeToFile}{Logical. If \code{TRUE} then the network is saved to file in current working directory (graphml 
-format), with filename denoting the current datetime and the type of network.}
+\item{writeToFile}{Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.}
 
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
 
-\item{...}{Additional parameters to pass to the network creation method.}
+\item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-A twitter bimodal network as igraph object.
+Named list containing bimodal network as igraph object \code{$graph}.
 }
 \description{
-Creates a bimodal network from collected tweets.
+Creates a bimodal network from tweets returned from the twitter search query. In this network there are 
+two types of nodes, twitter users who have tweeted (actors) and hashtags found within their tweets. Network edges 
+are weighted and represent hashtag usage by the actor or specifically their tweets that contain a hashtag matching 
+the name of the node they are directed towards.
+}
+\examples{
+\dontrun{
+# create a twitter bimodal network graph removing the hashtag '#auspol' as it was used in 
+# the twitter search query
+bimodalNetwork <- twitterData \%>\% 
+                  Create("bimodal", removeTermsOrHashtags = c("#auspol"), writeToFile = TRUE, 
+                         verbose = TRUE)
+
+# igraph object
+# bimodalNetwork$graph
+}
+
 }
