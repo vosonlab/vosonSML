@@ -43,5 +43,3 @@ cred.R
 *.csv
 *.graphml
 .Rproj.user
-
-/vosonSML/README.md
