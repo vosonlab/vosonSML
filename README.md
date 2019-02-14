@@ -22,7 +22,7 @@ Install the current version from Github:
 ```R
 # requires the 'devtools' package (or alternatively 'remotes')
 # optionally add the parameter 'dependencies = TRUE' to install package dependencies
-devtools::install_github("vosonlab/vosonSML", subdir = "vosonSML")
+devtools::install_github("vosonlab/vosonSML")
 ```
 
 Install vosonSML from CRAN:
