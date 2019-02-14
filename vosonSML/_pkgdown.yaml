@@ -1,0 +1,56 @@
+title: vosonSML
+url: http://vosonlab.github.io/vosonSML
+
+authors:
+  Bryan Gertzel:
+    href: "https://vosonlab.net"
+    html: "<span>VOSON Lab</span>"
+
+navbar:
+  structure:
+    left:
+    - home
+    - reference
+    right: github
+  components:
+    home:
+      icon: fa-home fa-lg
+      href: index.html
+    reference:
+      text: Reference
+      href: reference/index.html
+    github:
+      icon: fa-github fa-lg
+      href: https://github.com/vosonlab/vosonSML
+
+reference:
+- title: Function Reference
+  desc: Available functions and helpers
+  contents:
+  - '`vosonSML-package`'
+- title: Authenticate
+  contents:
+  - '`Authenticate`'
+  - '`Authenticate.reddit`'
+  - '`Authenticate.twitter`'
+  - '`Authenticate.youtube`'
+- title: Collect
+  contents:  
+  - '`Collect`'
+  - '`Collect.twitter`'
+  - '`Collect.youtube`'
+  - '`Collect.reddit`'  
+- title: Create
+  contents:
+  - '`Create`'
+  - '`Create.actor.twitter`'
+  - '`Create.actor.youtube`'
+  - '`Create.actor.reddit`'
+  - '`Create.bimodal.twitter`'
+  - '`Create.semantic.twitter`'
+- title: Helpers
+  contents:
+  - '`vosonSML::AddUserData.twitter`'
+  - '`vosonSML::GetYoutubeVideoIDs`'
+  - '`vosonSML::ImportData`'
+  - '`vosonSML::SaveCredential`'

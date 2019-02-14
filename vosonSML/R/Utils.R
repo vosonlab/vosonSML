@@ -1,5 +1,3 @@
-# vosonSML utils
-
 # check for a range of true values
 isTrueValue <- function(x) {
   if (x == "TRUE" || x == "true" || x == "T" || x == TRUE) {
@@ -26,48 +24,39 @@ systemTimeFilename <- function(name_suffix, name_ext, current_time = NULL, clean
   file_name <- paste0(format(current_time, "%Y-%m-%d_%H%M%S"), "-", name_suffix, ".", name_ext, sep = "")
 }
 
-# write data to file as type
-writeOutputFile <- function(data, type, name, msg = TRUE) {
-
-  if (missing(type)) {
-    type <- "rds"
-  }
+# write data to file in supported file format
+writeOutputFile <- function(data, type = "rds", name = "File", datetime = TRUE, msg = TRUE) {
   
   supported_types <- c("graphml", "csv", "rds")
   
   if (!type %in% supported_types) {
     cat(paste0("File output not supported. please choose from: ", paste0(supported_types, collapse = ", "), "\n"))
-    return(NA)
+    return(NULL)
   }
   
-  if (missing(name)) {
-    name <- "File"
-  }
-  
-  name <- systemTimeFilename(name, type)
-  
-  if (missing(msg)) {
-    msg <- TRUE
+  if (datetime) {
+    name <- systemTimeFilename(name, type) 
   }
   
   path <- paste0(getwd(), "/", name, "\n", sep = "")
   
   result <- tryCatch({
     switch(type,
-           "graphml" = write.graph(data, name, format = "graphml"),
-           "csv" = write.csv(data, name),
-           saveRDS(data, file = name))
-    
+      "graphml" = write.graph(data, name, format = "graphml"),
+      "csv" = write.csv(data, name),
+      saveRDS(data, file = name))
+
+  }, error = function(e) {
+    cat(paste0("Error writing: ", path, "\n", e))
+    return(NULL)
+  })
+  
+  if (!is.null(result)) {
     if (msg) {
       cat(paste0(toupper(type), " file written: "))
       cat(path)
-    }
-  },
-  error = function(e) {
-    cat(paste0("Error writing: ", path, "\n  "))
-    message(e)
-    return(NULL)
-  })
+    }    
+  }
 }
 
 # installs and loads a package if necessary

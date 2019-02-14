@@ -4,35 +4,27 @@
 \alias{Create}
 \title{Create networks from social media data}
 \usage{
-Create(dataSource, type = "actor", ...)
+Create(datasource, type, ...)
 }
 \arguments{
-\item{dataSource}{Social media data collected using the \code{Collect} method.}
+\item{datasource}{Collected social media data of class \code{"datasource"} and \code{socialmedia}.}
 
-\item{type}{Character string. Type of network to be created, can be \code{actor}, \code{bimodal},
-\code{dynamic}, \code{semantic} or \code{ego}.}
+\item{type}{Character string. Type of network to be created, can be \code{"actor"}, \code{"bimodal"} or 
+\code{"semantic"}.}
 
-\item{...}{Additional parameters for network creation for appropriate \code{social media} and network \code{type}. 
-Refer to S3 methods \code{social media} type for default parameters.}
-}
-\value{
-Network data containing an igraph object.
+\item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social 
+media network creation.}
 }
 \description{
-This function creates networks from social media data (i.e. collected from dataframes of class \code{social media}).
-\code{Create} is the final step of the \code{Authenticate}, \code{Collect}, \code{Create} workflow. This function 
-is a wrapper for the Create*Network S3 methods.
+This function creates networks from social media data as produced from \code{\link{Collect}}. 
+\code{Create} is the final step of the \code{\link{Authenticate}}, \code{\link{Collect}} and \code{Create} workflow.
+
+There are three types of networks that can be created from collected data: \code{actor}, \code{bimodal} or 
+\code{semantic}.
+
+For \code{actor} networks refer to \code{\link{Create.actor.twitter}}, \code{\link{Create.actor.youtube}} and 
+\code{\link{Create.actor.reddit}} for parameters and usage.
+
+For \code{bimodal} and \code{semantic} networks refer to \code{\link{Create.bimodal.twitter}} and 
+\code{\link{Create.semantic.twitter}} functions for parameters and usage respectively.
 }
-\note{
-When creating twitter networks, a network with additional user information can be generated using the
-\code{\link{GraphUserInfoTwitter}} function. Additional calls can be made to the twitter API to get information
-about users that were identified as nodes during network creation.
-}
-\seealso{
-\code{\link{CreateActorNetwork}}, \code{\link{CreateBimodalNetwork}}, \code{\link{CreateSemanticNetwork}}
-}
-\keyword{actor}
-\keyword{bimodal}
-\keyword{create}
-\keyword{network}
-\keyword{semantic}

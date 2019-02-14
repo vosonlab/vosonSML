@@ -1,5 +1,5 @@
 # vosonSML <img src="vosonSML/man/figures/logo.png" width="140px" align="right"/>
-![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=yellow)
+![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
 ![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg)
 [![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 ![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)
@@ -20,7 +20,8 @@ Unfortunately we are no longer able to maintain `facebook` and `instagram` colle
 
 Install the current version from Github:
 ```R
-# requires the devtools package
+# requires the 'devtools' package (or alternatively 'remotes')
+# optionally add the parameter 'dependencies = TRUE' to install package dependencies
 devtools::install_github("vosonlab/vosonSML", subdir = "vosonSML")
 ```
 
@@ -31,7 +32,7 @@ install.packages("vosonSML", dependencies = TRUE)
 
 ## Getting started
 
-The [vosonSML page on the VOSON website](http://vosonlab.net/vosonSML) has several "how to" guides, including an "Absolute Beginners Guide to vosonSML" tutorial aimed at people with little or no programming experience.
+The following usage examples will provide a great introduction to using `vosonSML`. There are also several "how to" guides, including an "Absolute Beginners Guide to vosonSML" tutorial aimed at people with little or no programming experience on the [vosonSML page of the VOSON website](http://vosonlab.net/SocialMediaLab).
 
 ### Usage
 
@@ -41,28 +42,57 @@ The process of authentication, data collection and creating social network in vo
 library(magrittr)
 library(vosonSML)
 
+# Twitter Example
+
+# Authenticate with twitter, Collect 100 tweets for the '#auspol' hashtag and Create an actor and 
+# semantic network
+myKeys <- list(appName = "vosonSML", apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx", 
+               accessToken = "xxxxxxxxxxxx", accessTokenSecret = "xxxxxxxxxxxx")
+  
+twitterAuth <- Authenticate("twitter", appName = myKeys$appName, apiKey = myKeys$apiKey, 
+                            apiSecret = myKeys$apiSecret, accessToken = myKeys$accessToken,
+                            accessTokenSecret = myKeys$accessTokenSecret, useCachedToken = TRUE)
+                             
+twitterData <- twitterAuth %>%
+               Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100, 
+                       includeRetweets = FALSE, retryOnRateLimit = TRUE, writeToFile = TRUE, 
+                       verbose = TRUE)
+
+actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TRUE)
+
+actorGraph <- actorNetwork$graph # igraph network graph
+
+# Optional step to add additional twitter user info to actor network graph as node attributes 
+actorNetWithUserAttr <- AddUserData.twitter(twitterData, actorNetwork,
+                                            lookupUsers = TRUE, 
+                                            twitterAuth = twitterAuth, writeToFile = TRUE)
+
+actorGraphWithUserAttr <- actorNetWithUserAttr$graph # igraph network graph
+
+semanticNetwork <- twitterData %>% Create("semantic", writeToFile = TRUE)
+
+# Youtube Example
+
 # Authenticate with youtube, Collect comment data from videos and then Create an actor network
+myYoutubeAPIKey = "xxxxxxxxxxxxxx"
+
+myYoutubeVideoIds <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx",
+                                          "https://youtu.be/xxxxxxxx"))
+                                 
 actorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>%
                 Collect(videoIDs = myYoutubeVideoIds) %>%
                 Create("actor", writeToFile = TRUE)
 
-# Authenticate with twitter, Collect 100 tweets for the '#auspol' hashtag and Create a 
-# semantic network
-semanticNetwork <- Authenticate("twitter", appName = myTwitAppName,
-                                apiKey = myTwitAPIKey, apiSecret = myTwitAPISecret,
-                                accessToken = myTwitAccessToken,
-                                accessTokenSecret = myTwitAccessTokenSecret,
-                                useCachedToken = TRUE) %>%
-                   Collect(searchTerm = "#auspol", searchType = "recent", 
-                           numTweets = 100, includeRetweets = FALSE, retryOnRateLimit = TRUE) %>%
-                   Create("semantic", writeToFile = TRUE)
+# Reddit Example
 
-# Collect reddit threads and Create an actor network with comment text as edge attribute
-actorCommentsNetwork <- Authenticate("reddit") %>%
-                        Collect(threadUrls = myThreadUrls, waitTime = 5) %>%
-                        Create("actor", includeTextData = TRUE, writeToFile = TRUE)
+## Collect reddit comment threads and Create an actor network with comment text as edge attribute
+myThreadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
+
+actorNetwork <- Authenticate("reddit") %>%
+                Collect(threadUrls = myThreadUrls, waitTime = 5) %>%
+                Create("actor", includeTextData = TRUE, writeToFile = TRUE)
 ```
-For more detailed information and examples, please refer to the [vosonSML documentation](https://github.com/vosonlab/vosonSML/blob/master/vosonSML.pdf).
+For more detailed information and examples, please refer to the [Reference](vosonSML/docs/reference/index.html) section.
 
 ## Special thanks
 

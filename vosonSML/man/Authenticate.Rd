@@ -2,71 +2,23 @@
 % Please edit documentation in R/Authenticate.R
 \name{Authenticate}
 \alias{Authenticate}
-\title{Create a credential to access social media APIs}
+\title{Create a credential object to access social media APIs}
 \usage{
 Authenticate(socialmedia, ...)
 }
 \arguments{
-\item{socialmedia}{Character string. Identifier for social media API to authenticate.\cr
-Supports: \code{"twitter"}, \code{"youtube"}, \code{"reddit"}, \code{"instagram"} and \code{"facebook"}.}
+\item{socialmedia}{Character string. Identifier for social media API to authenticate with. Supported social media
+are \code{"twitter"}, \code{"youtube"} and \code{"reddit"}.}
 
-\item{...}{Additional parameters for authentication appropriate to \code{socialmedia} identifier.
-\describe{
-  \item{twitter:}{\code{[appName], apiKey, apiSecret, accessToken, 
-                        accessTokenSecret, [useCachedToken]}}
-  \item{youtube:}{\code{apiKey}}
-  \item{reddit:}{\code{[appName], appKey, appSecret, [useCachedToken]}}
-  \item{instagram:}{\code{appID, appSecret, [useCachedToken]}}
-  \item{facebook:}{\code{appID, appSecret, [extendedPermissions, useCachedToken]}}
-}}
-}
-\value{
-A \code{credential} object with authentication information.
+\item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social media 
+API access.}
 }
 \description{
 \code{Authenticate} creates a \code{credential} object that enables R to make authenticated calls to social media
-APIs. A \code{credential} object is a S3 object with the authentication-related information such as access tokens
-and the information on the social media that grant authentication. \code{Authenticate} is the first step of the
-\code{Authenticate}, \code{\link{Collect}} and \code{\link{Create}} workflow.
+APIs. A \code{credential} object is a S3 object containing authentication related information such as an access 
+token or key, and a class name identifying the social media that grants authentication. \code{Authenticate} is the 
+first step of the \code{Authenticate}, \code{\link{Collect}} and \code{\link{Create}} workflow.
+
+Refer to \code{\link{Authenticate.twitter}}, \code{\link{Authenticate.youtube}} and 
+\code{\link{Authenticate.reddit}} for parameters and usage.
 }
-\note{
-Currently, \code{Authenticate} with \code{socialmedia = "twitter"} generates OAuth information to be used in
-the current active session only (i.e. "side-effect") and no authentication-related information will be stored in the
-returned \code{credential} object.
-
-For other social network API's it's useful to cache the credential to a file and then re-use it in future sessions.
-Refer to \code{\link{SaveCredential}} and \code{\link{LoadCredential}} to do this.
-}
-\examples{
-\dontrun{
-require(magrittr)
-
-## youtube actor network example
-
-myYoutubeAPIKey <- "xxxxxxxxxxxxxxxxxxxxxx"
-listYoutubeVideoIDs <- c("W2GZFeYGU3s", "mL27TAJGlWc")
-
-myActorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) \%>\%
-  Collect(videoIDs = listYoutubeVideoIDs) \%>\% Create("actor")
-
-## instagram ego network example
-
-myInstaAppID <- "xxxxxxxxxxx"
-myInstaAppSecret <- "xxxxxxxxxxxxxxxxxxxxxx"
-listInstaUsernames <- c("senjohnmccain", "obama")
-
-myEgoNetwork <- Authenticate("instagram", appID = myInstaAppID, appSecret = myInstaAppSecret) \%>\%
-  Collect(ego = TRUE, username = listInstaUsernames) \%>\% Create("ego")
-}
-
-}
-\seealso{
-\code{\link{SaveCredential}}, \code{\link{Collect}}, \code{\link{Create}}
-}
-\keyword{authenticate}
-\keyword{credential}
-\keyword{facebook}
-\keyword{instagram}
-\keyword{reddit}
-\keyword{twitter}
-\keyword{youtube}
