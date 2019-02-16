@@ -21,6 +21,8 @@ Unfortunately we are no longer able to maintain `facebook` and `instagram` colle
 Install the current version from Github:
 ```R
 # requires the 'devtools' package (or alternatively 'remotes')
+library(devtools)
+
 # optionally add the parameter 'dependencies = TRUE' to install package dependencies
 devtools::install_github("vosonlab/vosonSML")
 ```
