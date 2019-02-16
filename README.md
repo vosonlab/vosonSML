@@ -94,7 +94,7 @@ actorNetwork <- Authenticate("reddit") %>%
                 Collect(threadUrls = myThreadUrls, waitTime = 5) %>%
                 Create("actor", includeTextData = TRUE, writeToFile = TRUE)
 ```
-For more detailed information and examples, please refer to the [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) section.
+For more detailed information and examples, please refer to the function [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
 
 ## Special thanks
 
