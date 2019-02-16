@@ -27,7 +27,7 @@
 #' # requires twitterAuth from Authenticate, twitterData from Collect and actorNetwork from 
 #' # Create actor network
 #' actorNetWithUserAttr <- AddUserData.twitter(twitterData, actorNetwork,
-#'                                             lookupMissingUsers = TRUE, 
+#'                                             lookupUsers = TRUE, 
 #'                                             twitterAuth = twitterAuth, writeToFile = TRUE)
 #' # igraph object
 #' # actorNetWithUserAttr$graph
