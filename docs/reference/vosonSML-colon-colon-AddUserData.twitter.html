@@ -73,7 +73,7 @@ additional downloaded twitter user information applied as node attributes." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.3</span>
       </span>
     </div>
 
@@ -172,7 +172,7 @@ create twitter actor network and data to pass as input into this function.</p>
 <span class='co'># requires twitterAuth from Authenticate, twitterData from Collect and actorNetwork from </span>
 <span class='co'># Create actor network</span>
 <span class='no'>actorNetWithUserAttr</span> <span class='kw'>&lt;-</span> <span class='fu'>AddUserData.twitter</span>(<span class='no'>twitterData</span>, <span class='no'>actorNetwork</span>,
-                                            <span class='kw'>lookupMissingUsers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+                                            <span class='kw'>lookupUsers</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
                                             <span class='kw'>twitterAuth</span> <span class='kw'>=</span> <span class='no'>twitterAuth</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='co'># igraph object</span>
 <span class='co'># actorNetWithUserAttr$graph</span>

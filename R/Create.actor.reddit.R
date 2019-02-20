@@ -41,7 +41,7 @@ Create.actor.reddit <- function(datasource, type, weightEdges = FALSE, textData 
 
   if (textData == FALSE) { cleanText <- FALSE }
 
-  cat("Generating reddit actor network...\n")
+  cat(paste0("Generating reddit actor network", ifelse(textData, " with text edge attributes", ""), "...\n"))
   flush.console()
 
   # append string to file name to indicate different graph types, only used if writeToFile = TRUE
