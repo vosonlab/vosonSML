@@ -50,11 +50,29 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
     options("width" = save_width)
   })
   
-  # add thread id to df, extracted from url
-  threads_df$thread_id <- gsub("^(.*)?/comments/([0-9A-Za-z]{6})?/.*?(/)?$", "\\2", 
-                               threads_df$URL, ignore.case = TRUE, perl = TRUE)
-  
-  if (writeToFile) { writeOutputFile(threads_df, "csv", "RedditData") }
+  if (!is.null(threads_df) & nrow(threads_df) > 0) {
+    # add thread id to df, extracted from url
+    threads_df$thread_id <- gsub("^(.*)?/comments/([0-9A-Za-z]{6})?/.*?(/)?$", "\\2", 
+                                 threads_df$URL, ignore.case = TRUE, perl = TRUE)
+    
+    # summary
+    cat(paste0("Collected ", nrow(threads_df), " total comments.\n"))
+    
+    results_df <- threads_df %>% 
+      dplyr::group_by(thread_id) %>%
+      dplyr::summarise(title = paste0(unique(title), collapse = ","), 
+                       subreddit = paste0(unique(subreddit), collapse = ","), 
+                       count = dplyr::n()) %>%
+      dplyr::ungroup()
+    
+    results_df$title <- ifelse(nchar(results_df$title) > 32, paste0(strtrim(results_df$title, 32), "..."), 
+                               results_df$title)
+    printResultTable(results_df)
+    
+    if (writeToFile) { writeOutputFile(threads_df, "csv", "RedditData") }
+  } else {
+    cat(paste0("No comments were collected.\n"))
+  }
   
   cat("Done.\n")
   flush.console()

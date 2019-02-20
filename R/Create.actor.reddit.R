@@ -68,14 +68,20 @@ Create.actor.reddit <- function(datasource, type, weightEdges = FALSE, textData 
     # select structure and user from original df
     # rename structure to response_to and user to receiver
     # left join sender_receiver_df to response_to, receiver by response_to
+    # FIXED: crossing threads by joining only on structure (response_to)
     dplyr::left_join(thread_df %>% 
-                     dplyr::select(.data$structure, .data$user) %>%
+                     dplyr::select(.data$thread_id, .data$structure, .data$user) %>%
                      dplyr::rename("response_to" = .data$structure, "receiver" = .data$user),
-                     by = "response_to")
+                     by = c("response_to" = "response_to", "thread_id" = "thread_id"))
 
+  # above seems correct ^
+  
   sender_receiver_df %<>%
     # inserts author into missing receiver values
-    dplyr::mutate(receiver = dplyr::coalesce(.data$receiver, ifelse(include_author, .data$author, ""))) %>%
+    # FIXED: coalesce was crossing threads
+    # dplyr::mutate(receiver = dplyr::coalesce(.data$receiver, ifelse(include_author, .data$author, ""))) %>%
+    dplyr::mutate(receiver = ifelse(is.na(.data$receiver), .data$author, .data$receiver)) %>%
+  
     # filter out when sender and receiver same, or if either deleted or empty string
     dplyr::filter(.data$sender != .data$receiver, 
                   !(.data$sender %in% c("[deleted]", "")), 
@@ -92,10 +98,10 @@ Create.actor.reddit <- function(datasource, type, weightEdges = FALSE, textData 
   edge_df <- sender_receiver_df %>% 
              dplyr::left_join(node_df %>% 
                               dplyr::rename("sender" = .data$user, "from" = .data$id), 
-                              by = "sender") %>% 
+                              by = c("sender" = "sender")) %>% 
              dplyr::left_join(node_df %>% 
                               dplyr::rename("receiver" = .data$user, "to" = .data$id), 
-                              by = "receiver") %>%
+                              by = c("receiver" = "receiver")) %>%
              dplyr::rename("weight" = .data$count, "title" = .data$comment) %>% 
              dplyr::select(.data$from, .data$to, .data$weight, .data$comment_id, .data$subreddit, .data$thread_id,
                            .data$title)
