@@ -73,3 +73,43 @@ quiet <-function(x) {
   on.exit(sink())
   invisible(force(x))
 }
+
+# get the length of the longest character value in a list
+maxCharLength <- function(data) { 
+  i <- 0
+  sapply(data, function(x) { if (nchar(as.character(x)) > i) i <<- nchar(x) })
+  return(i)
+}
+
+# pad a character string with spaces
+padChar2Length <- function(value, length) {
+  value_length <- nchar(as.character(value))
+  if (value_length < length) {
+    return(paste0(value, paste0(replicate(length - value_length, ""), collapse = " "), " "))
+  } else {
+    return(as.character(value))
+  }
+}
+
+# format and print a data frame
+printResultTable <- function(df) {
+  col_names <- colnames(df)
+  col_len <- sapply(col_names, nchar)
+  
+  for (i in 1:length(col_names)) {
+    temp_len <- maxCharLength(df[[i]])
+    col_len[i] <- ifelse(temp_len > col_len[i], temp_len, col_len[i])
+  }
+  
+  header <- paste0(sapply(col_names, function(x) padChar2Length(x, col_len[match(c(x), col_names)])), collapse = " | ")
+  header <- paste0(header, "\n", paste0(replicate(nchar(header), ""), collapse = "-"), "-\n")
+  cat(header)
+  for (i in 1:nrow(df)) {
+    line <- ""
+    values <- as.character(as.vector(df[i, ]))
+    for (j in 1:length(values)) {
+      line <- paste0(line, padChar2Length(values[j], col_len[j]), ifelse(j < length(values), " | ", ""))
+    }
+    cat(paste0(line, "\n"))
+  }
+}

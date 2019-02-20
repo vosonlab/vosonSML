@@ -62,11 +62,12 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   
   rtlimit <- rtweet::rate_limit(authToken, "search/tweets")
   remaining <- rtlimit[["remaining"]] * 100
+  cat(paste0("Requested ", numTweets, " tweets of ", remaining, " in this search rate limit.\n"))
   if (retryOnRateLimit == TRUE & numTweets < remaining) {
-    cat(paste0("Requested ", numTweets, " tweets of ", remaining, " in this rate limit.\n"))
     cat("Less tweets requested than remaining limit retryOnRateLimit set to FALSE.\n")
     retryOnRateLimit <- FALSE
   }
+  cat(paste0("Rate limit reset: ", rtlimit$reset_at, "\n"))
   
   search_params <- list()
   search_params[['token']] <- authToken

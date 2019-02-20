@@ -8,7 +8,7 @@
 #' snippets. Retrieving threads or top-level comments with text costs 3 units per request (maximum 100 comments per 
 #' request). Using this function a video with 250 top-level comments and 10 of those having reply comments of up to 100 
 #' each, should cost (9 + 20) 29 quota units and return between 260 and 1260 total comments. There is currently a limit 
-#' of 100 reply comments collected per video thread.
+#' of 100 reply comments collected per top-level comment.
 #' 
 #' More information about the YouTube Data API v3 can be found here: 
 #' \url{https://developers.google.com/youtube/v3/getting-started}

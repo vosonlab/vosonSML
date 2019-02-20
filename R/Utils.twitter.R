@@ -108,6 +108,7 @@ PreprocessTweets <- function(df) {
 networkStats <- function(df, field, count, edge = FALSE, print = FALSE) {
   if (print == TRUE) {
     if (!is.null(df) & nrow(df) > 0) {
+      cat("-------------------------\n")
       lf <- lc <- 0
       for (i in 1:nrow(df)) {
         lf <- ifelse(nchar(df$field[i]) > lf, nchar(df$field[i]), lf)
@@ -123,6 +124,7 @@ networkStats <- function(df, field, count, edge = FALSE, print = FALSE) {
         line <- paste0(line, df$count[i], paste0(replicate(lc - nchar(df$count[i]), ""), collapse = " "), "\n")
         cat(line)
       }
+      cat("-------------------------\n")
     }
     
     return(TRUE)
