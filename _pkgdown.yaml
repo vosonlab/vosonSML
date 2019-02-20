@@ -1,6 +1,6 @@
 title: vosonSML
 url: http://vosonlab.github.io/vosonSML
-
+    
 authors:
   Bryan Gertzel:
     href: "https://vosonlab.net"
@@ -10,14 +10,20 @@ navbar:
   structure:
     left:
     - home
+    - news
     - reference
     right: github
   components:
     home:
       icon: fa-home fa-lg
       href: index.html
+    news:
+      icon: fa-newspaper-o
+      text: "News"
+      href: news/index.html    
     reference:
-      text: Reference
+      icon: fa-cubes
+      text: "Reference"
       href: reference/index.html
     github:
       icon: fa-github fa-lg

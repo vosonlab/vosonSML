@@ -5,8 +5,8 @@ Description: A suite of tools for collecting and constructing networks from soci
     Provides easy-to-use functions for collecting data across popular platforms (Twitter, YouTube 
     and Reddit) and generating different types of networks for analysis.
 Type: Package
-Imports: tm, stringr, RCurl, bitops, rjson, igraph (>= 1.2.2), Hmisc, data.table, httpuv, 
-    methods, httr, magrittr, dplyr (>= 0.7.8), rlang (>= 0.3.0.1), RedditExtractoR (>= 2.1.2), 
+Imports: tm, stringr, RCurl, igraph (>= 1.2.2), Hmisc, data.table, httpuv, methods, httr, 
+    magrittr, dplyr (>= 0.7.8), rlang (>= 0.3.0.1), RedditExtractoR (>= 2.1.2), 
     rtweet (>= 0.6.8)
 Depends: R (>= 3.2.0)
 Encoding: UTF-8

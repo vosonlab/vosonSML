@@ -1,0 +1,24 @@
+h1, .h1 {
+  font-size: 2.8rem;
+}
+
+h2, .h2 {
+  font-size: 2.2rem;
+}
+
+h3, .h3 {
+  font-size: 1.9rem;
+} 
+
+h4, .h4, h5, .h5 {
+  font-size: 1.4rem;
+}
+
+.contents h1, .contents h2 {
+  padding-top: 60px;
+  margin-top: -20px;
+}
+
+.contents h2 {
+  padding-top: 30px;
+}
