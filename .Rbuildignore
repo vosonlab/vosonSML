@@ -10,6 +10,7 @@
 ^\.git$
 
 ^cran-comments\.md$
+^LICENSE$
 
 ^docs$
 ^pkgdown$
