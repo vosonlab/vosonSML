@@ -1,6 +1,13 @@
+## Re-submission
+In this version the following recommended fixes were made:
+
+* Omitted "Tools for" from the DESCRIPTION title.
+* Omitted the LICENSE file from the DESCRIPTION and package build as there 
+  are no additional license restrictions.
+
 ## Test environments
-* MacOS X, R 3.5.2
-* Windows 10, R 3.5.2
+* local MacOS X, R 3.5.1
+* local Windows 10, R 3.5.2
 
 ## R CMD check results
 0 errors | 0 warnings

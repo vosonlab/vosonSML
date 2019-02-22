@@ -21,8 +21,6 @@
 #' @author Created by Timothy Graham and Robert Ackland, with major contributions by Chung-hong Chan and Bryan Gertzel.
 #' @import tm
 #' @import RCurl
-#' @import bitops
-#' @import rjson
 #' @import data.table
 #' @import httpuv
 #' @import methods
