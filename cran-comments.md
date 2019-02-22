@@ -1,9 +1,9 @@
 ## Re-submission
-In this version I have followed all of the fix recommendations:
+In this version the following recommended fixes were made:
 
 * Omitted "Tools for" from the DESCRIPTION title.
-* Omitted the LICENSE file from the DESCRIPTION and package build as 
-  we have no additional license restrictions.
+* Omitted the LICENSE file from the DESCRIPTION and package build as there 
+  are no additional license restrictions.
 
 ## Test environments
 * local MacOS X, R 3.5.1
