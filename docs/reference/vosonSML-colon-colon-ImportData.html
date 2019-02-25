@@ -41,7 +41,8 @@
   
 <meta property="og:title" content="Import collected data previously saved to file — vosonSML::ImportData" />
 
-<meta property="og:description" content="Import collected data previously saved to file" />
+<meta property="og:description" content="Imports collected data from file into a dataframe of class datasource and specified 
+socialmedia type that is usable by Create functions." />
 
 <meta property="og:image" content="http://vosonlab.github.io/vosonSML/logo.png" />
 <meta name="twitter:card" content="summary" />
@@ -74,7 +75,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.27.0</span>
       </span>
     </div>
 
@@ -128,11 +129,12 @@
 
     <div class="ref-description">
     
-    <p>Import collected data previously saved to file</p>
+    <p>Imports collected data from file into a dataframe of class <code>datasource</code> and specified 
+<code>socialmedia</code> type that is usable by <code><a href='Create.html'>Create</a></code> functions.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>ImportData</span>(<span class='no'>file</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"csv"</span>, <span class='no'>datasource</span>)</pre>
+    <pre class="usage"><span class='fu'>ImportData</span>(<span class='no'>file</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"csv"</span>, <span class='no'>socialmedia</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -143,17 +145,19 @@
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Character string. Type of file or file format of file to import.</p></td>
+      <td><p>Character string. Type of file or file format of file to import <code>csv</code> or <code>rds</code>. Default is 
+<code>csv</code>.</p></td>
     </tr>
     <tr>
-      <th>datasource</th>
-      <td><p>Character string. Social media type of collected data.</p></td>
+      <th>socialmedia</th>
+      <td><p>Character string. Social media type of collected data <code>twitter</code>, <code>youtube</code> or 
+<code>reddit</code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with datasource class attributes usable by create network functions.</p>
+    <p>A dataframe with datasource class attributes.</p>
     
 
   </div>

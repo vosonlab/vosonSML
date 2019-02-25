@@ -5,7 +5,7 @@
 \title{Twitter API authentication}
 \usage{
 \method{Authenticate}{twitter}(socialmedia, appName, apiKey, apiSecret,
-  accessToken, accessTokenSecret, useCachedToken = TRUE, ...)
+  accessToken, accessTokenSecret, ...)
 }
 \arguments{
 \item{socialmedia}{Character string. Identifier for social media API to authenticate, set to \code{"twitter"}.}
@@ -19,10 +19,6 @@
 \item{accessToken}{Character string. API access token to authenticate.}
 
 \item{accessTokenSecret}{Character string. API access token secret to authenticate.}
-
-\item{useCachedToken}{Logical. Use cached access token if found otherwise create one. The cached token file is 
-named \code{.twitter-oauth} and saved to the working directory.To refresh the cached token this file has to be 
-manually deleted. Default is \code{TRUE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
@@ -43,7 +39,7 @@ myKeys <- list(appName = "vosonSML", apiKey = "xxxxxxxxxxxx",
 
 twitterAuth <- Authenticate("twitter", appName = myKeys$appName, 
   apiKey = myKeys$apiKey, apiSecret = myKeys$apiSecret, accessToken = myKeys$accessToken, 
-  accessTokenSecret = myKeys$accessTokenSecret, useCachedToken = TRUE)
+  accessTokenSecret = myKeys$accessTokenSecret)
 }
 
 }

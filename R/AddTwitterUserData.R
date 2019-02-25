@@ -26,17 +26,17 @@
 #' # add additional twitter user profile information to actor network graph as node attributes 
 #' # requires twitterAuth from Authenticate, twitterData from Collect and actorNetwork from 
 #' # Create actor network
-#' actorNetWithUserAttr <- AddUserData.twitter(twitterData, actorNetwork,
-#'                                             lookupUsers = TRUE, 
-#'                                             twitterAuth = twitterAuth, writeToFile = TRUE)
+#' actorNetWithUserAttr <- AddTwitterUserData(twitterData, actorNetwork,
+#'                                            lookupUsers = TRUE, 
+#'                                            twitterAuth = twitterAuth, writeToFile = TRUE)
 #' # igraph object
 #' # actorNetWithUserAttr$graph
 #' }
 #' 
-#' @aliases AddUserData.twitter
-#' @name vosonSML::AddUserData.twitter
+#' @aliases AddTwitterUserData
+#' @name vosonSML::AddTwitterUserData
 #' @export
-AddUserData.twitter <- function(collectData, networkData, lookupUsers = TRUE, twitterAuth = NULL, writeToFile = FALSE) {
+AddTwitterUserData <- function(collectData, networkData, lookupUsers = TRUE, twitterAuth = NULL, writeToFile = FALSE) {
   
   dfCollect <- collectData
   dfRelations <- networkData$relations

@@ -44,6 +44,10 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
   
   threads_df <- NULL
   
+  save_enc <- getOption("encoding")
+  on.exit(options(encoding = save_enc), add = TRUE)
+  options(encoding = "UTF-8")
+  
   # make the get request for the reddit thread url
   tryCatch({
     capture.output(threads_df <- RedditExtractoR::reddit_content(threadUrls, waitTime), type = c("output"))

@@ -1,21 +1,27 @@
-#' Import collected data previously saved to file
+#' @title Import collected data previously saved to file
 #'
+#' @description Imports collected data from file into a dataframe of class \code{datasource} and specified 
+#' \code{socialmedia} type that is usable by \code{\link{Create}} functions. 
+#' 
 #' @param file Character string. Collected data file path.
-#' @param type Character string. Type of file or file format of file to import.
-#' @param datasource Character string. Social media type of collected data.
+#' @param type Character string. Type of file or file format of file to import \code{csv} or \code{rds}. Default is 
+#' \code{csv}.
+#' @param socialmedia Character string. Social media type of collected data \code{twitter}, \code{youtube} or 
+#' \code{reddit}.
 #' 
-#' @return A dataframe with datasource class attributes usable by create network functions.
+#' @return A dataframe with datasource class attributes.
 #' 
+#' @aliases ImportData
 #' @name vosonSML::ImportData
 #' @export
-ImportData <- function(file, type = "csv", datasource) {
+ImportData <- function(file, type = "csv", socialmedia) {
   
   if (missing(file)) {
     stop("Please provide file path of data to import.", .call = FALSE) 
   }
   
-  if (missing(datasource)) {
-    stop("Please provide datasource as social media type of data to import.", .call = FALSE) 
+  if (missing(socialmedia)) {
+    stop("Please provide the social media type of data to import.", .call = FALSE) 
   }
   
   supported_types <- c("csv", "rds")
@@ -39,8 +45,8 @@ ImportData <- function(file, type = "csv", datasource) {
   
   class(df) <- c("data.table", "data.frame", "datasource")
   
-  dataSource <- tolower(datasource)
-  switch(datasource,
+  socialmedia <- tolower(socialmedia)
+  switch(socialmedia,
     twitter = { class(df) <- append(class(df), c("twitter")) },
     youtube = { class(df) <- append(class(df), c("youtube")) },
     reddit = { class(df) <- append(class(df), c("reddit")) },

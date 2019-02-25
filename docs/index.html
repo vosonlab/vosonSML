@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.27.0</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#vosonsml" class="anchor"></a>vosonSML <img src="reference/figures/logo.png" width="140px" align="right">
 </h1></div>
-<p><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&amp;colorB=8065ac" alt="Github Release"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg" alt="Last Commit"><a href="https://CRAN.R-project.org/package=vosonSML"><img src="http://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="Downloads"></p>
+<p><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&amp;colorB=8065ac" alt="Github Release"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg" alt="Last Commit"><a href="https://CRAN.R-project.org/package=vosonSML"><img src="https://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="Downloads"></p>
 <p><code>vosonSML</code> is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.</p>
 <p><code>vosonSML</code> is the <code>SocialMediaLab</code> package, renamed. We decided that <code>SocialMediaLab</code> was a bit too generic and also we wanted to indicate the connection to the <a href="http://vosonlab.net">Virtual Observatory for the Study of Online Networks Lab</a>, where this package was conceived and created.</p>
 <p><code>vosonSML</code> was created by <a href="http://uq.academia.edu/TimGraham">Timothy Graham</a> and <a href="https://researchers.anu.edu.au/researchers/ackland-rj">Robert Ackland</a>, with major contributions by <a href="https://github.com/chainsawriot">Chung-hong Chan</a> and Bryan Gertzel.</p>
@@ -103,7 +103,7 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install the current version from Github:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># requires the 'devtools' package (or alternatively 'remotes')</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># github installation requires the 'devtools' or 'remotes' package</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(devtools)
 
 <span class="co"># optionally add the parameter 'dependencies = TRUE' to install package dependencies</span>
@@ -145,9 +145,9 @@ actorNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</
 actorGraph &lt;-<span class="st"> </span>actorNetwork<span class="op">$</span>graph <span class="co"># igraph network graph</span>
 
 <span class="co"># Optional step to add additional twitter user info to actor network graph as node attributes </span>
-actorNetWithUserAttr &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddUserData.twitter.html">AddUserData.twitter</a></span>(twitterData, actorNetwork,
-                                            <span class="dt">lookupUsers =</span> <span class="ot">TRUE</span>, 
-                                            <span class="dt">twitterAuth =</span> twitterAuth, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)
+actorNetWithUserAttr &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddTwitterUserData.html">AddTwitterUserData</a></span>(twitterData, actorNetwork,
+                                           <span class="dt">lookupUsers =</span> <span class="ot">TRUE</span>, 
+                                           <span class="dt">twitterAuth =</span> twitterAuth, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)
 
 actorGraphWithUserAttr &lt;-<span class="st"> </span>actorNetWithUserAttr<span class="op">$</span>graph <span class="co"># igraph network graph</span>
 
@@ -156,7 +156,7 @@ semanticNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;
 <span class="co"># Youtube Example</span>
 
 <span class="co"># Authenticate with youtube, Collect comment data from videos and then Create an actor network</span>
-myYoutubeAPIKey =<span class="st"> "xxxxxxxxxxxxxx"</span>
+myYoutubeAPIKey &lt;-<span class="st"> "xxxxxxxxxxxxxx"</span>
 
 myYoutubeVideoIds &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,
                                           <span class="st">"https://youtu.be/xxxxxxxx"</span>))

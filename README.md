@@ -1,7 +1,7 @@
 # vosonSML <img src="man/figures/logo.png" width="140px" align="right"/>
 ![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
 ![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 ![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)
 
 `vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
@@ -20,7 +20,7 @@ Unfortunately we are no longer able to maintain `facebook` and `instagram` colle
 
 Install the current version from Github:
 ```R
-# requires the 'devtools' package (or alternatively 'remotes')
+# github installation requires the 'devtools' or 'remotes' package
 library(devtools)
 
 # optionally add the parameter 'dependencies = TRUE' to install package dependencies
@@ -70,9 +70,9 @@ actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TR
 actorGraph <- actorNetwork$graph # igraph network graph
 
 # Optional step to add additional twitter user info to actor network graph as node attributes 
-actorNetWithUserAttr <- AddUserData.twitter(twitterData, actorNetwork,
-                                            lookupUsers = TRUE, 
-                                            twitterAuth = twitterAuth, writeToFile = TRUE)
+actorNetWithUserAttr <- AddTwitterUserData(twitterData, actorNetwork,
+                                           lookupUsers = TRUE, 
+                                           twitterAuth = twitterAuth, writeToFile = TRUE)
 
 actorGraphWithUserAttr <- actorNetWithUserAttr$graph # igraph network graph
 
@@ -81,7 +81,7 @@ semanticNetwork <- twitterData %>% Create("semantic", writeToFile = TRUE)
 # Youtube Example
 
 # Authenticate with youtube, Collect comment data from videos and then Create an actor network
-myYoutubeAPIKey = "xxxxxxxxxxxxxx"
+myYoutubeAPIKey <- "xxxxxxxxxxxxxx"
 
 myYoutubeVideoIds <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx",
                                           "https://youtu.be/xxxxxxxx"))
