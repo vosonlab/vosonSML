@@ -65,6 +65,8 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
     
   # Start data collection
   
+  cat(paste0("encoding: ", getOption("encoding"), "\n"))
+  
   # Create a dataframe to iteratively store comments from all the videos that the user wants to scrape 
   # (i.e. specified in videoIDs) uses 'dummy' data in first row (which is removed later)
   dataCombined <- data.frame(Comment = "foo",

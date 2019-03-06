@@ -129,7 +129,26 @@ Create.actor.reddit <- function(datasource, type, weightEdges = FALSE, textData 
 
     # remove any characters that are not in punctuation, alphanumeric classes or spaces
     if (cleanText) {
-      df_edges$vosonTxt_comment <- gsub("[^[:punct:]^[:alnum:]^\\s]", "", df_edges$vosonTxt_comment, perl = TRUE)
+      # df_edges$vosonTxt_comment <- gsub("[^[:punct:]^[:alnum:]^\\s^\\n]", "", df_edges$vosonTxt_comment, 
+      #                                   useBytes = TRUE, perl = TRUE)
+      
+      # allowed #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
+      # [\x00-\x1F] ^\xE000-\xFFFD^\x10000-\x10FFFF
+      # [^\x09^\x0A^\x0D^\x20-\xD7FF^\xE000-\xFFFD]
+      # [\u0000-\u0008,\u000B,\u000C,\u000E-\u001F]
+      
+      # stri_unescape_unicode
+      df_edges$vosonTxt_comment <- textutils::HTMLdecode(df_edges$vosonTxt_comment)
+      df_edges$vosonTxt_comment <- gsub("([\u0019])",
+                                        "'", df_edges$vosonTxt_comment,
+                                        useBytes = TRUE, perl = TRUE)
+      df_edges$vosonTxt_comment <- gsub("([\u0023])",
+                                        "#", df_edges$vosonTxt_comment,
+                                        useBytes = TRUE, perl = TRUE)
+      df_edges$vosonTxt_comment <- gsub("([\u0001-\u0008\u000B\u000C\u000E-\u001F])",
+                                        "[x]", df_edges$vosonTxt_comment,
+                                        useBytes = TRUE, perl = TRUE)
+      
       append_type <- "CleanTxt"
     }
   } else {

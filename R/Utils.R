@@ -38,24 +38,31 @@ writeOutputFile <- function(data, type = "rds", name = "File", datetime = TRUE, 
     name <- systemTimeFilename(name, type) 
   }
   
-  path <- paste0(getwd(), "/", name, "\n", sep = "")
-  
+  path <- paste0(getwd(), "/", name)
+  con <- file(path, open = "wb", encoding = "native.enc")
   result <- tryCatch({
     switch(type,
-      "graphml" = write.graph(data, name, format = "graphml"),
-      "csv" = write.csv(data, name),
-      saveRDS(data, file = name))
-
+      "graphml" = {
+        write.graph(data, file = con, format = "graphml")
+      }, "csv" = {
+        write.csv(data, file = con)
+      }, {
+        saveRDS(data, file = con)
+      })
   }, error = function(e) {
     cat(paste0("Error writing: ", path, "\n", e))
-    return(NULL)
-  })
+  }, finally = { })
+  close(con)
   
-  if (!is.null(result)) {
+  if (length(result) == 0) {
     if (msg) {
       cat(paste0(toupper(type), " file written: "))
-      cat(path)
+      cat(paste0(path, "\n"))
     }    
+  } else {
+    if (msg) {
+      cat(paste0("File unable to be written.\n"))
+    }
   }
 }
 

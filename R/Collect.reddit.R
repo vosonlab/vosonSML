@@ -31,33 +31,16 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
 
   cat("Collecting thread data for reddit urls...\n")
   
-  # reddit_content uses a progress bar that defaults to option width
-  # set to be much smaller than page
-  # save_width <- getOption("width")
-  
-  # progress_width <- save_width - 40
-  # if (progress_width >= 20) {
-  #   options("width" = progress_width)
-  # }
-  
-  # options("width" = 60)
-  
   threads_df <- NULL
   
-  save_enc <- getOption("encoding")
-  on.exit(options(encoding = save_enc), add = TRUE)
-  options(encoding = "UTF-8")
+  cat(paste0("encoding: ", getOption("encoding"), "\n"))
   
   # make the get request for the reddit thread url
   tryCatch({
     capture.output(threads_df <- RedditExtractoR::reddit_content(threadUrls, waitTime), type = c("output"))
-    # RedditExtractoR::reddit_content(threadUrls, waitTime)
   }, error = function(e) {
     stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
-  }, finally = {
-    # reset width
-    # options("width" = save_width)
-  })
+  }, finally = { })
   
   if (!is.null(threads_df)) {
     if (nrow(threads_df) > 0) {

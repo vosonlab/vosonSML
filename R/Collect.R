@@ -13,6 +13,14 @@
 #'
 #' @export
 Collect <- function(credential, ...) {
+  # set the environment encoding to UTF-8 for data collection
+  save_enc <- getOption("encoding")
+  on.exit({
+    options(encoding = save_enc)
+    # cat(paste0("reset encoding: ", getOption("encoding"), "\n"))
+  }, add = TRUE)
+  options(encoding = "UTF-8")
+  
   # searches the class list of credential for matching method
   UseMethod("Collect", credential)
 }
