@@ -85,12 +85,23 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   
   tweets_df <- do.call(rtweet::search_tweets, search_params)
   
+  # summary
+  if (nrow(tweets_df) > 0) {
+    results_df <- tweets_df %>% dplyr::filter(.data$status_id %in% c(min(.data$status_id), max(.data$status_id))) %>% 
+      dplyr::mutate(tweet = ifelse(.data$status_id == min(.data$status_id), "Min ID", "Max ID"), 
+                    created = as.character(.data$created_at)) %>% 
+      dplyr::select(.data$tweet, .data$status_id, .data$created, .data$screen_name) %>% 
+      dplyr::arrange(.data$status_id)
+    
+    results_df$screen_name <- paste0("@", results_df$screen_name)
+    
+    printResultTable(results_df)
+  }
   cat(paste0("Collected ", nrow(tweets_df), " tweets.\n"))
   
   # rds chosen over csv to avoid flattening lists in the data
   if (writeToFile) { writeOutputFile(tweets_df, "rds", "TwitterData") }
   
-  cat("Done.\n")
   flush.console()
   
   class(tweets_df) <- append(class(tweets_df), c("datasource", "twitter"))

@@ -16,10 +16,11 @@ Collect <- function(credential, ...) {
   # set the environment encoding to UTF-8 for data collection
   save_enc <- getOption("encoding")
   on.exit({
+    tictoc::toc(quiet = FALSE, func.toc = collectTocOutput)
     options(encoding = save_enc)
-    # cat(paste0("reset encoding: ", getOption("encoding"), "\n"))
   }, add = TRUE)
   options(encoding = "UTF-8")
+  tictoc::tic(msg = "Elapsed time")
   
   # searches the class list of credential for matching method
   UseMethod("Collect", credential)
@@ -28,5 +29,5 @@ Collect <- function(credential, ...) {
 # default function
 #' @export
 Collect.default <- function(credential, ...) {
-  stop("Unknown social media type passed to collect.", call. = FALSE) 
+  stop("Unknown social media type passed to collect.", call. = FALSE)
 }

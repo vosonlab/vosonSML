@@ -33,7 +33,7 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
   
   threads_df <- NULL
   
-  cat(paste0("encoding: ", getOption("encoding"), "\n"))
+  # cat(paste0("encoding: ", getOption("encoding"), "\n"))
   
   # make the get request for the reddit thread url
   tryCatch({
@@ -69,7 +69,6 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
     cat(paste0("Collection dataframe is null.\n"))
   }
   
-  cat("Done.\n")
   flush.console()
   
   class(threads_df) <- append(class(threads_df), c("datasource", "reddit"))

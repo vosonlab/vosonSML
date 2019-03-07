@@ -120,3 +120,19 @@ printResultTable <- function(df) {
     cat(paste0(line, "\n"))
   }
 }
+
+# format tictoc elapsed time output
+collectTocOutput <- function(tic, toc, msg) {
+  td <- round(toc - tic, digits = 0)
+  
+  hrs <- floor(td/(60*60))
+  mins<- floor(td/60)
+  secs <- td - (hrs * (60 * 60)) - (mins * 60)
+  
+  t <- ""
+  if (!is.null(msg) & !is.na(msg) & length(msg) > 0) {
+    t <- paste0(msg, ": ")
+  }
+  t <- trimws(paste0(t, hrs, " hrs ", mins, " mins ", secs, " secs (", round(toc - tic, digits = 3) , ")"))
+}
+
