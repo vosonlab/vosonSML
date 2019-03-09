@@ -1,3 +1,27 @@
+# vosonSML 0.27.0
+
+## Bug Fixes
+- Fixed a bug in `Collect.twitter` in which any additional `twitter API` parameters
+  e.g `lang` or `until` were not being passed properly to `rtweet::search_tweets`. This 
+  resulted in the additional parameters being ignored.
+
+## Major Changes
+- Removed the `SaveCredential` and `LoadCredential` functions, as well as the `useCachedToken`
+  parameter for `Authenticate.twitter`. These were simply calling the `saveRDS` and `readRDS` 
+  functions and not performing any additional processing. Using `saveRDS` and `readRDS` directly 
+  to save and load an `Authenticate` credential object to file is simpler.
+- Changed the way that the `cleanText` parameter works in `Create.actor.reddit` so that it is 
+  more permissive. Addresses encoding issues with apostrophes and pound symbols and removes 
+  unicode characters not permitted by the XML 1.0 standard as used in `graphml` files. This is 
+  best effort and does not resolve all `reddit` text encoding issues.
+  
+## Minor Changes
+- Added `Collect.twitter` summary information that includes the earliest (min) and latest (max) 
+  tweet `status_id` collected with timestamp. The `status_id` values can be used to frame 
+  subsequent collections as `since_id` or `max_id` parameter values. If the `until` date 
+  parameter was used the timestamp can also be used as a quick confirmation.
+- Added elapsed time output to the `Collect` method.
+  
 # vosonSML 0.26.3
 
 ## Bug Fixes

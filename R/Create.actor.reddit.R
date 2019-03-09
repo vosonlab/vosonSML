@@ -123,30 +123,40 @@ Create.actor.reddit <- function(datasource, type, weightEdges = FALSE, textData 
     # rename the edge attribute containing the thread comment
     df_edges %<>% dplyr::rename("vosonTxt_comment" = .data$title)
 
-    # problem control characters encountered in reddit text
-    # df_edges$vosonTxt_comment <- gsub("[\x01\x05\x18\x19\x1C]", "", df_edges$vosonTxt_comment, perl = TRUE)
     append_type <- "Txt"
 
-    # remove any characters that are not in punctuation, alphanumeric classes or spaces
     if (cleanText) {
+      cat("Cleaning comment text.\n")
+      # json encoding issues should be tackled upstream
+      
+      # remove any characters that are not in punctuation, alphanumeric classes or spaces
       # df_edges$vosonTxt_comment <- gsub("[^[:punct:]^[:alnum:]^\\s^\\n]", "", df_edges$vosonTxt_comment, 
       #                                   useBytes = TRUE, perl = TRUE)
       
+      # xml 1.0
       # allowed #x9 | #xA | #xD | [#x20-#xD7FF] | [#xE000-#xFFFD] | [#x10000-#x10FFFF]
       # [\x00-\x1F] ^\xE000-\xFFFD^\x10000-\x10FFFF
       # [^\x09^\x0A^\x0D^\x20-\xD7FF^\xE000-\xFFFD]
       # [\u0000-\u0008,\u000B,\u000C,\u000E-\u001F]
       
-      # stri_unescape_unicode
-      df_edges$vosonTxt_comment <- textutils::HTMLdecode(df_edges$vosonTxt_comment)
+      # decode html encoding as not required
+      # df_edges$vosonTxt_comment <- textutils::HTMLdecode(df_edges$vosonTxt_comment)
+      
+      # take care of a couple of known encoding issues
       df_edges$vosonTxt_comment <- gsub("([\u0019])",
                                         "'", df_edges$vosonTxt_comment,
                                         useBytes = TRUE, perl = TRUE)
       df_edges$vosonTxt_comment <- gsub("([\u0023])",
                                         "#", df_edges$vosonTxt_comment,
                                         useBytes = TRUE, perl = TRUE)
+
+      df_edges$vosonTxt_comment <- gsub("([&#x200B;])",
+                                        " ", df_edges$vosonTxt_comment,
+                                        useBytes = TRUE, perl = TRUE)
+      
+      # replace chars outside of allowed xml 1.0 spec
       df_edges$vosonTxt_comment <- gsub("([\u0001-\u0008\u000B\u000C\u000E-\u001F])",
-                                        "[x]", df_edges$vosonTxt_comment,
+                                        "", df_edges$vosonTxt_comment,
                                         useBytes = TRUE, perl = TRUE)
       
       append_type <- "CleanTxt"

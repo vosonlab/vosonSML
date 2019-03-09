@@ -48,6 +48,9 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
       threads_df$thread_id <- gsub("^(.*)?/comments/([0-9A-Za-z]{6})?/.*?(/)?$", "\\2", 
                                    threads_df$URL, ignore.case = TRUE, perl = TRUE)
       
+      cat("HTML decoding comments.\n")
+      threads_df$comment <- textutils::HTMLdecode(threads_df$comment)
+      
       # summary
       results_df <- threads_df %>% 
         dplyr::group_by(.data$thread_id) %>%
