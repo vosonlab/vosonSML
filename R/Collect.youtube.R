@@ -247,6 +247,7 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
   
   if (writeToFile) { writeOutputFile(dataCombined, "csv", "YoutubeData") }
   
+  cat("Done.\n")
   flush.console()
   
   #############################################################################

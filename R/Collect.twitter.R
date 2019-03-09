@@ -81,7 +81,8 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   
   # additional twitter api params
   dots <- substitute(...())
-  search_params[['...']] <- dots
+  # search_params[['...']] <- dots
+  search_params <- append(search_params, dots)
   
   tweets_df <- do.call(rtweet::search_tweets, search_params)
   
@@ -102,6 +103,7 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   # rds chosen over csv to avoid flattening lists in the data
   if (writeToFile) { writeOutputFile(tweets_df, "rds", "TwitterData") }
   
+  cat("Done.\n")
   flush.console()
   
   class(tweets_df) <- append(class(tweets_df), c("datasource", "twitter"))

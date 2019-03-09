@@ -69,6 +69,7 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
     cat(paste0("Collection dataframe is null.\n"))
   }
   
+  cat("Done.\n")
   flush.console()
   
   class(threads_df) <- append(class(threads_df), c("datasource", "reddit"))
