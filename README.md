@@ -1,7 +1,7 @@
 # vosonSML <img src="man/figures/logo.png" width="140px" align="right"/>
 ![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
 ![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg)
-[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
+[![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 ![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)
 
 `vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
@@ -20,7 +20,7 @@ Unfortunately we are no longer able to maintain `facebook` and `instagram` colle
 
 Install the current version from Github:
 ```R
-# requires the 'devtools' package (or alternatively 'remotes')
+# github installation requires the 'devtools' or 'remotes' package
 library(devtools)
 
 # optionally add the parameter 'dependencies = TRUE' to install package dependencies
@@ -49,7 +49,7 @@ The process of authentication, data collection and creating social network in vo
 library(magrittr)
 library(vosonSML)
 
-# Twitter Example
+# -- Twitter Example --
 
 # Authenticate with twitter, Collect 100 tweets for the '#auspol' hashtag and Create an actor and 
 # semantic network
@@ -58,7 +58,7 @@ myKeys <- list(appName = "vosonSML", apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxx
   
 twitterAuth <- Authenticate("twitter", appName = myKeys$appName, apiKey = myKeys$apiKey, 
                             apiSecret = myKeys$apiSecret, accessToken = myKeys$accessToken,
-                            accessTokenSecret = myKeys$accessTokenSecret, useCachedToken = TRUE)
+                            accessTokenSecret = myKeys$accessTokenSecret)
                              
 twitterData <- twitterAuth %>%
                Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100, 
@@ -70,18 +70,18 @@ actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TR
 actorGraph <- actorNetwork$graph # igraph network graph
 
 # Optional step to add additional twitter user info to actor network graph as node attributes 
-actorNetWithUserAttr <- AddUserData.twitter(twitterData, actorNetwork,
-                                            lookupUsers = TRUE, 
-                                            twitterAuth = twitterAuth, writeToFile = TRUE)
+actorNetWithUserAttr <- AddTwitterUserData(twitterData, actorNetwork,
+                                           lookupUsers = TRUE, 
+                                           twitterAuth = twitterAuth, writeToFile = TRUE)
 
 actorGraphWithUserAttr <- actorNetWithUserAttr$graph # igraph network graph
 
 semanticNetwork <- twitterData %>% Create("semantic", writeToFile = TRUE)
 
-# Youtube Example
+# -- Youtube Example --
 
 # Authenticate with youtube, Collect comment data from videos and then Create an actor network
-myYoutubeAPIKey = "xxxxxxxxxxxxxx"
+myYoutubeAPIKey <- "xxxxxxxxxxxxxx"
 
 myYoutubeVideoIds <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx",
                                           "https://youtu.be/xxxxxxxx"))
@@ -90,14 +90,23 @@ actorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>%
                 Collect(videoIDs = myYoutubeVideoIds) %>%
                 Create("actor", writeToFile = TRUE)
 
-# Reddit Example
+# -- Reddit Example --
 
-## Collect reddit comment threads and Create an actor network with comment text as edge attribute
+# Collect reddit comment threads and Create an actor network with comment text as edge attribute
 myThreadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
 
 actorNetwork <- Authenticate("reddit") %>%
                 Collect(threadUrls = myThreadUrls, waitTime = 5) %>%
                 Create("actor", includeTextData = TRUE, writeToFile = TRUE)
+
+             
+# Optional save and load authentication objects from file using saveRDS, readRDS
+
+# Save the object after Authenticate 
+saveRDS(my_twitter_auth, file = "~/.twitter_auth")
+
+# Load a previously saved authentication object for use in Collect
+my_twitter_auth <- readRDS("~/.twitter_auth")
 ```
 For more detailed information and examples, please refer to the function [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
 

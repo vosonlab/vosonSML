@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.26.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.27.0</span>
       </span>
     </div>
 
@@ -89,7 +89,7 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#vosonsml" class="anchor"></a>vosonSML <img src="reference/figures/logo.png" width="140px" align="right">
 </h1></div>
-<p><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&amp;colorB=8065ac" alt="Github Release"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg" alt="Last Commit"><a href="https://CRAN.R-project.org/package=vosonSML"><img src="http://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="Downloads"></p>
+<p><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&amp;colorB=8065ac" alt="Github Release"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg" alt="Last Commit"><a href="https://CRAN.R-project.org/package=vosonSML"><img src="https://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="Downloads"></p>
 <p><code>vosonSML</code> is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.</p>
 <p><code>vosonSML</code> is the <code>SocialMediaLab</code> package, renamed. We decided that <code>SocialMediaLab</code> was a bit too generic and also we wanted to indicate the connection to the <a href="http://vosonlab.net">Virtual Observatory for the Study of Online Networks Lab</a>, where this package was conceived and created.</p>
 <p><code>vosonSML</code> was created by <a href="http://uq.academia.edu/TimGraham">Timothy Graham</a> and <a href="https://researchers.anu.edu.au/researchers/ackland-rj">Robert Ackland</a>, with major contributions by <a href="https://github.com/chainsawriot">Chung-hong Chan</a> and Bryan Gertzel.</p>
@@ -103,7 +103,7 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install the current version from Github:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># requires the 'devtools' package (or alternatively 'remotes')</span>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># github installation requires the 'devtools' or 'remotes' package</span>
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(devtools)
 
 <span class="co"># optionally add the parameter 'dependencies = TRUE' to install package dependencies</span>
@@ -124,7 +124,7 @@ devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumen
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)
 <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vosonSML)
 
-<span class="co"># Twitter Example</span>
+<span class="co"># -- Twitter Example --</span>
 
 <span class="co"># Authenticate with twitter, Collect 100 tweets for the '#auspol' hashtag and Create an actor and </span>
 <span class="co"># semantic network</span>
@@ -133,7 +133,7 @@ myKeys &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocu
   
 twitterAuth &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"twitter"</span>, <span class="dt">appName =</span> myKeys<span class="op">$</span>appName, <span class="dt">apiKey =</span> myKeys<span class="op">$</span>apiKey, 
                             <span class="dt">apiSecret =</span> myKeys<span class="op">$</span>apiSecret, <span class="dt">accessToken =</span> myKeys<span class="op">$</span>accessToken,
-                            <span class="dt">accessTokenSecret =</span> myKeys<span class="op">$</span>accessTokenSecret, <span class="dt">useCachedToken =</span> <span class="ot">TRUE</span>)
+                            <span class="dt">accessTokenSecret =</span> myKeys<span class="op">$</span>accessTokenSecret)
                              
 twitterData &lt;-<span class="st"> </span>twitterAuth <span class="op">%&gt;%</span>
 <span class="st">               </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">searchTerm =</span> <span class="st">"#auspol"</span>, <span class="dt">searchType =</span> <span class="st">"recent"</span>, <span class="dt">numTweets =</span> <span class="dv">100</span>, 
@@ -145,18 +145,18 @@ actorNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</
 actorGraph &lt;-<span class="st"> </span>actorNetwork<span class="op">$</span>graph <span class="co"># igraph network graph</span>
 
 <span class="co"># Optional step to add additional twitter user info to actor network graph as node attributes </span>
-actorNetWithUserAttr &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddUserData.twitter.html">AddUserData.twitter</a></span>(twitterData, actorNetwork,
-                                            <span class="dt">lookupUsers =</span> <span class="ot">TRUE</span>, 
-                                            <span class="dt">twitterAuth =</span> twitterAuth, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)
+actorNetWithUserAttr &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddTwitterUserData.html">AddTwitterUserData</a></span>(twitterData, actorNetwork,
+                                           <span class="dt">lookupUsers =</span> <span class="ot">TRUE</span>, 
+                                           <span class="dt">twitterAuth =</span> twitterAuth, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)
 
 actorGraphWithUserAttr &lt;-<span class="st"> </span>actorNetWithUserAttr<span class="op">$</span>graph <span class="co"># igraph network graph</span>
 
 semanticNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"semantic"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)
 
-<span class="co"># Youtube Example</span>
+<span class="co"># -- Youtube Example --</span>
 
 <span class="co"># Authenticate with youtube, Collect comment data from videos and then Create an actor network</span>
-myYoutubeAPIKey =<span class="st"> "xxxxxxxxxxxxxx"</span>
+myYoutubeAPIKey &lt;-<span class="st"> "xxxxxxxxxxxxxx"</span>
 
 myYoutubeVideoIds &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,
                                           <span class="st">"https://youtu.be/xxxxxxxx"</span>))
@@ -165,14 +165,23 @@ actorNetwork &lt;-<span class="st"> </span><span class="kw"><a href="reference/A
 <span class="st">                </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">videoIDs =</span> myYoutubeVideoIds) <span class="op">%&gt;%</span>
 <span class="st">                </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)
 
-<span class="co"># Reddit Example</span>
+<span class="co"># -- Reddit Example --</span>
 
-## Collect reddit comment threads and Create an actor network with comment text as edge attribute
+<span class="co"># Collect reddit comment threads and Create an actor network with comment text as edge attribute</span>
 myThreadUrls &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>)
 
 actorNetwork &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"reddit"</span>) <span class="op">%&gt;%</span>
 <span class="st">                </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">threadUrls =</span> myThreadUrls, <span class="dt">waitTime =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span>
-<span class="st">                </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">includeTextData =</span> <span class="ot">TRUE</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</code></pre></div>
+<span class="st">                </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">includeTextData =</span> <span class="ot">TRUE</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)
+
+             
+<span class="co"># Optional save and load authentication objects from file using saveRDS, readRDS</span>
+
+<span class="co"># Save the object after Authenticate </span>
+<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">saveRDS</a></span>(my_twitter_auth, <span class="dt">file =</span> <span class="st">"~/.twitter_auth"</span>)
+
+<span class="co"># Load a previously saved authentication object for use in Collect</span>
+my_twitter_auth &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="st">"~/.twitter_auth"</span>)</code></pre></div>
 <p>For more detailed information and examples, please refer to the function <a href="https://vosonlab.github.io/vosonSML/reference/index.html">Reference</a> page.</p>
 </div>
 </div>

@@ -30,7 +30,7 @@ without relations to other users will appear in the network graph as isolate nod
 }
 \note{
 When creating twitter actor networks, a network with additional user information can be generated using the
-\code{\link{AddUserData.twitter}} function. Additional calls can be made to the twitter API to get information
+\code{\link{AddTwitterUserData}} function. Additional calls can be made to the twitter API to get information
 about users that were identified as nodes during network creation but did not tweet (meaning no user profile 
 information was initially collected for them).
 }

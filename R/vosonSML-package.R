@@ -34,6 +34,8 @@
 #' @importFrom RedditExtractoR reddit_content user_network
 #' @importFrom magrittr '%>%' '%<>%'
 #' @importFrom dplyr rename group_by summarise ungroup left_join select mutate filter coalesce row_number
-#' distinct anti_join mutate_all mutate_at ends_with vars funs bind_rows
+#' distinct anti_join mutate_all mutate_at ends_with vars funs bind_rows arrange
 #' @importFrom rlang '.data'
+#' @importFrom textutils HTMLdecode
+#' @importFrom tictoc tic toc
 NULL
