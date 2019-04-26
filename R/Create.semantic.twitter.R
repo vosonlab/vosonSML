@@ -67,30 +67,42 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   cat("Generating twitter semantic network...\n")
   flush.console()
   
+  # df$hashtags <- lapply(df$hashtags, function(x) paste("#", x))
+  
   # convert the hashtags to lowercase here (before using tm_map later) but first deal with character encoding
-  macMatch <- grep("darwin", R.Version()$os)
-  if (length(macMatch) != 0) {
-    # df$hashtags_used <- iconv(df$hashtags_used, to = "utf-8-mac")
+  if (isMac()) {
     df$hashtags <- lapply(df$hashtags, function(x) TrimOddCharMac(x))
+    df$hashtags <- lapply(df$hashtags, tolower)
+    df$text <- iconv(df$text, to = "utf-8-mac")
+  } else {
+    df$hashtags <- lapply(df$hashtags, function(x) TrimOddChar(x))
+    df$hashtags <- lapply(df$hashtags, tolower)
+    df$text <- iconv(df$text, to = "utf-8")
   }
   
-  if (length(macMatch) == 0) {
-    df$hashtags <- lapply(df$hashtags, function(x) TrimOddChar(x))
-  }
+  # macMatch <- grep("darwin", R.Version()$os)
+  # if (length(macMatch) != 0) {
+  #   # df$hashtags_used <- iconv(df$hashtags_used, to = "utf-8-mac")
+  #   df$hashtags <- lapply(df$hashtags, function(x) TrimOddCharMac(x))
+  # }
+  # 
+  # if (length(macMatch) == 0) {
+  #   df$hashtags <- lapply(df$hashtags, function(x) TrimOddChar(x))
+  # }
   
   # and then convert to lowercase
-  df$hashtags <- lapply(df$hashtags, tolower)
+  # df$hashtags <- lapply(df$hashtags, tolower)
   
   # do the same for the comment text, but first deal with character encoding!
   # we need to change value of `to` argument in 'iconv' depending on OS, or else errors can occur
-  macMatch <- grep("darwin", R.Version()$os)
-  if (length(macMatch) != 0) {
-    df$text <- iconv(df$text, to = "utf-8-mac")
-  }
-  
-  if (length(macMatch) == 0) {
-    df$text <- iconv(df$text, to = "utf-8")
-  }
+  # macMatch <- grep("darwin", R.Version()$os)
+  # if (length(macMatch) != 0) {
+  #   df$text <- iconv(df$text, to = "utf-8-mac")
+  # }
+  # 
+  # if (length(macMatch) == 0) {
+  #   df$text <- iconv(df$text, to = "utf-8")
+  # }
   
   # and then convert to lowercase
   df$text <- tolower(df$text)
@@ -144,13 +156,19 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   mach_usernames <- sapply(df$screen_name, function(x) TrimOddChar(x))
   mach_usernames <- unique(mach_usernames)
   
-  if (length(macMatch) != 0) {
+  if (isMac()) {
     mach_usernames <- iconv(mach_usernames, to = "utf-8-mac")
-  }
-  
-  if (length(macMatch) == 0) {
+  } else {
     mach_usernames <- iconv(mach_usernames, to = "utf-8")
   }
+  
+  # if (length(macMatch) != 0) {
+  #   mach_usernames <- iconv(mach_usernames, to = "utf-8-mac")
+  # }
+  # 
+  # if (length(macMatch) == 0) {
+  #   mach_usernames <- iconv(mach_usernames, to = "utf-8")
+  # }
   
   # we remove the usernames from the text (so they don't appear in data/network)
   my_stopwords <- mach_usernames
@@ -229,7 +247,7 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   for (i in 1:nrow(unique_dfSemanticNetwork3)) {
     unique_dfSemanticNetwork3$numHashtagTermOccurrences[i] <- sum(
       hashtagAssociatedWithTerm == unique_dfSemanticNetwork3[i, 1] & 
-        termAssociatedWithHashtag == unique_dfSemanticNetwork3[i, 2])
+        termAssociatedWithHashtag == unique_dfSemanticNetwork3[i, 2], na.rm = TRUE)
   }
   
   # make a dataframe of the relations between actors
@@ -277,6 +295,7 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   flush.console()
   
   func_output <- list(
+    "relations" = relations,
     "graph" = g
   )
   
