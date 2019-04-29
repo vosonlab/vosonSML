@@ -45,11 +45,10 @@ The following usage examples will provide a great introduction to using `vosonSM
 
 The process of authentication, data collection and creating social network in vosonSML is expressed with the three verb functions: *Authenticate*, *Collect* and *Create*. The following are some examples:
 
+#### Twitter Examples
 ```R
 library(magrittr)
 library(vosonSML)
-
-# -- Twitter Example --
 
 # Authenticate with twitter, Collect 100 tweets for the '#auspol' hashtag and Create an actor and 
 # semantic network
@@ -77,8 +76,13 @@ actorNetWithUserAttr <- AddTwitterUserData(twitterData, actorNetwork,
 actorGraphWithUserAttr <- actorNetWithUserAttr$graph # igraph network graph
 
 semanticNetwork <- twitterData %>% Create("semantic", writeToFile = TRUE)
+```
 
-# -- Youtube Example --
+#### Youtube Examples
+
+```R
+library(magrittr)
+library(vosonSML)
 
 # Authenticate with youtube, Collect comment data from videos and then Create an actor network
 myYoutubeAPIKey <- "xxxxxxxxxxxxxx"
@@ -89,8 +93,13 @@ myYoutubeVideoIds <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxx
 actorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>%
                 Collect(videoIDs = myYoutubeVideoIds) %>%
                 Create("actor", writeToFile = TRUE)
+```
 
-# -- Reddit Example --
+#### Reddit Examples
+
+```R
+library(magrittr)
+library(vosonSML)
 
 # Collect reddit comment threads and Create an actor network with comment text as edge attribute
 myThreadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
@@ -99,9 +108,11 @@ actorNetwork <- Authenticate("reddit") %>%
                 Collect(threadUrls = myThreadUrls, waitTime = 5) %>%
                 Create("actor", includeTextData = TRUE, writeToFile = TRUE)
 
-             
-# Optional save and load authentication objects from file using saveRDS, readRDS
+```
 
+#### Save and Load Authentication Objects
+
+```R
 # Save the object after Authenticate 
 saveRDS(my_twitter_auth, file = "~/.twitter_auth")
 

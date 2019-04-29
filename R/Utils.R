@@ -136,3 +136,13 @@ collectTocOutput <- function(tic, toc, msg) {
   t <- trimws(paste0(t, hrs, " hrs ", mins, " mins ", secs, " secs (", round(toc - tic, digits = 3) , ")"))
 }
 
+# check if R is running on macos
+isMac <- function() {
+  macMatch <- grep("darwin", R.Version()$os)
+  
+  if (length(macMatch) != 0) {
+    return(TRUE)
+  }
+  return(FALSE)
+}
+
