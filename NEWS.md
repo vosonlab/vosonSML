@@ -1,3 +1,16 @@
+# vosonSML 0.27.1
+
+## Bug Fixes
+- Fixed a bug in `Create.semantic.twitter` in which a sum operation calculating edge
+  weights would set `NA` values for all edges due to `NA` values present in the hashtag fields. 
+  This occurs when there are tweets with no hashtags in the twitter collection and is now
+  checked.
+- Some UTF encoding issues in `Create.semantic.twitter` were also fixed. 
+
+## Minor Changes
+- Added '#' to hashtags and '@' to mentions in twitter semantic network to differentiate between
+  hashtags, mentions and common terms.
+
 # vosonSML 0.27.0
 
 ## Bug Fixes

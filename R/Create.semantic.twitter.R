@@ -53,7 +53,7 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   
   df <- datasource # match the variable names (this must be used to avoid warnings in package compilation)
   
-  # if `df` is a list of dataframes, then need to convert these into one dataframe
+  # if df is a list of dataframes, then need to convert these into one dataframe
   suppressWarnings(
     if (class(df) == "list") {
       df <- do.call("rbind", df)
@@ -67,18 +67,21 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   cat("Generating twitter semantic network...\n")
   flush.console()
   
-  # df$hashtags <- lapply(df$hashtags, function(x) paste("#", x))
+  # added hash to hashtags to identify and merge them in results
+  df$hashtags <- lapply(df$hashtags, function(x) ifelse(is.na(x), NA, paste0("#", x)))
   
   # convert the hashtags to lowercase here (before using tm_map later) but first deal with character encoding
-  if (isMac()) {
-    df$hashtags <- lapply(df$hashtags, function(x) TrimOddCharMac(x))
-    df$hashtags <- lapply(df$hashtags, tolower)
-    df$text <- iconv(df$text, to = "utf-8-mac")
-  } else {
-    df$hashtags <- lapply(df$hashtags, function(x) TrimOddChar(x))
-    df$hashtags <- lapply(df$hashtags, tolower)
-    df$text <- iconv(df$text, to = "utf-8")
-  }
+  # if (isMac()) {
+  #   df$hashtags <- lapply(df$hashtags, function(x) TrimOddCharMac(x))
+  #   # df$text <- iconv(df$text, to = "utf-8-mac")
+  # } else {
+  #   df$hashtags <- lapply(df$hashtags, function(x) TrimOddChar(x))
+  #   # df$text <- iconv(df$text, to = "utf-8")
+  # }
+  
+  # and then convert to lowercase
+  df$text <- tolower(df$text)
+  df$hashtags <- lapply(df$hashtags, tolower)
   
   # macMatch <- grep("darwin", R.Version()$os)
   # if (length(macMatch) != 0) {
@@ -103,10 +106,7 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   # if (length(macMatch) == 0) {
   #   df$text <- iconv(df$text, to = "utf-8")
   # }
-  
-  # and then convert to lowercase
-  df$text <- tolower(df$text)
-  
+
   hashtagsUsedTemp <- c() # temp var to store output
   
   # the 'hashtags_used' column in the 'df' dataframe is slightly problematic (i.e. not straightforward)
@@ -115,17 +115,20 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   # so, need to extract each list item out, and put it into its own row in a new dataframe
   count <- 0
   for (i in 1:nrow(df)) {
-    if (length(df$hashtags[[i]]) > 0) { # skip any rows where NO HASHTAGS were used
+    if (!is.na(df$hashtags[[i]]) && length(df$hashtags[[i]]) > 0) { # skip any rows where NO HASHTAGS were used
       for (j in 1:length(df$hashtags[[i]])) {
         count <- count + 1
         #commonTermsTemp <- c(commonTermsTemp, df$from_user[i])
-        hashtagsUsedTemp <- c(hashtagsUsedTemp, df$hashtags[[i]][j])
+        if (!is.na(df$hashtags[[i]][j])) {
+          hashtagsUsedTemp <- c(hashtagsUsedTemp, df$hashtags[[i]][j]) 
+        }
       }
     }
   } # try and vectorise this in future work to improve speed
   df_stats <- networkStats(df_stats, "raw hashtags", count, FALSE)
   
   hashtagsUsedTemp <- unique(hashtagsUsedTemp)
+  unique_hashtags <- hashtagsUsedTemp
   df_stats <- networkStats(df_stats, "unique hashtags", length(hashtagsUsedTemp), FALSE)
   
   hashtagsUsedTempFrequency <- c()
@@ -145,7 +148,15 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   df_stats <- networkStats(df_stats, paste0("top ", hashtagFreq , "% hashtags"), length(hashtagsUsedTemp), FALSE)
   
   # we need to remove all punctuation EXCEPT HASHES (!) (e.g. both #auspol and auspol will appear in data)
-  df$text <- gsub("[^[:alnum:][:space:]#]", "", df$text)
+  
+  # this is a decision point for non-english text
+  # df$text <- gsub("[^[:alnum:][:space:]#]", "", df$text)
+  
+  # remove urls so dont get weird strings after punctuation removal
+  df$text <- gsub("https://t.co/[a-zA-Z0-9]+\\s", "", df$text, ignore.case = TRUE, perl = TRUE)
+  
+  # remove punctuation except # and @
+  df$text <- gsub("([#@])|[[:punct:]]", "\\1", df$text)
   
   # find the most frequent terms across the tweet text corpus
   commonTermsTemp <- df$text
@@ -153,37 +164,29 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   corpusTweetText <- Corpus(VectorSource(commonTermsTemp))
   
   # add usernames to stopwords
-  mach_usernames <- sapply(df$screen_name, function(x) TrimOddChar(x))
-  mach_usernames <- unique(mach_usernames)
+  # mach_usernames <- sapply(df$screen_name, function(x) TrimOddChar(x))
+  mach_usernames <- unique(df$screen_name)
   
-  if (isMac()) {
-    mach_usernames <- iconv(mach_usernames, to = "utf-8-mac")
-  } else {
-    mach_usernames <- iconv(mach_usernames, to = "utf-8")
-  }
-  
-  # if (length(macMatch) != 0) {
+  # if (isMac()) {
   #   mach_usernames <- iconv(mach_usernames, to = "utf-8-mac")
-  # }
-  # 
-  # if (length(macMatch) == 0) {
+  # } else {
   #   mach_usernames <- iconv(mach_usernames, to = "utf-8")
   # }
-  
+
   # we remove the usernames from the text (so they don't appear in data/network)
   my_stopwords <- mach_usernames
-  corpusTweetText <- tm_map(corpusTweetText, removeWords, my_stopwords)
+  # corpusTweetText <- suppressWarnings(tm_map(corpusTweetText, removeWords, my_stopwords))
   
   # convert to all lowercase (WE WILL DO THIS AGAIN BELOW, SO REMOVE THIS DUPLICATE)
   # corpusTweetText <- tm_map(corpusTweetText, content_transformer(tolower))
   
   # remove English stop words (IF THE USER HAS SPECIFIED!)
   if (stopwordsEnglish) {
-    corpusTweetText <- tm_map(corpusTweetText, removeWords, stopwords("english"))
+    corpusTweetText <- suppressWarnings(tm_map(corpusTweetText, removeWords, stopwords("english")))
   }
   
   # eliminate extra whitespace
-  corpusTweetText <- tm_map(corpusTweetText, stripWhitespace)
+  corpusTweetText <- suppressWarnings(tm_map(corpusTweetText, stripWhitespace))
   
   # create document term matrix applying some transformations
   # ** applying too many transformations here (duplicating...) - need to fix
@@ -198,10 +201,10 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   ## the default finds top 5% terms
   commonTerms <- names(head(vTemp, (length(vTemp) / 100) * termFreq))
   
-  toDel <- grep("http", commonTerms) # !! still picking up junk terms (FIX)
-  if (length(toDel) > 0) {
-    commonTerms <- commonTerms[-toDel] # delete these junk terms
-  }
+  # toDel <- grep("http", commonTerms) # !! still picking up junk terms (FIX)
+  # if (length(toDel) > 0) {
+  #   commonTerms <- commonTerms[-toDel] # delete these junk terms
+  # }
   df_stats <- networkStats(df_stats, paste0("top ", termFreq , "% terms"), length(commonTerms), FALSE)
   
   # create the "semantic hashtag-term network" dataframe (i.e. pairs of hashtags / terms)
@@ -210,7 +213,7 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   hashtagAssociatedWithTerm <- c() # temp var to store output
   
   for (i in 1:nrow(df)) {
-    if (length(df$hashtags[[i]]) > 0) { # skip any rows where NO HASHTAGS were used
+    if (!is.na(df$hashtags[[i]]) && length(df$hashtags[[i]]) > 0) { # skip any rows where NO HASHTAGS were used
       for (j in 1:length(df$hashtags[[i]])) {
         for (k in 1:length(commonTerms)) {
           
@@ -247,7 +250,7 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   for (i in 1:nrow(unique_dfSemanticNetwork3)) {
     unique_dfSemanticNetwork3$numHashtagTermOccurrences[i] <- sum(
       hashtagAssociatedWithTerm == unique_dfSemanticNetwork3[i, 1] & 
-        termAssociatedWithHashtag == unique_dfSemanticNetwork3[i, 2], na.rm = TRUE)
+        termAssociatedWithHashtag == unique_dfSemanticNetwork3[i, 2]) # na.rm = TRUE
   }
   
   # make a dataframe of the relations between actors
