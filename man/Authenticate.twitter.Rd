@@ -27,12 +27,17 @@ A \code{credential} object containing an access token \code{$auth} and social me
 \code{$socialmedia} set to \code{"twitter"}. Object has the class names \code{"credential"} and \code{"twitter"}.
 }
 \description{
-Twitter authentication uses OAuth and requires Application-user authentication API keys as described here: 
+Twitter authentication uses OAuth and either requires authorization of the rtweet package rstats2twitter
+client app by a registered twitter user or twitter app developer API keys as described here: 
 \url{https://developer.twitter.com/en/docs/basics/authentication/overview/oauth}.
 }
 \examples{
 \dontrun{
-# twitter authentication with api keys
+# twitter authentication via user authorization of rstats2twitter app
+# will open a web browser to twitter prompting the user to log in and authorize the app
+twitterAuth <- Authenticate("twitter")
+
+# twitter authentication with app developer api keys
 myKeys <- list(appName = "vosonSML", apiKey = "xxxxxxxxxxxx",
   apiSecret = "xxxxxxxxxxxx", accessToken = "xxxxxxxxxxxx",
   accessTokenSecret = "xxxxxxxxxxxx")
