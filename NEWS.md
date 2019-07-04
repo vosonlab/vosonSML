@@ -1,3 +1,12 @@
+# vosonSML 0.27.2
+
+## Minor Changes
+- Added twitter interactive web authorization of an app as provided by `rtweet::create_token`.
+  Method is used when only twitter app name and consumer keys are passed to `Authenticate.twitter`
+  as parameters. e.g `Authenticate("twitter", appName = "An App", apiKey = "xxxxxxxxxxxx", 
+  apiSecret = "xxxxxxxxxxxx")`. A browser tab will open asking the user to authorize the app to
+  their twitter account to complete authentication.
+  
 # vosonSML 0.27.1
 
 ## Bug Fixes

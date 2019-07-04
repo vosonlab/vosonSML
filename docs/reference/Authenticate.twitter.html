@@ -41,7 +41,8 @@
   
 <meta property="og:title" content="Twitter API authentication — Authenticate.twitter" />
 
-<meta property="og:description" content="Twitter authentication uses OAuth and requires Application-user authentication API keys as described here: 
+<meta property="og:description" content="Twitter authentication uses OAuth and either requires authorization of the rtweet package rstats2twitter
+client app by a registered twitter user or twitter app developer API keys as described here: 
 https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
 
 <meta property="og:image" content="http://vosonlab.github.io/vosonSML/logo.png" />
@@ -75,7 +76,7 @@ https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.27.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.27.2</span>
       </span>
     </div>
 
@@ -129,7 +130,8 @@ https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
 
     <div class="ref-description">
     
-    <p>Twitter authentication uses OAuth and requires Application-user authentication API keys as described here: 
+    <p>Twitter authentication uses OAuth and either requires authorization of the rtweet package rstats2twitter
+client app by a registered twitter user or twitter app developer API keys as described here: 
 <a href='https://developer.twitter.com/en/docs/basics/authentication/overview/oauth'>https://developer.twitter.com/en/docs/basics/authentication/overview/oauth</a>.</p>
     
     </div>
@@ -151,11 +153,11 @@ https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
     </tr>
     <tr>
       <th>apiKey</th>
-      <td><p>Character string. API key to authenticate.</p></td>
+      <td><p>Character string. API consumer key to authenticate.</p></td>
     </tr>
     <tr>
       <th>apiSecret</th>
-      <td><p>Character string. API secret to authenticate.</p></td>
+      <td><p>Character string. API consumer secret to authenticate.</p></td>
     </tr>
     <tr>
       <th>accessToken</th>
@@ -179,14 +181,21 @@ https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># twitter authentication with api keys</span>
-<span class='no'>myKeys</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>appName</span> <span class='kw'>=</span> <span class='st'>"vosonSML"</span>, <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>,
+<span class='co'># twitter authentication via user authorization of app on their account</span>
+<span class='co'># will open a web browser to twitter prompting the user to log in and authorize the app</span>
+<span class='co'># apiKey and apiSecret are equivalent to a twitter apps consumer key and secret</span>
+<span class='no'>twitterAuth</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='st'>"twitter"</span>, <span class='kw'>appName</span> <span class='kw'>=</span> <span class='st'>"An App"</span>,
+  <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>, <span class='kw'>apiSecret</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>
+)
+
+<span class='co'># twitter authentication with developer app api keys</span>
+<span class='no'>myDevKeys</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>appName</span> <span class='kw'>=</span> <span class='st'>"My App"</span>, <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>,
   <span class='kw'>apiSecret</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>, <span class='kw'>accessToken</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>,
   <span class='kw'>accessTokenSecret</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>)
 
-<span class='no'>twitterAuth</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='st'>"twitter"</span>, <span class='kw'>appName</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>appName</span>,
-  <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>apiKey</span>, <span class='kw'>apiSecret</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>apiSecret</span>, <span class='kw'>accessToken</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>accessToken</span>,
-  <span class='kw'>accessTokenSecret</span> <span class='kw'>=</span> <span class='no'>myKeys</span>$<span class='no'>accessTokenSecret</span>)
+<span class='no'>twitterAuth</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='st'>"twitter"</span>, <span class='kw'>appName</span> <span class='kw'>=</span> <span class='no'>myDevKeys</span>$<span class='no'>appName</span>,
+  <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='no'>myDevKeys</span>$<span class='no'>apiKey</span>, <span class='kw'>apiSecret</span> <span class='kw'>=</span> <span class='no'>myDevKeys</span>$<span class='no'>apiSecret</span>, <span class='kw'>accessToken</span> <span class='kw'>=</span> <span class='no'>myDevKeys</span>$<span class='no'>accessToken</span>,
+  <span class='kw'>accessTokenSecret</span> <span class='kw'>=</span> <span class='no'>myDevKeys</span>$<span class='no'>accessTokenSecret</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
