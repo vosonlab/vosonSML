@@ -1,4 +1,4 @@
-# vosonSML <img src="man/figures/logo.png" width="140px" align="right"/>
+# vosonSML
 ![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
 ![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
@@ -9,7 +9,7 @@
 
 `vosonSML` is the `SocialMediaLab` package, renamed. We decided that `SocialMediaLab` was a bit too generic and also we wanted to indicate the connection to the [Virtual Observatory for the Study of Online Networks Lab](http://vosonlab.net), where this package was conceived and created.
 
-`vosonSML` was created by [Timothy Graham](http://uq.academia.edu/TimGraham) and [Robert Ackland](https://researchers.anu.edu.au/researchers/ackland-rj) with major contributions by [Chung-hong Chan](https://github.com/chainsawriot). It is currently developed and maintained by Bryan Gertzel.
+`vosonSML` was created by [Timothy Graham](http://uq.academia.edu/TimGraham) and [Robert Ackland](https://researchers.anu.edu.au/researchers/ackland-rj) with major contributions by [Chung-hong Chan](https://github.com/chainsawriot). The current lead developer and maintainer is Bryan Gertzel.
 
 ### Supported Social Media
 
