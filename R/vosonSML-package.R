@@ -18,8 +18,8 @@
 #' @name vosonSML-package
 #' @aliases vosonSML-package vosonSML
 #' @docType package
-#' @author Created by Timothy Graham and Robert Ackland with major contributions by Chung-hong Chan. It is currently 
-#' developed and maintained by Bryan Gertzel.
+#' @author Created by Timothy Graham and Robert Ackland with major contributions by Chung-hong Chan. The current lead 
+#' developer and maintainer is Bryan Gertzel.
 #' @import tm
 #' @import RCurl
 #' @import data.table
