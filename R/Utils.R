@@ -1,3 +1,11 @@
+# get package version
+getVosonSMLVer <- function() {
+  if ("vosonSML" %in% loadedNamespaces()) {
+    return(utils::packageVersion("vosonSML"))
+  }
+  "unknown"
+}
+
 # check for a range of true values
 isTrueValue <- function(x) {
   if (x == "TRUE" || x == "true" || x == "T" || x == TRUE) {

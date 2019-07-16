@@ -22,6 +22,6 @@ of networks. For example, the function \code{Collect} can be used to collect twi
 the \code{Create} function resulting in a twitter network (as igraph object) that is ready for analysis.
 }
 \author{
-Created by Timothy Graham and Robert Ackland with major contributions by Chung-hong Chan. It is currently 
-developed and maintained by Bryan Gertzel.
+Created by Timothy Graham and Robert Ackland with major contributions by Chung-hong Chan. The current lead 
+developer and maintainer is Bryan Gertzel.
 }

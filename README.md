@@ -24,7 +24,12 @@ Install vosonSML from CRAN:
 install.packages("vosonSML")
 ```
 
-or install the latest version from Github:
+Install the latest Github release:
+```R
+install.packages("https://github.com/vosonlab/vosonSML/archive/vosonSML-0.27.2.tar.gz", repo = NULL, type = "source")
+```
+
+or install the latest dev version:
 ```R
 # library(devtools)
 devtools::install_github("vosonlab/vosonSML")
