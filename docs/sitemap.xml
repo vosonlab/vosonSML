@@ -28,9 +28,6 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.youtube.html</loc>
   </url>
   <url>
-    <loc>http://vosonlab.github.io/vosonSML/reference/Create.html</loc>
-  </url>
-  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.actor.reddit.html</loc>
   </url>
   <url>
@@ -41,6 +38,9 @@
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.bimodal.twitter.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Create.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.semantic.twitter.html</loc>
