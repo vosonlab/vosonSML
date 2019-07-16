@@ -1,3 +1,18 @@
+# vosonSML 0.27.2
+
+## Minor Changes
+- Added twitter interactive web authorization of an app as provided by `rtweet::create_token`.
+  Method is used when only twitter app name and consumer keys are passed to `Authenticate.twitter`
+  as parameters. e.g `Authenticate("twitter", appName = "An App", apiKey = "xxxxxxxxxxxx", 
+  apiSecret = "xxxxxxxxxxxx")`. A browser tab will open asking the user to authorize the app to
+  their twitter account to complete authentication. This is using twitters 
+  `Application-user authentication: OAuth 1a (access token for user context)` method.
+- It is suspected that Reddit is rate-limiting some generic R UA strings. So a User-Agent string is
+  now set for underlaying R Collect functions (e.g `file`) via the `HTTPUserAgent` option.  It is 
+  temporarily set to package name and current version number for Collect e.g 
+  `vosonSML v.0.27.2 (R Package)`.
+- Removed hex sticker (and favicons for pkgdown site).
+  
 # vosonSML 0.27.1
 
 ## Bug Fixes

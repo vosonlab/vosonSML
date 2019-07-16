@@ -12,9 +12,9 @@
 
 \item{appName}{Character string. Registered twitter app name associated with the API keys.}
 
-\item{apiKey}{Character string. API key to authenticate.}
+\item{apiKey}{Character string. API consumer key to authenticate.}
 
-\item{apiSecret}{Character string. API secret to authenticate.}
+\item{apiSecret}{Character string. API consumer secret to authenticate.}
 
 \item{accessToken}{Character string. API access token to authenticate.}
 
@@ -27,19 +27,27 @@ A \code{credential} object containing an access token \code{$auth} and social me
 \code{$socialmedia} set to \code{"twitter"}. Object has the class names \code{"credential"} and \code{"twitter"}.
 }
 \description{
-Twitter authentication uses OAuth and requires Application-user authentication API keys as described here: 
+Twitter authentication uses OAuth and either requires authorization of the rtweet package rstats2twitter
+client app by a registered twitter user or twitter app developer API keys as described here: 
 \url{https://developer.twitter.com/en/docs/basics/authentication/overview/oauth}.
 }
 \examples{
 \dontrun{
-# twitter authentication with api keys
-myKeys <- list(appName = "vosonSML", apiKey = "xxxxxxxxxxxx",
+# twitter authentication via user authorization of app on their account
+# will open a web browser to twitter prompting the user to log in and authorize the app
+# apiKey and apiSecret are equivalent to a twitter apps consumer key and secret
+twitterAuth <- Authenticate("twitter", appName = "An App",
+  apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx"
+)
+
+# twitter authentication with developer app api keys
+myDevKeys <- list(appName = "My App", apiKey = "xxxxxxxxxxxx",
   apiSecret = "xxxxxxxxxxxx", accessToken = "xxxxxxxxxxxx",
   accessTokenSecret = "xxxxxxxxxxxx")
 
-twitterAuth <- Authenticate("twitter", appName = myKeys$appName, 
-  apiKey = myKeys$apiKey, apiSecret = myKeys$apiSecret, accessToken = myKeys$accessToken, 
-  accessTokenSecret = myKeys$accessTokenSecret)
+twitterAuth <- Authenticate("twitter", appName = myDevKeys$appName, 
+  apiKey = myDevKeys$apiKey, apiSecret = myDevKeys$apiSecret, accessToken = myDevKeys$accessToken, 
+  accessTokenSecret = myDevKeys$accessTokenSecret)
 }
 
 }

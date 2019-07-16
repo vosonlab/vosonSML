@@ -1,4 +1,4 @@
-# vosonSML <img src="man/figures/logo.png" width="140px" align="right"/>
+# vosonSML
 ![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
 ![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
@@ -9,32 +9,35 @@
 
 `vosonSML` is the `SocialMediaLab` package, renamed. We decided that `SocialMediaLab` was a bit too generic and also we wanted to indicate the connection to the [Virtual Observatory for the Study of Online Networks Lab](http://vosonlab.net), where this package was conceived and created.
 
-`vosonSML` was created by [Timothy Graham](http://uq.academia.edu/TimGraham) and [Robert Ackland](https://researchers.anu.edu.au/researchers/ackland-rj), with major contributions by [Chung-hong Chan](https://github.com/chainsawriot) and Bryan Gertzel.
+`vosonSML` was created by [Timothy Graham](http://uq.academia.edu/TimGraham) and [Robert Ackland](https://researchers.anu.edu.au/researchers/ackland-rj) with major contributions by [Chung-hong Chan](https://github.com/chainsawriot). The current lead developer and maintainer is Bryan Gertzel.
 
 ### Supported Social Media
 
 `vosonSML` currently features the collection of data and generation of networks from `twitter`, `youtube` and `reddit`. 
 
-Unfortunately we are no longer able to maintain `facebook` and `instagram` collection, however these features will still be available in [releases](https://github.com/vosonlab/vosonSML/releases) prior to version `0.25.0`.
+Unfortunately we are no longer able to maintain `facebook` and `instagram` collection, however code for these platforms is still available in [releases](https://github.com/vosonlab/vosonSML/releases) prior to version `0.25.0`.
 
 ## Installation
 
-Install the current version from Github:
-```R
-# github installation requires the 'devtools' or 'remotes' package
-library(devtools)
-
-# optionally add the parameter 'dependencies = TRUE' to install package dependencies
-devtools::install_github("vosonlab/vosonSML")
-```
-
 Install vosonSML from CRAN:
 ```R
-install.packages("vosonSML", dependencies = TRUE)
+install.packages("vosonSML")
+```
+
+Install the latest Github release:
+```R
+install.packages("https://github.com/vosonlab/vosonSML/archive/vosonSML-0.27.2.tar.gz", repo = NULL, type = "source")
+```
+
+or install the latest dev version:
+```R
+# library(devtools)
+devtools::install_github("vosonlab/vosonSML")
 ```
 
 Note about previous releases: The vosonSML package was previously in a subdirectory, so if you wish to install versions prior to `0.26` please remember to include the `subdir` parameter.  
 ```R
+# library(devtools)
 devtools::install_github("vosonlab/vosonSML@v0.25.0", subdir = "vosonSML")
 ```
 
@@ -53,18 +56,28 @@ library(vosonSML)
 
 # Authenticate with twitter, Collect 100 tweets for the '#auspol' hashtag and Create an actor and 
 # semantic network
-myKeys <- list(appName = "vosonSML", apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx", 
+myKeys <- list(appName = "My App", apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx", 
                accessToken = "xxxxxxxxxxxx", accessTokenSecret = "xxxxxxxxxxxx")
   
 twitterAuth <- Authenticate("twitter", appName = myKeys$appName, apiKey = myKeys$apiKey, 
                             apiSecret = myKeys$apiSecret, accessToken = myKeys$accessToken,
                             accessTokenSecret = myKeys$accessTokenSecret)
-                             
+
+# twitter authentication creates an access token as part of the auth object
+# this can and should be re-used by saving it and then loading it for future sessions
+# Save the auth object after Authenticate 
+saveRDS(twitterAuth, file = "~/.twitter_auth")
+
+# Load a previously saved auth object for use in Collect
+twitterAuth <- readRDS("~/.twitter_auth")
+
+# Collect tweets
 twitterData <- twitterAuth %>%
                Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100, 
                        includeRetweets = FALSE, retryOnRateLimit = TRUE, writeToFile = TRUE, 
                        verbose = TRUE)
 
+# Create a network
 actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TRUE)
 
 actorGraph <- actorNetwork$graph # igraph network graph
@@ -115,10 +128,10 @@ actorNetwork <- Authenticate("reddit") %>%
 
 ```R
 # Save the object after Authenticate 
-saveRDS(my_twitter_auth, file = "~/.twitter_auth")
+saveRDS(my_youtube_auth, file = "~/.youtube_auth")
 
 # Load a previously saved authentication object for use in Collect
-my_twitter_auth <- readRDS("~/.twitter_auth")
+my_youtube_auth <- readRDS("~/.youtube_auth")
 ```
 For more detailed information and examples, please refer to the function [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
 
