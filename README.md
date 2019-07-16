@@ -26,7 +26,8 @@ install.packages("vosonSML")
 
 Install the latest Github release:
 ```R
-install.packages("https://github.com/vosonlab/vosonSML/archive/vosonSML-0.27.2.tar.gz", repo = NULL, type = "source")
+install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.27.2/vosonSML-0.27.2.tar.gz", 
+  repo = NULL, type = "source")
 ```
 
 or install the latest dev version:
