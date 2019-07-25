@@ -176,6 +176,29 @@ Create.actor.twitter <- function(datasource, type, writeToFile = FALSE, verbose 
   }
   df_stats <- networkStats(df_stats, "replies", count, TRUE)
   
+  # turn isolate tweeters into self loops
+  count <- 0
+  for (i in 1:nrow(df)) {
+    if (is.na(df[i, reply_to_user_id][[1]]) == FALSE ||
+        is.na(df[i, mentions_user_id][[1]]) == FALSE ||
+        df[i, is_quote][[1]] == TRUE ||
+        df[i, is_retweet][[1]] == TRUE
+        ) { next } 
+    
+    count <- count + 1
+    
+    dt_combined[nextEmptyRow, from:= as.character(df$user_id[i][[1]])]
+    dt_combined[nextEmptyRow, to := as.character(df$user_id[i][[1]])]
+    dt_combined[nextEmptyRow, edge_type := as.character("self-loop")]
+    dt_combined[nextEmptyRow, timestamp := as.character(df$created_at[i][[1]])]
+    dt_combined[nextEmptyRow, status_id := as.character(df$status_id[i][[1]])]
+    
+    df_users <- rbind(df_users, list(df$user_id[i][[1]], df$screen_name[i][[1]]))
+    
+    nextEmptyRow <- nextEmptyRow + 1 # increment the row to update in dt_combined
+  }
+  df_stats <- networkStats(df_stats, "self-loops", count, TRUE)
+  
   dt_combined <- dt_combined[edge_type != "NA_f00"]
   
   # make a vector of all the unique actors in the network

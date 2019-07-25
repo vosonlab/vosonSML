@@ -1,3 +1,9 @@
+# vosonSML 0.27.3
+
+## Minor Changes
+- Added a new twitter actor network edge type `self-loop`. This aims to facilitate the later addition 
+  of tweet text to the network graph for user tweets that have no ties to other users.
+
 # vosonSML 0.27.2
 
 ## Minor Changes
