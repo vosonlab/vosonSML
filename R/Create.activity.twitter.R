@@ -8,18 +8,25 @@
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
-#' @return Graph
+#' @return Named list containing generated network as igraph object \code{$graph}.
 #' 
 #' @examples
 #' \dontrun{
 #' # create a twitter activity network graph
+#' activityNetwork <- twitterData %>%
+#'   Create("activity", writeToFile = TRUE, verbose = TRUE)
+#'   
+#' # igraph object
+#' # actorNetwork$graph
 #' }
 #' 
 #' @export
 Create.activity.twitter <- function(datasource, type, writeToFile = FALSE, verbose = FALSE, ...) {
   
   # df <- datasource
-  df <- tibble::as_tibble(datasource) # data.table(df)
+  df <- tibble::as_tibble(datasource) # df <- tibble::as_tibble(my_twitter_data)
+  
+  df_stats <- networkStats(NULL, "collected tweets", nrow(df))
   
   cat("Generating twitter activity network...\n")
   flush.console()
@@ -38,34 +45,74 @@ Create.activity.twitter <- function(datasource, type, writeToFile = FALSE, verbo
                            if_else(.data$edge_type == "retweet", .data$retweet_status_id, 
                                    as.character(NA))))) %>%
     dplyr::rename("from" = .data$status_id) %>%
-    dplyr::select(.data$from, .data$to, .data$edge_type) %>%
-    dplyr::filter(.data$edge_type != "tweet") # remove stand alone tweets as they have no relations
+    dplyr::select(.data$from, .data$to, .data$edge_type)
+  
+  edge_summary <- df_relations %>% dplyr::group_by(.data$edge_type) %>%
+    summarise(num = n())
+  
+  for (row in 1:nrow(edge_summary)) {
+    type <- edge_summary[row, "edge_type"]
+    if (type == "tweet") df_stats <- networkStats(df_stats, "tweets", edge_summary[row, "num"])
+    else if (type == "retweet") df_stats <- networkStats(df_stats, "retweets", edge_summary[row, "num"])
+    else if (type == "quote") df_stats <- networkStats(df_stats, "quote tweets", edge_summary[row, "num"])
+    else if (type == "reply") df_stats <- networkStats(df_stats, "reply tweets", edge_summary[row, "num"])
+  }
+  
+  df_relations <- dplyr::filter(df_relations, .data$edge_type != "tweet") # remove stand alone tweets as they have no relations
   
   # vertices
-  df_nodes <- unique(c(df$reply_to_status_id,
-                df$quoted_status_id,
-                df$retweet_status_id))
-  df_nodes <- tibble::enframe(na.omit(df_nodes), name = NULL, value = "status_id")
-  # df_nodes only has one column at this point suppress join warning
-  df_nodes <- suppressWarnings(dplyr::anti_join(df_nodes, df, by = "status_id"))
-  df_nodes <- dplyr::bind_rows(df, df_nodes)
-  df_nodes <- df_nodes[, c(2, 1, 3:ncol(df_nodes))] %>%
-    dplyr::rename("vosonTxt_tweet" = .data$text, 
-                  "user_name" = .data$name)
-  # handle igraph warnings due to dttm class columns
-  df_nodes <- dplyr::mutate_at(df_nodes, vars(contains('created_at')), as.character)
-
-  df_replies <- df %>% dplyr::filter(!is.na(.data$reply_to_status_id)) %>% dplyr::select(starts_with("reply_to_")) %>%
+  df_nodes <- df %>% dplyr::select(.data$status_id, .data$user_id, .data$screen_name, .data$created_at)
+  
+  # order of binding rows for nodes in data based on completeness 
+  
+  df_quotes <- dplyr::select(df, .data$quoted_status_id,
+                             .data$quoted_user_id,
+                             .data$quoted_screen_name,
+                             .data$quoted_created_at) %>%
+    dplyr::filter(!is.na(.data$quoted_status_id))  %>%
+    dplyr::rename("status_id" = .data$quoted_status_id,
+                  "user_id" = .data$quoted_user_id,
+                  "screen_name" = .data$quoted_screen_name,
+                  "created_at" = .data$quoted_created_at) %>%
+    dplyr::distinct(.data$status_id, .keep_all = TRUE)
+  
+  if (nrow(df_quotes)) {
+    df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(df_quotes, df_nodes, by = "status_id"))
+  }
+  
+  df_replies <- dplyr::select(df, .data$reply_to_status_id,
+                              .data$reply_to_user_id,
+                              .data$reply_to_screen_name) %>%
+    dplyr::filter(!is.na(.data$reply_to_status_id))  %>%
     dplyr::rename("status_id" = .data$reply_to_status_id,
                   "user_id" = .data$reply_to_user_id,
-                  "screen_name" = .data$reply_to_screen_name)
+                  "screen_name" = .data$reply_to_screen_name) %>%
+    dplyr::distinct(.data$status_id, .keep_all = TRUE)
   
-  test_nodes <- df_nodes
+  if (nrow(df_replies)) {
+    df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(df_replies, df_nodes, by = "status_id"))
+  }
   
-  test_nodes <- dplyr::semi_join(test_nodes, df_replies)
+  df_retweets <- dplyr::select(df, .data$retweet_status_id,
+                               .data$retweet_created_at) %>%
+    dplyr::filter(!is.na(.data$retweet_status_id))  %>%
+    dplyr::rename("status_id" = .data$retweet_status_id,
+                  "created_at" = .data$retweet_created_at) %>%
+    dplyr::distinct(.data$status_id, .keep_all = TRUE)
   
-  df_quotes <- df %>% dplyr::filter(!is.na(.data$quoted_status_id)) %>% dplyr::select(starts_with("quoted"))
-  df_retweets <- df %>% dplyr::filter(!is.na(.data$retweet_status_id)) %>% dplyr::select(starts_with("retweet"))
+  if (nrow(df_retweets)) {
+    df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(df_retweets, df_nodes, by = "status_id"))
+  }
+  
+  # handle igraph warnings due to dttm class columns
+  df_nodes <- dplyr::mutate_at(df_nodes, vars(contains('created_at')), as.character)
+  
+  df_stats <- networkStats(df_stats, "nodes from data", nrow(df_nodes) - nrow(df))
+  df_stats <- networkStats(df_stats, "network nodes", nrow(df_nodes))
+  df_stats <- networkStats(df_stats, "network edges", nrow(df_relations))  
+  
+  # print stats
+  if (verbose) { networkStats(df_stats, print = TRUE) }
   
   g <- igraph::graph_from_data_frame(d = df_relations, directed = TRUE, vertices = df_nodes)
   
