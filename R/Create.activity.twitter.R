@@ -50,11 +50,23 @@ Create.activity.twitter <- function(datasource, type, writeToFile = FALSE, verbo
   df_nodes <- suppressWarnings(dplyr::anti_join(df_nodes, df, by = "status_id"))
   df_nodes <- dplyr::bind_rows(df, df_nodes)
   df_nodes <- df_nodes[, c(2, 1, 3:ncol(df_nodes))] %>%
-    dplyr::rename("vosonTxt_tweet" = .data$text) %>%
-    dplyr::rename("user_name" = .data$name)
+    dplyr::rename("vosonTxt_tweet" = .data$text, 
+                  "user_name" = .data$name)
   # handle igraph warnings due to dttm class columns
   df_nodes <- dplyr::mutate_at(df_nodes, vars(contains('created_at')), as.character)
 
+  df_replies <- df %>% dplyr::filter(!is.na(.data$reply_to_status_id)) %>% dplyr::select(starts_with("reply_to_")) %>%
+    dplyr::rename("status_id" = .data$reply_to_status_id,
+                  "user_id" = .data$reply_to_user_id,
+                  "screen_name" = .data$reply_to_screen_name)
+  
+  test_nodes <- df_nodes
+  
+  test_nodes <- dplyr::semi_join(test_nodes, df_replies)
+  
+  df_quotes <- df %>% dplyr::filter(!is.na(.data$quoted_status_id)) %>% dplyr::select(starts_with("quoted"))
+  df_retweets <- df %>% dplyr::filter(!is.na(.data$retweet_status_id)) %>% dplyr::select(starts_with("retweet"))
+  
   g <- igraph::graph_from_data_frame(d = df_relations, directed = TRUE, vertices = df_nodes)
   
   V(g)$label <- ifelse(!is.na(V(g)$screen_name), paste0(V(g)$name, " (", V(g)$screen_name, ")"), V(g)$name)
