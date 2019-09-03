@@ -298,7 +298,8 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   flush.console()
   
   func_output <- list(
-    "relations" = relations,
+    "nodes" = actorsFixed,
+    "edges" = relations,
     "graph" = g
   )
   

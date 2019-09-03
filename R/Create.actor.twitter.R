@@ -230,8 +230,8 @@ Create.actor.twitter <- function(datasource, type, writeToFile = FALSE, verbose 
   flush.console()
   
   func_output <- list(
-    "relations" = df_relations,
-    "users" = df_users,
+    "edges" = df_relations,
+    "nodes" = df_users,
     "graph" = g
   )
   

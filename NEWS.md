@@ -1,3 +1,10 @@
+# vosonSML 0.28.0
+
+## Minor Changes
+- Added new `activity` network type for twitter and youtube `Create` function. In this network
+  nodes are the items collected such as tweets returned from a twitter search and comments posted
+  to youtube videos. Edges represent the ties between individual tweets and comments.
+  
 # vosonSML 0.27.3
 
 ## Minor Changes

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create networks from social media data — Create • vosonSML</title>
+<title>Create youtube activity network — Create.activity.youtube • vosonSML</title>
 
 
 <!-- jquery -->
@@ -35,15 +35,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Create networks from social media data — Create" />
-<meta property="og:description" content="This function creates networks from social media data as produced from Collect. 
-Create is the final step of the Authenticate, Collect and Create workflow.
-There are three types of networks that can be created from collected data: actor, bimodal or 
-semantic.
-For actor networks refer to Create.actor.twitter, Create.actor.youtube and 
-Create.actor.reddit for parameters and usage.
-For bimodal and semantic networks refer to Create.bimodal.twitter and 
-Create.semantic.twitter functions for parameters and usage respectively." />
+<meta property="og:title" content="Create youtube activity network — Create.activity.youtube" />
+<meta property="og:description" content="Creates an activity network from collected youtube video comment threads. Nodes are top-level
+comments, reply comments and videos. Edges are directed between the nodes and represent commenting activity." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -121,49 +115,65 @@ Create.semantic.twitter functions for parameters and usage respectively." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create networks from social media data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.R'><code>R/Create.R</code></a></small>
-    <div class="hidden name"><code>Create.Rd</code></div>
+    <h1>Create youtube activity network</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.activity.youtube.R'><code>R/Create.activity.youtube.R</code></a></small>
+    <div class="hidden name"><code>Create.activity.youtube.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function creates networks from social media data as produced from <code><a href='Collect.html'>Collect</a></code>. 
-<code>Create</code> is the final step of the <code><a href='Authenticate.html'>Authenticate</a></code>, <code><a href='Collect.html'>Collect</a></code> and <code>Create</code> workflow.</p>
-<p>There are three types of networks that can be created from collected data: <code>actor</code>, <code>bimodal</code> or 
-<code>semantic</code>.</p>
-<p>For <code>actor</code> networks refer to <code><a href='Create.actor.twitter.html'>Create.actor.twitter</a></code>, <code><a href='Create.actor.youtube.html'>Create.actor.youtube</a></code> and 
-<code><a href='Create.actor.reddit.html'>Create.actor.reddit</a></code> for parameters and usage.</p>
-<p>For <code>bimodal</code> and <code>semantic</code> networks refer to <code><a href='Create.bimodal.twitter.html'>Create.bimodal.twitter</a></code> and 
-<code><a href='Create.semantic.twitter.html'>Create.semantic.twitter</a></code> functions for parameters and usage respectively.</p>
+    <p>Creates an activity network from collected youtube video comment threads. Nodes are top-level
+comments, reply comments and videos. Edges are directed between the nodes and represent commenting activity.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Create</span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for activity.youtube</span>
+<span class='fu'><a href='Create.html'>Create</a></span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>datasource</th>
-      <td><p>Collected social media data of class <code>"datasource"</code> and <code>socialmedia</code>.</p></td>
+      <td><p>Collected social media data with <code>"datasource"</code> and <code>"youtube"</code> class names.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Character string. Type of network to be created, can be <code>"actor"</code>, <code>"bimodal"</code> or 
-<code>"semantic"</code>.</p></td>
+      <td><p>Character string. Type of network to be created, set to <code>"activity"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>writeToFile</th>
+      <td><p>Logical. Save network data to a file in the current working directory. Default is <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical. Output additional information about the network creation. Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Optional parameters to pass to functions providied by supporting R packages that are used for social 
-media network creation.</p></td>
+      <td><p>Additional parameters passed to function. Not used in this method.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>Named list containing generated network as igraph object <code>$graph</code>.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># create a youtube activity network graph</span>
+<span class='no'>activityNetwork</span> <span class='kw'>&lt;-</span> <span class='no'>youtubeData</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Create.html'>Create</a></span>(<span class='st'>"activity"</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># igraph object</span>
+<span class='co'># activityNetwork$graph</span>
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

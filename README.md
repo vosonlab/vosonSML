@@ -46,17 +46,21 @@ devtools::install_github("vosonlab/vosonSML@v0.25.0", subdir = "vosonSML")
 
 The following usage examples will provide a great introduction to using `vosonSML`. There are also several "how to" guides, including an "Absolute Beginners Guide to vosonSML" tutorial aimed at people with little or no programming experience on the [vosonSML page of the VOSON website](http://vosonlab.net/SocialMediaLab).
 
+Additional resources:
+- [Function Reference](https://vosonlab.github.io/vosonSML/reference/index.html)
+- [Updates & Changelog](https://vosonlab.github.io/vosonSML/news/index.html)
+
 ### Usage
 
 The process of authentication, data collection and creating social network in vosonSML is expressed with the three verb functions: *Authenticate*, *Collect* and *Create*. The following are some examples:
 
-#### Twitter Examples
+### Twitter Example
+
+#### 'Authenticate' with the Twitter API
 ```R
 library(magrittr)
 library(vosonSML)
 
-# Authenticate with twitter, Collect 100 tweets for the '#auspol' hashtag and Create an actor and 
-# semantic network
 myKeys <- list(appName = "My App", apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx", 
                accessToken = "xxxxxxxxxxxx", accessTokenSecret = "xxxxxxxxxxxx")
   
@@ -66,75 +70,117 @@ twitterAuth <- Authenticate("twitter", appName = myKeys$appName, apiKey = myKeys
 
 # twitter authentication creates an access token as part of the auth object
 # this can and should be re-used by saving it and then loading it for future sessions
-# Save the auth object after Authenticate 
+# save the auth object after authenticate 
 saveRDS(twitterAuth, file = "~/.twitter_auth")
 
-# Load a previously saved auth object for use in Collect
+# load a previously saved auth object for use in collect
 twitterAuth <- readRDS("~/.twitter_auth")
+```
 
-# Collect tweets
+#### 'Collect' tweets for the '#auspol' hashtag
+```R
+# collect 100 recent tweets
 twitterData <- twitterAuth %>%
                Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100, 
                        includeRetweets = FALSE, retryOnRateLimit = TRUE, writeToFile = TRUE, 
                        verbose = TRUE)
+```
 
-# Create a network
+#### 'Create' twitter 'activity', 'actor', 'semantic' and 'bimodal' network graphs
+```R
+## activity network - nodes are tweets
+
+activityNetwork <- twitterData %>% Create("activity", writeToFile = TRUE)
+activityGraph <- activityNetwork$graph # igraph network graph
+
+## actor network - nodes are users who have tweeted
+
 actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TRUE)
+actorGraph <- actorNetwork$graph
 
-actorGraph <- actorNetwork$graph # igraph network graph
-
-# Optional step to add additional twitter user info to actor network graph as node attributes 
+# optional step to add additional twitter user profile info to actor network graph as 
+# node attributes 
 actorNetWithUserAttr <- AddTwitterUserData(twitterData, actorNetwork,
                                            lookupUsers = TRUE, 
                                            twitterAuth = twitterAuth, writeToFile = TRUE)
 
-actorGraphWithUserAttr <- actorNetWithUserAttr$graph # igraph network graph
+actorGraphWithUserAttr <- actorNetWithUserAttr$graph
 
-semanticNetwork <- twitterData %>% Create("semantic", writeToFile = TRUE)
+## semantic network - relationships between concepts - nodes are common terms, hashtags and actors
+
+remItems <- c("#auspol", "auspol") # exclude these terms
+topTerms <- 5                      # include only the top 5% most frequent terms as nodes
+semanticNetwork <- twitterData %>% Create("semantic", removeTermsOrHashtags = remItems, 
+                                          termFreq = topTerms, writeToFile = TRUE)
+semanticGraph <- semanticNetwork$graph
+
+## bimodal network - nodes are actors and hashtags
+
+remItems <- c("#auspol") # exclude these hashtags
+bimodalNetwork <- twitterData %>% Create("bimodal", removeTermsOrHashtags = remItems, 
+                                         writeToFile = TRUE)
+bimodalGraph <- bimodalNetwork$graph
 ```
 
-#### Youtube Examples
+### Youtube Example
 
+#### 'Authenticate', 'Collect' and 'Create' network graphs from youtube video comments
 ```R
 library(magrittr)
 library(vosonSML)
 
-# Authenticate with youtube, Collect comment data from videos and then Create an actor network
 myYoutubeAPIKey <- "xxxxxxxxxxxxxx"
 
+# helper to create a list of youtube video ids from urls
 myYoutubeVideoIds <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx",
                                           "https://youtu.be/xxxxxxxx"))
-                                 
-actorNetwork <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>%
-                Collect(videoIDs = myYoutubeVideoIds) %>%
-                Create("actor", writeToFile = TRUE)
+
+# authenticate and collect 100 top-level comments per youtube video in list
+# also collects reply-comments for each top-level comment
+youtubeData <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>%
+               Collect(videoIDs = myYoutubeVideoIds, maxComments = 100)
+
+## activity network - nodes are comments and videos
+
+activityNetwork <- youtubeData %>% Create("activity", writeToFile = TRUE)
+activityGraph <- activityNetwork$graph
+
+## actor network - nodes are users who have posted comments
+
+actorNetwork <- Create("actor", writeToFile = TRUE)
+actorGraph <- actorNetwork$graph                
 ```
 
-#### Reddit Examples
+### Reddit Example
 
+#### 'Collect' and 'Create' a reddit actor network from a subreddit thread and include text comments
 ```R
 library(magrittr)
 library(vosonSML)
 
-# Collect reddit comment threads and Create an actor network with comment text as edge attribute
+# collect reddit comment threads and Create an actor network with comment text as 
+# edge attribute
 myThreadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
 
+# authentication does not require credentials
 actorNetwork <- Authenticate("reddit") %>%
                 Collect(threadUrls = myThreadUrls, waitTime = 5) %>%
                 Create("actor", includeTextData = TRUE, writeToFile = TRUE)
+actorGraph <- actorNetwork$graph
 
 ```
 
 #### Save and Load Authentication Objects
 
+Save and reuse twitter and youtube authentication objects in future sessions.
 ```R
-# Save the object after Authenticate 
+# save the object after 'Authenticate' 
 saveRDS(my_youtube_auth, file = "~/.youtube_auth")
 
-# Load a previously saved authentication object for use in Collect
+# load a previously saved authentication object for use in 'Collect'
 my_youtube_auth <- readRDS("~/.youtube_auth")
 ```
-For more detailed information and examples, please refer to the function [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
+For more detailed function information and examples, please refer to the  [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
 
 ## Special thanks
 

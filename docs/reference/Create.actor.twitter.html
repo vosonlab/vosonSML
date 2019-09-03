@@ -8,11 +8,13 @@
 
 <title>Create twitter actor network — Create.actor.twitter • vosonSML</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,13 +34,14 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Create twitter actor network — Create.actor.twitter" />
 
+<meta property="og:title" content="Create twitter actor network — Create.actor.twitter" />
 <meta property="og:description" content="Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who 
 have tweeted / retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges 
 of different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted 
 without relations to other users will appear in the network graph as isolate nodes." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -68,7 +71,7 @@ without relations to other users will appear in the network graph as isolate nod
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.27.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.28.0</span>
       </span>
     </div>
 
@@ -95,7 +98,6 @@ without relations to other users will appear in the network graph as isolate nod
   </a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/vosonlab/vosonSML">
@@ -121,18 +123,16 @@ without relations to other users will appear in the network graph as isolate nod
     </div>
 
     <div class="ref-description">
-    
     <p>Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who 
 have tweeted / retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges 
 of different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted 
 without relations to other users will appear in the network graph as isolate nodes.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for actor.twitter</span>
 <span class='fu'><a href='Create.html'>Create</a></span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -157,19 +157,17 @@ without relations to other users will appear in the network graph as isolate nod
       <td><p>Additional parameters passed to function. Not used in this method.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Named list containing dataframes with the relations between actors (directed edges) <code>$relations</code>,
 the actors (including isolates) <code>$users</code> and generated actor network as igraph object <code>$graph</code>.</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>When creating twitter actor networks, a network with additional user information can be generated using the
 <code><a href='vosonSML-colon-colon-AddTwitterUserData.html'>AddTwitterUserData</a></code> function. Additional calls can be made to the twitter API to get information
 about users that were identified as nodes during network creation but did not tweet (meaning no user profile 
 information was initially collected for them).</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
@@ -186,11 +184,8 @@ information was initially collected for them).</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#note">Note</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

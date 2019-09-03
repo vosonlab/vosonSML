@@ -1,11 +1,14 @@
 #' @title Create twitter activity network
 #' 
-#' @description Creates a twitter activity network from tweets.
+#' @description Creates a twitter activity network from collected tweets. Nodes are tweets and directed edges represent
+#' the relationship of tweets to one another. For example, there is a directed edge from a quote tweet towards the
+#' tweet that was quoted. Stand-alone tweets that are not replies, retweets or quote tweets have no relation to others
+#' and will be isolates.
 #' 
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"twitter"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.
 #' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
-#' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
 #' @return Named list containing generated network as igraph object \code{$graph}.
@@ -14,14 +17,14 @@
 #' \dontrun{
 #' # create a twitter activity network graph
 #' activityNetwork <- twitterData %>%
-#'   Create("activity", writeToFile = TRUE, verbose = TRUE)
+#'   Create("activity", writeToFile = TRUE)
 #'   
 #' # igraph object
-#' # actorNetwork$graph
+#' # activityNetwork$graph
 #' }
 #' 
 #' @export
-Create.activity.twitter <- function(datasource, type, writeToFile = FALSE, verbose = FALSE, ...) {
+Create.activity.twitter <- function(datasource, type, writeToFile = FALSE, verbose = TRUE, ...) {
   
   # df <- datasource
   df <- tibble::as_tibble(datasource) # df <- tibble::as_tibble(my_twitter_data)
@@ -48,7 +51,7 @@ Create.activity.twitter <- function(datasource, type, writeToFile = FALSE, verbo
     dplyr::select(.data$from, .data$to, .data$edge_type)
   
   edge_summary <- df_relations %>% dplyr::group_by(.data$edge_type) %>%
-    summarise(num = n())
+    summarise(num = dplyr::n())
   
   for (row in 1:nrow(edge_summary)) {
     type <- edge_summary[row, "edge_type"]
@@ -58,7 +61,8 @@ Create.activity.twitter <- function(datasource, type, writeToFile = FALSE, verbo
     else if (type == "reply") df_stats <- networkStats(df_stats, "reply tweets", edge_summary[row, "num"])
   }
   
-  df_relations <- dplyr::filter(df_relations, .data$edge_type != "tweet") # remove stand alone tweets as they have no relations
+  # remove stand alone tweets as they have no relations
+  df_relations <- dplyr::filter(df_relations, .data$edge_type != "tweet")
   
   # vertices
   df_nodes <- df %>% dplyr::select(.data$status_id, .data$user_id, .data$screen_name, .data$created_at)
@@ -126,8 +130,8 @@ Create.activity.twitter <- function(datasource, type, writeToFile = FALSE, verbo
   flush.console()
   
   func_output <- list(
-    "relations" = df_relations,
-    "users" = df_nodes,
+    "edges" = df_relations,
+    "nodes" = df_nodes,
     "graph" = g
   )
   

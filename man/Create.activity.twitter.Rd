@@ -5,7 +5,7 @@
 \title{Create twitter activity network}
 \usage{
 \method{Create}{activity.twitter}(datasource, type, writeToFile = FALSE,
-  verbose = FALSE, ...)
+  verbose = TRUE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
@@ -14,19 +14,27 @@
 
 \item{writeToFile}{Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.}
 
-\item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
+\item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-Graph
+Named list containing generated network as igraph object \code{$graph}.
 }
 \description{
-Creates a twitter activity network from tweets.
+Creates a twitter activity network from collected tweets. Nodes are tweets and directed edges represent
+the relationship of tweets to one another. For example, there is a directed edge from a quote tweet towards the
+tweet that was quoted. Stand-alone tweets that are not replies, retweets or quote tweets have no relation to others
+and will be isolates.
 }
 \examples{
 \dontrun{
 # create a twitter activity network graph
+activityNetwork <- twitterData \%>\%
+  Create("activity", writeToFile = TRUE)
+  
+# igraph object
+# activityNetwork$graph
 }
 
 }

@@ -8,11 +8,13 @@
 
 <title>Collect comments data for youtube videos — Collect.youtube • vosonSML</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,8 +34,8 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Collect comments data for youtube videos — Collect.youtube" />
 
+<meta property="og:title" content="Collect comments data for youtube videos — Collect.youtube" />
 <meta property="og:description" content="This function collects public comments data for one or more youtube videos using the YouTube Data API 
 v3 and structures the data into a dataframe with the class names &quot;datasource&quot; and &quot;youtube&quot;.
 Youtube has a quota unit system as a rate limit with most developers having either 10,000 or 1,000,000 units per 
@@ -45,6 +47,7 @@ of 100 reply comments collected per top-level comment.
 More information about the YouTube Data API v3 can be found here: 
 https://developers.google.com/youtube/v3/getting-started" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -74,7 +77,7 @@ https://developers.google.com/youtube/v3/getting-started" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.27.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.28.0</span>
       </span>
     </div>
 
@@ -101,7 +104,6 @@ https://developers.google.com/youtube/v3/getting-started" />
   </a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/vosonlab/vosonSML">
@@ -127,7 +129,6 @@ https://developers.google.com/youtube/v3/getting-started" />
     </div>
 
     <div class="ref-description">
-    
     <p>This function collects public comments data for one or more youtube videos using the YouTube Data API 
 v3 and structures the data into a dataframe with the class names <code>"datasource"</code> and <code>"youtube"</code>.</p>
 <p>Youtube has a quota unit system as a rate limit with most developers having either 10,000 or 1,000,000 units per 
@@ -138,13 +139,12 @@ each, should cost (9 + 20) 29 quota units and return between 260 and 1260 total 
 of 100 reply comments collected per top-level comment.</p>
 <p>More information about the YouTube Data API v3 can be found here: 
 <a href='https://developers.google.com/youtube/v3/getting-started'>https://developers.google.com/youtube/v3/getting-started</a></p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for youtube</span>
 <span class='fu'><a href='Collect.html'>Collect</a></span>(<span class='no'>credential</span>, <span class='no'>videoIDs</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>maxComments</span> <span class='kw'>=</span> <span class='fl'>1e+13</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -176,11 +176,10 @@ greater than <code>maxComments</code> depending on the number of reply comments 
       <td><p>Additional parameters passed to function. Not used in this method.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data.frame object with class names <code>"datasource"</code> and <code>"youtube"</code>.</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Due to specifications of the YouTube Data API it is currently not efficient to specify the exact number of 
@@ -193,7 +192,6 @@ video and not the combined total of comments.</p>
 <p>To help extract video ids for videos the function <code><a href='vosonSML-colon-colon-GetYoutubeVideoIDs.html'>GetYoutubeVideoIDs</a></code> can be used. It accepts input of 
 a vector or file containing video urls and creates a chracter vector suitable as input for the <code>videoIDs</code> 
 parameter.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
@@ -211,11 +209,8 @@ parameter.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#note">Note</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

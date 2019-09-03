@@ -8,11 +8,13 @@
 
 <title>Changelog • vosonSML</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,7 +34,9 @@
 
   <link href="../extra.css" rel="stylesheet">
   
+
 <meta property="og:title" content="Changelog" />
+
 
 
 
@@ -62,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.27.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.28.0</span>
       </span>
     </div>
 
@@ -89,7 +93,6 @@
   </a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/vosonlab/vosonSML">
@@ -113,13 +116,25 @@
       <small>Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="vosonsml-0-27-3" class="section level1">
+    <div id="vosonsml-0-28-0" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-3" class="anchor"></a>vosonSML 0.27.3<small> Unreleased </small>
+<a href="#vosonsml-0-28-0" class="anchor"></a>vosonSML 0.28.0<small> Unreleased </small>
 </h1>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor Changes</h2>
+<ul>
+<li>Added new <code>activity</code> network type for twitter and youtube <code>Create</code> function. In this network nodes are the items collected such as tweets returned from a twitter search and comments posted to youtube videos. Edges represent the ties between individual tweets and comments.</li>
+</ul>
+</div>
+</div>
+    <div id="vosonsml-0-27-3" class="section level1">
+<h1 class="page-header">
+<a href="#vosonsml-0-27-3" class="anchor"></a>vosonSML 0.27.3<small> Unreleased </small>
+</h1>
+<div id="minor-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added a new twitter actor network edge type <code>self-loop</code>. This aims to facilitate the later addition of tweet text to the network graph for user tweets that have no ties to other users.</li>
 </ul>
@@ -129,9 +144,9 @@
 <h1 class="page-header">
 <a href="#vosonsml-0-27-2" class="anchor"></a>vosonSML 0.27.2<small> 2019-07-18 </small>
 </h1>
-<div id="minor-changes-1" class="section level2">
+<div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-2" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added twitter interactive web authorization of an app as provided by <code><a href="https://www.rdocumentation.org/packages/rtweet/topics/create_token">rtweet::create_token</a></code>. Method is used when only twitter app name and consumer keys are passed to <code>Authenticate.twitter</code> as parameters. e.g <code><a href="../reference/Authenticate.html">Authenticate("twitter", appName = "An App", apiKey = "xxxxxxxxxxxx",  apiSecret = "xxxxxxxxxxxx")</a></code>. A browser tab will open asking the user to authorize the app to their twitter account to complete authentication. This is using twitters <code>Application-user authentication: OAuth 1a (access token for user context)</code> method.</li>
 <li>It is suspected that Reddit is rate-limiting some generic R UA strings. So a User-Agent string is now set for underlaying R Collect functions (e.g <code>file</code>) via the <code>HTTPUserAgent</code> option. It is temporarily set to package name and current version number for Collect e.g <code>vosonSML v.0.27.2 (R Package)</code>.</li>
@@ -151,9 +166,9 @@
 <li>Some UTF encoding issues in <code>Create.semantic.twitter</code> were also fixed.</li>
 </ul>
 </div>
-<div id="minor-changes-2" class="section level2">
+<div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-3" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added ‘#’ to hashtags and ‘@’ to mentions in twitter semantic network to differentiate between hashtags, mentions and common terms.</li>
 </ul>
@@ -178,9 +193,9 @@
 <li>Changed the way that the <code>cleanText</code> parameter works in <code>Create.actor.reddit</code> so that it is more permissive. Addresses encoding issues with apostrophes and pound symbols and removes unicode characters not permitted by the XML 1.0 standard as used in <code>graphml</code> files. This is best effort and does not resolve all <code>reddit</code> text encoding issues.</li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level2">
+<div id="minor-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-4" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added <code>Collect.twitter</code> summary information that includes the earliest (min) and latest (max) tweet <code>status_id</code> collected with timestamp. The <code>status_id</code> values can be used to frame subsequent collections as <code>since_id</code> or <code>max_id</code> parameter values. If the <code>until</code> date parameter was used the timestamp can also be used as a quick confirmation.</li>
 <li>Added elapsed time output to the <code>Collect</code> method.</li>
@@ -198,9 +213,9 @@
 <li>Fixed bugs in <code>Create.actor.reddit</code> that were incorrectly creating edges between top-level commentors and thread authors from different threads. These bugs were only observable in when collecting multiple reddit threads.</li>
 </ul>
 </div>
-<div id="minor-changes-4" class="section level2">
+<div id="minor-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-5" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Improved output for <code>reddit</code> collection. Removed the progress bar and added a table of results summarising the number of comments collected for each thread.</li>
 <li>Added to <code>twitter</code> collection output the users <code>twitter API</code> reset time.</li>
@@ -226,9 +241,9 @@
 <li>Updated all <code>Authenticate</code>, <code>Collect</code> and <code>Create</code> S3 methods to implement function routing based on object class names.</li>
 </ul>
 </div>
-<div id="minor-changes-5" class="section level2">
+<div id="minor-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-6" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Created a <code>pkgdown</code> web site for github hosted package documentation.</li>
 <li>Created a new hex sticker logo.</li>
@@ -254,6 +269,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#vosonsml-0-28-0">0.28.0</a></li>
         <li><a href="#vosonsml-0-27-3">0.27.3</a></li>
         <li><a href="#vosonsml-0-27-2">0.27.2</a></li>
         <li><a href="#vosonsml-0-27-1">0.27.1</a></li>
