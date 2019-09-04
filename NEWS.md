@@ -1,9 +1,17 @@
+# vosonSML 0.28.1
+
+## Minor Changes
+- Added `activity` network type for reddit. In the reddit activity network nodes are the
+  thread posts and comments, edges represent where comments are directed in the threads.
+- Added github dev version badge to README.
+  
 # vosonSML 0.28.0
 
 ## Minor Changes
 - Added new `activity` network type for twitter and youtube `Create` function. In this network
-  nodes are the items collected such as tweets returned from a twitter search and comments posted
-  to youtube videos. Edges represent the platform relationship between the tweets or comments.
+  nodes are the items collected such as tweets returned from a twitter search and comments
+  posted to youtube videos. Edges represent the platform relationship between the tweets or
+  comments.
   
 # vosonSML 0.27.3
 

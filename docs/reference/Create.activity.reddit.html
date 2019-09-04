@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract the ids from a list of youtube video URLs — vosonSML::GetYoutubeVideoIDs • vosonSML</title>
+<title>Create reddit activity network — Create.activity.reddit • vosonSML</title>
 
 
 <!-- jquery -->
@@ -35,11 +35,9 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Extract the ids from a list of youtube video URLs — vosonSML::GetYoutubeVideoIDs" />
-<meta property="og:description" content="This function reads youtube video urls from a list and or a text file and converts them to a vector of 
-video ids. For example, URL https://www.youtube.com/watch?v=73I5dRucCds returns the id 73I5dRucCds. 
-This function can be used to create a vector for the youtube Collect.youtube functions videoIDs 
-parameter." />
+<meta property="og:title" content="Create reddit activity network — Create.activity.reddit" />
+<meta property="og:description" content="Creates a reddit activity network from subreddit thread comments. Nodes are comments and initial thread
+posts, edges form the discussion structure and signify to which comment or post a comment has been made to." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -117,48 +115,66 @@ parameter." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract the ids from a list of youtube video URLs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Utils.youtube.R'><code>R/Utils.youtube.R</code></a></small>
-    <div class="hidden name"><code>vosonSML-colon-colon-GetYoutubeVideoIDs.Rd</code></div>
+    <h1>Create reddit activity network</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.activity.reddit.R'><code>R/Create.activity.reddit.R</code></a></small>
+    <div class="hidden name"><code>Create.activity.reddit.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function reads youtube video urls from a list and or a text file and converts them to a vector of 
-video ids. For example, URL <code>https://www.youtube.com/watch?v=73I5dRucCds</code> returns the id <code>73I5dRucCds</code>. 
-This function can be used to create a vector for the youtube <code><a href='Collect.youtube.html'>Collect.youtube</a></code> functions <code>videoIDs</code> 
-parameter.</p>
+    <p>Creates a reddit activity network from subreddit thread comments. Nodes are comments and initial thread
+posts, edges form the discussion structure and signify to which comment or post a comment has been made to.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>GetYoutubeVideoIDs</span>(<span class='kw'>urls</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>file</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for activity.reddit</span>
+<span class='fu'><a href='Create.html'>Create</a></span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>urls</th>
-      <td><p>Character vector. List of youtube URLs.</p></td>
+      <th>datasource</th>
+      <td><p>Collected social media data with <code>"datasource"</code> and <code>"reddit"</code> class names.</p></td>
     </tr>
     <tr>
-      <th>file</th>
-      <td><p>Character string. Text file containing youtube URLs.</p></td>
+      <th>type</th>
+      <td><p>Character string. Type of network to be created, set to <code>"activity"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>writeToFile</th>
+      <td><p>Logical. Save network data to a file in the current working directory. Default is <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical. Output additional information about the network creation. Default is <code>TRUE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional parameters passed to function. Not used in this method.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A vector of youtube video ids as character strings that were extracted from input video urls.</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+    <p>Named list containing generated network as igraph object <code>$graph</code>.</p>
 
-    <p>Accepts youtube URL formats <code>https://youtu.be/xxxxxxxx</code> and 
-<code>https://www.youtube.com/watch?v=xxxxxxxx</code>.</p>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># create a reddit activity network graph</span>
+<span class='no'>activityNetwork</span> <span class='kw'>&lt;-</span> <span class='no'>redditData</span> <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='Create.html'>Create</a></span>(<span class='st'>"activity"</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
+<span class='co'># igraph object</span>
+<span class='co'># activityNetwork$graph</span>
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#note">Note</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

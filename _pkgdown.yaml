@@ -50,7 +50,8 @@ reference:
   contents:
   - '`Create`'
   - '`Create.activity.twitter`'
-  - '`Create.activity.youtube`'  
+  - '`Create.activity.youtube`'
+  - '`Create.activity.reddit`' 
   - '`Create.actor.twitter`'
   - '`Create.actor.youtube`'
   - '`Create.actor.reddit`'

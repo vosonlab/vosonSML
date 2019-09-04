@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.28.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.28.1</span>
       </span>
     </div>
 
@@ -81,7 +81,7 @@
 <div id="vosonsml" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#vosonsml" class="anchor"></a>vosonSML</h1></div>
-<p><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&amp;colorB=8065ac" alt="Github Release"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg" alt="Last Commit"><a href="https://CRAN.R-project.org/package=vosonSML"><img src="https://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="Downloads"><img src="https://cranlogs.r-pkg.org/badges/grand-total/vosonSML" alt="Total"></p>
+<p><a href="https://CRAN.R-project.org/package=vosonSML"><img src="https://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="Downloads"><img src="https://cranlogs.r-pkg.org/badges/grand-total/vosonSML" alt="Total"><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&amp;colorB=8065ac" alt="Github Release"><img src="https://img.shields.io/static/v1?label=dev&amp;message=v0.28.1&amp;color=orange&amp;logo=github" alt="Dev"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?logo=github" alt="Last Commit"></p>
 <p><code>vosonSML</code> is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.</p>
 <p><code>vosonSML</code> is the <code>SocialMediaLab</code> package, renamed. We decided that <code>SocialMediaLab</code> was a bit too generic and also we wanted to indicate the connection to the <a href="http://vosonlab.net">Virtual Observatory for the Study of Online Networks Lab</a>, where this package was conceived and created.</p>
 <p><code>vosonSML</code> was created by <a href="http://uq.academia.edu/TimGraham">Timothy Graham</a> and <a href="https://researchers.anu.edu.au/researchers/ackland-rj">Robert Ackland</a> with major contributions by <a href="https://github.com/chainsawriot">Chung-hong Chan</a>. The current lead developer and maintainer is Bryan Gertzel.</p>
@@ -224,21 +224,29 @@
 <div id="reddit-example" class="section level3">
 <h3 class="hasAnchor">
 <a href="#reddit-example" class="anchor"></a>Reddit Example</h3>
-<div id="collect-and-create-a-reddit-actor-network-from-a-subreddit-thread-and-include-text-comments" class="section level4">
+<div id="collect-and-create-reddit-networks-from-a-subreddit-thread" class="section level4">
 <h4 class="hasAnchor">
-<a href="#collect-and-create-a-reddit-actor-network-from-a-subreddit-thread-and-include-text-comments" class="anchor"></a>‘Collect’ and ‘Create’ a reddit actor network from a subreddit thread and include text comments</h4>
+<a href="#collect-and-create-reddit-networks-from-a-subreddit-thread" class="anchor"></a>‘Collect’ and ‘Create’ reddit networks from a subreddit thread</h4>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vosonSML)</a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># collect reddit comment threads and Create an actor network with comment text as </span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co"># edge attribute</span></a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">myThreadUrls &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>)</a>
-<a class="sourceLine" id="cb9-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co"># authentication does not require credentials</span></a>
-<a class="sourceLine" id="cb9-9" data-line-number="9">actorNetwork &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"reddit"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="st">                </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">threadUrls =</span> myThreadUrls, <span class="dt">waitTime =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="st">                </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">includeTextData =</span> <span class="ot">TRUE</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb9-12" data-line-number="12">actorGraph &lt;-<span class="st"> </span>actorNetwork<span class="op">$</span>graph</a></code></pre></div>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># collect reddit comment threads</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5">myThreadUrls &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>)</a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="co"># authentication does not require credentials</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8">redditData &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"reddit"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9"><span class="st">              </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">threadUrls =</span> myThreadUrls, <span class="dt">waitTime =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb9-10" data-line-number="10">              </a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="co">## activity network - nodes are comments and intital thread posts</span></a>
+<a class="sourceLine" id="cb9-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb9-13" data-line-number="13">activityNetwork &lt;-<span class="st"> </span>redditData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb9-14" data-line-number="14">activityGraph &lt;-<span class="st"> </span>activityNetwork<span class="op">$</span>graph</a>
+<a class="sourceLine" id="cb9-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb9-16" data-line-number="16"><span class="co">## actor network - nodes are users who have posted comments</span></a>
+<a class="sourceLine" id="cb9-17" data-line-number="17"></a>
+<a class="sourceLine" id="cb9-18" data-line-number="18"><span class="co"># create an actor network with comment text as edge attribute</span></a>
+<a class="sourceLine" id="cb9-19" data-line-number="19">actorNetwork &lt;-<span class="st"> </span>redditData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">includeTextData =</span> <span class="ot">TRUE</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb9-20" data-line-number="20">actorGraph &lt;-<span class="st"> </span>actorNetwork<span class="op">$</span>graph</a></code></pre></div>
 </div>
 <div id="save-and-load-authentication-objects" class="section level4">
 <h4 class="hasAnchor">

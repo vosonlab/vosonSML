@@ -1,9 +1,10 @@
 # vosonSML
-![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
-![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 ![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)
 ![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)
+![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
+![Dev](https://img.shields.io/static/v1?label=dev&message=v0.28.1&color=orange&logo=github)
+![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?logo=github)
 
 `vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
 
@@ -153,19 +154,27 @@ actorGraph <- actorNetwork$graph
 
 ### Reddit Example
 
-#### 'Collect' and 'Create' a reddit actor network from a subreddit thread and include text comments
+#### 'Collect' and 'Create' reddit networks from a subreddit thread
 ```R
 library(magrittr)
 library(vosonSML)
 
-# collect reddit comment threads and Create an actor network with comment text as 
-# edge attribute
+# collect reddit comment threads
 myThreadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
 
 # authentication does not require credentials
-actorNetwork <- Authenticate("reddit") %>%
-                Collect(threadUrls = myThreadUrls, waitTime = 5) %>%
-                Create("actor", includeTextData = TRUE, writeToFile = TRUE)
+redditData <- Authenticate("reddit") %>%
+              Collect(threadUrls = myThreadUrls, waitTime = 5)
+              
+## activity network - nodes are comments and intital thread posts
+
+activityNetwork <- redditData %>% Create("activity", writeToFile = TRUE)
+activityGraph <- activityNetwork$graph
+
+## actor network - nodes are users who have posted comments
+
+# create an actor network with comment text as edge attribute
+actorNetwork <- redditData %>% Create("actor", includeTextData = TRUE, writeToFile = TRUE)
 actorGraph <- actorNetwork$graph
 
 ```
