@@ -3,7 +3,7 @@
 ## Minor Changes
 - Added new `activity` network type for twitter and youtube `Create` function. In this network
   nodes are the items collected such as tweets returned from a twitter search and comments posted
-  to youtube videos. Edges represent the ties between individual tweets and comments.
+  to youtube videos. Edges represent the platform relationship between the tweets or comments.
   
 # vosonSML 0.27.3
 
