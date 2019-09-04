@@ -147,7 +147,7 @@ activityGraph <- activityNetwork$graph
 
 ## actor network - nodes are users who have posted comments
 
-actorNetwork <- Create("actor", writeToFile = TRUE)
+actorNetwork <- youtubeData %>% Create("actor", writeToFile = TRUE)
 actorGraph <- actorNetwork$graph                
 ```
 
