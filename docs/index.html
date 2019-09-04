@@ -33,7 +33,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.27.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.28.0</span>
       </span>
     </div>
 
@@ -110,91 +110,146 @@
 <h2 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h2>
 <p>The following usage examples will provide a great introduction to using <code>vosonSML</code>. There are also several “how to” guides, including an “Absolute Beginners Guide to vosonSML” tutorial aimed at people with little or no programming experience on the <a href="http://vosonlab.net/SocialMediaLab">vosonSML page of the VOSON website</a>.</p>
+<p>Additional resources:</p>
+<ul>
+<li><a href="https://vosonlab.github.io/vosonSML/reference/index.html">Function Reference</a></li>
+<li><a href="https://vosonlab.github.io/vosonSML/news/index.html">Updates &amp; Changelog</a></li>
+</ul>
 <div id="usage" class="section level3">
 <h3 class="hasAnchor">
 <a href="#usage" class="anchor"></a>Usage</h3>
 <p>The process of authentication, data collection and creating social network in vosonSML is expressed with the three verb functions: <em>Authenticate</em>, <em>Collect</em> and <em>Create</em>. The following are some examples:</p>
-<div id="twitter-examples" class="section level4">
+</div>
+<div id="twitter-example" class="section level3">
+<h3 class="hasAnchor">
+<a href="#twitter-example" class="anchor"></a>Twitter Example</h3>
+<div id="authenticate-with-the-twitter-api" class="section level4">
 <h4 class="hasAnchor">
-<a href="#twitter-examples" class="anchor"></a>Twitter Examples</h4>
+<a href="#authenticate-with-the-twitter-api" class="anchor"></a>‘Authenticate’ with the Twitter API</h4>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vosonSML)</a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="co"># Authenticate with twitter, Collect 100 tweets for the '#auspol' hashtag and Create an actor and </span></a>
-<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="co"># semantic network</span></a>
-<a class="sourceLine" id="cb5-6" data-line-number="6">myKeys &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">appName =</span> <span class="st">"My App"</span>, <span class="dt">apiKey =</span> <span class="st">"xxxxxxxxxxxx"</span>, <span class="dt">apiSecret =</span> <span class="st">"xxxxxxxxxxxx"</span>, </a>
-<a class="sourceLine" id="cb5-7" data-line-number="7">               <span class="dt">accessToken =</span> <span class="st">"xxxxxxxxxxxx"</span>, <span class="dt">accessTokenSecret =</span> <span class="st">"xxxxxxxxxxxx"</span>)</a>
-<a class="sourceLine" id="cb5-8" data-line-number="8">  </a>
-<a class="sourceLine" id="cb5-9" data-line-number="9">twitterAuth &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"twitter"</span>, <span class="dt">appName =</span> myKeys<span class="op">$</span>appName, <span class="dt">apiKey =</span> myKeys<span class="op">$</span>apiKey, </a>
-<a class="sourceLine" id="cb5-10" data-line-number="10">                            <span class="dt">apiSecret =</span> myKeys<span class="op">$</span>apiSecret, <span class="dt">accessToken =</span> myKeys<span class="op">$</span>accessToken,</a>
-<a class="sourceLine" id="cb5-11" data-line-number="11">                            <span class="dt">accessTokenSecret =</span> myKeys<span class="op">$</span>accessTokenSecret)</a>
-<a class="sourceLine" id="cb5-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co"># twitter authentication creates an access token as part of the auth object</span></a>
-<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="co"># this can and should be re-used by saving it and then loading it for future sessions</span></a>
-<a class="sourceLine" id="cb5-15" data-line-number="15"><span class="co"># Save the auth object after Authenticate </span></a>
-<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">saveRDS</a></span>(twitterAuth, <span class="dt">file =</span> <span class="st">"~/.twitter_auth"</span>)</a>
-<a class="sourceLine" id="cb5-17" data-line-number="17"></a>
-<a class="sourceLine" id="cb5-18" data-line-number="18"><span class="co"># Load a previously saved auth object for use in Collect</span></a>
-<a class="sourceLine" id="cb5-19" data-line-number="19">twitterAuth &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="st">"~/.twitter_auth"</span>)</a>
-<a class="sourceLine" id="cb5-20" data-line-number="20"></a>
-<a class="sourceLine" id="cb5-21" data-line-number="21"><span class="co"># Collect tweets</span></a>
-<a class="sourceLine" id="cb5-22" data-line-number="22">twitterData &lt;-<span class="st"> </span>twitterAuth <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb5-23" data-line-number="23"><span class="st">               </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">searchTerm =</span> <span class="st">"#auspol"</span>, <span class="dt">searchType =</span> <span class="st">"recent"</span>, <span class="dt">numTweets =</span> <span class="dv">100</span>, </a>
-<a class="sourceLine" id="cb5-24" data-line-number="24">                       <span class="dt">includeRetweets =</span> <span class="ot">FALSE</span>, <span class="dt">retryOnRateLimit =</span> <span class="ot">TRUE</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb5-25" data-line-number="25">                       <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-26" data-line-number="26"></a>
-<a class="sourceLine" id="cb5-27" data-line-number="27"><span class="co"># Create a network</span></a>
-<a class="sourceLine" id="cb5-28" data-line-number="28">actorNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-29" data-line-number="29"></a>
-<a class="sourceLine" id="cb5-30" data-line-number="30">actorGraph &lt;-<span class="st"> </span>actorNetwork<span class="op">$</span>graph <span class="co"># igraph network graph</span></a>
-<a class="sourceLine" id="cb5-31" data-line-number="31"></a>
-<a class="sourceLine" id="cb5-32" data-line-number="32"><span class="co"># Optional step to add additional twitter user info to actor network graph as node attributes </span></a>
-<a class="sourceLine" id="cb5-33" data-line-number="33">actorNetWithUserAttr &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddTwitterUserData.html">AddTwitterUserData</a></span>(twitterData, actorNetwork,</a>
-<a class="sourceLine" id="cb5-34" data-line-number="34">                                           <span class="dt">lookupUsers =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb5-35" data-line-number="35">                                           <span class="dt">twitterAuth =</span> twitterAuth, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb5-36" data-line-number="36"></a>
-<a class="sourceLine" id="cb5-37" data-line-number="37">actorGraphWithUserAttr &lt;-<span class="st"> </span>actorNetWithUserAttr<span class="op">$</span>graph <span class="co"># igraph network graph</span></a>
-<a class="sourceLine" id="cb5-38" data-line-number="38"></a>
-<a class="sourceLine" id="cb5-39" data-line-number="39">semanticNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"semantic"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb5-4" data-line-number="4">myKeys &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">appName =</span> <span class="st">"My App"</span>, <span class="dt">apiKey =</span> <span class="st">"xxxxxxxxxxxx"</span>, <span class="dt">apiSecret =</span> <span class="st">"xxxxxxxxxxxx"</span>, </a>
+<a class="sourceLine" id="cb5-5" data-line-number="5">               <span class="dt">accessToken =</span> <span class="st">"xxxxxxxxxxxx"</span>, <span class="dt">accessTokenSecret =</span> <span class="st">"xxxxxxxxxxxx"</span>)</a>
+<a class="sourceLine" id="cb5-6" data-line-number="6">  </a>
+<a class="sourceLine" id="cb5-7" data-line-number="7">twitterAuth &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"twitter"</span>, <span class="dt">appName =</span> myKeys<span class="op">$</span>appName, <span class="dt">apiKey =</span> myKeys<span class="op">$</span>apiKey, </a>
+<a class="sourceLine" id="cb5-8" data-line-number="8">                            <span class="dt">apiSecret =</span> myKeys<span class="op">$</span>apiSecret, <span class="dt">accessToken =</span> myKeys<span class="op">$</span>accessToken,</a>
+<a class="sourceLine" id="cb5-9" data-line-number="9">                            <span class="dt">accessTokenSecret =</span> myKeys<span class="op">$</span>accessTokenSecret)</a>
+<a class="sourceLine" id="cb5-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb5-11" data-line-number="11"><span class="co"># twitter authentication creates an access token as part of the auth object</span></a>
+<a class="sourceLine" id="cb5-12" data-line-number="12"><span class="co"># this can and should be re-used by saving it and then loading it for future sessions</span></a>
+<a class="sourceLine" id="cb5-13" data-line-number="13"><span class="co"># save the auth object after authenticate </span></a>
+<a class="sourceLine" id="cb5-14" data-line-number="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">saveRDS</a></span>(twitterAuth, <span class="dt">file =</span> <span class="st">"~/.twitter_auth"</span>)</a>
+<a class="sourceLine" id="cb5-15" data-line-number="15"></a>
+<a class="sourceLine" id="cb5-16" data-line-number="16"><span class="co"># load a previously saved auth object for use in collect</span></a>
+<a class="sourceLine" id="cb5-17" data-line-number="17">twitterAuth &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="st">"~/.twitter_auth"</span>)</a></code></pre></div>
 </div>
-<div id="youtube-examples" class="section level4">
+<div id="collect-tweets-for-the-auspol-hashtag" class="section level4">
 <h4 class="hasAnchor">
-<a href="#youtube-examples" class="anchor"></a>Youtube Examples</h4>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vosonSML)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># Authenticate with youtube, Collect comment data from videos and then Create an actor network</span></a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">myYoutubeAPIKey &lt;-<span class="st"> "xxxxxxxxxxxxxx"</span></a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">myYoutubeVideoIds &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,</a>
-<a class="sourceLine" id="cb6-8" data-line-number="8">                                          <span class="st">"https://youtu.be/xxxxxxxx"</span>))</a>
-<a class="sourceLine" id="cb6-9" data-line-number="9">                                 </a>
-<a class="sourceLine" id="cb6-10" data-line-number="10">actorNetwork &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"youtube"</span>, <span class="dt">apiKey =</span> myYoutubeAPIKey) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-11" data-line-number="11"><span class="st">                </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">videoIDs =</span> myYoutubeVideoIds) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb6-12" data-line-number="12"><span class="st">                </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a href="#collect-tweets-for-the-auspol-hashtag" class="anchor"></a>‘Collect’ tweets for the ‘#auspol’ hashtag</h4>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># collect 100 recent tweets</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">twitterData &lt;-<span class="st"> </span>twitterAuth <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">               </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">searchTerm =</span> <span class="st">"#auspol"</span>, <span class="dt">searchType =</span> <span class="st">"recent"</span>, <span class="dt">numTweets =</span> <span class="dv">100</span>, </a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">                       <span class="dt">includeRetweets =</span> <span class="ot">FALSE</span>, <span class="dt">retryOnRateLimit =</span> <span class="ot">TRUE</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">                       <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 </div>
-<div id="reddit-examples" class="section level4">
+<div id="create-twitter-activity-actor-semantic-and-bimodal-network-graphs" class="section level4">
 <h4 class="hasAnchor">
-<a href="#reddit-examples" class="anchor"></a>Reddit Examples</h4>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vosonSML)</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co"># Collect reddit comment threads and Create an actor network with comment text as edge attribute</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">myThreadUrls &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>)</a>
-<a class="sourceLine" id="cb7-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb7-7" data-line-number="7">actorNetwork &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"reddit"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">                </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">threadUrls =</span> myThreadUrls, <span class="dt">waitTime =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="st">                </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">includeTextData =</span> <span class="ot">TRUE</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<a href="#create-twitter-activity-actor-semantic-and-bimodal-network-graphs" class="anchor"></a>‘Create’ twitter ‘activity’, ‘actor’, ‘semantic’ and ‘bimodal’ network graphs</h4>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co">## activity network - nodes are tweets</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3">activityNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4">activityGraph &lt;-<span class="st"> </span>activityNetwork<span class="op">$</span>graph <span class="co"># igraph network graph</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="co">## actor network - nodes are users who have tweeted</span></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8">actorNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb7-9" data-line-number="9">actorGraph &lt;-<span class="st"> </span>actorNetwork<span class="op">$</span>graph</a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb7-11" data-line-number="11"><span class="co"># optional step to add additional twitter user profile info to actor network graph as </span></a>
+<a class="sourceLine" id="cb7-12" data-line-number="12"><span class="co"># node attributes </span></a>
+<a class="sourceLine" id="cb7-13" data-line-number="13">actorNetWithUserAttr &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddTwitterUserData.html">AddTwitterUserData</a></span>(twitterData, actorNetwork,</a>
+<a class="sourceLine" id="cb7-14" data-line-number="14">                                           <span class="dt">lookupUsers =</span> <span class="ot">TRUE</span>, </a>
+<a class="sourceLine" id="cb7-15" data-line-number="15">                                           <span class="dt">twitterAuth =</span> twitterAuth, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb7-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb7-17" data-line-number="17">actorGraphWithUserAttr &lt;-<span class="st"> </span>actorNetWithUserAttr<span class="op">$</span>graph</a>
+<a class="sourceLine" id="cb7-18" data-line-number="18"></a>
+<a class="sourceLine" id="cb7-19" data-line-number="19"><span class="co">## semantic network - relationships between concepts - nodes are common terms, hashtags and actors</span></a>
+<a class="sourceLine" id="cb7-20" data-line-number="20"></a>
+<a class="sourceLine" id="cb7-21" data-line-number="21">remItems &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#auspol"</span>, <span class="st">"auspol"</span>) <span class="co"># exclude these terms</span></a>
+<a class="sourceLine" id="cb7-22" data-line-number="22">topTerms &lt;-<span class="st"> </span><span class="dv">5</span>                      <span class="co"># include only the top 5% most frequent terms as nodes</span></a>
+<a class="sourceLine" id="cb7-23" data-line-number="23">semanticNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"semantic"</span>, <span class="dt">removeTermsOrHashtags =</span> remItems, </a>
+<a class="sourceLine" id="cb7-24" data-line-number="24">                                          <span class="dt">termFreq =</span> topTerms, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb7-25" data-line-number="25">semanticGraph &lt;-<span class="st"> </span>semanticNetwork<span class="op">$</span>graph</a>
+<a class="sourceLine" id="cb7-26" data-line-number="26"></a>
+<a class="sourceLine" id="cb7-27" data-line-number="27"><span class="co">## bimodal network - nodes are actors and hashtags</span></a>
+<a class="sourceLine" id="cb7-28" data-line-number="28"></a>
+<a class="sourceLine" id="cb7-29" data-line-number="29">remItems &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#auspol"</span>) <span class="co"># exclude these hashtags</span></a>
+<a class="sourceLine" id="cb7-30" data-line-number="30">bimodalNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"bimodal"</span>, <span class="dt">removeTermsOrHashtags =</span> remItems, </a>
+<a class="sourceLine" id="cb7-31" data-line-number="31">                                         <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb7-32" data-line-number="32">bimodalGraph &lt;-<span class="st"> </span>bimodalNetwork<span class="op">$</span>graph</a></code></pre></div>
+</div>
+</div>
+<div id="youtube-example" class="section level3">
+<h3 class="hasAnchor">
+<a href="#youtube-example" class="anchor"></a>Youtube Example</h3>
+<div id="authenticate-collect-and-create-network-graphs-from-youtube-video-comments" class="section level4">
+<h4 class="hasAnchor">
+<a href="#authenticate-collect-and-create-network-graphs-from-youtube-video-comments" class="anchor"></a>‘Authenticate’, ‘Collect’ and ‘Create’ network graphs from youtube video comments</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vosonSML)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4">myYoutubeAPIKey &lt;-<span class="st"> "xxxxxxxxxxxxxx"</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="co"># helper to create a list of youtube video ids from urls</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">myYoutubeVideoIds &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,</a>
+<a class="sourceLine" id="cb8-8" data-line-number="8">                                          <span class="st">"https://youtu.be/xxxxxxxx"</span>))</a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="co"># authenticate and collect 100 top-level comments per youtube video in list</span></a>
+<a class="sourceLine" id="cb8-11" data-line-number="11"><span class="co"># also collects reply-comments for each top-level comment</span></a>
+<a class="sourceLine" id="cb8-12" data-line-number="12">youtubeData &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"youtube"</span>, <span class="dt">apiKey =</span> myYoutubeAPIKey) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb8-13" data-line-number="13"><span class="st">               </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">videoIDs =</span> myYoutubeVideoIds, <span class="dt">maxComments =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb8-14" data-line-number="14"></a>
+<a class="sourceLine" id="cb8-15" data-line-number="15"><span class="co">## activity network - nodes are comments and videos</span></a>
+<a class="sourceLine" id="cb8-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb8-17" data-line-number="17">activityNetwork &lt;-<span class="st"> </span>youtubeData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-18" data-line-number="18">activityGraph &lt;-<span class="st"> </span>activityNetwork<span class="op">$</span>graph</a>
+<a class="sourceLine" id="cb8-19" data-line-number="19"></a>
+<a class="sourceLine" id="cb8-20" data-line-number="20"><span class="co">## actor network - nodes are users who have posted comments</span></a>
+<a class="sourceLine" id="cb8-21" data-line-number="21"></a>
+<a class="sourceLine" id="cb8-22" data-line-number="22">actorNetwork &lt;-<span class="st"> </span>youtubeData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb8-23" data-line-number="23">actorGraph &lt;-<span class="st"> </span>actorNetwork<span class="op">$</span>graph                </a></code></pre></div>
+</div>
+</div>
+<div id="reddit-example" class="section level3">
+<h3 class="hasAnchor">
+<a href="#reddit-example" class="anchor"></a>Reddit Example</h3>
+<div id="collect-and-create-a-reddit-actor-network-from-a-subreddit-thread-and-include-text-comments" class="section level4">
+<h4 class="hasAnchor">
+<a href="#collect-and-create-a-reddit-actor-network-from-a-subreddit-thread-and-include-text-comments" class="anchor"></a>‘Collect’ and ‘Create’ a reddit actor network from a subreddit thread and include text comments</h4>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vosonSML)</a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="co"># collect reddit comment threads and Create an actor network with comment text as </span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="co"># edge attribute</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6">myThreadUrls &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>)</a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="co"># authentication does not require credentials</span></a>
+<a class="sourceLine" id="cb9-9" data-line-number="9">actorNetwork &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"reddit"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-10" data-line-number="10"><span class="st">                </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">threadUrls =</span> myThreadUrls, <span class="dt">waitTime =</span> <span class="dv">5</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-11" data-line-number="11"><span class="st">                </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">includeTextData =</span> <span class="ot">TRUE</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb9-12" data-line-number="12">actorGraph &lt;-<span class="st"> </span>actorNetwork<span class="op">$</span>graph</a></code></pre></div>
 </div>
 <div id="save-and-load-authentication-objects" class="section level4">
 <h4 class="hasAnchor">
 <a href="#save-and-load-authentication-objects" class="anchor"></a>Save and Load Authentication Objects</h4>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="co"># Save the object after Authenticate </span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">saveRDS</a></span>(my_youtube_auth, <span class="dt">file =</span> <span class="st">"~/.youtube_auth"</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="co"># Load a previously saved authentication object for use in Collect</span></a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">my_youtube_auth &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="st">"~/.youtube_auth"</span>)</a></code></pre></div>
-<p>For more detailed information and examples, please refer to the function <a href="https://vosonlab.github.io/vosonSML/reference/index.html">Reference</a> page.</p>
+<p>Save and reuse twitter and youtube authentication objects in future sessions.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="co"># save the object after 'Authenticate' </span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">saveRDS</a></span>(my_youtube_auth, <span class="dt">file =</span> <span class="st">"~/.youtube_auth"</span>)</a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="co"># load a previously saved authentication object for use in 'Collect'</span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">my_youtube_auth &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="st">"~/.youtube_auth"</span>)</a></code></pre></div>
+<p>For more detailed function information and examples, please refer to the <a href="https://vosonlab.github.io/vosonSML/reference/index.html">Reference</a> page.</p>
 </div>
 </div>
 </div>

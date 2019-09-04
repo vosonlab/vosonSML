@@ -49,6 +49,8 @@ reference:
 - title: Create
   contents:
   - '`Create`'
+  - '`Create.activity.twitter`'
+  - '`Create.activity.youtube`'  
   - '`Create.actor.twitter`'
   - '`Create.actor.youtube`'
   - '`Create.actor.reddit`'

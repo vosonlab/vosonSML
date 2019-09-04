@@ -8,11 +8,13 @@
 
 <title>Twitter API authentication — Authenticate.twitter • vosonSML</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,12 +34,13 @@
 
   <link href="../extra.css" rel="stylesheet">
   
-<meta property="og:title" content="Twitter API authentication — Authenticate.twitter" />
 
+<meta property="og:title" content="Twitter API authentication — Authenticate.twitter" />
 <meta property="og:description" content="Twitter authentication uses OAuth and either requires authorization of the rtweet package rstats2twitter
 client app by a registered twitter user or twitter app developer API keys as described here: 
 https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -67,7 +70,7 @@ https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.27.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.28.0</span>
       </span>
     </div>
 
@@ -94,7 +97,6 @@ https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
   </a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/vosonlab/vosonSML">
@@ -120,17 +122,15 @@ https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
     </div>
 
     <div class="ref-description">
-    
     <p>Twitter authentication uses OAuth and either requires authorization of the rtweet package rstats2twitter
 client app by a registered twitter user or twitter app developer API keys as described here: 
 <a href='https://developer.twitter.com/en/docs/basics/authentication/overview/oauth'>https://developer.twitter.com/en/docs/basics/authentication/overview/oauth</a>.</p>
-    
     </div>
 
     <pre class="usage"><span class='co'># S3 method for twitter</span>
 <span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='no'>socialmedia</span>, <span class='no'>appName</span>, <span class='no'>apiKey</span>, <span class='no'>apiSecret</span>,
   <span class='no'>accessToken</span>, <span class='no'>accessTokenSecret</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -163,12 +163,11 @@ client app by a registered twitter user or twitter app developer API keys as des
       <td><p>Additional parameters passed to function. Not used in this method.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A <code>credential</code> object containing an access token <code>$auth</code> and social media type descriptor 
 <code>$socialmedia</code> set to <code>"twitter"</code>. Object has the class names <code>"credential"</code> and <code>"twitter"</code>.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
@@ -194,9 +193,7 @@ client app by a registered twitter user or twitter app developer API keys as des
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
