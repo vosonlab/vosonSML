@@ -87,21 +87,21 @@ Create.activity.youtube <- function(datasource, type, writeToFile = FALSE, verbo
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }
   
-  g <- igraph::graph_from_data_frame(d = df_relations, directed = TRUE, vertices = df_nodes)
-  
-  V(g)$label <- ifelse(!is.na(V(g)$User), paste0(V(g)$name, " (", V(g)$User, ")"), V(g)$name)
-  
-  g <- igraph::set_graph_attr(g, "type", "youtube")
-  
-  if (writeToFile) { writeOutputFile(g, "graphml", "YoutubeActivityNetwork") }
+  # g <- igraph::graph_from_data_frame(d = df_relations, directed = TRUE, vertices = df_nodes)
+  # 
+  # V(g)$label <- ifelse(!is.na(V(g)$User), paste0(V(g)$name, " (", V(g)$User, ")"), V(g)$name)
+  # 
+  # g <- igraph::set_graph_attr(g, "type", "youtube")
+  # 
+  # if (writeToFile) { writeOutputFile(g, "graphml", "YoutubeActivityNetwork") }
   
   cat("Done.\n")
   flush.console()
   
   func_output <- list(
     "edges" = df_relations,
-    "nodes" = df_nodes,
-    "graph" = g
+    "nodes" = df_nodes # ,
+    # "graph" = g
   )
   
   class(func_output) <- append(class(func_output), c("network", "activity", "youtube"))

@@ -65,21 +65,21 @@ Create.activity.reddit <- function(datasource, type, writeToFile = FALSE, verbos
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }
   
-  g <- igraph::graph_from_data_frame(d = df_relations, directed = TRUE, vertices = df_nodes)
-  
-  V(g)$label <- ifelse(!is.na(V(g)$user), paste0(V(g)$name, " (", V(g)$user, ")"), V(g)$name)
-  
-  g <- igraph::set_graph_attr(g, "type", "reddit")
-  
-  if (writeToFile) { writeOutputFile(g, "graphml", "RedditActivityNetwork") }
+  # g <- igraph::graph_from_data_frame(d = df_relations, directed = TRUE, vertices = df_nodes)
+  # 
+  # V(g)$label <- ifelse(!is.na(V(g)$user), paste0(V(g)$name, " (", V(g)$user, ")"), V(g)$name)
+  # 
+  # g <- igraph::set_graph_attr(g, "type", "reddit")
+  # 
+  # if (writeToFile) { writeOutputFile(g, "graphml", "RedditActivityNetwork") }
   
   cat("Done.\n")
   flush.console()
   
   func_output <- list(
     "edges" = df_relations,
-    "nodes" = df_nodes,
-    "graph" = g
+    "nodes" = df_nodes #,
+    # "graph" = g
   )
   
   class(func_output) <- append(class(func_output), c("network", "activity", "reddit"))
