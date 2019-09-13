@@ -66,7 +66,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.28.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.0</span>
       </span>
     </div>
 
@@ -116,9 +116,21 @@
       <small>Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="vosonsml-0-28-1" class="section level1">
+    <div id="vosonsml-0290" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-28-1" class="anchor"></a>vosonSML 0.28.1<small> Unreleased </small>
+<a href="#vosonsml-0290" class="anchor"></a>vosonSML 0.29.0<small> Unreleased </small>
+</h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major Changes</h2>
+<ul>
+<li>Created <code>Addtext</code> and <code>Graph</code> functions to add text columns and create <code>igraph</code> graphs from networks. These functions are no longer part of <code>Create</code> or steps in graph post-processing.</li>
+</ul>
+</div>
+</div>
+    <div id="vosonsml-0281" class="section level1">
+<h1 class="page-header">
+<a href="#vosonsml-0281" class="anchor"></a>vosonSML 0.28.1<small> Unreleased </small>
 </h1>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -129,9 +141,9 @@
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-28-0" class="section level1">
+    <div id="vosonsml-0280" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-28-0" class="anchor"></a>vosonSML 0.28.0<small> Unreleased </small>
+<a href="#vosonsml-0280" class="anchor"></a>vosonSML 0.28.0<small> Unreleased </small>
 </h1>
 <div id="minor-changes-1" class="section level2">
 <h2 class="hasAnchor">
@@ -141,9 +153,9 @@
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-27-3" class="section level1">
+    <div id="vosonsml-0273" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-3" class="anchor"></a>vosonSML 0.27.3<small> Unreleased </small>
+<a href="#vosonsml-0273" class="anchor"></a>vosonSML 0.27.3<small> Unreleased </small>
 </h1>
 <div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
@@ -153,9 +165,9 @@
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-27-2" class="section level1">
+    <div id="vosonsml-0272" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-2" class="anchor"></a>vosonSML 0.27.2<small> 2019-07-18 </small>
+<a href="#vosonsml-0272" class="anchor"></a>vosonSML 0.27.2<small> 2019-07-18 </small>
 </h1>
 <div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
@@ -167,9 +179,9 @@
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-27-1" class="section level1">
+    <div id="vosonsml-0271" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-1" class="anchor"></a>vosonSML 0.27.1<small> Unreleased </small>
+<a href="#vosonsml-0271" class="anchor"></a>vosonSML 0.27.1<small> Unreleased </small>
 </h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
@@ -187,9 +199,9 @@
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-27-0" class="section level1">
+    <div id="vosonsml-0270" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-0" class="anchor"></a>vosonSML 0.27.0<small> Unreleased </small>
+<a href="#vosonsml-0270" class="anchor"></a>vosonSML 0.27.0<small> Unreleased </small>
 </h1>
 <div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
@@ -198,9 +210,9 @@
 <li>Fixed a bug in <code>Collect.twitter</code> in which any additional <code>twitter API</code> parameters e.g <code>lang</code> or <code>until</code> were not being passed properly to <code><a href="https://www.rdocumentation.org/packages/rtweet/topics/search_tweets">rtweet::search_tweets</a></code>. This resulted in the additional parameters being ignored.</li>
 </ul>
 </div>
-<div id="major-changes" class="section level2">
+<div id="major-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-1" class="anchor"></a>Major Changes</h2>
 <ul>
 <li>Removed the <code>SaveCredential</code> and <code>LoadCredential</code> functions, as well as the <code>useCachedToken</code> parameter for <code>Authenticate.twitter</code>. These were simply calling the <code>saveRDS</code> and <code>readRDS</code> functions and not performing any additional processing. Using <code>saveRDS</code> and <code>readRDS</code> directly to save and load an <code>Authenticate</code> credential object to file is simpler.</li>
 <li>Changed the way that the <code>cleanText</code> parameter works in <code>Create.actor.reddit</code> so that it is more permissive. Addresses encoding issues with apostrophes and pound symbols and removes unicode characters not permitted by the XML 1.0 standard as used in <code>graphml</code> files. This is best effort and does not resolve all <code>reddit</code> text encoding issues.</li>
@@ -215,9 +227,9 @@
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-26-3" class="section level1">
+    <div id="vosonsml-0263" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-26-3" class="anchor"></a>vosonSML 0.26.3<small> 2019-02-22 </small>
+<a href="#vosonsml-0263" class="anchor"></a>vosonSML 0.26.3<small> 2019-02-22 </small>
 </h1>
 <div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
@@ -235,9 +247,9 @@
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-26-2" class="section level1">
+    <div id="vosonsml-0262" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-26-2" class="anchor"></a>vosonSML 0.26.2<small> Unreleased </small>
+<a href="#vosonsml-0262" class="anchor"></a>vosonSML 0.26.2<small> Unreleased </small>
 </h1>
 <div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
@@ -246,9 +258,9 @@
 <li>Fixed a bug in <code>Create.actor.twitter</code> and <code>Create.bimodal.twitter</code> in which the vertices dataframe provided to the <code>graph_from_data_frame</code> function as a contained duplicate names raising an error.</li>
 </ul>
 </div>
-<div id="major-changes-1" class="section level2">
+<div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-2" class="anchor"></a>Major Changes</h2>
 <ul>
 <li>Revised and updated <code>roxygen</code> documentation and examples for all package functions.</li>
 <li>Updated all <code>Authenticate</code>, <code>Collect</code> and <code>Create</code> S3 methods to implement function routing based on object class names.</li>
@@ -263,13 +275,13 @@
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-25-0" class="section level1">
+    <div id="vosonsml-0250" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-25-0" class="anchor"></a>vosonSML 0.25.0<small> Unreleased </small>
+<a href="#vosonsml-0250" class="anchor"></a>vosonSML 0.25.0<small> Unreleased </small>
 </h1>
-<div id="major-changes-2" class="section level2">
+<div id="major-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-3" class="anchor"></a>Major Changes</h2>
 <ul>
 <li>Replaced the <code>twitteR</code> twitter collection implementation with the <code>rtweet</code> package.</li>
 <li>A users <code>twitter</code> authentication token can now be cached in the <code>.twitter_oauth_token</code> file and used for subsequent <code>twitter API</code> requests without re-authentication. A new authentication token can be cached by deleting this file and using the re-using the parameter <code>useCachedToken = TRUE</code>.</li>
@@ -282,15 +294,16 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#vosonsml-0-28-1">0.28.1</a></li>
-        <li><a href="#vosonsml-0-28-0">0.28.0</a></li>
-        <li><a href="#vosonsml-0-27-3">0.27.3</a></li>
-        <li><a href="#vosonsml-0-27-2">0.27.2</a></li>
-        <li><a href="#vosonsml-0-27-1">0.27.1</a></li>
-        <li><a href="#vosonsml-0-27-0">0.27.0</a></li>
-        <li><a href="#vosonsml-0-26-3">0.26.3</a></li>
-        <li><a href="#vosonsml-0-26-2">0.26.2</a></li>
-        <li><a href="#vosonsml-0-25-0">0.25.0</a></li>
+        <li><a href="#vosonsml-0290">0.29.0</a></li>
+        <li><a href="#vosonsml-0281">0.28.1</a></li>
+        <li><a href="#vosonsml-0280">0.28.0</a></li>
+        <li><a href="#vosonsml-0273">0.27.3</a></li>
+        <li><a href="#vosonsml-0272">0.27.2</a></li>
+        <li><a href="#vosonsml-0271">0.27.1</a></li>
+        <li><a href="#vosonsml-0270">0.27.0</a></li>
+        <li><a href="#vosonsml-0263">0.26.3</a></li>
+        <li><a href="#vosonsml-0262">0.26.2</a></li>
+        <li><a href="#vosonsml-0250">0.25.0</a></li>
       </ul>
     </div>
   </div>

@@ -1,3 +1,10 @@
+# vosonSML 0.29.0
+
+## Major Changes
+- Created `Addtext` and `Graph` functions to add text columns and create `igraph` graphs
+  from networks. These functions are no longer part of `Create` or steps in graph 
+  post-processing.
+  
 # vosonSML 0.28.1
 
 ## Minor Changes

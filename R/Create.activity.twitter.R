@@ -26,8 +26,7 @@
 #' @export
 Create.activity.twitter <- function(datasource, type, writeToFile = FALSE, verbose = TRUE, ...) {
   
-  # df <- datasource
-  df <- tibble::as_tibble(datasource) # df <- tibble::as_tibble(my_twitter_data)
+  df <- tibble::as_tibble(datasource)
   
   df_stats <- networkStats(NULL, "collected tweets", nrow(df))
   
@@ -118,21 +117,12 @@ Create.activity.twitter <- function(datasource, type, writeToFile = FALSE, verbo
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }
   
-  # g <- igraph::graph_from_data_frame(d = df_relations, directed = TRUE, vertices = df_nodes)
-  # 
-  # V(g)$label <- ifelse(!is.na(V(g)$screen_name), paste0(V(g)$name, " (", V(g)$screen_name, ")"), V(g)$name)
-  # 
-  # g <- igraph::set_graph_attr(g, "type", "twitter")
-  # 
-  # if (writeToFile) { writeOutputFile(g, "graphml", "TwitterActivityNetwork") }
-  
   cat("Done.\n")
   flush.console()
   
   func_output <- list(
     "edges" = df_relations,
-    "nodes" = df_nodes # ,
-    # "graph" = g
+    "nodes" = df_nodes
   )
   
   class(func_output) <- append(class(func_output), c("network", "activity", "twitter"))

@@ -59,6 +59,8 @@ reference:
   - '`Create.semantic.twitter`'
 - title: Helpers
   contents:
+  - '`vosonSML::AddText`'
+  - '`vosonSML::Graph`'
   - '`vosonSML::AddTwitterUserData`'
   - '`vosonSML::GetYoutubeVideoIDs`'
   - '`vosonSML::ImportData`'

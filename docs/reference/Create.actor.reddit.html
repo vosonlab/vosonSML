@@ -70,7 +70,7 @@ weights (weight) or edge text attributes (vosonTxt_comment) can be created." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.28.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.0</span>
       </span>
     </div>
 
@@ -128,8 +128,7 @@ weights (<code>weight</code>) or edge text attributes (<code>vosonTxt_comment</c
     </div>
 
     <pre class="usage"><span class='co'># S3 method for actor.reddit</span>
-<span class='fu'><a href='Create.html'>Create</a></span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='kw'>weightEdges</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>textData</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>cleanText</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='Create.html'>Create</a></span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -141,28 +140,6 @@ weights (<code>weight</code>) or edge text attributes (<code>vosonTxt_comment</c
     <tr>
       <th>type</th>
       <td><p>Character string. Type of network to be created, set to <code>"actor"</code>.</p></td>
-    </tr>
-    <tr>
-      <th>weightEdges</th>
-      <td><p>Logical. Combine and weight directed network edges. Default is <code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>textData</th>
-      <td><p>Logical. Include comment text as an edge attributes of returned igraph network. Is set to 
-<code>FALSE</code> if the <code>weightEdges</code> parameter is <code>TRUE</code> as text merging is not supported. Default is 
-<code>FALSE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>cleanText</th>
-      <td><p>Logical. Simple removal of non-alphanumeric, non-punctuation, and non-space characters from 
-the comment text data applied as graph edge attribute. Not suitable in some cases requiring capture of utf or emoji 
-characters. Implemented to support basic text analysis and to prevent reddit specific XML control character errors 
-in the graphml files created by this function. Alternatively custom cleaning of text data can be performed on the 
-<code>datasource</code> dataframe before being passed to this function. Default is <code>TRUE</code>.</p></td>
-    </tr>
-    <tr>
-      <th>writeToFile</th>
-      <td><p>Logical. Save network data to a file in the current working directory. Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
