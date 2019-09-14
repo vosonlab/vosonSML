@@ -40,16 +40,12 @@ Graph.activity.default <- function(...) {
 #' @noRd
 #' @export
 Graph.activity.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-
   igraph::V(g)$label <- ifelse(!is.na(igraph::V(g)$screen_name), 
                                paste0(igraph::V(g)$name, " (", igraph::V(g)$screen_name, ")"), 
                                igraph::V(g)$name)
+  g <- set_graph_attr(g, "type", "twitter")
   
-  if (is.logical(writeToFile) && writeToFile) { 
-    writeOutputFile(g, "graphml", "TwitterActivity") 
-  } else if (is.character(writeToFile)) {
-    writeOutputFile(g, "graphml", writeToFile)
-  } 
+  graphOutputFile(g, "graphml", writeToFile, "TwitterActivity")
   
   g
 }
@@ -57,16 +53,12 @@ Graph.activity.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ..
 #' @noRd
 #' @export
 Graph.activity.youtube <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  
   igraph::V(g)$label <- ifelse(!is.na(igraph::V(g)$User), 
                                paste0(igraph::V(g)$name, " (", igraph::V(g)$User, ")"), 
                                igraph::V(g)$name)
+  g <- set_graph_attr(g, "type", "youtube")
   
-  if (is.logical(writeToFile) && writeToFile) { 
-    writeOutputFile(g, "graphml", "YoutubeActivity") 
-  } else if (is.character(writeToFile)) {
-    writeOutputFile(g, "graphml", writeToFile)
-  }
+  graphOutputFile(g, "graphml", writeToFile, "YoutubeActivity")
   
   g
 }
@@ -74,14 +66,10 @@ Graph.activity.youtube <- function(net, directed = TRUE, writeToFile = FALSE, ..
 #' @noRd
 #' @export
 Graph.activity.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  
   V(g)$label <- ifelse(!is.na(V(g)$user), paste0(V(g)$name, " (", V(g)$user, ")"), V(g)$name)
+  g <- set_graph_attr(g, "type", "reddit")
 
-  if (is.logical(writeToFile) && writeToFile) { 
-    writeOutputFile(g, "graphml", "RedditActivity") 
-  } else if (is.character(writeToFile)) {
-    writeOutputFile(g, "graphml", writeToFile)
-  }
+  graphOutputFile(g, "graphml", writeToFile, "RedditActivity")
   
   g
 }
@@ -101,14 +89,42 @@ Graph.actor.default <- function(...) {
 
 #' @noRd
 #' @export
-Graph.actor.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$label <- ifelse(!is.na(V(g)$user), V(g)$user, V(g)$name)
+Graph.actor.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  V(g)$screen_name <- ifelse(is.na(V(g)$screen_name), paste0("ID:", V(g)$name), V(g)$screen_name)
+  V(g)$label <- V(g)$screen_name
+  g <- set_graph_attr(g, "type", "twitter")
   
-  if (is.logical(writeToFile) && writeToFile) { 
-    writeOutputFile(g, "graphml", "RedditActor") 
-  } else if (is.character(writeToFile)) {
-    writeOutputFile(g, "graphml", writeToFile)
-  }
+  graphOutputFile(g, "graphml", writeToFile, "TwitterActor")
   
   g  
+}
+
+#' @noRd
+#' @export
+Graph.actor.youtube <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  V(g)$label <- V(g)$name
+  g <- set_graph_attr(g, "type", "youtube")
+  
+  graphOutputFile(g, "graphml", writeToFile, "YoutubeActor")
+  
+  g  
+}
+
+#' @noRd
+#' @export
+Graph.actor.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  V(g)$label <- ifelse(!is.na(V(g)$user), V(g)$user, V(g)$name)
+  g <- set_graph_attr(g, "type", "reddit")
+  
+  graphOutputFile(g, "graphml", writeToFile, "RedditActor")
+  
+  g  
+}
+
+graphOutputFile <- function(g, type, wtof, def) {
+  if (is.logical(wtof) && wtof) { 
+    writeOutputFile(g, "graphml", def) 
+  } else if (is.character(wtof)) {
+    writeOutputFile(g, "graphml", wtof)
+  }  
 }

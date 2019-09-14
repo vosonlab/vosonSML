@@ -100,6 +100,18 @@ AddText.actor.default <- function(net, ...) {
 
 #' @noRd
 #' @export
+AddText.actor.twitter <- function(net, data, ...) {
+  net
+}
+
+#' @noRd
+#' @export
+AddText.actor.youtube <- function(net, data, ...) {
+  net
+}
+
+#' @noRd
+#' @export
 AddText.actor.reddit <- function(net, data, cleanText = TRUE, ...) {
 
   # rename the edge attribute containing the thread comment

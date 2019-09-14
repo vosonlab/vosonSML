@@ -12,8 +12,7 @@
 #' 
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"twitter"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"actor"}.
-#' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
-#' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
 #' @return Named list containing dataframes with the relations between actors (directed edges) \code{$relations},
@@ -30,7 +29,7 @@
 #' }
 #' 
 #' @export
-Create.actor.twitter <- function(datasource, type, writeToFile = FALSE, verbose = FALSE, ...) {
+Create.actor.twitter <- function(datasource, type, verbose = TRUE, ...) {
   
   from <- to <- edge_type <- timestamp <- status_id <- NULL
   is_retweet <- is_quote <- mentions_user_id <- reply_to_user_id <- NULL
@@ -218,21 +217,12 @@ Create.actor.twitter <- function(datasource, type, writeToFile = FALSE, verbose 
     timestamp = dt_combined$timestamp,
     status_id = dt_combined$status_id)
   
-  g <- graph_from_data_frame(df_relations, directed = TRUE, vertices = df_users)
-  
-  V(g)$screen_name <- ifelse(is.na(V(g)$screen_name), paste0("ID:", V(g)$name), V(g)$screen_name)
-  V(g)$label <- V(g)$screen_name
-  g <- set_graph_attr(g, "type", "twitter")
-  
-  if (writeToFile) { writeOutputFile(g, "graphml", "TwitterActorNetwork") }
-  
   cat("Done.\n")
   flush.console()
   
   func_output <- list(
     "edges" = df_relations,
-    "nodes" = df_users,
-    "graph" = g
+    "nodes" = df_users
   )
   
   class(func_output) <- append(class(func_output), c("network", "actor", "twitter"))
