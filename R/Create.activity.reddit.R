@@ -5,24 +5,23 @@
 #' 
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"reddit"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.
-#' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
-#' @return Named list containing generated network as igraph object \code{$graph}.
+#' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #' 
 #' @examples
 #' \dontrun{
 #' # create a reddit activity network graph
-#' activityNetwork <- redditData %>% 
-#'   Create("activity", writeToFile = TRUE)
+#' activityNetwork <- redditData %>% Create("activity")
 #' 
-#' # igraph object
-#' # activityNetwork$graph
+#' # network
+#' # activityNetwork$nodes
+#' # activityNetwork$edges
 #' }
 #' 
 #' @export
-Create.activity.reddit <- function(datasource, type, writeToFile = FALSE, verbose = TRUE, ...) {
+Create.activity.reddit <- function(datasource, type, verbose = TRUE, ...) {
   df <- tibble::as_tibble(datasource) 
   
   df_stats <- networkStats(NULL, "collected reddit comments", nrow(df))
@@ -69,8 +68,8 @@ Create.activity.reddit <- function(datasource, type, writeToFile = FALSE, verbos
   flush.console()
   
   func_output <- list(
-    "edges" = df_relations,
-    "nodes" = df_nodes
+    "nodes" = df_nodes,
+    "edges" = df_relations
   )
   
   class(func_output) <- append(class(func_output), c("network", "activity", "reddit"))

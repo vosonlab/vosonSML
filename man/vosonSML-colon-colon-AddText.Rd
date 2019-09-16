@@ -3,7 +3,7 @@
 \name{vosonSML::AddText}
 \alias{vosonSML::AddText}
 \alias{AddText}
-\title{Add columns containing text data to network}
+\title{Add columns containing text data to network dataframes}
 \usage{
 AddText(net, data, ...)
 }
@@ -15,8 +15,9 @@ AddText(net, data, ...)
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-A named list of dataframes \code{nodes} and \code{edges} including text data columns.
+Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}
+including columns containing text data.
 }
 \description{
-Add columns containing text data to network
+Add columns containing text data to network dataframes
 }

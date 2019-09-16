@@ -16,8 +16,8 @@
 #' \code{\link{Create.semantic.twitter}} functions for parameters and usage respectively. 
 #'
 #' @param datasource Collected social media data of class \code{"datasource"} and \code{socialmedia}.
-#' @param type Character string. Type of network to be created, can be \code{"actor"}, \code{"bimodal"} or 
-#' \code{"semantic"}.
+#' @param type Character string. Type of network to be created, can be \code{"activity"}, \code{"actor"},
+#' \code{"bimodal"} or \code{"semantic"}.
 #' @param ... Optional parameters to pass to functions providied by supporting R packages that are used for social 
 #' media network creation.
 #'

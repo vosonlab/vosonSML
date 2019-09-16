@@ -1,23 +1,22 @@
 #' @title Create reddit actor network
 #' 
 #' @description Creates a reddit actor network from thread comments on subreddits. Users who have commented on a thread 
-#' are actor nodes and comment replies to each other are represented as directed edges. Optionally a graph with edge 
-#' weights (\code{weight}) or edge text attributes (\code{vosonTxt_comment}) can be created.
+#' are actor nodes and comment replies to each other are represented as directed edges.
 #' 
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"reddit"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"actor"}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
-#' @return Named list containing generated network as igraph object \code{$graph}.
+#' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #' 
 #' @examples
 #' \dontrun{
 #' # create a reddit actor network graph with comment text as edge attributes
-#' actorNetwork <- redditData %>% 
-#'   Create("actor", includeTextData = TRUE, writeToFile = TRUE)
+#' actorNetwork <- redditData %>% Create("actor")
 #' 
-#' # igraph object
-#' # actorNetwork$graph
+#' # network
+#' # actorNetwork$nodes
+#' # actorNetwork$edges
 #' }
 #' 
 #' @export

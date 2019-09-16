@@ -9,15 +9,16 @@
 #' @param type Character string. Type of network to be created, set to \code{"actor"}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
-#' @return Named list containing generated network as igraph object \code{$graph}.
+#' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #' 
 #' @examples
 #' \dontrun{
 #' # create a youtube actor network graph
-#' actorNetwork <- youtubeData %>% Create("actor", writeToFile = TRUE)
+#' actorNetwork <- youtubeData %>% Create("actor")
 #' 
-#' # igraph object
-#' # actorNetwork$graph
+#' # network
+#' # actorNetwork$nodes
+#' # actorNetwork$edges
 #' }
 #' 
 #' @export

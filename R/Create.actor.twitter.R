@@ -15,17 +15,17 @@
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
-#' @return Named list containing dataframes with the relations between actors (directed edges) \code{$relations},
-#' the actors (including isolates) \code{$users} and generated actor network as igraph object \code{$graph}.
+#' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #' 
 #' @examples
 #' \dontrun{
 #' # create a twitter actor network graph and output to console additional information 
 #' # during network creation (verbose)
-#' actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TRUE)
+#' actorNetwork <- twitterData %>% Create("actor")
 #' 
-#' # igraph object
-#' # actorNetwork$graph
+#' # network
+#' # actorNetwork$nodes
+#' # actorNetwork$edges
 #' }
 #' 
 #' @export

@@ -6,8 +6,7 @@
 \usage{
 \method{Create}{semantic.twitter}(datasource, type,
   removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE,
-  termFreq = 5, hashtagFreq = 50, writeToFile = FALSE,
-  verbose = FALSE, ...)
+  termFreq = 5, hashtagFreq = 50, verbose = FALSE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
@@ -29,14 +28,12 @@ The default value is \code{5}, meaning the top 5 percent most frequent terms are
 example, a \code{hashtagFreq = 80} means that the 80 percent most frequently occurring hashtags will be included 
 in the semantic network as nodes. The default value is \code{50}.}
 
-\item{writeToFile}{Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.}
-
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-Named list containing semantic network as igraph object \code{$graph}.
+Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
 Creates a semantic network from tweets returned from the twitter search query. Semantic networks 
@@ -51,10 +48,11 @@ weighted and represent usage of frequently occurring terms and hashtags by the a
 # concepts or nodes
 semanticNetwork <- twitterData \%>\% 
                    Create("semantic", removeTermsOrHashtags = c("#auspol"), termFreq = 2,
-                          hashtagFreq = 10, writeToFile = TRUE, verbose = TRUE)
+                          hashtagFreq = 10, verbose = TRUE)
 
-# igraph object
-# semanticNetwork$graph
+# network
+# semanticNetwork$nodes
+# semanticNetwork$edges
 }
 
 }

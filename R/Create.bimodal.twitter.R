@@ -10,27 +10,25 @@
 #' @param removeTermsOrHashtags Character vector. Terms or hashtags to remove from the bimodal network. For example, 
 #' this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
 #' nodes with matching name. Default is \code{NULL} to remove none.
-#' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
-#' @return Named list containing bimodal network as igraph object \code{$graph}.
+#' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #' 
 #' @examples
 #' \dontrun{
 #' # create a twitter bimodal network graph removing the hashtag '#auspol' as it was used in 
 #' # the twitter search query
 #' bimodalNetwork <- twitterData %>% 
-#'                   Create("bimodal", removeTermsOrHashtags = c("#auspol"), writeToFile = TRUE, 
-#'                          verbose = TRUE)
+#'                   Create("bimodal", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
 #' 
-#' # igraph object
-#' # bimodalNetwork$graph
+#' # network
+#' # bimodalNetwork$nodes
+#' # bimodalNetwork$edges
 #' }
 #' 
 #' @export
-Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, writeToFile = FALSE, 
-                                   verbose = FALSE, ...) {
+Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, verbose = FALSE, ...) {
   
   from <- to <- edge_type <- timestamp <- status_id <- NULL
 
@@ -114,10 +112,6 @@ Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
     timestamp = dt_combined$timestamp,
     status_id = dt_combined$status_id)
   
-  g <- graph_from_data_frame(relations, directed = TRUE, vertices = df_entities)
-  
-  V(g)$display_name <- ifelse(is.na(V(g)$display_name), paste0("ID:", V(g)$name), V(g)$display_name)
-  
   # remove the search term / hashtags, if user specified it:
   if (removeTermsOrHashtags[1] != "#fake_hashtag_foobar42_1234567890") {
     # we force to lowercase because all terms/hashtags are already converted to lowercase
@@ -127,15 +121,12 @@ Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
     g <- delete.vertices(g, toDel)
   }
   
-  V(g)$label <- V(g)$display_name
-  
-  if (writeToFile) { writeOutputFile(g, "graphml", "TwitterBimodalNetwork") }
-  
   cat("Done.\n")
   flush.console()
   
   func_output <- list(
-    "graph" = g
+    "nodes" = df_entities,
+    "edges" = relations
   )
   
   class(func_output) <- append(class(func_output), c("network", "bimodal", "twitter"))

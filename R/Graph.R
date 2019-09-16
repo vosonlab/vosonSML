@@ -121,6 +121,60 @@ Graph.actor.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
   g  
 }
 
+#' @noRd
+#' @method Graph semantic
+#' @export
+Graph.semantic <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  UseMethod("Graph.semantic", net)
+}
+
+#' @noRd
+#' @export
+Graph.semantic.default <- function(...) {
+  stop("Unknown social media type passed to graph.", call. = FALSE)
+}
+
+#' @noRd
+#' @export
+Graph.semantic.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  # we need to simplify the graph because multiple use of same term in one tweet will cause self-loops, etc
+  # g <- simplify(g)  
+  V(g)$label <- V(g)$name
+  g <- set_graph_attr(g, "type", "twitter")
+  
+  graphOutputFile(g, "graphml", writeToFile, "TwitterSemantic")
+  
+  g  
+}
+
+#' @noRd
+#' @method Graph bimodal
+#' @export
+Graph.bimodal <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  UseMethod("Graph.bimodal", net)
+}
+
+#' @noRd
+#' @export
+Graph.bimodal.default <- function(...) {
+  stop("Unknown social media type passed to graph.", call. = FALSE)
+}
+
+#' @noRd
+#' @export
+Graph.bimodal.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  V(g)$display_name <- ifelse(is.na(V(g)$display_name), paste0("ID:", V(g)$name), V(g)$display_name)
+  V(g)$label <- V(g)$display_name
+  g <- set_graph_attr(g, "type", "twitter")
+  
+  graphOutputFile(g, "graphml", writeToFile, "TwitterBimodal")
+  
+  g  
+}
+
+# set output file name
+# if wtof is logical use def as file name
+# if character use wtof as file name
 graphOutputFile <- function(g, type, wtof, def) {
   if (is.logical(wtof) && wtof) { 
     writeOutputFile(g, "graphml", def) 

@@ -9,8 +9,8 @@ Create(datasource, type, ...)
 \arguments{
 \item{datasource}{Collected social media data of class \code{"datasource"} and \code{socialmedia}.}
 
-\item{type}{Character string. Type of network to be created, can be \code{"actor"}, \code{"bimodal"} or 
-\code{"semantic"}.}
+\item{type}{Character string. Type of network to be created, can be \code{"activity"}, \code{"actor"},
+\code{"bimodal"} or \code{"semantic"}.}
 
 \item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social 
 media network creation.}

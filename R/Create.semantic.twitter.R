@@ -18,11 +18,10 @@
 #' @param hashtagFreq Numeric integer. Specifies the percentage of most frequent \code{hashtags} to include. For 
 #' example, a \code{hashtagFreq = 80} means that the 80 percent most frequently occurring hashtags will be included 
 #' in the semantic network as nodes. The default value is \code{50}.
-#' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
-#' @return Named list containing semantic network as igraph object \code{$graph}.
+#' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #' 
 #' @examples
 #' \dontrun{
@@ -31,15 +30,16 @@
 #' # concepts or nodes
 #' semanticNetwork <- twitterData %>% 
 #'                    Create("semantic", removeTermsOrHashtags = c("#auspol"), termFreq = 2,
-#'                           hashtagFreq = 10, writeToFile = TRUE, verbose = TRUE)
+#'                           hashtagFreq = 10, verbose = TRUE)
 #' 
-#' # igraph object
-#' # semanticNetwork$graph
+#' # network
+#' # semanticNetwork$nodes
+#' # semanticNetwork$edges
 #' }
 #' 
 #' @export
 Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE, 
-                                    termFreq = 5, hashtagFreq = 50, writeToFile = FALSE, verbose = FALSE, ...) {
+                                    termFreq = 5, hashtagFreq = 50, verbose = FALSE, ...) {
 
   # default to the top 5% most frequent terms. reduces size of graph
   # default to the top 50% hashtags. reduces size of graph. hashtags are 50% because they are much less 
@@ -267,15 +267,6 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   df_stats <- networkStats(df_stats, "unique entities (nodes)", length(actorsFixed))
   df_stats <- networkStats(df_stats, "relations (edges)", nrow(relations))
   
-  # convert into a graph
-  suppressWarnings(g <- graph_from_data_frame(relations, directed = FALSE, vertices = actorsFixed))
-  
-  # we need to simplify the graph because multiple use of same term in one tweet will cause self-loops, etc
-  # g <- simplify(g)
-  
-  # make the node labels play nice with Gephi
-  V(g)$label <- V(g)$name
-  
   # remove the search term / hashtags, if user specified it
   if (removeTermsOrHashtags[1] != "foobar") {
     # we force to lowercase because all terms/hashtags are already converted to lowercase
@@ -292,15 +283,12 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }
   
-  if (writeToFile) { writeOutputFile(g, "graphml", "TwitterSemanticNetwork") }
-  
   cat("Done.\n")
   flush.console()
   
   func_output <- list(
     "nodes" = actorsFixed,
-    "edges" = relations,
-    "graph" = g
+    "edges" = relations
   )
   
   class(func_output) <- append(class(func_output), c("network", "semantic", "twitter"))

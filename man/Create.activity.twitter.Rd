@@ -4,22 +4,19 @@
 \alias{Create.activity.twitter}
 \title{Create twitter activity network}
 \usage{
-\method{Create}{activity.twitter}(datasource, type, writeToFile = FALSE,
-  verbose = TRUE, ...)
+\method{Create}{activity.twitter}(datasource, type, verbose = TRUE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"activity"}.}
 
-\item{writeToFile}{Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.}
-
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-Named list containing generated network as igraph object \code{$graph}.
+Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
 Creates a twitter activity network from collected tweets. Nodes are tweets and directed edges represent
@@ -30,11 +27,11 @@ and will be isolates.
 \examples{
 \dontrun{
 # create a twitter activity network graph
-activityNetwork <- twitterData \%>\%
-  Create("activity", writeToFile = TRUE)
+activityNetwork <- twitterData \%>\% Create("activity")
   
-# igraph object
-# activityNetwork$graph
+# network
+# activityNetwork$nodes
+# activityNetwork$edges
 }
 
 }

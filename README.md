@@ -91,16 +91,16 @@ twitterData <- twitterAuth %>%
 ```R
 ## activity network - nodes are tweets
 
-activityNetwork <- twitterData %>% Create("activity", writeToFile = TRUE)
-activityGraph <- activityNetwork$graph # igraph network graph
+activityNetwork <- twitterData %>% Create("activity")
+activityGraph <- activityNetwork %>% Graph() # igraph network graph
 
 ## actor network - nodes are users who have tweeted
 
-actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TRUE)
-actorGraph <- actorNetwork$graph
+actorNetwork <- twitterData %>% Create("actor")
+actorGraph <- actorNetwork %>% Graph() # igraph network graph
 
 # optional step to add additional twitter user profile info to actor network graph as 
-# node attributes 
+# node attributes
 actorNetWithUserAttr <- AddTwitterUserData(twitterData, actorNetwork,
                                            lookupUsers = TRUE, 
                                            twitterAuth = twitterAuth, writeToFile = TRUE)
@@ -112,15 +112,22 @@ actorGraphWithUserAttr <- actorNetWithUserAttr$graph
 remItems <- c("#auspol", "auspol") # exclude these terms
 topTerms <- 5                      # include only the top 5% most frequent terms as nodes
 semanticNetwork <- twitterData %>% Create("semantic", removeTermsOrHashtags = remItems, 
-                                          termFreq = topTerms, writeToFile = TRUE)
-semanticGraph <- semanticNetwork$graph
+                                          termFreq = topTerms)
+semanticGraph <- semanticNetwork %>% Graph(writeToFile = TRUE, directed = FALSE)
 
 ## bimodal network - nodes are actors and hashtags
 
 remItems <- c("#auspol") # exclude these hashtags
-bimodalNetwork <- twitterData %>% Create("bimodal", removeTermsOrHashtags = remItems, 
-                                         writeToFile = TRUE)
-bimodalGraph <- bimodalNetwork$graph
+bimodalNetwork <- twitterData %>% Create("bimodal", removeTermsOrHashtags = remItems)
+bimodalGraph <- bimodalNetwork %>% Graph(writeToFile = TRUE)
+```
+
+#### AddText() is a function that can be used to add collected text data (i.e tweets) to 
+#### activity and actor networks
+```R
+## graph for activity network with text added
+activityNetworkGraph <- twitterData %>% Create("activity") %>% 
+                        AddText(twitterData) %>% Graph()
 ```
 
 ### Youtube Example
@@ -143,13 +150,12 @@ youtubeData <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>%
 
 ## activity network - nodes are comments and videos
 
-activityNetwork <- youtubeData %>% Create("activity", writeToFile = TRUE)
-activityGraph <- activityNetwork$graph
+activityNetwork <- youtubeData %>% Create("activity") %>% AddText(youtubeData)
+activityGraph <- activityNetwork %>% Graph()
 
 ## actor network - nodes are users who have posted comments
 
-actorNetwork <- youtubeData %>% Create("actor", writeToFile = TRUE)
-actorGraph <- actorNetwork$graph                
+actorGraph <- youtubeData %>% Create("actor") %>% AddText(youtubeData) %>% Graph()
 ```
 
 ### Reddit Example
@@ -168,15 +174,13 @@ redditData <- Authenticate("reddit") %>%
               
 ## activity network - nodes are comments and intital thread posts
 
-activityNetwork <- redditData %>% Create("activity", writeToFile = TRUE)
-activityGraph <- activityNetwork$graph
+activityNetwork <- redditData %>% Create("activity")
+activityGraph <- activityNetwork %>% Graph(writeToFile = TRUE)
 
 ## actor network - nodes are users who have posted comments
 
 # create an actor network with comment text as edge attribute
-actorNetwork <- redditData %>% Create("actor", includeTextData = TRUE, writeToFile = TRUE)
-actorGraph <- actorNetwork$graph
-
+actorGraph <- redditData %>% Create("actor") %>% AddText(redditData) %>% Graph()
 ```
 
 #### Save and Load Authentication Objects
