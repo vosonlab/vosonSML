@@ -127,5 +127,7 @@ AddUserData.actor.twitter <- function(net, data, lookupUsers = TRUE, twitterAuth
     "edges" = net$edges
   )
   
+  class(func_output) <- append(class(func_output), c("network", "actor", "twitter"))
+  
   return(func_output)
 }
