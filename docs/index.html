@@ -7,8 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Collecting Social Media Data and Generating Networks for Analysis • vosonSML</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="Collecting Social Media Data and Generating Networks for Analysis">
 <meta property="og:description" content="A suite of tools for collecting and constructing networks from social media data.
@@ -76,6 +77,7 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="contents col-md-9">
 <div id="vosonsml" class="section level1">
@@ -95,16 +97,16 @@
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>Install the latest release via CRAN:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"vosonSML"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"vosonSML"</span>)</a></code></pre></div>
 <p>Install the latest release via GitHub:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages</a></span>(<span class="st">"https://github.com/vosonlab/vosonSML/releases/download/v0.27.2/vosonSML-0.27.2.tar.gz"</span>, </a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"https://github.com/vosonlab/vosonSML/releases/download/v0.27.2/vosonSML-0.27.2.tar.gz"</span>, </a>
 <a class="sourceLine" id="cb2-2" title="2">  <span class="dt">repo =</span> <span class="ot">NULL</span>, <span class="dt">type =</span> <span class="st">"source"</span>)</a></code></pre></div>
 <p>Install the latest development version:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># library(devtools)</span></a>
-<a class="sourceLine" id="cb3-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"vosonlab/vosonSML"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"vosonlab/vosonSML"</span>)</a></code></pre></div>
 <p>Note about previous releases: The vosonSML package was previously in a subdirectory, so if you wish to install versions prior to <code>0.26</code> please remember to include the <code>subdir</code> parameter.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># library(devtools)</span></a>
-<a class="sourceLine" id="cb4-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://www.rdocumentation.org/packages/devtools/topics/reexports">install_github</a></span>(<span class="st">"vosonlab/vosonSML@v0.25.0"</span>, <span class="dt">subdir =</span> <span class="st">"vosonSML"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb4-2" title="2">devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"vosonlab/vosonSML@v0.25.0"</span>, <span class="dt">subdir =</span> <span class="st">"vosonSML"</span>)</a></code></pre></div>
 </div>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
@@ -126,10 +128,10 @@
 <div id="authenticate-with-the-twitter-api" class="section level4">
 <h4 class="hasAnchor">
 <a href="#authenticate-with-the-twitter-api" class="anchor"></a>‘Authenticate’ with the Twitter API</h4>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vosonSML)</a>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(vosonSML)</a>
 <a class="sourceLine" id="cb5-3" title="3"></a>
-<a class="sourceLine" id="cb5-4" title="4">myKeys &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/list">list</a></span>(<span class="dt">appName =</span> <span class="st">"My App"</span>, <span class="dt">apiKey =</span> <span class="st">"xxxxxxxxxxxx"</span>, <span class="dt">apiSecret =</span> <span class="st">"xxxxxxxxxxxx"</span>, </a>
+<a class="sourceLine" id="cb5-4" title="4">myKeys &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">appName =</span> <span class="st">"My App"</span>, <span class="dt">apiKey =</span> <span class="st">"xxxxxxxxxxxx"</span>, <span class="dt">apiSecret =</span> <span class="st">"xxxxxxxxxxxx"</span>, </a>
 <a class="sourceLine" id="cb5-5" title="5">               <span class="dt">accessToken =</span> <span class="st">"xxxxxxxxxxxx"</span>, <span class="dt">accessTokenSecret =</span> <span class="st">"xxxxxxxxxxxx"</span>)</a>
 <a class="sourceLine" id="cb5-6" title="6">  </a>
 <a class="sourceLine" id="cb5-7" title="7">twitterAuth &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"twitter"</span>, <span class="dt">appName =</span> myKeys<span class="op">$</span>appName, <span class="dt">apiKey =</span> myKeys<span class="op">$</span>apiKey, </a>
@@ -139,10 +141,10 @@
 <a class="sourceLine" id="cb5-11" title="11"><span class="co"># twitter authentication creates an access token as part of the auth object</span></a>
 <a class="sourceLine" id="cb5-12" title="12"><span class="co"># this can and should be re-used by saving it and then loading it for future sessions</span></a>
 <a class="sourceLine" id="cb5-13" title="13"><span class="co"># save the auth object after authenticate </span></a>
-<a class="sourceLine" id="cb5-14" title="14"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">saveRDS</a></span>(twitterAuth, <span class="dt">file =</span> <span class="st">"~/.twitter_auth"</span>)</a>
+<a class="sourceLine" id="cb5-14" title="14"><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(twitterAuth, <span class="dt">file =</span> <span class="st">"~/.twitter_auth"</span>)</a>
 <a class="sourceLine" id="cb5-15" title="15"></a>
 <a class="sourceLine" id="cb5-16" title="16"><span class="co"># load a previously saved auth object for use in collect</span></a>
-<a class="sourceLine" id="cb5-17" title="17">twitterAuth &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="st">"~/.twitter_auth"</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb5-17" title="17">twitterAuth &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"~/.twitter_auth"</span>)</a></code></pre></div>
 </div>
 <div id="collect-tweets-for-the-auspol-hashtag" class="section level4">
 <h4 class="hasAnchor">
@@ -158,36 +160,42 @@
 <a href="#create-twitter-activity-actor-semantic-and-bimodal-network-graphs" class="anchor"></a>‘Create’ twitter ‘activity’, ‘actor’, ‘semantic’ and ‘bimodal’ network graphs</h4>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="co">## activity network - nodes are tweets</span></a>
 <a class="sourceLine" id="cb7-2" title="2"></a>
-<a class="sourceLine" id="cb7-3" title="3">activityNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-4" title="4">activityGraph &lt;-<span class="st"> </span>activityNetwork<span class="op">$</span>graph <span class="co"># igraph network graph</span></a>
+<a class="sourceLine" id="cb7-3" title="3">activityNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>)</a>
+<a class="sourceLine" id="cb7-4" title="4">activityGraph &lt;-<span class="st"> </span>activityNetwork <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>() <span class="co"># igraph network graph</span></a>
 <a class="sourceLine" id="cb7-5" title="5"></a>
 <a class="sourceLine" id="cb7-6" title="6"><span class="co">## actor network - nodes are users who have tweeted</span></a>
 <a class="sourceLine" id="cb7-7" title="7"></a>
-<a class="sourceLine" id="cb7-8" title="8">actorNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-9" title="9">actorGraph &lt;-<span class="st"> </span>actorNetwork<span class="op">$</span>graph</a>
+<a class="sourceLine" id="cb7-8" title="8">actorNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>)</a>
+<a class="sourceLine" id="cb7-9" title="9">actorGraph &lt;-<span class="st"> </span>actorNetwork <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>() <span class="co"># igraph network graph</span></a>
 <a class="sourceLine" id="cb7-10" title="10"></a>
-<a class="sourceLine" id="cb7-11" title="11"><span class="co"># optional step to add additional twitter user profile info to actor network graph as </span></a>
-<a class="sourceLine" id="cb7-12" title="12"><span class="co"># node attributes </span></a>
-<a class="sourceLine" id="cb7-13" title="13">actorNetWithUserAttr &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddTwitterUserData.html">AddTwitterUserData</a></span>(twitterData, actorNetwork,</a>
-<a class="sourceLine" id="cb7-14" title="14">                                           <span class="dt">lookupUsers =</span> <span class="ot">TRUE</span>, </a>
-<a class="sourceLine" id="cb7-15" title="15">                                           <span class="dt">twitterAuth =</span> twitterAuth, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-16" title="16"></a>
-<a class="sourceLine" id="cb7-17" title="17">actorGraphWithUserAttr &lt;-<span class="st"> </span>actorNetWithUserAttr<span class="op">$</span>graph</a>
-<a class="sourceLine" id="cb7-18" title="18"></a>
-<a class="sourceLine" id="cb7-19" title="19"><span class="co">## semantic network - relationships between concepts - nodes are common terms, hashtags and actors</span></a>
+<a class="sourceLine" id="cb7-11" title="11"><span class="co"># optional step to add additional twitter user profile info to actor network graph as</span></a>
+<a class="sourceLine" id="cb7-12" title="12"><span class="co"># node attributes</span></a>
+<a class="sourceLine" id="cb7-13" title="13">actorGraphWithUserAttr &lt;-<span class="st"> </span>actorNetwork <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="st">                          </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddUserData.html">AddUserData</a></span>(twitterData, </a>
+<a class="sourceLine" id="cb7-15" title="15">                                      <span class="dt">lookupUsers =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb7-16" title="16">                                      <span class="dt">twitterAuth =</span> twitterAuth) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a>
+<a class="sourceLine" id="cb7-17" title="17"></a>
+<a class="sourceLine" id="cb7-18" title="18"><span class="co">## semantic network - relationships between concepts - nodes are common terms, hashtags</span></a>
+<a class="sourceLine" id="cb7-19" title="19"><span class="co">## and actors</span></a>
 <a class="sourceLine" id="cb7-20" title="20"></a>
-<a class="sourceLine" id="cb7-21" title="21">remItems &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#auspol"</span>, <span class="st">"auspol"</span>) <span class="co"># exclude these terms</span></a>
+<a class="sourceLine" id="cb7-21" title="21">remItems &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#auspol"</span>, <span class="st">"auspol"</span>) <span class="co"># exclude these terms</span></a>
 <a class="sourceLine" id="cb7-22" title="22">topTerms &lt;-<span class="st"> </span><span class="dv">5</span>                      <span class="co"># include only the top 5% most frequent terms as nodes</span></a>
 <a class="sourceLine" id="cb7-23" title="23">semanticNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"semantic"</span>, <span class="dt">removeTermsOrHashtags =</span> remItems, </a>
-<a class="sourceLine" id="cb7-24" title="24">                                          <span class="dt">termFreq =</span> topTerms, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-25" title="25">semanticGraph &lt;-<span class="st"> </span>semanticNetwork<span class="op">$</span>graph</a>
+<a class="sourceLine" id="cb7-24" title="24">                                          <span class="dt">termFreq =</span> topTerms)</a>
+<a class="sourceLine" id="cb7-25" title="25">semanticGraph &lt;-<span class="st"> </span>semanticNetwork <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>(<span class="dt">writeToFile =</span> <span class="ot">TRUE</span>, <span class="dt">directed =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb7-26" title="26"></a>
 <a class="sourceLine" id="cb7-27" title="27"><span class="co">## bimodal network - nodes are actors and hashtags</span></a>
 <a class="sourceLine" id="cb7-28" title="28"></a>
-<a class="sourceLine" id="cb7-29" title="29">remItems &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"#auspol"</span>) <span class="co"># exclude these hashtags</span></a>
-<a class="sourceLine" id="cb7-30" title="30">bimodalNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"bimodal"</span>, <span class="dt">removeTermsOrHashtags =</span> remItems, </a>
-<a class="sourceLine" id="cb7-31" title="31">                                         <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb7-32" title="32">bimodalGraph &lt;-<span class="st"> </span>bimodalNetwork<span class="op">$</span>graph</a></code></pre></div>
+<a class="sourceLine" id="cb7-29" title="29">remItems &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#auspol"</span>) <span class="co"># exclude these hashtags</span></a>
+<a class="sourceLine" id="cb7-30" title="30">bimodalNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"bimodal"</span>, <span class="dt">removeTermsOrHashtags =</span> remItems)</a>
+<a class="sourceLine" id="cb7-31" title="31">bimodalGraph &lt;-<span class="st"> </span>bimodalNetwork <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>(<span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+</div>
+<div id="addtext-is-a-function-that-can-be-used-to-add-collected-text-data-ie-tweets-to-activity-and-actor-networks" class="section level4">
+<h4 class="hasAnchor">
+<a href="#addtext-is-a-function-that-can-be-used-to-add-collected-text-data-ie-tweets-to-activity-and-actor-networks" class="anchor"></a>AddText() is a function that can be used to add collected text data (i.e tweets) to activity and actor networks</h4>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="co">## graph for activity network with text added</span></a>
+<a class="sourceLine" id="cb8-2" title="2">activityNetworkGraph &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="st">                        </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(twitterData) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a></code></pre></div>
 </div>
 </div>
 <div id="youtube-example" class="section level3">
@@ -196,29 +204,28 @@
 <div id="authenticate-collect-and-create-network-graphs-from-youtube-video-comments" class="section level4">
 <h4 class="hasAnchor">
 <a href="#authenticate-collect-and-create-network-graphs-from-youtube-video-comments" class="anchor"></a>‘Authenticate’, ‘Collect’ and ‘Create’ network graphs from youtube video comments</h4>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
-<a class="sourceLine" id="cb8-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vosonSML)</a>
-<a class="sourceLine" id="cb8-3" title="3"></a>
-<a class="sourceLine" id="cb8-4" title="4">myYoutubeAPIKey &lt;-<span class="st"> "xxxxxxxxxxxxxx"</span></a>
-<a class="sourceLine" id="cb8-5" title="5"></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="co"># helper to create a list of youtube video ids from urls</span></a>
-<a class="sourceLine" id="cb8-7" title="7">myYoutubeVideoIds &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,</a>
-<a class="sourceLine" id="cb8-8" title="8">                                          <span class="st">"https://youtu.be/xxxxxxxx"</span>))</a>
-<a class="sourceLine" id="cb8-9" title="9"></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="co"># authenticate and collect 100 top-level comments per youtube video in list</span></a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="co"># also collects reply-comments for each top-level comment</span></a>
-<a class="sourceLine" id="cb8-12" title="12">youtubeData &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"youtube"</span>, <span class="dt">apiKey =</span> myYoutubeAPIKey) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="st">               </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">videoIDs =</span> myYoutubeVideoIds, <span class="dt">maxComments =</span> <span class="dv">100</span>)</a>
-<a class="sourceLine" id="cb8-14" title="14"></a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="co">## activity network - nodes are comments and videos</span></a>
-<a class="sourceLine" id="cb8-16" title="16"></a>
-<a class="sourceLine" id="cb8-17" title="17">activityNetwork &lt;-<span class="st"> </span>youtubeData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb8-18" title="18">activityGraph &lt;-<span class="st"> </span>activityNetwork<span class="op">$</span>graph</a>
-<a class="sourceLine" id="cb8-19" title="19"></a>
-<a class="sourceLine" id="cb8-20" title="20"><span class="co">## actor network - nodes are users who have posted comments</span></a>
-<a class="sourceLine" id="cb8-21" title="21"></a>
-<a class="sourceLine" id="cb8-22" title="22">actorNetwork &lt;-<span class="st"> </span>youtubeData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb8-23" title="23">actorGraph &lt;-<span class="st"> </span>actorNetwork<span class="op">$</span>graph                </a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(vosonSML)</a>
+<a class="sourceLine" id="cb9-3" title="3"></a>
+<a class="sourceLine" id="cb9-4" title="4">myYoutubeAPIKey &lt;-<span class="st"> "xxxxxxxxxxxxxx"</span></a>
+<a class="sourceLine" id="cb9-5" title="5"></a>
+<a class="sourceLine" id="cb9-6" title="6"><span class="co"># helper to create a list of youtube video ids from urls</span></a>
+<a class="sourceLine" id="cb9-7" title="7">myYoutubeVideoIds &lt;-<span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,</a>
+<a class="sourceLine" id="cb9-8" title="8">                                          <span class="st">"https://youtu.be/xxxxxxxx"</span>))</a>
+<a class="sourceLine" id="cb9-9" title="9"></a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="co"># authenticate and collect 100 top-level comments per youtube video in list</span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="co"># also collects reply-comments for each top-level comment</span></a>
+<a class="sourceLine" id="cb9-12" title="12">youtubeData &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"youtube"</span>, <span class="dt">apiKey =</span> myYoutubeAPIKey) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="st">               </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">videoIDs =</span> myYoutubeVideoIds, <span class="dt">maxComments =</span> <span class="dv">100</span>)</a>
+<a class="sourceLine" id="cb9-14" title="14"></a>
+<a class="sourceLine" id="cb9-15" title="15"><span class="co">## activity network - nodes are comments and videos</span></a>
+<a class="sourceLine" id="cb9-16" title="16"></a>
+<a class="sourceLine" id="cb9-17" title="17">activityNetwork &lt;-<span class="st"> </span>youtubeData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(youtubeData)</a>
+<a class="sourceLine" id="cb9-18" title="18">activityGraph &lt;-<span class="st"> </span>activityNetwork <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a>
+<a class="sourceLine" id="cb9-19" title="19"></a>
+<a class="sourceLine" id="cb9-20" title="20"><span class="co">## actor network - nodes are users who have posted comments</span></a>
+<a class="sourceLine" id="cb9-21" title="21"></a>
+<a class="sourceLine" id="cb9-22" title="22">actorGraph &lt;-<span class="st"> </span>youtubeData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(youtubeData) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a></code></pre></div>
 </div>
 </div>
 <div id="reddit-example" class="section level3">
@@ -227,36 +234,35 @@
 <div id="collect-and-create-reddit-networks-from-a-subreddit-thread" class="section level4">
 <h4 class="hasAnchor">
 <a href="#collect-and-create-reddit-networks-from-a-subreddit-thread" class="anchor"></a>‘Collect’ and ‘Create’ reddit networks from a subreddit thread</h4>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(magrittr)</a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(vosonSML)</a>
-<a class="sourceLine" id="cb9-3" title="3"></a>
-<a class="sourceLine" id="cb9-4" title="4"><span class="co"># collect reddit comment threads</span></a>
-<a class="sourceLine" id="cb9-5" title="5">myThreadUrls &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>)</a>
-<a class="sourceLine" id="cb9-6" title="6"></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="co"># authentication does not require credentials</span></a>
-<a class="sourceLine" id="cb9-8" title="8">redditData &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"reddit"</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="st">              </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">threadUrls =</span> myThreadUrls, <span class="dt">waitTime =</span> <span class="dv">5</span>)</a>
-<a class="sourceLine" id="cb9-10" title="10">              </a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="co">## activity network - nodes are comments and intital thread posts</span></a>
-<a class="sourceLine" id="cb9-12" title="12"></a>
-<a class="sourceLine" id="cb9-13" title="13">activityNetwork &lt;-<span class="st"> </span>redditData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb9-14" title="14">activityGraph &lt;-<span class="st"> </span>activityNetwork<span class="op">$</span>graph</a>
-<a class="sourceLine" id="cb9-15" title="15"></a>
-<a class="sourceLine" id="cb9-16" title="16"><span class="co">## actor network - nodes are users who have posted comments</span></a>
-<a class="sourceLine" id="cb9-17" title="17"></a>
-<a class="sourceLine" id="cb9-18" title="18"><span class="co"># create an actor network with comment text as edge attribute</span></a>
-<a class="sourceLine" id="cb9-19" title="19">actorNetwork &lt;-<span class="st"> </span>redditData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>, <span class="dt">includeTextData =</span> <span class="ot">TRUE</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb9-20" title="20">actorGraph &lt;-<span class="st"> </span>actorNetwork<span class="op">$</span>graph</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(vosonSML)</a>
+<a class="sourceLine" id="cb10-3" title="3"></a>
+<a class="sourceLine" id="cb10-4" title="4"><span class="co"># collect reddit comment threads</span></a>
+<a class="sourceLine" id="cb10-5" title="5">myThreadUrls &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>)</a>
+<a class="sourceLine" id="cb10-6" title="6"></a>
+<a class="sourceLine" id="cb10-7" title="7"><span class="co"># authentication does not require credentials</span></a>
+<a class="sourceLine" id="cb10-8" title="8">redditData &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"reddit"</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb10-9" title="9"><span class="st">              </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">threadUrls =</span> myThreadUrls, <span class="dt">waitTime =</span> <span class="dv">5</span>)</a>
+<a class="sourceLine" id="cb10-10" title="10">              </a>
+<a class="sourceLine" id="cb10-11" title="11"><span class="co">## activity network - nodes are comments and intital thread posts</span></a>
+<a class="sourceLine" id="cb10-12" title="12"></a>
+<a class="sourceLine" id="cb10-13" title="13">activityNetwork &lt;-<span class="st"> </span>redditData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>)</a>
+<a class="sourceLine" id="cb10-14" title="14">activityGraph &lt;-<span class="st"> </span>activityNetwork <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>(<span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb10-15" title="15"></a>
+<a class="sourceLine" id="cb10-16" title="16"><span class="co">## actor network - nodes are users who have posted comments</span></a>
+<a class="sourceLine" id="cb10-17" title="17"></a>
+<a class="sourceLine" id="cb10-18" title="18"><span class="co"># create an actor network with comment text as edge attribute</span></a>
+<a class="sourceLine" id="cb10-19" title="19">actorGraph &lt;-<span class="st"> </span>redditData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(redditData) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a></code></pre></div>
 </div>
 <div id="save-and-load-authentication-objects" class="section level4">
 <h4 class="hasAnchor">
 <a href="#save-and-load-authentication-objects" class="anchor"></a>Save and Load Authentication Objects</h4>
 <p>Save and reuse twitter and youtube authentication objects in future sessions.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># save the object after 'Authenticate' </span></a>
-<a class="sourceLine" id="cb10-2" title="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">saveRDS</a></span>(my_youtube_auth, <span class="dt">file =</span> <span class="st">"~/.youtube_auth"</span>)</a>
-<a class="sourceLine" id="cb10-3" title="3"></a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="co"># load a previously saved authentication object for use in 'Collect'</span></a>
-<a class="sourceLine" id="cb10-5" title="5">my_youtube_auth &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="st">"~/.youtube_auth"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># save the object after 'Authenticate' </span></a>
+<a class="sourceLine" id="cb11-2" title="2"><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(myYoutubeAuth, <span class="dt">file =</span> <span class="st">"~/.youtube_auth"</span>)</a>
+<a class="sourceLine" id="cb11-3" title="3"></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="co"># load a previously saved authentication object for use in 'Collect'</span></a>
+<a class="sourceLine" id="cb11-5" title="5">myYoutubeAuth &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"~/.youtube_auth"</span>)</a></code></pre></div>
 <p>For more detailed function information and examples, please refer to the <a href="https://vosonlab.github.io/vosonSML/reference/index.html">Reference</a> page.</p>
 </div>
 </div>
@@ -298,17 +304,20 @@
   </div>
 </div>
 
+
       <footer><div class="copyright">
   <p>Developed by <a href="https://vosonlab.net"><span>VOSON Lab</span></a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
   
+
 
   </body>
 </html>

@@ -99,15 +99,15 @@ activityGraph <- activityNetwork %>% Graph() # igraph network graph
 actorNetwork <- twitterData %>% Create("actor")
 actorGraph <- actorNetwork %>% Graph() # igraph network graph
 
-# optional step to add additional twitter user profile info to actor network graph as 
+# optional step to add additional twitter user profile info to actor network graph as
 # node attributes
-actorNetWithUserAttr <- AddTwitterUserData(twitterData, actorNetwork,
-                                           lookupUsers = TRUE, 
-                                           twitterAuth = twitterAuth, writeToFile = TRUE)
+actorGraphWithUserAttr <- actorNetwork %>% 
+                          AddUserData(twitterData, 
+                                      lookupUsers = TRUE,
+                                      twitterAuth = twitterAuth) %>% Graph()
 
-actorGraphWithUserAttr <- actorNetWithUserAttr$graph
-
-## semantic network - relationships between concepts - nodes are common terms, hashtags and actors
+## semantic network - relationships between concepts - nodes are common terms, hashtags
+## and actors
 
 remItems <- c("#auspol", "auspol") # exclude these terms
 topTerms <- 5                      # include only the top 5% most frequent terms as nodes
@@ -122,8 +122,7 @@ bimodalNetwork <- twitterData %>% Create("bimodal", removeTermsOrHashtags = remI
 bimodalGraph <- bimodalNetwork %>% Graph(writeToFile = TRUE)
 ```
 
-#### AddText() is a function that can be used to add collected text data (i.e tweets) to 
-#### activity and actor networks
+#### AddText() is a function that can be used to add collected text data (i.e tweets) to activity and actor networks
 ```R
 ## graph for activity network with text added
 activityNetworkGraph <- twitterData %>% Create("activity") %>% 
@@ -188,10 +187,10 @@ actorGraph <- redditData %>% Create("actor") %>% AddText(redditData) %>% Graph()
 Save and reuse twitter and youtube authentication objects in future sessions.
 ```R
 # save the object after 'Authenticate' 
-saveRDS(my_youtube_auth, file = "~/.youtube_auth")
+saveRDS(myYoutubeAuth, file = "~/.youtube_auth")
 
 # load a previously saved authentication object for use in 'Collect'
-my_youtube_auth <- readRDS("~/.youtube_auth")
+myYoutubeAuth <- readRDS("~/.youtube_auth")
 ```
 For more detailed function information and examples, please refer to the  [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
 

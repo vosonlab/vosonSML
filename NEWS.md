@@ -8,13 +8,16 @@
   `$edges` if passed an actor network.
 - Generation of `igraph` graph objects and subsequent writing to file has been removed from the
   `Create` function and placed in a new function `Graph`. This change abstracts the graph creation
-  and makes it optional, but also allows network enrichment steps such as `AddText` to be
+  and makes it optional, but also allows supplemental network steps such as `AddText` to be
   performed prior to creating the final igraph object.
 
 ## Minor Changes
 - Removed `writeToFile` parameter from `Create` functions and added it to `Graph`.
 - Removed `weightEdges`, `textData` and `cleanText` parameters from `Create.actor.reddit`.
   `cleanText` is now a parameter of `AddText.activity.reddit` and `AddText.actor.reddit`.
+- Replaced `AddTwitterUserData` with `AddUserData` function that works similarly to `AddText`.
+  This function currently only applies to twitter actor networks and will add, or download
+  add if missing, user profile information to actors as node attributes.
 
 # vosonSML 0.28.1
 
