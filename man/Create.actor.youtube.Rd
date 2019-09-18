@@ -4,20 +4,17 @@
 \alias{Create.actor.youtube}
 \title{Create youtube actor network}
 \usage{
-\method{Create}{actor.youtube}(datasource, type, writeToFile = FALSE,
-  ...)
+\method{Create}{actor.youtube}(datasource, type, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"youtube"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"actor"}.}
 
-\item{writeToFile}{Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.}
-
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-Named list containing generated network as igraph object \code{$graph}.
+Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
 Creates a youtube actor network from comment threads on youtube videos. Users who have made comments to 
@@ -28,10 +25,11 @@ the videos publisher with top-level comments as directed edges towards them.
 \examples{
 \dontrun{
 # create a youtube actor network graph
-actorNetwork <- youtubeData \%>\% Create("actor", writeToFile = TRUE)
+actorNetwork <- youtubeData \%>\% Create("actor")
 
-# igraph object
-# actorNetwork$graph
+# network
+# actorNetwork$nodes
+# actorNetwork$edges
 }
 
 }

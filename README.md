@@ -3,7 +3,7 @@
 ![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)
 ![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)
 ![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
-![Dev](https://img.shields.io/static/v1?label=dev&message=v0.28.1&color=orange&logo=github)
+![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.0&color=orange&logo=github)
 ![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?logo=github)
 
 `vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
@@ -91,36 +91,42 @@ twitterData <- twitterAuth %>%
 ```R
 ## activity network - nodes are tweets
 
-activityNetwork <- twitterData %>% Create("activity", writeToFile = TRUE)
-activityGraph <- activityNetwork$graph # igraph network graph
+activityNetwork <- twitterData %>% Create("activity")
+activityGraph <- activityNetwork %>% Graph() # igraph network graph
 
 ## actor network - nodes are users who have tweeted
 
-actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TRUE)
-actorGraph <- actorNetwork$graph
+actorNetwork <- twitterData %>% Create("actor")
+actorGraph <- actorNetwork %>% Graph() # igraph network graph
 
-# optional step to add additional twitter user profile info to actor network graph as 
-# node attributes 
-actorNetWithUserAttr <- AddTwitterUserData(twitterData, actorNetwork,
-                                           lookupUsers = TRUE, 
-                                           twitterAuth = twitterAuth, writeToFile = TRUE)
+# optional step to add additional twitter user profile info to actor network graph as
+# node attributes
+actorGraphWithUserAttr <- actorNetwork %>% 
+                          AddUserData(twitterData, 
+                                      lookupUsers = TRUE,
+                                      twitterAuth = twitterAuth) %>% Graph()
 
-actorGraphWithUserAttr <- actorNetWithUserAttr$graph
-
-## semantic network - relationships between concepts - nodes are common terms, hashtags and actors
+## semantic network - relationships between concepts - nodes are common terms, hashtags
+## and actors
 
 remItems <- c("#auspol", "auspol") # exclude these terms
 topTerms <- 5                      # include only the top 5% most frequent terms as nodes
 semanticNetwork <- twitterData %>% Create("semantic", removeTermsOrHashtags = remItems, 
-                                          termFreq = topTerms, writeToFile = TRUE)
-semanticGraph <- semanticNetwork$graph
+                                          termFreq = topTerms)
+semanticGraph <- semanticNetwork %>% Graph(writeToFile = TRUE, directed = FALSE)
 
 ## bimodal network - nodes are actors and hashtags
 
 remItems <- c("#auspol") # exclude these hashtags
-bimodalNetwork <- twitterData %>% Create("bimodal", removeTermsOrHashtags = remItems, 
-                                         writeToFile = TRUE)
-bimodalGraph <- bimodalNetwork$graph
+bimodalNetwork <- twitterData %>% Create("bimodal", removeTermsOrHashtags = remItems)
+bimodalGraph <- bimodalNetwork %>% Graph(writeToFile = TRUE)
+```
+
+#### AddText() is a function that can be used to add collected text data (i.e tweets) to activity and actor networks
+```R
+## graph for activity network with text added
+activityNetworkGraph <- twitterData %>% Create("activity") %>% 
+                        AddText(twitterData) %>% Graph()
 ```
 
 ### Youtube Example
@@ -143,13 +149,12 @@ youtubeData <- Authenticate("youtube", apiKey = myYoutubeAPIKey) %>%
 
 ## activity network - nodes are comments and videos
 
-activityNetwork <- youtubeData %>% Create("activity", writeToFile = TRUE)
-activityGraph <- activityNetwork$graph
+activityNetwork <- youtubeData %>% Create("activity") %>% AddText(youtubeData)
+activityGraph <- activityNetwork %>% Graph()
 
 ## actor network - nodes are users who have posted comments
 
-actorNetwork <- youtubeData %>% Create("actor", writeToFile = TRUE)
-actorGraph <- actorNetwork$graph                
+actorGraph <- youtubeData %>% Create("actor") %>% AddText(youtubeData) %>% Graph()
 ```
 
 ### Reddit Example
@@ -168,15 +173,13 @@ redditData <- Authenticate("reddit") %>%
               
 ## activity network - nodes are comments and intital thread posts
 
-activityNetwork <- redditData %>% Create("activity", writeToFile = TRUE)
-activityGraph <- activityNetwork$graph
+activityNetwork <- redditData %>% Create("activity")
+activityGraph <- activityNetwork %>% Graph(writeToFile = TRUE)
 
 ## actor network - nodes are users who have posted comments
 
 # create an actor network with comment text as edge attribute
-actorNetwork <- redditData %>% Create("actor", includeTextData = TRUE, writeToFile = TRUE)
-actorGraph <- actorNetwork$graph
-
+actorGraph <- redditData %>% Create("actor") %>% AddText(redditData) %>% Graph()
 ```
 
 #### Save and Load Authentication Objects
@@ -184,10 +187,10 @@ actorGraph <- actorNetwork$graph
 Save and reuse twitter and youtube authentication objects in future sessions.
 ```R
 # save the object after 'Authenticate' 
-saveRDS(my_youtube_auth, file = "~/.youtube_auth")
+saveRDS(myYoutubeAuth, file = "~/.youtube_auth")
 
 # load a previously saved authentication object for use in 'Collect'
-my_youtube_auth <- readRDS("~/.youtube_auth")
+myYoutubeAuth <- readRDS("~/.youtube_auth")
 ```
 For more detailed function information and examples, please refer to the  [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
 

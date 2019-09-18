@@ -4,22 +4,19 @@
 \alias{Create.activity.reddit}
 \title{Create reddit activity network}
 \usage{
-\method{Create}{activity.reddit}(datasource, type, writeToFile = FALSE,
-  verbose = TRUE, ...)
+\method{Create}{activity.reddit}(datasource, type, verbose = TRUE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"reddit"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"activity"}.}
 
-\item{writeToFile}{Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.}
-
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-Named list containing generated network as igraph object \code{$graph}.
+Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
 Creates a reddit activity network from subreddit thread comments. Nodes are comments and initial thread
@@ -28,11 +25,11 @@ posts, edges form the discussion structure and signify to which comment or post 
 \examples{
 \dontrun{
 # create a reddit activity network graph
-activityNetwork <- redditData \%>\% 
-  Create("activity", writeToFile = TRUE)
+activityNetwork <- redditData \%>\% Create("activity")
 
-# igraph object
-# activityNetwork$graph
+# network
+# activityNetwork$nodes
+# activityNetwork$edges
 }
 
 }

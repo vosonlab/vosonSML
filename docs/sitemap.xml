@@ -28,9 +28,6 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.youtube.html</loc>
   </url>
   <url>
-    <loc>http://vosonlab.github.io/vosonSML/reference/Create.html</loc>
-  </url>
-  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.activity.reddit.html</loc>
   </url>
   <url>
@@ -52,13 +49,31 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.bimodal.twitter.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Create.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.semantic.twitter.html</loc>
   </url>
   <url>
-    <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddTwitterUserData.html</loc>
+    <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddText.activity.reddit.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddText.actor.reddit.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddText.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddUserData.actor.twitter.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddUserData.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-GetYoutubeVideoIDs.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-Graph.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-ImportData.html</loc>

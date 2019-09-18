@@ -18,13 +18,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -50,6 +52,7 @@
 <![endif]-->
 
 
+
   </head>
 
   <body>
@@ -66,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.28.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.0</span>
       </span>
     </div>
 
@@ -107,6 +110,7 @@
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -116,60 +120,82 @@
       <small>Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="vosonsml-0-28-1" class="section level1">
+    <div id="vosonsml-0290" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-28-1" class="anchor"></a>vosonSML 0.28.1<small> Unreleased </small>
+<a href="#vosonsml-0290" class="anchor"></a>vosonSML 0.29.0<small> Unreleased </small>
 </h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major Changes</h2>
+<ul>
+<li>Created the <code>Addtext</code> function to add collected text data to networks. This feature applies to <code>activity</code> and <code>actor</code> networks and will typically add a node attribute to activity networks and an edge attribute to actor networks. For example, this function will add the column <code>vosonTxt_tweets</code> containing tweet text to <code>$nodes</code> if passed an activity network, and to <code>$edges</code> if passed an actor network.</li>
+<li>Generation of <code>igraph</code> graph objects and subsequent writing to file has been removed from the <code>Create</code> function and placed in a new function <code>Graph</code>. This change abstracts the graph creation and makes it optional, but also allows supplemental network steps such as <code>AddText</code> to be performed prior to creating the final igraph object.</li>
+</ul>
+</div>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor Changes</h2>
+<ul>
+<li>Removed <code>writeToFile</code> parameter from <code>Create</code> functions and added it to <code>Graph</code>.</li>
+<li>Removed <code>weightEdges</code>, <code>textData</code> and <code>cleanText</code> parameters from <code>Create.actor.reddit</code>. <code>cleanText</code> is now a parameter of <code>AddText.activity.reddit</code> and <code>AddText.actor.reddit</code>.</li>
+<li>Replaced <code>AddTwitterUserData</code> with <code>AddUserData</code> function that works similarly to <code>AddText</code>. This function currently only applies to twitter actor networks and will add, or download add if missing, user profile information to actors as node attributes.</li>
+</ul>
+</div>
+</div>
+    <div id="vosonsml-0281" class="section level1">
+<h1 class="page-header">
+<a href="#vosonsml-0281" class="anchor"></a>vosonSML 0.28.1<small> Unreleased </small>
+</h1>
+<div id="minor-changes-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes-1" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added <code>activity</code> network type for reddit. In the reddit activity network nodes are the thread posts and comments, edges represent where comments are directed in the threads.</li>
 <li>Added github dev version badge to README.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-28-0" class="section level1">
+    <div id="vosonsml-0280" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-28-0" class="anchor"></a>vosonSML 0.28.0<small> Unreleased </small>
-</h1>
-<div id="minor-changes-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor Changes</h2>
-<ul>
-<li>Added new <code>activity</code> network type for twitter and youtube <code>Create</code> function. In this network nodes are the items collected such as tweets returned from a twitter search and comments posted to youtube videos. Edges represent the platform relationship between the tweets or comments.</li>
-</ul>
-</div>
-</div>
-    <div id="vosonsml-0-27-3" class="section level1">
-<h1 class="page-header">
-<a href="#vosonsml-0-27-3" class="anchor"></a>vosonSML 0.27.3<small> Unreleased </small>
+<a href="#vosonsml-0280" class="anchor"></a>vosonSML 0.28.0<small> Unreleased </small>
 </h1>
 <div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-2" class="anchor"></a>Minor Changes</h2>
 <ul>
-<li>Added a new twitter actor network edge type <code>self-loop</code>. This aims to facilitate the later addition of tweet text to the network graph for user tweets that have no ties to other users.</li>
+<li>Added new <code>activity</code> network type for twitter and youtube <code>Create</code> function. In this network nodes are the items collected such as tweets returned from a twitter search and comments posted to youtube videos. Edges represent the platform relationship between the tweets or comments.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-27-2" class="section level1">
+    <div id="vosonsml-0273" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-2" class="anchor"></a>vosonSML 0.27.2<small> 2019-07-18 </small>
+<a href="#vosonsml-0273" class="anchor"></a>vosonSML 0.27.3<small> Unreleased </small>
 </h1>
 <div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-3" class="anchor"></a>Minor Changes</h2>
 <ul>
-<li>Added twitter interactive web authorization of an app as provided by <code><a href="https://www.rdocumentation.org/packages/rtweet/topics/create_token">rtweet::create_token</a></code>. Method is used when only twitter app name and consumer keys are passed to <code>Authenticate.twitter</code> as parameters. e.g <code><a href="../reference/Authenticate.html">Authenticate("twitter", appName = "An App", apiKey = "xxxxxxxxxxxx",  apiSecret = "xxxxxxxxxxxx")</a></code>. A browser tab will open asking the user to authorize the app to their twitter account to complete authentication. This is using twitters <code>Application-user authentication: OAuth 1a (access token for user context)</code> method.</li>
+<li>Added a new twitter actor network edge type <code>self-loop</code>. This aims to facilitate the later addition of tweet text to the network graph for user tweets that have no ties to other users.</li>
+</ul>
+</div>
+</div>
+    <div id="vosonsml-0272" class="section level1">
+<h1 class="page-header">
+<a href="#vosonsml-0272" class="anchor"></a>vosonSML 0.27.2<small> 2019-07-18 </small>
+</h1>
+<div id="minor-changes-4" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes-4" class="anchor"></a>Minor Changes</h2>
+<ul>
+<li>Added twitter interactive web authorization of an app as provided by <code><a href="https://rdrr.io/pkg/rtweet/man/create_token.html">rtweet::create_token</a></code>. Method is used when only twitter app name and consumer keys are passed to <code>Authenticate.twitter</code> as parameters. e.g <code><a href="../reference/Authenticate.html">Authenticate("twitter", appName = "An App", apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx")</a></code>. A browser tab will open asking the user to authorize the app to their twitter account to complete authentication. This is using twitters <code>Application-user authentication: OAuth 1a (access token for user context)</code> method.</li>
 <li>It is suspected that Reddit is rate-limiting some generic R UA strings. So a User-Agent string is now set for underlaying R Collect functions (e.g <code>file</code>) via the <code>HTTPUserAgent</code> option. It is temporarily set to package name and current version number for Collect e.g <code>vosonSML v.0.27.2 (R Package)</code>.</li>
 <li>Removed hex sticker (and favicons for pkgdown site).</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-27-1" class="section level1">
+    <div id="vosonsml-0271" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-1" class="anchor"></a>vosonSML 0.27.1<small> Unreleased </small>
+<a href="#vosonsml-0271" class="anchor"></a>vosonSML 0.27.1<small> Unreleased </small>
 </h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
@@ -179,45 +205,45 @@
 <li>Some UTF encoding issues in <code>Create.semantic.twitter</code> were also fixed.</li>
 </ul>
 </div>
-<div id="minor-changes-4" class="section level2">
+<div id="minor-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-5" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added ‘#’ to hashtags and ‘@’ to mentions in twitter semantic network to differentiate between hashtags, mentions and common terms.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-27-0" class="section level1">
+    <div id="vosonsml-0270" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-0" class="anchor"></a>vosonSML 0.27.0<small> Unreleased </small>
+<a href="#vosonsml-0270" class="anchor"></a>vosonSML 0.27.0<small> Unreleased </small>
 </h1>
 <div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
 <ul>
-<li>Fixed a bug in <code>Collect.twitter</code> in which any additional <code>twitter API</code> parameters e.g <code>lang</code> or <code>until</code> were not being passed properly to <code><a href="https://www.rdocumentation.org/packages/rtweet/topics/search_tweets">rtweet::search_tweets</a></code>. This resulted in the additional parameters being ignored.</li>
+<li>Fixed a bug in <code>Collect.twitter</code> in which any additional <code>twitter API</code> parameters e.g <code>lang</code> or <code>until</code> were not being passed properly to <code><a href="https://rdrr.io/pkg/rtweet/man/search_tweets.html">rtweet::search_tweets</a></code>. This resulted in the additional parameters being ignored.</li>
 </ul>
 </div>
-<div id="major-changes" class="section level2">
+<div id="major-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-1" class="anchor"></a>Major Changes</h2>
 <ul>
 <li>Removed the <code>SaveCredential</code> and <code>LoadCredential</code> functions, as well as the <code>useCachedToken</code> parameter for <code>Authenticate.twitter</code>. These were simply calling the <code>saveRDS</code> and <code>readRDS</code> functions and not performing any additional processing. Using <code>saveRDS</code> and <code>readRDS</code> directly to save and load an <code>Authenticate</code> credential object to file is simpler.</li>
 <li>Changed the way that the <code>cleanText</code> parameter works in <code>Create.actor.reddit</code> so that it is more permissive. Addresses encoding issues with apostrophes and pound symbols and removes unicode characters not permitted by the XML 1.0 standard as used in <code>graphml</code> files. This is best effort and does not resolve all <code>reddit</code> text encoding issues.</li>
 </ul>
 </div>
-<div id="minor-changes-5" class="section level2">
+<div id="minor-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-6" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added <code>Collect.twitter</code> summary information that includes the earliest (min) and latest (max) tweet <code>status_id</code> collected with timestamp. The <code>status_id</code> values can be used to frame subsequent collections as <code>since_id</code> or <code>max_id</code> parameter values. If the <code>until</code> date parameter was used the timestamp can also be used as a quick confirmation.</li>
 <li>Added elapsed time output to the <code>Collect</code> method.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-26-3" class="section level1">
+    <div id="vosonsml-0263" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-26-3" class="anchor"></a>vosonSML 0.26.3<small> 2019-02-22 </small>
+<a href="#vosonsml-0263" class="anchor"></a>vosonSML 0.26.3<small> 2019-02-22 </small>
 </h1>
 <div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
@@ -226,18 +252,18 @@
 <li>Fixed bugs in <code>Create.actor.reddit</code> that were incorrectly creating edges between top-level commentors and thread authors from different threads. These bugs were only observable in when collecting multiple reddit threads.</li>
 </ul>
 </div>
-<div id="minor-changes-6" class="section level2">
+<div id="minor-changes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-7" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Improved output for <code>reddit</code> collection. Removed the progress bar and added a table of results summarising the number of comments collected for each thread.</li>
 <li>Added to <code>twitter</code> collection output the users <code>twitter API</code> reset time.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-26-2" class="section level1">
+    <div id="vosonsml-0262" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-26-2" class="anchor"></a>vosonSML 0.26.2<small> Unreleased </small>
+<a href="#vosonsml-0262" class="anchor"></a>vosonSML 0.26.2<small> Unreleased </small>
 </h1>
 <div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
@@ -246,30 +272,30 @@
 <li>Fixed a bug in <code>Create.actor.twitter</code> and <code>Create.bimodal.twitter</code> in which the vertices dataframe provided to the <code>graph_from_data_frame</code> function as a contained duplicate names raising an error.</li>
 </ul>
 </div>
-<div id="major-changes-1" class="section level2">
+<div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-2" class="anchor"></a>Major Changes</h2>
 <ul>
 <li>Revised and updated <code>roxygen</code> documentation and examples for all package functions.</li>
 <li>Updated all <code>Authenticate</code>, <code>Collect</code> and <code>Create</code> S3 methods to implement function routing based on object class names.</li>
 </ul>
 </div>
-<div id="minor-changes-7" class="section level2">
+<div id="minor-changes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-7" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-8" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Created a <code>pkgdown</code> web site for github hosted package documentation.</li>
 <li>Created a new hex sticker logo.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-25-0" class="section level1">
+    <div id="vosonsml-0250" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-25-0" class="anchor"></a>vosonSML 0.25.0<small> Unreleased </small>
+<a href="#vosonsml-0250" class="anchor"></a>vosonSML 0.25.0<small> Unreleased </small>
 </h1>
-<div id="major-changes-2" class="section level2">
+<div id="major-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-3" class="anchor"></a>Major Changes</h2>
 <ul>
 <li>Replaced the <code>twitteR</code> twitter collection implementation with the <code>rtweet</code> package.</li>
 <li>A users <code>twitter</code> authentication token can now be cached in the <code>.twitter_oauth_token</code> file and used for subsequent <code>twitter API</code> requests without re-authentication. A new authentication token can be cached by deleting this file and using the re-using the parameter <code>useCachedToken = TRUE</code>.</li>
@@ -282,20 +308,22 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#vosonsml-0-28-1">0.28.1</a></li>
-        <li><a href="#vosonsml-0-28-0">0.28.0</a></li>
-        <li><a href="#vosonsml-0-27-3">0.27.3</a></li>
-        <li><a href="#vosonsml-0-27-2">0.27.2</a></li>
-        <li><a href="#vosonsml-0-27-1">0.27.1</a></li>
-        <li><a href="#vosonsml-0-27-0">0.27.0</a></li>
-        <li><a href="#vosonsml-0-26-3">0.26.3</a></li>
-        <li><a href="#vosonsml-0-26-2">0.26.2</a></li>
-        <li><a href="#vosonsml-0-25-0">0.25.0</a></li>
+        <li><a href="#vosonsml-0290">0.29.0</a></li>
+        <li><a href="#vosonsml-0281">0.28.1</a></li>
+        <li><a href="#vosonsml-0280">0.28.0</a></li>
+        <li><a href="#vosonsml-0273">0.27.3</a></li>
+        <li><a href="#vosonsml-0272">0.27.2</a></li>
+        <li><a href="#vosonsml-0271">0.27.1</a></li>
+        <li><a href="#vosonsml-0270">0.27.0</a></li>
+        <li><a href="#vosonsml-0263">0.26.3</a></li>
+        <li><a href="#vosonsml-0262">0.26.2</a></li>
+        <li><a href="#vosonsml-0250">0.25.0</a></li>
       </ul>
     </div>
   </div>
 
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -303,13 +331,16 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

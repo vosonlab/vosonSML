@@ -4,23 +4,19 @@
 \alias{Create.actor.twitter}
 \title{Create twitter actor network}
 \usage{
-\method{Create}{actor.twitter}(datasource, type, writeToFile = FALSE,
-  verbose = FALSE, ...)
+\method{Create}{actor.twitter}(datasource, type, verbose = TRUE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"actor"}.}
 
-\item{writeToFile}{Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.}
-
-\item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
+\item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-Named list containing dataframes with the relations between actors (directed edges) \code{$relations},
-the actors (including isolates) \code{$users} and generated actor network as igraph object \code{$graph}.
+Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
 Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who 
@@ -30,7 +26,7 @@ without relations to other users will appear in the network graph as isolate nod
 }
 \note{
 When creating twitter actor networks, a network with additional user information can be generated using the
-\code{\link{AddTwitterUserData}} function. Additional calls can be made to the twitter API to get information
+\code{\link{AddUserData}} function. Additional calls can be made to the twitter API to get information
 about users that were identified as nodes during network creation but did not tweet (meaning no user profile 
 information was initially collected for them).
 }
@@ -38,10 +34,11 @@ information was initially collected for them).
 \dontrun{
 # create a twitter actor network graph and output to console additional information 
 # during network creation (verbose)
-actorNetwork <- twitterData \%>\% Create("actor", writeToFile = TRUE, verbose = TRUE)
+actorNetwork <- twitterData \%>\% Create("actor")
 
-# igraph object
-# actorNetwork$graph
+# network
+# actorNetwork$nodes
+# actorNetwork$edges
 }
 
 }

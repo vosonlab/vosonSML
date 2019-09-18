@@ -7,22 +7,22 @@
 #' 
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"youtube"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"actor"}.
-#' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
-#' @return Named list containing generated network as igraph object \code{$graph}.
+#' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #' 
 #' @examples
 #' \dontrun{
 #' # create a youtube actor network graph
-#' actorNetwork <- youtubeData %>% Create("actor", writeToFile = TRUE)
+#' actorNetwork <- youtubeData %>% Create("actor")
 #' 
-#' # igraph object
-#' # actorNetwork$graph
+#' # network
+#' # actorNetwork$nodes
+#' # actorNetwork$edges
 #' }
 #' 
 #' @export
-Create.actor.youtube <- function(datasource, type, writeToFile = FALSE, ...) {
+Create.actor.youtube <- function(datasource, type, ...) {
 
   df_comments <- datasource # match the variable names to avoid warnings in package compilation
 
@@ -53,21 +53,12 @@ Create.actor.youtube <- function(datasource, type, writeToFile = FALSE, ...) {
   # make a dataframe of the relations between actors
   relations <- data.frame(from = df_actor_network[, 1], to = df_actor_network[, 2], commentId = df_actor_network[, 3])
 
-  # convert into a graph
-  g <- graph_from_data_frame(relations, directed = TRUE, vertices = actor_names)
-
-  # add node labels
-  V(g)$label <- V(g)$name
-  g <- set_graph_attr(g, "type", "youtube")
-
-  # output the final network to a graphml file
-  if (writeToFile) { writeOutputFile(g, "graphml", "YoutubeActorNetwork") }
-
   cat("Done.\n")
   flush.console()
 
   func_output <- list(
-    "graph" = g
+    "nodes" = actor_names,
+    "edges" = relations
   )
   
   class(func_output) <- append(class(func_output), c("network", "actor", "youtube"))

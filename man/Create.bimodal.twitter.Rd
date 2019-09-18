@@ -5,8 +5,7 @@
 \title{Create twitter bimodal network}
 \usage{
 \method{Create}{bimodal.twitter}(datasource, type,
-  removeTermsOrHashtags = NULL, writeToFile = FALSE, verbose = FALSE,
-  ...)
+  removeTermsOrHashtags = NULL, verbose = FALSE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
@@ -17,14 +16,12 @@
 this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
 nodes with matching name. Default is \code{NULL} to remove none.}
 
-\item{writeToFile}{Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.}
-
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-Named list containing bimodal network as igraph object \code{$graph}.
+Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
 Creates a bimodal network from tweets returned from the twitter search query. In this network there are 
@@ -37,11 +34,11 @@ the name of the node they are directed towards.
 # create a twitter bimodal network graph removing the hashtag '#auspol' as it was used in 
 # the twitter search query
 bimodalNetwork <- twitterData \%>\% 
-                  Create("bimodal", removeTermsOrHashtags = c("#auspol"), writeToFile = TRUE, 
-                         verbose = TRUE)
+                  Create("bimodal", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
 
-# igraph object
-# bimodalNetwork$graph
+# network
+# bimodalNetwork$nodes
+# bimodalNetwork$edges
 }
 
 }

@@ -4,22 +4,19 @@
 \alias{Create.activity.youtube}
 \title{Create youtube activity network}
 \usage{
-\method{Create}{activity.youtube}(datasource, type, writeToFile = FALSE,
-  verbose = TRUE, ...)
+\method{Create}{activity.youtube}(datasource, type, verbose = TRUE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"youtube"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"activity"}.}
 
-\item{writeToFile}{Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.}
-
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-Named list containing generated network as igraph object \code{$graph}.
+Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
 Creates an activity network from collected youtube video comment threads. Nodes are top-level
@@ -28,10 +25,11 @@ comments, reply comments and videos. Edges are directed between the nodes and re
 \examples{
 \dontrun{
 # create a youtube activity network graph
-activityNetwork <- youtubeData \%>\% Create("activity", writeToFile = TRUE)
+activityNetwork <- youtubeData \%>\% Create("activity")
 
-# igraph object
-# activityNetwork$graph
+# network
+# activityNetwork$nodes
+# activityNetwork$edges
 }
 
 }

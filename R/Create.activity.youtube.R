@@ -5,23 +5,23 @@
 #' 
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"youtube"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.
-#' @param writeToFile Logical. Save network data to a file in the current working directory. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
-#' @return Named list containing generated network as igraph object \code{$graph}.
+#' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #' 
 #' @examples
 #' \dontrun{
 #' # create a youtube activity network graph
-#' activityNetwork <- youtubeData %>% Create("activity", writeToFile = TRUE)
+#' activityNetwork <- youtubeData %>% Create("activity")
 #' 
-#' # igraph object
-#' # activityNetwork$graph
+#' # network
+#' # activityNetwork$nodes
+#' # activityNetwork$edges
 #' }
 #' 
 #' @export
-Create.activity.youtube <- function(datasource, type, writeToFile = FALSE, verbose = TRUE, ...) {
+Create.activity.youtube <- function(datasource, type, verbose = TRUE, ...) {
   df <- tibble::as_tibble(datasource) 
   
   df_stats <- networkStats(NULL, "collected youtube comments", nrow(df))
@@ -87,21 +87,12 @@ Create.activity.youtube <- function(datasource, type, writeToFile = FALSE, verbo
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }
   
-  g <- igraph::graph_from_data_frame(d = df_relations, directed = TRUE, vertices = df_nodes)
-  
-  V(g)$label <- ifelse(!is.na(V(g)$User), paste0(V(g)$name, " (", V(g)$User, ")"), V(g)$name)
-  
-  g <- igraph::set_graph_attr(g, "type", "youtube")
-  
-  if (writeToFile) { writeOutputFile(g, "graphml", "YoutubeActivityNetwork") }
-  
   cat("Done.\n")
   flush.console()
   
   func_output <- list(
     "edges" = df_relations,
-    "nodes" = df_nodes,
-    "graph" = g
+    "nodes" = df_nodes
   )
   
   class(func_output) <- append(class(func_output), c("network", "activity", "youtube"))
