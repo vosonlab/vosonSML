@@ -40,8 +40,9 @@ Create.actor.youtube <- function(datasource, type, ...) {
   df_comments$ReplyToAnotherUser[not_replies] <- paste0("VIDEO:", df_comments$VideoID[not_replies])
 
   comment_users <- df_comments[, 2]
-  mentioned_users <- df_comments[, 8]
-  comment_ids <- df_comments[, 6]
+  user_ids <- df_comments[, 5]
+  mentioned_users <- df_comments[, 11]
+  comment_ids <- df_comments[, 9]
 
   # create network of users that commented on videos as from user, to user, comment id
   df_actor_network <- data.frame(comment_users, mentioned_users, comment_ids)
