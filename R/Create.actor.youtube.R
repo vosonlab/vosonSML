@@ -24,42 +24,50 @@
 #' @export
 Create.actor.youtube <- function(datasource, type, ...) {
 
-  df_comments <- datasource # match the variable names to avoid warnings in package compilation
+  df <- tibble::as_tibble(datasource)
 
   cat("Generating youtube actor network...\n")
   flush.console()
   
-  if (nrow(df_comments) == 0) {
-    stop(paste0("There are no user comments in the data. Please check that the videos selected ",
-               "for collection have comments."), call. = FALSE)
-  }
+  # nodes are authors and videos, edges are comments and self-loops
   
-  # direct comments which are not replies to others to a video id node
-  # in the graph the video nodes will appear as VIDEO:AbCxYz where AbCxYz is the id
-  not_replies <- which(df_comments$ReplyToAnotherUser == "FALSE" & df_comments$ParentID == "None")
-  df_comments$ReplyToAnotherUser[not_replies] <- paste0("VIDEO:", df_comments$VideoID[not_replies])
-
-  comment_users <- df_comments[, 2]
-  user_ids <- df_comments[, 5]
-  mentioned_users <- df_comments[, 11]
-  comment_ids <- df_comments[, 9]
-
-  # create network of users that commented on videos as from user, to user, comment id
-  df_actor_network <- data.frame(comment_users, mentioned_users, comment_ids)
-
-  # make a vector of all the unique actors in the network
-  actor_names <- unique(factor(c(as.character(unique(df_actor_network[, 1])),
-                                 as.character(unique(df_actor_network[, 2])))))
-
-  # make a dataframe of the relations between actors
-  relations <- data.frame(from = df_actor_network[, 1], to = df_actor_network[, 2], commentId = df_actor_network[, 3])
-
+  parent_authors <- df %>% dplyr::select(.data$CommentID, .data$AuthorChannelID) %>% 
+    dplyr::distinct(.data$CommentID, .keep_all = TRUE) %>% 
+    dplyr::rename("ParentID" = .data$CommentID, "ParentAuthorID" = .data$AuthorChannelID)
+  
+  df_relations <- df %>% 
+    dplyr::left_join(., parent_authors, by = c("ParentID")) %>%
+    dplyr::select(.data$AuthorChannelID, .data$ParentID, .data$ParentAuthorID, .data$VideoID) %>%
+    dplyr::mutate(edge_type = case_when((!is.na(.data$ParentID)) ~ "reply-comment", TRUE ~ "comment")) %>%
+    dplyr::mutate(to = if_else(.data$edge_type == "reply-comment", .data$ParentAuthorID,
+                               if_else(.data$edge_type == "comment", paste0("VIDEOID:", .data$VideoID),
+                                       as.character(NA)))) %>%
+    
+    dplyr::rename("from" = .data$AuthorChannelID) %>%
+    dplyr::select(.data$from, .data$to, .data$edge_type)
+  
+  df_nodes <- df %>% dplyr::select(.data$AuthorChannelID, .data$AuthorDisplayName) %>%
+    dplyr::distinct(.data$AuthorChannelID, .keep_all = TRUE) %>%
+    dplyr::mutate(node_type = "actor") %>%
+    dplyr::rename("id" = .data$AuthorChannelID, "screen_name" = .data$AuthorDisplayName)
+  
+  video_ids <- df %>% distinct(.data$VideoID) %>% dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID), VideoID = NULL)
+  
+  df_relations <- dplyr::bind_rows(df_relations, 
+                                   video_ids %>% dplyr::mutate(from = .data$id, to = .data$id, 
+                                                               edge_type = "self-loop", id = NULL))
+  
+  if (nrow(video_ids)) {
+    video_ids %<>% dplyr::mutate(node_type = "video")
+    df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(video_ids, df_nodes, by = "id"))
+  }
+    
   cat("Done.\n")
   flush.console()
-
+  
   func_output <- list(
-    "nodes" = actor_names,
-    "edges" = relations
+    "nodes" = df_nodes,
+    "edges" = df_relations
   )
   
   class(func_output) <- append(class(func_output), c("network", "actor", "youtube"))

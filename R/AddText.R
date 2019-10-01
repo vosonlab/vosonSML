@@ -71,9 +71,10 @@ AddText.activity.twitter <- function(net, data, ...) {
 #' @noRd
 #' @export
 AddText.activity.youtube <- function(net, data, ...) {
-  net$nodes <- dplyr::left_join(net$nodes, dplyr::select(data, .data$CommentId, .data$Comment), by = "CommentId") %>%
-    dplyr::rename(vosonTxt_comment = .data$Comment)
-  
+  net$nodes <- dplyr::left_join(net$nodes, 
+                                dplyr::select(data, .data$CommentID, .data$Comment) %>%
+                                  dplyr::rename(id = .data$CommentID, vosonTxt_comment = .data$Comment), 
+                                by = c("id"))
   net
 }
 
@@ -140,9 +141,9 @@ AddText.actor.twitter <- function(net, data, ...) {
 #' @export
 AddText.actor.youtube <- function(net, data, ...) {
   net$edges <- dplyr::left_join(net$edges,
-                                dplyr::select(data, .data$CommentId, .data$Comment),
-                                by = c("commentId" = "CommentId")) %>%
-               dplyr::rename(vosonTxt_comment = .data$Comment)
+                                dplyr::select(data, .data$AuthorChannelID, .data$Comment) %>%
+                                  dplyr::rename(from = .data$AuthorChannelID, vosonTxt_comment = .data$Comment), 
+                                by = c("from"))
   net
 }
 

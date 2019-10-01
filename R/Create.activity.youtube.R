@@ -22,6 +22,7 @@
 #' 
 #' @export
 Create.activity.youtube <- function(datasource, type, verbose = TRUE, ...) {
+  
   df <- tibble::as_tibble(datasource) 
   
   df_stats <- networkStats(NULL, "collected youtube comments", nrow(df))
@@ -35,23 +36,13 @@ Create.activity.youtube <- function(datasource, type, verbose = TRUE, ...) {
     dplyr::mutate(to = if_else(.data$edge_type == "reply-comment", .data$ParentID, 
                                if_else(.data$edge_type == "comment", paste0("VIDEOID:", .data$VideoID),
                                        as.character(NA)))) %>%
-    # removes parent id part of <parent id>.<comment id> id format for reply comments
-    # dplyr::rowwise() %>%
-    # dplyr::mutate(from = if_else(.data$edge_type == "reply-comment", 
-    #                              sub(paste0(.data$ParentID, "\\."), "", .data$CommentID), 
-    #                              if_else(.data$edge_type == "comment", .data$CommentID,
-    #                                      as.character(NA)))) %>%
     dplyr::rename(from = .data$CommentID) %>%
     dplyr::select(.data$from, .data$to, .data$edge_type)
   
-  # vertices
+  # nodes
   df_nodes <- df %>% dplyr::select(.data$CommentID, .data$VideoID, .data$ParentID, .data$PublishedAt, .data$UpdatedAt,
                                    .data$AuthorChannelID, .data$AuthorDisplayName) %>%
     dplyr::mutate(node_type = case_when((!is.na(.data$ParentID)) ~ "reply-comment", TRUE ~ "comment"))
-    # dplyr::rowwise() %>%
-    # dplyr::mutate(id = if_else(.data$ParentID != "None", 
-    #                                      sub(paste0(.data$ParentID, "\\."), "", .data$CommentID),
-    #                                      .data$CommentID)) %>%
   
   # add unique parent ids not already in node list
   parent_ids <- dplyr::distinct(df_nodes, .data$ParentID) %>% dplyr::filter(!is.na(.data$ParentID)) %>%
@@ -73,7 +64,10 @@ Create.activity.youtube <- function(datasource, type, verbose = TRUE, ...) {
   
   df_nodes <- dplyr::select(df_nodes, .data$CommentID, .data$VideoID, .data$PublishedAt, .data$UpdatedAt,
                             .data$AuthorChannelID, .data$AuthorDisplayName, .data$node_type) %>%
-    dplyr::mutate_at(vars(contains('At')), as.character)
+    dplyr::mutate_at(vars(contains('At')), as.character) %>%
+    dplyr::rename(id = .data$CommentID, video_id = .data$VideoID, published_at = .data$PublishedAt,
+                  updated_at = .data$UpdatedAt, author_id = .data$AuthorChannelID, 
+                  screen_name = .data$AuthorDisplayName)
   
   node_summary <- df_nodes %>% dplyr::group_by(.data$node_type) %>%
     summarise(num = dplyr::n())
