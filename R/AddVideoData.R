@@ -18,51 +18,6 @@ AddVideoData <- function(net, youtubeAuth = NULL, videoIds = NULL, ...) {
     stop("AddVideoData requires authenticate object.", call. = FALSE)
   }
   
-  if (is.null(videoIds)) {
-    # extract video ids from network nodes
-    rm_videoid_str <- function(col) { sub("VIDEOID:", "", col) }
-    
-    videoIds <- net$nodes %>% dplyr::filter(.data$node_type == "video") %>% dplyr::select(.data$id) %>%
-      dplyr::mutate_at(.vars = "id", .funs = rm_videoid_str)
-    videoIds <- unlist(unname(as.list(videoIds)))
-  }
-  
-  videoIds <- unique(videoIds)
-  video_data <- list()
-  
-  base_url_videos <- "https://www.googleapis.com/youtube/v3/videos"
-  api_opts_videos <- list(part = "snippet",
-                          id = paste0(videoIds, collapse = ","),
-                          key = youtubeAuth$auth)
-  
-  req <- httr::GET(base_url_videos, query = api_opts_videos)
-  res <- httr::content(req)
-  
-  if (req$status_code != 200) {
-    cat(paste0("Error: ", res$error$code, "\nDetail: ", res$error$message, "\n"))
-    return(net)
-  } else {
-    video_data <- c(video_data, res$items)
-  }
-  
-  video_df <- lapply(video_data, function(x) {
-    data.frame(VideoID = x$id,
-               VideoTitle = x$snippet$title,
-               VideoDescription = x$snippet$description,
-               ChannelID = x$snippet$channelId,
-               ChannelTitle = x$snippet$channelTitle,
-               stringsAsFactors = FALSE)
-  })
-  
-  video_df <- do.call("rbind", video_df)
-  
-  if (nrow(video_df) == 0) {
-    cat("No video data could be retrieved.\n")
-    return(net)
-  }
-  
-  net$video_df <- video_df
-  
   # searches the class list of net for matching method
   UseMethod("AddVideoData", net)
 }
@@ -104,9 +59,52 @@ AddVideoData.actor.default <- function(net, youtubeAuth = NULL, videoIds = NULL,
 #' @export
 AddVideoData.actor.youtube <- function(net, youtubeAuth = NULL, videoIds = NULL, ...) {
   
+  if (is.null(videoIds)) {
+    # extract video ids from network nodes
+    rm_videoid_str <- function(col) { sub("VIDEOID:", "", col) }
+    
+    videoIds <- net$nodes %>% dplyr::filter(.data$node_type == "video") %>% dplyr::select(.data$id) %>%
+      dplyr::mutate_at(.vars = "id", .funs = rm_videoid_str)
+    videoIds <- unlist(unname(as.list(videoIds)))
+  }
+  
+  videoIds <- unique(videoIds)
+  video_data <- list()
+  
+  base_url_videos <- "https://www.googleapis.com/youtube/v3/videos"
+  api_opts_videos <- list(part = "snippet",
+                          id = paste0(videoIds, collapse = ","),
+                          key = youtubeAuth$auth)
+  
+  req <- httr::GET(base_url_videos, query = api_opts_videos)
+  res <- httr::content(req)
+  
+  if (req$status_code != 200) {
+    cat(paste0("Error: ", res$error$code, "\nDetail: ", res$error$message, "\n"))
+    return(net)
+  } else {
+    video_data <- c(video_data, res$items)
+  }
+  
+  video_df <- lapply(video_data, function(x) {
+    data.frame(VideoID = x$id,
+               VideoTitle = x$snippet$title,
+               VideoDescription = x$snippet$description,
+               ChannelID = x$snippet$channelId,
+               ChannelTitle = x$snippet$channelTitle,
+               stringsAsFactors = FALSE)
+  })
+  
+  video_df <- tibble::as_tibble(do.call("rbind", video_df))
+  
+  if (nrow(video_df) == 0) {
+    cat("No video data could be retrieved.\n")
+    return(net)
+  }
+  
   # downloaded video data
-  net$video_df %<>% dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID))
-  ch_details <- net$video_df %>% dplyr::select(.data$id, .data$ChannelTitle, .data$ChannelID) %>%
+  video_df %<>% dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID))
+  ch_details <- video_df %>% dplyr::select(.data$id, .data$ChannelTitle, .data$ChannelID) %>%
     dplyr::rename(video_author_title = .data$ChannelTitle, video_author_id = .data$ChannelID)
   
   # replace video id values in nodes with the video publishers id (channel id) and screen name

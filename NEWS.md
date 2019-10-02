@@ -1,7 +1,12 @@
+# vosonSML 0.29.1
+
+## Minor Changes
+- Created the `AddVideoData` function to add collected video data to networks.
+  
 # vosonSML 0.29.0
 
 ## Major Changes
-- Created the `Addtext` function to add collected text data to networks. This feature applies
+- Created the `AddText` function to add collected text data to networks. This feature applies
   to `activity` and `actor` networks and will typically add a node attribute to activity networks
   and an edge attribute to actor networks. For example, this function will add the column
   `vosonTxt_tweets` containing tweet text to `$nodes` if passed an activity network, and to
