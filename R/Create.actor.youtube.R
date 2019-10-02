@@ -36,26 +36,29 @@ Create.actor.youtube <- function(datasource, type, ...) {
     dplyr::rename("ParentID" = .data$CommentID, "ParentAuthorID" = .data$AuthorChannelID)
   
   df_relations <- df %>% 
-    dplyr::left_join(., parent_authors, by = c("ParentID")) %>%
-    dplyr::select(.data$AuthorChannelID, .data$ParentID, .data$ParentAuthorID, .data$VideoID) %>%
+    dplyr::left_join(parent_authors, by = c("ParentID")) %>%
+    dplyr::select(.data$AuthorChannelID, .data$ParentID, .data$ParentAuthorID, .data$VideoID, .data$CommentID) %>%
     dplyr::mutate(edge_type = case_when((!is.na(.data$ParentID)) ~ "reply-comment", TRUE ~ "comment")) %>%
     dplyr::mutate(to = if_else(.data$edge_type == "reply-comment", .data$ParentAuthorID,
                                if_else(.data$edge_type == "comment", paste0("VIDEOID:", .data$VideoID),
                                        as.character(NA)))) %>%
     
-    dplyr::rename("from" = .data$AuthorChannelID) %>%
-    dplyr::select(.data$from, .data$to, .data$edge_type)
+    dplyr::rename("from" = .data$AuthorChannelID, "video_id" = .data$VideoID, "comment_id" = .data$CommentID) %>%
+    dplyr::select(.data$from, .data$to, .data$video_id, .data$comment_id, .data$edge_type)
   
   df_nodes <- df %>% dplyr::select(.data$AuthorChannelID, .data$AuthorDisplayName) %>%
     dplyr::distinct(.data$AuthorChannelID, .keep_all = TRUE) %>%
     dplyr::mutate(node_type = "actor") %>%
     dplyr::rename("id" = .data$AuthorChannelID, "screen_name" = .data$AuthorDisplayName)
   
-  video_ids <- df %>% distinct(.data$VideoID) %>% dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID), VideoID = NULL)
+  video_ids <- df %>% distinct(.data$VideoID) %>% dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID)) %>%
+    dplyr::rename(video_id = .data$VideoID)
   
   df_relations <- dplyr::bind_rows(df_relations, 
                                    video_ids %>% dplyr::mutate(from = .data$id, to = .data$id, 
                                                                edge_type = "self-loop", id = NULL))
+  
+  video_ids <- video_ids %>% dplyr::select(-.data$video_id)
   
   if (nrow(video_ids)) {
     video_ids %<>% dplyr::mutate(node_type = "video")

@@ -141,9 +141,9 @@ AddText.actor.twitter <- function(net, data, ...) {
 #' @export
 AddText.actor.youtube <- function(net, data, ...) {
   net$edges <- dplyr::left_join(net$edges,
-                                dplyr::select(data, .data$AuthorChannelID, .data$Comment) %>%
-                                  dplyr::rename(from = .data$AuthorChannelID, vosonTxt_comment = .data$Comment), 
-                                by = c("from"))
+                                dplyr::select(data, .data$CommentID, .data$Comment) %>%
+                                  dplyr::rename(comment_id = .data$CommentID, vosonTxt_comment = .data$Comment), 
+                                by = c("comment_id"))
   net
 }
 
