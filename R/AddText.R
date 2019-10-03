@@ -33,7 +33,7 @@ AddText <- function(net, data, ...) {
 #' @noRd
 #' @export
 AddText.default <- function(net, data, ...) {
-  stop("Unknown network type passed to addtext.", call. = FALSE) 
+  stop("Unknown network type passed to AddText.", call. = FALSE) 
 }
 
 #' @noRd
@@ -46,7 +46,7 @@ AddText.activity <- function(net, data, ...) {
 #' @noRd
 #' @export
 AddText.activity.default <- function(net, data, ...) {
-  stop("Unknown social media type passed to addtext.", call. = FALSE)
+  stop("Unknown social media type passed to AddText.", call. = FALSE)
 }
 
 #' @noRd
@@ -65,6 +65,8 @@ AddText.activity.twitter <- function(net, data, ...) {
                                                       ifelse(!is.na(.data$qtext), .data$qtext, .data$rtext))) %>%
     dplyr::select(-c(.data$qtext, .data$rtext)) %>% dplyr::rename(vosonTxt_tweet = .data$text)
   
+  class(net) <- union(class(net), c("voson_text"))
+  
   net
 }
 
@@ -75,6 +77,9 @@ AddText.activity.youtube <- function(net, data, ...) {
                                 dplyr::select(data, .data$CommentID, .data$Comment) %>%
                                   dplyr::rename(id = .data$CommentID, vosonTxt_comment = .data$Comment), 
                                 by = c("id"))
+  
+  class(net) <- union(class(net), c("voson_text"))
+  
   net
 }
 
@@ -110,6 +115,8 @@ AddText.activity.reddit <- function(net, data, cleanText = TRUE, ...) {
     net$nodes$title <- CleanRedditText(net$nodes$title)
   }  
   
+  class(net) <- union(class(net), c("voson_text"))
+  
   net
 }
 
@@ -124,7 +131,7 @@ AddText.actor <- function(net, ...) {
 #' @noRd
 #' @export
 AddText.actor.default <- function(net, ...) {
-  stop("Unknown social media type passed to addtext.", call. = FALSE)
+  stop("Unknown social media type passed to AddText.", call. = FALSE)
 }
 
 #' @noRd
@@ -134,6 +141,9 @@ AddText.actor.twitter <- function(net, data, ...) {
                                 dplyr::select(data, .data$status_id, .data$text),
                                 by = c("status_id")) %>%
                dplyr::rename(vosonTxt_tweet = .data$text)
+  
+  class(net) <- union(class(net), c("voson_text"))
+  
   net
 }
 
@@ -144,6 +154,9 @@ AddText.actor.youtube <- function(net, data, ...) {
                                 dplyr::select(data, .data$CommentID, .data$Comment) %>%
                                   dplyr::rename(comment_id = .data$CommentID, vosonTxt_comment = .data$Comment), 
                                 by = c("comment_id"))
+  
+  class(net) <- union(class(net), c("voson_text"))
+  
   net
 }
 
@@ -182,6 +195,8 @@ AddText.actor.reddit <- function(net, data, cleanText = TRUE, ...) {
     net$edges$vosonTxt_comment <- CleanRedditText(net$edges$vosonTxt_comment)
     net$edges$title <- CleanRedditText(net$edges$title)
   }
+  
+  class(net) <- union(class(net), c("voson_text"))
   
   net
 }

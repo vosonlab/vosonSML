@@ -2,7 +2,7 @@
 RemoveOddChars <- function(df) {
   df$text <- sapply(df$text, function(x) TrimOddChar(x))
   
-  return(df)
+  df
 }
 
 # extract information related to users from dataframe such as to_user, rt_user etc.
@@ -18,14 +18,14 @@ ExtractUserInfo <- function(df) {
   # extract rt_user
   df$retweet_from <- sapply(df$text, function(tweet) TrimHead(str_extract(tweet, "^[RM]T (@[[:alnum:]_+]*)")))
   
-  return(df)
+  df
 }
 
 # extract any hashtags found in tweet text
 ExtractHashtagInfo <- function(df) {
   df$hashtags_used <- sapply(df$text, function(tweet) regmatches(tweet, gregexpr("#[^#\\s]+(?!\u2026)\\b", 
                                                                                  tweet, perl = T)))
-  return(df)
+  df
 }
 
 # for each tweet, extract url, remove it from the tweet, and put them separately in a new column
@@ -36,7 +36,7 @@ ExtractUrls <- function(df) {
   df$links <- sapply(df$text,function(tweet) str_extract(tweet,("http[^[:blank:]]+")))
   df$text <- sapply(df$text, function(x) TrimUrls(x))
   
-  return(df)
+  df
 }
 
 # remove odd characters in the user information attributes
@@ -51,7 +51,7 @@ RemoveOddCharsUserInfo <- function(actorsInfoDF) {
   actorsInfoDF$lang <- sapply(actorsInfoDF$lang, function(x) TrimOddChar(x))
   actorsInfoDF$profileImageUrl <- sapply(actorsInfoDF$profileImageUrl, function(x) TrimOddChar(x))
   
-  return(actorsInfoDF)
+  actorsInfoDF
 }
 
 # remove twitter users from text e.g @user
@@ -99,44 +99,6 @@ PreprocessTweets <- function(df) {
   
   # extract urls and add to df
   df_new <- ExtractUrls(df_new)
-  
-  return(df_new)
-}
-
-# accepts a df to add or increment a field value with count
-# if param print is TRUE then prints formatted field values
-networkStats <- function(df, field, count, edge = FALSE, print = FALSE) {
-  if (print == TRUE) {
-    if (!is.null(df) & nrow(df) > 0) {
-      cat("-------------------------\n")
-      lf <- lc <- 0
-      for (i in 1:nrow(df)) {
-        lf <- ifelse(nchar(df$field[i]) > lf, nchar(df$field[i]), lf)
-        lc <- ifelse(nchar(df$count[i]) > lc, nchar(df$count[i]), lc)
-      }
-      
-      for (i in 1:nrow(df)) {
-        lfm <- lf
-        if (nchar(df$field[i]) != lf) {
-          lfm <-lf + 1
-        }
-        line <- paste0(df$field[i], paste0(replicate(lfm - nchar(df$field[i]), ""), collapse = " "), " | ")
-        line <- paste0(line, df$count[i], paste0(replicate(lc - nchar(df$count[i]), ""), collapse = " "), "\n")
-        cat(line)
-      }
-      cat("-------------------------\n")
-    }
-    
-    return(TRUE)
-  }
-  
-  if (is.null(df)) {
-    df  <- data.frame("field" = character(0), "count" = character(0), "edge_count" = character(0), 
-                      stringsAsFactors = FALSE)
-  }
-  df <- rbind(df, list(field = field, count = count, edge_count = edge), stringsAsFactors = FALSE)
-  
-  return(df)
 }
 
 # print twitter api rate limit and reset time for tweet search

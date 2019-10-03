@@ -125,11 +125,11 @@ Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
   flush.console()
   
   func_output <- list(
-    "nodes" = df_entities,
-    "edges" = relations
+    "nodes" = tibble::as_tibble(df_entities),
+    "edges" = tibble::as_tibble(relations)
   )
   
-  class(func_output) <- append(class(func_output), c("network", "bimodal", "twitter"))
+  class(func_output) <- union(class(func_output), c("network", "bimodal", "twitter"))
   
-  return(func_output)
+  func_output
 }

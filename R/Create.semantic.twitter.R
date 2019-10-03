@@ -287,11 +287,11 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   flush.console()
   
   func_output <- list(
-    "nodes" = actorsFixed,
-    "edges" = relations
+    "nodes" = tibble::as_tibble(actorsFixed),
+    "edges" = tibble::as_tibble(relations)
   )
   
-  class(func_output) <- append(class(func_output), c("network", "semantic", "twitter"))
+  class(func_output) <- union(class(func_output), c("network", "semantic", "twitter"))
   
-  return(func_output)
+  func_output
 }
