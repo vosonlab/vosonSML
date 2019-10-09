@@ -149,11 +149,35 @@ AddText.actor.twitter <- function(net, data, ...) {
 
 #' @noRd
 #' @export
-AddText.actor.youtube <- function(net, data, ...) {
-  net$edges <- dplyr::left_join(net$edges,
-                                dplyr::select(data, .data$CommentID, .data$Comment) %>%
+AddText.actor.youtube <- function(net, data, replies_from_text = TRUE, at_replies_only = TRUE, ...) {
+  net$edges %<>% dplyr::left_join(dplyr::select(data, .data$CommentID, .data$Comment) %>%
                                   dplyr::rename(comment_id = .data$CommentID, vosonTxt_comment = .data$Comment), 
-                                by = c("comment_id"))
+                                  by = c("comment_id"))
+  
+  # in comment reply to's
+  if (replies_from_text) {
+  
+    net$edges %<>% dplyr::left_join(dplyr::select(net$nodes, -.data$node_type), by = c("from" = "id"))
+    
+    net$edges$at_id <- sapply(net$edges$vosonTxt_comment, function(x) {
+      for (name_at in net$nodes$screen_name) {
+        if (at_replies_only) {
+          name_at_regex <- paste0("^", Hmisc::escapeRegex(paste0("@", name_at)))
+        } else {
+          name_at_regex <- paste0("^[@]?", Hmisc::escapeRegex(name_at))
+        }
+        
+        if (grepl(name_at_regex, x)) {
+          to_id <- dplyr::filter(net$nodes, .data$screen_name == name_at) %>% dplyr::select(.data$id) %>% 
+            dplyr::distinct()
+          if (nrow(to_id)) { return(to_id[[1]]) }
+        }
+      }
+      return(NA)
+    })
+    net$edges %<>% dplyr::mutate(to = if_else(is.na(.data$at_id), .data$to, .data$at_id), 
+                                 edge_type = if_else(is.na(.data$at_id), .data$edge_type, "reply-comment-text")) # , at_id = NULL
+  }
   
   class(net) <- union(class(net), c("voson_text"))
   

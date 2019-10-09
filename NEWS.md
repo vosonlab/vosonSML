@@ -1,7 +1,13 @@
+# vosonSML 0.29.2
+
+## Minor Changes
+- Extracted youtube reply to actors from comments 
+
 # vosonSML 0.29.1
 
 ## Minor Changes
 - Created the `AddVideoData` function to add collected video data to networks.
+- Changed youtube to work via user channel id instead of screen name
   
 # vosonSML 0.29.0
 
@@ -33,7 +39,7 @@
   
 # vosonSML 0.28.0
 
-## Minor Changes
+## Major Changes
 - Added new `activity` network type for twitter and youtube `Create` function. In this network
   nodes are the items collected such as tweets returned from a twitter search and comments
   posted to youtube videos. Edges represent the platform relationship between the tweets or
