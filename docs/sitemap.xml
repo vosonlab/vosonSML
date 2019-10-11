@@ -61,6 +61,9 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddText.actor.reddit.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddText.actor.youtube.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddText.html</loc>
   </url>
   <url>
@@ -68,6 +71,12 @@
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddUserData.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddVideoData.actor.youtube.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddVideoData.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-GetYoutubeVideoIDs.html</loc>

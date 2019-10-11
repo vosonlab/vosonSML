@@ -37,12 +37,6 @@ Install the latest development version:
 devtools::install_github("vosonlab/vosonSML")
 ```
 
-Note about previous releases: The vosonSML package was previously in a subdirectory, so if you wish to install versions prior to `0.26` please remember to include the `subdir` parameter.  
-```R
-# library(devtools)
-devtools::install_github("vosonlab/vosonSML@v0.25.0", subdir = "vosonSML")
-```
-
 ## Getting started
 
 The following usage examples will provide a great introduction to using `vosonSML`. There are also several "how to" guides, including an "Absolute Beginners Guide to vosonSML" tutorial aimed at people with little or no programming experience on the [vosonSML page of the VOSON website](http://vosonlab.net/SocialMediaLab).

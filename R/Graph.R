@@ -166,8 +166,9 @@ Graph.bimodal.default <- function(...) {
 #' @noRd
 #' @export
 Graph.bimodal.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$display_name <- ifelse(is.na(V(g)$display_name), paste0("ID:", V(g)$name), V(g)$display_name)
-  V(g)$label <- V(g)$display_name
+  V(g)$label <- ifelse(V(g)$name == V(g)$display_name, V(g)$display_name,
+                       paste0(V(g)$display_name, " (", V(g)$name, ")"))
+  
   g <- set_graph_attr(g, "type", "twitter")
   
   graphOutputFile(g, "graphml", writeToFile, "TwitterBimodal")
