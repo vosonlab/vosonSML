@@ -3,7 +3,7 @@
 \name{vosonSML::AddVideoData.actor.youtube}
 \alias{vosonSML::AddVideoData.actor.youtube}
 \alias{AddVideoData.actor.youtube}
-\title{Add columns of video information to youtube actor network dataframes}
+\title{Add video information to youtube actor network dataframes}
 \usage{
 \method{AddVideoData}{actor.youtube}(net, youtubeAuth = NULL,
   videoIds = NULL, actorSubOnly = FALSE, ...)
@@ -13,10 +13,10 @@
 
 \item{youtubeAuth}{Youtube Authenticate object.}
 
-\item{videoIds}{List. Video ID's to lookup.}
+\item{videoIds}{List. Video ID's to download video information.}
 
-\item{actorSubOnly}{Logical. Only substitute video ID's for their publishers channel ID.
-Don't add additional video data to edge list.}
+\item{actorSubOnly}{Logical. Only substitute video ID's for their publishers channel ID. Don't add
+additional video data to edge list.}
 
 \item{...}{Additional parameters passed to function.}
 }

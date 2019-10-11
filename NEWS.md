@@ -1,13 +1,22 @@
 # vosonSML 0.29.2
 
 ## Minor Changes
-- Extracted youtube reply to actors from comments 
+- A feature was added to the youtube actor `AddText` function to redirect edges towards actors based
+  on the presence of a `screen name` or `@screen name` (the standard convention) found at the
+  beginning of a reply comment. Typically reply comments are directed towards a top-level comment, this
+  captures when reply comments are directed to other commentors in the thread.
 
 # vosonSML 0.29.1
 
 ## Minor Changes
-- Created the `AddVideoData` function to add collected video data to networks.
-- Changed youtube to work via user channel id instead of screen name
+- Changed youtube `actor` network identifiers to be their unique `Channel ID` instead of their
+  `screen names`.
+- Created the `AddVideoData` function to add collected video data to the youtube `actor` network. The
+  main purpose of this function is to replace video identifiers with the `Channel ID` of the video
+  publisher (actor) instead. To get the `Channel ID` of video publishers an additional API lookup for
+  the videos in the network is required. Additional columns such as video `Title`, `Description` and
+  `Publish` time are also added to the network `$edges` dataframe as well as returned in their own
+  dataframe called `$videos`.
   
 # vosonSML 0.29.0
 
