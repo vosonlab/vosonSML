@@ -169,45 +169,43 @@ actorGraph <- redditData %>% Create("actor") %>% AddText(redditData) %>% Graph()
 # applies to twitter, youtube and reddit - activity and actor networks
 
 # graph for activity network with text data added as node attribute
-activityNetworkGraph <- twitterData %>% Create("activity") %>% 
-                        AddText(twitterData) %>% Graph()
+activityNetworkGraph <- twitterData %>% Create("activity") %>% AddText(twitterData) %>%
+                        Graph()
                         
-# AddText will also redirect some edges in a youtube actor network by
-# finding user references at the beginning of reply comments text
+# AddText will also redirect some edges in a youtube actor network by finding user
+# references at the beginning of reply comments text
 # i.e a reply comment from user_B to top-level comment by user_A
-#     "@user_C A very fine point!"
-# this would typically create an edge between user_B --> user_A
-# the parameter replies_from_text redirects this edge from
-# user_B --> user_C as per the reference in the comment text
+#     user_B: "@user_C A very fine point!"
+# this would typically create an edge between user_B -> user_A, however the parameter
+# 'replies_from_text' redirects this edge instead from user_B -> user_C as per the
+# reference in the comment text - set this to 'FALSE' to ignore comment references
 
 actorNetworkGraph <- youtubeData %>% Create("actor") %>% 
-                     AddText(youtubeData, replies_from_text = TRUE) %>% 
-                     Graph()
+                     AddText(youtubeData, replies_from_text = TRUE) %>% Graph()
 ```
 
 #### 'AddUserData' requests and adds user profile data to networks
 ```R
 # applies only to twitter actor networks
 
-# add additional twitter user profile info to actor network graph as
-# node attributes
+# add additional twitter user profile info to actor network graph as node attributes
 actorGraphWithUserAttr <- actorNetwork %>% 
                           AddUserData(twitterData, 
                                       lookupUsers = TRUE,
-                                      twitterAuth = twitterAuth) %>% 
-                                      Graph()
+                                      twitterAuth = twitterAuth) %>% Graph()
 ```
 
 #### 'AddVideoData' requests and adds video data to networks
 ```R
 # applies only to youtube actor networks
 
-# replaces 'VIDEOID:xxxxxx' references in actor network with their
-# publishers user id (channel ID)
-# adds additional collected youtube video info to actor network graph as
-# node attributes
-actorGraphWithVideos <- actorNetwork %>% 
-                        AddVideoData(youtubeAuth) %>% Graph()
+# replaces 'VIDEOID:xxxxxx' references in actor network with their publishers
+# user id (channel ID) and adds additional collected youtube video info to actor
+# network graph as node attributes
+
+# if only want the video id substitution use the 'actorSubOnly = TRUE' parameter
+actorGraphWithVideos <- actorNetwork %>% AddVideoData(youtubeAuth,
+                                                      actorSubOnly = FALSE) %>% Graph()
 ```
 
 #### Save and Load Authentication Objects

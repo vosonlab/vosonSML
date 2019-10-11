@@ -247,45 +247,43 @@
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># applies to twitter, youtube and reddit - activity and actor networks</span></a>
 <a class="sourceLine" id="cb9-2" title="2"></a>
 <a class="sourceLine" id="cb9-3" title="3"><span class="co"># graph for activity network with text data added as node attribute</span></a>
-<a class="sourceLine" id="cb9-4" title="4">activityNetworkGraph &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-5" title="5"><span class="st">                        </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(twitterData) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a>
+<a class="sourceLine" id="cb9-4" title="4">activityNetworkGraph &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(twitterData) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb9-5" title="5"><span class="st">                        </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a>
 <a class="sourceLine" id="cb9-6" title="6">                        </a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="co"># AddText will also redirect some edges in a youtube actor network by</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="co"># finding user references at the beginning of reply comments text</span></a>
+<a class="sourceLine" id="cb9-7" title="7"><span class="co"># AddText will also redirect some edges in a youtube actor network by finding user</span></a>
+<a class="sourceLine" id="cb9-8" title="8"><span class="co"># references at the beginning of reply comments text</span></a>
 <a class="sourceLine" id="cb9-9" title="9"><span class="co"># i.e a reply comment from user_B to top-level comment by user_A</span></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="co">#     "@user_C A very fine point!"</span></a>
-<a class="sourceLine" id="cb9-11" title="11"><span class="co"># this would typically create an edge between user_B --&gt; user_A</span></a>
-<a class="sourceLine" id="cb9-12" title="12"><span class="co"># the parameter replies_from_text redirects this edge from</span></a>
-<a class="sourceLine" id="cb9-13" title="13"><span class="co"># user_B --&gt; user_C as per the reference in the comment text</span></a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="co">#     user_B: "@user_C A very fine point!"</span></a>
+<a class="sourceLine" id="cb9-11" title="11"><span class="co"># this would typically create an edge between user_B -&gt; user_A, however the parameter</span></a>
+<a class="sourceLine" id="cb9-12" title="12"><span class="co"># 'replies_from_text' redirects this edge instead from user_B -&gt; user_C as per the</span></a>
+<a class="sourceLine" id="cb9-13" title="13"><span class="co"># reference in the comment text - set this to 'FALSE' to ignore comment references</span></a>
 <a class="sourceLine" id="cb9-14" title="14"></a>
 <a class="sourceLine" id="cb9-15" title="15">actorNetworkGraph &lt;-<span class="st"> </span>youtubeData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-16" title="16"><span class="st">                     </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(youtubeData, <span class="dt">replies_from_text =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-17" title="17"><span class="st">                     </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb9-16" title="16"><span class="st">                     </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(youtubeData, <span class="dt">replies_from_text =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a></code></pre></div>
 </div>
 <div id="adduserdata-requests-and-adds-user-profile-data-to-networks" class="section level4">
 <h4 class="hasAnchor">
 <a href="#adduserdata-requests-and-adds-user-profile-data-to-networks" class="anchor"></a>‘AddUserData’ requests and adds user profile data to networks</h4>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># applies only to twitter actor networks</span></a>
 <a class="sourceLine" id="cb10-2" title="2"></a>
-<a class="sourceLine" id="cb10-3" title="3"><span class="co"># add additional twitter user profile info to actor network graph as</span></a>
-<a class="sourceLine" id="cb10-4" title="4"><span class="co"># node attributes</span></a>
-<a class="sourceLine" id="cb10-5" title="5">actorGraphWithUserAttr &lt;-<span class="st"> </span>actorNetwork <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-6" title="6"><span class="st">                          </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddUserData.html">AddUserData</a></span>(twitterData, </a>
-<a class="sourceLine" id="cb10-7" title="7">                                      <span class="dt">lookupUsers =</span> <span class="ot">TRUE</span>,</a>
-<a class="sourceLine" id="cb10-8" title="8">                                      <span class="dt">twitterAuth =</span> twitterAuth) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-9" title="9"><span class="st">                                      </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb10-3" title="3"><span class="co"># add additional twitter user profile info to actor network graph as node attributes</span></a>
+<a class="sourceLine" id="cb10-4" title="4">actorGraphWithUserAttr &lt;-<span class="st"> </span>actorNetwork <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-5" title="5"><span class="st">                          </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddUserData.html">AddUserData</a></span>(twitterData, </a>
+<a class="sourceLine" id="cb10-6" title="6">                                      <span class="dt">lookupUsers =</span> <span class="ot">TRUE</span>,</a>
+<a class="sourceLine" id="cb10-7" title="7">                                      <span class="dt">twitterAuth =</span> twitterAuth) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a></code></pre></div>
 </div>
 <div id="addvideodata-requests-and-adds-video-data-to-networks" class="section level4">
 <h4 class="hasAnchor">
 <a href="#addvideodata-requests-and-adds-video-data-to-networks" class="anchor"></a>‘AddVideoData’ requests and adds video data to networks</h4>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># applies only to youtube actor networks</span></a>
 <a class="sourceLine" id="cb11-2" title="2"></a>
-<a class="sourceLine" id="cb11-3" title="3"><span class="co"># replaces 'VIDEOID:xxxxxx' references in actor network with their</span></a>
-<a class="sourceLine" id="cb11-4" title="4"><span class="co"># publishers user id (channel ID)</span></a>
-<a class="sourceLine" id="cb11-5" title="5"><span class="co"># adds additional collected youtube video info to actor network graph as</span></a>
-<a class="sourceLine" id="cb11-6" title="6"><span class="co"># node attributes</span></a>
-<a class="sourceLine" id="cb11-7" title="7">actorGraphWithVideos &lt;-<span class="st"> </span>actorNetwork <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-8" title="8"><span class="st">                        </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddVideoData.html">AddVideoData</a></span>(youtubeAuth) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a></code></pre></div>
+<a class="sourceLine" id="cb11-3" title="3"><span class="co"># replaces 'VIDEOID:xxxxxx' references in actor network with their publishers</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="co"># user id (channel ID) and adds additional collected youtube video info to actor</span></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="co"># network graph as node attributes</span></a>
+<a class="sourceLine" id="cb11-6" title="6"></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="co"># if only want the video id substitution use the 'actorSubOnly = TRUE' parameter</span></a>
+<a class="sourceLine" id="cb11-8" title="8">actorGraphWithVideos &lt;-<span class="st"> </span>actorNetwork <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddVideoData.html">AddVideoData</a></span>(youtubeAuth,</a>
+<a class="sourceLine" id="cb11-9" title="9">                                                      <span class="dt">actorSubOnly =</span> <span class="ot">FALSE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</a></code></pre></div>
 </div>
 <div id="save-and-load-authentication-objects" class="section level4">
 <h4 class="hasAnchor">
