@@ -128,7 +128,7 @@
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor Changes</h2>
 <ul>
-<li>A feature was added to the youtube actor <code>AddText</code> function to redirect edges towards actors based on the presence of a <code>screen name</code> or <code>@screen name</code> (standard) that is found at the beginning of a reply comment. Typically reply comments are directed towards a top-level comment, this captures when reply comments are directed to other commentors in the thread.</li>
+<li>A feature was added to the youtube actor <code>AddText</code> function to redirect edges towards actors based on the presence of a <code>screen name</code> or <code>@screen name</code> that may be found at the beginning of a reply comment. Typically reply comments are directed towards a top-level comment, this instead captures when reply comments are directed to other commenters in the thread.</li>
 </ul>
 </div>
 </div>
@@ -141,7 +141,7 @@
 <a href="#minor-changes-1" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Changed youtube <code>actor</code> network identifiers to be their unique <code>Channel ID</code> instead of their <code>screen names</code>.</li>
-<li>Created the <code>AddVideoData</code> function to add collected video data to the youtube <code>actor</code> network. The main purpose of this function is to replace video identifiers with the <code>Channel ID</code> of the video publisher (actor) instead. To get the <code>Channel ID</code> of video publishers an additional API lookup for the videos in the network is required. Additional columns such as video <code>Title</code>, <code>Description</code> and <code>Publish</code> time are also added to the network <code>$edges</code> dataframe as well as returned in their own dataframe called <code>$videos</code>.</li>
+<li>Created the <code>AddVideoData</code> function to add collected video data to the youtube <code>actor</code> network. The main purpose of this function is to replace video identifiers with the <code>Channel ID</code> of the video publisher (actor) instead. To get the <code>Channel ID</code> of video publishers an additional API lookup for the videos in the network is required. Additional columns such as video <code>Title</code>, <code>Description</code> and <code>Published</code> time are also added to the network <code>$edges</code> dataframe as well as returned in their own dataframe called <code>$videos</code>.</li>
 </ul>
 </div>
 </div>
