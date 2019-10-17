@@ -11,7 +11,8 @@ isTrueValue <- function(x) {
   if (x == "TRUE" || x == "true" || x == "T" || x == TRUE) {
     return(TRUE)
   }
-  return(FALSE)
+  
+  FALSE
 }
 
 # return a friendly file name with system time prefix
@@ -93,7 +94,8 @@ quiet <-function(x) {
 maxCharLength <- function(data) { 
   i <- 0
   sapply(data, function(x) { if (nchar(as.character(x)) > i) i <<- nchar(x) })
-  return(i)
+  
+  i
 }
 
 # pad a character string with spaces
@@ -101,9 +103,9 @@ padChar2Length <- function(value, length) {
   value_length <- nchar(as.character(value))
   if (value_length < length) {
     return(paste0(value, paste0(replicate(length - value_length, ""), collapse = " "), " "))
-  } else {
-    return(as.character(value))
   }
+  
+  as.character(value)
 }
 
 # format and print a data frame
@@ -151,6 +153,40 @@ isMac <- function() {
   if (length(macMatch) != 0) {
     return(TRUE)
   }
-  return(FALSE)
+  
+  FALSE
 }
 
+# accepts a df to add or increment a field value with count
+# if param print is TRUE then prints formatted field values
+networkStats <- function(df, field, count, edge = FALSE, print = FALSE) {
+  if (print == TRUE) {
+    if (!is.null(df) & nrow(df) > 0) {
+      cat("-------------------------\n")
+      lf <- lc <- 0
+      for (i in 1:nrow(df)) {
+        lf <- ifelse(nchar(df$field[i]) > lf, nchar(df$field[i]), lf)
+        lc <- ifelse(nchar(df$count[i]) > lc, nchar(df$count[i]), lc)
+      }
+      
+      for (i in 1:nrow(df)) {
+        lfm <- lf
+        if (nchar(df$field[i]) != lf) {
+          lfm <-lf + 1
+        }
+        line <- paste0(df$field[i], paste0(replicate(lfm - nchar(df$field[i]), ""), collapse = " "), " | ")
+        line <- paste0(line, df$count[i], paste0(replicate(lc - nchar(df$count[i]), ""), collapse = " "), "\n")
+        cat(line)
+      }
+      cat("-------------------------\n")
+    }
+    
+    return(TRUE)
+  }
+  
+  if (is.null(df)) {
+    df  <- data.frame("field" = character(0), "count" = character(0), "edge_count" = character(0), 
+                      stringsAsFactors = FALSE)
+  }
+  df <- rbind(df, list(field = field, count = count, edge_count = edge), stringsAsFactors = FALSE)
+}

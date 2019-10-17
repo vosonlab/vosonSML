@@ -60,10 +60,13 @@ reference:
 - title: Helpers
   contents:
   - '`vosonSML::AddText`'
+  - '`vosonSML::AddText.actor.youtube`'
   - '`vosonSML::AddText.activity.reddit`'
   - '`vosonSML::AddText.actor.reddit`'
   - '`vosonSML::AddUserData`'
   - '`vosonSML::AddUserData.actor.twitter`'
+  - '`vosonSML::AddVideoData`'
+  - '`vosonSML::AddVideoData.actor.youtube`'
   - '`vosonSML::Graph`'  
   - '`vosonSML::GetYoutubeVideoIDs`'
   - '`vosonSML::ImportData`'

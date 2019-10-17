@@ -1,7 +1,27 @@
+# vosonSML 0.29.2
+
+## Minor Changes
+- A feature was added to the youtube actor `AddText` function to redirect edges towards actors based
+  on the presence of a `screen name` or `@screen name` that may be found at the beginning of
+  a reply comment. Typically reply comments are directed towards a top-level comment, this
+  instead captures when reply comments are directed to other commenters in the thread.
+
+# vosonSML 0.29.1
+
+## Minor Changes
+- Changed youtube `actor` network identifiers to be their unique `Channel ID` instead of their
+  `screen names`.
+- Created the `AddVideoData` function to add collected video data to the youtube `actor` network. The
+  main purpose of this function is to replace video identifiers with the `Channel ID` of the video
+  publisher (actor) instead. To get the `Channel ID` of video publishers an additional API lookup for
+  the videos in the network is required. Additional columns such as video `Title`, `Description` and
+  `Published` time are also added to the network `$edges` dataframe as well as returned in their own
+  dataframe called `$videos`.
+  
 # vosonSML 0.29.0
 
 ## Major Changes
-- Created the `Addtext` function to add collected text data to networks. This feature applies
+- Created the `AddText` function to add collected text data to networks. This feature applies
   to `activity` and `actor` networks and will typically add a node attribute to activity networks
   and an edge attribute to actor networks. For example, this function will add the column
   `vosonTxt_tweets` containing tweet text to `$nodes` if passed an activity network, and to
@@ -28,7 +48,7 @@
   
 # vosonSML 0.28.0
 
-## Minor Changes
+## Major Changes
 - Added new `activity` network type for twitter and youtube `Create` function. In this network
   nodes are the items collected such as tweets returned from a twitter search and comments
   posted to youtube videos. Edges represent the platform relationship between the tweets or

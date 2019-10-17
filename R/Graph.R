@@ -53,8 +53,8 @@ Graph.activity.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ..
 #' @noRd
 #' @export
 Graph.activity.youtube <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  igraph::V(g)$label <- ifelse(!is.na(igraph::V(g)$User), 
-                               paste0(igraph::V(g)$name, " (", igraph::V(g)$User, ")"), 
+  igraph::V(g)$label <- ifelse(!is.na(igraph::V(g)$screen_name), 
+                               paste0(igraph::V(g)$name, " (", igraph::V(g)$screen_name, ")"), 
                                igraph::V(g)$name)
   g <- set_graph_attr(g, "type", "youtube")
   
@@ -90,8 +90,8 @@ Graph.actor.default <- function(...) {
 #' @noRd
 #' @export
 Graph.actor.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$screen_name <- ifelse(is.na(V(g)$screen_name), paste0("ID:", V(g)$name), V(g)$screen_name)
-  V(g)$label <- V(g)$screen_name
+  V(g)$label <- ifelse(is.na(V(g)$screen_name), paste0("ID:", V(g)$name), 
+                             paste0(V(g)$screen_name, " (", V(g)$name, ")"))
   g <- set_graph_attr(g, "type", "twitter")
   
   graphOutputFile(g, "graphml", writeToFile, "TwitterActor")
@@ -102,18 +102,21 @@ Graph.actor.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) 
 #' @noRd
 #' @export
 Graph.actor.youtube <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$label <- V(g)$name
+  V(g)$label <- ifelse(is.na(V(g)$screen_name), V(g)$name, 
+                             paste0(V(g)$screen_name, " (", V(g)$name, ")"))
   g <- set_graph_attr(g, "type", "youtube")
   
   graphOutputFile(g, "graphml", writeToFile, "YoutubeActor")
   
-  g  
+  g
 }
 
 #' @noRd
 #' @export
 Graph.actor.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$label <- ifelse(!is.na(V(g)$user), V(g)$user, V(g)$name)
+  V(g)$label <- ifelse(is.na(V(g)$user), paste0("ID:", V(g)$name), 
+                             paste0(V(g)$user, " (", V(g)$name, ")"))
+
   g <- set_graph_attr(g, "type", "reddit")
   
   graphOutputFile(g, "graphml", writeToFile, "RedditActor")
@@ -163,8 +166,9 @@ Graph.bimodal.default <- function(...) {
 #' @noRd
 #' @export
 Graph.bimodal.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$display_name <- ifelse(is.na(V(g)$display_name), paste0("ID:", V(g)$name), V(g)$display_name)
-  V(g)$label <- V(g)$display_name
+  V(g)$label <- ifelse(V(g)$name == V(g)$display_name, V(g)$display_name,
+                       paste0(V(g)$display_name, " (", V(g)$name, ")"))
+  
   g <- set_graph_attr(g, "type", "twitter")
   
   graphOutputFile(g, "graphml", writeToFile, "TwitterBimodal")

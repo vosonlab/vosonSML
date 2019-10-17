@@ -124,7 +124,7 @@ Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
     "edges" = df_relations
   )
   
-  class(func_output) <- append(class(func_output), c("network", "activity", "twitter"))
+  class(func_output) <- union(class(func_output), c("network", "activity", "twitter"))
   
-  return(func_output)
+  func_output
 }

@@ -37,6 +37,8 @@ Create.actor.twitter <- function(datasource, type, verbose = TRUE, ...) {
   df <- datasource
   df <- data.table(df)
   
+  # df <- tibble::as_tibble(datasource)
+  
   df_stats <- networkStats(NULL, "collected tweets", nrow(df))
   
   cat("Generating twitter actor network...\n")
@@ -221,11 +223,11 @@ Create.actor.twitter <- function(datasource, type, verbose = TRUE, ...) {
   flush.console()
   
   func_output <- list(
-    "edges" = df_relations,
-    "nodes" = df_users
+    "edges" = tibble::as_tibble(df_relations),
+    "nodes" = tibble::as_tibble(df_users)
   )
   
-  class(func_output) <- append(class(func_output), c("network", "actor", "twitter"))
+  class(func_output) <- union(class(func_output), c("network", "actor", "twitter"))
   
-  return(func_output)
+  func_output
 }
