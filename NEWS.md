@@ -2,8 +2,8 @@
 
 ## Minor Changes
 - A feature was added to the youtube actor `AddText` function to redirect edges towards actors based
-  on the presence of a `screen name` or `@screen name` (the standard convention) found at the
-  beginning of a reply comment. Typically reply comments are directed towards a top-level comment, this
+  on the presence of a `screen name` or `@screen name` (standard) that is found at the beginning of
+  a reply comment. Typically reply comments are directed towards a top-level comment, this
   captures when reply comments are directed to other commentors in the thread.
 
 # vosonSML 0.29.1

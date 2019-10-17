@@ -26,15 +26,24 @@ and \code{$videos} nodes and edges include columns for additional video data.
 }
 \description{
 Youtube actor network is supplemented with additional downloaded video information.
+Adds video id, title, description and publish time as edge attributes. Nodes or actor references
+to video id's in the network are substituted with the actor id (video channel id) retrieved from
+the video details.
 }
 \examples{
 \dontrun{
-# add video data to an actor network
+# replace video id references with actors and add video id, title, description and plublish time
+# to an actor network
 actorNetwork <- collectData \%>\% Create("actor") \%>\% AddVideoData(youtubeAuth)
+
+# only replace video id references with actors that published videos in network
+actorNetwork <- collectData \%>\% Create("actor") \%>\% AddVideoData(youtubeAuth, actorSubOnly = TRUE)
 
 # network
 # actorNetwork$nodes
 # actorNetwork$edges
+
+# dataframe of downloaded video data
 # actorNetwork$videos
 }
 

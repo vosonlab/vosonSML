@@ -21,5 +21,5 @@ Network is supplemented with additional downloaded social media user information
 attributes.
 }
 \note{
-Only supports twitter actor network at this time. Refer to \code{\link{AddUserData.actor.twitter}}.
+Only supports twitter actor networks at this time. Refer to \code{\link{AddUserData.actor.twitter}}.
 }

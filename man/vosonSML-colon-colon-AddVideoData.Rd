@@ -21,3 +21,6 @@ and \code{$videos} nodes and edges include columns for additional video data.
 \description{
 Network is supplemented with additional downloaded video information.
 }
+\note{
+Only supports youtube actor networks. Refer to \code{\link{AddVideoData.actor.youtube}}.
+}

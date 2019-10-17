@@ -38,7 +38,9 @@
   
 
 <meta property="og:title" content="Add columns containing text data to youtube actor network dataframes — vosonSML::AddText.actor.youtube" />
-<meta property="og:description" content="Add columns containing text data to youtube actor network dataframes" />
+<meta property="og:description" content="Text comments are added to the network as edge attributes. References to actors
+are detected at the beginning of comments and edges redirected to that actor instead if they
+differ from the top-level comment author." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,7 +126,9 @@
     </div>
 
     <div class="ref-description">
-    <p>Add columns containing text data to youtube actor network dataframes</p>
+    <p>Text comments are added to the network as edge attributes. References to actors
+are detected at the beginning of comments and edges redirected to that actor instead if they
+differ from the top-level comment author.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for actor.youtube</span>
@@ -164,12 +168,24 @@ Default is <code>TRUE</code>.</p></td>
     <p>Network as a named list of two dataframes containing <code>$nodes</code> and <code>$edges</code>
 including columns containing text data.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># add text to an actor network ignoring references to actors at the beginning of</span>
+<span class='co'># comment text</span>
+<span class='no'>activityNetwork</span> <span class='kw'>&lt;-</span> <span class='no'>collectData</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Create.html'>Create</a></span>(<span class='st'>"activity"</span>) <span class='kw'>%&gt;%</span>
+                                   <span class='fu'><a href='vosonSML-colon-colon-AddText.html'>AddText</a></span>(<span class='no'>collectData</span>, <span class='kw'>replies_from_text</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='co'># network</span>
+<span class='co'># activityNetwork$nodes</span>
+<span class='co'># activityNetwork$edges</span>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

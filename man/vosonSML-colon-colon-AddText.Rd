@@ -23,7 +23,8 @@ Network is supplemented with additional social media text data applied as node o
 }
 \note{
 Supports all \code{activity} and \code{actor} networks. Refer to \code{\link{AddText.activity.reddit}} and
-\code{\link{AddText.actor.reddit}} for additional reddit parameters.
+\code{\link{AddText.actor.reddit}} for additional reddit parameters. Refer to \code{\link{AddText.actor.youtube}}
+for additional youtube actor network parameters.
 }
 \examples{
 \dontrun{

@@ -38,7 +38,10 @@
   
 
 <meta property="og:title" content="Add video information to youtube actor network dataframes — vosonSML::AddVideoData.actor.youtube" />
-<meta property="og:description" content="Youtube actor network is supplemented with additional downloaded video information." />
+<meta property="og:description" content="Youtube actor network is supplemented with additional downloaded video information.
+Adds video id, title, description and publish time as edge attributes. Nodes or actor references
+to video id's in the network are substituted with the actor id (video channel id) retrieved from
+the video details." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -124,7 +127,10 @@
     </div>
 
     <div class="ref-description">
-    <p>Youtube actor network is supplemented with additional downloaded video information.</p>
+    <p>Youtube actor network is supplemented with additional downloaded video information.
+Adds video id, title, description and publish time as edge attributes. Nodes or actor references
+to video id's in the network are substituted with the actor id (video channel id) retrieved from
+the video details.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for actor.youtube</span>
@@ -164,12 +170,18 @@ and <code>$videos</code> nodes and edges include columns for additional video da
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># add video data to an actor network</span>
+<span class='co'># replace video id references with actors and add video id, title, description and plublish time</span>
+<span class='co'># to an actor network</span>
 <span class='no'>actorNetwork</span> <span class='kw'>&lt;-</span> <span class='no'>collectData</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Create.html'>Create</a></span>(<span class='st'>"actor"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='vosonSML-colon-colon-AddVideoData.html'>AddVideoData</a></span>(<span class='no'>youtubeAuth</span>)
+
+<span class='co'># only replace video id references with actors that published videos in network</span>
+<span class='no'>actorNetwork</span> <span class='kw'>&lt;-</span> <span class='no'>collectData</span> <span class='kw'>%&gt;%</span> <span class='fu'><a href='Create.html'>Create</a></span>(<span class='st'>"actor"</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='vosonSML-colon-colon-AddVideoData.html'>AddVideoData</a></span>(<span class='no'>youtubeAuth</span>, <span class='kw'>actorSubOnly</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='co'># network</span>
 <span class='co'># actorNetwork$nodes</span>
 <span class='co'># actorNetwork$edges</span>
+
+<span class='co'># dataframe of downloaded video data</span>
 <span class='co'># actorNetwork$videos</span>
 }</div></pre>
   </div>

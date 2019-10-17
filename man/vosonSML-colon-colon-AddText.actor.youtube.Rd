@@ -27,5 +27,20 @@ Network as a named list of two dataframes containing \code{$nodes} and \code{$ed
 including columns containing text data.
 }
 \description{
-Add columns containing text data to youtube actor network dataframes
+Text comments are added to the network as edge attributes. References to actors
+are detected at the beginning of comments and edges redirected to that actor instead if they
+differ from the top-level comment author.
+}
+\examples{
+\dontrun{
+# add text to an actor network ignoring references to actors at the beginning of
+# comment text
+activityNetwork <- collectData \%>\% Create("activity") \%>\% 
+                                   AddText(collectData, replies_from_text = FALSE)
+
+# network
+# activityNetwork$nodes
+# activityNetwork$edges
+}
+
 }
