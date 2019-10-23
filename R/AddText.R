@@ -207,7 +207,7 @@ AddText.actor.youtube <- function(net, data, replies_from_text = TRUE, at_replie
       }
       return(NA)
     })
-    net$edges %<>% dplyr::mutate(to = if_else(is.na(.data$at_id), .data$to, .data$at_id), 
+    net$edges %<>% dplyr::mutate(to = if_else(is.na(.data$at_id), .data$to, as.character(.data$at_id)), 
                                  edge_type = if_else(is.na(.data$at_id), .data$edge_type, "reply-comment-text")) 
     # , at_id = NULL
   }
