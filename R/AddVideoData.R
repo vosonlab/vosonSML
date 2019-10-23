@@ -94,7 +94,7 @@ AddVideoData.actor.youtube <- function(net, youtubeAuth = NULL, videoIds = NULL,
   videoIds <- unique(videoIds)
   video_df <- GetVideoData(youtubeAuth, videoIds)
   
-  net$videos <- video_df <- GetVideoData(youtubeAuth, videoIds)
+  net$videos <- video_df # <- GetVideoData(youtubeAuth, videoIds)
   
   if (nrow(video_df) == 0) {
     cat("No video data could be retrieved.\n")
@@ -157,7 +157,9 @@ GetVideoData <- function(youtubeAuth, videoIds) {
   res <- httr::content(req)
   
   if (req$status_code != 200) {
-    cat(paste0("Error: ", res$error$code, "\nDetail: ", res$error$message, "\n"))
+    cat(paste0("Status: ", req$status_code,
+               "\nError: ", res$error$code, 
+               "\nDetail: ", res$error$message, "\n"))
     return(tibble::tibble())
   } else {
     video_data <- c(video_data, res$items)
