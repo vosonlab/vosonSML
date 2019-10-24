@@ -41,10 +41,13 @@ Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
                                    !is.na(.data$quoted_status_id) ~ "quote",
                                    !is.na(.data$retweet_status_id) ~ "retweet",
                                    TRUE ~ "tweet")) %>%
-    dplyr::mutate(to = if_else(.data$edge_type == "reply", .data$reply_to_status_id, 
-                         if_else(.data$edge_type == "quote", .data$quoted_status_id,
-                           if_else(.data$edge_type == "retweet", .data$retweet_status_id, 
-                                   as.character(NA))))) %>%
+    # dplyr::mutate(to = if_else(.data$edge_type == "reply", .data$reply_to_status_id, 
+    #                      if_else(.data$edge_type == "quote", .data$quoted_status_id,
+    #                        if_else(.data$edge_type == "retweet", .data$retweet_status_id, 
+    #                                as.character(NA))))) %>%
+    dplyr::mutate(to = ifelse(.data$edge_type == "reply", .data$reply_to_status_id,
+                         ifelse(.data$edge_type == "quote", .data$quoted_status_id,
+                           ifelse(.data$edge_type == "retweet", .data$retweet_status_id, NA)))) %>%
     dplyr::rename("from" = .data$status_id) %>%
     dplyr::select(.data$from, .data$to, .data$edge_type)
   
