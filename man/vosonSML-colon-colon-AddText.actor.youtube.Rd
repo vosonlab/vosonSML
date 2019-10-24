@@ -5,7 +5,7 @@
 \alias{AddText.actor.youtube}
 \title{Add columns containing text data to youtube actor network dataframes}
 \usage{
-\method{AddText}{actor.youtube}(net, data, replies_from_text = TRUE,
+\method{AddText}{actor.youtube}(net, data, replies_from_text = FALSE,
   at_replies_only = TRUE, ...)
 }
 \arguments{
@@ -15,7 +15,7 @@
 
 \item{replies_from_text}{Logical. If comment text for an edge begins with \code{screen_name} change the
 edge to be directed to \code{screen_name} - if different from the top level comment author that the reply
-comment was posted to. Default is \code{TRUE}.}
+comment was posted to. Default is \code{FALSE}.}
 
 \item{at_replies_only}{Logical. Comment \code{screen_names} must begin with an '@' symbol to be redirected.
 Default is \code{TRUE}.}
