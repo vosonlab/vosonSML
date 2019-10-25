@@ -107,13 +107,14 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
     ## Make a dataframe out of the results
     
     if (verbose) { cat(paste0("** Creating dataframe from threads of ", videoIDs[k], ".\n")) }
-    
+    # browser()
     tempData <- lapply(rObj$data, function(x) {
       data.frame(Comment = x$snippet$topLevelComment$snippet$textDisplay,
                  AuthorDisplayName = x$snippet$topLevelComment$snippet$authorDisplayName,
                  AuthorProfileImageUrl = x$snippet$topLevelComment$snippet$authorProfileImageUrl,
                  AuthorChannelUrl = x$snippet$topLevelComment$snippet$authorChannelUrl,
-                 AuthorChannelID = x$snippet$topLevelComment$snippet$authorChannelId$value,               
+                 AuthorChannelID = ifelse(is.null(x$snippet$topLevelComment$snippet$authorChannelId$value),
+                                          "[NoChannelId]", x$snippet$topLevelComment$snippet$authorChannelId$value),               
                  ReplyCount = x$snippet$totalReplyCount,
                  LikeCount = x$snippet$topLevelComment$snippet$likeCount,
                  PublishedAt = x$snippet$topLevelComment$snippet$publishedAt,
@@ -214,7 +215,8 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
                    AuthorDisplayName = x$snippet$authorDisplayName,
                    AuthorProfileImageUrl = x$snippet$authorProfileImageUrl,
                    AuthorChannelUrl = x$snippet$authorChannelUrl,
-                   AuthorChannelID = x$snippet$authorChannelId$value,                    
+                   AuthorChannelID = ifelse(is.null(x$snippet$authorChannelId$value),
+                                            "[NoChannelId]", x$snippet$authorChannelId$value), 
                    ReplyCount = 0, # there is no ReplyCount returned for replies (API specs)
                    LikeCount = x$snippet$likeCount,
                    PublishedAt = x$snippet$publishedAt,
@@ -429,7 +431,8 @@ yt_scraper <- setRefClass(
             AuthorDisplayName = x$snippet$topLevelComment$snippet$authorDisplayName,
             AuthorProfileImageUrl = x$snippet$topLevelComment$snippet$authorProfileImageUrl,
             AuthorChannelUrl = x$snippet$topLevelComment$snippet$authorChannelUrl,
-            AuthorChannelID = x$snippet$topLevelComment$snippet$authorChannelId$value,
+            AuthorChannelID = ifelse(is.null(x$snippet$topLevelComment$snippet$authorChannelId$value),
+                                     "[NoChannelId]", x$snippet$topLevelComment$snippet$authorChannelId$value),
             ReplyCount = x$snippet$totalReplyCount,
             LikeCount = x$snippet$topLevelComment$snippet$likeCount,
             PublishedAt = x$snippet$topLevelComment$snippet$publishedAt,

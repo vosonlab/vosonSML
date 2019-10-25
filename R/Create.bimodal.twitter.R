@@ -32,10 +32,9 @@ Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
   
   from <- to <- edge_type <- timestamp <- status_id <- NULL
 
-  if (is.null(removeTermsOrHashtags)) {
-    removeTermsOrHashtags <- "#fake_hashtag_foobar42_1234567890"
-  } else {
+  if (!is.null(removeTermsOrHashtags) && length(removeTermsOrHashtags)) {
     removeTermsOrHashtags <- as.vector(removeTermsOrHashtags) # coerce to vector to be sure
+    removeTermsOrHashtags <- unlist(lapply(removeTermsOrHashtags, tolower))
   }
   
   df <- datasource
@@ -113,9 +112,10 @@ Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
     status_id = dt_combined$status_id)
   
   # remove the search term / hashtags, if user specified it:
-  if (removeTermsOrHashtags[1] != "#fake_hashtag_foobar42_1234567890") {
+  if (length(removeTermsOrHashtags)) {
     # remove hashtags
-    relations %<>% dplyr::filter(!.data$to %in% removeTermsOrHashtags)
+    relations %<>% dplyr::filter((!.data$to %in% removeTermsOrHashtags) &
+                                 (!.data$from %in% removeTermsOrHashtags))
     df_entities %<>% dplyr::filter(!.data$entity_id %in% removeTermsOrHashtags)
     
     # # we force to lowercase because all terms/hashtags are already converted to lowercase

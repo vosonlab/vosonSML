@@ -22,16 +22,17 @@
 #' developer and maintainer is Bryan Gertzel.
 #' @import tm
 #' @import RCurl
-#' @import data.table
 #' @import httpuv
 #' @import methods
 #' @import httr
+#' @importFrom data.table data.table setkey ':='
 #' @importFrom Hmisc escapeRegex
 #' @importFrom igraph delete.vertices simplify write.graph V 'V<-' vcount
 #' graph_from_data_frame delete_vertex_attr set_graph_attr
 #' @importFrom rtweet create_token rate_limit search_tweets users_data lookup_users
 #' @importFrom stringr str_extract str_replace_all str_match_all
-#' @importFrom utils "flush.console" head "install.packages" "read.table" "write.csv" "read.csv" "capture.output"
+#' @importFrom utils "flush.console" head tail "install.packages" "read.table" "write.csv"
+#' "read.csv" "capture.output"
 #' @importFrom RedditExtractoR reddit_content user_network
 #' @importFrom magrittr '%>%' '%<>%'
 #' @importFrom dplyr rename group_by summarise ungroup left_join select mutate filter coalesce row_number
@@ -42,4 +43,5 @@
 #' @importFrom tictoc tic toc
 #' @importFrom tibble as_tibble enframe
 #' @importFrom stats na.omit
+#' @importFrom purrr transpose
 NULL
