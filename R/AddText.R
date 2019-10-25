@@ -191,7 +191,11 @@ AddText.actor.youtube <- function(net, data, replies_from_text = FALSE, at_repli
   
     net$edges %<>% dplyr::left_join(dplyr::select(net$nodes, -.data$node_type), by = c("from" = "id"))
     
-    net$edges$at_id <- sapply(net$edges$vosonTxt_comment, function(x) {
+    vid_comments <- dplyr::select(net$edges, .data$video_id, .data$vosonTxt_comment) %>% purrr::transpose()
+      
+    
+    # net$edges$at_id <- sapply(net$edges$vosonTxt_comment, function(x) {
+    net$edges$at_id <- sapply(vid_comments, function(x) {
       for (name_at in net$nodes$screen_name) {
         if (at_replies_only) {
           name_at_regex <- paste0("^", Hmisc::escapeRegex(paste0("@", name_at)))
@@ -199,9 +203,11 @@ AddText.actor.youtube <- function(net, data, replies_from_text = FALSE, at_repli
           name_at_regex <- paste0("^[@]?", Hmisc::escapeRegex(name_at))
         }
         
-        if (grepl(name_at_regex, x)) {
-          to_id <- dplyr::filter(net$nodes, .data$screen_name == name_at) %>% 
-                   dplyr::select(.data$id) %>% dplyr::distinct()
+        if (grepl(name_at_regex, x$vosonTxt_comment)) {
+          # to_id <- dplyr::filter(net$nodes, .data$screen_name == name_at) %>% 
+          #          dplyr::select(.data$id) %>% dplyr::distinct()
+          to_id <- dplyr::filter(net$edges, .data$screen_name == name_at & .data$video_id == x$video_id) %>%
+                   dplyr::select(.data$from) %>% dplyr::distinct()
           if (nrow(to_id)) { return(tail(to_id, n = 1)) } # choose last match - best effort
         }
       }

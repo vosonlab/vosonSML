@@ -7,7 +7,7 @@ Description: A suite of tools for collecting and constructing networks from soci
 Type: Package
 Imports: tm, stringr, RCurl, igraph (>= 1.2.2), Hmisc, data.table, httpuv, methods, httr, 
     magrittr, dplyr (>= 0.7.8), tibble, rlang (>= 0.3.0.1), RedditExtractoR (>= 2.1.2), 
-    rtweet (>= 0.6.8), textutils, tictoc, stats
+    rtweet (>= 0.6.8), textutils, tictoc, stats, purrr
 Depends: R (>= 3.2.0)
 Encoding: UTF-8
 Author: Timothy Graham, Robert Ackland, Chung-hong Chan, Bryan Gertzel

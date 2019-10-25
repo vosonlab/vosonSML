@@ -22,10 +22,10 @@
 #' developer and maintainer is Bryan Gertzel.
 #' @import tm
 #' @import RCurl
-#' @import data.table
 #' @import httpuv
 #' @import methods
 #' @import httr
+#' @importFrom data.table data.table setkey ':='
 #' @importFrom Hmisc escapeRegex
 #' @importFrom igraph delete.vertices simplify write.graph V 'V<-' vcount
 #' graph_from_data_frame delete_vertex_attr set_graph_attr
@@ -43,4 +43,5 @@
 #' @importFrom tictoc tic toc
 #' @importFrom tibble as_tibble enframe
 #' @importFrom stats na.omit
+#' @importFrom purrr transpose
 NULL
