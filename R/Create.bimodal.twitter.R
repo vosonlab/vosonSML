@@ -75,7 +75,7 @@ Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
       
       for (j in 1:length(df$hashtags[[i]])) { # for each hashtag in list
         
-        tag <- paste0("#", df$hashtags[[i]][j])
+        tag <- paste0("#", tolower(df$hashtags[[i]][j]))
         
         dt_combined[nextEmptyRow, from:= as.character(df$user_id[i][[1]])]
         dt_combined[nextEmptyRow, to := as.character(tag)]
