@@ -41,7 +41,7 @@
 #' @importFrom rlang '.data'
 #' @importFrom textutils HTMLdecode
 #' @importFrom tictoc tic toc
-#' @importFrom tibble as_tibble enframe
-#' @importFrom stats na.omit
+#' @importFrom tibble as_tibble
+#' @importFrom stats na.omit setNames
 #' @importFrom purrr transpose
 NULL

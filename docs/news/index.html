@@ -120,34 +120,57 @@
       <small>Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="vosonsml-0-29-2" class="section level1">
+    <div id="vosonsml-0293" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-29-2" class="anchor"></a>vosonSML 0.29.2<small> Unreleased </small>
+<a href="#vosonsml-0293" class="anchor"></a>vosonSML 0.29.3<small> Unreleased </small>
 </h1>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor Changes</h2>
 <ul>
-<li>A feature was added to the youtube actor <code>AddText</code> function to redirect edges towards actors based on the presence of a <code>screen name</code> or <code>@screen name</code> that may be found at the beginning of a reply comment. Typically reply comments are directed towards a top-level comment, this instead captures when reply comments are directed to other commenters in the thread.</li>
+<li>Added output messages from supplemental functions such as <code><a href="../reference/vosonSML-colon-colon-AddText.html">AddText()</a></code> and <code><a href="../reference/vosonSML-colon-colon-Graph.html">Graph()</a></code>. Also improved consistency of output messages from <code>Collect</code> and <code>Create</code> functions.</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
+<ul>
+<li>Added a fix <code>reddit</code> gsub locale error <a href="https://github.com/vosonlab/vosonSML/issues/21" class="uri">https://github.com/vosonlab/vosonSML/issues/21</a>.</li>
+<li>Changed <code>bimodal</code> network hashtags to lowercase as filter terms when entered are converted to lowercase.</li>
+<li>Fixed errors thrown when removing terms from <code>bimodal</code> and <code>semantic</code> networks.</li>
+<li>Removed a duplicate <code>GetVideoData()</code> function call in <code>AddVideoData</code>.</li>
+<li>Fixed data type errors in <code>AddText</code> functions related to strict typing by <code><a href="https://dplyr.tidyverse.org/reference/if_else.html">dplyr::if_else</a></code> function.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-29-1" class="section level1">
+    <div id="vosonsml-0292" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-29-1" class="anchor"></a>vosonSML 0.29.1<small> Unreleased </small>
+<a href="#vosonsml-0292" class="anchor"></a>vosonSML 0.29.2<small> Unreleased </small>
 </h1>
 <div id="minor-changes-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-changes-1" class="anchor"></a>Minor Changes</h2>
+<ul>
+<li>A feature was added to the youtube actor <code>AddText</code> function to redirect edges towards actors based on the presence of a <code>screen name</code> or <code>@screen name</code> that may be found at the beginning of a reply comment. Typically reply comments are directed towards a top-level comment, this instead captures when reply comments are directed to other commenters in the thread.</li>
+</ul>
+</div>
+</div>
+    <div id="vosonsml-0291" class="section level1">
+<h1 class="page-header">
+<a href="#vosonsml-0291" class="anchor"></a>vosonSML 0.29.1<small> Unreleased </small>
+</h1>
+<div id="minor-changes-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes-2" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Changed youtube <code>actor</code> network identifiers to be their unique <code>Channel ID</code> instead of their <code>screen names</code>.</li>
 <li>Created the <code>AddVideoData</code> function to add collected video data to the youtube <code>actor</code> network. The main purpose of this function is to replace video identifiers with the <code>Channel ID</code> of the video publisher (actor) instead. To get the <code>Channel ID</code> of video publishers an additional API lookup for the videos in the network is required. Additional columns such as video <code>Title</code>, <code>Description</code> and <code>Published</code> time are also added to the network <code>$edges</code> dataframe as well as returned in their own dataframe called <code>$videos</code>.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-29-0" class="section level1">
+    <div id="vosonsml-0290" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-29-0" class="anchor"></a>vosonSML 0.29.0<small> Unreleased </small>
+<a href="#vosonsml-0290" class="anchor"></a>vosonSML 0.29.0<small> Unreleased </small>
 </h1>
 <div id="major-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -157,9 +180,9 @@
 <li>Generation of <code>igraph</code> graph objects and subsequent writing to file has been removed from the <code>Create</code> function and placed in a new function <code>Graph</code>. This change abstracts the graph creation and makes it optional, but also allows supplemental network steps such as <code>AddText</code> to be performed prior to creating the final igraph object.</li>
 </ul>
 </div>
-<div id="minor-changes-2" class="section level2">
+<div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-3" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Removed <code>writeToFile</code> parameter from <code>Create</code> functions and added it to <code>Graph</code>.</li>
 <li>Removed <code>weightEdges</code>, <code>textData</code> and <code>cleanText</code> parameters from <code>Create.actor.reddit</code>. <code>cleanText</code> is now a parameter of <code>AddText.activity.reddit</code> and <code>AddText.actor.reddit</code>.</li>
@@ -167,22 +190,22 @@
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-28-1" class="section level1">
+    <div id="vosonsml-0281" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-28-1" class="anchor"></a>vosonSML 0.28.1<small> Unreleased </small>
+<a href="#vosonsml-0281" class="anchor"></a>vosonSML 0.28.1<small> Unreleased </small>
 </h1>
-<div id="minor-changes-3" class="section level2">
+<div id="minor-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-4" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added <code>activity</code> network type for reddit. In the reddit activity network nodes are the thread posts and comments, edges represent where comments are directed in the threads.</li>
 <li>Added github dev version badge to README.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-28-0" class="section level1">
+    <div id="vosonsml-0280" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-28-0" class="anchor"></a>vosonSML 0.28.0<small> Unreleased </small>
+<a href="#vosonsml-0280" class="anchor"></a>vosonSML 0.28.0<small> Unreleased </small>
 </h1>
 <div id="major-changes-1" class="section level2">
 <h2 class="hasAnchor">
@@ -192,25 +215,25 @@
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-27-3" class="section level1">
+    <div id="vosonsml-0273" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-3" class="anchor"></a>vosonSML 0.27.3<small> Unreleased </small>
+<a href="#vosonsml-0273" class="anchor"></a>vosonSML 0.27.3<small> Unreleased </small>
 </h1>
-<div id="minor-changes-4" class="section level2">
+<div id="minor-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-5" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added a new twitter actor network edge type <code>self-loop</code>. This aims to facilitate the later addition of tweet text to the network graph for user tweets that have no ties to other users.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-27-2" class="section level1">
+    <div id="vosonsml-0272" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-2" class="anchor"></a>vosonSML 0.27.2<small> 2019-07-18 </small>
+<a href="#vosonsml-0272" class="anchor"></a>vosonSML 0.27.2<small> 2019-07-18 </small>
 </h1>
-<div id="minor-changes-5" class="section level2">
+<div id="minor-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-6" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added twitter interactive web authorization of an app as provided by <code><a href="https://rdrr.io/pkg/rtweet/man/create_token.html">rtweet::create_token</a></code>. Method is used when only twitter app name and consumer keys are passed to <code>Authenticate.twitter</code> as parameters. e.g <code><a href="../reference/Authenticate.html">Authenticate("twitter", appName = "An App", apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx")</a></code>. A browser tab will open asking the user to authorize the app to their twitter account to complete authentication. This is using twitters <code>Application-user authentication: OAuth 1a (access token for user context)</code> method.</li>
 <li>It is suspected that Reddit is rate-limiting some generic R UA strings. So a User-Agent string is now set for underlaying R Collect functions (e.g <code>file</code>) via the <code>HTTPUserAgent</code> option. It is temporarily set to package name and current version number for Collect e.g <code>vosonSML v.0.27.2 (R Package)</code>.</li>
@@ -218,33 +241,33 @@
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-27-1" class="section level1">
+    <div id="vosonsml-0271" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-1" class="anchor"></a>vosonSML 0.27.1<small> Unreleased </small>
+<a href="#vosonsml-0271" class="anchor"></a>vosonSML 0.27.1<small> Unreleased </small>
 </h1>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fixed a bug in <code>Create.semantic.twitter</code> in which a sum operation calculating edge weights would set <code>NA</code> values for all edges due to <code>NA</code> values present in the hashtag fields. This occurs when there are tweets with no hashtags in the twitter collection and is now checked.</li>
 <li>Some UTF encoding issues in <code>Create.semantic.twitter</code> were also fixed.</li>
 </ul>
 </div>
-<div id="minor-changes-6" class="section level2">
+<div id="minor-changes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-7" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added ‘#’ to hashtags and ‘@’ to mentions in twitter semantic network to differentiate between hashtags, mentions and common terms.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-27-0" class="section level1">
+    <div id="vosonsml-0270" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-27-0" class="anchor"></a>vosonSML 0.27.0<small> Unreleased </small>
+<a href="#vosonsml-0270" class="anchor"></a>vosonSML 0.27.0<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fixed a bug in <code>Collect.twitter</code> in which any additional <code>twitter API</code> parameters e.g <code>lang</code> or <code>until</code> were not being passed properly to <code><a href="https://rdrr.io/pkg/rtweet/man/search_tweets.html">rtweet::search_tweets</a></code>. This resulted in the additional parameters being ignored.</li>
 </ul>
@@ -257,42 +280,42 @@
 <li>Changed the way that the <code>cleanText</code> parameter works in <code>Create.actor.reddit</code> so that it is more permissive. Addresses encoding issues with apostrophes and pound symbols and removes unicode characters not permitted by the XML 1.0 standard as used in <code>graphml</code> files. This is best effort and does not resolve all <code>reddit</code> text encoding issues.</li>
 </ul>
 </div>
-<div id="minor-changes-7" class="section level2">
+<div id="minor-changes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-7" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-8" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added <code>Collect.twitter</code> summary information that includes the earliest (min) and latest (max) tweet <code>status_id</code> collected with timestamp. The <code>status_id</code> values can be used to frame subsequent collections as <code>since_id</code> or <code>max_id</code> parameter values. If the <code>until</code> date parameter was used the timestamp can also be used as a quick confirmation.</li>
 <li>Added elapsed time output to the <code>Collect</code> method.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-26-3" class="section level1">
+    <div id="vosonsml-0263" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-26-3" class="anchor"></a>vosonSML 0.26.3<small> 2019-02-22 </small>
+<a href="#vosonsml-0263" class="anchor"></a>vosonSML 0.26.3<small> 2019-02-22 </small>
 </h1>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fixed bugs in <code>Create.actor.reddit</code> that were incorrectly creating edges between top-level commentors and thread authors from different threads. These bugs were only observable in when collecting multiple reddit threads.</li>
 </ul>
 </div>
-<div id="minor-changes-8" class="section level2">
+<div id="minor-changes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-8" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-9" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Improved output for <code>reddit</code> collection. Removed the progress bar and added a table of results summarising the number of comments collected for each thread.</li>
 <li>Added to <code>twitter</code> collection output the users <code>twitter API</code> reset time.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-26-2" class="section level1">
+    <div id="vosonsml-0262" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-26-2" class="anchor"></a>vosonSML 0.26.2<small> Unreleased </small>
+<a href="#vosonsml-0262" class="anchor"></a>vosonSML 0.26.2<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fixed a bug in <code>Create.actor.twitter</code> and <code>Create.bimodal.twitter</code> in which the vertices dataframe provided to the <code>graph_from_data_frame</code> function as a contained duplicate names raising an error.</li>
 </ul>
@@ -305,18 +328,18 @@
 <li>Updated all <code>Authenticate</code>, <code>Collect</code> and <code>Create</code> S3 methods to implement function routing based on object class names.</li>
 </ul>
 </div>
-<div id="minor-changes-9" class="section level2">
+<div id="minor-changes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-9" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-10" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Created a <code>pkgdown</code> web site for github hosted package documentation.</li>
 <li>Created a new hex sticker logo.</li>
 </ul>
 </div>
 </div>
-    <div id="vosonsml-0-25-0" class="section level1">
+    <div id="vosonsml-0250" class="section level1">
 <h1 class="page-header">
-<a href="#vosonsml-0-25-0" class="anchor"></a>vosonSML 0.25.0<small> Unreleased </small>
+<a href="#vosonsml-0250" class="anchor"></a>vosonSML 0.25.0<small> Unreleased </small>
 </h1>
 <div id="major-changes-4" class="section level2">
 <h2 class="hasAnchor">
@@ -333,18 +356,19 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#vosonsml-0-29-2">0.29.2</a></li>
-        <li><a href="#vosonsml-0-29-1">0.29.1</a></li>
-        <li><a href="#vosonsml-0-29-0">0.29.0</a></li>
-        <li><a href="#vosonsml-0-28-1">0.28.1</a></li>
-        <li><a href="#vosonsml-0-28-0">0.28.0</a></li>
-        <li><a href="#vosonsml-0-27-3">0.27.3</a></li>
-        <li><a href="#vosonsml-0-27-2">0.27.2</a></li>
-        <li><a href="#vosonsml-0-27-1">0.27.1</a></li>
-        <li><a href="#vosonsml-0-27-0">0.27.0</a></li>
-        <li><a href="#vosonsml-0-26-3">0.26.3</a></li>
-        <li><a href="#vosonsml-0-26-2">0.26.2</a></li>
-        <li><a href="#vosonsml-0-25-0">0.25.0</a></li>
+        <li><a href="#vosonsml-0293">0.29.3</a></li>
+        <li><a href="#vosonsml-0292">0.29.2</a></li>
+        <li><a href="#vosonsml-0291">0.29.1</a></li>
+        <li><a href="#vosonsml-0290">0.29.0</a></li>
+        <li><a href="#vosonsml-0281">0.28.1</a></li>
+        <li><a href="#vosonsml-0280">0.28.0</a></li>
+        <li><a href="#vosonsml-0273">0.27.3</a></li>
+        <li><a href="#vosonsml-0272">0.27.2</a></li>
+        <li><a href="#vosonsml-0271">0.27.1</a></li>
+        <li><a href="#vosonsml-0270">0.27.0</a></li>
+        <li><a href="#vosonsml-0263">0.26.3</a></li>
+        <li><a href="#vosonsml-0262">0.26.2</a></li>
+        <li><a href="#vosonsml-0250">0.25.0</a></li>
       </ul>
     </div>
   </div>

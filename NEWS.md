@@ -1,3 +1,17 @@
+# vosonSML 0.29.3
+
+## Minor Changes
+- Added output messages from supplemental functions such as `AddText()` and `Graph()`. Also improved
+  consistency of output messages from `Collect` and `Create` functions.
+
+## Bug Fixes
+- Added a fix `reddit` gsub locale error https://github.com/vosonlab/vosonSML/issues/21.
+- Changed `bimodal` network hashtags to lowercase as filter terms when entered are converted to
+  lowercase.
+- Fixed errors thrown when removing terms from `bimodal` and `semantic` networks.
+- Removed a duplicate `GetVideoData()` function call in `AddVideoData`.
+- Fixed data type errors in `AddText` functions related to strict typing by `dplyr::if_else` function.
+
 # vosonSML 0.29.2
 
 ## Minor Changes
