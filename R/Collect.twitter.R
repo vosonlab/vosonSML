@@ -49,7 +49,9 @@
 Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", numTweets = 100, 
                             includeRetweets = TRUE, retryOnRateLimit = FALSE, writeToFile = FALSE, 
                             verbose = FALSE, ...) {
- 
+  
+  cat("Collecting tweets for search query...\n")
+  
   authToken <- credential$auth
   
   if (!("Token" %in% class(authToken))) { 
@@ -57,8 +59,8 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   }
   
   searchTerm <- trimws(searchTerm)
-  cat(paste0("Collecting tweets", ifelse(searchTerm == "", "", paste0(" for search term: ", searchTerm)), "...\n"))
-  flush.console()
+  # cat(paste0("Collecting tweets", ifelse(searchTerm == "", "", paste0(" for search term: ", searchTerm)), "...\n"))
+  if (searchTerm != "") { cat(paste0("Search term: ", searchTerm, "\n")) }
   
   rtlimit <- rtweet::rate_limit(authToken, "search/tweets")
   remaining <- rtlimit[["remaining"]] * 100
@@ -103,10 +105,8 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   # rds chosen over csv to avoid flattening lists in the data
   if (writeToFile) { writeOutputFile(tweets_df, "rds", "TwitterData") }
   
-  cat("Done.\n")
-  flush.console()
-  
   class(tweets_df) <- append(class(tweets_df), c("datasource", "twitter"))
+  cat("Done.\n")
   
   return(tweets_df)
 }

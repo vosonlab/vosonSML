@@ -15,6 +15,8 @@
 #' @name vosonSML::AddVideoData
 #' @export
 AddVideoData <- function(net, youtubeAuth = NULL, ...) {
+  cat("Adding video data to network...")
+  
   if (is.null(youtubeAuth)) {
     stop("AddVideoData requires Authenticate object.", call. = FALSE)
   }
@@ -139,6 +141,7 @@ AddVideoData.actor.youtube <- function(net, youtubeAuth = NULL, videoIds = NULL,
   }
   
   class(net) <- union(class(net), c("voson_video_data"))
+  cat("Done.\n")
   
   net
 }
@@ -157,7 +160,7 @@ GetVideoData <- function(youtubeAuth, videoIds) {
   res <- httr::content(req)
   
   if (req$status_code != 200) {
-    cat(paste0("Status: ", req$status_code,
+    cat(paste0("\nStatus: ", req$status_code,
                "\nError: ", res$error$code, 
                "\nDetail: ", res$error$message, "\n"))
     return(tibble::tibble())

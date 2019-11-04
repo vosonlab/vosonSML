@@ -27,6 +27,8 @@
 #' @name vosonSML::AddText
 #' @export
 AddText <- function(net, data, ...) {
+  cat("Adding text to network...")
+  
   # searches the class list of net for matching method
   UseMethod("AddText", net)
 }
@@ -67,6 +69,7 @@ AddText.activity.twitter <- function(net, data, ...) {
     dplyr::select(-c(.data$qtext, .data$rtext)) %>% dplyr::rename(vosonTxt_tweet = .data$text)
   
   class(net) <- union(class(net), c("voson_text"))
+  cat("Done.\n")
   
   net
 }
@@ -80,6 +83,7 @@ AddText.activity.youtube <- function(net, data, ...) {
                                 by = c("id"))
   
   class(net) <- union(class(net), c("voson_text"))
+  cat("Done.\n")
   
   net
 }
@@ -117,6 +121,7 @@ AddText.activity.reddit <- function(net, data, cleanText = TRUE, ...) {
   }  
   
   class(net) <- union(class(net), c("voson_text"))
+  cat("Done.\n")
   
   net
 }
@@ -144,6 +149,7 @@ AddText.actor.twitter <- function(net, data, ...) {
                dplyr::rename(vosonTxt_tweet = .data$text)
   
   class(net) <- union(class(net), c("voson_text"))
+  cat("Done.\n")
   
   net
 }
@@ -213,6 +219,7 @@ AddText.actor.youtube <- function(net, data, replies_from_text = FALSE, at_repli
   }
   
   class(net) <- union(class(net), c("voson_text"))
+  cat("Done.\n")
   
   net
 }
@@ -254,6 +261,7 @@ AddText.actor.reddit <- function(net, data, cleanText = TRUE, ...) {
   }
   
   class(net) <- union(class(net), c("voson_text"))
+  cat("Done.\n")
   
   net
 }

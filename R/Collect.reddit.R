@@ -24,7 +24,8 @@
 #' 
 #' @export
 Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = FALSE, ...) {
-
+  cat("Collecting comment threads for reddit urls...\n")
+  
   if (missing(threadUrls) || !is.vector(threadUrls) || length(threadUrls) < 1) {
     stop("Please provide a vector of one or more reddit thread urls.", call. = FALSE)
   }
@@ -33,8 +34,6 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
   saved_locale <- setNames(lapply(locale_list, Sys.getlocale), locale_list)
   on.exit({ lapply(names(saved_locale), function(x) { Sys.setlocale(x, unlist(saved_locale[[x]])) }) })
   Sys.setlocale("LC_ALL", "C")
-  
-  cat("Collecting thread data for reddit urls...\n")
   
   threads_df <- NULL
   
@@ -81,10 +80,8 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
     cat(paste0("Collection dataframe is null.\n"))
   }
   
-  cat("Done.\n")
-  flush.console()
-  
   class(threads_df) <- append(class(threads_df), c("datasource", "reddit"))
+  cat("Done.\n")
   
   return(threads_df)
 }

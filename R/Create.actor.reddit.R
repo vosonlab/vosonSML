@@ -21,11 +21,9 @@
 #' 
 #' @export
 Create.actor.reddit <- function(datasource, type, ...) {
+  cat("Generating reddit actor network...")
   
   df <- tibble::as_tibble(datasource) 
-  
-  cat("Generating reddit actor network...\n")
-  flush.console()
 
   # df_thread <- datasource
 
@@ -86,15 +84,13 @@ Create.actor.reddit <- function(datasource, type, ...) {
       by = c("receiver" = "receiver")) %>%
     dplyr::select(.data$from, .data$to, .data$subreddit, .data$thread_id, .data$comment_id)
 
-  cat("Done.\n")
-  flush.console()
-
   func_output <- list(
     "nodes" = df_nodes,
     "edges" = df_relations
   )
   
   class(func_output) <- append(class(func_output), c("network", "actor", "reddit"))
+  cat("Done.\n")
   
-  return(func_output)
+  func_output
 }

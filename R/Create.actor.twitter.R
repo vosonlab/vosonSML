@@ -30,6 +30,8 @@
 #' 
 #' @export
 Create.actor.twitter <- function(datasource, type, verbose = TRUE, ...) {
+  cat("Generating twitter actor network...")
+  if (verbose) { cat("\n") }
   
   from <- to <- edge_type <- timestamp <- status_id <- NULL
   is_retweet <- is_quote <- mentions_user_id <- reply_to_user_id <- NULL
@@ -40,9 +42,6 @@ Create.actor.twitter <- function(datasource, type, verbose = TRUE, ...) {
   # df <- tibble::as_tibble(datasource)
   
   df_stats <- networkStats(NULL, "collected tweets", nrow(df))
-  
-  cat("Generating twitter actor network...\n")
-  flush.console()
   
   df_users <- data.frame("user_id" = character(0), "screen_name" = character(0))
   df_users <- rbind(df_users, subset(df, select = c("user_id", "screen_name"), stringsAsFactors = FALSE))
@@ -219,15 +218,13 @@ Create.actor.twitter <- function(datasource, type, verbose = TRUE, ...) {
     timestamp = dt_combined$timestamp,
     status_id = dt_combined$status_id)
   
-  cat("Done.\n")
-  flush.console()
-  
   func_output <- list(
     "edges" = tibble::as_tibble(df_relations),
     "nodes" = tibble::as_tibble(df_users)
   )
   
   class(func_output) <- union(class(func_output), c("network", "actor", "twitter"))
+  cat("Done.\n")
   
   func_output
 }

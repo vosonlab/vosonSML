@@ -22,12 +22,12 @@
 #' 
 #' @export
 Create.activity.reddit <- function(datasource, type, verbose = TRUE, ...) {
+  cat("Generating reddit activity network...")
+  if (verbose) { cat("\n") }
+  
   df <- tibble::as_tibble(datasource) 
   
   df_stats <- networkStats(NULL, "collected reddit comments", nrow(df))
-  
-  cat("Generating reddit activity network...\n")
-  flush.console()
   
   # would be better with the unique comment fullname ids
   # comment id format <thread_id>.<structure>
@@ -64,15 +64,13 @@ Create.activity.reddit <- function(datasource, type, verbose = TRUE, ...) {
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }
   
-  cat("Done.\n")
-  flush.console()
-  
   func_output <- list(
     "nodes" = df_nodes,
     "edges" = df_relations
   )
   
   class(func_output) <- append(class(func_output), c("network", "activity", "reddit"))
+  cat("Done.\n")
   
   return(func_output)  
 }

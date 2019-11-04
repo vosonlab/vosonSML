@@ -22,13 +22,12 @@
 #' 
 #' @export
 Create.activity.youtube <- function(datasource, type, verbose = TRUE, ...) {
+  cat("Generating youtube activity network...")
+  if (verbose) { cat("\n") }
   
   df <- tibble::as_tibble(datasource) 
   
   df_stats <- networkStats(NULL, "collected youtube comments", nrow(df))
-  
-  cat("Generating youtube activity network...\n")
-  flush.console()
   
   # edges
   df_relations <- df %>% dplyr::select(.data$CommentID, .data$ParentID, .data$VideoID) %>%
@@ -84,15 +83,13 @@ Create.activity.youtube <- function(datasource, type, verbose = TRUE, ...) {
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }
   
-  cat("Done.\n")
-  flush.console()
-  
   func_output <- list(
     "edges" = df_relations,
     "nodes" = df_nodes
   )
   
   class(func_output) <- append(class(func_output), c("network", "activity", "youtube"))
+  cat("Done.\n")
   
   return(func_output)  
 }

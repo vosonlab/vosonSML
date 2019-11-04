@@ -52,6 +52,9 @@
 Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile = FALSE, 
                             maxComments = 10000000000000, ...) {
   
+  cat("Collecting comment threads for youtube videos...\n")
+  flush.console()
+  
   # maxComments defaults to an arbitrary very large number
   
   apiKey <- credential$auth
@@ -87,7 +90,7 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
   
   # Iterate through the videos in videoIDs, adding to dataCombined.
   for (k in 1:length(videoIDs)) {
-    cat(paste0("Collecting video number: ", k, " of ", length(videoIDs), "\n", sep = "")) # DEBUG
+    cat(paste0("Video ", k, " of ", length(videoIDs), "\n", sep = "")) # DEBUG
     cat("---------------------------------------------------------------\n")
     
     ############################## Collect comment threads #############################
@@ -272,13 +275,12 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
   
   if (writeToFile) { writeOutputFile(dataCombined, "rds", "YoutubeData") }
   
-  cat("Done.\n")
-  flush.console()
-  
   #############################################################################
   # return dataframe to environment
   
   class(dataCombined) <- append(class(dataCombined), c("dataource", "youtube"))
+  cat("Done.\n")
+  flush.console()
   
   return(dataCombined)
   
@@ -327,8 +329,6 @@ yt_scraper <- setRefClass(
       
       req <- httr::GET(base_url, query = opts)
       res <- httr::content(req)
-      
-      # browser()
       
       if (req$status_code != 200) {
         api_error <<- TRUE

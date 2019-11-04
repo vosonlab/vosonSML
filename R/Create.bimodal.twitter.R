@@ -29,7 +29,9 @@
 #' 
 #' @export
 Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, verbose = FALSE, ...) {
-  
+  cat("Generating twitter bimodal network...")
+  if (verbose) { cat("\n") }
+
   from <- to <- edge_type <- timestamp <- status_id <- NULL
 
   if (!is.null(removeTermsOrHashtags) && length(removeTermsOrHashtags)) {
@@ -41,9 +43,6 @@ Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
   df <- data.table(df)
 
   df_stats <- networkStats(NULL, "collected tweets", nrow(df))
-
-  cat("Generating twitter bimodal network...\n")
-  flush.console()
 
   df_entities <- data.table("entity_id" = character(0), "display_name" = character(0))
 
@@ -125,15 +124,13 @@ Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
     # g <- delete.vertices(g, toDel)
   }
   
-  cat("Done.\n")
-  flush.console()
-  
   func_output <- list(
     "nodes" = tibble::as_tibble(df_entities),
     "edges" = tibble::as_tibble(relations)
   )
   
   class(func_output) <- union(class(func_output), c("network", "bimodal", "twitter"))
+  cat("Done.\n")
   
   func_output
 }
