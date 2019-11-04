@@ -41,6 +41,9 @@
 Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE, 
                                     termFreq = 5, hashtagFreq = 50, verbose = FALSE, ...) {
 
+  cat("Generating twitter semantic network...")
+  if (verbose) { cat("\n") }
+  
   # default to the top 5% most frequent terms. reduces size of graph
   # default to the top 50% hashtags. reduces size of graph. hashtags are 50% because they are much less 
   # frequent than terms.
@@ -63,9 +66,6 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   # both occurred in same tweet (weight = n occurrences))
   
   df_stats <- networkStats(NULL, "collected tweets", nrow(df))
-  
-  cat("Generating twitter semantic network...\n")
-  flush.console()
   
   # added hash to hashtags to identify and merge them in results
   df$hashtags <- lapply(df$hashtags, function(x) ifelse(is.na(x), NA, paste0("#", x)))
@@ -298,15 +298,13 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }
   
-  cat("Done.\n")
-  flush.console()
-  
   func_output <- list(
     "nodes" = actorsFixed,
     "edges" = relations
   )
   
   class(func_output) <- union(class(func_output), c("network", "semantic", "twitter"))
+  cat("Done.\n")
   
   func_output
 }

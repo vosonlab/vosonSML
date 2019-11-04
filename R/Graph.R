@@ -11,6 +11,9 @@
 #' @name vosonSML::Graph
 #' @export
 Graph <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  cat("Creating igraph network graph...")
+  if (writeToFile) { cat("\n") }
+  
   # create igraph object from dataframes
   g <- igraph::graph_from_data_frame(d = net$edges, directed = directed, vertices = net$nodes)
   
@@ -46,6 +49,7 @@ Graph.activity.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ..
   g <- set_graph_attr(g, "type", "twitter")
   
   graphOutputFile(g, "graphml", writeToFile, "TwitterActivity")
+  cat("Done.\n")
   
   g
 }
@@ -59,6 +63,7 @@ Graph.activity.youtube <- function(net, directed = TRUE, writeToFile = FALSE, ..
   g <- set_graph_attr(g, "type", "youtube")
   
   graphOutputFile(g, "graphml", writeToFile, "YoutubeActivity")
+  cat("Done.\n")
   
   g
 }
@@ -70,6 +75,7 @@ Graph.activity.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...
   g <- set_graph_attr(g, "type", "reddit")
 
   graphOutputFile(g, "graphml", writeToFile, "RedditActivity")
+  cat("Done.\n")
   
   g
 }
@@ -95,6 +101,7 @@ Graph.actor.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) 
   g <- set_graph_attr(g, "type", "twitter")
   
   graphOutputFile(g, "graphml", writeToFile, "TwitterActor")
+  cat("Done.\n")
   
   g  
 }
@@ -107,6 +114,7 @@ Graph.actor.youtube <- function(net, directed = TRUE, writeToFile = FALSE, ...) 
   g <- set_graph_attr(g, "type", "youtube")
   
   graphOutputFile(g, "graphml", writeToFile, "YoutubeActor")
+  cat("Done.\n")
   
   g
 }
@@ -120,6 +128,7 @@ Graph.actor.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
   g <- set_graph_attr(g, "type", "reddit")
   
   graphOutputFile(g, "graphml", writeToFile, "RedditActor")
+  cat("Done.\n")
   
   g  
 }
@@ -146,6 +155,7 @@ Graph.semantic.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ..
   g <- set_graph_attr(g, "type", "twitter")
   
   graphOutputFile(g, "graphml", writeToFile, "TwitterSemantic")
+  cat("Done.\n")
   
   g  
 }
@@ -167,11 +177,12 @@ Graph.bimodal.default <- function(...) {
 #' @export
 Graph.bimodal.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
   V(g)$label <- ifelse(V(g)$name == V(g)$display_name, V(g)$display_name,
-                       paste0(V(g)$display_name, " (", V(g)$name, ")"))
+                       paste0("@", V(g)$display_name, " (", V(g)$name, ")"))
   
   g <- set_graph_attr(g, "type", "twitter")
   
   graphOutputFile(g, "graphml", writeToFile, "TwitterBimodal")
+  cat("Done.\n")
   
   g  
 }

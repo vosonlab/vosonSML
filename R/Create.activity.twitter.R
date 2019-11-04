@@ -24,13 +24,12 @@
 #' 
 #' @export
 Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
+  cat("Generating twitter activity network...")
+  if (verbose) { cat("\n") }
   
   df <- tibble::as_tibble(datasource)
   
   df_stats <- networkStats(NULL, "collected tweets", nrow(df))
-  
-  cat("Generating twitter activity network...\n")
-  flush.console()
   
   # edges
   df_relations <- df %>% dplyr::select(.data$status_id, 
@@ -119,15 +118,13 @@ Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }
   
-  cat("Done.\n")
-  flush.console()
-  
   func_output <- list(
     "nodes" = df_nodes,
     "edges" = df_relations
   )
   
   class(func_output) <- union(class(func_output), c("network", "activity", "twitter"))
+  cat("Done.\n")
   
   func_output
 }

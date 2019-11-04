@@ -23,11 +23,9 @@
 #' 
 #' @export
 Create.actor.youtube <- function(datasource, type, ...) {
-
+  cat("Generating youtube actor network...")
+  
   df <- tibble::as_tibble(datasource)
-
-  cat("Generating youtube actor network...\n")
-  flush.console()
   
   # nodes are authors and videos, edges are comments and self-loops
   
@@ -64,9 +62,6 @@ Create.actor.youtube <- function(datasource, type, ...) {
     video_ids %<>% dplyr::mutate(node_type = "video")
     df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(video_ids, df_nodes, by = "id"))
   }
-    
-  cat("Done.\n")
-  flush.console()
   
   func_output <- list(
     "nodes" = df_nodes,
@@ -74,6 +69,7 @@ Create.actor.youtube <- function(datasource, type, ...) {
   )
   
   class(func_output) <- append(class(func_output), c("network", "actor", "youtube"))
+  cat("Done.\n")
   
-  return(func_output)
+  func_output
 }

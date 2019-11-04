@@ -24,12 +24,16 @@
 #' 
 #' @export
 Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = FALSE, ...) {
+  cat("Collecting comment threads for reddit urls...\n")
   
   if (missing(threadUrls) || !is.vector(threadUrls) || length(threadUrls) < 1) {
     stop("Please provide a vector of one or more reddit thread urls.", call. = FALSE)
   }
 
-  cat("Collecting thread data for reddit urls...\n")
+  locale_list <- c("LC_COLLATE", "LC_CTYPE", "LC_MONETARY", "LC_NUMERIC", "LC_TIME") # LC_ALL
+  saved_locale <- setNames(lapply(locale_list, Sys.getlocale), locale_list)
+  on.exit({ lapply(names(saved_locale), function(x) { Sys.setlocale(x, unlist(saved_locale[[x]])) }) })
+  Sys.setlocale("LC_ALL", "C")
   
   threads_df <- NULL
   
@@ -40,13 +44,17 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
     capture.output(threads_df <- RedditExtractoR::reddit_content(threadUrls, waitTime), type = c("output"))
   }, error = function(e) {
     stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
-  }, finally = { })
+  # }, warning = function(w) {
+  #   
+  }, finally = { 
+    threads_df <- as_tibble(threads_df)
+  })
   
   if (!is.null(threads_df)) {
     if (nrow(threads_df) > 0) {
       # add thread id to df, extracted from url
       threads_df$thread_id <- gsub("^(.*)?/comments/([0-9A-Za-z]{6})?/.*?(/)?$", "\\2", 
-                                   threads_df$URL, ignore.case = TRUE, perl = TRUE)
+                                   threads_df$URL, ignore.case = TRUE, perl = TRUE, useBytes = TRUE)
       
       cat("HTML decoding comments.\n")
       threads_df$comment <- textutils::HTMLdecode(threads_df$comment)
@@ -72,10 +80,8 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
     cat(paste0("Collection dataframe is null.\n"))
   }
   
-  cat("Done.\n")
-  flush.console()
-  
   class(threads_df) <- append(class(threads_df), c("datasource", "reddit"))
+  cat("Done.\n")
   
   return(threads_df)
 }

@@ -12,15 +12,15 @@ CleanRedditText <- function(comments) {
   # df$vosonTxt_comment <- textutils::HTMLdecode(df$vosonTxt_comment)
   
   # take care of a few known encoding issues
-  comments <- gsub("([\u0019])", "'", comments, perl = TRUE) # useBytes = TRUE
-  comments <- gsub("([\u0023])", "#", comments, perl = TRUE)
-  comments <- gsub("([&#x200B;])", " ", comments, perl = TRUE)
+  comments <- gsub("([\u0019])", "'", comments, perl = TRUE, useBytes = TRUE)
+  comments <- gsub("([\u0023])", "#", comments, perl = TRUE, useBytes = TRUE)
+  comments <- gsub("([&#x200B;])", " ", comments, perl = TRUE, useBytes = TRUE)
   
   # replace chars outside of allowed xml 1.0 spec
-  comments <- gsub("([\u0001-\u0008\u000B\u000C\u000E-\u001F])", "", comments, perl = TRUE)
+  comments <- gsub("([\u0001-\u0008\u000B\u000C\u000E-\u001F])", "", comments, perl = TRUE, useBytes = TRUE)
 }
 
 FullCleanText <- function(sentences) {
   # remove any characters that are not in punctuation, alphanumeric classes or spaces
-  sentences <- gsub("[^[:punct:]^[:alnum:]^\\s^\\n]", "", sentences, perl = TRUE)
+  sentences <- gsub("[^[:punct:]^[:alnum:]^\\s^\\n]", "", sentences, perl = TRUE, useBytes = TRUE)
 }

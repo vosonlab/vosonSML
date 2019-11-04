@@ -72,6 +72,8 @@ AddUserData.actor.default <- function(net, ...) {
 #' @name vosonSML::AddUserData.actor.twitter
 #' @export
 AddUserData.actor.twitter <- function(net, data, lookupUsers = TRUE, twitterAuth = NULL, verbose = TRUE, ...) {
+  cat("Adding user profile data to network...")
+  if (verbose) { cat("\n") }
   
   dfUsers <- net$nodes
   
@@ -136,6 +138,7 @@ AddUserData.actor.twitter <- function(net, data, lookupUsers = TRUE, twitterAuth
   # return(func_output)
   
   class(net) <- union(class(net), c("voson_user_data"))
+  cat("Done.\n")
   
   net
 }
