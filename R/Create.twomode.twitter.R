@@ -1,13 +1,13 @@
-#' @title Create twitter bimodal network
+#' @title Create twitter twomode network
 #' 
-#' @description Creates a bimodal network from tweets returned from the twitter search query. In this network there are 
+#' @description Creates a twomode network from tweets returned from the twitter search query. In this network there are 
 #' two types of nodes, twitter users who have tweeted (actors) and hashtags found within their tweets. Network edges 
 #' are weighted and represent hashtag usage by the actor or specifically their tweets that contain a hashtag matching 
 #' the name of the node they are directed towards.
 #'
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"twitter"} class names.
-#' @param type Character string. Type of network to be created, set to \code{"bimodal"}.
-#' @param removeTermsOrHashtags Character vector. Terms or hashtags to remove from the bimodal network. For example, 
+#' @param type Character string. Type of network to be created, set to \code{"twomode"}.
+#' @param removeTermsOrHashtags Character vector. Terms or hashtags to remove from the twomode network. For example, 
 #' this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
 #' nodes with matching name. Default is \code{NULL} to remove none.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
@@ -17,19 +17,19 @@
 #' 
 #' @examples
 #' \dontrun{
-#' # create a twitter bimodal network graph removing the hashtag '#auspol' as it was used in 
+#' # create a twitter twomode network graph removing the hashtag '#auspol' as it was used in 
 #' # the twitter search query
-#' bimodalNetwork <- twitterData %>% 
-#'                   Create("bimodal", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
+#' twomodeNetwork <- twitterData %>% 
+#'                   Create("twomode", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
 #' 
 #' # network
-#' # bimodalNetwork$nodes
-#' # bimodalNetwork$edges
+#' # twomodeNetwork$nodes
+#' # twomodeNetwork$edges
 #' }
 #' 
 #' @export
-Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, verbose = FALSE, ...) {
-  cat("Generating twitter bimodal network...")
+Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, verbose = FALSE, ...) {
+  cat("Generating twitter twomode network...")
   if (verbose) { cat("\n") }
 
   from <- to <- edge_type <- timestamp <- status_id <- NULL
@@ -129,7 +129,7 @@ Create.bimodal.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
     "edges" = tibble::as_tibble(relations)
   )
   
-  class(func_output) <- union(class(func_output), c("network", "bimodal", "twitter"))
+  class(func_output) <- union(class(func_output), c("network", "twomode", "twitter"))
   cat("Done.\n")
   
   func_output

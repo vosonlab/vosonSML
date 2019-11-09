@@ -3,7 +3,7 @@
 ![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)
 ![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)
 ![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
-![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.3&color=orange&logo=github)
+![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.4&color=orange&logo=github)
 ![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?logo=github)
 
 `vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
@@ -20,18 +20,18 @@ Unfortunately we are no longer able to maintain `facebook` and `instagram` colle
 
 ## Installation
 
-Install the latest release via CRAN:
+Install the latest release via CRAN (v0.27.2):
 ```R
 install.packages("vosonSML")
 ```
 
-Install the latest release via GitHub:
+Install the latest release via GitHub (v0.29.3):
 ```R
 install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.3/vosonSML-0.29.3.tar.gz", 
   repo = NULL, type = "source")
 ```
 
-Install the latest development version:
+Install the latest development version (v0.29.4):
 ```R
 # library(devtools)
 devtools::install_github("vosonlab/vosonSML")
@@ -81,7 +81,7 @@ twitterData <- twitterAuth %>%
                        verbose = TRUE)
 ```
 
-#### 'Create' twitter 'activity', 'actor', 'semantic' and 'bimodal' network graphs
+#### 'Create' twitter 'activity', 'actor', 'semantic' and 'twomode' network graphs
 ```R
 ## activity network - nodes are tweets
 
@@ -102,11 +102,11 @@ semanticNetwork <- twitterData %>% Create("semantic", removeTermsOrHashtags = re
                                           termFreq = topTerms)
 semanticGraph <- semanticNetwork %>% Graph(writeToFile = TRUE, directed = FALSE)
 
-## bimodal network - nodes are actors and hashtags
+## twomode network - nodes are actors and hashtags
 
 remItems <- c("#auspol") # exclude these hashtags
-bimodalNetwork <- twitterData %>% Create("bimodal", removeTermsOrHashtags = remItems)
-bimodalGraph <- bimodalNetwork %>% Graph(writeToFile = TRUE)
+twomodeNetwork <- twitterData %>% Create("twomode", removeTermsOrHashtags = remItems)
+twomodeGraph <- twomodeNetwork %>% Graph(writeToFile = TRUE)
 ```
 
 ### Youtube Example

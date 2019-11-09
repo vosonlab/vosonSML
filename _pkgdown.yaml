@@ -55,7 +55,7 @@ reference:
   - '`Create.actor.twitter`'
   - '`Create.actor.youtube`'
   - '`Create.actor.reddit`'
-  - '`Create.bimodal.twitter`'
+  - '`Create.twomode.twitter`'
   - '`Create.semantic.twitter`'
 - title: Helpers
   contents:

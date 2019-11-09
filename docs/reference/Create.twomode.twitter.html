@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create networks from social media data — Create • vosonSML</title>
+<title>Create twitter twomode network — Create.twomode.twitter • vosonSML</title>
 
 
 <!-- jquery -->
@@ -37,17 +37,11 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Create networks from social media data — Create" />
-<meta property="og:description" content="This function creates networks from social media data as produced from Collect. 
-Create is the final step of the Authenticate, Collect and Create workflow.
-There are four types of networks that can be created from collected data: activity, actor, 
-twomode or semantic.
-For activity networks refer to Create.activity.twitter, Create.activity.youtube 
-and Create.activity.reddit for parameters and usage.
-For actor networks refer to Create.actor.twitter, Create.actor.youtube and 
-Create.actor.reddit.
-For twomode and semantic networks refer to Create.twomode.twitter and 
-Create.semantic.twitter functions for parameters and usage respectively." />
+<meta property="og:title" content="Create twitter twomode network — Create.twomode.twitter" />
+<meta property="og:description" content="Creates a twomode network from tweets returned from the twitter search query. In this network there are 
+two types of nodes, twitter users who have tweeted (actors) and hashtags found within their tweets. Network edges 
+are weighted and represent hashtag usage by the actor or specifically their tweets that contain a hashtag matching 
+the name of the node they are directed towards." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -127,51 +121,71 @@ Create.semantic.twitter functions for parameters and usage respectively." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create networks from social media data</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.R'><code>R/Create.R</code></a></small>
-    <div class="hidden name"><code>Create.Rd</code></div>
+    <h1>Create twitter twomode network</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.twomode.twitter.R'><code>R/Create.twomode.twitter.R</code></a></small>
+    <div class="hidden name"><code>Create.twomode.twitter.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function creates networks from social media data as produced from <code><a href='Collect.html'>Collect</a></code>. 
-<code>Create</code> is the final step of the <code><a href='Authenticate.html'>Authenticate</a></code>, <code><a href='Collect.html'>Collect</a></code> and <code>Create</code> workflow.</p>
-<p>There are four types of networks that can be created from collected data: <code>activity</code>, <code>actor</code>, 
-<code>twomode</code> or <code>semantic</code>.</p>
-<p>For <code>activity</code> networks refer to <code><a href='Create.activity.twitter.html'>Create.activity.twitter</a></code>, <code><a href='Create.activity.youtube.html'>Create.activity.youtube</a></code> 
-and <code><a href='Create.activity.reddit.html'>Create.activity.reddit</a></code> for parameters and usage.</p>
-<p>For <code>actor</code> networks refer to <code><a href='Create.actor.twitter.html'>Create.actor.twitter</a></code>, <code><a href='Create.actor.youtube.html'>Create.actor.youtube</a></code> and 
-<code><a href='Create.actor.reddit.html'>Create.actor.reddit</a></code>.</p>
-<p>For <code>twomode</code> and <code>semantic</code> networks refer to <code><a href='Create.twomode.twitter.html'>Create.twomode.twitter</a></code> and 
-<code><a href='Create.semantic.twitter.html'>Create.semantic.twitter</a></code> functions for parameters and usage respectively.</p>
+    <p>Creates a twomode network from tweets returned from the twitter search query. In this network there are 
+two types of nodes, twitter users who have tweeted (actors) and hashtags found within their tweets. Network edges 
+are weighted and represent hashtag usage by the actor or specifically their tweets that contain a hashtag matching 
+the name of the node they are directed towards.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>Create</span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for twomode.twitter</span>
+<span class='fu'><a href='Create.html'>Create</a></span>(<span class='no'>datasource</span>, <span class='no'>type</span>,
+  <span class='kw'>removeTermsOrHashtags</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>datasource</th>
-      <td><p>Collected social media data of class <code>"datasource"</code> and <code>socialmedia</code>.</p></td>
+      <td><p>Collected social media data with <code>"datasource"</code> and <code>"twitter"</code> class names.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Character string. Type of network to be created, can be <code>"activity"</code>, <code>"actor"</code>,
-<code>"twomode"</code> or <code>"semantic"</code>.</p></td>
+      <td><p>Character string. Type of network to be created, set to <code>"twomode"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>removeTermsOrHashtags</th>
+      <td><p>Character vector. Terms or hashtags to remove from the twomode network. For example, 
+this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
+nodes with matching name. Default is <code>NULL</code> to remove none.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical. Output additional information about the network creation. Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Optional parameters to pass to functions providied by supporting R packages that are used for social 
-media network creation.</p></td>
+      <td><p>Additional parameters passed to function. Not used in this method.</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
+    <p>Network as a named list of two dataframes containing <code>$nodes</code> and <code>$edges</code>.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># create a twitter twomode network graph removing the hashtag '#auspol' as it was used in </span>
+<span class='co'># the twitter search query</span>
+<span class='no'>twomodeNetwork</span> <span class='kw'>&lt;-</span> <span class='no'>twitterData</span> <span class='kw'>%&gt;%</span>
+                  <span class='fu'><a href='Create.html'>Create</a></span>(<span class='st'>"twomode"</span>, <span class='kw'>removeTermsOrHashtags</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"#auspol"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># network</span>
+<span class='co'># twomodeNetwork$nodes</span>
+<span class='co'># twomodeNetwork$edges</span>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
 
   </div>

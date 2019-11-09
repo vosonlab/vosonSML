@@ -161,27 +161,27 @@ Graph.semantic.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ..
 }
 
 #' @noRd
-#' @method Graph bimodal
+#' @method Graph twomode
 #' @export
-Graph.bimodal <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  UseMethod("Graph.bimodal", net)
+Graph.twomode <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  UseMethod("Graph.twomode", net)
 }
 
 #' @noRd
 #' @export
-Graph.bimodal.default <- function(...) {
+Graph.twomode.default <- function(...) {
   stop("Unknown social media type passed to graph.", call. = FALSE)
 }
 
 #' @noRd
 #' @export
-Graph.bimodal.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+Graph.twomode.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
   V(g)$label <- ifelse(V(g)$name == V(g)$display_name, V(g)$display_name,
                        paste0("@", V(g)$display_name, " (", V(g)$name, ")"))
   
   g <- set_graph_attr(g, "type", "twitter")
   
-  graphOutputFile(g, "graphml", writeToFile, "TwitterBimodal")
+  graphOutputFile(g, "graphml", writeToFile, "TwitterTwomode")
   cat("Done.\n")
   
   g  
