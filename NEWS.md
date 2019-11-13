@@ -1,3 +1,8 @@
+# vosonSML 0.29.4
+
+## Minor Changes
+- Renamed `bimodal` networks to `twomode`.
+  
 # vosonSML 0.29.3
 
 ## Minor Changes

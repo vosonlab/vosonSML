@@ -10,7 +10,7 @@ Create(datasource, type, ...)
 \item{datasource}{Collected social media data of class \code{"datasource"} and \code{socialmedia}.}
 
 \item{type}{Character string. Type of network to be created, can be \code{"activity"}, \code{"actor"},
-\code{"bimodal"} or \code{"semantic"}.}
+\code{"twomode"} or \code{"semantic"}.}
 
 \item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social 
 media network creation.}
@@ -20,7 +20,7 @@ This function creates networks from social media data as produced from \code{\li
 \code{Create} is the final step of the \code{\link{Authenticate}}, \code{\link{Collect}} and \code{Create} workflow.
 
 There are four types of networks that can be created from collected data: \code{activity}, \code{actor}, 
-\code{bimodal} or \code{semantic}.
+\code{twomode} or \code{semantic}.
 
 For \code{activity} networks refer to \code{\link{Create.activity.twitter}}, \code{\link{Create.activity.youtube}} 
 and \code{\link{Create.activity.reddit}} for parameters and usage.
@@ -28,6 +28,6 @@ and \code{\link{Create.activity.reddit}} for parameters and usage.
 For \code{actor} networks refer to \code{\link{Create.actor.twitter}}, \code{\link{Create.actor.youtube}} and 
 \code{\link{Create.actor.reddit}}.
 
-For \code{bimodal} and \code{semantic} networks refer to \code{\link{Create.bimodal.twitter}} and 
+For \code{twomode} and \code{semantic} networks refer to \code{\link{Create.twomode.twitter}} and 
 \code{\link{Create.semantic.twitter}} functions for parameters and usage respectively.
 }

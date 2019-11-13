@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Reddit API authentication — Authenticate.reddit • vosonSML</title>
+<title>Create twitter twomode network — Create.twomode.twitter • vosonSML</title>
 
 
 <!-- jquery -->
@@ -37,8 +37,11 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Reddit API authentication — Authenticate.reddit" />
-<meta property="og:description" content="Reddit does not require authentication in this version of vosonSML." />
+<meta property="og:title" content="Create twitter twomode network — Create.twomode.twitter" />
+<meta property="og:description" content="Creates a twomode network from tweets returned from the twitter search query. In this network there are 
+two types of nodes, twitter users who have tweeted (actors) and hashtags found within their tweets. Network edges 
+are weighted and represent hashtag usage by the actor or specifically their tweets that contain a hashtag matching 
+the name of the node they are directed towards." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -118,24 +121,42 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Reddit API authentication</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Authenticate.reddit.R'><code>R/Authenticate.reddit.R</code></a></small>
-    <div class="hidden name"><code>Authenticate.reddit.Rd</code></div>
+    <h1>Create twitter twomode network</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.twomode.twitter.R'><code>R/Create.twomode.twitter.R</code></a></small>
+    <div class="hidden name"><code>Create.twomode.twitter.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Reddit does not require authentication in this version of vosonSML.</p>
+    <p>Creates a twomode network from tweets returned from the twitter search query. In this network there are 
+two types of nodes, twitter users who have tweeted (actors) and hashtags found within their tweets. Network edges 
+are weighted and represent hashtag usage by the actor or specifically their tweets that contain a hashtag matching 
+the name of the node they are directed towards.</p>
     </div>
 
-    <pre class="usage"><span class='co'># S3 method for reddit</span>
-<span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='no'>socialmedia</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='co'># S3 method for twomode.twitter</span>
+<span class='fu'><a href='Create.html'>Create</a></span>(<span class='no'>datasource</span>, <span class='no'>type</span>,
+  <span class='kw'>removeTermsOrHashtags</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>socialmedia</th>
-      <td><p>Character string. Identifier for social media API to authenticate, set to <code>"reddit"</code>.</p></td>
+      <th>datasource</th>
+      <td><p>Collected social media data with <code>"datasource"</code> and <code>"twitter"</code> class names.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>Character string. Type of network to be created, set to <code>"twomode"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>removeTermsOrHashtags</th>
+      <td><p>Character vector. Terms or hashtags to remove from the twomode network. For example, 
+this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
+nodes with matching name. Default is <code>NULL</code> to remove none.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical. Output additional information about the network creation. Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -145,18 +166,18 @@
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A <code>credential</code> object containing a <code>$auth = NULL</code> value and social media type descriptor 
-<code>$socialmedia</code> set to <code>"reddit"</code>. Object has the class names <code>"credential"</code> and <code>"reddit"</code>.</p>
-    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
-
-    <p>Even though reddit does not require authentication in this version of vosonSML the <code>Authenticate</code> 
-function must still be called to set the <code>socialmedia</code> identifier. This is used to route to the appropriate 
-social media <code>Collect</code> function.</p>
+    <p>Network as a named list of two dataframes containing <code>$nodes</code> and <code>$edges</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># reddit authentication</span>
-<span class='no'>redditAuth</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='st'>"reddit"</span>)
+<span class='co'># create a twitter twomode network graph removing the hashtag '#auspol' as it was used in </span>
+<span class='co'># the twitter search query</span>
+<span class='no'>twomodeNetwork</span> <span class='kw'>&lt;-</span> <span class='no'>twitterData</span> <span class='kw'>%&gt;%</span>
+                  <span class='fu'><a href='Create.html'>Create</a></span>(<span class='st'>"twomode"</span>, <span class='kw'>removeTermsOrHashtags</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"#auspol"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+
+<span class='co'># network</span>
+<span class='co'># twomodeNetwork$nodes</span>
+<span class='co'># twomodeNetwork$edges</span>
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -164,7 +185,6 @@ social media <code>Collect</code> function.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
-      <li><a href="#note">Note</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
