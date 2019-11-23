@@ -4,8 +4,14 @@
 \alias{Collect.youtube}
 \title{Collect comments data for youtube videos}
 \usage{
-\method{Collect}{youtube}(credential, videoIDs, verbose = FALSE,
-  writeToFile = FALSE, maxComments = 1e+13, ...)
+\method{Collect}{youtube}(
+  credential,
+  videoIDs,
+  verbose = FALSE,
+  writeToFile = FALSE,
+  maxComments = 1e+13,
+  ...
+)
 }
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"youtube"}.}

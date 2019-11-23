@@ -58,7 +58,8 @@ AddUserData.actor.default <- function(net, ...) {
 #' @examples
 #' \dontrun{
 #' # add user info to a twitter actor network
-#' actorNetwork <- collectData %>% Create("actor") %>% AddUserData(collectData, twitterAuth = myTwitterAuth)
+#' actorNetwork <- collectData %>%
+#'   Create("actor") %>% AddUserData(collectData, twitterAuth = myTwitterAuth)
 #' 
 #' # network
 #' # actorNetwork$nodes

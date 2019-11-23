@@ -20,14 +20,14 @@ Unfortunately we are no longer able to maintain `facebook` and `instagram` colle
 
 ## Installation
 
-Install the latest release via CRAN (v0.27.2):
+Install the latest release via CRAN (v0.29.4):
 ```R
 install.packages("vosonSML")
 ```
 
-Install the latest release via GitHub (v0.29.3):
+Install the latest release via GitHub (v0.29.4):
 ```R
-install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.3/vosonSML-0.29.3.tar.gz", 
+install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.4/vosonSML-0.29.4.tar.gz", 
   repo = NULL, type = "source")
 ```
 

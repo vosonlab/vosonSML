@@ -4,9 +4,16 @@
 \alias{Create.semantic.twitter}
 \title{Create twitter semantic network}
 \usage{
-\method{Create}{semantic.twitter}(datasource, type,
-  removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE,
-  termFreq = 5, hashtagFreq = 50, verbose = FALSE, ...)
+\method{Create}{semantic.twitter}(
+  datasource,
+  type,
+  removeTermsOrHashtags = NULL,
+  stopwordsEnglish = TRUE,
+  termFreq = 5,
+  hashtagFreq = 50,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}

@@ -4,8 +4,7 @@
 \alias{Create.twomode.twitter}
 \title{Create twitter twomode network}
 \usage{
-\method{Create}{twomode.twitter}(datasource, type,
-  removeTermsOrHashtags = NULL, verbose = FALSE, ...)
+\method{Create}{twomode.twitter}(datasource, type, removeTermsOrHashtags = NULL, verbose = FALSE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
