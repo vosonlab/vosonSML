@@ -152,10 +152,17 @@ documentation for query operators: <a href='https://developer.twitter.com/en/doc
     </div>
 
     <pre class="usage"><span class='co'># S3 method for twitter</span>
-<span class='fu'><a href='Collect.html'>Collect</a></span>(<span class='no'>credential</span>, <span class='kw'>searchTerm</span> <span class='kw'>=</span> <span class='st'>""</span>,
-  <span class='kw'>searchType</span> <span class='kw'>=</span> <span class='st'>"recent"</span>, <span class='kw'>numTweets</span> <span class='kw'>=</span> <span class='fl'>100</span>, <span class='kw'>includeRetweets</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>retryOnRateLimit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>)</pre>
+<span class='fu'><a href='Collect.html'>Collect</a></span>(
+  <span class='no'>credential</span>,
+  <span class='kw'>searchTerm</span> <span class='kw'>=</span> <span class='st'>""</span>,
+  <span class='kw'>searchType</span> <span class='kw'>=</span> <span class='st'>"recent"</span>,
+  <span class='kw'>numTweets</span> <span class='kw'>=</span> <span class='fl'>100</span>,
+  <span class='kw'>includeRetweets</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>retryOnRateLimit</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,10 +204,10 @@ the hashtag <code>"#auspol"</code>.</p></td>
     <tr>
       <th>...</th>
       <td><p>Arguments passed on to <code><a href='https://rdrr.io/pkg/rtweet/man/search_tweets.html'>rtweet::search_tweets</a></code></p><dl class='dl-horizontal'>
-  <dt>geocode</dt><dd><p>Geographical limiter of the template
+    <dt><code>geocode</code></dt><dd><p>Geographical limiter of the template
 "latitude,longitude,radius" e.g., <code>geocode =
 "37.78,-122.40,1mi"</code>.</p></dd>
-  <dt>max_id</dt><dd><p>Character, returns results with an ID less
+    <dt><code>max_id</code></dt><dd><p>Character, returns results with an ID less
 than (that is, older than) or equal to `max_id`.  Especially
 useful for large data returns that require multiple iterations
 interrupted by user time constraints. For searches exceeding
@@ -213,7 +220,7 @@ multiple days. In these cases, it would likely be useful to
 leverage <code>retryonratelimit</code> for sets of tweets and
 <code>max_id</code> to allow results to continue where previous efforts
 left off.</p></dd>
-  <dt>parse</dt><dd><p>Logical, indicating whether to return parsed
+    <dt><code>parse</code></dt><dd><p>Logical, indicating whether to return parsed
 data.frame, if true, or nested list, if false. By default,
 <code>parse = TRUE</code> saves users from the wreck of time and
 frustration associated with disentangling the nasty nested list
@@ -226,7 +233,7 @@ returns nearly all bits of information returned from
 Twitter. However, users may occasionally encounter new or
 omitted variables. In these rare cases, the nested list object
 will be the only way to access these variables.</p></dd>
-
+  
 </dl></td>
     </tr>
     </table>
