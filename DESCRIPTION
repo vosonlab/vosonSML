@@ -13,7 +13,7 @@ Encoding: UTF-8
 Author: Timothy Graham, Robert Ackland, Chung-hong Chan, Bryan Gertzel
 Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
 License: GPL (>= 3)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.1
 NeedsCompilation: no
 URL: https://github.com/vosonlab/vosonSML
 BugReports: https://github.com/vosonlab/vosonSML/issues

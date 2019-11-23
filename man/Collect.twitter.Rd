@@ -4,10 +4,17 @@
 \alias{Collect.twitter}
 \title{Collect tweet data from twitter search}
 \usage{
-\method{Collect}{twitter}(credential, searchTerm = "",
-  searchType = "recent", numTweets = 100, includeRetweets = TRUE,
-  retryOnRateLimit = FALSE, writeToFile = FALSE, verbose = FALSE,
-  ...)
+\method{Collect}{twitter}(
+  credential,
+  searchTerm = "",
+  searchType = "recent",
+  numTweets = 100,
+  includeRetweets = TRUE,
+  retryOnRateLimit = FALSE,
+  writeToFile = FALSE,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"twitter"}.}
@@ -28,12 +35,13 @@ the hashtag \code{"#auspol"}.}
 
 \item{verbose}{Logical. Output additional information about the data collection. Default is \code{FALSE}.}
 
-\item{...}{Arguments passed on to \code{rtweet::search_tweets}
-\describe{
-  \item{geocode}{Geographical limiter of the template
+\item{...}{
+  Arguments passed on to \code{\link[rtweet:search_tweets]{rtweet::search_tweets}}
+  \describe{
+    \item{\code{geocode}}{Geographical limiter of the template
 "latitude,longitude,radius" e.g., \code{geocode =
 "37.78,-122.40,1mi"}.}
-  \item{max_id}{Character, returns results with an ID less
+    \item{\code{max_id}}{Character, returns results with an ID less
 than (that is, older than) or equal to `max_id`.  Especially
 useful for large data returns that require multiple iterations
 interrupted by user time constraints. For searches exceeding
@@ -46,7 +54,7 @@ multiple days. In these cases, it would likely be useful to
 leverage \code{retryonratelimit} for sets of tweets and
 \code{max_id} to allow results to continue where previous efforts
 left off.}
-  \item{parse}{Logical, indicating whether to return parsed
+    \item{\code{parse}}{Logical, indicating whether to return parsed
 data.frame, if true, or nested list, if false. By default,
 \code{parse = TRUE} saves users from the wreck of time and
 frustration associated with disentangling the nasty nested list
@@ -59,7 +67,7 @@ returns nearly all bits of information returned from
 Twitter. However, users may occasionally encounter new or
 omitted variables. In these rare cases, the nested list object
 will be the only way to access these variables.}
-}}
+  }}
 }
 \value{
 A data.frame object with class names \code{"datasource"} and \code{"twitter"}.

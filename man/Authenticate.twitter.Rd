@@ -4,8 +4,15 @@
 \alias{Authenticate.twitter}
 \title{Twitter API authentication}
 \usage{
-\method{Authenticate}{twitter}(socialmedia, appName, apiKey, apiSecret,
-  accessToken, accessTokenSecret, ...)
+\method{Authenticate}{twitter}(
+  socialmedia,
+  appName,
+  apiKey,
+  apiSecret,
+  accessToken,
+  accessTokenSecret,
+  ...
+)
 }
 \arguments{
 \item{socialmedia}{Character string. Identifier for social media API to authenticate, set to \code{"twitter"}.}

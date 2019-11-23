@@ -4,8 +4,7 @@
 \alias{Collect.reddit}
 \title{Collect comments data from reddit threads}
 \usage{
-\method{Collect}{reddit}(credential, threadUrls, waitTime = 5,
-  writeToFile = FALSE, ...)
+\method{Collect}{reddit}(credential, threadUrls, waitTime = 5, writeToFile = FALSE, ...)
 }
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.}
