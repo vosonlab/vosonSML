@@ -79,6 +79,8 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   #   # df$text <- iconv(df$text, to = "utf-8")
   # }
   
+  df$text <- HTMLdecode(df$text)
+  
   # and then convert to lowercase
   df$text <- tolower(df$text)
   df$hashtags <- lapply(df$hashtags, tolower)

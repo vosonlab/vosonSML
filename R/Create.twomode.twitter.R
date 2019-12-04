@@ -44,7 +44,7 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
 
   df_stats <- networkStats(NULL, "collected tweets", nrow(df))
 
-  df_entities <- data.table("entity_id" = character(0), "display_name" = character(0))
+  df_entities <- data.table("entity_id" = character(0), "display_name" = character(0), "type" = character(0))
 
   # for speed we will pre-allocate dt_combined to a very large size (more rows than needed)
   # and after everything is finished we will delete the unused rows
@@ -70,7 +70,8 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
       }
       
       count <- count + 1
-      df_entities <- rbind(df_entities, list(df$user_id[i][[1]], df$screen_name[i][[1]]), stringsAsFactors = FALSE)
+      df_entities <- rbind(df_entities, list(df$user_id[i][[1]], df$screen_name[i][[1]], "user"), 
+                           stringsAsFactors = FALSE)
       
       for (j in 1:length(df$hashtags[[i]])) { # for each hashtag in list
         
@@ -82,7 +83,7 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
         dt_combined[nextEmptyRow, timestamp := as.character(df$created_at[i][[1]])]
         dt_combined[nextEmptyRow, status_id := as.character(df$status_id[i][[1]])]
         
-        df_entities <- rbind(df_entities, list(tag, tag), stringsAsFactors = FALSE)
+        df_entities <- rbind(df_entities, list(tag, tag, "hashtag"), stringsAsFactors = FALSE)
 
         hashtag_count = hashtag_count + 1 
         nextEmptyRow <- nextEmptyRow + 1 # increment the row to update in `dt_combined`
@@ -99,9 +100,7 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
   
   df_stats <- networkStats(df_stats, "nodes", nrow(df_entities))
   df_stats <- networkStats(df_stats, "edges", sum(df_stats$count[df_stats$edge_count == TRUE]))
-  if (verbose) {
-    networkStats(df_stats, print = TRUE) 
-  }
+  if (verbose) { networkStats(df_stats, print = TRUE) }
   
   relations <- data.frame(
     from = dt_combined$from,

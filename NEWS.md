@@ -1,3 +1,9 @@
+# vosonSML 0.29.5
+
+## Minor Changes
+- HTML decoded tweet text during network creation to replace '&', '<', and '>' HTML codes.
+- Added node type attribute to twomode networks.
+
 # vosonSML 0.29.4
 
 ## Minor Changes

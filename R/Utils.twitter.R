@@ -116,3 +116,9 @@ getRemainingSearchNum <- function(token) {
   rtlimit <- rtweet::rate_limit(token, "search/tweets")
   remaining <- rtlimit[["remaining"]] * 100
 }
+
+# replace known HTML encoded symbols in tweet text
+# tweet_html_decode <- function(text) {
+  # c("&amp;", "&lt;", "&gt;") 
+  # c("&", "<", ">")
+# }

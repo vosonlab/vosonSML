@@ -68,6 +68,8 @@ AddText.activity.twitter <- function(net, data, ...) {
                                                       ifelse(!is.na(.data$qtext), .data$qtext, .data$rtext))) %>%
     dplyr::select(-c(.data$qtext, .data$rtext)) %>% dplyr::rename(vosonTxt_tweet = .data$text)
   
+  net$nodes$vosonTxt_tweet <- HTMLdecode(net$nodes$vosonTxt_tweet)
+  
   class(net) <- union(class(net), c("voson_text"))
   cat("Done.\n")
   
@@ -147,6 +149,8 @@ AddText.actor.twitter <- function(net, data, ...) {
                                 dplyr::select(data, .data$status_id, .data$text),
                                 by = c("status_id")) %>%
                dplyr::rename(vosonTxt_tweet = .data$text)
+  
+  net$edges$vosonTxt_tweet <- HTMLdecode(net$edges$vosonTxt_tweet)
   
   class(net) <- union(class(net), c("voson_text"))
   cat("Done.\n")
