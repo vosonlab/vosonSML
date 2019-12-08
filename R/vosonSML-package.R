@@ -41,4 +41,8 @@
 #' @importFrom tibble as_tibble
 #' @importFrom utils "flush.console" head tail "install.packages" "read.table" "write.csv"
 #' "read.csv" "capture.output"
+#' @importFrom stats na.omit setNames
+#' @importFrom purrr transpose
+#' @importFrom lubridate as_datetime
+#' @importFrom RJSONIO fromJSON
 NULL

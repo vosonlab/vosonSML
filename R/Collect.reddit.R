@@ -46,7 +46,7 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
   
   # make the get request for the reddit thread url
   tryCatch({
-    capture.output(threads_df <- RedditExtractoR::reddit_content(threadUrls, waitTime), type = c("output"))
+    capture.output(threads_df <- mod_reddit_content(threadUrls, waitTime), type = c("output"))
   }, error = function(e) {
     stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
   # }, warning = function(w) {
