@@ -1,5 +1,5 @@
 Package: vosonSML
-Version: 0.29.4
+Version: 0.29.4.9000
 Title: Collecting Social Media Data and Generating Networks for Analysis
 Description: A suite of tools for collecting and constructing networks from social media data.
     Provides easy-to-use functions for collecting data across popular platforms (Twitter, YouTube 
@@ -7,13 +7,13 @@ Description: A suite of tools for collecting and constructing networks from soci
 Type: Package
 Imports: tm, stringr, RCurl, igraph (>= 1.2.2), Hmisc, data.table, httpuv, methods, httr, 
     magrittr, dplyr (>= 0.7.8), tibble, rlang (>= 0.3.0.1), RedditExtractoR (>= 2.1.2), 
-    rtweet (>= 0.6.8), textutils, tictoc, stats, purrr
+    rtweet (>= 0.6.8), textutils, tictoc, stats, purrr, lubridate, RJSONIO
 Depends: R (>= 3.2.0)
 Encoding: UTF-8
 Author: Timothy Graham, Robert Ackland, Chung-hong Chan, Bryan Gertzel
 Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
 License: GPL (>= 3)
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
 NeedsCompilation: no
 URL: https://github.com/vosonlab/vosonSML
 BugReports: https://github.com/vosonlab/vosonSML/issues

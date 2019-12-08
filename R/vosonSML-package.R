@@ -44,4 +44,6 @@
 #' @importFrom tibble as_tibble
 #' @importFrom stats na.omit setNames
 #' @importFrom purrr transpose
+#' @importFrom lubridate as_datetime
+#' @importFrom RJSONIO fromJSON 
 NULL
