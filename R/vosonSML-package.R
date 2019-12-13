@@ -33,7 +33,6 @@
 #' @importFrom stringr str_extract str_replace_all str_match_all
 #' @importFrom utils "flush.console" head tail "install.packages" "read.table" "write.csv"
 #' "read.csv" "capture.output"
-#' @importFrom RedditExtractoR reddit_content user_network
 #' @importFrom magrittr '%>%' '%<>%'
 #' @importFrom dplyr rename group_by summarise ungroup left_join select mutate filter coalesce row_number
 #' distinct anti_join mutate_all mutate_at ends_with vars funs bind_rows arrange case_when if_else
