@@ -32,6 +32,10 @@
 #' @importFrom Hmisc escapeRegex
 #' @importFrom igraph delete.vertices simplify write.graph V 'V<-' vcount
 #' graph_from_data_frame delete_vertex_attr set_graph_attr
+#' @importFrom rtweet create_token rate_limit search_tweets users_data lookup_users
+#' @importFrom stringr str_extract str_replace_all str_match_all
+#' @importFrom utils "flush.console" head tail "install.packages" "read.table" "write.csv"
+#' "read.csv" "capture.output"
 #' @importFrom magrittr '%>%' '%<>%'
 #' @importFrom purrr transpose
 #' @importFrom rlang '.data'
