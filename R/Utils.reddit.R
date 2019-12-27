@@ -24,3 +24,9 @@ FullCleanText <- function(sentences) {
   # remove any characters that are not in punctuation, alphanumeric classes or spaces
   sentences <- gsub("[^[:punct:]^[:alnum:]^\\s^\\n]", "", sentences, perl = TRUE, useBytes = TRUE)
 }
+
+reddit_tid_from_url <- function(url, desc = FALSE) {
+  if (desc) { extract <- "\\2 - \\3" } else { extract <- "\\3" }
+  gsub("^(.*)?/(r/.+)/comments/([0-9A-Za-z]{6})?/.*?(/)?$", extract, url, ignore.case = TRUE, 
+       perl = TRUE, useBytes = TRUE)  
+}
