@@ -5,7 +5,7 @@ Description: A suite of tools for collecting and constructing networks from soci
     Provides easy-to-use functions for collecting data across popular platforms (Twitter, YouTube 
     and Reddit) and generating different types of networks for analysis.
 Type: Package
-Imports: 
+Imports:
     data.table,
     dplyr (>= 0.7.8),
     Hmisc,
@@ -21,7 +21,8 @@ Imports:
     stringr,
     textutils,
     tibble,
-    tm
+    tm,
+    utils
 Suggests:
     RedditExtractoR (>= 2.1.2),
     rtweet (>= 0.6.8),
@@ -31,7 +32,7 @@ Encoding: UTF-8
 Author: Timothy Graham, Robert Ackland, Chung-hong Chan, Bryan Gertzel
 Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
 License: GPL (>= 3)
-RoxygenNote: 7.0.1
+RoxygenNote: 7.0.2
 NeedsCompilation: no
 URL: https://github.com/vosonlab/vosonSML
 BugReports: https://github.com/vosonlab/vosonSML/issues

@@ -19,7 +19,7 @@ navbar:
       href: index.html
     news:
       icon: fa-newspaper-o
-      text: "News"
+      text: "Changelog"
       href: news/index.html    
     reference:
       icon: fa-cubes
