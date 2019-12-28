@@ -13,17 +13,21 @@
 #'
 #' @export
 Collect <- function(credential, ...) {
+  
+  timer_pkg <- FALSE
+  if (requireNamespace("tictoc", quietly = TRUE)) { timer_pkg <- TRUE }
+  
   # set the environment encoding to UTF-8 for data collection
   saved_enc <- getOption("encoding")
   saved_ua <- getOption("HTTPUserAgent")
   on.exit({
-    tictoc::toc(quiet = FALSE, func.toc = collectTocOutput)
+    if (timer_pkg) { tictoc::toc(quiet = FALSE, func.toc = collectTocOutput) }
     options(encoding = saved_enc)
     options(HTTPUserAgent = saved_ua)
   }, add = TRUE)
   options(encoding = "UTF-8")
   options(HTTPUserAgent = paste0("vosonSML v.", getVosonSMLVer(), " (R Package)"))
-  tictoc::tic(msg = "Elapsed time")
+  if (timer_pkg) { tictoc::tic(msg = "Elapsed time") }
   
   # searches the class list of credential for matching method
   UseMethod("Collect", credential)

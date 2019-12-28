@@ -1,13 +1,31 @@
 Package: vosonSML
-Version: 0.29.4
+Version: 0.29.5
 Title: Collecting Social Media Data and Generating Networks for Analysis
 Description: A suite of tools for collecting and constructing networks from social media data.
     Provides easy-to-use functions for collecting data across popular platforms (Twitter, YouTube 
     and Reddit) and generating different types of networks for analysis.
 Type: Package
-Imports: tm, stringr, RCurl, igraph (>= 1.2.2), Hmisc, data.table, httpuv, methods, httr, 
-    magrittr, dplyr (>= 0.7.8), tibble, rlang (>= 0.3.0.1), RedditExtractoR (>= 2.1.2), 
-    rtweet (>= 0.6.8), textutils, tictoc, stats, purrr
+Imports: 
+    data.table,
+    dplyr (>= 0.7.8),
+    Hmisc,
+    httpuv,
+    httr,
+    igraph (>= 1.2.2),
+    magrittr,
+    methods,
+    purrr,
+    RCurl,
+    rlang (>= 0.3.0.1),
+    stats,
+    stringr,
+    textutils,
+    tibble,
+    tm
+Suggests:
+    RedditExtractoR (>= 2.1.2),
+    rtweet (>= 0.6.8),
+    tictoc
 Depends: R (>= 3.2.0)
 Encoding: UTF-8
 Author: Timothy Graham, Robert Ackland, Chung-hong Chan, Bryan Gertzel
