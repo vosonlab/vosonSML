@@ -73,6 +73,11 @@ AddUserData.actor.default <- function(net, ...) {
 #' @name vosonSML::AddUserData.actor.twitter
 #' @export
 AddUserData.actor.twitter <- function(net, data, lookupUsers = TRUE, twitterAuth = NULL, verbose = TRUE, ...) {
+  
+  if (!requireNamespace("rtweet", quietly = TRUE)) {
+    stop("Please install the rtweet package before calling AddUserData.", call. = FALSE)
+  }
+  
   cat("Adding user profile data to network...")
   if (verbose) { cat("\n") }
   

@@ -24,6 +24,11 @@
 #' 
 #' @export
 Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = FALSE, ...) {
+  
+  if (!requireNamespace("RedditExtractoR", quietly = TRUE)) {
+    stop("Please install the RedditExtractoR package before calling Collect.", call. = FALSE)
+  }
+  
   cat("Collecting comment threads for reddit urls...\n")
   
   if (missing(threadUrls) || !is.vector(threadUrls) || length(threadUrls) < 1) {

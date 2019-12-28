@@ -36,6 +36,11 @@
 #' 
 #' @export
 Authenticate.twitter <- function(socialmedia, appName, apiKey, apiSecret, accessToken, accessTokenSecret, ...) {
+  
+  if (!requireNamespace("rtweet", quietly = TRUE)) {
+    stop("Please install the rtweet package before calling Authenticate.", call. = FALSE)
+  }
+  
   credential <- list(socialmedia = "twitter", auth = NULL)
   class(credential) <- append(class(credential), c("credential", "twitter"))   
 
