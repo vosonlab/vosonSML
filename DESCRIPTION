@@ -16,6 +16,7 @@ Imports:
     methods,
     purrr,
     RCurl,
+    RedditExtractoR (>= 2.1.2),
     rlang (>= 0.3.0.1),
     stats,
     stringr,
@@ -24,7 +25,6 @@ Imports:
     tm,
     utils
 Suggests:
-    RedditExtractoR (>= 2.1.2),
     rtweet (>= 0.6.8),
     tictoc
 Depends: R (>= 3.2.0)
