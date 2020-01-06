@@ -128,7 +128,7 @@
 <h2 class="hasAnchor">
 <a href="#minor-changes" class="anchor"></a>Minor Changes</h2>
 <ul>
-<li>Removed the <code>rtweet</code>, <code>RedditExtractoR</code> and <code>tictoc</code> packages from dependency imports to suggested packages. Using the <code>Authenticate</code> and <code>Collect</code> functions for <code>twitter</code> without the <code>rtweet</code> package installed will stop and notify the user. Using the <code>Collect</code> function for <code>reddit</code> without the <code>RedditExtractoR</code> package will stop and notify the user that it first needs to be installed.</li>
+<li>Removed the <code>rtweet</code> and <code>tictoc</code> packages from dependency imports to suggested packages. Using the <code>Authenticate</code> and <code>Collect</code> functions for <code>twitter</code> without the <code>rtweet</code> package installed will stop and notify the user that it must be installed first.</li>
 </ul>
 </div>
 </div>
@@ -259,7 +259,7 @@
 <h2 class="hasAnchor">
 <a href="#minor-changes-8" class="anchor"></a>Minor Changes</h2>
 <ul>
-<li>Added twitter interactive web authorization of an app as provided by <code><a href="https://rdrr.io/pkg/rtweet/man/create_token.html">rtweet::create_token</a></code>. Method is used when only twitter app name and consumer keys are passed to <code>Authenticate.twitter</code> as parameters. e.g <code><a href="../reference/Authenticate.html">Authenticate("twitter", appName = "An App", apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx")</a></code>. A browser tab will open asking the user to authorize the app to their twitter account to complete authentication. This is using twitters <code>Application-user authentication: OAuth 1a (access token for user context)</code> method.</li>
+<li>Added twitter interactive web authorization of an app as provided by <code><a href="https://rdrr.io/pkg/rtweet/man/create_token.html">rtweet::create_token</a></code>. Method is used when only twitter app name and consumer keys are passed to <code>Authenticate.twitter</code> as parameters. e.g <code><a href="../reference/Authenticate.html">Authenticate("twitter", appName = "An App", apiKey = "xxxxxxxxxxxx",   apiSecret = "xxxxxxxxxxxx")</a></code>. A browser tab will open asking the user to authorize the app to their twitter account to complete authentication. This is using twitters <code>Application-user authentication: OAuth 1a (access token for user context)</code> method.</li>
 <li>It is suspected that Reddit is rate-limiting some generic R UA strings. So a User-Agent string is now set for underlaying R Collect functions (e.g <code>file</code>) via the <code>HTTPUserAgent</code> option. It is temporarily set to package name and current version number for Collect e.g <code>vosonSML v.0.27.2 (R Package)</code>.</li>
 <li>Removed hex sticker (and favicons for pkgdown site).</li>
 </ul>

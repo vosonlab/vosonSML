@@ -1,11 +1,9 @@
 # vosonSML 0.29.5
 
 ## Minor Changes
-- Removed the `rtweet`, `RedditExtractoR` and `tictoc` packages from dependency imports to
-  suggested packages. Using the `Authenticate` and `Collect` functions for `twitter` without
-  the `rtweet` package installed will stop and notify the user. Using the `Collect` function
-  for `reddit` without the `RedditExtractoR` package will stop and notify the user that it
-  first needs to be installed.
+- Removed the `rtweet` and `tictoc` packages from dependency imports to suggested packages. Using
+  the `Authenticate` and `Collect` functions for `twitter` without the `rtweet` package installed
+  will stop and notify the user that it must be installed first.
 
 # vosonSML 0.29.4
 
