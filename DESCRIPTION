@@ -18,6 +18,7 @@ Imports:
     RCurl,
     RedditExtractoR (>= 2.1.2),
     rlang (>= 0.3.0.1),
+    rtweet (>= 0.6.8),
     stats,
     stringr,
     textutils,
@@ -25,7 +26,6 @@ Imports:
     tm,
     utils
 Suggests:
-    rtweet (>= 0.6.8),
     tictoc
 Depends: R (>= 3.2.0)
 Encoding: UTF-8
