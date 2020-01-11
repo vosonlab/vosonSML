@@ -1,8 +1,10 @@
 # vosonSML 0.29.5
 
 ## Minor Changes
-- Removed the `tictoc` package from dependency imports to suggested packages. Added some checks
-  for whether the `rtweet` package is installed.
+- Reworked the `RedditExtractoR` collection and parsing methods.
+- Removed the `tictoc` package from dependency imports to suggested packages.
+- Added some checks for whether the `rtweet` package is installed.
+- Removed the `RedditExtractoR` package from imports.
 
 # vosonSML 0.29.4
 

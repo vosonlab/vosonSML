@@ -32,21 +32,16 @@
 #' @importFrom Hmisc escapeRegex
 #' @importFrom igraph delete.vertices simplify write.graph V 'V<-' vcount
 #' graph_from_data_frame delete_vertex_attr set_graph_attr
-#' @importFrom rtweet create_token rate_limit search_tweets users_data lookup_users
-#' @importFrom stringr str_extract str_replace_all str_match_all
-#' @importFrom utils "flush.console" head tail "install.packages" "read.table" "write.csv"
-#' "read.csv" "capture.output"
+#' @importFrom lubridate as_datetime
 #' @importFrom magrittr '%>%' '%<>%'
 #' @importFrom purrr transpose
+#' @importFrom RJSONIO fromJSON
 #' @importFrom rlang '.data'
+#' @importFrom rtweet create_token rate_limit search_tweets users_data lookup_users
 #' @importFrom stats na.omit setNames
 #' @importFrom stringr str_extract str_replace_all str_match_all
 #' @importFrom textutils HTMLdecode
 #' @importFrom tibble as_tibble
 #' @importFrom utils "flush.console" head tail "install.packages" "read.table" "write.csv"
 #' "read.csv" "capture.output"
-#' @importFrom stats na.omit setNames
-#' @importFrom purrr transpose
-#' @importFrom lubridate as_datetime
-#' @importFrom RJSONIO fromJSON
 NULL

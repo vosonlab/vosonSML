@@ -3,8 +3,8 @@
 ![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)
 ![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)
 ![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
-![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.5&color=orange&logo=github)
-![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?logo=github)
+![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.5&color=659DBD&logo=github)
+![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&color=659DBD&logo=github)
 
 `vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
 
