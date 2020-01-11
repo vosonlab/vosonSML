@@ -98,7 +98,7 @@
 <p>Install the latest release via CRAN (v0.29.5):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"vosonSML"</span>)</span></code></pre></div>
 <p>Install the latest release via GitHub (v0.29.4):</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"https://github.com/vosonlab/vosonSML/releases/download/v0.29.4/vosonSML-0.29.4.tar.gz"</span>, </span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"https://github.com/vosonlab/vosonSML/releases/download/v0.29.4/vosonSML-0.29.4.tar.gz"</span>,</span>
 <span id="cb2-2"><a href="#cb2-2"></a>  <span class="dt">repo =</span> <span class="ot">NULL</span>, <span class="dt">type =</span> <span class="st">"source"</span>)</span></code></pre></div>
 <p>Install the latest development version (v0.29.5):</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># library(devtools)</span></span>
@@ -127,16 +127,16 @@
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(vosonSML)</span>
 <span id="cb4-3"><a href="#cb4-3"></a></span>
-<span id="cb4-4"><a href="#cb4-4"></a>myKeys &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">appName =</span> <span class="st">"My App"</span>, <span class="dt">apiKey =</span> <span class="st">"xxxxxxxxxxxx"</span>, <span class="dt">apiSecret =</span> <span class="st">"xxxxxxxxxxxx"</span>, </span>
+<span id="cb4-4"><a href="#cb4-4"></a>myKeys &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">appName =</span> <span class="st">"My App"</span>, <span class="dt">apiKey =</span> <span class="st">"xxxxxxxxxxxx"</span>, <span class="dt">apiSecret =</span> <span class="st">"xxxxxxxxxxxx"</span>,</span>
 <span id="cb4-5"><a href="#cb4-5"></a>               <span class="dt">accessToken =</span> <span class="st">"xxxxxxxxxxxx"</span>, <span class="dt">accessTokenSecret =</span> <span class="st">"xxxxxxxxxxxx"</span>)</span>
-<span id="cb4-6"><a href="#cb4-6"></a>  </span>
-<span id="cb4-7"><a href="#cb4-7"></a>twitterAuth &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"twitter"</span>, <span class="dt">appName =</span> myKeys<span class="op">$</span>appName, <span class="dt">apiKey =</span> myKeys<span class="op">$</span>apiKey, </span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a>twitterAuth &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"twitter"</span>, <span class="dt">appName =</span> myKeys<span class="op">$</span>appName, <span class="dt">apiKey =</span> myKeys<span class="op">$</span>apiKey,</span>
 <span id="cb4-8"><a href="#cb4-8"></a>                            <span class="dt">apiSecret =</span> myKeys<span class="op">$</span>apiSecret, <span class="dt">accessToken =</span> myKeys<span class="op">$</span>accessToken,</span>
 <span id="cb4-9"><a href="#cb4-9"></a>                            <span class="dt">accessTokenSecret =</span> myKeys<span class="op">$</span>accessTokenSecret)</span>
 <span id="cb4-10"><a href="#cb4-10"></a></span>
 <span id="cb4-11"><a href="#cb4-11"></a><span class="co"># twitter authentication creates an access token as part of the auth object</span></span>
 <span id="cb4-12"><a href="#cb4-12"></a><span class="co"># this can and should be re-used by saving it and then loading it for future sessions</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a><span class="co"># save the auth object after authenticate </span></span>
+<span id="cb4-13"><a href="#cb4-13"></a><span class="co"># save the auth object after authenticate</span></span>
 <span id="cb4-14"><a href="#cb4-14"></a><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(twitterAuth, <span class="dt">file =</span> <span class="st">"~/.twitter_auth"</span>)</span>
 <span id="cb4-15"><a href="#cb4-15"></a></span>
 <span id="cb4-16"><a href="#cb4-16"></a><span class="co"># load a previously saved auth object for use in collect</span></span>
@@ -147,8 +147,8 @@
 <a href="#collect-tweets-for-the-auspol-hashtag" class="anchor"></a>‘Collect’ tweets for the ‘#auspol’ hashtag</h4>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># collect 100 recent tweets</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>twitterData &lt;-<span class="st"> </span>twitterAuth <span class="op">%&gt;%</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="st">               </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">searchTerm =</span> <span class="st">"#auspol"</span>, <span class="dt">searchType =</span> <span class="st">"recent"</span>, <span class="dt">numTweets =</span> <span class="dv">100</span>, </span>
-<span id="cb5-4"><a href="#cb5-4"></a>                       <span class="dt">includeRetweets =</span> <span class="ot">FALSE</span>, <span class="dt">retryOnRateLimit =</span> <span class="ot">TRUE</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>, </span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="st">               </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">searchTerm =</span> <span class="st">"#auspol"</span>, <span class="dt">searchType =</span> <span class="st">"recent"</span>, <span class="dt">numTweets =</span> <span class="dv">100</span>,</span>
+<span id="cb5-4"><a href="#cb5-4"></a>                       <span class="dt">includeRetweets =</span> <span class="ot">FALSE</span>, <span class="dt">retryOnRateLimit =</span> <span class="ot">TRUE</span>, <span class="dt">writeToFile =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb5-5"><a href="#cb5-5"></a>                       <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
 </div>
 <div id="create-twitter-activity-actor-semantic-and-twomode-network-graphs" class="section level4">
@@ -169,7 +169,7 @@
 <span id="cb6-13"><a href="#cb6-13"></a></span>
 <span id="cb6-14"><a href="#cb6-14"></a>remItems &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#auspol"</span>, <span class="st">"auspol"</span>) <span class="co"># exclude these terms</span></span>
 <span id="cb6-15"><a href="#cb6-15"></a>topTerms &lt;-<span class="st"> </span><span class="dv">5</span>                      <span class="co"># include only the top 5% most frequent terms as nodes</span></span>
-<span id="cb6-16"><a href="#cb6-16"></a>semanticNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"semantic"</span>, <span class="dt">removeTermsOrHashtags =</span> remItems, </span>
+<span id="cb6-16"><a href="#cb6-16"></a>semanticNetwork &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"semantic"</span>, <span class="dt">removeTermsOrHashtags =</span> remItems,</span>
 <span id="cb6-17"><a href="#cb6-17"></a>                                          <span class="dt">termFreq =</span> topTerms)</span>
 <span id="cb6-18"><a href="#cb6-18"></a>semanticGraph &lt;-<span class="st"> </span>semanticNetwork <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>(<span class="dt">writeToFile =</span> <span class="ot">TRUE</span>, <span class="dt">directed =</span> <span class="ot">FALSE</span>)</span>
 <span id="cb6-19"><a href="#cb6-19"></a></span>
@@ -225,7 +225,7 @@
 <span id="cb8-7"><a href="#cb8-7"></a><span class="co"># authentication does not require credentials</span></span>
 <span id="cb8-8"><a href="#cb8-8"></a>redditData &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"reddit"</span>) <span class="op">%&gt;%</span></span>
 <span id="cb8-9"><a href="#cb8-9"></a><span class="st">              </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">threadUrls =</span> myThreadUrls, <span class="dt">waitTime =</span> <span class="dv">5</span>)</span>
-<span id="cb8-10"><a href="#cb8-10"></a>              </span>
+<span id="cb8-10"><a href="#cb8-10"></a></span>
 <span id="cb8-11"><a href="#cb8-11"></a><span class="co">## activity network - nodes are comments and intital thread posts</span></span>
 <span id="cb8-12"><a href="#cb8-12"></a></span>
 <span id="cb8-13"><a href="#cb8-13"></a>activityNetwork &lt;-<span class="st"> </span>redditData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>)</span>
@@ -248,7 +248,7 @@
 <span id="cb9-3"><a href="#cb9-3"></a><span class="co"># graph for activity network with text data added as node attribute</span></span>
 <span id="cb9-4"><a href="#cb9-4"></a>activityNetworkGraph &lt;-<span class="st"> </span>twitterData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(twitterData) <span class="op">%&gt;%</span></span>
 <span id="cb9-5"><a href="#cb9-5"></a><span class="st">                        </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</span>
-<span id="cb9-6"><a href="#cb9-6"></a>                        </span>
+<span id="cb9-6"><a href="#cb9-6"></a></span>
 <span id="cb9-7"><a href="#cb9-7"></a><span class="co"># AddText will also redirect some edges in a youtube actor network by finding user</span></span>
 <span id="cb9-8"><a href="#cb9-8"></a><span class="co"># references at the beginning of reply comments text</span></span>
 <span id="cb9-9"><a href="#cb9-9"></a><span class="co"># i.e a reply comment from user_B to top-level comment by user_A</span></span>
@@ -257,7 +257,7 @@
 <span id="cb9-12"><a href="#cb9-12"></a><span class="co"># 'replies_from_text' redirects this edge instead from user_B -&gt; user_C as per the</span></span>
 <span id="cb9-13"><a href="#cb9-13"></a><span class="co"># reference in the comment text - set this to 'FALSE' to ignore comment references</span></span>
 <span id="cb9-14"><a href="#cb9-14"></a></span>
-<span id="cb9-15"><a href="#cb9-15"></a>actorNetworkGraph &lt;-<span class="st"> </span>youtubeData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb9-15"><a href="#cb9-15"></a>actorNetworkGraph &lt;-<span class="st"> </span>youtubeData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>) <span class="op">%&gt;%</span></span>
 <span id="cb9-16"><a href="#cb9-16"></a><span class="st">                     </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(youtubeData, <span class="dt">replies_from_text =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</span></code></pre></div>
 </div>
 <div id="adduserdata-requests-and-adds-user-profile-data-to-networks" class="section level4">
@@ -266,8 +266,8 @@
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># applies only to twitter actor networks</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="co"># add additional twitter user profile info to actor network graph as node attributes</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a>actorGraphWithUserAttr &lt;-<span class="st"> </span>actorNetwork <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="st">                          </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddUserData.html">AddUserData</a></span>(twitterData, </span>
+<span id="cb10-4"><a href="#cb10-4"></a>actorGraphWithUserAttr &lt;-<span class="st"> </span>actorNetwork <span class="op">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="st">                          </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddUserData.html">AddUserData</a></span>(twitterData,</span>
 <span id="cb10-6"><a href="#cb10-6"></a>                                      <span class="dt">lookupUsers =</span> <span class="ot">TRUE</span>,</span>
 <span id="cb10-7"><a href="#cb10-7"></a>                                      <span class="dt">twitterAuth =</span> twitterAuth) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</span></code></pre></div>
 </div>
@@ -288,7 +288,7 @@
 <h4 class="hasAnchor">
 <a href="#save-and-load-authentication-objects" class="anchor"></a>Save and Load Authentication Objects</h4>
 <p>Save and reuse twitter and youtube authentication objects in future sessions.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># save the object after 'Authenticate' </span></span>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># save the object after 'Authenticate'</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span>(myYoutubeAuth, <span class="dt">file =</span> <span class="st">"~/.youtube_auth"</span>)</span>
 <span id="cb12-3"><a href="#cb12-3"></a></span>
 <span id="cb12-4"><a href="#cb12-4"></a><span class="co"># load a previously saved authentication object for use in 'Collect'</span></span>
