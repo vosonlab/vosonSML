@@ -104,7 +104,7 @@ AddText.activity.youtube <- function(net, data, ...) {
 #' @aliases AddText.activity.reddit
 #' @name vosonSML::AddText.activity.reddit
 #' @export
-AddText.activity.reddit <- function(net, data, cleanText = TRUE, ...) {
+AddText.activity.reddit <- function(net, data, cleanText = FALSE, ...) {
   net$nodes <- dplyr::left_join(net$nodes, 
                                 dplyr::mutate(data, id = paste0(.data$thread_id, ".", .data$structure)) %>%
                                   dplyr::select(.data$id, .data$subreddit, .data$comment), 
@@ -242,7 +242,7 @@ AddText.actor.youtube <- function(net, data, replies_from_text = FALSE, at_repli
 #' @aliases AddText.actor.reddit
 #' @name vosonSML::AddText.actor.reddit
 #' @export
-AddText.actor.reddit <- function(net, data, cleanText = TRUE, ...) {
+AddText.actor.reddit <- function(net, data, cleanText = FALSE, ...) {
 
   # rename the edge attribute containing the thread comment
   net$edges <- dplyr::left_join(net$edges,

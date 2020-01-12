@@ -7,8 +7,12 @@
 #' 
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.
 #' @param threadUrls Character vector. Reddit thread urls to collect data from.
-#' @param waitTime Numeric integer. Time in seconds to wait in-between url collection requests.
+#' @param waitTime Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
+#' Minimum is 3 seconds. Default is \code{c(3, 10)} for a wait time chosen from between 3 and 10 seconds.
+#' @param ua Character string. Override User-Agent string to use in Reddit thread requests. Default is
+#' \code{option("HTTPUserAgent")} value as set by vosonSML.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information about the data collection. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
 #' @return A \code{data.frame} object with class names \code{"datasource"} and \code{"reddit"}.
@@ -19,15 +23,12 @@
 #' threadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
 #' 
 #' redditData <- redditAuth %>%
-#'   Collect(threadUrls = threadUrls, waitTime = 3, writeToFile = TRUE)
+#'   Collect(threadUrls = threadUrls, writeToFile = TRUE)
 #' }
 #' 
 #' @export
-Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = FALSE, ...) {
-  
-  # if (!requireNamespace("RedditExtractoR", quietly = TRUE)) {
-  #   stop("Please install the RedditExtractoR package before calling Collect.", call. = FALSE)
-  # }
+Collect.reddit <- function(credential, threadUrls, waitTime = c(3, 10), ua = getOption("HTTPUserAgent"),
+                           writeToFile = FALSE, verbose = TRUE, ...) {
   
   cat("Collecting comment threads for reddit urls...\n")
   
@@ -35,15 +36,28 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
     stop("Please provide a vector of one or more reddit thread urls.", call. = FALSE)
   }
 
-  locale_list <- c("LC_COLLATE", "LC_CTYPE", "LC_MONETARY", "LC_NUMERIC", "LC_TIME") # LC_ALL
-  saved_locale <- setNames(lapply(locale_list, Sys.getlocale), locale_list)
-  on.exit({ lapply(names(saved_locale), function(x) { Sys.setlocale(x, unlist(saved_locale[[x]])) }) })
-  Sys.setlocale("LC_ALL", "C")
+  if (!is.numeric(waitTime) || length(waitTime) != 2 || waitTime[1] >= waitTime[2]) {
+    stop("Please provide a numeric range as vector c(min, max) for reddit thread request waitTime parameter.", 
+         call. = FALSE)
+  }
+  
+  if (waitTime[1] < 3) { waitTime[1] <- 3 }
+  if (waitTime[1] >= waitTime[2]) { waitTime[2] <- waitTime[1] + 1 }
+  waitTime <- waitTime[1]:waitTime[2]
+  if (verbose) {
+    cat(paste0("Waiting between ", waitTime[1], " and ", waitTime[length(waitTime)], " seconds per thread request.\n"))
+    # cat(paste0("UA-String: ", ua, "\n"))
+  }
+  
+  # locale_list <- c("LC_COLLATE", "LC_CTYPE", "LC_MONETARY", "LC_NUMERIC", "LC_TIME") # LC_ALL
+  # saved_locale <- setNames(lapply(locale_list, Sys.getlocale), locale_list)
+  # on.exit({ lapply(names(saved_locale), function(x) { Sys.setlocale(x, unlist(saved_locale[[x]])) }) })
+  # Sys.setlocale("LC_ALL", "C")
   
   threads_df <- NULL
   
   tryCatch({
-    threads_df <- reddit_build_df(threadUrls, waitTime = waitTime)
+    threads_df <- reddit_build_df(threadUrls, waitTime, ua, verbose)
   }, error = function(e) {
     stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
   }, finally = { 
@@ -63,6 +77,9 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
                          count = dplyr::n()) %>%
         dplyr::ungroup()
       
+      # results_df$thread_id <- as.character(results_df$thread_id)
+      # results_df$title <- as.character(results_df$title)
+      # results_df$subreddit <- as.character(results_df$subreddit)
       results_df$title <- ifelse(nchar(results_df$title) > 42, paste0(strtrim(results_df$title, 42), "..."), 
                                  results_df$title)
       printResultTable(results_df)
@@ -82,28 +99,34 @@ Collect.reddit <- function(credential, threadUrls, waitTime = 5, writeToFile = F
   return(threads_df)
 }
 
-reddit_build_df <- function(threadUrls, waitTime = 2) {
+reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
   threads <- lapply(threadUrls, function(x) {
-    json <- reddit_data(x, waitTime = waitTime)
+    
+    if (length(threadUrls) > 1 & (x != threadUrls[1])) { Sys.sleep(sample(waitTime, 1)) }
+    
+    json <- reddit_data(x, wait_time = waitTime, ua = ua, verbose = verbose)
     df <- reddit_content_plus(json, x)
     
     # process continue threads
     plus <- filter(df, grepl("Listing:", .data$comm_id))
     while (nrow(plus) > 0) {
+      Sys.sleep(sample(waitTime, 1))
+      
       row <- 1
       row_id <- as.numeric(plus[row, "id"])
       depth <- as.numeric(gsub(".*_(\\d)_\\d$", "\\1", plus[row, "structure"]))
       struct <- gsub("_\\d_\\d$", "", plus[row, "structure"])
       cont_thread_id <- gsub("Listing:t1_", "", plus[row, "comm_id"])
       
-      df <- mutate(df, rm = ifelse((.data$comm_id == cont_thread_id | .data$comm_id == plus[row, "comm_id"]), TRUE, .data$rm))
-      cat(paste0("Continue thread: ", cont_thread_id))
+      df <- mutate(df, rm = ifelse((.data$comm_id == cont_thread_id | .data$comm_id == plus[row, "comm_id"]),
+                                   TRUE, .data$rm))
+      # cat(paste0("Continue thread: ", cont_thread_id))
       
-      data <- reddit_data(paste0(x, cont_thread_id))
+      data <- reddit_data(paste0(x, cont_thread_id), waitTime, ua, cont = cont_thread_id, verbose = verbose)
       thread_df <- reddit_content_plus(data, x, depth = depth)
       
       if (nrow(thread_df)) {
-        cat(paste0(" (comments: ", nrow(thread_df), ")\n"))
+        # cat(paste0(" (comments: ", nrow(thread_df), ")\n"))
         thread_df <- thread_df %>% mutate(structure = paste0(struct, "_", .data$structure))
         if (row_id == 1) {
           df <- rbind(thread_df, df)
@@ -112,44 +135,73 @@ reddit_build_df <- function(threadUrls, waitTime = 2) {
           df <- rbind(pre_df, df[row_id:nrow(df), ])
         }
       } else {
-        cat(paste0(" (no comments found)\n"))
+        # cat(paste0(" (no comments found)\n"))
       }
       
       plus <- plus[-row, ]
       plus <- filter(df, grepl("Listing:", .data$comm_id), .data$rm == FALSE)
-      Sys.sleep(sample(waitTime:10, 1))
-    
     } # end while
     
-    df$thread_id <- gsub("^(.*)?/comments/([0-9A-Za-z]{6})?/.*?(/)?$", "\\2", 
-                         df$url, ignore.case = TRUE, perl = TRUE, useBytes = TRUE)
-    df <- df %>% filter(.data$rm == FALSE) 
-    df <- df %>% arrange(.data$thread_id, .data$id) %>% mutate(id = 1:nrow(df))
+    if (!is.null(df) && nrow(df) > 0) {
+      df$thread_id <- gsub("^(.*)?/comments/([0-9A-Za-z]{6})?/.*?(/)?$", "\\2", 
+                           df$url, ignore.case = TRUE, perl = TRUE, useBytes = TRUE)
+      df <- df %>% filter(.data$rm == FALSE)
+      df <- df %>% arrange(.data$thread_id, .data$id) %>% mutate(id = 1:nrow(df))
+    }
+    
+    df
   })
   
   threads_df <- bind_rows(threads)
+  
+  # cols <- c("subreddit", "title", "author", "post_text", "post_date", "post_date_unix", "link", "domain", "url",
+  #           "thread_id", "user")
+  # threads_df[cols] <- lapply(threads_df[cols], as.factor)
+  threads_df$rm <- NULL
+  
+  threads_df
 }
 
-# original author of method @ivan-rivera
-reddit_data <- function(url, waitTime = 2) {
-  if (is.null(url) | length(url) == 0 | !is.character(url)) { stop("invalid url parameter") }
+# based on method by @ivan-rivera RedditExtractoR
+reddit_data <- function(url, wait_time, ua, cont = NULL, verbose = TRUE) {
+  if (is.null(url) | length(url) == 0 | !is.character(url)) { stop("invalid URL parameter") }
   
-  if (!grepl("^https?://(.*)", url)) url = paste0("https://www.",gsub("^.*(reddit\\..*$)","\\1",url))
-  if (!grepl("\\?ref=search_posts$",url)) url = paste0(gsub("/$","",url),"/?ref=search_posts")
+  if (!grepl("^https?://(.*)", url)) { url <- paste0("https://www.", gsub("^.*(reddit\\..*$)", "\\1", url)) }
+  if (!grepl("\\?ref=search_posts$", url)) { url <- paste0(gsub("/$", "", url), "/?ref=search_posts") }
   
-  req_url = paste0(gsub("\\?ref=search_posts$","",url),".json?limit=500&raw_json=1&enc=utf8")
+  req_url <- paste0(gsub("\\?ref=search_posts$", "", url), ".json?limit=500&raw_json=1")
+  req_tid <- reddit_tid_from_url(req_url, TRUE)
   
-  raw_data = tryCatch(RJSONIO::fromJSON(readLines(req_url, warn = FALSE)), error = function(e) NULL)
-  
-  if (is.null(raw_data)) {
-    Sys.sleep(sample(waitTime:10, 1))
-    raw_data = tryCatch(RJSONIO::fromJSON(readLines(req_url, warn = FALSE)), error = function(e) NULL)
+  if (is.null(cont)) { cat(paste0("Request thread: ", req_tid, "\n")) } else {
+    if (verbose) { 
+      cat(paste0("Continue thread: ", req_tid, " - ", cont, "\n")) 
+    }
   }
   
-  raw_data
+  req_data <- get_json(req_url, ua) # ua
+  
+  if (is.null(req_data$data)) {
+    Sys.sleep(sample(wait_time, 1))
+    
+    if (is.null(cont)) { cat(paste0("Retry thread: ", req_tid, "\n")) } else {
+      if (verbose) {
+        cat(paste0("Retry continue thread: ", req_tid, " - ", cont, "\n")) 
+      }
+    }
+    
+    req_data <- get_json(req_url, ua) # ua
+  }
+  
+  if (is.null(req_data$status) || as.numeric(req_data$status) != 200) {
+    cat(paste0("Failed: ", url, 
+               ifelse(is.null(req_data$status), "", paste0(" (", req_data$status, ")")), 
+               "\n"))
+  }
+  
+  req_data$data
 }
 
-# original author of method @ivan-rivera
+# based on method by @ivan-rivera RedditExtractoR
 reddit_values_list  = function(node, feature) {
   attr <- node$data[[feature]]
   if (is.null(attr)) {
@@ -172,7 +224,7 @@ reddit_values_list  = function(node, feature) {
     }))
 }
 
-# original author of method @ivan-rivera
+# based on method by @ivan-rivera RedditExtractoR
 reddit_struct_list = function(node, depth = 0) {
   if (is.null(node)) { return(list()) }
   
@@ -188,7 +240,7 @@ reddit_struct_list = function(node, depth = 0) {
    }))
 }
 
-# original author of method @ivan-rivera
+# based on method by @ivan-rivera RedditExtractoR
 reddit_content_plus <- function(raw_data, req_url, depth = 0) {
   
   data_extract <- data.frame(
@@ -203,6 +255,8 @@ reddit_content_plus <- function(raw_data, req_url, depth = 0) {
     title = character(),          post_text = character(),
     link = character(),           domain = character(),
     url = character(),            rm = logical())
+  
+  if (is.null(raw_data)) { return(data_extract) }
   
   meta_node <- raw_data[[1]]$data$children[[1]]$data
   main_node <- raw_data[[2]]$data$children

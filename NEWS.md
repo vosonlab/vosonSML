@@ -1,7 +1,11 @@
 # vosonSML 0.29.5
 
 ## Minor Changes
-- Reworked the `RedditExtractoR` collection and parsing methods.
+- Reddit JSON is now retrieved using `jsonlite::fromJSON`.
+- Reddit 'Continue' threads are now followed with additional thread requests. Many more comments
+  are now collected for threads with large diameters or breadth. Continue threads also have a
+  Reddit limit of 500 comments per thread request.
+- Reddit comment ID's and timestamps are now extracted.
 - Removed the `tictoc` package from dependency imports to suggested packages.
 - Added some checks for whether the `rtweet` package is installed.
 - Removed the `RedditExtractoR` package from imports.

@@ -32,10 +32,10 @@
 #' @importFrom Hmisc escapeRegex
 #' @importFrom igraph delete.vertices simplify write.graph V 'V<-' vcount
 #' graph_from_data_frame delete_vertex_attr set_graph_attr
+#' @importFrom jsonlite fromJSON
 #' @importFrom lubridate as_datetime
 #' @importFrom magrittr '%>%' '%<>%'
 #' @importFrom purrr transpose
-#' @importFrom RJSONIO fromJSON
 #' @importFrom rlang '.data'
 #' @importFrom rtweet create_token rate_limit search_tweets users_data lookup_users
 #' @importFrom stats na.omit setNames
