@@ -18,7 +18,7 @@ Unfortunately we are no longer able to maintain `facebook` and `instagram` colle
 
 ## Installation
 
-Install the latest release via CRAN (v0.29.5):
+Install the latest release via CRAN (v0.29.4):
 ```R
 install.packages("vosonSML")
 ```
@@ -143,11 +143,10 @@ library(magrittr)
 library(vosonSML)
 
 # collect reddit comment threads
-myThreadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
+myThreadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxx/")
 
 # authentication does not require credentials
-redditData <- Authenticate("reddit") %>%
-              Collect(threadUrls = myThreadUrls, waitTime = 5)
+redditData <- Authenticate("reddit") %>% Collect(threadUrls = myThreadUrls)
 
 ## activity network - nodes are comments and intital thread posts
 
