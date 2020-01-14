@@ -35,7 +35,8 @@ Create.actor.reddit <- function(datasource, type, ...) {
 
   # select cols and rename id and user
   df_relations <- df %>% 
-    dplyr::select(.data$id, .data$subreddit, .data$thread_id, .data$structure, .data$user, .data$author) %>% 
+    dplyr::select(.data$id, .data$subreddit, .data$thread_id, .data$comm_id, .data$structure,
+                  .data$user, .data$author) %>% 
     dplyr::rename("comment_id" = .data$id, "sender" = .data$user)
 
   df_relations %<>%
@@ -64,7 +65,7 @@ Create.actor.reddit <- function(datasource, type, ...) {
     # have to decide on deleted, self loops are fine
     # removed comments have the value "[removed]"
     # dplyr::mutate(count = 1) %>%
-    dplyr::select(.data$sender, .data$receiver, .data$comment_id, .data$subreddit, .data$thread_id)
+    dplyr::select(.data$sender, .data$receiver, .data$comment_id, .data$subreddit, .data$comm_id, .data$thread_id)
 
   # attempt to add authors thread posts as self-loops
   authors <- dplyr::select(df, .data$subreddit, .data$thread_id, .data$author) %>% dplyr::distinct() %>%
@@ -82,7 +83,7 @@ Create.actor.reddit <- function(datasource, type, ...) {
       dplyr::rename("sender" = .data$user, "from" = .data$id), by = c("sender" = "sender")) %>% 
     dplyr::left_join(df_nodes %>% dplyr::rename("receiver" = .data$user, "to" = .data$id), 
       by = c("receiver" = "receiver")) %>%
-    dplyr::select(.data$from, .data$to, .data$subreddit, .data$thread_id, .data$comment_id)
+    dplyr::select(.data$from, .data$to, .data$subreddit, .data$thread_id, .data$comment_id, .data$comm_id)
 
   func_output <- list(
     "nodes" = df_nodes,

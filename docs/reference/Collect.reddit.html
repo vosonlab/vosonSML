@@ -72,7 +72,7 @@ the data into a dataframe with the class names &quot;datasource&quot; and &quot;
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.5</span>
       </span>
     </div>
 
@@ -88,7 +88,7 @@ the data into a dataframe with the class names &quot;datasource&quot; and &quot;
   <a href="../news/index.html">
     <span class="fa fa-newspaper-o"></span>
      
-    News
+    Changelog
   </a>
 </li>
 <li>
@@ -130,7 +130,15 @@ the data into a dataframe with the class names <code>"datasource"</code> and <co
     </div>
 
     <pre class="usage"><span class='co'># S3 method for reddit</span>
-<span class='fu'><a href='Collect.html'>Collect</a></span>(<span class='no'>credential</span>, <span class='no'>threadUrls</span>, <span class='kw'>waitTime</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='Collect.html'>Collect</a></span>(
+  <span class='no'>credential</span>,
+  <span class='no'>threadUrls</span>,
+  <span class='kw'>waitTime</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>3</span>, <span class='fl'>10</span>),
+  <span class='kw'>ua</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"HTTPUserAgent"</span>),
+  <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -145,11 +153,21 @@ the data into a dataframe with the class names <code>"datasource"</code> and <co
     </tr>
     <tr>
       <th>waitTime</th>
-      <td><p>Numeric integer. Time in seconds to wait in-between url collection requests.</p></td>
+      <td><p>Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
+Minimum is 3 seconds. Default is <code><a href='https://rdrr.io/r/base/c.html'>c(3, 10)</a></code> for a wait time chosen from between 3 and 10 seconds.</p></td>
+    </tr>
+    <tr>
+      <th>ua</th>
+      <td><p>Character string. Override User-Agent string to use in Reddit thread requests. Default is
+<code><a href='https://rdrr.io/r/base/options.html'>option("HTTPUserAgent")</a></code> value as set by vosonSML.</p></td>
     </tr>
     <tr>
       <th>writeToFile</th>
       <td><p>Logical. Write collected data to file. Default is <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>Logical. Output additional information about the data collection. Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -170,7 +188,7 @@ the data into a dataframe with the class names <code>"datasource"</code> and <co
 <span class='no'>threadUrls</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>)
 
 <span class='no'>redditData</span> <span class='kw'>&lt;-</span> <span class='no'>redditAuth</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='Collect.html'>Collect</a></span>(<span class='kw'>threadUrls</span> <span class='kw'>=</span> <span class='no'>threadUrls</span>, <span class='kw'>waitTime</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='fu'><a href='Collect.html'>Collect</a></span>(<span class='kw'>threadUrls</span> <span class='kw'>=</span> <span class='no'>threadUrls</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

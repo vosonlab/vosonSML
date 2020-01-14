@@ -42,16 +42,17 @@ Create.activity.reddit <- function(datasource, type, verbose = TRUE, ...) {
     dplyr::select(.data$from, .data$to, .data$edge_type)
   
   # nodes
-  df_nodes <- df %>% dplyr::select(.data$comment_id, .data$comm_date, .data$subreddit, .data$user) %>%
-    dplyr::rename("id" = .data$comment_id, "date" = .data$comm_date) %>%
+  df_nodes <- df %>% dplyr::select(.data$comment_id, .data$thread_id, .data$comm_id, .data$comm_date, 
+                                   .data$comm_date_unix, .data$subreddit, .data$user) %>%
+    dplyr::rename("id" = .data$comment_id, "datetime" = .data$comm_date, "ts" = .data$comm_date_unix) %>%
     dplyr::mutate(node_type = "comment")
   
   # add thread posts to nodes
-  thread_ids <- df %>% dplyr::select(.data$subreddit, .data$author, .data$thread_id, .data$post_date) %>%
+  thread_ids <- df %>% dplyr::select(.data$subreddit, .data$author, .data$thread_id, .data$post_date, .data$post_date_unix) %>%
     dplyr::mutate(id = paste0(.data$thread_id, ".0")) %>% 
     dplyr::distinct(.data$subreddit, .data$id, .keep_all = TRUE) %>%
-    dplyr::rename("user" = .data$author, "date" = .data$post_date) %>%
-    dplyr::select(.data$id, .data$date, .data$subreddit, .data$user) %>%
+    dplyr::rename("user" = .data$author, "datetime" = .data$post_date, "ts" = .data$post_date_unix) %>%
+    dplyr::select(.data$id, .data$thread_id, .data$datetime, .data$ts, .data$subreddit, .data$user) %>%
     dplyr::mutate(node_type = "thread")
   
   df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(thread_ids, df_nodes, by = c("id", "subreddit")))

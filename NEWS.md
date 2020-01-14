@@ -1,8 +1,22 @@
+# vosonSML 0.29.5
+
+## Minor Changes
+- Reddit JSON is now retrieved using `jsonlite::fromJSON`.
+- Reddit 'Continue' threads are now followed with additional thread requests. Many more comments
+  are now collected for threads with large diameters or breadth. Continue threads also have a
+  Reddit limit of 500 comments per thread request.
+- Reddit comment ID's and timestamps are now extracted.
+- Removed the `tictoc` package from dependency imports to suggested packages.
+- Added some checks for whether the `rtweet` package is installed.
+- Removed the `RedditExtractoR` package from imports.
+- HTML decoded tweet text during network creation to replace '&', '<', and '>' HTML codes.
+- Added node type attribute to twomode networks.
+
 # vosonSML 0.29.4
 
 ## Minor Changes
 - Renamed `bimodal` networks to `twomode`.
-  
+
 # vosonSML 0.29.3
 
 ## Minor Changes
@@ -36,7 +50,7 @@
   the videos in the network is required. Additional columns such as video `Title`, `Description` and
   `Published` time are also added to the network `$edges` dataframe as well as returned in their own
   dataframe called `$videos`.
-  
+
 # vosonSML 0.29.0
 
 ## Major Changes
@@ -64,7 +78,7 @@
 - Added `activity` network type for reddit. In the reddit activity network nodes are the
   thread posts and comments, edges represent where comments are directed in the threads.
 - Added github dev version badge to README.
-  
+
 # vosonSML 0.28.0
 
 ## Major Changes
@@ -72,7 +86,7 @@
   nodes are the items collected such as tweets returned from a twitter search and comments
   posted to youtube videos. Edges represent the platform relationship between the tweets or
   comments.
-  
+
 # vosonSML 0.27.3
 
 ## Minor Changes
@@ -93,7 +107,7 @@
   temporarily set to package name and current version number for Collect e.g
   `vosonSML v.0.27.2 (R Package)`.
 - Removed hex sticker (and favicons for pkgdown site).
-  
+
 # vosonSML 0.27.1
 
 ## Bug Fixes
@@ -123,14 +137,14 @@
   more permissive. Addresses encoding issues with apostrophes and pound symbols and removes
   unicode characters not permitted by the XML 1.0 standard as used in `graphml` files. This is
   best effort and does not resolve all `reddit` text encoding issues.
-  
+
 ## Minor Changes
 - Added `Collect.twitter` summary information that includes the earliest (min) and latest (max)
   tweet `status_id` collected with timestamp. The `status_id` values can be used to frame
   subsequent collections as `since_id` or `max_id` parameter values. If the `until` date
   parameter was used the timestamp can also be used as a quick confirmation.
 - Added elapsed time output to the `Collect` method.
-  
+
 # vosonSML 0.26.3
 
 ## Bug Fixes
@@ -149,12 +163,12 @@
 - Fixed a bug in `Create.actor.twitter` and `Create.bimodal.twitter` in which the vertices
   dataframe provided to the `graph_from_data_frame` function as a contained duplicate names
   raising an error.
-  
+
 ## Major Changes
 - Revised and updated `roxygen` documentation and examples for all package functions.
 - Updated all `Authenticate`, `Collect` and `Create` S3 methods to implement function routing
   based on object class names.
-  
+
 ## Minor Changes
 - Created a `pkgdown` web site for github hosted package documentation.
 - Created a new hex sticker logo.

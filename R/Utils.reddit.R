@@ -1,3 +1,39 @@
+reddit_tid_from_url <- function(url, desc = FALSE) {
+  if (desc) { extract <- "\\2 (\\3)" } else { extract <- "\\3" }
+  gsub("^(.*)?/(r/.+)/comments/([0-9A-Za-z]{6})?/.*?(/)?$", extract, url, ignore.case = TRUE, 
+       perl = TRUE, useBytes = TRUE)  
+}
+
+get_json <- function(req_url, ua = NULL) {
+  res <- list(status = NULL, msg = NULL, data = NULL)
+  req_headers <- c("Accept-Charset" = "UTF-8",
+                   "Cache-Control" = "no-cache")
+  
+  if (!is.null(ua)) { req_headers <- append(req_headers, c("User-Agent" = ua)) }
+  
+  resp <- httr::GET(req_url, add_headers(.headers = req_headers))
+  res$status <- resp$status
+  
+  if (httr::http_error(resp) | as.numeric(resp$status) != 200) {
+    res$msg <- "URL request error"
+    return(res)
+  } 
+  
+  if (httr::http_type(resp) == "application/json") {
+    res$data <- tryCatch({
+      res$msg <- "URL JSON ok"
+      jsonlite::fromJSON(content(resp, as = "text"), simplifyVector = FALSE)
+    }, error = function(e) {
+      res$msg <- e
+      NULL
+    })
+  } else {
+    res$msg <- "URL not JSON"
+  }
+  
+  res
+}
+
 CleanRedditText <- function(comments) {
 
   # json encoding issues should be tackled upstream

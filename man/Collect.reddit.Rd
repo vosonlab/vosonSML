@@ -4,16 +4,30 @@
 \alias{Collect.reddit}
 \title{Collect comments data from reddit threads}
 \usage{
-\method{Collect}{reddit}(credential, threadUrls, waitTime = 5, writeToFile = FALSE, ...)
+\method{Collect}{reddit}(
+  credential,
+  threadUrls,
+  waitTime = c(3, 10),
+  ua = getOption("HTTPUserAgent"),
+  writeToFile = FALSE,
+  verbose = TRUE,
+  ...
+)
 }
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.}
 
 \item{threadUrls}{Character vector. Reddit thread urls to collect data from.}
 
-\item{waitTime}{Numeric integer. Time in seconds to wait in-between url collection requests.}
+\item{waitTime}{Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
+Minimum is 3 seconds. Default is \code{c(3, 10)} for a wait time chosen from between 3 and 10 seconds.}
+
+\item{ua}{Character string. Override User-Agent string to use in Reddit thread requests. Default is
+\code{option("HTTPUserAgent")} value as set by vosonSML.}
 
 \item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
+
+\item{verbose}{Logical. Output additional information about the data collection. Default is \code{TRUE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
@@ -33,7 +47,7 @@ The reddit web endpoint used for collection has maximum limit of 500 comments pe
 threadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
 
 redditData <- redditAuth \%>\%
-  Collect(threadUrls = threadUrls, waitTime = 3, writeToFile = TRUE)
+  Collect(threadUrls = threadUrls, writeToFile = TRUE)
 }
 
 }
