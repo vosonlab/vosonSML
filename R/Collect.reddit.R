@@ -36,14 +36,20 @@ Collect.reddit <- function(credential, threadUrls, waitTime = c(3, 10), ua = get
     stop("Please provide a vector of one or more reddit thread urls.", call. = FALSE)
   }
 
-  if (!is.numeric(waitTime) || length(waitTime) != 2 || waitTime[1] >= waitTime[2]) {
+  # some protection against spamming requests
+  def_wait <- c(3, 10)
+  if (!is.numeric(waitTime)) {
     stop("Please provide a numeric range as vector c(min, max) for reddit thread request waitTime parameter.", 
          call. = FALSE)
+  } else {
+    if (length(waitTime) == 1) { waitTime <- c(def_wait[1], waitTime[1]) }
+    if (length(waitTime) != 2) { waitTime <- c(waitTime[1], waitTime[2]) }
+    
+    if (waitTime[1] < def_wait[1]) { waitTime[1] <- def_wait[1] }      # if min < default min, set min to default
+    if (waitTime[1] >= waitTime[2]) { waitTime[2] <- waitTime[1] + 1 } # if min >= max, set max to min + 1
+    waitTime <- waitTime[1]:waitTime[2] # create range
   }
   
-  if (waitTime[1] < 3) { waitTime[1] <- 3 }
-  if (waitTime[1] >= waitTime[2]) { waitTime[2] <- waitTime[1] + 1 }
-  waitTime <- waitTime[1]:waitTime[2]
   if (verbose) {
     cat(paste0("Waiting between ", waitTime[1], " and ", waitTime[length(waitTime)], " seconds per thread request.\n"))
     # cat(paste0("UA-String: ", ua, "\n"))
@@ -85,7 +91,7 @@ Collect.reddit <- function(credential, threadUrls, waitTime = c(3, 10), ua = get
       printResultTable(results_df)
       cat(paste0("Collected ", nrow(threads_df), " total comments.\n"))
       
-      if (writeToFile) { writeOutputFile(threads_df, "csv", "RedditData") }
+      if (writeToFile) { writeOutputFile(threads_df, "rds", "RedditData") }
     } else {
       cat(paste0("No comments were collected.\n"))
     }
@@ -244,6 +250,7 @@ reddit_struct_list = function(node, depth = 0) {
 reddit_content_plus <- function(raw_data, req_url, depth = 0) {
   
   data_extract <- data.frame(
+  # data_extract <- tibble::tibble(
     id = numeric(),             structure = character(),
     post_date = character(),    post_date_unix = numeric(),
     comm_id = character(),      comm_date = character(),
@@ -268,6 +275,7 @@ reddit_content_plus <- function(raw_data, req_url, depth = 0) {
     }))
     
     data <- data.frame(
+    # data <- tibble::tibble(
       id               = NA,
       structure        = structures_list,
       post_date        = as.character(

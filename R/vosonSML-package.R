@@ -41,7 +41,7 @@
 #' @importFrom stats na.omit setNames
 #' @importFrom stringr str_extract str_replace_all str_match_all
 #' @importFrom textutils HTMLdecode
-#' @importFrom tibble as_tibble
+#' @importFrom tibble as_tibble tibble
 #' @importFrom utils "flush.console" head tail "install.packages" "read.table" "write.csv"
 #' "read.csv" "capture.output"
 NULL
