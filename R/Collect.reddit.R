@@ -113,12 +113,24 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
     json <- reddit_data(x, wait_time = waitTime, ua = ua, verbose = verbose)
     df <- reddit_content_plus(json, x)
     
-    # process continue threads
+  
+    # loop protection
+    prev_value <- NULL
+    
     plus <- filter(df, grepl("Listing:", .data$comm_id))
     while (nrow(plus) > 0) {
+      
+      row <- 1 # top row
+      
+      # loop protection
+      if (!is.null(prev_value) && plus[row, "comm_id"] == prev_value) { 
+        cat("Loop protection following continue threads. Exiting.\n")
+        break
+      }
+      prev_value <- plus[row, "comm_id"]
+      
       Sys.sleep(sample(waitTime, 1))
       
-      row <- 1
       row_id <- as.numeric(plus[row, "id"])
       depth <- as.numeric(gsub(".*_(\\d)_\\d$", "\\1", plus[row, "structure"]))
       struct <- gsub("_\\d_\\d$", "", plus[row, "structure"])
