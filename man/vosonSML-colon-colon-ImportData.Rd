@@ -5,16 +5,16 @@
 \alias{ImportData}
 \title{Import collected data previously saved to file}
 \usage{
-ImportData(file, type = "csv", socialmedia)
+ImportData(path, socialmedia, type = NULL)
 }
 \arguments{
-\item{file}{Character string. Collected data file path.}
-
-\item{type}{Character string. Type of file or file format of file to import \code{csv} or \code{rds}. Default is 
-\code{csv}.}
+\item{path}{Character string. Collected data file path.}
 
 \item{socialmedia}{Character string. Social media type of collected data \code{twitter}, \code{youtube} or 
 \code{reddit}.}
+
+\item{type}{Character string. Type of file or file format of file to import \code{csv} or \code{rds}. Default is 
+\code{NULL} to use extension.}
 }
 \value{
 A dataframe with datasource class attributes.

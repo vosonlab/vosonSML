@@ -1,3 +1,10 @@
+# vosonSML 0.29.6
+
+## Minor Changes
+- Added `Introduction to vosonSML` vignette to the package.
+- Minor changes and input checks added to `ImportData`.
+- Added some unit testing for `Authenticate` and `ImportData`.
+
 # vosonSML 0.29.5
 
 ## Minor Changes
@@ -10,7 +17,7 @@
 - Added some checks for whether the `rtweet` package is installed.
 - Removed the `RedditExtractoR` package from imports.
 - HTML decoded tweet text during network creation to replace '&', '<', and '>' HTML codes.
-- Added node type attribute to twomode networks.
+- Added node type attribute to `twomode` networks.
 
 # vosonSML 0.29.4
 

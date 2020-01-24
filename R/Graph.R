@@ -71,7 +71,11 @@ Graph.activity.youtube <- function(net, directed = TRUE, writeToFile = FALSE, ..
 #' @noRd
 #' @export
 Graph.activity.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$label <- ifelse(!is.na(V(g)$user), paste0(V(g)$name, " (", V(g)$user, ")"), V(g)$name)
+  # V(g)$label <- ifelse(!is.na(V(g)$user), paste0(V(g)$name, " (", V(g)$user, ")"), V(g)$name)
+  V(g)$label <- paste0(V(g)$thread_id, 
+                       ifelse(!is.na(V(g)$comm_id), paste0(".", V(g)$comm_id), ""),
+                       ifelse(!is.na(V(g)$user), paste0(" (", V(g)$user, ")"), ""))
+  
   g <- set_graph_attr(g, "type", "reddit")
 
   graphOutputFile(g, "graphml", writeToFile, "RedditActivity")
@@ -123,8 +127,8 @@ Graph.actor.youtube <- function(net, directed = TRUE, writeToFile = FALSE, ...) 
 #' @export
 Graph.actor.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
   V(g)$label <- ifelse(is.na(V(g)$user), paste0("ID:", V(g)$name), 
-                             paste0(V(g)$user, " (", V(g)$name, ")"))
-
+                       paste0(V(g)$user, " (", V(g)$name, ")"))
+  
   g <- set_graph_attr(g, "type", "reddit")
   
   graphOutputFile(g, "graphml", writeToFile, "RedditActor")

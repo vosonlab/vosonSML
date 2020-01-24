@@ -22,3 +22,5 @@
 ^.*\.graphml$
 ^.*\.csv$
 ^.*\.pdf$
+^doc$
+^Meta$
