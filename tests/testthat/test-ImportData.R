@@ -1,6 +1,8 @@
-context("import data")
+context("ImportData")
 
-test_that("ImportData() has required input", {
+test_csv <- "test.csv"
+
+test_that("ImportData has required input", {
   expect_error(ImportData(), "Please provide file path of data to import.")
   expect_error(ImportData("xxx.rds"), "Please provide the social media type of data to import.")
   
@@ -11,14 +13,18 @@ test_that("ImportData() has required input", {
   expect_error(ImportData("xxx.graphml", "twitter"), not_supp_msg)
   
   expect_error(suppressWarnings(ImportData("xxx.rds", "twitter"))) # no such file
-  expect_error(ImportData("test.csv", "twitter", "rds"))           # wrong input format
   
-  expect_error(capture.output(ImportData("test.csv", "xxx", "csv")),
-               "Unknown social media type provided as datasource.")
+  if (file.exists(test_csv)) {
+    expect_error(ImportData(test_csv, "twitter", "rds"))               # wrong input format
+    expect_error(capture.output(ImportData(test_csv, "xxx", "csv")),
+                 "Unknown social media type provided as datasource.")  # unknown social media type
+  }
 })
 
-test_that("ImportData() has correct output", {
-  capture.output({ data <- ImportData("test.csv", "twitter", "csv") })
+test_that("ImportData has correct output", {
+  skip_if_not(file.exists(test_csv), message = "csv file exists")
+  capture.output({ data <- ImportData(test_csv, "twitter", "csv") })
+  expect_s3_class(data, "data.frame")
   expect_s3_class(data, "datasource")
   expect_s3_class(data, "twitter")
 })
