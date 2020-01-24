@@ -2,7 +2,7 @@ context("ImportData")
 
 test_csv <- "test.csv"
 
-test_that("ImportData has required input", {
+test_that("ImportData input", {
   expect_error(ImportData(), "Please provide file path of data to import.")
   expect_error(ImportData("xxx.rds"), "Please provide the social media type of data to import.")
   
@@ -21,7 +21,7 @@ test_that("ImportData has required input", {
   }
 })
 
-test_that("ImportData has correct output", {
+test_that("ImportData output", {
   skip_if_not(file.exists(test_csv), message = "csv file exists")
   capture.output({ data <- ImportData(test_csv, "twitter", "csv") })
   expect_s3_class(data, "data.frame")

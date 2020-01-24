@@ -24,6 +24,10 @@ Authenticate.youtube <- function(socialmedia, apiKey, ...) {
     stop("Missing youtube API key.", call. = FALSE)
   }
   
+  if (!is.character(apiKey)) {
+    stop("Requires youtube API key as string.", call. = FALSE)
+  }
+  
   credential <- list(socialmedia = "youtube", auth = apiKey)
   class(credential) <- append(class(credential), c("credential", "youtube"))
   
