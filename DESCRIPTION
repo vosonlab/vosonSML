@@ -27,6 +27,8 @@ Imports:
     tm,
     utils
 Suggests:
+    knitr,
+    rmarkdown,
     testthat,
     tictoc
 Depends: R (>= 3.2.0)
@@ -36,5 +38,6 @@ Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
 License: GPL (>= 3)
 RoxygenNote: 7.0.2
 NeedsCompilation: no
+VignetteBuilder: knitr
 URL: https://github.com/vosonlab/vosonSML
 BugReports: https://github.com/vosonlab/vosonSML/issues
