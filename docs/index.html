@@ -60,6 +60,18 @@
     Reference
   </a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/Intro-to-vosonSML.html">Introduction to vosonSML</a>
+    </li>
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -83,7 +95,7 @@
 <div id="vosonsml" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#vosonsml" class="anchor"></a>vosonSML</h1></div>
-<p><a href="https://CRAN.R-project.org/package=vosonSML"><img src="https://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="Downloads"><img src="https://cranlogs.r-pkg.org/badges/grand-total/vosonSML" alt="Total"><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&amp;colorB=8065ac" alt="Github Release"><img src="https://img.shields.io/static/v1?label=dev&amp;message=v0.29.5&amp;color=659DBD&amp;logo=github" alt="Dev"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&amp;color=659DBD&amp;logo=github" alt="Last Commit"></p>
+<p><a href="https://CRAN.R-project.org/package=vosonSML"><img src="https://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="Downloads"><img src="https://cranlogs.r-pkg.org/badges/grand-total/vosonSML" alt="Total"><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&amp;colorB=8065ac" alt="Github Release"><img src="https://img.shields.io/static/v1?label=dev&amp;message=v0.29.6&amp;color=659DBD&amp;logo=github" alt="Dev"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&amp;color=659DBD&amp;logo=github" alt="Last Commit"></p>
 <p><code>vosonSML</code> is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.</p>
 <p><code>vosonSML</code> is the <code>SocialMediaLab</code> package, with significant improvements and enhancements. We renamed the package because we thought that <code>SocialMediaLab</code> sounded a bit generic and also we wanted to indicate the connection to the <a href="http://vosonlab.net">Virtual Observatory for the Study of Online Networks Lab</a>, where te package was created. The original <code>SocialMediaLab</code> package was created by <a href="https://github.com/timothyjgraham">Timothy Graham</a> and <a href="https://github.com/rjackland">Robert Ackland</a> with major contributions by <a href="https://github.com/chainsawriot">Chung-hong Chan</a>. The development and maintenance of <code>vosonSML</code> is led by <a href="https://github.com/mishoryu">Bryan Gertzel</a>.</p>
 <div id="supported-social-media" class="section level3">
@@ -95,12 +107,12 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Install the latest release via CRAN (v0.29.5):</p>
+<p>Install the latest release via CRAN (v0.29.4):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"vosonSML"</span>)</span></code></pre></div>
 <p>Install the latest release via GitHub (v0.29.4):</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"https://github.com/vosonlab/vosonSML/releases/download/v0.29.4/vosonSML-0.29.4.tar.gz"</span>,</span>
 <span id="cb2-2"><a href="#cb2-2"></a>  <span class="dt">repo =</span> <span class="ot">NULL</span>, <span class="dt">type =</span> <span class="st">"source"</span>)</span></code></pre></div>
-<p>Install the latest development version (v0.29.5):</p>
+<p>Install the latest development version (v0.29.6):</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># library(devtools)</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>devtools<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/devtools/man/remote-reexports.html">install_github</a></span>(<span class="st">"vosonlab/vosonSML"</span>)</span></code></pre></div>
 </div>
@@ -220,21 +232,20 @@
 <span id="cb8-2"><a href="#cb8-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(vosonSML)</span>
 <span id="cb8-3"><a href="#cb8-3"></a></span>
 <span id="cb8-4"><a href="#cb8-4"></a><span class="co"># collect reddit comment threads</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>myThreadUrls &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5"></a>myThreadUrls &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxx/"</span>)</span>
 <span id="cb8-6"><a href="#cb8-6"></a></span>
 <span id="cb8-7"><a href="#cb8-7"></a><span class="co"># authentication does not require credentials</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a>redditData &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"reddit"</span>) <span class="op">%&gt;%</span></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="st">              </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">threadUrls =</span> myThreadUrls, <span class="dt">waitTime =</span> <span class="dv">5</span>)</span>
-<span id="cb8-10"><a href="#cb8-10"></a></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co">## activity network - nodes are comments and intital thread posts</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a></span>
-<span id="cb8-13"><a href="#cb8-13"></a>activityNetwork &lt;-<span class="st"> </span>redditData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>)</span>
-<span id="cb8-14"><a href="#cb8-14"></a>activityGraph &lt;-<span class="st"> </span>activityNetwork <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>(<span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</span>
-<span id="cb8-15"><a href="#cb8-15"></a></span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="co">## actor network - nodes are users who have posted comments</span></span>
-<span id="cb8-17"><a href="#cb8-17"></a></span>
-<span id="cb8-18"><a href="#cb8-18"></a><span class="co"># create an actor network with comment text as edge attribute</span></span>
-<span id="cb8-19"><a href="#cb8-19"></a>actorGraph &lt;-<span class="st"> </span>redditData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(redditData) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</span></code></pre></div>
+<span id="cb8-8"><a href="#cb8-8"></a>redditData &lt;-<span class="st"> </span><span class="kw"><a href="reference/Authenticate.html">Authenticate</a></span>(<span class="st">"reddit"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Collect.html">Collect</a></span>(<span class="dt">threadUrls =</span> myThreadUrls)</span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">## activity network - nodes are comments and intital thread posts</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a></span>
+<span id="cb8-12"><a href="#cb8-12"></a>activityNetwork &lt;-<span class="st"> </span>redditData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>)</span>
+<span id="cb8-13"><a href="#cb8-13"></a>activityGraph &lt;-<span class="st"> </span>activityNetwork <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>(<span class="dt">writeToFile =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb8-14"><a href="#cb8-14"></a></span>
+<span id="cb8-15"><a href="#cb8-15"></a><span class="co">## actor network - nodes are users who have posted comments</span></span>
+<span id="cb8-16"><a href="#cb8-16"></a></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="co"># create an actor network with comment text as edge attribute</span></span>
+<span id="cb8-18"><a href="#cb8-18"></a>actorGraph &lt;-<span class="st"> </span>redditData <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/Create.html">Create</a></span>(<span class="st">"actor"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-AddText.html">AddText</a></span>(redditData) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</span></code></pre></div>
 </div>
 </div>
 <div id="supplemental-functions" class="section level3">
