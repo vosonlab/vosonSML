@@ -6,12 +6,17 @@ authors:
     href: "https://vosonlab.net"
     html: "<span>VOSON Lab</span>"
 
+#template:
+#  params:
+#    bootswatch: flatly
+    
 navbar:
   structure:
     left:
     - home
     - news
     - reference
+    - articles
     right: github
   components:
     home:
@@ -25,9 +30,15 @@ navbar:
       icon: fa-cubes
       text: "Reference"
       href: reference/index.html
-    github:
-      icon: fa-github fa-lg
-      href: https://github.com/vosonlab/vosonSML
+  articles:
+    icon: fa-book
+    text: Articles
+    menu:
+    - text: "Introduction to vosonSML"
+      href: articles/Intro-to-vosonSML.html
+  github:
+    icon: fa-github fa-lg
+    href: https://github.com/vosonlab/vosonSML
 
 reference:
 - title: Function Reference
