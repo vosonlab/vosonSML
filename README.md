@@ -23,9 +23,9 @@ Install the latest release via CRAN (v0.29.4):
 install.packages("vosonSML")
 ```
 
-Install the latest release via GitHub (v0.29.4):
+Install the latest release via GitHub (v0.29.6):
 ```R
-install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.4/vosonSML-0.29.4.tar.gz",
+install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.6/vosonSML-0.29.6.tar.gz",
   repo = NULL, type = "source")
 ```
 
