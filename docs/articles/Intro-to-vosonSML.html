@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.7</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@
             <h3 class="subtitle">VOSON Lab, Australian National University</h3>
                         <h4 class="author">Robert Ackland, Bryan Gertzel, Francisca Borquez</h4>
             
-            <h4 class="date">25 January, 2020</h4>
+            <h4 class="date">05 March, 2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/master/vignettes/Intro-to-vosonSML.Rmd"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
       <div class="hidden name"><code>Intro-to-vosonSML.Rmd</code></div>
@@ -806,13 +806,87 @@
 </div>
 </div>
 </div>
+<div id="merging-collected-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#merging-collected-data" class="anchor"></a>Merging Collected Data</h1>
+<p>Data that was collected at different times, used different collect parameters or was saved to multiple files can be merged by using functions that operate on dataframes. The data from <code>Collect</code> is output in <code>tibble</code> (dataframe) format and provided each collected data set are from the same social media type can be combined using the <code>rbind</code> function.</p>
+<p>In the examples below or cases that involve large datasets it can sometimes be more efficient or timely to substitute optimized functions such as <code><a href="https://dplyr.tidyverse.org/reference/bind.html">dplyr::bind_rows</a></code> for <code>rbind</code> or <code><a href="https://Rdatatable.gitlab.io/data.table/reference/rbindlist.html">data.table::rbindlist</a></code> instead of <code><a href="https://rdrr.io/r/base/do.call.html">do.call("rbind", list)</a></code>.</p>
+<div id="merging-from-multiple-collect-operations" class="section level2">
+<h2 class="hasAnchor">
+<a href="#merging-from-multiple-collect-operations" class="anchor"></a>Merging from multiple Collect operations</h2>
+<p>Data collected in the same session can be merged using the <code>rbind</code> function. The following twitter example combines tweet data collected using different search parameters. The result is combined most <code>recent</code> tweets using the <code>#auspol</code> hashtag and most <code>popular</code> tweets using the <code>#bushfire</code> hashtag.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="co"># collect twitter data for the #auspol hashtag</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a>auspol_twitter_data &lt;-<span class="st"> </span>my_twitter_auth <span class="op">%&gt;%</span></span>
+<span id="cb60-3"><a href="#cb60-3"></a><span class="st">  </span><span class="kw"><a href="../reference/Collect.html">Collect</a></span>(<span class="dt">searchTerm =</span> <span class="st">"#auspol"</span>, <span class="dt">searchType =</span> <span class="st">"recent"</span>, <span class="dt">numTweets =</span> <span class="dv">100</span>)</span>
+<span id="cb60-4"><a href="#cb60-4"></a></span>
+<span id="cb60-5"><a href="#cb60-5"></a><span class="co"># collect twitter data for the #bushfire hashtag</span></span>
+<span id="cb60-6"><a href="#cb60-6"></a>bushfire_twitter_data &lt;-<span class="st"> </span>my_twitter_auth <span class="op">%&gt;%</span></span>
+<span id="cb60-7"><a href="#cb60-7"></a><span class="st">  </span><span class="kw"><a href="../reference/Collect.html">Collect</a></span>(<span class="dt">searchTerm =</span> <span class="st">"#bushfire"</span>, <span class="dt">searchType =</span> <span class="st">"popular"</span>, <span class="dt">numTweets =</span> <span class="dv">50</span>)</span>
+<span id="cb60-8"><a href="#cb60-8"></a></span>
+<span id="cb60-9"><a href="#cb60-9"></a><span class="co"># combine the collected data for the different hashtags using rbind</span></span>
+<span id="cb60-10"><a href="#cb60-10"></a>comb_twitter_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(auspol_twitter_data, bushfire_twitter_data)</span></code></pre></div>
+</div>
+<div id="merging-from-file" class="section level2">
+<h2 class="hasAnchor">
+<a href="#merging-from-file" class="anchor"></a>Merging from file</h2>
+<p><code>vosonSML</code> has a function for importing previously saved collected data from file so that it can be correctly handled and used in subsequent processsing functions. This example shows how to import and merge twitter data collected the previous day with newly collected data using <code>rbind</code> and the <code>ImportData</code> function.</p>
+<p>Please note that <code>ImportData</code> requires the file path and social media type either “twitter”, “youtube” or “reddit” to be specified as parameters.</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a><span class="co"># collect twitter data</span></span>
+<span id="cb61-2"><a href="#cb61-2"></a>new_twitter_data &lt;-<span class="st"> </span>my_twitter_auth <span class="op">%&gt;%</span></span>
+<span id="cb61-3"><a href="#cb61-3"></a><span class="st">  </span><span class="kw"><a href="../reference/Collect.html">Collect</a></span>(<span class="dt">searchTerm =</span> <span class="st">"#auspol"</span>, <span class="dt">searchType =</span> <span class="st">"recent"</span>, <span class="dt">numTweets =</span> <span class="dv">100</span>)</span>
+<span id="cb61-4"><a href="#cb61-4"></a></span>
+<span id="cb61-5"><a href="#cb61-5"></a><span class="co"># import data from file using ImportData</span></span>
+<span id="cb61-6"><a href="#cb61-6"></a>prev_twitter_data &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vosonSML-colon-colon-ImportData.html">ImportData</a></span>(<span class="st">"2020-02-26_143505-TwitterData.rds"</span>, <span class="st">"twitter"</span>)</span>
+<span id="cb61-7"><a href="#cb61-7"></a></span>
+<span id="cb61-8"><a href="#cb61-8"></a><span class="co"># add to imported data the new data using rbind</span></span>
+<span id="cb61-9"><a href="#cb61-9"></a>comb_twitter_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(prev_twitter_data, new_twitter_data)</span></code></pre></div>
+</div>
+<div id="merging-files-in-a-directory" class="section level2">
+<h2 class="hasAnchor">
+<a href="#merging-files-in-a-directory" class="anchor"></a>Merging files in a directory</h2>
+<p>If there are many data collections to be merged from file it may be useful to use <code>rbind</code> in conjuction with <code>lapply</code>. In this example a list of twitter collection files in the <code>2019TwitterBushfireData</code> directory that end in “TwitterData.rds” are passed into an <code>lapply</code> function. This imports each dataset with <code>ImportData</code> and is then added to a list of dataframes that is combined with <code>rbind</code> for the final result.</p>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a><span class="co"># vector of file names matching *TwitterData.rds to combine from directory</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a>import_files &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span>(<span class="dt">path =</span> <span class="st">"D:</span><span class="ch">\\</span><span class="st">2019TwitterBushfireData"</span>,</span>
+<span id="cb62-3"><a href="#cb62-3"></a>                           <span class="dt">pattern =</span> <span class="st">"*TwitterData.rds"</span>,</span>
+<span id="cb62-4"><a href="#cb62-4"></a>                           <span class="dt">full.names =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb62-5"><a href="#cb62-5"></a></span>
+<span id="cb62-6"><a href="#cb62-6"></a><span class="co"># combine imported data from files with apply and rbind</span></span>
+<span id="cb62-7"><a href="#cb62-7"></a>comb_twitter_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="st">"rbind"</span>, <span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(import_files, </span>
+<span id="cb62-8"><a href="#cb62-8"></a>                                             <span class="cf">function</span>(x) { <span class="kw"><a href="../reference/vosonSML-colon-colon-ImportData.html">ImportData</a></span>(x, <span class="st">"twitter"</span>) }))</span></code></pre></div>
+<p>Once the data is merged then it can be passed to the <code>Create</code> function to create a network as per the usual <code>vosonSML</code> work flow.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="co"># create an igraph of twitter actor network</span></span>
+<span id="cb63-2"><a href="#cb63-2"></a>twitter_actor_g &lt;-<span class="st"> </span>comb_twitter_data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/Create.html">Create</a></span>(<span class="st">"actor"</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="../reference/vosonSML-colon-colon-Graph.html">Graph</a></span>()</span></code></pre></div>
+</div>
+<div id="duplicate-data" class="section level2">
+<h2 class="hasAnchor">
+<a href="#duplicate-data" class="anchor"></a>Duplicate data</h2>
+<p>Depending on type of collections being performed there may be duplicate data or rows in the combined dataframes. This is generally not a problem for <code>vosonSML</code> network creation, however it may sometimes be useful to address in order to reduce the size of the data being processed. This can be achieved in many ways but is probably acomplished most easily using the <code>unique</code> or <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">dplyr::distinct</a></code> function. In the example below the unique tweet identifier “status_id” is used with <code>distinct</code> to choose which columns to identify distinct values from. For youtube the identifier columns “VideoID” and “CommentID” and for reddit “thread_id” and “comm_id” can be used instead of “status_id”.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="co"># combine the collected data using rbind and remove duplicates with distinct based on tweet status_id </span></span>
+<span id="cb64-2"><a href="#cb64-2"></a>comb_twitter_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(auspol_twitter_data, bushfire_twitter_data) <span class="op">%&gt;%</span></span>
+<span id="cb64-3"><a href="#cb64-3"></a><span class="st">   </span><span class="kw">distinct</span>(status_id, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<p>If unique rows can change over time such as a tweets retweet count, or perhaps youtube video / reddit thread comments being updated then a strategy will need to be adopted to choose the desired version to keep between dataframes. The <code>distinct</code> function will keep the first found row that contains a duplicate identifier, so it is often useful to arrange the rows so that more recent record comes first in the combined dataframe and is kept. With twitter data the easiest way to do this is to perform the <code>rbind</code> with twitter dataframes in reverse order (chronological) with the most recent collect data first. For youtube and reddit the rows can be arranged by the “UpdatedAt” and “comm_date_unix” timestamp values respectively. The <code>dplyr</code> package again provides a convenient function for sorting or arranging rows called <code>arrange</code>.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="co"># manually combine data sets in reverse chronological order and remove duplicates based on status_id </span></span>
+<span id="cb65-2"><a href="#cb65-2"></a>comb_twitter_data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(bushfire_twitter_data, auspol_twitter_data) <span class="op">%&gt;%</span></span>
+<span id="cb65-3"><a href="#cb65-3"></a><span class="st">   </span><span class="kw">distinct</span>(status_id, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb65-4"><a href="#cb65-4"></a></span>
+<span id="cb65-5"><a href="#cb65-5"></a><span class="co"># arrange combined youtube data by updated timestamp and remove duplicates, keeping the version of a</span></span>
+<span id="cb65-6"><a href="#cb65-6"></a><span class="co"># duplicate video comment that was most recently updated</span></span>
+<span id="cb65-7"><a href="#cb65-7"></a>comb_youtube_data &lt;-<span class="st"> </span>comb_youtube_data <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb65-8"><a href="#cb65-8"></a><span class="st">   </span><span class="kw">arrange</span>(<span class="kw">desc</span>(UpdatedAt)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(VideoID, CommentID, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb65-9"><a href="#cb65-9"></a></span>
+<span id="cb65-10"><a href="#cb65-10"></a><span class="co"># arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of a</span></span>
+<span id="cb65-11"><a href="#cb65-11"></a><span class="co"># duplicate thread comment that was most recently updated</span></span>
+<span id="cb65-12"><a href="#cb65-12"></a>comb_reddit_data &lt;-<span class="st"> </span>comb_reddit_data <span class="op">%&gt;%</span></span>
+<span id="cb65-13"><a href="#cb65-13"></a><span class="st">   </span><span class="kw">arrange</span>(<span class="kw">desc</span>(comm_date_unix)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">distinct</span>(thread_id, comm_id, <span class="dt">.keep_all =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+</div>
+</div>
 <div id="voson-dashboard" class="section level1">
 <h1 class="hasAnchor">
 <a href="#voson-dashboard" class="anchor"></a>VOSON Dashboard</h1>
 <p>It is possible to import a network created using <code>vosonSML</code>, and saved as a “.graphml” file, into <code>VOSON Dashboard</code>. However, if you have created a categorical node attribute in the network and wish to plot networks in <code>VOSON Dashboard</code> with node colour reflecting the node attribute, then the node attribute name has to be pre-pended with “vosonCA_”. This let’s <code>VOSON Dashboard</code> know the attribute is to be treated as categorical.</p>
 <p>Above, we created a Twitter subnetwork: the giant component in the reply network, with red nodes indicating those users who tweeted using the word “bushfire”. We did this by created a node attribute “tweetedBushfires”. For <code>VOSON Dashboard</code> to recognise this node attribute, it has to be named “vosonCA_tweetedBushfires”. The following code creates a new node attribute with this name, and sames the network as a graphml file:</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="kw">V</span>(g3)<span class="op">$</span>vosonCA_tweetedBushfires &lt;-<span class="st"> </span><span class="kw">V</span>(g3)<span class="op">$</span>tweetedBushfires</span>
-<span id="cb60-2"><a href="#cb60-2"></a><span class="kw">write.graph</span>(g3, <span class="st">"g3.graphml"</span>, <span class="dt">format=</span><span class="st">"graphml"</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="kw">V</span>(g3)<span class="op">$</span>vosonCA_tweetedBushfires &lt;-<span class="st"> </span><span class="kw">V</span>(g3)<span class="op">$</span>tweetedBushfires</span>
+<span id="cb66-2"><a href="#cb66-2"></a><span class="kw">write.graph</span>(g3, <span class="st">"g3.graphml"</span>, <span class="dt">format=</span><span class="st">"graphml"</span>)</span></code></pre></div>
 <p>The following shows a screenshot of <code>VOSON Dashboard</code> with this network loaded and the “tweetedBushfires” attribute has been seleced to be reflected in the node colour.</p>
 <div class="figure">
 <img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/voson_dashboard.png" alt=""><p class="caption">VOSON Dashboard with Twitter network of users who tweeted using the word “bushfire”</p>
@@ -855,6 +929,15 @@
 <li><a href="#authenticating-with-the-reddit-api">Authenticating with the Reddit API</a></li>
       <li><a href="#collecting-data-from-reddit">Collecting Data from Reddit</a></li>
       <li><a href="#creating-reddit-networks">Creating Reddit Networks</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#merging-collected-data">Merging Collected Data</a>
+      <ul class="nav nav-pills nav-stacked">
+<li><a href="#merging-from-multiple-collect-operations">Merging from multiple Collect operations</a></li>
+      <li><a href="#merging-from-file">Merging from file</a></li>
+      <li><a href="#merging-files-in-a-directory">Merging files in a directory</a></li>
+      <li><a href="#duplicate-data">Duplicate data</a></li>
       </ul>
 </li>
       <li><a href="#voson-dashboard">VOSON Dashboard</a></li>

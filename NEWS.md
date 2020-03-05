@@ -1,3 +1,8 @@
+# vosonSML 0.29.7
+
+## Minor Changes
+- Added some guidance for merging collected data to the `Introduction to vosonSML` vignette. 
+
 # vosonSML 0.29.6
 
 ## Minor Changes
