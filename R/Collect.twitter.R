@@ -66,14 +66,25 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   # cat(paste0("Collecting tweets", ifelse(searchTerm == "", "", paste0(" for search term: ", searchTerm)), "...\n"))
   if (searchTerm != "") { cat(paste0("Search term: ", searchTerm, "\n")) }
   
-  rtlimit <- rtweet::rate_limit(authToken, "search/tweets")
-  remaining <- rtlimit[["remaining"]] * 100
-  cat(paste0("Requested ", numTweets, " tweets of ", remaining, " in this search rate limit.\n"))
-  if (retryOnRateLimit == TRUE & numTweets < remaining) {
-    cat("Less tweets requested than remaining limit retryOnRateLimit set to FALSE.\n")
-    retryOnRateLimit <- FALSE
+  rtlimit <- NULL
+  tryCatch({
+    rtlimit <- rtweet::rate_limit(authToken, "search/tweets")
+  }, error = function(e) {
+    cat("Unable to determine rate limit. retryOnRateLimit set to FALSE.\n")
+    retryOnRateLimit <<- FALSE
+  })
+  
+  if (!is.null(rtlimit)) {
+    remaining <- rtlimit[["remaining"]] * 100
+    cat(paste0("Requested ", numTweets, " tweets of ", remaining, " in this search rate limit.\n"))
+    if (retryOnRateLimit == TRUE & numTweets < remaining) {
+      cat("Less tweets requested than remaining limit retryOnRateLimit set to FALSE.\n")
+      retryOnRateLimit <- FALSE
+    }
+    cat(paste0("Rate limit reset: ", rtlimit$reset_at, "\n"))   
+  } else {
+    cat(paste0("Requested ", numTweets, " tweets.\n"))
   }
-  cat(paste0("Rate limit reset: ", rtlimit$reset_at, "\n"))
   
   search_params <- list()
   search_params[['token']] <- authToken

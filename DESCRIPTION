@@ -1,5 +1,5 @@
 Package: vosonSML
-Version: 0.29.7
+Version: 0.29.8
 Title: Collecting Social Media Data and Generating Networks for Analysis
 Description: A suite of tools for collecting and constructing networks from social media data.
     Provides easy-to-use functions for collecting data across popular platforms (Twitter, YouTube
