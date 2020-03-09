@@ -26,3 +26,7 @@ h4, .h4, h5, .h5 {
 .contents h3, .contents h4 {
   padding-top: 40px;
 }
+
+.version.label.label-default {
+  background-color: #ec248f;
+}

@@ -37,15 +37,15 @@ devtools::install_github("vosonlab/vosonSML")
 
 ## Getting started
 
-The following usage examples will provide a great introduction to using `vosonSML`. There are also several "how to" guides, including an "Absolute Beginners Guide to vosonSML" tutorial aimed at people with little or no programming experience on the [vosonSML page of the VOSON website](http://vosonlab.net/SocialMediaLab).
+The following usage examples will provide a quick start to using `vosonSML` functions. There are also several "how to" guides, including an "Absolute Beginners Guide to vosonSML" tutorial aimed at people with little or no programming experience on the [vosonSML page of the VOSON website](http://vosonlab.net/SocialMediaLab). Additionally there is an [Introduction to vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html) vignette included with the `vosonSML` package is that is a practical and explanatory guide to collecting data and creating networks.
 
-Additional resources:
+Further resources:
 - [Function Reference](https://vosonlab.github.io/vosonSML/reference/index.html)
 - [Updates & Changelog](https://vosonlab.github.io/vosonSML/news/index.html)
 
 ### Usage
 
-The process of authentication, data collection and creating social network in vosonSML is expressed with the three verb functions: *Authenticate*, *Collect* and *Create*. The following are some examples:
+The process of authentication, data collection and creating social network in `vosonSML` is expressed with the three functions: *Authenticate*, *Collect* and *Create*. The following are some examples of their usage for supported social media:
 
 ### Twitter Example
 

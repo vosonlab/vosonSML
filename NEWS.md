@@ -1,7 +1,10 @@
 # vosonSML 0.29.8
 
 ## Bug Fixes
-- A change in the Twitter API has caused an issue with the `rtweet::rate_limit` function that results in an error when using the rtweet `retryonratelimit` search parameter. The `rate_limit` function was being called by `vosonSML` to check the twitter rate limit regardless of whether the search parameter was set or not, and so is now failing `Collect` with an error. A fix was made so that `vosonSML` checks if `rtweet::rate_limit` succeeds, and if not automatically sets `retryonratelimit` to `FALSE` so that a twitter `Collect` can still be performed without error. The twitter  `retryOnRateLimit` parameter of `Collect` should again work as per usual when this issue is resolved in the `rtweet` package.
+- A recent intermittent problem with the Twitter API caused an issue with the `rtweet::rate_limit` function that resulted in an error when using the rtweet `retryonratelimit` search parameter. The `rate_limit` function was being called by `vosonSML` to check the twitter rate limit regardless of whether the search parameter was set or not, and so was failing `Collect` with an error. A fix was made so that `vosonSML` checks if `rtweet::rate_limit` succeeds, and if not automatically sets `retryonratelimit` to `FALSE` so that a twitter `Collect` can still be performed without error should this problem occur again.
+
+## Minor Changes
+- Added some links to the `pkgdown` site navbar.
 
 # vosonSML 0.29.7
 
