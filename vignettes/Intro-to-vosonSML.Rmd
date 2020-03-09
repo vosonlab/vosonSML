@@ -999,7 +999,8 @@ twitter_actor_g <- comb_twitter_data %>% Create("actor") %>% Graph()
 Depending on type of collections being performed there may be duplicate data or rows in the combined dataframes. This is generally not a problem for `vosonSML` network creation, however it may sometimes be useful to address in order to reduce the size of the data being processed. This can be achieved in many ways but is probably acomplished most easily using the `unique` or `dplyr::distinct` function. In the example below the unique tweet identifier "status_id" is used with `distinct` to choose which columns to identify distinct values from. For youtube the identifier columns "VideoID" and "CommentID" and for reddit "thread_id" and "comm_id" can be used instead of "status_id".
 
 ```{r eval=FALSE}
-# combine the collected data using rbind and remove duplicates with distinct based on tweet status_id 
+# combine the collected data using rbind and remove duplicates with distinct based on
+# tweet status_id 
 comb_twitter_data <- rbind(auspol_twitter_data, bushfire_twitter_data) %>%
    distinct(status_id, .keep_all = TRUE)
 ```
@@ -1007,17 +1008,18 @@ comb_twitter_data <- rbind(auspol_twitter_data, bushfire_twitter_data) %>%
 If unique rows can change over time such as a tweets retweet count, or perhaps youtube video / reddit thread comments being updated then a strategy will need to be adopted to choose the desired version to keep between dataframes. The `distinct` function will keep the first found row that contains a duplicate identifier, so it is often useful to arrange the rows so that more recent record comes first in the combined dataframe and is kept. With twitter data the easiest way to do this is to perform the `rbind` with twitter dataframes in reverse order (chronological) with the most recent collect data first. For youtube and reddit the rows can be arranged by the "UpdatedAt" and "comm_date_unix" timestamp values respectively. The `dplyr` package again provides a convenient function for sorting or arranging rows called `arrange`. 
 
 ```{r eval=FALSE}
-# manually combine data sets in reverse chronological order and remove duplicates based on status_id 
+# manually combine data sets in reverse chronological order and remove duplicates based on
+# status_id 
 comb_twitter_data <- rbind(bushfire_twitter_data, auspol_twitter_data) %>%
    distinct(status_id, .keep_all = TRUE)
 
-# arrange combined youtube data by updated timestamp and remove duplicates, keeping the version of a
-# duplicate video comment that was most recently updated
+# arrange combined youtube data by updated timestamp and remove duplicates, keeping the version
+# of a duplicate video comment that was most recently updated
 comb_youtube_data <- comb_youtube_data %>% 
    arrange(desc(UpdatedAt)) %>% distinct(VideoID, CommentID, .keep_all = TRUE)
 
-# arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of a
-# duplicate thread comment that was most recently updated
+# arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of
+# a duplicate thread comment that was most recently updated
 comb_reddit_data <- comb_reddit_data %>%
    arrange(desc(comm_date_unix)) %>% distinct(thread_id, comm_id, .keep_all = TRUE)
 ```
