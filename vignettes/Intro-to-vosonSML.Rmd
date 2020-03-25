@@ -934,7 +934,7 @@ dev.off()
 
 Data that was collected at different times, used different collect parameters or was saved to multiple files can be merged by using functions that operate on dataframes. The data from `Collect` is output in `tibble` (dataframe) format and provided each collected data set are from the same social media type can be combined using the `rbind` function.
 
-In the examples below or cases that involve large datasets it can sometimes be more efficient or timely to substitute optimized functions such as `dplyr::bind_rows` for `rbind` or `data.table::rbindlist` instead of `do.call("rbind", list)`.
+In the examples below or cases that involve large datasets, it can sometimes be more efficient or timely to substitute optimized functions such as `dplyr::bind_rows` for `rbind` or `data.table::rbindlist` instead of `do.call("rbind", list)`.
 
 ## Merging from multiple Collect operations
 
@@ -942,33 +942,33 @@ Data collected in the same session can be merged using the `rbind` function. The
 
 ```{r eval=FALSE}
 # collect twitter data for the #auspol hashtag
-auspol_twitter_data <- my_twitter_auth %>%
+auspolTwitterData <- twitterAuth %>%
   Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100)
 
 # collect twitter data for the #bushfire hashtag
-bushfire_twitter_data <- my_twitter_auth %>%
+bushfireTwitterData <- twitterAuth %>%
   Collect(searchTerm = "#bushfire", searchType = "popular", numTweets = 50)
 
 # combine the collected data for the different hashtags using rbind
-comb_twitter_data <- rbind(auspol_twitter_data, bushfire_twitter_data)
+twitterData <- rbind(auspolTwitterData, bushfireTwitterData)
 ```
 
 ## Merging from file
 
-`vosonSML` has a function for importing previously saved collected data from file so that it can be correctly handled and used in subsequent processsing functions. This example shows how to import and merge twitter data collected the previous day with newly collected data using `rbind` and the `ImportData` function.
+`vosonSML` has a function for importing previously saved collected data from file so that, it can be correctly handled and used in subsequent processsing functions. This example shows how to import and merge twitter data collected the previous day with newly collected data using `rbind` and the `ImportData` function.
 
 Please note that `ImportData` requires the file path and social media type either "twitter", "youtube" or "reddit" to be specified as parameters. 
 
 ```{r eval=FALSE}
 # collect twitter data
-new_twitter_data <- my_twitter_auth %>%
+newTwitterData <- twitterAuth %>%
   Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100)
 
 # import data from file using ImportData
-prev_twitter_data <- ImportData("2020-02-26_143505-TwitterData.rds", "twitter")
+prevTwitterData <- ImportData("2020-02-26_143505-TwitterData.rds", "twitter")
 
 # add to imported data the new data using rbind
-comb_twitter_data <- rbind(prev_twitter_data, new_twitter_data)
+twitterData <- rbind(prevTwitterData, newTwitterData)
 ```
 
 ## Merging files in a directory
@@ -977,51 +977,54 @@ If there are many data collections to be merged from file it may be useful to us
 
 ```{r eval=FALSE}
 # vector of file names matching *TwitterData.rds to combine from directory
-import_files <- list.files(path = "D:\\2019TwitterBushfireData",
-                           pattern = "*TwitterData.rds",
-                           full.names = TRUE)
+importFiles <- list.files(path = "D:\\2019TwitterBushfireData",
+                          pattern = "*TwitterData.rds",
+                          full.names = TRUE)
 
 # combine imported data from files with apply and rbind
-comb_twitter_data <- do.call("rbind", lapply(import_files, 
-                                             function(x) { ImportData(x, "twitter") }))
+twitterData <- do.call("rbind", lapply(importFiles, 
+                                       function(x) { ImportData(x, "twitter") }))
 
-```
-
-Once the data is merged then it can be passed to the `Create` function to create a network as per the usual `vosonSML` work flow.
-
-```{r eval=FALSE}
-# create an igraph of twitter actor network
-twitter_actor_g <- comb_twitter_data %>% Create("actor") %>% Graph()
 ```
 
 ## Duplicate data
 
-Depending on type of collections being performed there may be duplicate data or rows in the combined dataframes. This is generally not a problem for `vosonSML` network creation, however it may sometimes be useful to address in order to reduce the size of the data being processed. This can be achieved in many ways but is probably acomplished most easily using the `unique` or `dplyr::distinct` function. In the example below the unique tweet identifier "status_id" is used with `distinct` to choose which columns to identify distinct values from. For youtube the identifier columns "VideoID" and "CommentID" and for reddit "thread_id" and "comm_id" can be used instead of "status_id".
+Depending on type of collections being performed, there may be duplicate data or rows in the combined dataframes. This is generally not a problem for `vosonSML` network creation, however it may sometimes be useful to address in order to reduce the size of the data being processed. This can be achieved in many ways but is probably acomplished most easily using the `unique` or `dplyr::distinct` function. In the example below the unique tweet identifier "status_id" is used with `distinct` to choose which columns to identify distinct values from. For youtube the identifier columns "VideoID" and "CommentID" and for reddit "thread_id" and "comm_id" can be used instead of "status_id".
 
 ```{r eval=FALSE}
-# combine the collected data using rbind and remove duplicates with distinct based on
-# tweet status_id 
-comb_twitter_data <- rbind(auspol_twitter_data, bushfire_twitter_data) %>%
+# load dplyr
+library(dplyr)
+
+# combine the collected data using rbind and remove duplicates with distinct based on tweet status_id 
+twitterData <- rbind(auspolTwitterData, bushfireTwitterData) %>%
    distinct(status_id, .keep_all = TRUE)
 ```
 
-If unique rows can change over time such as a tweets retweet count, or perhaps youtube video / reddit thread comments being updated then a strategy will need to be adopted to choose the desired version to keep between dataframes. The `distinct` function will keep the first found row that contains a duplicate identifier, so it is often useful to arrange the rows so that more recent record comes first in the combined dataframe and is kept. With twitter data the easiest way to do this is to perform the `rbind` with twitter dataframes in reverse order (chronological) with the most recent collect data first. For youtube and reddit the rows can be arranged by the "UpdatedAt" and "comm_date_unix" timestamp values respectively. The `dplyr` package again provides a convenient function for sorting or arranging rows called `arrange`. 
+If unique rows can change over time such as a tweets retweet count, or perhaps youtube video / reddit thread comments being updated then a strategy will need to be adopted to choose the desired version to keep between dataframes. The `distinct` function will keep the first found row that contains a duplicate identifier, so it is often useful to arrange the rows so that more recent record comes first in the combined dataframe and is kept. With twitter data, the easiest way to do this is to perform the `rbind` with twitter dataframes in reverse order (chronological) with the most recent collect data first. For youtube and reddit, the rows can be arranged by the "UpdatedAt" and "comm_date_unix" timestamp values respectively. The `dplyr` package again provides a convenient function for sorting or arranging rows called `arrange`. 
 
 ```{r eval=FALSE}
-# manually combine data sets in reverse chronological order and remove duplicates based on
-# status_id 
-comb_twitter_data <- rbind(bushfire_twitter_data, auspol_twitter_data) %>%
+# manually combine data sets in reverse chronological order and remove duplicates based on status_id 
+twitterData <- rbind(bushfireTwitterData, auspolTwitterData) %>%
    distinct(status_id, .keep_all = TRUE)
 
-# arrange combined youtube data by updated timestamp and remove duplicates, keeping the version
-# of a duplicate video comment that was most recently updated
-comb_youtube_data <- comb_youtube_data %>% 
+# arrange combined youtube data by updated timestamp and remove duplicates, keeping the version of a
+# duplicate video comment that was most recently updated
+youtubeData <- youtubeData %>% 
    arrange(desc(UpdatedAt)) %>% distinct(VideoID, CommentID, .keep_all = TRUE)
 
-# arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of
-# a duplicate thread comment that was most recently updated
-comb_reddit_data <- comb_reddit_data %>%
+# arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of a
+# duplicate thread comment that was most recently updated
+redditData <- redditData %>%
    arrange(desc(comm_date_unix)) %>% distinct(thread_id, comm_id, .keep_all = TRUE)
+```
+
+## Creating a network and graph from merged data
+
+Once the data is merged then it can then simply be passed to the `Create` function to create a network as per the usual `vosonSML` work flow.
+
+```{r eval=FALSE}
+# create an igraph of twitter actor network
+actorGraph <- twitterData %>% Create("actor") %>% Graph(writeToFile = TRUE)
 ```
 
 # VOSON Dashboard

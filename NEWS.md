@@ -1,3 +1,9 @@
+# vosonSML 0.29.9
+
+## Minor Changes
+- Updated `Introduction to vosonSML` vignette `Merging Collected Data` examples.
+- Added new hex sticker to package documentation.
+
 # vosonSML 0.29.8
 
 ## Bug Fixes
