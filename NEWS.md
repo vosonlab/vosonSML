@@ -4,6 +4,9 @@
 - Updated `Introduction to vosonSML` vignette `Merging Collected Data` examples.
 - Added new hex sticker to package documentation.
 
+## Bug Fixes
+- Fixed a logic problem in `Collect.youtube` that was causing no video comments to be collected if there were no reply comments for any of the videos first `maxComments` number of top level comments. For example, if `maxComments` is set to 100 and the first 100 comments made to a video had no replies then no results would be returned. 
+
 # vosonSML 0.29.8
 
 ## Bug Fixes
