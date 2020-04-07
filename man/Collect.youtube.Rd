@@ -30,7 +30,7 @@ greater than \code{maxComments} depending on the number of reply comments presen
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-A data.frame object with class names \code{"datasource"} and \code{"youtube"}.
+A tibble object with class names \code{"datasource"} and \code{"youtube"}.
 }
 \description{
 This function collects public comments data for one or more youtube videos using the YouTube Data API 

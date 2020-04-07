@@ -35,7 +35,7 @@
 #' greater than \code{maxComments} depending on the number of reply comments present.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
-#' @return A data.frame object with class names \code{"datasource"} and \code{"youtube"}.
+#' @return A tibble object with class names \code{"datasource"} and \code{"youtube"}.
 #' 
 #' @examples
 #' \dontrun{
@@ -110,7 +110,7 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
     ## Make a dataframe out of the results
     
     if (verbose) { cat(paste0("** Creating dataframe from threads of ", videoIDs[k], ".\n")) }
-    # browser()
+    #browser()
     tempData <- lapply(rObj$data, function(x) {
       data.frame(Comment = x$snippet$topLevelComment$snippet$textDisplay,
                  AuthorDisplayName = x$snippet$topLevelComment$snippet$authorDisplayName,
@@ -142,10 +142,12 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
     commentIDs_with_replies <- commentIDs_with_replies$CommentID
     
     # skip collecting comments if no threads with comment replies
-    if (length(commentIDs_with_replies) == 0) { 
-      cat("\n")
-      next 
-    }
+    # if (length(commentIDs_with_replies) == 0) { 
+    #   cat("\n")
+    #   next
+    # }
+    
+    if (length(commentIDs_with_replies) > 0) { 
     
     cat(paste0("** Collecting replies for ", length(commentIDs_with_replies), 
                " threads with replies. Please be patient.\n")) # commentIDs
@@ -254,11 +256,21 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
     # combine the comments and replies dataframes
     dataCombinedTemp <- rbind(core_df, dataRepliesAll)
     
-    # APPEND TO THE OVERALL DATAFRAME (I.E. MULTIPLE VIDEO COMMENTS)
     dataCombined <- rbind(dataCombined, dataCombinedTemp)
     
+    # no threads with reply comments for video
+    } else {
+      total_api_cost <- total_api_cost + api_cost
+      dataCombined <- rbind(dataCombined, core_df)
+      cat("\n") 
+    }
+    
+    # APPEND TO THE OVERALL DATAFRAME (I.E. MULTIPLE VIDEO COMMENTS)
+    # dataCombined <- rbind(dataCombined, dataCombinedTemp)
+    
     # if (err || rObj$api_error) { break }
-  }
+    
+  } # end for (k in 1:length(videoIDs))
     
   cat(paste0("** Total comments collected for all videos ", nrow(dataCombined)-1, ".\n", sep = ""))
   
@@ -278,6 +290,7 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
   #############################################################################
   # return dataframe to environment
   
+  dataCombined <- tibble::as_tibble(dataCombined) # convert type to tibble for package consistency
   class(dataCombined) <- append(class(dataCombined), c("dataource", "youtube"))
   cat("Done.\n")
   flush.console()

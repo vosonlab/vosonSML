@@ -25,7 +25,8 @@
 Create.actor.youtube <- function(datasource, type, ...) {
   cat("Generating youtube actor network...")
   
-  df <- tibble::as_tibble(datasource)
+  # df <- tibble::as_tibble(datasource)
+  df <- datasource
   
   # nodes are authors and videos, edges are comments and self-loops
   
