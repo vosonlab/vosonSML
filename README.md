@@ -29,7 +29,7 @@ install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.6
   repo = NULL, type = "source")
 ```
 
-Install the latest development version (v0.29.8):
+Install the latest development version (v0.29.9):
 ``` r
 # library(devtools)
 devtools::install_github("vosonlab/vosonSML")
