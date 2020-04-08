@@ -1,3 +1,20 @@
+# vosonSML 0.29.9
+
+## Minor Changes
+- Updated `Introduction to vosonSML` vignette `Merging Collected Data` examples.
+- Added new hex sticker to package documentation.
+
+## Bug Fixes
+- Fixed a logic problem in `Collect.youtube` that was causing no video comments to be collected if there were no reply comments for any of the videos first `maxComments` number of top level comments. For example, if `maxComments` is set to 100 and the first 100 comments made to a video had no replies then no results would be returned. 
+
+# vosonSML 0.29.8
+
+## Bug Fixes
+- A recent intermittent problem with the Twitter API caused an issue with the `rtweet::rate_limit` function that resulted in an error when using the rtweet `retryonratelimit` search parameter. The `rate_limit` function was being called by `vosonSML` to check the twitter rate limit regardless of whether the search parameter was set or not, and so was failing `Collect` with an error. A fix was made so that `vosonSML` checks if `rtweet::rate_limit` succeeds, and if not automatically sets `retryonratelimit` to `FALSE` so that a twitter `Collect` can still be performed without error should this problem occur again.
+
+## Minor Changes
+- Added some links to the `pkgdown` site navbar.
+
 # vosonSML 0.29.7
 
 ## Minor Changes

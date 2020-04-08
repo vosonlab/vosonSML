@@ -1,10 +1,10 @@
-# vosonSML
+# vosonSML <img src="https://vosonlab.github.io/vosonSML/images/logo.png" width="140px" align="right" />
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
-![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)
-![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)
-![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)
-![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.7&color=659DBD&logo=github)
-![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&color=659DBD&logo=github)
+[![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
+[![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
+[![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)](https://github.com/vosonlab/vosonSML/releases)
+[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.9&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 
 `vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
 
@@ -19,38 +19,39 @@ Unfortunately we are no longer able to maintain `facebook` and `instagram` colle
 ## Installation
 
 Install the latest release via CRAN (v0.29.4):
-```R
+``` r
 install.packages("vosonSML")
 ```
 
 Install the latest release via GitHub (v0.29.6):
-```R
+``` r
 install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.6/vosonSML-0.29.6.tar.gz",
   repo = NULL, type = "source")
 ```
 
-Install the latest development version (v0.29.7):
-```R
+Install the latest development version (v0.29.8):
+``` r
 # library(devtools)
 devtools::install_github("vosonlab/vosonSML")
 ```
 
 ## Getting started
 
-The following usage examples will provide a great introduction to using `vosonSML`. There are also several "how to" guides, including an "Absolute Beginners Guide to vosonSML" tutorial aimed at people with little or no programming experience on the [vosonSML page of the VOSON website](http://vosonlab.net/SocialMediaLab).
+The following usage examples will provide a quick start to using `vosonSML` functions. There are also several "how to" guides, including an "Absolute Beginners Guide to vosonSML" tutorial aimed at people with little or no programming experience on the [vosonSML page of the VOSON website](http://vosonlab.net/SocialMediaLab). Additionally there is an [Introduction to vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html) vignette included with the `vosonSML` package is that is a practical and explanatory guide to collecting data and creating networks.
 
-Additional resources:
+Further resources:
 - [Function Reference](https://vosonlab.github.io/vosonSML/reference/index.html)
 - [Updates & Changelog](https://vosonlab.github.io/vosonSML/news/index.html)
 
 ### Usage
 
-The process of authentication, data collection and creating social network in vosonSML is expressed with the three verb functions: *Authenticate*, *Collect* and *Create*. The following are some examples:
+The process of authentication, data collection and creating social network in `vosonSML` is expressed with the three functions: *Authenticate*, *Collect* and *Create*. The following are some examples of their usage for supported social media:
 
 ### Twitter Example
 
 #### 'Authenticate' with the Twitter API
-```R
+
+``` r
 library(magrittr)
 library(vosonSML)
 
@@ -71,7 +72,8 @@ twitterAuth <- readRDS("~/.twitter_auth")
 ```
 
 #### 'Collect' tweets for the '#auspol' hashtag
-```R
+
+``` r
 # collect 100 recent tweets
 twitterData <- twitterAuth %>%
                Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100,
@@ -80,7 +82,8 @@ twitterData <- twitterAuth %>%
 ```
 
 #### 'Create' twitter 'activity', 'actor', 'semantic' and 'twomode' network graphs
-```R
+
+``` r
 ## activity network - nodes are tweets
 
 activityNetwork <- twitterData %>% Create("activity")
@@ -110,7 +113,8 @@ twomodeGraph <- twomodeNetwork %>% Graph(writeToFile = TRUE)
 ### Youtube Example
 
 #### 'Authenticate', 'Collect' and 'Create' network graphs from youtube video comments
-```R
+
+``` r
 library(magrittr)
 library(vosonSML)
 
@@ -138,7 +142,8 @@ actorGraph <- youtubeData %>% Create("actor") %>% AddText(youtubeData) %>% Graph
 ### Reddit Example
 
 #### 'Collect' and 'Create' reddit networks from a subreddit thread
-```R
+
+``` r
 library(magrittr)
 library(vosonSML)
 
@@ -162,7 +167,8 @@ actorGraph <- redditData %>% Create("actor") %>% AddText(redditData) %>% Graph()
 ### Supplemental Functions
 
 #### 'AddText' adds collected text data to networks as node or edge attributes
-```R
+
+``` r
 # applies to twitter, youtube and reddit - activity and actor networks
 
 # graph for activity network with text data added as node attribute
@@ -182,7 +188,8 @@ actorNetworkGraph <- youtubeData %>% Create("actor") %>%
 ```
 
 #### 'AddUserData' requests and adds user profile data to networks
-```R
+
+``` r
 # applies only to twitter actor networks
 
 # add additional twitter user profile info to actor network graph as node attributes
@@ -193,7 +200,8 @@ actorGraphWithUserAttr <- actorNetwork %>%
 ```
 
 #### 'AddVideoData' requests and adds video data to networks
-```R
+
+``` r
 # applies only to youtube actor networks
 
 # replaces 'VIDEOID:xxxxxx' references in actor network with their publishers
@@ -208,7 +216,7 @@ actorGraphWithVideos <- actorNetwork %>% AddVideoData(youtubeAuth,
 #### Save and Load Authentication Objects
 
 Save and reuse twitter and youtube authentication objects in future sessions.
-```R
+``` r
 # save the object after 'Authenticate'
 saveRDS(myYoutubeAuth, file = "~/.youtube_auth")
 

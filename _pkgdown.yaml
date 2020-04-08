@@ -17,7 +17,10 @@ navbar:
     - news
     - reference
     - articles
-    right: github
+    right:
+    - vosonlab
+    - twitter
+    - github
   components:
     home:
       icon: fa-home fa-lg
@@ -30,15 +33,21 @@ navbar:
       icon: fa-cubes
       text: "Reference"
       href: reference/index.html
-  articles:
-    icon: fa-book
-    text: Articles
-    menu:
-    - text: "Introduction to vosonSML"
-      href: articles/Intro-to-vosonSML.html
-  github:
-    icon: fa-github fa-lg
-    href: https://github.com/vosonlab/vosonSML
+    articles:
+      icon: fa-book
+      text: Articles
+      menu:
+      - text: "Introduction to vosonSML"
+        href: articles/Intro-to-vosonSML.html
+    vosonlab:
+      icon: fa-flask fa-lg
+      href: http://vosonlab.net/
+    twitter:
+      icon: fa-twitter-square fa-lg
+      href: https://twitter.com/vosonlab    
+    github:
+      icon: fa-github fa-lg
+      href: https://github.com/vosonlab/vosonSML
 
 reference:
 - title: Function Reference
@@ -81,3 +90,6 @@ reference:
   - '`vosonSML::Graph`'  
   - '`vosonSML::GetYoutubeVideoIDs`'
   - '`vosonSML::ImportData`'
+
+toc:
+  depth: 2

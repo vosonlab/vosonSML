@@ -25,7 +25,8 @@ Create.activity.youtube <- function(datasource, type, verbose = TRUE, ...) {
   cat("Generating youtube activity network...")
   if (verbose) { cat("\n") }
   
-  df <- tibble::as_tibble(datasource) 
+  # df <- tibble::as_tibble(datasource) 
+  df <- datasource
   
   df_stats <- networkStats(NULL, "collected youtube comments", nrow(df))
   
