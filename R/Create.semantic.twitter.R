@@ -48,19 +48,12 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   # default to the top 50% hashtags. reduces size of graph. hashtags are 50% because they are much less 
   # frequent than terms.
 
-  if (!is.null(removeTermsOrHashtags) && length(removeTermsOrHashtags)) {
-    removeTermsOrHashtags <- as.vector(removeTermsOrHashtags) # coerce to vector
+  if (!is.null(removeTermsOrHashtags) && length(removeTermsOrHashtags) > 0) {
+    removeTermsOrHashtags <- as.vector(removeTermsOrHashtags)
     removeTermsOrHashtags <- unlist(lapply(removeTermsOrHashtags, tolower))
   }
   
-  df <- datasource # match the variable names (this must be used to avoid warnings in package compilation)
-  # df <- tibble::as_tibble(datasource)
-  
-  # if df is a list of dataframes, then need to convert these into one dataframe
-  suppressWarnings(
-    if (class(df) == "list") {
-      df <- do.call("rbind", df)
-    })
+  df <- datasource
   
   # now create the dfSemanticNetwork3, a dataframe of relations between hashtags and terms (i.e. hashtag i and term j 
   # both occurred in same tweet (weight = n occurrences))
@@ -70,15 +63,6 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   # added hash to hashtags to identify and merge them in results
   df$hashtags <- lapply(df$hashtags, function(x) ifelse(is.na(x), NA, paste0("#", x)))
   
-  # convert the hashtags to lowercase here (before using tm_map later) but first deal with character encoding
-  # if (isMac()) {
-  #   df$hashtags <- lapply(df$hashtags, function(x) TrimOddCharMac(x))
-  #   # df$text <- iconv(df$text, to = "utf-8-mac")
-  # } else {
-  #   df$hashtags <- lapply(df$hashtags, function(x) TrimOddChar(x))
-  #   # df$text <- iconv(df$text, to = "utf-8")
-  # }
-  
   df$text <- HTMLdecode(df$text)
   
   # and then convert to lowercase
@@ -86,30 +70,6 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   df$hashtags <- lapply(df$hashtags, tolower)
   
   # test - remove terms at this point?
-  
-  # macMatch <- grep("darwin", R.Version()$os)
-  # if (length(macMatch) != 0) {
-  #   # df$hashtags_used <- iconv(df$hashtags_used, to = "utf-8-mac")
-  #   df$hashtags <- lapply(df$hashtags, function(x) TrimOddCharMac(x))
-  # }
-  # 
-  # if (length(macMatch) == 0) {
-  #   df$hashtags <- lapply(df$hashtags, function(x) TrimOddChar(x))
-  # }
-  
-  # and then convert to lowercase
-  # df$hashtags <- lapply(df$hashtags, tolower)
-  
-  # do the same for the comment text, but first deal with character encoding!
-  # we need to change value of `to` argument in 'iconv' depending on OS, or else errors can occur
-  # macMatch <- grep("darwin", R.Version()$os)
-  # if (length(macMatch) != 0) {
-  #   df$text <- iconv(df$text, to = "utf-8-mac")
-  # }
-  # 
-  # if (length(macMatch) == 0) {
-  #   df$text <- iconv(df$text, to = "utf-8")
-  # }
 
   hashtagsUsedTemp <- c() # temp var to store output
   
@@ -171,12 +131,6 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   # mach_usernames <- sapply(df$screen_name, function(x) TrimOddChar(x))
   mach_usernames <- unique(df$screen_name)
   
-  # if (isMac()) {
-  #   mach_usernames <- iconv(mach_usernames, to = "utf-8-mac")
-  # } else {
-  #   mach_usernames <- iconv(mach_usernames, to = "utf-8")
-  # }
-
   # we remove the usernames from the text (so they don't appear in data/network)
   my_stopwords <- mach_usernames
   corpusTweetText <- suppressWarnings(tm_map(corpusTweetText, removeWords, my_stopwords))
@@ -302,6 +256,180 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   
   func_output <- list(
     "nodes" = actorsFixed,
+    "edges" = relations
+  )
+  
+  class(func_output) <- union(class(func_output), c("network", "semantic", "twitter"))
+  cat("Done.\n")
+  
+  func_output
+}
+
+#' @title Create twitter semantic network 2
+#' 
+#' @description Creates a semantic network from tweets returned from the twitter search query. Semantic networks 
+#' describe the semantic relationships between concepts. In this network the concepts are significant words and terms 
+#' (hashtags) extracted from the text corpus of the tweet data, and actors represented as nodes. Network edges are 
+#' weighted and represent usage of frequently occurring terms and hashtags by the actors.
+#'
+#' @param datasource Collected social media data with \code{"datasource"} and \code{"twitter"} class names.
+#' @param type Character string. Type of network to be created, set to \code{"semantic"}.
+#' @param removeTermsOrHashtags Character vector. Terms or hashtags to remove from the semantic network. For example, 
+#' this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
+#' nodes with matching name. Default is \code{NULL} to remove none.
+#' @param stopwordsEnglish Logical. Removes English stopwords from the tweet data. Default is \code{TRUE}.
+#' @param termFreq Numeric integer. Specifies the percentage of most frequent terms to include. For example, a 
+#' \code{termFreq = 20} means that the 20 percent most frequently occurring \code{terms} will be included in the 
+#' semantic network as nodes. A larger percentage will increase the number of nodes and therefore the size of graph. 
+#' The default value is \code{5}, meaning the top 5 percent most frequent terms are used.
+#' @param hashtagFreq Numeric integer. Specifies the percentage of most frequent \code{hashtags} to include. For 
+#' example, a \code{hashtagFreq = 80} means that the 80 percent most frequently occurring hashtags will be included 
+#' in the semantic network as nodes. The default value is \code{50}.
+#' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
+#' @param ... Additional parameters passed to function. Not used in this method.
+#' 
+#' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
+#' 
+#' @examples
+#' \dontrun{
+#' # create a twitter semantic network graph removing the hashtag '#auspol' and using the
+#' # top 2% frequently occurring terms and 10% frequently occurring hashtags as additional 
+#' # concepts or nodes
+#' semanticNetwork <- twitterData %>% 
+#'                    Create("semantic", removeTermsOrHashtags = c("#auspol"), termFreq = 2,
+#'                           hashtagFreq = 10, verbose = TRUE)
+#' 
+#' # network
+#' # semanticNetwork$nodes
+#' # semanticNetwork$edges
+#' }
+#' 
+#' @export
+Create.semantic2.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, stopwordsEnglish = TRUE, 
+                                    termFreq = 5, hashtagFreq = 50, verbose = FALSE, ...) {
+  
+  cat("Generating twitter semantic network...")
+  if (verbose) { cat("\n") }
+  
+  if (!is.numeric(termFreq) || termFreq > 100 || termFreq < 1) {
+    stop("termFreq must be a number between 1 and 100", call. = FALSE)
+  }
+  
+  if (!is.numeric(hashtagFreq) || hashtagFreq > 100 || hashtagFreq < 1) {
+    stop("hashtagFreq must be a number between 1 and 100", call. = FALSE)
+  }
+  
+  df <- datasource
+  if (nrow(df) < 1) { stop("datasource contains no rows", call. = FALSE) }
+  
+  df_stats <- networkStats(NULL, "collected tweets", nrow(df))
+  
+  text_df <- tibble(status_id = df$status_id, text = HTMLdecode(df$text), hashtags = df$hashtags)
+  tokens_df <- text_df %>% unnest_tokens(word, text, token = "tweets", to_lower = TRUE)
+  
+  df_stats <- networkStats(df_stats, "tokens", nrow(tokens_df), FALSE)
+  
+  # may want this at end to simply remove words from result set?
+  if (!is.null(removeTermsOrHashtags) && length(removeTermsOrHashtags) > 0) {
+    removeTermsOrHashtags <- unlist(lapply(removeTermsOrHashtags, tolower))
+    token_count <- nrow(tokens_df)
+    if (verbose) {
+      cat(paste0("Removing terms and hashtags: ", 
+                 paste0(as.character(removeTermsOrHashtags), collapse = ", "), 
+                 "\n"))
+    }
+    tokens_df <- tokens_df %>% dplyr::filter(!(word %in% removeTermsOrHashtags))
+    
+    df_stats <- networkStats(df_stats, "removed specified", token_count - nrow(tokens_df), FALSE)
+  }
+  
+  if (stopwordsEnglish) {
+    if (verbose) { cat("Removing stopwords.\n") }
+    data(stop_words)
+    tokens_df <- tokens_df %>% anti_join(stop_words)
+  }
+  
+  freq_df <- tokens_df %>% count(word, sort = TRUE)
+  freq_df <- freq_df %>% dplyr::mutate(type = if_else(grepl("^#", word), "hashtag", 
+                                                      if_else(grepl("^@", word), "user", 
+                                                              if_else(grepl("^[[:digit:]]+$", word), "number", "term"))))
+  # rem numbers
+  freq_df <- freq_df %>% dplyr::filter(type != "number")
+  
+  type_tally <- freq_df %>% group_by(type) %>% tally(n) %>% tibble::deframe()
+  
+  if (verbose) {
+    unique_hashtags <- nrow(dplyr::distinct(text_df %>% dplyr::select(hashtags) %>% tidyr::unnest(hashtags)))
+  }
+  
+  # remove users
+  freq_df <- freq_df %>% dplyr::filter(type != "user")
+  
+  if (verbose) {
+    df_stats <- networkStats(df_stats, "removed users", type_tally[["user"]], FALSE)
+    df_stats <- networkStats(df_stats, "hashtag count", type_tally[["hashtag"]], FALSE)
+    df_stats <- networkStats(df_stats, "unique hashtags", unique_hashtags, FALSE)
+  }
+  
+  rm_words <- function(rm_type, keep_perc) {
+    type_df <- freq_df %>% dplyr::filter(type == rm_type) %>% dplyr::arrange(desc(n))
+    
+    if (nrow(type_df) > 0) {
+      keep_count <- round(((nrow(type_df) / 100) * keep_perc), digits = 0)
+      n_value <- type_df[keep_count, ]$n
+      
+      # top number of rows
+      # rm_values <- type_df %>% dplyr::slice(keep_count + 1:n())
+      # df_stats <<- networkStats(df_stats, paste0("top ", keep_perc , "% ", rm_type, "s"), keep_count, FALSE)
+      
+      # top n values
+      rm_values <- type_df %>% dplyr::filter(n < n_value)
+      
+      df_stats <<- networkStats(df_stats, paste0("top ", keep_perc , "% ", rm_type, "s (freq>=", n_value, ")"),
+                                nrow(type_df %>% dplyr::filter(n >= n_value)), FALSE)
+      
+      freq_df %>% dplyr::filter(!(word %in% rm_values$word))
+    } else {
+      freq_df
+    }
+  }
+  
+  # top %
+  freq_df <- rm_words("hashtag", hashtagFreq)
+  
+  if (verbose) {
+    df_stats <- networkStats(df_stats, "term count", type_tally[["term"]], FALSE)
+    
+    unique_terms <- nrow(dplyr::distinct(freq_df %>% dplyr::filter(type == "term"), word))
+    df_stats <- networkStats(df_stats, "unique terms", unique_terms, FALSE)
+  }
+  
+  freq_df <- rm_words("term", termFreq)
+  
+  freq_df <- freq_df %>% dplyr::arrange(desc(n))
+  
+  pair_df <- dplyr::inner_join(tokens_df, freq_df, by = "word")
+  pair_df$hashtags <- lapply(pair_df$hashtags, function(x) ifelse(is.na(x), NA, paste0("#", tolower(x))))
+  
+  keep_hashtags <- freq_df %>% dplyr::filter(type == "hashtag")
+  keep_terms <- freq_df %>% dplyr::filter(type == "term")
+  nodes <- dplyr::bind_rows(keep_hashtags, keep_terms)
+  
+  # the diff in nodes is bc there may not be top % terms and hashtags in the same tweets and therefore no relation
+  relations <- pair_df %>% tidyr::unnest(hashtags)
+  relations <- relations %>% dplyr::filter(hashtags %in% unique(keep_hashtags$word) & word %in% unique(keep_terms$word))
+  
+  relations <- relations %>% dplyr::select(hashtags, word) %>% dplyr::mutate(from = hashtags, to = word) %>%
+    group_by(from, to) %>% summarise(weight = n())
+  
+  df_stats <- networkStats(df_stats, "unique entities (nodes)", nrow(nodes))
+  df_stats <- networkStats(df_stats, "relations (edges)", nrow(relations))
+  
+  # print stats
+  if (verbose) { networkStats(df_stats, print = TRUE) } 
+  
+  func_output <- list(
+    "nodes" = nodes,
     "edges" = relations
   )
   

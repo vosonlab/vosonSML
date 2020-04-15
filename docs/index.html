@@ -140,7 +140,7 @@
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting started</h2>
-<p>The following usage examples will provide a quick start to using <code>vosonSML</code> functions. There are also several &quot;how to&quot; guides, including an &quot;Absolute Beginners Guide to vosonSML&quot; tutorial aimed at people with little or no programming experience on the <a href="http://vosonlab.net/SocialMediaLab">vosonSML page of the VOSON website</a>. Additionally there is an <a href="https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html">Introduction to vosonSML</a> vignette included with the <code>vosonSML</code> package is that is a practical and explanatory guide to collecting data and creating networks.</p>
+<p>The following usage examples will provide a quick start to using <code>vosonSML</code> functions. There are also several “how to” guides, including an “Absolute Beginners Guide to vosonSML” tutorial aimed at people with little or no programming experience on the <a href="http://vosonlab.net/SocialMediaLab">vosonSML page of the VOSON website</a>. Additionally there is an <a href="https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html">Introduction to vosonSML</a> vignette included with the <code>vosonSML</code> package is that is a practical and explanatory guide to collecting data and creating networks.</p>
 <p>Further resources:</p>
 <ul>
 <li><a href="https://vosonlab.github.io/vosonSML/reference/index.html">Function Reference</a></li>
@@ -156,7 +156,7 @@
 <a href="#twitter-example" class="anchor"></a>Twitter Example</h3>
 <div id="authenticate-with-the-twitter-api" class="section level4">
 <h4 class="hasAnchor">
-<a href="#authenticate-with-the-twitter-api" class="anchor"></a>&apos;Authenticate&apos; with the Twitter API</h4>
+<a href="#authenticate-with-the-twitter-api" class="anchor"></a>‘Authenticate’ with the Twitter API</h4>
 <div class="sourceCode" id="cb4"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">magrittr</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">vosonSML</span>)
 
@@ -177,7 +177,7 @@
 </div>
 <div id="collect-tweets-for-the-auspol-hashtag" class="section level4">
 <h4 class="hasAnchor">
-<a href="#collect-tweets-for-the-auspol-hashtag" class="anchor"></a>&apos;Collect&apos; tweets for the &apos;#auspol&apos; hashtag</h4>
+<a href="#collect-tweets-for-the-auspol-hashtag" class="anchor"></a>‘Collect’ tweets for the ‘#auspol’ hashtag</h4>
 <div class="sourceCode" id="cb5"><pre class="r"><span class="co"># collect 100 recent tweets</span>
 <span class="no">twitterData</span> <span class="kw">&lt;-</span> <span class="no">twitterAuth</span> <span class="kw">%&gt;%</span>
                <span class="fu"><a href="reference/Collect.html">Collect</a></span>(<span class="kw">searchTerm</span> <span class="kw">=</span> <span class="st">"#auspol"</span>, <span class="kw">searchType</span> <span class="kw">=</span> <span class="st">"recent"</span>, <span class="kw">numTweets</span> <span class="kw">=</span> <span class="fl">100</span>,
@@ -186,7 +186,7 @@
 </div>
 <div id="create-twitter-activity-actor-semantic-and-twomode-network-graphs" class="section level4">
 <h4 class="hasAnchor">
-<a href="#create-twitter-activity-actor-semantic-and-twomode-network-graphs" class="anchor"></a>&apos;Create&apos; twitter &apos;activity&apos;, &apos;actor&apos;, &apos;semantic&apos; and &apos;twomode&apos; network graphs</h4>
+<a href="#create-twitter-activity-actor-semantic-and-twomode-network-graphs" class="anchor"></a>‘Create’ twitter ‘activity’, ‘actor’, ‘semantic’ and ‘twomode’ network graphs</h4>
 <div class="sourceCode" id="cb6"><pre class="r"><span class="co">## activity network - nodes are tweets</span>
 
 <span class="no">activityNetwork</span> <span class="kw">&lt;-</span> <span class="no">twitterData</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="reference/Create.html">Create</a></span>(<span class="st">"activity"</span>)
@@ -218,7 +218,7 @@
 <a href="#youtube-example" class="anchor"></a>Youtube Example</h3>
 <div id="authenticate-collect-and-create-network-graphs-from-youtube-video-comments" class="section level4">
 <h4 class="hasAnchor">
-<a href="#authenticate-collect-and-create-network-graphs-from-youtube-video-comments" class="anchor"></a>&apos;Authenticate&apos;, &apos;Collect&apos; and &apos;Create&apos; network graphs from youtube video comments</h4>
+<a href="#authenticate-collect-and-create-network-graphs-from-youtube-video-comments" class="anchor"></a>‘Authenticate’, ‘Collect’ and ‘Create’ network graphs from youtube video comments</h4>
 <div class="sourceCode" id="cb7"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">magrittr</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">vosonSML</span>)
 
@@ -248,7 +248,7 @@
 <a href="#reddit-example" class="anchor"></a>Reddit Example</h3>
 <div id="collect-and-create-reddit-networks-from-a-subreddit-thread" class="section level4">
 <h4 class="hasAnchor">
-<a href="#collect-and-create-reddit-networks-from-a-subreddit-thread" class="anchor"></a>&apos;Collect&apos; and &apos;Create&apos; reddit networks from a subreddit thread</h4>
+<a href="#collect-and-create-reddit-networks-from-a-subreddit-thread" class="anchor"></a>‘Collect’ and ‘Create’ reddit networks from a subreddit thread</h4>
 <div class="sourceCode" id="cb8"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">magrittr</span>)
 <span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">vosonSML</span>)
 
@@ -274,7 +274,7 @@
 <a href="#supplemental-functions" class="anchor"></a>Supplemental Functions</h3>
 <div id="addtext-adds-collected-text-data-to-networks-as-node-or-edge-attributes" class="section level4">
 <h4 class="hasAnchor">
-<a href="#addtext-adds-collected-text-data-to-networks-as-node-or-edge-attributes" class="anchor"></a>&apos;AddText&apos; adds collected text data to networks as node or edge attributes</h4>
+<a href="#addtext-adds-collected-text-data-to-networks-as-node-or-edge-attributes" class="anchor"></a>‘AddText’ adds collected text data to networks as node or edge attributes</h4>
 <div class="sourceCode" id="cb9"><pre class="r"><span class="co"># applies to twitter, youtube and reddit - activity and actor networks</span>
 
 <span class="co"># graph for activity network with text data added as node attribute</span>
@@ -294,7 +294,7 @@
 </div>
 <div id="adduserdata-requests-and-adds-user-profile-data-to-networks" class="section level4">
 <h4 class="hasAnchor">
-<a href="#adduserdata-requests-and-adds-user-profile-data-to-networks" class="anchor"></a>&apos;AddUserData&apos; requests and adds user profile data to networks</h4>
+<a href="#adduserdata-requests-and-adds-user-profile-data-to-networks" class="anchor"></a>‘AddUserData’ requests and adds user profile data to networks</h4>
 <div class="sourceCode" id="cb10"><pre class="r"><span class="co"># applies only to twitter actor networks</span>
 
 <span class="co"># add additional twitter user profile info to actor network graph as node attributes</span>
@@ -305,7 +305,7 @@
 </div>
 <div id="addvideodata-requests-and-adds-video-data-to-networks" class="section level4">
 <h4 class="hasAnchor">
-<a href="#addvideodata-requests-and-adds-video-data-to-networks" class="anchor"></a>&apos;AddVideoData&apos; requests and adds video data to networks</h4>
+<a href="#addvideodata-requests-and-adds-video-data-to-networks" class="anchor"></a>‘AddVideoData’ requests and adds video data to networks</h4>
 <div class="sourceCode" id="cb11"><pre class="r"><span class="co"># applies only to youtube actor networks</span>
 
 <span class="co"># replaces 'VIDEOID:xxxxxx' references in actor network with their publishers</span>
@@ -383,7 +383,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

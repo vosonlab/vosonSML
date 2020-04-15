@@ -140,7 +140,7 @@ Graph.actor.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
 #' @noRd
 #' @method Graph semantic
 #' @export
-Graph.semantic <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+Graph.semantic <- function(net, directed = FALSE, writeToFile = FALSE, ...) {
   UseMethod("Graph.semantic", net)
 }
 
@@ -152,9 +152,10 @@ Graph.semantic.default <- function(...) {
 
 #' @noRd
 #' @export
-Graph.semantic.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  # we need to simplify the graph because multiple use of same term in one tweet will cause self-loops, etc
-  # g <- simplify(g)  
+Graph.semantic.twitter <- function(net, directed = FALSE, writeToFile = FALSE, ...) {
+  # create igraph object from dataframes
+  g <- igraph::graph_from_data_frame(d = net$edges, directed = directed, vertices = net$nodes)
+  
   V(g)$label <- V(g)$name
   g <- set_graph_attr(g, "type", "twitter")
   

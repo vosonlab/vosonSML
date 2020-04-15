@@ -12,12 +12,12 @@ test_that("ImportData input", {
   expect_error(ImportData("xxx", "twitter"), not_supp_msg)
   expect_error(ImportData("xxx.graphml", "twitter"), not_supp_msg)
   
-  expect_error(suppressWarnings(ImportData("xxx.rds", "twitter"))) # no such file
+  expect_error(suppressWarnings(ImportData("xxx.rds", "twitter")))
   
   if (file.exists(test_csv)) {
-    expect_error(ImportData(test_csv, "twitter", "rds"))               # wrong input format
+    expect_error(ImportData(test_csv, "twitter", "rds"))
     expect_error(capture.output(ImportData(test_csv, "xxx", "csv")),
-                 "Unknown social media type provided as datasource.")  # unknown social media type
+                 "Unknown social media type provided as datasource.")
   }
 })
 

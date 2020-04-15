@@ -52,14 +52,8 @@ Collect.reddit <- function(credential, threadUrls, waitTime = c(3, 10), ua = get
   
   if (verbose) {
     cat(paste0("Waiting between ", waitTime[1], " and ", waitTime[length(waitTime)], " seconds per thread request.\n"))
-    # cat(paste0("UA-String: ", ua, "\n"))
   }
-  
-  # locale_list <- c("LC_COLLATE", "LC_CTYPE", "LC_MONETARY", "LC_NUMERIC", "LC_TIME") # LC_ALL
-  # saved_locale <- setNames(lapply(locale_list, Sys.getlocale), locale_list)
-  # on.exit({ lapply(names(saved_locale), function(x) { Sys.setlocale(x, unlist(saved_locale[[x]])) }) })
-  # Sys.setlocale("LC_ALL", "C")
-  
+
   threads_df <- NULL
   
   tryCatch({
@@ -83,9 +77,6 @@ Collect.reddit <- function(credential, threadUrls, waitTime = c(3, 10), ua = get
                          count = dplyr::n()) %>%
         dplyr::ungroup()
       
-      # results_df$thread_id <- as.character(results_df$thread_id)
-      # results_df$title <- as.character(results_df$title)
-      # results_df$subreddit <- as.character(results_df$subreddit)
       results_df$title <- ifelse(nchar(results_df$title) > 42, paste0(strtrim(results_df$title, 42), "..."), 
                                  results_df$title)
       printResultTable(results_df)
@@ -136,8 +127,6 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
       struct <- gsub("_\\d_\\d$", "", extra_threads[row_i, "structure"])
       cont_thread_id <- gsub("Listing:t1_", "", extra_threads[row_i, "comm_id"])
       
-      # browser()
-      
       # set continue thread comment rm flag to true
       branch_df <- mutate(branch_df,
                           rm = ifelse((.data$comm_id == cont_thread_id | .data$comm_id == extra_threads[row_i, "comm_id"]),
@@ -175,13 +164,6 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
   })
   
   threads_df <- bind_rows(threads)
-  
-  # cols <- c("subreddit", "title", "author", "post_text", "post_date", "post_date_unix", "link", "domain", "url",
-  #           "thread_id", "user")
-  # threads_df[cols] <- lapply(threads_df[cols], as.factor)
-  # threads_df$rm <- NULL
-  
-  # threads_df
 }
 
 # based on method by @ivan-rivera RedditExtractoR
@@ -193,9 +175,7 @@ reddit_data <- function(url, wait_time, ua, cont = NULL, verbose = TRUE) {
   
   req_url <- paste0(gsub("\\?ref=search_posts$", "", url), ".json?limit=500&raw_json=1")
   req_tid <- reddit_tid_from_url(req_url, TRUE)
-  
-  # browser()
-  
+
   if (is.null(cont)) { cat(paste0("Request thread: ", req_tid, "\n")) } else {
     if (verbose) { 
       cat(paste0("Continue thread: ", req_tid, " - ", cont, "\n")) 
@@ -268,7 +248,6 @@ reddit_struct_list = function(node, depth = 0) {
 reddit_content_plus <- function(raw_data, req_url, depth = 0) {
   
   data_extract <- data.frame(
-  # data_extract <- tibble::tibble(
     id = numeric(),             structure = character(),
     post_date = character(),    post_date_unix = numeric(),
     comm_id = character(),      comm_date = character(),
@@ -293,7 +272,6 @@ reddit_content_plus <- function(raw_data, req_url, depth = 0) {
     }))
     
     data <- data.frame(
-    # data <- tibble::tibble(
       id               = NA,
       structure        = structures_list,
       post_date        = as.character(
