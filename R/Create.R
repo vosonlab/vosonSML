@@ -29,6 +29,10 @@ Create <- function(datasource, type, ...) {
 
 #' @export
 Create.default <- function(datasource, type, ...) {
+  # check datasource
+  if (!is.data.frame(datasource)) { stop("Datasource is not a dataframe.", call. = FALSE) }
+  if (nrow(datasource) < 1) { stop("Empty datasource passed to create.", call. = FALSE) }
+  
   # check if network type is a character string
   if (!is.character(type)) {
     stop("Create network type should be a character string.", call. = FALSE) 
@@ -44,7 +48,7 @@ Create.default <- function(datasource, type, ...) {
   # add social media type to value class list
   class(type) <- append(class(type), type)
   
-  # call authenticate
+  # call create again
   Create(datasource, type, ...)
 }
 

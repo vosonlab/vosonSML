@@ -97,6 +97,8 @@ actorGraph <- actorNetwork %>% Graph() # igraph network graph
 ## semantic network - relationships between concepts - nodes are common terms, hashtags
 ## and actors
 
+install.packages("tidytext", "tidyr")
+
 remItems <- c("#auspol", "auspol") # exclude these terms
 topTerms <- 5                      # include only the top 5% most frequent terms as nodes
 semanticNetwork <- twitterData %>% Create("semantic", removeTermsOrHashtags = remItems,

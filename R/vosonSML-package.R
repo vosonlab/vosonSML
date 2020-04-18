@@ -24,18 +24,17 @@
 #' @import httr
 #' @import methods
 #' @import RCurl
-#' @import tm
 #' @importFrom data.table data.table setkey ':='
 #' @importFrom dplyr rename group_by summarise ungroup left_join select mutate filter coalesce
 #' row_number distinct anti_join mutate_all mutate_at ends_with vars funs bind_rows arrange
-#' case_when if_else contains n rowwise starts_with
+#' case_when if_else contains n rowwise starts_with count
 #' @importFrom Hmisc escapeRegex
 #' @importFrom igraph delete.vertices simplify write.graph V 'V<-' vcount
 #' graph_from_data_frame delete_vertex_attr set_graph_attr
 #' @importFrom jsonlite fromJSON
 #' @importFrom lubridate as_datetime
 #' @importFrom magrittr '%>%' '%<>%'
-#' @importFrom purrr transpose
+#' @importFrom purrr transpose flatten_chr
 #' @importFrom rlang '.data'
 #' @importFrom rtweet create_token rate_limit search_tweets users_data lookup_users
 #' @importFrom stats na.omit setNames

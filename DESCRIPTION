@@ -1,5 +1,5 @@
 Package: vosonSML
-Version: 0.29.9
+Version: 0.29.10
 Title: Collecting Social Media Data and Generating Networks for Analysis
 Description: A suite of tools for collecting and constructing networks from social media data.
     Provides easy-to-use functions for collecting data across popular platforms (Twitter, YouTube
@@ -24,13 +24,14 @@ Imports:
     stringr,
     textutils,
     tibble,
-    tm,
     utils
 Suggests:
     knitr,
     rmarkdown,
     testthat,
-    tictoc
+    tictoc,
+    tidyr,
+    tidytext    
 Depends: R (>= 3.2.0)
 Encoding: UTF-8
 Author: Timothy Graham, Robert Ackland, Chung-hong Chan, Bryan Gertzel
