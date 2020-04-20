@@ -31,8 +31,9 @@
 #' further information on supported languages. Default is \code{"en"}.
 #' @param stopwordsSrc Character string. Source of stopwords list. Refer to the \pkg{stopwords} package for
 #' further information on supported sources. Default is \code{"smart"}.
-#' @param removeNumbers Logical. Removes whole numerical values as words from the tweet text. For example, a year value
+#' @param removeNumbers Logical. Removes whole numerical tokens from the tweet text. For example, a year value
 #' such as \code{2020} will be removed but not mixed values such as \code{G20}. Default is \code{TRUE}.
+#' @param removeUrls Logical. Removes twitter shortened URL tokens from the tweet text. Default is \code{TRUE}.
 #' @param termFreq Numeric integer. Specifies the percentage of most frequent words to include. For example,
 #' \code{termFreq = 20} means that the 20 percent most frequently occurring \code{words} will be included in the 
 #' semantic network as nodes. A larger percentage will increase the number of nodes and therefore the size of graph. 
@@ -59,8 +60,9 @@
 #' }
 #' 
 #' @export
-Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, stopwords = TRUE,
-                                    stopwordsLang = "en", stopwordsSrc = "smart", removeNumbers = TRUE,
+Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NULL,
+                                    stopwords = TRUE, stopwordsLang = "en", stopwordsSrc = "smart",
+                                    removeNumbers = TRUE, removeUrls = TRUE,
                                     termFreq = 5, hashtagFreq = 50, verbose = FALSE, ...) {
   
   cat("Generating twitter semantic network...")
@@ -68,8 +70,7 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
 
   requiredPackages <- sapply(c("tidyr", "tidytext"), function(x) { requireNamespace(x, quietly = TRUE) })  
   if (any(requiredPackages == FALSE)) {
-    stop(paste0("Please install ", 
-                paste0(names(which(requiredPackages == FALSE)), collapse = ', '),
+    stop(paste0("Please install ", paste0(names(which(requiredPackages == FALSE)), collapse = ', '),
                 " package", ifelse(length(which(requiredPackages == FALSE)) > 1, "s", ""),
                 " before calling Create.semantic.twitter.", call. = FALSE))
   }
@@ -91,12 +92,17 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
     })
   }
   
-  df_stats <- networkStats(NULL, "collected tweets", nrow(datasource))
+  if (verbose) { df_stats <- networkStats(NULL, "collected tweets", nrow(datasource)) }
   
-  text_df <- tibble::tibble(status_id = datasource$status_id, text = HTMLdecode(datasource$text), hashtags = datasource$hashtags)
-  tokens_df <- text_df %>% tidytext::unnest_tokens(.data$word, .data$text, token = "tweets", to_lower = TRUE)
+  text_df <- tibble::tibble(status_id = datasource$status_id, text = HTMLdecode(datasource$text),
+                            hashtags = datasource$hashtags)
   
-  df_stats <- networkStats(df_stats, "tokens", nrow(tokens_df), FALSE)
+  
+  capture.output(
+    tokens_df <- text_df %>% tidytext::unnest_tokens(.data$word, .data$text, token = "tweets", to_lower = TRUE)
+  , type = "output")
+  
+  if (verbose) { df_stats <- networkStats(df_stats, "tokens", nrow(tokens_df), FALSE) }
 
   # removal of words and hashtags before frequencies are calculated
   # in future may want an option to do this at the end to simply filter words from result set
@@ -113,17 +119,21 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   
   if (stopwords) {
     if (verbose) { cat("Removing stopwords.\n") }
-    tokens_df %<>% dplyr::anti_join(rem_stopwords)
+    capture.output(
+      tokens_df %<>% dplyr::anti_join(rem_stopwords)
+    , type = "output")
   }
   
   freq_df <- tokens_df %>% dplyr::count(.data$word, sort = TRUE)
-  # clasify words as hashtags, users, numbers and terms
+  # clasify words as hashtags, users, numbers, urls and terms
   freq_df %<>% dplyr::mutate(type = if_else(grepl("^#.*", .data$word), "hashtag", 
                                     if_else(grepl("^@.*", .data$word), "user", 
-                                    if_else(grepl("^[[:digit:]]+$", .data$word), "number", "term"))))
+                                    if_else(grepl("^[[:digit:]]+$", .data$word), if_else(removeNumbers, "number", "term"),
+                                    if_else(grepl("^https?://t\\.co/", .data$word), if_else(removeUrls, "url", "term"), 
+                                    "term")))))
   
-  # remove numbers
   if (removeNumbers) { freq_df %<>% dplyr::filter(type != "number") }
+  if (removeUrls) { freq_df %<>% dplyr::filter(type != "url") }
   
   type_tally <- freq_df %>% dplyr::group_by(type) %>% dplyr::tally(n) %>% tibble::deframe()
   
@@ -131,9 +141,6 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   freq_df %<>% dplyr::filter(type != "user")
   
   if (verbose) {
-    # unique_hashtags <- nrow(dplyr::distinct(text_df %>% dplyr::select(.data$hashtags) %>%
-    #                                          tidyr::unnest(.data$hashtags)))
-    
     # unique_hashtags <- nrow(dplyr::distinct(text_df %>% dplyr::select(.data$hashtags) %>%
     #   tidyr::unnest(.data$hashtags) %>%
     #   dplyr::mutate(hashtags = ifelse(is.na(.data$hashtags), NA, paste0("#", tolower(.data$hashtags))))) %>%
@@ -146,8 +153,12 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   }
   
   if (verbose) {
-    df_stats <- networkStats(df_stats, "removed users", type_tally[["user"]], FALSE)
-    df_stats <- networkStats(df_stats, "hashtag count", type_tally[["hashtag"]], FALSE)
+    if ("user" %in% names(type_tally)) {
+      df_stats <- networkStats(df_stats, "removed users", type_tally[["user"]], FALSE)
+    }
+    if ("hashtag" %in% names(type_tally)) {
+      df_stats <- networkStats(df_stats, "hashtag count", type_tally[["hashtag"]], FALSE)
+    }
     df_stats <- networkStats(df_stats, "unique hashtags", unique_hashtags, FALSE)
   }
   
@@ -161,13 +172,17 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
       # keep top number of rows
       if (n_value <= 1 & keep_perc != 100) {
         rm_values <- type_df %>% dplyr::slice(keep_count + 1:n())
-        df_stats <<- networkStats(df_stats, paste0("top ", keep_perc , "% ", rm_type, "s"), keep_count, FALSE)
+        if (verbose) {
+          df_stats <<- networkStats(df_stats, paste0("top ", keep_perc , "% ", rm_type, "s"), keep_count, FALSE)
+        }
       } else {
       
         # keep tokens above n value cutoff
         rm_values <- type_df %>% dplyr::filter(.data$n < n_value)
-        df_stats <<- networkStats(df_stats, paste0("top ", keep_perc , "% ", rm_type, "s (freq>=", n_value, ")"),
-                                  nrow(type_df %>% dplyr::filter(.data$n >= n_value)), FALSE)
+        if (verbose) {
+          df_stats <<- networkStats(df_stats, paste0("top ", keep_perc , "% ", rm_type, "s (freq>=", n_value, ")"),
+                                    nrow(type_df %>% dplyr::filter(.data$n >= n_value)), FALSE)
+        }
       }
       
       freq_df %>% dplyr::filter(!(.data$word %in% rm_values$word))
@@ -180,7 +195,7 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   freq_df <- rm_words("hashtag", hashtagFreq)
   
   if (verbose) {
-    df_stats <- networkStats(df_stats, "term count", type_tally[["term"]], FALSE)
+    if ("term" %in% names(type_tally)) { df_stats <- networkStats(df_stats, "term count", type_tally[["term"]], FALSE) }
     
     unique_terms <- nrow(dplyr::distinct(freq_df %>% dplyr::filter(type == "term"), .data$word))
     df_stats <- networkStats(df_stats, "unique terms", unique_terms, FALSE)
@@ -203,11 +218,12 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
     dplyr::mutate(from = .data$hashtags, to = .data$word) %>%
     group_by(.data$from, .data$to) %>% summarise(weight = dplyr::n())
   
-  df_stats <- networkStats(df_stats, "nodes", nrow(nodes))
-  df_stats <- networkStats(df_stats, "edges", nrow(edges))
-  
-  # print stats
-  if (verbose) { networkStats(df_stats, print = TRUE) } 
+  if (verbose) {
+    df_stats <- networkStats(df_stats, "nodes", nrow(nodes))
+    df_stats <- networkStats(df_stats, "edges", nrow(edges))
+    
+    networkStats(df_stats, print = TRUE)
+  } 
   
   func_output <- list(
     "nodes" = nodes,

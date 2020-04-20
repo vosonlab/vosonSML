@@ -38,7 +38,7 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
     stop(paste0("Please install the tidytext package before calling Create.twomode.twitter.", call. = FALSE))
   }
 
-  df_stats <- networkStats(NULL, "collected tweets", nrow(datasource))
+  if (verbose) { df_stats <- networkStats(NULL, "collected tweets", nrow(datasource)) }
   
   text_df <- tibble::tibble(status_id = datasource$status_id,
                             user_id = datasource$user_id,
@@ -47,7 +47,9 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
                             created_at = datasource$created_at,
                             is_retweet = datasource$is_retweet,
                             is_quote = datasource$is_quote)
-  tokens_df <- text_df %>% tidytext::unnest_tokens(.data$word, .data$text, token = "tweets", to_lower = TRUE)
+  capture.output(
+    tokens_df <- text_df %>% tidytext::unnest_tokens(.data$word, .data$text, token = "tweets", to_lower = TRUE)
+  , type = "output")
   tokens_df %<>% dplyr::mutate(at_name = paste0("@", tolower(.data$screen_name)))
   
   if (!is.null(removeTermsOrHashtags) && length(removeTermsOrHashtags) > 0) {
@@ -62,23 +64,36 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
                                  !(tolower(.data$screen_name) %in% removeTermsOrHashtags) &
                                  !(.data$at_name %in% removeTermsOrHashtags))
     
-    df_stats <- networkStats(df_stats, "removed specified", token_count - nrow(tokens_df), FALSE)
+    if (verbose) {
+      df_stats <- networkStats(df_stats, "removed specified", token_count - nrow(tokens_df), FALSE)
+    }
   }
   
   tokens_df %<>% dplyr::mutate(type = if_else(grepl("^#.*", .data$word), "hashtag",
                                               if_else(grepl("^@.*", .data$word), "user", "term"))) %>%
     dplyr::filter(.data$type %in% c("hashtag", "user") & .data$at_name != .data$word)
   
+  if (verbose) {
+    df_stats <- networkStats(df_stats, "users", nrow(tokens_df %>% dplyr::filter(.data$type == "user")), FALSE)
+    df_stats <- networkStats(df_stats, "hashtags", nrow(tokens_df %>% dplyr::filter(.data$type == "hashtag")), FALSE)
+  }
+  
   edges <- tokens_df %>% dplyr::mutate(from = .data$at_name, to = .data$word) %>%
     dplyr::select(.data$from, .data$to, .data$status_id, .data$created_at, .data$is_retweet, .data$is_quote)
   
   if (weighted) {
-    edges %<>% dplyr::count(.data$from, .data$to, name = "weight")  
+    edges %<>% dplyr::count(.data$from, .data$to, name = "weight")
   }
 
   nodes <- dplyr::distinct(tibble::tibble(name = c(edges$to, edges$from))) %>% 
     dplyr::left_join(tokens_df %>% dplyr::select(.data$at_name, .data$user_id) %>%
                        dplyr::distinct(), by = c("name" = "at_name"))
+  if (verbose) {
+    df_stats <- networkStats(df_stats, "nodes", nrow(nodes))
+    df_stats <- networkStats(df_stats, "edges", nrow(edges))
+    
+    networkStats(df_stats, print = TRUE)
+  }
   
   func_output <- list(
     "nodes" = nodes,

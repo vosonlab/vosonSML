@@ -14,8 +14,10 @@ Graph <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
   cat("Creating igraph network graph...")
   if (writeToFile) { cat("\n") }
   
-  # create igraph object from dataframes
-  g <- igraph::graph_from_data_frame(d = net$edges, directed = directed, vertices = net$nodes)
+  if (!all(c("semantic", "twitter") %in% class(net))) {
+    # create igraph object from dataframes
+    g <- igraph::graph_from_data_frame(d = net$edges, directed = directed, vertices = net$nodes)
+  }
   
   # searches the class list of net for matching method
   UseMethod("Graph", net)
@@ -181,8 +183,8 @@ Graph.twomode.default <- function(...) {
 #' @noRd
 #' @export
 Graph.twomode.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$label <- ifelse(V(g)$name == V(g)$display_name, V(g)$display_name,
-                       paste0("@", V(g)$display_name, " (", V(g)$name, ")"))
+  # V(g)$label <- ifelse(is.na(V(g)$user_id), V(g)$name, paste0(V(g)$name, " (", V(g)$user_id, ")"))
+  V(g)$label <- V(g)$name
   
   g <- set_graph_attr(g, "type", "twitter")
   

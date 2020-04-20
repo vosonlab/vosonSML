@@ -12,6 +12,7 @@
   stopwordsLang = "en",
   stopwordsSrc = "smart",
   removeNumbers = TRUE,
+  removeUrls = TRUE,
   termFreq = 5,
   hashtagFreq = 50,
   verbose = FALSE,
@@ -35,8 +36,10 @@ further information on supported languages. Default is \code{"en"}.}
 \item{stopwordsSrc}{Character string. Source of stopwords list. Refer to the \pkg{stopwords} package for
 further information on supported sources. Default is \code{"smart"}.}
 
-\item{removeNumbers}{Logical. Removes whole numerical values as words from the tweet text. For example, a year value
+\item{removeNumbers}{Logical. Removes whole numerical tokens from the tweet text. For example, a year value
 such as \code{2020} will be removed but not mixed values such as \code{G20}. Default is \code{TRUE}.}
+
+\item{removeUrls}{Logical. Removes twitter shortened URL tokens from the tweet text. Default is \code{TRUE}.}
 
 \item{termFreq}{Numeric integer. Specifies the percentage of most frequent words to include. For example,
 \code{termFreq = 20} means that the 20 percent most frequently occurring \code{words} will be included in the 

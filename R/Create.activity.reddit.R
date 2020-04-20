@@ -59,8 +59,8 @@ Create.activity.reddit <- function(datasource, type, verbose = TRUE, ...) {
   
   df_stats <- networkStats(df_stats, "threads", nrow(thread_ids))
   df_stats <- networkStats(df_stats, "comments", nrow(df))
-  df_stats <- networkStats(df_stats, "network nodes", nrow(df_nodes))
-  df_stats <- networkStats(df_stats, "network edges", nrow(df_relations))  
+  df_stats <- networkStats(df_stats, "nodes", nrow(df_nodes))
+  df_stats <- networkStats(df_stats, "edges", nrow(df_relations))  
   
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }
