@@ -202,7 +202,7 @@
 <div id="create-twitter-activity-actor-semantic-and-twomode-network-graphs" class="section level4">
 <h4 class="hasAnchor">
 <a href="#create-twitter-activity-actor-semantic-and-twomode-network-graphs" class="anchor"></a>‘Create’ twitter ‘activity’, ‘actor’, ‘semantic’ and ‘twomode’ network graphs</h4>
-<p>The twitter <code>Create</code> function accepts the data from <code>Collect</code> and a type parameter of <code>activity</code>, <code>actor</code>, <code>semantic</code> or <code>twomode</code> that specifies the type of network to create from the collected data. <code>Create</code> produces two dataframes, one for network nodes and one for node relations or edges in the network. These can then undergo further processing as per the <a href="#supplemental-functions">Supplemental functions</a> section or be passed to the <code>Graph</code> function that creates an <code>igraph</code> object.</p>
+<p>The twitter <code>Create</code> function accepts the data from <code>Collect</code> and a type parameter of <code>activity</code>, <code>actor</code>, <code>semantic</code> or <code>twomode</code> that specifies the type of network to create from the collected data. <code>Create</code> produces two dataframes, one for network <code>nodes</code> and one for node relations or <code>edges</code> in the network. These can then undergo further processing as per the <a href="#supplemental-functions">supplemental functions</a> section or be passed to the <code>Graph</code> function that creates an <code>igraph</code> object.</p>
 <div id="activity-network" class="section level5">
 <h5 class="hasAnchor">
 <a href="#activity-network" class="anchor"></a>Activity network</h5>
@@ -565,9 +565,15 @@ actorNetwork &lt;- actorNetwork %&gt;%
 
 <span class="co"># load a previously saved authentication object for use in 'Collect'</span>
 <span class="no">myYoutubeAuth</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="st">"~/.youtube_auth"</span>)</pre></div>
-<p>For more detailed function information and examples, please refer to the <a href="https://vosonlab.github.io/vosonSML/reference/index.html">Reference</a> page.</p>
 </div>
 </div>
+</div>
+<div id="where-to-next" class="section level2">
+<h2 class="hasAnchor">
+<a href="#where-to-next" class="anchor"></a>Where to next?</h2>
+<p>Continue working with the network graphs using the <code>igraph</code> package and check out some examples of plots in the <a href="https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html">Introduction to vosonSML</a> vignette. The <code>graphml</code> files produced by <code>vosonSML</code> are also easily imported into software such as <a href="https://gephi.org/">Gephi</a> for further visualization and exploration of networks.</p>
+<p>As an alternative to <code>vosonSML</code> using the R command-line interface we have also developed an R Shiny app called <a href="https://vosonlab.github.io/VOSONDash/">VOSON Dash</a>. It provides a user friendly GUI for the collection of data using <code>vosonSML</code> and has additional network visualization and analysis features.</p>
+<p>For more detailed information about functions and their parameters, please refer to the <a href="https://vosonlab.github.io/vosonSML/reference/index.html">Reference</a> page.</p>
 </div>
 <div id="special-thanks" class="section level2">
 <h2 class="hasAnchor">

@@ -100,10 +100,12 @@ The `Collect()` function returns a tibble (an enhanced dataframe which has featu
 ...
 ```
 
-Note that if you read the Twitter dataframe from disk, you will need to modify the class values for the object, before you can use it with `vosonSML`:
+Note that if you read the Twitter dataframe from disk, you will need to modify the class values for the object before you can use it with `vosonSML`. This can be done manually or by using the handy `ImportData()` function:
 ```{r eval=FALSE}
 twitterData <- readRDS("/path/to/data/data.rds")
 class(twitterData) <- append(class(twitterData), c("datasource", "twitter"))
+
+twitterData <- ImportData("/path/to/data/data.rds", "twitter")
 ```
 
 ## Creating Twitter Networks
@@ -162,6 +164,8 @@ The Twitter actor network contains a graph attribute `type` which is set to "twi
 The example actor network contains 1158 nodes and 1725 edges. The following code uses `igraph` functions to: (1) remove all edges other than reply edges; (2) construct a subnetwork consisting of the giant component (the largest set of connected nodes); (3) plot this network.
 
 ```{r eval=FALSE}
+library(igraph)
+
 g2 <- delete.edges(actorGraph, which(E(actorGraph)$edge_type!="reply"))
 cc <- clusters(g2)
 g2 <- induced_subgraph(g2,which(cc$membership == which.max(cc$csize)))

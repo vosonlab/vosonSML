@@ -104,7 +104,7 @@ twitterData <- twitterAuth %>%
 
 #### 'Create' twitter 'activity', 'actor', 'semantic' and 'twomode' network graphs
 
-The twitter `Create` function accepts the data from `Collect` and a type parameter of `activity`, `actor`, `semantic` or `twomode` that specifies the type of network to create from the collected data. `Create` produces two dataframes, one for network nodes and one for node relations or edges in the network. These can then undergo further processing as per the [Supplemental functions](#supplemental-functions) section or be passed to the `Graph` function that creates an `igraph` object.
+The twitter `Create` function accepts the data from `Collect` and a type parameter of `activity`, `actor`, `semantic` or `twomode` that specifies the type of network to create from the collected data. `Create` produces two dataframes, one for network `nodes` and one for node relations or `edges` in the network. These can then undergo further processing as per the [supplemental functions](#supplemental-functions) section or be passed to the `Graph` function that creates an `igraph` object.
 
 ##### Activity network
 
@@ -519,7 +519,13 @@ saveRDS(myYoutubeAuth, file = "~/.youtube_auth")
 myYoutubeAuth <- readRDS("~/.youtube_auth")
 ```
 
-For more detailed function information and examples, please refer to the  [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
+## Where to next?
+
+Continue working with the network graphs using the `igraph` package and check out some examples of plots in the [Introduction to vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html) vignette. The `graphml` files produced by `vosonSML` are also easily imported into software such as [Gephi](https://gephi.org/) for further visualization and exploration of networks.
+
+As an alternative to `vosonSML` using the R command-line interface we have also developed an R Shiny app called [VOSON Dash](https://vosonlab.github.io/VOSONDash/). It provides a user friendly GUI for the collection of data using `vosonSML` and has additional network visualization and analysis features.
+
+For more detailed information about functions and their parameters, please refer to the [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
 
 ## Special thanks
 

@@ -114,7 +114,9 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
     }
     tokens_df %<>% dplyr::filter(!(.data$word %in% removeTermsOrHashtags))
     
-    df_stats <- networkStats(df_stats, "removed specified", token_count - nrow(tokens_df), FALSE)
+    if (verbose) {
+      df_stats <- networkStats(df_stats, "removed specified", token_count - nrow(tokens_df), FALSE)
+    }
   }
   
   if (stopwords) {
