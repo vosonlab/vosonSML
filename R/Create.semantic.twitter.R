@@ -206,29 +206,42 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   freq_df <- rm_words("term", termFreq) 
   freq_df %<>% dplyr::arrange(dplyr::desc(n))
 
-  keep_hashtags <- freq_df %>% dplyr::filter(type == "hashtag")
-  keep_terms <- freq_df %>% dplyr::filter(type == "term")
-  nodes <- dplyr::bind_rows(keep_hashtags, keep_terms)
+  # keep_hashtags <- freq_df %>% dplyr::filter(type == "hashtag")
+  # keep_terms <- freq_df %>% dplyr::filter(type == "term")
+  # nodes <- dplyr::bind_rows(keep_hashtags, keep_terms)
   
-  edges <- dplyr::inner_join(tokens_df, freq_df, by = "word") %>% tidyr::unnest(.data$hashtags) %>%
-    dplyr::mutate(hashtags = ifelse(is.na(.data$hashtags), NA, paste0("#", tolower(.data$hashtags))))
+  edges <- dplyr::inner_join((tokens_df %>% dplyr::select(-.data$hashtags)), 
+                             (freq_df %>% dplyr::select(-.data$n, -.data$type)), by = "word")
   
-  edges %<>% dplyr::filter(.data$hashtags %in% unique(keep_hashtags$word) &
-                           .data$word %in% unique(keep_terms$word))
-  
-  edges %<>% dplyr::select(.data$hashtags, .data$word) %>%
-    dplyr::mutate(from = .data$hashtags, to = .data$word) %>%
-    group_by(.data$from, .data$to) %>% summarise(weight = dplyr::n())
+  edges <- dplyr::inner_join(edges, (edges %>% dplyr::select(.data$status_id, .data$word)), by = "status_id") %>%
+    dplyr::group_by(.data$status_id) %>%
+    dplyr::filter(word.x != word.y) %>%
+    dplyr::ungroup() %>%
+    
+    dplyr::select(-.data$status_id) %>%
+    dplyr::mutate(from = .data$word.x, to = .data$word.y) %>%
+    group_by(.data$from, .data$to) %>%
+    summarise(weight = dplyr::n())
+
+  # edges <- dplyr::inner_join(tokens_df, freq_df, by = "word") %>% tidyr::unnest(.data$hashtags) %>%
+  #   dplyr::mutate(hashtags = ifelse(is.na(.data$hashtags), NA, paste0("#", tolower(.data$hashtags))))
+  # 
+  # edges %<>% dplyr::filter(.data$hashtags %in% unique(keep_hashtags$word) &
+  #                          .data$word %in% unique(keep_terms$word)) %>% dplyr::select(-.data$n, -.data$type)
+  # 
+  # edges %<>% dplyr::select(.data$hashtags, .data$word) %>%
+  #   dplyr::mutate(from = .data$hashtags, to = .data$word) %>%
+  #   group_by(.data$from, .data$to) %>% summarise(weight = dplyr::n())
   
   if (verbose) {
-    df_stats <- networkStats(df_stats, "nodes", nrow(nodes))
+    df_stats <- networkStats(df_stats, "nodes", nrow(freq_df))
     df_stats <- networkStats(df_stats, "edges", nrow(edges))
     
     networkStats(df_stats, print = TRUE)
   } 
   
   func_output <- list(
-    "nodes" = nodes,
+    "nodes" = freq_df,
     "edges" = edges
   )
   
