@@ -181,6 +181,7 @@ hashtags in the same tweets.</p>
   <span class='kw'>removeUrls</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>termFreq</span> <span class='kw'>=</span> <span class='fl'>5</span>,
   <span class='kw'>hashtagFreq</span> <span class='kw'>=</span> <span class='fl'>50</span>,
+  <span class='kw'>assoc</span> <span class='kw'>=</span> <span class='st'>"limited"</span>,
   <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
@@ -237,6 +238,12 @@ The default value is <code>5</code>, meaning the top 5 percent most frequent wor
       <td><p>Numeric integer. Specifies the percentage of most frequent <code>hashtags</code> to include. For 
 example, <code>hashtagFreq = 20</code> means that the 20 percent most frequently occurring hashtags will be included 
 in the semantic network as nodes. The default value is <code>50</code>.</p></td>
+    </tr>
+    <tr>
+      <th>assoc</th>
+      <td><p>Character string. Association of nodes. A value of <code>"limited"</code> includes only edges between
+most frequently occurring hashtags and terms. A value of <code>"full"</code> includes ties between most frequently
+occurring hashtags and terms, hashtags and hashtags, and terms and terms. Default is <code>"limited"</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>

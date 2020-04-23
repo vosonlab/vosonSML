@@ -39,16 +39,14 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
   }
 
   if (verbose) { df_stats <- networkStats(NULL, "collected tweets", nrow(datasource)) }
+ 
+  datasource <- datasource %>% dplyr::select(.data$status_id, .data$user_id, .data$screen_name,
+                                             .data$text, .data$created_at, .data$is_retweet,
+                                             .data$is_quote)
+  datasource$text = HTMLdecode(datasource$text)
   
-  text_df <- tibble::tibble(status_id = datasource$status_id,
-                            user_id = datasource$user_id,
-                            screen_name = datasource$screen_name,
-                            text = HTMLdecode(datasource$text),
-                            created_at = datasource$created_at,
-                            is_retweet = datasource$is_retweet,
-                            is_quote = datasource$is_quote)
   capture.output(
-    tokens_df <- text_df %>% tidytext::unnest_tokens(.data$word, .data$text, token = "tweets", to_lower = TRUE)
+    tokens_df <- datasource %>% tidytext::unnest_tokens(.data$word, .data$text, token = "tweets", to_lower = TRUE)
   , type = "output")
   tokens_df %<>% dplyr::mutate(at_name = paste0("@", tolower(.data$screen_name)))
   
@@ -61,6 +59,7 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
                  "\n"))
     }
     tokens_df %<>% dplyr::filter(!(.data$word %in% removeTermsOrHashtags) &
+                                 !(.data$user_id %in% removeTermsOrHashtags) &
                                  !(tolower(.data$screen_name) %in% removeTermsOrHashtags) &
                                  !(.data$at_name %in% removeTermsOrHashtags))
     

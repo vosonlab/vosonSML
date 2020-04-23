@@ -166,6 +166,13 @@
 <a href="#minor-changes" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Reimplemented the <code>Create.semantic.twitter</code> and <code>Create.twomode.twitter</code> functions using the <code>tidytext</code> package. They now better support tokenization of tweet text and allows a range of stopword lists and sources to be used from the <code>stopwords</code> package. The semantic network function requires the <code>tidytext</code> and <code>tidyr</code> packages to be installed before use.</li>
+<li>New parameters have been added to <code>Create.semantic.twitter</code>:
+<ul>
+<li>Numbers and urls can be removed or included from the term list using <code>removeNumbers</code> and <code>removeUrls</code>, default value is <code>TRUE</code>.</li>
+<li>The <code>assoc</code> parameter has been added to choose which node associations or ties to include in the network. The default value is <code>"limited"</code> and includes only ties between most frequently occurring hashtags and terms in tweets. A value of <code>full</code> will also include ties between most frequently occurring hashtags and hashtags, and terms with terms creating a more densely connected network.</li>
+<li>Parameters to specify <code>stopwords</code> language e.g <code>stopwordsLang = "en"</code> and source e.g <code>stopwordsSrc = "smart"</code> have been added. These correspond to the <code>language</code> and <code>source</code> parameters of the <code><a href="https://rdrr.io/pkg/tidytext/man/get_stopwords.html">tidytext::get_stopwords</a></code> function. The <code>stopwords</code> default value is <code>TRUE</code>.</li>
+</ul>
+</li>
 <li>The network produced by the <code>Create.twomode.twitter</code> function is weighted by default but can be disabled by setting the new <code>weighted</code> parameter to <code>FALSE</code>.</li>
 <li>Renamed the <code>replies_from_text</code> parameter to <code>repliesFromText</code> and <code>at_replies_only</code> to <code>atRepliesOnly</code> in the <code>AddText.actor.youtube</code> function for consistency.</li>
 <li>Improved the usage examples in the README file.</li>

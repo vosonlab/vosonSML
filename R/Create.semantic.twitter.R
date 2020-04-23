@@ -41,6 +41,9 @@
 #' @param hashtagFreq Numeric integer. Specifies the percentage of most frequent \code{hashtags} to include. For 
 #' example, \code{hashtagFreq = 20} means that the 20 percent most frequently occurring hashtags will be included 
 #' in the semantic network as nodes. The default value is \code{50}.
+#' @param assoc Character string. Association of nodes. A value of \code{"limited"} includes only edges between
+#' most frequently occurring hashtags and terms. A value of \code{"full"} includes ties between most frequently
+#' occurring hashtags and terms, hashtags and hashtags, and terms and terms. Default is \code{"limited"}.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' 
@@ -63,7 +66,9 @@
 Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NULL,
                                     stopwords = TRUE, stopwordsLang = "en", stopwordsSrc = "smart",
                                     removeNumbers = TRUE, removeUrls = TRUE,
-                                    termFreq = 5, hashtagFreq = 50, verbose = FALSE, ...) {
+                                    termFreq = 5, hashtagFreq = 50,
+                                    assoc = "limited",
+                                    verbose = FALSE, ...) {
   
   cat("Generating twitter semantic network...")
   if (verbose) { cat("\n") }
@@ -94,12 +99,11 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   
   if (verbose) { df_stats <- networkStats(NULL, "collected tweets", nrow(datasource)) }
   
-  text_df <- tibble::tibble(status_id = datasource$status_id, text = HTMLdecode(datasource$text),
-                            hashtags = datasource$hashtags)
-  
+  datasource <- datasource %>% dplyr::select(.data$status_id, .data$text, .data$hashtags)
+  datasource$text = HTMLdecode(datasource$text)
   
   capture.output(
-    tokens_df <- text_df %>% tidytext::unnest_tokens(.data$word, .data$text, token = "tweets", to_lower = TRUE)
+    tokens_df <- datasource %>% tidytext::unnest_tokens(.data$word, .data$text, token = "tweets", to_lower = TRUE)
   , type = "output")
   
   if (verbose) { df_stats <- networkStats(df_stats, "tokens", nrow(tokens_df), FALSE) }
@@ -143,11 +147,6 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   freq_df %<>% dplyr::filter(type != "user")
   
   if (verbose) {
-    # unique_hashtags <- nrow(dplyr::distinct(text_df %>% dplyr::select(.data$hashtags) %>%
-    #   tidyr::unnest(.data$hashtags) %>%
-    #   dplyr::mutate(hashtags = ifelse(is.na(.data$hashtags), NA, paste0("#", tolower(.data$hashtags))))) %>%
-    #     tidyr::drop_na())
-    
     # tidytext unnest_tokens is changing hashtags starting with digits such as #9news to words i.e 9news
     # this causes a discrepancy between generated tokens and original hashtags data field count
     
@@ -205,33 +204,38 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   
   freq_df <- rm_words("term", termFreq) 
   freq_df %<>% dplyr::arrange(dplyr::desc(n))
-
-  # keep_hashtags <- freq_df %>% dplyr::filter(type == "hashtag")
-  # keep_terms <- freq_df %>% dplyr::filter(type == "term")
-  # nodes <- dplyr::bind_rows(keep_hashtags, keep_terms)
   
-  edges <- dplyr::inner_join((tokens_df %>% dplyr::select(-.data$hashtags)), 
-                             (freq_df %>% dplyr::select(-.data$n, -.data$type)), by = "word")
-  
-  edges <- dplyr::inner_join(edges, (edges %>% dplyr::select(.data$status_id, .data$word)), by = "status_id") %>%
-    dplyr::group_by(.data$status_id) %>%
-    dplyr::filter(word.x != word.y) %>%
-    dplyr::ungroup() %>%
+  if (tolower(assoc) == "full") {
+    edges <- dplyr::inner_join((tokens_df %>% dplyr::select(-.data$hashtags)), 
+                              (freq_df %>% dplyr::select(-.data$n, -.data$type)), by = "word")
     
-    dplyr::select(-.data$status_id) %>%
-    dplyr::mutate(from = .data$word.x, to = .data$word.y) %>%
-    group_by(.data$from, .data$to) %>%
-    summarise(weight = dplyr::n())
-
-  # edges <- dplyr::inner_join(tokens_df, freq_df, by = "word") %>% tidyr::unnest(.data$hashtags) %>%
-  #   dplyr::mutate(hashtags = ifelse(is.na(.data$hashtags), NA, paste0("#", tolower(.data$hashtags))))
-  # 
-  # edges %<>% dplyr::filter(.data$hashtags %in% unique(keep_hashtags$word) &
-  #                          .data$word %in% unique(keep_terms$word)) %>% dplyr::select(-.data$n, -.data$type)
-  # 
-  # edges %<>% dplyr::select(.data$hashtags, .data$word) %>%
-  #   dplyr::mutate(from = .data$hashtags, to = .data$word) %>%
-  #   group_by(.data$from, .data$to) %>% summarise(weight = dplyr::n())
+    edges <- dplyr::inner_join(edges, (edges %>% dplyr::select(.data$status_id, .data$word)), by = "status_id") %>%
+      dplyr::group_by(.data$status_id) %>%
+      dplyr::filter(.data$word.x != .data$word.y) %>%
+      dplyr::ungroup() %>%
+      
+      dplyr::select(-.data$status_id) %>%
+      dplyr::mutate(from = .data$word.x, to = .data$word.y) %>%
+      group_by(.data$from, .data$to) %>%
+      summarise(weight = dplyr::n())
+  } else {
+    keep_hashtags <- freq_df %>% dplyr::filter(type == "hashtag")
+    keep_terms <- freq_df %>% dplyr::filter(type == "term")
+    
+    class(tokens_df) <- c("tbl_df", "tbl", "data.frame") # unnest had a problem with vosonsml classes in class list
+      
+    edges <- dplyr::inner_join(tokens_df, freq_df, by = "word") %>%
+      tidyr::unnest(.data$hashtags) %>%
+      dplyr::mutate(hashtags = ifelse(is.na(.data$hashtags), NA, paste0("#", tolower(.data$hashtags))))
+    
+    edges %<>% dplyr::filter(.data$hashtags %in% unique(keep_hashtags$word) &
+                              .data$word %in% unique(keep_terms$word)) %>%
+      dplyr::select(-.data$n, -.data$type)
+    
+    edges %<>% dplyr::select(.data$hashtags, .data$word) %>%
+      dplyr::mutate(from = .data$hashtags, to = .data$word) %>%
+      group_by(.data$from, .data$to) %>% summarise(weight = dplyr::n())
+  }
   
   if (verbose) {
     df_stats <- networkStats(df_stats, "nodes", nrow(freq_df))

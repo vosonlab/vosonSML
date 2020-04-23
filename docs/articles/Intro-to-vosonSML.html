@@ -115,7 +115,7 @@
             <h3 class="subtitle">VOSON Lab, Australian National University</h3>
                         <h4 class="author">Robert Ackland, Bryan Gertzel, Francisca Borquez</h4>
             
-            <h4 class="date">21 April, 2020</h4>
+            <h4 class="date">24 April, 2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/master/vignettes/Intro-to-vosonSML.Rmd"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
       <div class="hidden name"><code>Intro-to-vosonSML.Rmd</code></div>
@@ -309,7 +309,7 @@ IGRAPH e60c486 DN-- 1408 662 --
 [snip]
 + ... omitted several edges</pre></body></html></div>
 <p>The Twitter activity network contains a graph attribute <code>type</code> (set to “twitter”). The node attributes are: <code>name</code> (Twitter ID for the tweet), <code>user_id</code> (Twitter ID for the user who authored the tweet), <code>screen_name</code> (Twitter handle or screen name of the user who authored the tweet), <code>created_at</code> (timestamp when the tweet was authored), <code>vosonTxt_tweet</code> (text content of the tweet) and <code>label</code> (a concatenation of <code>name</code> and <code>user_id</code>). The edge attribute is <code>edge_type</code> which can have the value ‘reply’, ‘retweet’ or ‘quote’.</p>
-<p>The example Twitter activity network contains 1408 nodes and 662 edges. The following is a visualisation of the network, where the post is indicated by a red node, and blue indicates those comments that include the words “arson” or “starting fires”.</p>
+<p>The example Twitter activity network contains 1408 nodes and 662 edges. The following is a visualisation of the network, where nodes are tweets and tweets mentioning bushfires are indicated in red.</p>
 <div class="sourceCode" id="cb21"><html><body><pre class="r"><span class="no">cc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html">clusters</a></span>(<span class="no">activityGraph</span>)
 <span class="no">g2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html">induced_subgraph</a></span>(<span class="no">activityGraph</span>,<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="no">cc</span>$<span class="no">membership</span> <span class="kw">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="no">cc</span>$<span class="no">csize</span><span class="kw">&gt;</span><span class="fl">5</span>)))
 <span class="no">ind</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span>(<span class="st">"bushfire"</span>,<span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span>(<span class="no">g2</span>)$<span class="no">vosonTxt_tweet</span>))

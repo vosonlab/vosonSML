@@ -15,6 +15,7 @@
   removeUrls = TRUE,
   termFreq = 5,
   hashtagFreq = 50,
+  assoc = "limited",
   verbose = FALSE,
   ...
 )
@@ -49,6 +50,10 @@ The default value is \code{5}, meaning the top 5 percent most frequent words are
 \item{hashtagFreq}{Numeric integer. Specifies the percentage of most frequent \code{hashtags} to include. For 
 example, \code{hashtagFreq = 20} means that the 20 percent most frequently occurring hashtags will be included 
 in the semantic network as nodes. The default value is \code{50}.}
+
+\item{assoc}{Character string. Association of nodes. A value of \code{"limited"} includes only edges between
+most frequently occurring hashtags and terms. A value of \code{"full"} includes ties between most frequently
+occurring hashtags and terms, hashtags and hashtags, and terms and terms. Default is \code{"limited"}.}
 
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
 
