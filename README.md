@@ -168,7 +168,7 @@ actorNetwork <- twitterData %>%
 
 Nodes are concepts represented as common words and hashtags, edges represent the occurence of a word and hashtag in the same tweet.
 ``` r
-install.packages("tidytext", "tidyr") # install additional required packages
+install.packages(c("tidytext", "tidyr")) # install additional required packages
 
 # create a semantic network excluding the hashtag #auspol, include only the top 10%
 # most frequent words and 20% most frequent hashtags as nodes
