@@ -4,16 +4,26 @@
 \alias{Create.twomode.twitter}
 \title{Create twitter twomode network}
 \usage{
-\method{Create}{twomode.twitter}(datasource, type, removeTermsOrHashtags = NULL, verbose = FALSE, ...)
+\method{Create}{twomode.twitter}(
+  datasource,
+  type,
+  removeTermsOrHashtags = NULL,
+  weighted = TRUE,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"twomode"}.}
 
-\item{removeTermsOrHashtags}{Character vector. Terms or hashtags to remove from the twomode network. For example, 
-this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
+\item{removeTermsOrHashtags}{Character vector. Users or hashtags to remove from the twomode network. For example, 
+this parameter could be used to remove the user or hashtag that was used to collect the data by removing any
 nodes with matching name. Default is \code{NULL} to remove none.}
+
+\item{weighted}{Logical. Add weights to network edges. If set to \code{FALSE} tweet \code{status_id} and 
+\code{created_at} fields will be preserved for edges in the dataframe. Default is \code{TRUE}.}
 
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
 
@@ -24,9 +34,8 @@ Network as a named list of two dataframes containing \code{$nodes} and \code{$ed
 }
 \description{
 Creates a twomode network from tweets returned from the twitter search query. In this network there are 
-two types of nodes, twitter users who have tweeted (actors) and hashtags found within their tweets. Network edges 
-are weighted and represent hashtag usage by the actor or specifically their tweets that contain a hashtag matching 
-the name of the node they are directed towards.
+two types of nodes, twitter users who authored or were mentioned in collected tweets and hashtags found within
+tweets. Network edges represent a users tweets that contain hashtags or mention users screen names.
 }
 \examples{
 \dontrun{

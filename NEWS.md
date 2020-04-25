@@ -1,3 +1,16 @@
+# vosonSML 0.29.10
+
+## Minor Changes
+- Reimplemented the `Create.semantic.twitter` and `Create.twomode.twitter` functions using the `tidytext` package. They now better support tokenization of tweet text and allows a range of stopword lists and sources to be used from the `stopwords` package. The semantic network function requires the `tidytext` and `tidyr` packages to be installed before use.
+- New parameters have been added to `Create.semantic.twitter`: 
+    - Numbers and urls can be removed or included from the term list using `removeNumbers` and `removeUrls`, default value is `TRUE`.
+    - The `assoc` parameter has been added to choose which node associations or ties to include in the network. The default value is `"limited"` and includes only ties between most frequently occurring hashtags and terms in tweets. A value of `full` will also include ties between most frequently occurring hashtags and hashtags, and terms with terms creating a more densely connected network.
+    - Parameters to specify `stopwords` language e.g `stopwordsLang = "en"` and source e.g `stopwordsSrc = "smart"` have been added. These correspond to the `language` and `source` parameters of the `tidytext::get_stopwords` function. The `stopwords` default value is `TRUE`.
+- The network produced by the `Create.twomode.twitter` function is weighted by default but can be disabled by setting the new `weighted` parameter to `FALSE`.
+- Renamed the `replies_from_text` parameter to `repliesFromText` and `at_replies_only` to `atRepliesOnly` in the `AddText.actor.youtube` function for consistency.
+- Improved the usage examples in the README file.
+- Removed `tm` package dependency.
+
 # vosonSML 0.29.9
 
 ## Minor Changes

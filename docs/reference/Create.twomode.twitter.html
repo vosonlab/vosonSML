@@ -50,9 +50,8 @@
 
 <meta property="og:title" content="Create twitter twomode network — Create.twomode.twitter" />
 <meta property="og:description" content="Creates a twomode network from tweets returned from the twitter search query. In this network there are 
-two types of nodes, twitter users who have tweeted (actors) and hashtags found within their tweets. Network edges 
-are weighted and represent hashtag usage by the actor or specifically their tweets that contain a hashtag matching 
-the name of the node they are directed towards." />
+two types of nodes, twitter users who authored or were mentioned in collected tweets and hashtags found within
+tweets. Network edges represent a users tweets that contain hashtags or mention users screen names." />
 
 
 
@@ -84,7 +83,7 @@ the name of the node they are directed towards." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.10</span>
       </span>
     </div>
 
@@ -164,13 +163,19 @@ the name of the node they are directed towards." />
 
     <div class="ref-description">
     <p>Creates a twomode network from tweets returned from the twitter search query. In this network there are 
-two types of nodes, twitter users who have tweeted (actors) and hashtags found within their tweets. Network edges 
-are weighted and represent hashtag usage by the actor or specifically their tweets that contain a hashtag matching 
-the name of the node they are directed towards.</p>
+two types of nodes, twitter users who authored or were mentioned in collected tweets and hashtags found within
+tweets. Network edges represent a users tweets that contain hashtags or mention users screen names.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for twomode.twitter</span>
-<span class='fu'><a href='Create.html'>Create</a></span>(<span class='no'>datasource</span>, <span class='no'>type</span>, <span class='kw'>removeTermsOrHashtags</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='Create.html'>Create</a></span>(
+  <span class='no'>datasource</span>,
+  <span class='no'>type</span>,
+  <span class='kw'>removeTermsOrHashtags</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>weighted</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -185,9 +190,14 @@ the name of the node they are directed towards.</p>
     </tr>
     <tr>
       <th>removeTermsOrHashtags</th>
-      <td><p>Character vector. Terms or hashtags to remove from the twomode network. For example, 
-this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
+      <td><p>Character vector. Users or hashtags to remove from the twomode network. For example, 
+this parameter could be used to remove the user or hashtag that was used to collect the data by removing any
 nodes with matching name. Default is <code>NULL</code> to remove none.</p></td>
+    </tr>
+    <tr>
+      <th>weighted</th>
+      <td><p>Logical. Add weights to network edges. If set to <code>FALSE</code> tweet <code>status_id</code> and 
+<code>created_at</code> fields will be preserved for edges in the dataframe. Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -229,7 +239,7 @@ nodes with matching name. Default is <code>NULL</code> to remove none.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

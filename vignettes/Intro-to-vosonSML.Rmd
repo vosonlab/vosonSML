@@ -100,10 +100,12 @@ The `Collect()` function returns a tibble (an enhanced dataframe which has featu
 ...
 ```
 
-Note that if you read the Twitter dataframe from disk, you will need to modify the class values for the object, before you can use it with `vosonSML`:
+Note that if you read the Twitter dataframe from disk, you will need to modify the class values for the object before you can use it with `vosonSML`. This can be done manually or by using the handy `ImportData()` function:
 ```{r eval=FALSE}
 twitterData <- readRDS("/path/to/data/data.rds")
 class(twitterData) <- append(class(twitterData), c("datasource", "twitter"))
+
+twitterData <- ImportData("/path/to/data/data.rds", "twitter")
 ```
 
 ## Creating Twitter Networks
@@ -162,6 +164,8 @@ The Twitter actor network contains a graph attribute `type` which is set to "twi
 The example actor network contains 1158 nodes and 1725 edges. The following code uses `igraph` functions to: (1) remove all edges other than reply edges; (2) construct a subnetwork consisting of the giant component (the largest set of connected nodes); (3) plot this network.
 
 ```{r eval=FALSE}
+library(igraph)
+
 g2 <- delete.edges(actorGraph, which(E(actorGraph)$edge_type!="reply"))
 cc <- clusters(g2)
 g2 <- induced_subgraph(g2,which(cc$membership == which.max(cc$csize)))
@@ -268,7 +272,7 @@ IGRAPH e60c486 DN-- 1408 662 --
 
 The Twitter activity network contains a graph attribute `type` (set to "twitter"). The node attributes are: `name` (Twitter ID for the tweet), `user_id` (Twitter ID for the user who authored the tweet), `screen_name` (Twitter handle or screen name of the user who authored the tweet), `created_at` (timestamp when the tweet was authored), `vosonTxt_tweet` (text content of the tweet) and `label` (a concatenation of `name` and `user_id`).  The edge attribute is `edge_type` which can have the value 'reply', 'retweet' or 'quote'.
 
-The example Twitter activity network contains 1408 nodes and 662 edges. The following is a visualisation of the  network, where the post is indicated by a red node, and blue indicates those comments that include the words "arson" or "starting fires".
+The example Twitter activity network contains 1408 nodes and 662 edges. The following is a visualisation of the network, where nodes are tweets and tweets mentioning bushfires are indicated in red.
 
 ```{r eval=FALSE}
 cc <- clusters(activityGraph)

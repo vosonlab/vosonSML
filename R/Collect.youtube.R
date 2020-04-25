@@ -55,8 +55,6 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
   cat("Collecting comment threads for youtube videos...\n")
   flush.console()
   
-  # maxComments defaults to an arbitrary very large number
-  
   apiKey <- credential$auth
   if (is.null(apiKey) || nchar(apiKey) < 1) {
     stop("Please provide a valid youtube api key.", call. = FALSE)
@@ -83,8 +81,6 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
                              UpdatedAt = "timestamp",
                              CommentID = "99999999123456789",
                              ParentID = "foobar",
-                             # ReplyToAnotherUser = "FALSE",
-                             # ChannelId = NA, 
                              VideoID = "foobarfoobar",
                              stringsAsFactors = FALSE)
   
@@ -110,7 +106,7 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
     ## Make a dataframe out of the results
     
     if (verbose) { cat(paste0("** Creating dataframe from threads of ", videoIDs[k], ".\n")) }
-    #browser()
+
     tempData <- lapply(rObj$data, function(x) {
       data.frame(Comment = x$snippet$topLevelComment$snippet$textDisplay,
                  AuthorDisplayName = x$snippet$topLevelComment$snippet$authorDisplayName,
@@ -124,8 +120,6 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
                  UpdatedAt = x$snippet$topLevelComment$snippet$updatedAt,
                  CommentID = x$snippet$topLevelComment$id,
                  ParentID = NA,
-                 # ReplyToAnotherUser = "FALSE",
-                 # ChannelId = x$snippet$topLevelComment$snippet$channelId,
                  VideoID = videoIDs[k], # actual reference to API data is: 
                                         # x$snippet$topLevelComment$snippet$videoIDs[k]
                  stringsAsFactors = FALSE)
@@ -141,123 +135,111 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
     commentIDs_with_replies <- core_df[which(core_df$ReplyCount > 0), ] # column 6
     commentIDs_with_replies <- commentIDs_with_replies$CommentID
     
-    # skip collecting comments if no threads with comment replies
-    # if (length(commentIDs_with_replies) == 0) { 
-    #   cat("\n")
-    #   next
-    # }
+    if (length(commentIDs_with_replies) > 0) {
     
-    if (length(commentIDs_with_replies) > 0) { 
-    
-    cat(paste0("** Collecting replies for ", length(commentIDs_with_replies), 
-               " threads with replies. Please be patient.\n")) # commentIDs
-    
-    base_url <- "https://www.googleapis.com/youtube/v3/comments"
-    
-    # 'dummy' first row of dataframe, for DEBUG purposes (fix later..)
-    dataRepliesAll <- data.frame(Comment = "foo",
-                                 AuthorDisplayName = "bar",
-                                 AuthorProfileImageUrl = NA,
-                                 AuthorChannelUrl = NA,
-                                 AuthorChannelID = NA,
-                                 ReplyCount = "99999999",
-                                 LikeCount = "99999999",
-                                 PublishedAt = "timestamp",
-                                 UpdatedAt = "timestamp",
-                                 CommentID = "99999999123456789",
-                                 ParentID = "foobar",
-                                 # ReplyToAnotherUser = "FALSE",
-                                 # ChannelId = NA,
-                                 VideoID = videoIDs[k], # API DOESN'T SEEM TO RETURN HERE, no matter anyway
-                                 stringsAsFactors = FALSE)
-    
-    # for each thread 
-    # ** doesnt have paging - possibly wont get all comments if > 100 per thread
-    # need to do same as with threads
-    total_replies <- 0
-    
-    for (i in 1:length(commentIDs_with_replies)) { # commentIDs
-      api_opts <- list(part = "snippet",
-                       textFormat = "plainText",
-                       parentId = commentIDs_with_replies[i], # commentIDs
-                       key = apiKey)
+      cat(paste0("** Collecting replies for ", length(commentIDs_with_replies), 
+                 " threads with replies. Please be patient.\n")) # commentIDs
       
-      # api cost 1 + 1 = 2 per request
-      # init_results <- httr::content(httr::GET(base_url, query = api_opts)) # TODO: should die when there is error
+      base_url <- "https://www.googleapis.com/youtube/v3/comments"
       
-      req <- httr::GET(base_url, query = api_opts)
-      init_results <- httr::content(req)
+      # 'dummy' first row of dataframe, for DEBUG purposes (fix later..)
+      dataRepliesAll <- data.frame(Comment = "foo",
+                                   AuthorDisplayName = "bar",
+                                   AuthorProfileImageUrl = NA,
+                                   AuthorChannelUrl = NA,
+                                   AuthorChannelID = NA,
+                                   ReplyCount = "99999999",
+                                   LikeCount = "99999999",
+                                   PublishedAt = "timestamp",
+                                   UpdatedAt = "timestamp",
+                                   CommentID = "99999999123456789",
+                                   ParentID = "foobar",
+                                   VideoID = videoIDs[k], # API DOESN'T SEEM TO RETURN HERE, no matter anyway
+                                   stringsAsFactors = FALSE)
       
-      # browser()
+      # for each thread 
+      # ** doesnt have paging - possibly wont get all comments if > 100 per thread
+      # need to do same as with threads
+      total_replies <- 0
       
-      err <- FALSE
-      if (req$status_code != 200) {
-        err <- TRUE
-        cat(paste0("\nComment error: ", init_results$error$code, "\nDetail: ", init_results$error$message, "\n"))
-        cat(paste0("parentId: ", commentIDs_with_replies[i], "\n\n"))
-      } else {
-        api_cost <- api_cost + 2
-      }
-      
-      num_items <- length(init_results$items)
-      
-      if (verbose) {
-        if (i == 1) {
-          cat("Comment replies ")
+      for (i in 1:length(commentIDs_with_replies)) { # commentIDs
+        api_opts <- list(part = "snippet",
+                         textFormat = "plainText",
+                         parentId = commentIDs_with_replies[i], # commentIDs
+                         key = apiKey)
+        
+        # api cost 1 + 1 = 2 per request
+        # init_results <- httr::content(httr::GET(base_url, query = api_opts)) # TODO: should die when there is error
+        
+        req <- httr::GET(base_url, query = api_opts)
+        init_results <- httr::content(req)
+        
+        err <- FALSE
+        if (req$status_code != 200) {
+          err <- TRUE
+          cat(paste0("\nComment error: ", init_results$error$code, "\nDetail: ", init_results$error$message, "\n"))
+          cat(paste0("parentId: ", commentIDs_with_replies[i], "\n\n"))
+        } else {
+          api_cost <- api_cost + 2
         }
         
-        cat(paste(num_items, ""))
-        flush.console()
-      } else {
-        cat(".")
-        flush.console()        
-      }
+        num_items <- length(init_results$items)
         
-      total_replies <- total_replies + num_items
+        if (verbose) {
+          if (i == 1) {
+            cat("Comment replies ")
+          }
+          
+          cat(paste(num_items, ""))
+          flush.console()
+        } else {
+          cat(".")
+          flush.console()        
+        }
+          
+        total_replies <- total_replies + num_items
+        
+        tempDataReplies <- lapply(init_results$items, function(x) {
+          data.frame(Comment = x$snippet$textDisplay,
+                     AuthorDisplayName = x$snippet$authorDisplayName,
+                     AuthorProfileImageUrl = x$snippet$authorProfileImageUrl,
+                     AuthorChannelUrl = x$snippet$authorChannelUrl,
+                     AuthorChannelID = ifelse(is.null(x$snippet$authorChannelId$value),
+                                              "[NoChannelId]", x$snippet$authorChannelId$value), 
+                     ReplyCount = 0, # there is no ReplyCount returned for replies (API specs)
+                     LikeCount = x$snippet$likeCount,
+                     PublishedAt = x$snippet$publishedAt,
+                     UpdatedAt = x$snippet$updatedAt,
+                     CommentID = x$id,
+                     ParentID = x$snippet$parentId,
+                     VideoID = videoIDs[k],
+                     stringsAsFactors = FALSE)
+        })
+        
+        tempDataRepliesBinded <- do.call("rbind", tempDataReplies)
+        
+        dataRepliesAll <- rbind(dataRepliesAll, tempDataRepliesBinded)
+        
+        if (err || rObj$api_error) { break }
+      }
       
-      tempDataReplies <- lapply(init_results$items, function(x) {
-        data.frame(Comment = x$snippet$textDisplay,
-                   AuthorDisplayName = x$snippet$authorDisplayName,
-                   AuthorProfileImageUrl = x$snippet$authorProfileImageUrl,
-                   AuthorChannelUrl = x$snippet$authorChannelUrl,
-                   AuthorChannelID = ifelse(is.null(x$snippet$authorChannelId$value),
-                                            "[NoChannelId]", x$snippet$authorChannelId$value), 
-                   ReplyCount = 0, # there is no ReplyCount returned for replies (API specs)
-                   LikeCount = x$snippet$likeCount,
-                   PublishedAt = x$snippet$publishedAt,
-                   UpdatedAt = x$snippet$updatedAt,
-                   CommentID = x$id,
-                   ParentID = x$snippet$parentId,
-                   # ReplyToAnotherUser = "FALSE",
-                   # ChannelId = x$snippet$channelId,
-                   VideoID = videoIDs[k], # API DOESN'T SEEM TO RETURN HERE, not that it matters
-                   stringsAsFactors = FALSE)
-      })
+      total_api_cost <- total_api_cost + api_cost
       
-      tempDataRepliesBinded <- do.call("rbind", tempDataReplies)
+      cat(paste0("\n** Collected replies: ", total_replies, "\n"))
+      cat(paste0("** Total video comments: ", length(commentIDs) + total_replies, "\n"))
+      if (verbose) { cat(paste0("(Video API unit cost: ", api_cost, ")\n")) }
+      cat("---------------------------------------------------------------\n")
       
-      dataRepliesAll <- rbind(dataRepliesAll, tempDataRepliesBinded)
+      ############################## Combine comment threads and replies #############################
+        
+      # get rid of "dummy" first row
+      dataRepliesAll <- dataRepliesAll[-1, ]
       
-      if (err || rObj$api_error) { break }
-    }
-    
-    total_api_cost <- total_api_cost + api_cost
-    
-    cat(paste0("\n** Collected replies: ", total_replies, "\n"))
-    cat(paste0("** Total video comments: ", length(commentIDs) + total_replies, "\n"))
-    if (verbose) { cat(paste0("(Video API unit cost: ", api_cost, ")\n")) }
-    cat("---------------------------------------------------------------\n")
-    
-    ############################## Combine comment threads and replies #############################
+      # combine the comments and replies dataframes
+      dataCombinedTemp <- rbind(core_df, dataRepliesAll)
       
-    # get rid of "dummy" first row
-    dataRepliesAll <- dataRepliesAll[-1, ]
-    
-    # combine the comments and replies dataframes
-    dataCombinedTemp <- rbind(core_df, dataRepliesAll)
-    
-    dataCombined <- rbind(dataCombined, dataCombinedTemp)
-    
+      dataCombined <- rbind(dataCombined, dataCombinedTemp)
+      
     # no threads with reply comments for video
     } else {
       total_api_cost <- total_api_cost + api_cost
@@ -291,7 +273,7 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
   # return dataframe to environment
   
   dataCombined <- tibble::as_tibble(dataCombined) # convert type to tibble for package consistency
-  class(dataCombined) <- append(class(dataCombined), c("dataource", "youtube"))
+  class(dataCombined) <- append(class(dataCombined), c("datasource", "youtube"))
   cat("Done.\n")
   flush.console()
   
@@ -451,7 +433,6 @@ yt_scraper <- setRefClass(
             PublishedAt = x$snippet$topLevelComment$snippet$publishedAt,
             UpdatedAt = x$snippet$topLevelComment$snippet$updatedAt,
             CommentID = x$snippet$topLevelComment$id,
-            #ChannelId = x$snippet$topLevelComment$snippet$channelId,
             stringsAsFactors = FALSE)
         })
         core_df <<- do.call("rbind", sub_data)

@@ -13,7 +13,6 @@
 #'
 #' @export
 Collect <- function(credential, ...) {
-  
   timer_pkg <- FALSE
   if (requireNamespace("tictoc", quietly = TRUE)) { timer_pkg <- TRUE }
   

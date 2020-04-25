@@ -112,8 +112,8 @@ Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
   df_nodes <- dplyr::mutate_at(df_nodes, vars(contains('created_at')), as.character)
   
   df_stats <- networkStats(df_stats, "nodes from data", nrow(df_nodes) - nrow(df))
-  df_stats <- networkStats(df_stats, "network nodes", nrow(df_nodes))
-  df_stats <- networkStats(df_stats, "network edges", nrow(df_relations))  
+  df_stats <- networkStats(df_stats, "nodes", nrow(df_nodes))
+  df_stats <- networkStats(df_stats, "edges", nrow(df_relations))  
   
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }

@@ -78,8 +78,8 @@ Create.activity.youtube <- function(datasource, type, verbose = TRUE, ...) {
     else if (type == "reply-comment") df_stats <- networkStats(df_stats, "reply comments", node_summary[row, "num"])
     else if (type == "video") df_stats <- networkStats(df_stats, "videos", node_summary[row, "num"])
   }
-  df_stats <- networkStats(df_stats, "network nodes", nrow(df_nodes))
-  df_stats <- networkStats(df_stats, "network edges", nrow(df_relations))  
+  df_stats <- networkStats(df_stats, "nodes", nrow(df_nodes))
+  df_stats <- networkStats(df_stats, "edges", nrow(df_relations))  
   
   # print stats
   if (verbose) { networkStats(df_stats, print = TRUE) }
