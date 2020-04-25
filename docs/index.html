@@ -259,7 +259,7 @@
 <h5 class="hasAnchor">
 <a href="#semantic-network" class="anchor"></a>Semantic network</h5>
 <p>Nodes are concepts represented as common words and hashtags, edges represent the occurence of a word and hashtag in the same tweet.</p>
-<div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"tidytext"</span>, <span class="st">"tidyr"</span>) <span class="co"># install additional required packages</span>
+<div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(c(<span class="st">"tidytext"</span>, <span class="st">"tidyr"</span>)) <span class="co"># install additional required packages</span>
 
 <span class="co"># create a semantic network excluding the hashtag #auspol, include only the top 10%</span>
 <span class="co"># most frequent words and 20% most frequent hashtags as nodes</span>
