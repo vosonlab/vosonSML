@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.10</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.11</span>
       </span>
     </div>
 
@@ -157,9 +157,21 @@
       <small>Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="vosonsml-02911" class="section level1">
+<h1 class="page-header" data-toc-text="0.29.11">
+<a href="#vosonsml-02911" class="anchor"></a>vosonSML 0.29.11<small> Unreleased </small>
+</h1>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
+<ul>
+<li>Fixed a reddit collect <code>bind_rows</code> error on joining dataframes with different types for the structure column. Column type was being set to integer instead of character in cases when every thread comment have no replies or depth (except the OP).</li>
+</ul>
+</div>
+</div>
     <div id="vosonsml-02910" class="section level1">
 <h1 class="page-header" data-toc-text="0.29.10">
-<a href="#vosonsml-02910" class="anchor"></a>vosonSML 0.29.10<small> Unreleased </small>
+<a href="#vosonsml-02910" class="anchor"></a>vosonSML 0.29.10<small> 2020-04-25 </small>
 </h1>
 <div id="minor-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -192,9 +204,9 @@
 <li>Added new hex sticker to package documentation.</li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fixed a logic problem in <code>Collect.youtube</code> that was causing no video comments to be collected if there were no reply comments for any of the videos first <code>maxComments</code> number of top level comments. For example, if <code>maxComments</code> is set to 100 and the first 100 comments made to a video had no replies then no results would be returned.</li>
 </ul>
@@ -204,9 +216,9 @@
 <h1 class="page-header" data-toc-text="0.29.8">
 <a href="#vosonsml-0298" class="anchor"></a>vosonSML 0.29.8<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-1" class="section level2">
+<div id="bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-1" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>A recent intermittent problem with the Twitter API caused an issue with the <code><a href="https://rdrr.io/pkg/rtweet/man/rate_limit.html">rtweet::rate_limit</a></code> function that resulted in an error when using the rtweet <code>retryonratelimit</code> search parameter. The <code>rate_limit</code> function was being called by <code>vosonSML</code> to check the twitter rate limit regardless of whether the search parameter was set or not, and so was failing <code>Collect</code> with an error. A fix was made so that <code>vosonSML</code> checks if <code><a href="https://rdrr.io/pkg/rtweet/man/rate_limit.html">rtweet::rate_limit</a></code> succeeds, and if not automatically sets <code>retryonratelimit</code> to <code>FALSE</code> so that a twitter <code>Collect</code> can still be performed without error should this problem occur again.</li>
 </ul>
@@ -287,9 +299,9 @@
 <li>Added output messages from supplemental functions such as <code><a href="../reference/vosonSML-colon-colon-AddText.html">AddText()</a></code> and <code><a href="../reference/vosonSML-colon-colon-Graph.html">Graph()</a></code>. Also improved consistency of output messages from <code>Collect</code> and <code>Create</code> functions.</li>
 </ul>
 </div>
-<div id="bug-fixes-2" class="section level2">
+<div id="bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-2" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-3" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Added a fix <code>reddit</code> gsub locale error <a href="https://github.com/vosonlab/vosonSML/issues/21" class="uri">https://github.com/vosonlab/vosonSML/issues/21</a>.</li>
 <li>Changed <code>bimodal</code> network hashtags to lowercase as filter terms when entered are converted to lowercase.</li>
@@ -401,9 +413,9 @@
 <h1 class="page-header" data-toc-text="0.27.1">
 <a href="#vosonsml-0271" class="anchor"></a>vosonSML 0.27.1<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-3" class="section level2">
+<div id="bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-3" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-4" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fixed a bug in <code>Create.semantic.twitter</code> in which a sum operation calculating edge weights would set <code>NA</code> values for all edges due to <code>NA</code> values present in the hashtag fields. This occurs when there are tweets with no hashtags in the twitter collection and is now checked.</li>
 <li>Some UTF encoding issues in <code>Create.semantic.twitter</code> were also fixed.</li>
@@ -421,9 +433,9 @@
 <h1 class="page-header" data-toc-text="0.27.0">
 <a href="#vosonsml-0270" class="anchor"></a>vosonSML 0.27.0<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-4" class="section level2">
+<div id="bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-4" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-5" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fixed a bug in <code>Collect.twitter</code> in which any additional <code>twitter API</code> parameters e.g <code>lang</code> or <code>until</code> were not being passed properly to <code><a href="https://rdrr.io/pkg/rtweet/man/search_tweets.html">rtweet::search_tweets</a></code>. This resulted in the additional parameters being ignored.</li>
 </ul>
@@ -449,9 +461,9 @@
 <h1 class="page-header" data-toc-text="0.26.3">
 <a href="#vosonsml-0263" class="anchor"></a>vosonSML 0.26.3<small> 2019-02-22 </small>
 </h1>
-<div id="bug-fixes-5" class="section level2">
+<div id="bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-5" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-6" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fixed bugs in <code>Create.actor.reddit</code> that were incorrectly creating edges between top-level commentors and thread authors from different threads. These bugs were only observable in when collecting multiple reddit threads.</li>
 </ul>
@@ -469,9 +481,9 @@
 <h1 class="page-header" data-toc-text="0.26.2">
 <a href="#vosonsml-0262" class="anchor"></a>vosonSML 0.26.2<small> Unreleased </small>
 </h1>
-<div id="bug-fixes-6" class="section level2">
+<div id="bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes-6" class="anchor"></a>Bug Fixes</h2>
+<a href="#bug-fixes-7" class="anchor"></a>Bug Fixes</h2>
 <ul>
 <li>Fixed a bug in <code>Create.actor.twitter</code> and <code>Create.bimodal.twitter</code> in which the vertices dataframe provided to the <code>graph_from_data_frame</code> function as a contained duplicate names raising an error.</li>
 </ul>
