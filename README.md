@@ -3,7 +3,7 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)](https://github.com/vosonlab/vosonSML/releases)
-[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.10&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.11&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
 [![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 
 `vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
@@ -29,7 +29,7 @@ install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.1
   repo = NULL, type = "source")
 ```
 
-Install the latest development version (v0.29.10):
+Install the latest development version (v0.29.11):
 ``` r
 # library(devtools)
 devtools::install_github("vosonlab/vosonSML")

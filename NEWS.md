@@ -1,3 +1,8 @@
+# vosonSML 0.29.11
+
+## Bug Fixes
+- Fixed a reddit collect `bind_rows` error on joining dataframes with different types for the structure column. Column type was being set to integer instead of character in cases when every thread comment have no replies or depth (except the OP).
+
 # vosonSML 0.29.10
 
 ## Minor Changes

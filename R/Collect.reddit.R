@@ -60,7 +60,7 @@ Collect.reddit <- function(credential, threadUrls, waitTime = c(3, 10), ua = get
     threads_df <- reddit_build_df(threadUrls, waitTime, ua, verbose)
   }, error = function(e) {
     stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
-  }, finally = { 
+  }, finally = {
     threads_df <- as_tibble(threads_df)
   })
   
@@ -139,7 +139,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
       # if comments returned
       if (nrow(cont_df)) {
         cont_df <- cont_df %>% mutate(structure = paste0(struct, "_", .data$structure)) # append structure
-        
+
         # insert new comments into thread dataframe using position
         if (cont_index == 1) {
           branch_df <- bind_rows(cont_df, branch_df)
@@ -238,7 +238,8 @@ reddit_struct_list = function(node, depth = 0) {
     reply_nodes <- replies$data$children
   }
   
-  structures <- list(depth,
+  # depth is converted to char to prevent col type to integer with no-depth threads
+  structures <- list(as.character(depth),
    lapply(1:length(reply_nodes), function(x) {
      reddit_struct_list(reply_nodes[[x]], paste0(depth, "_", x))
    }))
