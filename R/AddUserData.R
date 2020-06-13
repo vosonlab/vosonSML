@@ -14,7 +14,7 @@
 #' @aliases AddUserData
 #' @name vosonSML::AddUserData
 #' @export
-AddUserData <- function(net, ...) {
+AddUserData <- function(net, data, ...) {
   # searches the class list of net for matching method
   UseMethod("AddUserData", net)
 }
@@ -29,7 +29,6 @@ AddUserData.default <- function(net, ...) {
 #' @method AddUserData actor
 #' @export
 AddUserData.actor <- function(net, ...) {
-  
   UseMethod("AddUserData.actor", net)
 }
 
@@ -80,6 +79,8 @@ AddUserData.actor.twitter <- function(net, data, lookupUsers = TRUE, twitterAuth
   
   cat("Adding user profile data to network...")
   if (verbose) { cat("\n") }
+  
+  class(data) <- rmCustCls(class(data))
   
   dfUsers <- net$nodes
   
@@ -143,7 +144,7 @@ AddUserData.actor.twitter <- function(net, data, lookupUsers = TRUE, twitterAuth
   
   # return(func_output)
   
-  class(net) <- union(class(net), c("voson_user_data"))
+  class(net) <- union(class(net), c("vosonuser"))
   cat("Done.\n")
   
   net

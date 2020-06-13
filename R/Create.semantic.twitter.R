@@ -99,6 +99,9 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   
   if (verbose) { df_stats <- networkStats(NULL, "collected tweets", nrow(datasource)) }
   
+  # datasource <- tibble::as_tibble(datasource)
+  class(datasource) <- rmCustCls(class(datasource))
+  
   datasource <- datasource %>% dplyr::select(.data$status_id, .data$text, .data$hashtags)
   datasource$text = HTMLdecode(datasource$text)
   
@@ -249,7 +252,7 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
     "edges" = edges
   )
   
-  class(func_output) <- union(class(func_output), c("network", "semantic", "twitter"))
+  class(func_output) <- append(class(func_output), c("network", "semantic", "twitter"))
   cat("Done.\n")
   
   func_output

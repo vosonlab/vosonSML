@@ -40,6 +40,9 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
 
   if (verbose) { df_stats <- networkStats(NULL, "collected tweets", nrow(datasource)) }
  
+  # datasource <- tibble::as_tibble(datasource)
+  class(datasource) <- rmCustCls(class(datasource))
+  
   datasource <- datasource %>% dplyr::select(.data$status_id, .data$user_id, .data$screen_name,
                                              .data$text, .data$created_at, .data$is_retweet,
                                              .data$is_quote)
@@ -99,7 +102,7 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
     "edges" = edges
   )
   
-  class(func_output) <- union(class(func_output), c("network", "twomode", "twitter"))
+  class(func_output) <- append(class(func_output), c("network", "twomode", "twitter"))
   cat("Done.\n")
   
   func_output

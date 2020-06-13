@@ -35,26 +35,29 @@ AddText <- function(net, data, ...) {
 
 #' @noRd
 #' @export
-AddText.default <- function(net, data, ...) {
+AddText.default <- function(net, ...) {
   stop("Unknown network type passed to AddText.", call. = FALSE) 
 }
 
 #' @noRd
 #' @method AddText activity
 #' @export
-AddText.activity <- function(net, data, ...) {
+AddText.activity <- function(net, ...) {
   UseMethod("AddText.activity", net)
 }
 
 #' @noRd
 #' @export
-AddText.activity.default <- function(net, data, ...) {
+AddText.activity.default <- function(net, ...) {
   stop("Unknown social media type passed to AddText.", call. = FALSE)
 }
 
 #' @noRd
 #' @export
 AddText.activity.twitter <- function(net, data, ...) {
+  # data <- tibble::as_tibble(data)
+  class(data) <- rmCustCls(class(data))
+  
   net$nodes <- dplyr::left_join(net$nodes, dplyr::select(data, .data$status_id, .data$text), by = "status_id")
   net$nodes <- dplyr::left_join(net$nodes, 
                                 dplyr::select(data, .data$quoted_status_id, .data$quoted_text) %>%
@@ -70,7 +73,7 @@ AddText.activity.twitter <- function(net, data, ...) {
   
   net$nodes$vosonTxt_tweet <- HTMLdecode(net$nodes$vosonTxt_tweet)
   
-  class(net) <- union(class(net), c("voson_text"))
+  class(net) <- union(class(net), c("vosontxt"))
   cat("Done.\n")
   
   net
@@ -79,12 +82,15 @@ AddText.activity.twitter <- function(net, data, ...) {
 #' @noRd
 #' @export
 AddText.activity.youtube <- function(net, data, ...) {
+  # data <- tibble::as_tibble(data)
+  class(data) <- rmCustCls(class(data))
+  
   net$nodes <- dplyr::left_join(net$nodes, 
                                 dplyr::select(data, .data$CommentID, .data$Comment) %>%
                                   dplyr::rename(id = .data$CommentID, vosonTxt_comment = .data$Comment), 
                                 by = c("id"))
   
-  class(net) <- union(class(net), c("voson_text"))
+  class(net) <- union(class(net), c("vosontxt"))
   cat("Done.\n")
   
   net
@@ -105,6 +111,9 @@ AddText.activity.youtube <- function(net, data, ...) {
 #' @name vosonSML::AddText.activity.reddit
 #' @export
 AddText.activity.reddit <- function(net, data, cleanText = FALSE, ...) {
+  # data <- tibble::as_tibble(data)
+  class(data) <- rmCustCls(class(data))
+  
   net$nodes <- dplyr::left_join(net$nodes, 
                                 dplyr::mutate(data, id = paste0(.data$thread_id, ".", .data$structure)) %>%
                                   dplyr::select(.data$id, .data$subreddit, .data$comment), 
@@ -122,7 +131,7 @@ AddText.activity.reddit <- function(net, data, cleanText = FALSE, ...) {
     net$nodes$title <- CleanRedditText(net$nodes$title)
   }  
   
-  class(net) <- union(class(net), c("voson_text"))
+  class(net) <- union(class(net), c("vosontxt"))
   cat("Done.\n")
   
   net
@@ -132,7 +141,6 @@ AddText.activity.reddit <- function(net, data, cleanText = FALSE, ...) {
 #' @method AddText actor
 #' @export
 AddText.actor <- function(net, ...) {
-
   UseMethod("AddText.actor", net)
 }
 
@@ -145,6 +153,9 @@ AddText.actor.default <- function(net, ...) {
 #' @noRd
 #' @export
 AddText.actor.twitter <- function(net, data, ...) {
+  # data <- tibble::as_tibble(data)
+  class(data) <- rmCustCls(class(data))
+  
   net$edges <- dplyr::left_join(net$edges,
                                 dplyr::select(data, .data$status_id, .data$text),
                                 by = c("status_id")) %>%
@@ -152,7 +163,7 @@ AddText.actor.twitter <- function(net, data, ...) {
   
   net$edges$vosonTxt_tweet <- HTMLdecode(net$edges$vosonTxt_tweet)
   
-  class(net) <- union(class(net), c("voson_text"))
+  class(net) <- union(class(net), c("vosontxt"))
   cat("Done.\n")
   
   net
@@ -192,6 +203,9 @@ AddText.actor.twitter <- function(net, data, ...) {
 #' @name vosonSML::AddText.actor.youtube
 #' @export
 AddText.actor.youtube <- function(net, data, repliesFromText = FALSE, atRepliesOnly = TRUE, ...) {
+  # data <- tibble::as_tibble(data)
+  class(data) <- rmCustCls(class(data))
+  
   net$edges %<>% dplyr::left_join(dplyr::select(data, .data$CommentID, .data$Comment) %>%
                                   dplyr::rename(comment_id = .data$CommentID, vosonTxt_comment = .data$Comment), 
                                   by = c("comment_id"))
@@ -222,7 +236,7 @@ AddText.actor.youtube <- function(net, data, repliesFromText = FALSE, atRepliesO
     # , at_id = NULL # leave in for reference
   }
   
-  class(net) <- union(class(net), c("voson_text"))
+  class(net) <- union(class(net), c("vosontxt"))
   cat("Done.\n")
   
   net
@@ -243,7 +257,9 @@ AddText.actor.youtube <- function(net, data, repliesFromText = FALSE, atRepliesO
 #' @name vosonSML::AddText.actor.reddit
 #' @export
 AddText.actor.reddit <- function(net, data, cleanText = FALSE, ...) {
-
+  # data <- tibble::as_tibble(data)
+  class(data) <- rmCustCls(class(data))
+  
   # rename the edge attribute containing the thread comment
   net$edges <- dplyr::left_join(net$edges,
                                 dplyr::select(data, .data$subreddit, .data$thread_id, .data$id, .data$comment),
@@ -264,7 +280,7 @@ AddText.actor.reddit <- function(net, data, cleanText = FALSE, ...) {
     net$edges$title <- CleanRedditText(net$edges$title)
   }
   
-  class(net) <- union(class(net), c("voson_text"))
+  class(net) <- union(class(net), c("vosontxt"))
   cat("Done.\n")
   
   net

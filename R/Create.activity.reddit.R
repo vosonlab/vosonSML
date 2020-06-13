@@ -25,16 +25,17 @@ Create.activity.reddit <- function(datasource, type, verbose = TRUE, ...) {
   cat("Generating reddit activity network...")
   if (verbose) { cat("\n") }
   
-  df <- tibble::as_tibble(datasource) 
+  # df <- tibble::as_tibble(datasource) 
+  class(datasource) <- rmCustCls(class(datasource))
   
-  df_stats <- networkStats(NULL, "collected reddit comments", nrow(df))
+  df_stats <- networkStats(NULL, "collected reddit comments", nrow(datasource))
   
   # would be better with the unique comment fullname ids
   # comment id format <thread_id>.<structure>
-  df %<>% dplyr::mutate(comment_id = paste0(.data$thread_id, ".", .data$structure))
+  datasource %<>% dplyr::mutate(comment_id = paste0(.data$thread_id, ".", .data$structure))
   
   # edges  
-  df_relations <- df %>%
+  df_relations <- datasource %>%
     dplyr::rename("from" = .data$comment_id) %>%
     dplyr::mutate(to = ifelse(!grepl("_", .data$structure), paste0(.data$thread_id, ".0"), 
                               gsub("_\\d+$", "", .data$from))) %>%
@@ -42,13 +43,13 @@ Create.activity.reddit <- function(datasource, type, verbose = TRUE, ...) {
     dplyr::select(.data$from, .data$to, .data$edge_type)
   
   # nodes
-  df_nodes <- df %>% dplyr::select(.data$comment_id, .data$thread_id, .data$comm_id, .data$comm_date, 
+  df_nodes <- datasource %>% dplyr::select(.data$comment_id, .data$thread_id, .data$comm_id, .data$comm_date, 
                                    .data$comm_date_unix, .data$subreddit, .data$user) %>%
     dplyr::rename("id" = .data$comment_id, "datetime" = .data$comm_date, "ts" = .data$comm_date_unix) %>%
     dplyr::mutate(node_type = "comment")
   
   # add thread posts to nodes
-  thread_ids <- df %>% dplyr::select(.data$subreddit, .data$author, .data$thread_id, .data$post_date, .data$post_date_unix) %>%
+  thread_ids <- datasource %>% dplyr::select(.data$subreddit, .data$author, .data$thread_id, .data$post_date, .data$post_date_unix) %>%
     dplyr::mutate(id = paste0(.data$thread_id, ".0")) %>% 
     dplyr::distinct(.data$subreddit, .data$id, .keep_all = TRUE) %>%
     dplyr::rename("user" = .data$author, "datetime" = .data$post_date, "ts" = .data$post_date_unix) %>%
@@ -58,7 +59,7 @@ Create.activity.reddit <- function(datasource, type, verbose = TRUE, ...) {
   df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(thread_ids, df_nodes, by = c("id", "subreddit")))
   
   df_stats <- networkStats(df_stats, "threads", nrow(thread_ids))
-  df_stats <- networkStats(df_stats, "comments", nrow(df))
+  df_stats <- networkStats(df_stats, "comments", nrow(datasource))
   df_stats <- networkStats(df_stats, "nodes", nrow(df_nodes))
   df_stats <- networkStats(df_stats, "edges", nrow(df_relations))  
   

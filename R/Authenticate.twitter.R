@@ -70,5 +70,5 @@ Authenticate.twitter <- function(socialmedia, appName, apiKey, apiSecret, access
     access_secret = accessTokenSecret,
     set_renv = FALSE)
   
-  return(credential)
+  credential
 }

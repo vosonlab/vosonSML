@@ -50,7 +50,7 @@
 #' 
 #' @export
 Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile = FALSE, 
-                            maxComments = 10000000000000, ...) {
+                            maxComments = 1e10, ...) { # 10000000000000
   
   cat("Collecting comment threads for youtube videos...\n")
   flush.console()
@@ -277,7 +277,7 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
   cat("Done.\n")
   flush.console()
   
-  return(dataCombined)
+  dataCombined
   
   #############################################################################
 }

@@ -23,8 +23,10 @@
 Create.actor.reddit <- function(datasource, type, ...) {
   cat("Generating reddit actor network...")
   
-  df <- tibble::as_tibble(datasource) 
-
+  # df <- tibble::as_tibble(datasource) 
+  # df <- datasource 
+  class(datasource) <- rmCustCls(class(datasource))
+  
   # df_thread <- datasource
 
   # actor_network <- RedditExtractoR::user_network(df_thread, include_author = TRUE, agg = FALSE)
@@ -34,7 +36,7 @@ Create.actor.reddit <- function(datasource, type, ...) {
   # include_author <- TRUE
 
   # select cols and rename id and user
-  df_relations <- df %>% 
+  df_relations <- datasource %>% 
     dplyr::select(.data$id, .data$subreddit, .data$thread_id, .data$comm_id, .data$structure,
                   .data$user, .data$author) %>% 
     dplyr::rename("comment_id" = .data$id, "sender" = .data$user)
@@ -48,7 +50,7 @@ Create.actor.reddit <- function(datasource, type, ...) {
     # rename structure to response_to and user to receiver
     # left join df_relations to response_to, receiver by response_to
     # FIXED: crossing threads by joining only on structure (response_to)
-    dplyr::left_join(df %>% 
+    dplyr::left_join(datasource %>% 
       dplyr::select(.data$thread_id, .data$structure, .data$user) %>%
       dplyr::rename("response_to" = .data$structure, "receiver" = .data$user), by = c("response_to", "thread_id"))
 

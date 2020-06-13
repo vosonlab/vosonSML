@@ -140,7 +140,7 @@ AddVideoData.actor.youtube <- function(net, youtubeAuth = NULL, videoIds = NULL,
                     video_published_at = .data$VideoPublishedAt)
   }
   
-  class(net) <- union(class(net), c("voson_video_data"))
+  class(net) <- union(class(net), c("vosonvideo"))
   cat("Done.\n")
   
   net

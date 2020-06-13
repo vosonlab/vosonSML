@@ -63,7 +63,6 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   }
   
   searchTerm <- trimws(searchTerm)
-  # cat(paste0("Collecting tweets", ifelse(searchTerm == "", "", paste0(" for search term: ", searchTerm)), "...\n"))
   if (searchTerm != "") { cat(paste0("Search term: ", searchTerm, "\n")) }
   
   rtlimit <- NULL
@@ -98,11 +97,10 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   
   # additional twitter api params
   dots <- substitute(...())
-  # search_params[['...']] <- dots
   search_params <- append(search_params, dots)
   
   tweets_df <- do.call(rtweet::search_tweets, search_params)
-  
+
   # summary
   if (nrow(tweets_df) > 0) {
     results_df <- tweets_df %>% dplyr::filter(.data$status_id %in% c(min(.data$status_id), max(.data$status_id))) %>% 
@@ -123,5 +121,5 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   class(tweets_df) <- append(class(tweets_df), c("datasource", "twitter"))
   cat("Done.\n")
   
-  return(tweets_df)
+  tweets_df
 }
