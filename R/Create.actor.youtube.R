@@ -26,15 +26,17 @@ Create.actor.youtube <- function(datasource, type, ...) {
   cat("Generating youtube actor network...")
   
   # df <- tibble::as_tibble(datasource)
-  df <- datasource
+  # df <- datasource
+  # df <- data.table(datasource)
+  class(datasource) <- rmCustCls(class(datasource))
   
   # nodes are authors and videos, edges are comments and self-loops
   
-  parent_authors <- df %>% dplyr::select(.data$CommentID, .data$AuthorChannelID) %>% 
+  parent_authors <- datasource %>% dplyr::select(.data$CommentID, .data$AuthorChannelID) %>% 
     dplyr::distinct(.data$CommentID, .keep_all = TRUE) %>% 
     dplyr::rename("ParentID" = .data$CommentID, "ParentAuthorID" = .data$AuthorChannelID)
   
-  df_relations <- df %>% 
+  df_relations <- datasource %>% 
     dplyr::left_join(parent_authors, by = c("ParentID")) %>%
     dplyr::select(.data$AuthorChannelID, .data$ParentID, .data$ParentAuthorID, .data$VideoID, .data$CommentID) %>%
     dplyr::mutate(edge_type = case_when((!is.na(.data$ParentID)) ~ "reply-comment", TRUE ~ "comment")) %>%
@@ -45,12 +47,12 @@ Create.actor.youtube <- function(datasource, type, ...) {
     dplyr::rename("from" = .data$AuthorChannelID, "video_id" = .data$VideoID, "comment_id" = .data$CommentID) %>%
     dplyr::select(.data$from, .data$to, .data$video_id, .data$comment_id, .data$edge_type)
   
-  df_nodes <- df %>% dplyr::select(.data$AuthorChannelID, .data$AuthorDisplayName) %>%
+  df_nodes <- datasource %>% dplyr::select(.data$AuthorChannelID, .data$AuthorDisplayName) %>%
     dplyr::distinct(.data$AuthorChannelID, .keep_all = TRUE) %>%
     dplyr::mutate(node_type = "actor") %>%
     dplyr::rename("id" = .data$AuthorChannelID, "screen_name" = .data$AuthorDisplayName)
   
-  video_ids <- df %>% distinct(.data$VideoID) %>% dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID)) %>%
+  video_ids <- datasource %>% distinct(.data$VideoID) %>% dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID)) %>%
     dplyr::rename(video_id = .data$VideoID)
   
   df_relations <- dplyr::bind_rows(df_relations, 

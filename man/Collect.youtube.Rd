@@ -9,7 +9,7 @@
   videoIDs,
   verbose = FALSE,
   writeToFile = FALSE,
-  maxComments = 1e+13,
+  maxComments = 1e+10,
   ...
 )
 }

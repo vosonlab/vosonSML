@@ -27,12 +27,13 @@ Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
   cat("Generating twitter activity network...")
   if (verbose) { cat("\n") }
   
-  df <- tibble::as_tibble(datasource)
+  # df <- tibble::as_tibble(datasource)
+  class(datasource) <- rmCustCls(class(datasource))
   
-  df_stats <- networkStats(NULL, "collected tweets", nrow(df))
+  df_stats <- networkStats(NULL, "collected tweets", nrow(datasource))
   
   # edges
-  df_relations <- df %>% dplyr::select(.data$status_id, 
+  df_relations <- datasource %>% dplyr::select(.data$status_id, 
                                  .data$reply_to_status_id,
                                  .data$quoted_status_id,
                                  .data$retweet_status_id) %>%
@@ -65,11 +66,11 @@ Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
   df_relations <- dplyr::filter(df_relations, .data$edge_type != "tweet")
   
   # vertices
-  df_nodes <- df %>% dplyr::select(.data$status_id, .data$user_id, .data$screen_name, .data$created_at)
+  df_nodes <- datasource %>% dplyr::select(.data$status_id, .data$user_id, .data$screen_name, .data$created_at)
   
   # order of binding rows for nodes in data based on completeness 
   
-  df_quotes <- dplyr::select(df, .data$quoted_status_id,
+  df_quotes <- dplyr::select(datasource, .data$quoted_status_id,
                              .data$quoted_user_id,
                              .data$quoted_screen_name,
                              .data$quoted_created_at) %>%
@@ -84,7 +85,7 @@ Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
     df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(df_quotes, df_nodes, by = "status_id"))
   }
   
-  df_replies <- dplyr::select(df, .data$reply_to_status_id,
+  df_replies <- dplyr::select(datasource, .data$reply_to_status_id,
                               .data$reply_to_user_id,
                               .data$reply_to_screen_name) %>%
     dplyr::filter(!is.na(.data$reply_to_status_id))  %>%
@@ -97,7 +98,7 @@ Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
     df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(df_replies, df_nodes, by = "status_id"))
   }
   
-  df_retweets <- dplyr::select(df, .data$retweet_status_id,
+  df_retweets <- dplyr::select(datasource, .data$retweet_status_id,
                                .data$retweet_created_at) %>%
     dplyr::filter(!is.na(.data$retweet_status_id))  %>%
     dplyr::rename("status_id" = .data$retweet_status_id,
@@ -111,7 +112,7 @@ Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
   # handle igraph warnings due to dttm class columns
   df_nodes <- dplyr::mutate_at(df_nodes, vars(contains('created_at')), as.character)
   
-  df_stats <- networkStats(df_stats, "nodes from data", nrow(df_nodes) - nrow(df))
+  df_stats <- networkStats(df_stats, "nodes from data", nrow(df_nodes) - nrow(datasource))
   df_stats <- networkStats(df_stats, "nodes", nrow(df_nodes))
   df_stats <- networkStats(df_stats, "edges", nrow(df_relations))  
   
@@ -123,7 +124,7 @@ Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
     "edges" = df_relations
   )
   
-  class(func_output) <- union(class(func_output), c("network", "activity", "twitter"))
+  class(func_output) <- append(class(func_output), c("network", "activity", "twitter"))
   cat("Done.\n")
   
   func_output

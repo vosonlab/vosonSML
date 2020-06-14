@@ -190,3 +190,7 @@ networkStats <- function(df, field, count, edge = FALSE, print = FALSE) {
   }
   df <- rbind(df, list(field = field, count = count, edge_count = edge), stringsAsFactors = FALSE)
 }
+
+rmCustCls <- function(clsList) {
+  clsList[!clsList %in% c("datasource", "twitter", "youtube", "reddit")]
+}

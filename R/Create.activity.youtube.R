@@ -25,13 +25,14 @@ Create.activity.youtube <- function(datasource, type, verbose = TRUE, ...) {
   cat("Generating youtube activity network...")
   if (verbose) { cat("\n") }
   
-  # df <- tibble::as_tibble(datasource) 
-  df <- datasource
+  # df <- tibble::as_tibble(datasource)
+  # df <- datasource
+  class(datasource) <- rmCustCls(class(datasource))
   
-  df_stats <- networkStats(NULL, "collected youtube comments", nrow(df))
+  df_stats <- networkStats(NULL, "collected youtube comments", nrow(datasource))
   
   # edges
-  df_relations <- df %>% dplyr::select(.data$CommentID, .data$ParentID, .data$VideoID) %>%
+  df_relations <- datasource %>% dplyr::select(.data$CommentID, .data$ParentID, .data$VideoID) %>%
     dplyr::mutate(edge_type = case_when((!is.na(.data$ParentID)) ~ "reply-comment", TRUE ~ "comment")) %>%
     dplyr::mutate(to = if_else(.data$edge_type == "reply-comment", .data$ParentID, 
                                if_else(.data$edge_type == "comment", paste0("VIDEOID:", .data$VideoID),
@@ -40,7 +41,7 @@ Create.activity.youtube <- function(datasource, type, verbose = TRUE, ...) {
     dplyr::select(.data$from, .data$to, .data$edge_type)
   
   # nodes
-  df_nodes <- df %>% dplyr::select(.data$CommentID, .data$VideoID, .data$ParentID, .data$PublishedAt, .data$UpdatedAt,
+  df_nodes <- datasource %>% dplyr::select(.data$CommentID, .data$VideoID, .data$ParentID, .data$PublishedAt, .data$UpdatedAt,
                                    .data$AuthorChannelID, .data$AuthorDisplayName) %>%
     dplyr::mutate(node_type = case_when((!is.na(.data$ParentID)) ~ "reply-comment", TRUE ~ "comment"))
   

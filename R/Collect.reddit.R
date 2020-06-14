@@ -61,7 +61,7 @@ Collect.reddit <- function(credential, threadUrls, waitTime = c(3, 10), ua = get
   }, error = function(e) {
     stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
   }, finally = {
-    threads_df <- as_tibble(threads_df)
+    threads_df <- tibble::as_tibble(threads_df)
   })
   
   if (!is.null(threads_df)) {
@@ -93,7 +93,7 @@ Collect.reddit <- function(credential, threadUrls, waitTime = c(3, 10), ua = get
   class(threads_df) <- append(class(threads_df), c("datasource", "reddit"))
   cat("Done.\n")
   
-  return(threads_df)
+  threads_df
 }
 
 reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
@@ -107,7 +107,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
     # loop protection
     prev_value <- NULL
     
-    extra_threads <- filter(branch_df, grepl("Listing:", .data$comm_id))
+    extra_threads <- dplyr::filter(branch_df, grepl("Listing:", .data$comm_id))
     while (nrow(extra_threads) > 0) {
       
       row_i <- 1 # top row
@@ -128,9 +128,9 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
       cont_thread_id <- gsub("Listing:t1_", "", extra_threads[row_i, "comm_id"])
       
       # set continue thread comment rm flag to true
-      branch_df <- mutate(branch_df,
-                          rm = ifelse((.data$comm_id == cont_thread_id | .data$comm_id == extra_threads[row_i, "comm_id"]),
-                                      TRUE, .data$rm))
+      branch_df <- dplyr::mutate(branch_df,
+                    rm = ifelse((.data$comm_id == cont_thread_id | .data$comm_id == extra_threads[row_i, "comm_id"]),
+                                TRUE, .data$rm))
       
       # get continue thread
       cont_json <- reddit_data(paste0(x, cont_thread_id), waitTime, ua, cont = cont_thread_id, verbose = verbose)
@@ -138,14 +138,14 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
       
       # if comments returned
       if (nrow(cont_df)) {
-        cont_df <- cont_df %>% mutate(structure = paste0(struct, "_", .data$structure)) # append structure
+        cont_df <- cont_df %>% dplyr::mutate(structure = paste0(struct, "_", .data$structure)) # append structure
 
         # insert new comments into thread dataframe using position
         if (cont_index == 1) {
-          branch_df <- bind_rows(cont_df, branch_df)
+          branch_df <- dplyr::bind_rows(cont_df, branch_df)
         } else {
-          pre_df <- bind_rows(branch_df[1:cont_index-1, ], cont_df)
-          branch_df <- bind_rows(pre_df, branch_df[cont_index:nrow(branch_df), ])
+          pre_df <- dplyr::bind_rows(branch_df[1:cont_index-1, ], cont_df)
+          branch_df <- dplyr::bind_rows(pre_df, branch_df[cont_index:nrow(branch_df), ])
         }
       }
       
@@ -156,14 +156,14 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
     if (!is.null(branch_df) && nrow(branch_df) > 0) {
       branch_df$thread_id <- gsub("^(.*)?/comments/([0-9A-Za-z]{6})?/.*?(/)?$", "\\2", 
                            branch_df$url, ignore.case = TRUE, perl = TRUE, useBytes = TRUE) # extract thread id
-      branch_df <- branch_df %>% filter(.data$rm == FALSE) # remove continue thread entries
-      branch_df <- branch_df %>% arrange(.data$thread_id, .data$id) %>% mutate(id = 1:nrow(branch_df)) # re-index
+      branch_df <- branch_df %>% dplyr::filter(.data$rm == FALSE) # remove continue thread entries
+      branch_df <- branch_df %>% dplyr::arrange(.data$thread_id, .data$id) %>% dplyr::mutate(id = 1:nrow(branch_df)) # re-index
     }
     
     branch_df
   })
   
-  threads_df <- bind_rows(threads)
+  threads_df <- dplyr::bind_rows(threads)
 }
 
 # based on method by @ivan-rivera RedditExtractoR

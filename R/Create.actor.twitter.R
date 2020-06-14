@@ -36,10 +36,11 @@ Create.actor.twitter <- function(datasource, type, verbose = TRUE, ...) {
   from <- to <- edge_type <- timestamp <- status_id <- NULL
   is_retweet <- is_quote <- mentions_user_id <- reply_to_user_id <- NULL
   
-  df <- datasource
-  df <- data.table(df)
-  
+  # df <- datasource
+  # df <- data.table(df)
   # df <- tibble::as_tibble(datasource)
+  
+  df <- data.table(datasource)
   
   df_stats <- networkStats(NULL, "collected tweets", nrow(df))
   
@@ -223,7 +224,7 @@ Create.actor.twitter <- function(datasource, type, verbose = TRUE, ...) {
     "nodes" = tibble::as_tibble(df_users)
   )
   
-  class(func_output) <- union(class(func_output), c("network", "actor", "twitter"))
+  class(func_output) <- append(class(func_output), c("network", "actor", "twitter"))
   cat("Done.\n")
   
   func_output
