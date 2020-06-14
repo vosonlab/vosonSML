@@ -1,3 +1,12 @@
+# vosonSML 0.29.12
+
+## Bug Fixes
+- Fixed an issue with custom classes assigned to dataframes causing an `vctrs` error when using `dplyr` functions. The classes are no longer needed post-method routing so they are simply removed.
+- Replaced an instance of the deprecated `dplyr::funs` function that was generating a warning.
+
+## Minor Changes
+- Minor documentation updates.
+
 # vosonSML 0.29.11
 
 ## Bug Fixes

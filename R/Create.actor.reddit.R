@@ -70,7 +70,7 @@ Create.actor.reddit <- function(datasource, type, ...) {
     dplyr::select(.data$sender, .data$receiver, .data$comment_id, .data$subreddit, .data$comm_id, .data$thread_id)
 
   # attempt to add authors thread posts as self-loops
-  authors <- dplyr::select(df, .data$subreddit, .data$thread_id, .data$author) %>% dplyr::distinct() %>%
+  authors <- dplyr::select(datasource, .data$subreddit, .data$thread_id, .data$author) %>% dplyr::distinct() %>%
     dplyr::mutate(sender = .data$author, receiver = .data$author, comment_id = 0, author = NULL)
   
   df_relations <- dplyr::bind_rows(df_relations, authors)
