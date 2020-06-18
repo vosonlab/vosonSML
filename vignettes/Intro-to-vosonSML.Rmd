@@ -110,7 +110,7 @@ twitterData <- ImportData("/path/to/data/data.rds", "twitter")
 
 ## Creating Twitter Networks
 
-It is currently possible to create four types of networks using Twitter data: (1) *actor network*; (2) *activity network*; (3) *two-mode network* and (4) *semantic network*. 
+It is currently possible to create four types of networks using Twitter data: (1) *actor network*; (2) *activity network*; (3) *2-mode network* and (4) *semantic network*. 
 
 ### Actor Network 
 
@@ -289,9 +289,9 @@ dev.off()
 
 It should be noted that a limitation of the Twitter API is that retweet chains are not provided. That is: if user *i* tweeted an original tweet, and then user *j* retweeted this tweet, and user *k* retweeted *j*'s retweet, the activity network will show edges connecting the two retweets to the original tweet.
 
-### Two-mode Network
+### 2-mode Network
 
-In the Twitter *two-mode network*, the two types of nodes are actors (Twitter users) and hashtags. There is an edge from user *i* to hashtag *j* if user *i* authored a tweet containing hashtag *j*. 
+In the Twitter *2-mode network*, the two types of nodes are actors (Twitter users) and hashtags. There is an edge from user *i* to hashtag *j* if user *i* authored a tweet containing hashtag *j*. 
 
 ```{r eval=FALSE}
 twomodeNetwork <- twitterData %>% Create("twomode", removeTermsOrHashtags = c("#auspol"))
@@ -340,7 +340,7 @@ IGRAPH 68bd240 DN-- 1146 1675 --
 + ... omitted several edges
 ```
 
-The Twitter two-model network has a graph attribute `type` (set to "twitter"). The node attributes are: `name` (hashtag or Twitter user ID), `display_name` (hashtag or Twitter handle or screen name), `label` (for users, a concatenation of `name` and `display_name`, while for hashtags it is `name`). The edge attributes are: `edge_type` ('hashtag'), `timestamp` (timestamp of the tweet that led to the edge), `status_id` (Twitter ID of the tweet that led to the edge).
+The Twitter 2-model network has a graph attribute `type` (set to "twitter"). The node attributes are: `name` (hashtag or Twitter user ID), `display_name` (hashtag or Twitter handle or screen name), `label` (for users, a concatenation of `name` and `display_name`, while for hashtags it is `name`). The edge attributes are: `edge_type` ('hashtag'), `timestamp` (timestamp of the tweet that led to the edge), `status_id` (Twitter ID of the tweet that led to the edge).
 
 ```{r eval=FALSE}
 ind <- order(degree(twomodeGraph, mode="in"), decreasing=TRUE)[1:5] # top-5 hashtags
@@ -356,7 +356,7 @@ plot(g2, vertex.label=V(g2)$label2, vertex.size=4, edge.arrow.size=0.5, vertex.l
 dev.off()
 ```
 
-![Twitter twomode network - top-5 hashtags, and the users who tweeted them](https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/twitter_twomode.png)
+![Twitter 2-mode network - top-5 hashtags, and the users who tweeted them](https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/twitter_twomode.png)
 
 
 ### Semantic Network 

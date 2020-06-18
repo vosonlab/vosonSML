@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.13</span>
       </span>
     </div>
 
@@ -157,6 +157,23 @@
       <small>Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="vosonsml-02913" class="section level1">
+<h1 class="page-header" data-toc-text="0.29.13">
+<a href="#vosonsml-02913" class="anchor"></a>vosonSML 0.29.13<small> Unreleased </small>
+</h1>
+<div id="minor-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-changes" class="anchor"></a>Minor Changes</h2>
+<ul>
+<li>Minor documentation updates to <code>Create.semantic.twitter</code>, <code>Create.twomode.twitter</code> and the <code>Intro-to-vosonSML</code> vignette:
+<ul>
+<li>Specified the <code>tidyr</code> and <code>tidytext</code> package requirements in descriptions and examples</li>
+<li>Updated references to <code>twomode</code> networks as <code>2-mode</code> where possible</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
     <div id="vosonsml-02912" class="section level1">
 <h1 class="page-header" data-toc-text="0.29.12">
 <a href="#vosonsml-02912" class="anchor"></a>vosonSML 0.29.12<small> Unreleased </small>
@@ -169,9 +186,9 @@
 <li>Replaced an instance of the deprecated <code><a href="https://dplyr.tidyverse.org/reference/funs.html">dplyr::funs</a></code> function that was generating a warning.</li>
 </ul>
 </div>
-<div id="minor-changes" class="section level2">
+<div id="minor-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-1" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Minor documentation updates.</li>
 </ul>
@@ -193,9 +210,9 @@
 <h1 class="page-header" data-toc-text="0.29.10">
 <a href="#vosonsml-02910" class="anchor"></a>vosonSML 0.29.10<small> 2020-04-25 </small>
 </h1>
-<div id="minor-changes-1" class="section level2">
+<div id="minor-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-1" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-2" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Reimplemented the <code>Create.semantic.twitter</code> and <code>Create.twomode.twitter</code> functions using the <code>tidytext</code> package. They now better support tokenization of tweet text and allows a range of stopword lists and sources to be used from the <code>stopwords</code> package. The semantic network function requires the <code>tidytext</code> and <code>tidyr</code> packages to be installed before use.</li>
 <li>New parameters have been added to <code>Create.semantic.twitter</code>:
@@ -216,9 +233,9 @@
 <h1 class="page-header" data-toc-text="0.29.9">
 <a href="#vosonsml-0299" class="anchor"></a>vosonSML 0.29.9<small> Unreleased </small>
 </h1>
-<div id="minor-changes-2" class="section level2">
+<div id="minor-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-2" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-3" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Updated <code>Introduction to vosonSML</code> vignette <code>Merging Collected Data</code> examples.</li>
 <li>Added new hex sticker to package documentation.</li>
@@ -243,9 +260,9 @@
 <li>A recent intermittent problem with the Twitter API caused an issue with the <code><a href="https://rdrr.io/pkg/rtweet/man/rate_limit.html">rtweet::rate_limit</a></code> function that resulted in an error when using the rtweet <code>retryonratelimit</code> search parameter. The <code>rate_limit</code> function was being called by <code>vosonSML</code> to check the twitter rate limit regardless of whether the search parameter was set or not, and so was failing <code>Collect</code> with an error. A fix was made so that <code>vosonSML</code> checks if <code><a href="https://rdrr.io/pkg/rtweet/man/rate_limit.html">rtweet::rate_limit</a></code> succeeds, and if not automatically sets <code>retryonratelimit</code> to <code>FALSE</code> so that a twitter <code>Collect</code> can still be performed without error should this problem occur again.</li>
 </ul>
 </div>
-<div id="minor-changes-3" class="section level2">
+<div id="minor-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-3" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-4" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added some links to the <code>pkgdown</code> site navbar.</li>
 </ul>
@@ -255,9 +272,9 @@
 <h1 class="page-header" data-toc-text="0.29.7">
 <a href="#vosonsml-0297" class="anchor"></a>vosonSML 0.29.7<small> Unreleased </small>
 </h1>
-<div id="minor-changes-4" class="section level2">
+<div id="minor-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-4" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-5" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added some guidance for merging collected data to the <code>Introduction to vosonSML</code> vignette.</li>
 </ul>
@@ -267,9 +284,9 @@
 <h1 class="page-header" data-toc-text="0.29.6">
 <a href="#vosonsml-0296" class="anchor"></a>vosonSML 0.29.6<small> Unreleased </small>
 </h1>
-<div id="minor-changes-5" class="section level2">
+<div id="minor-changes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-5" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-6" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added <code>Introduction to vosonSML</code> vignette to the package.</li>
 <li>Minor changes and input checks added to <code>ImportData</code>.</li>
@@ -281,9 +298,9 @@
 <h1 class="page-header" data-toc-text="0.29.5">
 <a href="#vosonsml-0295" class="anchor"></a>vosonSML 0.29.5<small> Unreleased </small>
 </h1>
-<div id="minor-changes-6" class="section level2">
+<div id="minor-changes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-6" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-7" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Reddit JSON is now retrieved using <code><a href="https://jeroen.cran.dev/jsonlite/reference/fromJSON.html">jsonlite::fromJSON</a></code>.</li>
 <li>Reddit ‘Continue’ threads are now followed with additional thread requests. Many more comments are now collected for threads with large diameters or breadth. Continue threads also have a Reddit limit of 500 comments per thread request.</li>
@@ -300,9 +317,9 @@
 <h1 class="page-header" data-toc-text="0.29.4">
 <a href="#vosonsml-0294" class="anchor"></a>vosonSML 0.29.4<small> 2019-11-23 </small>
 </h1>
-<div id="minor-changes-7" class="section level2">
+<div id="minor-changes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-7" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-8" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Renamed <code>bimodal</code> networks to <code>twomode</code>.</li>
 </ul>
@@ -312,9 +329,9 @@
 <h1 class="page-header" data-toc-text="0.29.3">
 <a href="#vosonsml-0293" class="anchor"></a>vosonSML 0.29.3<small> Unreleased </small>
 </h1>
-<div id="minor-changes-8" class="section level2">
+<div id="minor-changes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-8" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-9" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added output messages from supplemental functions such as <code><a href="../reference/vosonSML-colon-colon-AddText.html">AddText()</a></code> and <code><a href="../reference/vosonSML-colon-colon-Graph.html">Graph()</a></code>. Also improved consistency of output messages from <code>Collect</code> and <code>Create</code> functions.</li>
 </ul>
@@ -335,9 +352,9 @@
 <h1 class="page-header" data-toc-text="0.29.2">
 <a href="#vosonsml-0292" class="anchor"></a>vosonSML 0.29.2<small> Unreleased </small>
 </h1>
-<div id="minor-changes-9" class="section level2">
+<div id="minor-changes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-9" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-10" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>A feature was added to the youtube actor <code>AddText</code> function to redirect edges towards actors based on the presence of a <code>screen name</code> or <code>@screen name</code> that may be found at the beginning of a reply comment. Typically reply comments are directed towards a top-level comment, this instead captures when reply comments are directed to other commenters in the thread.</li>
 </ul>
@@ -347,9 +364,9 @@
 <h1 class="page-header" data-toc-text="0.29.1">
 <a href="#vosonsml-0291" class="anchor"></a>vosonSML 0.29.1<small> Unreleased </small>
 </h1>
-<div id="minor-changes-10" class="section level2">
+<div id="minor-changes-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-10" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-11" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Changed youtube <code>actor</code> network identifiers to be their unique <code>Channel ID</code> instead of their <code>screen names</code>.</li>
 <li>Created the <code>AddVideoData</code> function to add collected video data to the youtube <code>actor</code> network. The main purpose of this function is to replace video identifiers with the <code>Channel ID</code> of the video publisher (actor) instead. To get the <code>Channel ID</code> of video publishers an additional API lookup for the videos in the network is required. Additional columns such as video <code>Title</code>, <code>Description</code> and <code>Published</code> time are also added to the network <code>$edges</code> dataframe as well as returned in their own dataframe called <code>$videos</code>.</li>
@@ -368,9 +385,9 @@
 <li>Generation of <code>igraph</code> graph objects and subsequent writing to file has been removed from the <code>Create</code> function and placed in a new function <code>Graph</code>. This change abstracts the graph creation and makes it optional, but also allows supplemental network steps such as <code>AddText</code> to be performed prior to creating the final igraph object.</li>
 </ul>
 </div>
-<div id="minor-changes-11" class="section level2">
+<div id="minor-changes-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-11" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-12" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Removed <code>writeToFile</code> parameter from <code>Create</code> functions and added it to <code>Graph</code>.</li>
 <li>Removed <code>weightEdges</code>, <code>textData</code> and <code>cleanText</code> parameters from <code>Create.actor.reddit</code>. <code>cleanText</code> is now a parameter of <code>AddText.activity.reddit</code> and <code>AddText.actor.reddit</code>.</li>
@@ -382,9 +399,9 @@
 <h1 class="page-header" data-toc-text="0.28.1">
 <a href="#vosonsml-0281" class="anchor"></a>vosonSML 0.28.1<small> Unreleased </small>
 </h1>
-<div id="minor-changes-12" class="section level2">
+<div id="minor-changes-13" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-12" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-13" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added <code>activity</code> network type for reddit. In the reddit activity network nodes are the thread posts and comments, edges represent where comments are directed in the threads.</li>
 <li>Added github dev version badge to README.</li>
@@ -407,9 +424,9 @@
 <h1 class="page-header" data-toc-text="0.27.3">
 <a href="#vosonsml-0273" class="anchor"></a>vosonSML 0.27.3<small> Unreleased </small>
 </h1>
-<div id="minor-changes-13" class="section level2">
+<div id="minor-changes-14" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-13" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-14" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added a new twitter actor network edge type <code>self-loop</code>. This aims to facilitate the later addition of tweet text to the network graph for user tweets that have no ties to other users.</li>
 </ul>
@@ -419,9 +436,9 @@
 <h1 class="page-header" data-toc-text="0.27.2">
 <a href="#vosonsml-0272" class="anchor"></a>vosonSML 0.27.2<small> 2019-07-18 </small>
 </h1>
-<div id="minor-changes-14" class="section level2">
+<div id="minor-changes-15" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-14" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-15" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added twitter interactive web authorization of an app as provided by <code><a href="https://rdrr.io/pkg/rtweet/man/create_token.html">rtweet::create_token</a></code>. Method is used when only twitter app name and consumer keys are passed to <code>Authenticate.twitter</code> as parameters. e.g <code><a href="../reference/Authenticate.html">Authenticate("twitter", appName = "An App", apiKey = "xxxxxxxxxxxx",   apiSecret = "xxxxxxxxxxxx")</a></code>. A browser tab will open asking the user to authorize the app to their twitter account to complete authentication. This is using twitters <code>Application-user authentication: OAuth 1a (access token for user context)</code> method.</li>
 <li>It is suspected that Reddit is rate-limiting some generic R UA strings. So a User-Agent string is now set for underlaying R Collect functions (e.g <code>file</code>) via the <code>HTTPUserAgent</code> option. It is temporarily set to package name and current version number for Collect e.g <code>vosonSML v.0.27.2 (R Package)</code>.</li>
@@ -441,9 +458,9 @@
 <li>Some UTF encoding issues in <code>Create.semantic.twitter</code> were also fixed.</li>
 </ul>
 </div>
-<div id="minor-changes-15" class="section level2">
+<div id="minor-changes-16" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-15" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-16" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added ‘#’ to hashtags and ‘@’ to mentions in twitter semantic network to differentiate between hashtags, mentions and common terms.</li>
 </ul>
@@ -468,9 +485,9 @@
 <li>Changed the way that the <code>cleanText</code> parameter works in <code>Create.actor.reddit</code> so that it is more permissive. Addresses encoding issues with apostrophes and pound symbols and removes unicode characters not permitted by the XML 1.0 standard as used in <code>graphml</code> files. This is best effort and does not resolve all <code>reddit</code> text encoding issues.</li>
 </ul>
 </div>
-<div id="minor-changes-16" class="section level2">
+<div id="minor-changes-17" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-16" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-17" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Added <code>Collect.twitter</code> summary information that includes the earliest (min) and latest (max) tweet <code>status_id</code> collected with timestamp. The <code>status_id</code> values can be used to frame subsequent collections as <code>since_id</code> or <code>max_id</code> parameter values. If the <code>until</code> date parameter was used the timestamp can also be used as a quick confirmation.</li>
 <li>Added elapsed time output to the <code>Collect</code> method.</li>
@@ -488,9 +505,9 @@
 <li>Fixed bugs in <code>Create.actor.reddit</code> that were incorrectly creating edges between top-level commentors and thread authors from different threads. These bugs were only observable in when collecting multiple reddit threads.</li>
 </ul>
 </div>
-<div id="minor-changes-17" class="section level2">
+<div id="minor-changes-18" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-17" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-18" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Improved output for <code>reddit</code> collection. Removed the progress bar and added a table of results summarising the number of comments collected for each thread.</li>
 <li>Added to <code>twitter</code> collection output the users <code>twitter API</code> reset time.</li>
@@ -516,9 +533,9 @@
 <li>Updated all <code>Authenticate</code>, <code>Collect</code> and <code>Create</code> S3 methods to implement function routing based on object class names.</li>
 </ul>
 </div>
-<div id="minor-changes-18" class="section level2">
+<div id="minor-changes-19" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-changes-18" class="anchor"></a>Minor Changes</h2>
+<a href="#minor-changes-19" class="anchor"></a>Minor Changes</h2>
 <ul>
 <li>Created a <code>pkgdown</code> web site for github hosted package documentation.</li>
 <li>Created a new hex sticker logo.</li>

@@ -97,7 +97,7 @@ Create.semantic.default <- function(datasource, type, ...) {
   stop("Unknown datasource passed to create semantic network.", call. = FALSE) 
 }
 
-#' @title Create twomode networks from social media data
+#' @title Create 2-mode networks from social media data
 #'
 #' @noRd
 #' @method Create twomode
