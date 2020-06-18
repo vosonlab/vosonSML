@@ -1,3 +1,10 @@
+# vosonSML 0.29.13
+
+## Minor Changes
+- Minor documentation updates to `Create.semantic.twitter`, `Create.twomode.twitter` and the `Intro-to-vosonSML` vignette:
+    - Specified the `tidyr` and `tidytext` package requirements in descriptions and examples
+    - Updated references to `twomode` networks as `2-mode` where possible
+
 # vosonSML 0.29.12
 
 ## Bug Fixes

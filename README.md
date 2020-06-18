@@ -3,7 +3,7 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)](https://github.com/vosonlab/vosonSML/releases)
-[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.12&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.13&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
 [![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 
 `vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
@@ -29,7 +29,7 @@ install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.1
   repo = NULL, type = "source")
 ```
 
-Install the latest development version (v0.29.12):
+Install the latest development version (v0.29.13):
 ``` r
 # library(devtools)
 devtools::install_github("vosonlab/vosonSML")
@@ -102,7 +102,7 @@ twitterData <- twitterAuth %>%
 #> Done.
 ```
 
-#### 'Create' twitter 'activity', 'actor', 'semantic' and 'twomode' network graphs
+#### 'Create' twitter 'activity', 'actor', 'semantic' and '2-mode' network graphs
 
 The twitter `Create` function accepts the data from `Collect` and a type parameter of `activity`, `actor`, `semantic` or `twomode` that specifies the type of network to create from the collected data. `Create` produces two dataframes, one for network `nodes` and one for node relations or `edges` in the network. These can then undergo further processing as per the [supplemental functions](#supplemental-functions) section or be passed to the `Graph` function that creates an `igraph` object.
 
@@ -206,10 +206,12 @@ semanticNetwork <- twitterData %>%
 #> + attr: type (g/c), name (v/c), n (v/n), type (v/c), label (v/c), weight (e/n)
 ```
 
-##### Twomode network
+##### 2-mode network
 
 Nodes are twitter users and hashtags, edges represent the use of a hashtag or the reference to another user in a tweet.
 ``` r
+install.packages("tidytext") # install additional required packages
+
 twomodeNetwork <- twitterData %>%
   Create("twomode", 
          removeTermsOrHashtags = c("#auspol"),
@@ -219,7 +221,7 @@ twomodeNetwork <- twitterData %>%
   summary()
 ```
 ``` r
-#> Generating twitter twomode network...
+#> Generating twitter 2-mode network...
 #> Removing terms and hashtags: #auspol
 #> -------------------------
 #> collected tweets  | 100
@@ -231,7 +233,7 @@ twomodeNetwork <- twitterData %>%
 #> -------------------------
 #> Done.
 #> Creating igraph network graph...
-#> GRAPHML file written: D:/wd/2020-04-20_003907-TwitterTwomode.graphml
+#> GRAPHML file written: D:/wd/2020-04-20_003907-Twitter2mode.graphml
 #> Done.
 #> IGRAPH 86847fb DNW- 176 166 -- 
 #> + attr: type (g/c), name (v/c), user_id (v/c), label (v/c), weight (e/n)

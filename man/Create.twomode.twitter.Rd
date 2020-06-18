@@ -2,7 +2,7 @@
 % Please edit documentation in R/Create.twomode.twitter.R
 \name{Create.twomode.twitter}
 \alias{Create.twomode.twitter}
-\title{Create twitter twomode network}
+\title{Create twitter 2-mode network}
 \usage{
 \method{Create}{twomode.twitter}(
   datasource,
@@ -33,13 +33,20 @@ nodes with matching name. Default is \code{NULL} to remove none.}
 Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
-Creates a twomode network from tweets returned from the twitter search query. In this network there are 
+Creates a 2-mode network from tweets returned from the twitter search query. In this network there are 
 two types of nodes, twitter users who authored or were mentioned in collected tweets and hashtags found within
 tweets. Network edges represent a users tweets that contain hashtags or mention users screen names.
+
+The creation of twitter 2-mode networks requires text processing and the tokenization of tweets. As such
+this function requires the additional installation of the \pkg{tidytext} package to achieve this.
 }
 \examples{
 \dontrun{
-# create a twitter twomode network graph removing the hashtag '#auspol' as it was used in 
+# twitter 2-mode network creation additionally requires the tidytext package
+# for working with text data
+install.packages("tidytext")
+
+# create a twitter 2-mode network graph removing the hashtag '#auspol' as it was used in 
 # the twitter search query
 twomodeNetwork <- twitterData \%>\% 
                   Create("twomode", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.13</span>
       </span>
     </div>
 
@@ -133,7 +133,7 @@
 <p>Install the latest release via GitHub (v0.29.12):</p>
 <div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"https://github.com/vosonlab/vosonSML/releases/download/v0.29.12/vosonSML-0.29.12.tar.gz"</span>,
   <span class="kw">repo</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"source"</span>)</pre></div>
-<p>Install the latest development version (v0.29.12):</p>
+<p>Install the latest development version (v0.29.13):</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="co"># library(devtools)</span>
 <span class="kw pkg">devtools</span><span class="kw ns">::</span><span class="fu">install_github</span>(<span class="st">"vosonlab/vosonSML"</span>)</pre></div>
 </div>
@@ -199,9 +199,9 @@
 #&gt; Collected 100 tweets.
 #&gt; Done.</pre></div>
 </div>
-<div id="create-twitter-activity-actor-semantic-and-twomode-network-graphs" class="section level4">
+<div id="create-twitter-activity-actor-semantic-and-2-mode-network-graphs" class="section level4">
 <h4 class="hasAnchor">
-<a href="#create-twitter-activity-actor-semantic-and-twomode-network-graphs" class="anchor"></a>‘Create’ twitter ‘activity’, ‘actor’, ‘semantic’ and ‘twomode’ network graphs</h4>
+<a href="#create-twitter-activity-actor-semantic-and-2-mode-network-graphs" class="anchor"></a>‘Create’ twitter ‘activity’, ‘actor’, ‘semantic’ and ‘2-mode’ network graphs</h4>
 <p>The twitter <code>Create</code> function accepts the data from <code>Collect</code> and a type parameter of <code>activity</code>, <code>actor</code>, <code>semantic</code> or <code>twomode</code> that specifies the type of network to create from the collected data. <code>Create</code> produces two dataframes, one for network <code>nodes</code> and one for node relations or <code>edges</code> in the network. These can then undergo further processing as per the <a href="#supplemental-functions">supplemental functions</a> section or be passed to the <code>Graph</code> function that creates an <code>igraph</code> object.</p>
 <div id="activity-network" class="section level5">
 <h5 class="hasAnchor">
@@ -294,18 +294,20 @@
 #&gt; IGRAPH ae1da92 UNWB 199 95 -- 
 #&gt; + attr: type (g/c), name (v/c), n (v/n), type (v/c), label (v/c), weight (e/n)</pre></div>
 </div>
-<div id="twomode-network" class="section level5">
+<div id="2-mode-network" class="section level5">
 <h5 class="hasAnchor">
-<a href="#twomode-network" class="anchor"></a>Twomode network</h5>
+<a href="#2-mode-network" class="anchor"></a>2-mode network</h5>
 <p>Nodes are twitter users and hashtags, edges represent the use of a hashtag or the reference to another user in a tweet.</p>
-<div class="sourceCode" id="cb14"><pre class="r"><span class="no">twomodeNetwork</span> <span class="kw">&lt;-</span> <span class="no">twitterData</span> <span class="kw">%&gt;%</span>
+<div class="sourceCode" id="cb14"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"tidytext"</span>) <span class="co"># install additional required packages</span>
+
+<span class="no">twomodeNetwork</span> <span class="kw">&lt;-</span> <span class="no">twitterData</span> <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/Create.html">Create</a></span>(<span class="st">"twomode"</span>,
          <span class="kw">removeTermsOrHashtags</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#auspol"</span>),
          <span class="kw">weighted</span> <span class="kw">=</span> <span class="fl">TRUE</span>,
          <span class="kw">verbose</span> <span class="kw">=</span> <span class="fl">TRUE</span>) <span class="kw">%&gt;%</span>
   <span class="fu"><a href="reference/vosonSML-colon-colon-Graph.html">Graph</a></span>() <span class="kw">%&gt;%</span>
   <span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>()</pre></div>
-<div class="sourceCode" id="cb15"><pre class="r">#&gt; Generating twitter twomode network...
+<div class="sourceCode" id="cb15"><pre class="r">#&gt; Generating twitter 2-mode network...
 #&gt; Removing terms and hashtags: #auspol
 #&gt; -------------------------
 #&gt; collected tweets  | 100
@@ -317,7 +319,7 @@
 #&gt; -------------------------
 #&gt; Done.
 #&gt; Creating igraph network graph...
-#&gt; GRAPHML file written: D:/wd/2020-04-20_003907-TwitterTwomode.graphml
+#&gt; GRAPHML file written: D:/wd/2020-04-20_003907-Twitter2mode.graphml
 #&gt; Done.
 #&gt; IGRAPH 86847fb DNW- 176 166 -- 
 #&gt; + attr: type (g/c), name (v/c), user_id (v/c), label (v/c), weight (e/n)</pre></div>
@@ -616,7 +618,7 @@ actorNetwork &lt;- actorNetwork %&gt;%
 <li><a href="https://CRAN.R-project.org/package=vosonSML"><img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="Downloads"></a></li>
 <li><a href="https://CRAN.R-project.org/package=vosonSML"><img src="https://cranlogs.r-pkg.org/badges/grand-total/vosonSML" alt="Total"></a></li>
 <li><a href="https://github.com/vosonlab/vosonSML/releases"><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&amp;colorB=8065ac" alt="Github Release"></a></li>
-<li><a href="https://github.com/vosonlab/vosonSML"><img src="https://img.shields.io/static/v1?label=dev&amp;message=v0.29.12&amp;color=659DBD&amp;logo=github" alt="Dev"></a></li>
+<li><a href="https://github.com/vosonlab/vosonSML"><img src="https://img.shields.io/static/v1?label=dev&amp;message=v0.29.13&amp;color=659DBD&amp;logo=github" alt="Dev"></a></li>
 <li><a href="https://github.com/vosonlab/vosonSML/commits/master"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&amp;color=659DBD&amp;logo=github" alt="Last Commit"></a></li>
 </ul>
 </div>

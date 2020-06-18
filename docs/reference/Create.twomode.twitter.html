@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create twitter twomode network — Create.twomode.twitter • vosonSML</title>
+<title>Create twitter 2-mode network — Create.twomode.twitter • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,10 +48,12 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Create twitter twomode network — Create.twomode.twitter" />
-<meta property="og:description" content="Creates a twomode network from tweets returned from the twitter search query. In this network there are 
+<meta property="og:title" content="Create twitter 2-mode network — Create.twomode.twitter" />
+<meta property="og:description" content="Creates a 2-mode network from tweets returned from the twitter search query. In this network there are 
 two types of nodes, twitter users who authored or were mentioned in collected tweets and hashtags found within
-tweets. Network edges represent a users tweets that contain hashtags or mention users screen names." />
+tweets. Network edges represent a users tweets that contain hashtags or mention users screen names.
+The creation of twitter 2-mode networks requires text processing and the tokenization of tweets. As such
+this function requires the additional installation of the tidytext package to achieve this." />
 
 
 
@@ -83,7 +85,7 @@ tweets. Network edges represent a users tweets that contain hashtags or mention 
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.13</span>
       </span>
     </div>
 
@@ -156,15 +158,17 @@ tweets. Network edges represent a users tweets that contain hashtags or mention 
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create twitter twomode network</h1>
+    <h1>Create twitter 2-mode network</h1>
     <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.twomode.twitter.R'><code>R/Create.twomode.twitter.R</code></a></small>
     <div class="hidden name"><code>Create.twomode.twitter.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates a twomode network from tweets returned from the twitter search query. In this network there are 
+    <p>Creates a 2-mode network from tweets returned from the twitter search query. In this network there are 
 two types of nodes, twitter users who authored or were mentioned in collected tweets and hashtags found within
 tweets. Network edges represent a users tweets that contain hashtags or mention users screen names.</p>
+<p>The creation of twitter 2-mode networks requires text processing and the tokenization of tweets. As such
+this function requires the additional installation of the <span class="pkg">tidytext</span> package to achieve this.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for twomode.twitter</span>
@@ -215,7 +219,11 @@ nodes with matching name. Default is <code>NULL</code> to remove none.</p></td>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># create a twitter twomode network graph removing the hashtag '#auspol' as it was used in </span>
+<span class='co'># twitter 2-mode network creation additionally requires the tidytext package</span>
+<span class='co'># for working with text data</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span>(<span class='st'>"tidytext"</span>)
+
+<span class='co'># create a twitter 2-mode network graph removing the hashtag '#auspol' as it was used in </span>
 <span class='co'># the twitter search query</span>
 <span class='no'>twomodeNetwork</span> <span class='kw'>&lt;-</span> <span class='no'>twitterData</span> <span class='kw'>%&gt;%</span>
                   <span class='fu'><a href='Create.html'>Create</a></span>(<span class='st'>"twomode"</span>, <span class='kw'>removeTermsOrHashtags</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"#auspol"</span>), <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)

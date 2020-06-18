@@ -188,7 +188,7 @@ Graph.twomode.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...
   
   g <- set_graph_attr(g, "type", "twitter")
   
-  graphOutputFile(g, "graphml", writeToFile, "TwitterTwomode")
+  graphOutputFile(g, "graphml", writeToFile, "Twitter2mode")
   cat("Done.\n")
   
   g  

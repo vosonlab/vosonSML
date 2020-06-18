@@ -38,7 +38,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.12</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.13</span>
       </span>
     </div>
 
@@ -115,7 +115,7 @@
             <h3 class="subtitle">VOSON Lab, Australian National University</h3>
                         <h4 class="author">Robert Ackland, Bryan Gertzel, Francisca Borquez</h4>
             
-            <h4 class="date">14 June, 2020</h4>
+            <h4 class="date">18 June, 2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/master/vignettes/Intro-to-vosonSML.Rmd"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
       <div class="hidden name"><code>Intro-to-vosonSML.Rmd</code></div>
@@ -191,7 +191,7 @@
 <div id="creating-twitter-networks" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-twitter-networks" class="anchor"></a>Creating Twitter Networks</h2>
-<p>It is currently possible to create four types of networks using Twitter data: (1) <em>actor network</em>; (2) <em>activity network</em>; (3) <em>two-mode network</em> and (4) <em>semantic network</em>.</p>
+<p>It is currently possible to create four types of networks using Twitter data: (1) <em>actor network</em>; (2) <em>activity network</em>; (3) <em>2-mode network</em> and (4) <em>semantic network</em>.</p>
 <div id="actor-network" class="section level3">
 <h3 class="hasAnchor">
 <a href="#actor-network" class="anchor"></a>Actor Network</h3>
@@ -323,10 +323,10 @@ IGRAPH e60c486 DN-- 1408 662 --
 </div>
 <p>It should be noted that a limitation of the Twitter API is that retweet chains are not provided. That is: if user <em>i</em> tweeted an original tweet, and then user <em>j</em> retweeted this tweet, and user <em>k</em> retweeted <em>j</em>’s retweet, the activity network will show edges connecting the two retweets to the original tweet.</p>
 </div>
-<div id="two-mode-network" class="section level3">
+<div id="mode-network" class="section level3">
 <h3 class="hasAnchor">
-<a href="#two-mode-network" class="anchor"></a>Two-mode Network</h3>
-<p>In the Twitter <em>two-mode network</em>, the two types of nodes are actors (Twitter users) and hashtags. There is an edge from user <em>i</em> to hashtag <em>j</em> if user <em>i</em> authored a tweet containing hashtag <em>j</em>.</p>
+<a href="#mode-network" class="anchor"></a>2-mode Network</h3>
+<p>In the Twitter <em>2-mode network</em>, the two types of nodes are actors (Twitter users) and hashtags. There is an edge from user <em>i</em> to hashtag <em>j</em> if user <em>i</em> authored a tweet containing hashtag <em>j</em>.</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">twomodeNetwork</span> <span class="kw">&lt;-</span> <span class="no">twitterData</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span>(<span class="st">"twomode"</span>, <span class="kw">removeTermsOrHashtags</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#auspol"</span>))
 <span class="no">twomodeGraph</span> <span class="kw">&lt;-</span> <span class="no">twomodeNetwork</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/vosonSML-colon-colon-Graph.html">Graph</a></span>(<span class="kw">writeToFile</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p><code><a href="../reference/Create.html">Create("twomode")</a></code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity). Note that in this example, the <code>removeTermsOrHashtags</code> argument was used to exclude ‘#auspol’, since by construction all tweets contained this hashtag.</p>
@@ -363,7 +363,7 @@ IGRAPH 68bd240 DN-- 1146 1675 --
  [2] xxxx -&gt; #australianbushfiredisaster 
 [snip]
 + ... omitted several edges</pre></body></html></div>
-<p>The Twitter two-model network has a graph attribute <code>type</code> (set to “twitter”). The node attributes are: <code>name</code> (hashtag or Twitter user ID), <code>display_name</code> (hashtag or Twitter handle or screen name), <code>label</code> (for users, a concatenation of <code>name</code> and <code>display_name</code>, while for hashtags it is <code>name</code>). The edge attributes are: <code>edge_type</code> (‘hashtag’), <code>timestamp</code> (timestamp of the tweet that led to the edge), <code>status_id</code> (Twitter ID of the tweet that led to the edge).</p>
+<p>The Twitter 2-model network has a graph attribute <code>type</code> (set to “twitter”). The node attributes are: <code>name</code> (hashtag or Twitter user ID), <code>display_name</code> (hashtag or Twitter handle or screen name), <code>label</code> (for users, a concatenation of <code>name</code> and <code>display_name</code>, while for hashtags it is <code>name</code>). The edge attributes are: <code>edge_type</code> (‘hashtag’), <code>timestamp</code> (timestamp of the tweet that led to the edge), <code>status_id</code> (Twitter ID of the tweet that led to the edge).</p>
 <div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">ind</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span>(<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html">degree</a></span>(<span class="no">twomodeGraph</span>, <span class="kw">mode</span><span class="kw">=</span><span class="st">"in"</span>), <span class="kw">decreasing</span><span class="kw">=</span><span class="fl">TRUE</span>)[<span class="fl">1</span>:<span class="fl">5</span>] <span class="co"># top-5 hashtags</span>
 <span class="co"># users who tweet with these hashtags</span>
 <span class="no">ind2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="no">ind</span>, <span class="kw">function</span>(<span class="no">x</span>){<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/neighbors.html">neighbors</a></span>(<span class="no">twomodeGraph</span>, <span class="no">x</span>, <span class="kw">mode</span><span class="kw">=</span><span class="st">"in"</span>)}))
@@ -376,7 +376,7 @@ IGRAPH 68bd240 DN-- 1146 1675 --
      <span class="kw">vertex.label.color</span><span class="kw">=</span><span class="st">"red"</span>)
 <span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span>()</pre></body></html></div>
 <div class="figure">
-<img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/twitter_twomode.png" alt=""><p class="caption">Twitter twomode network - top-5 hashtags, and the users who tweeted them</p>
+<img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/twitter_twomode.png" alt=""><p class="caption">Twitter 2-mode network - top-5 hashtags, and the users who tweeted them</p>
 </div>
 </div>
 <div id="semantic-network" class="section level3">
