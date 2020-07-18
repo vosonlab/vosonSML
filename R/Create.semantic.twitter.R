@@ -55,9 +55,9 @@
 #' 
 #' @examples
 #' \dontrun{
-#' # twitter semantic network creation additionally requires the tidyr and tidytext packages
+#' # twitter semantic network creation additionally requires the tidyr, tidytext and stopwords packages
 #' # for working with text data
-#' install.packages(c("tidytext", "tidyr"))
+#' install.packages(c("tidyr", "tidytext", "stopwords"))
 #' 
 #' # create a twitter semantic network graph removing the hashtag '#auspol' and using the
 #' # top 2% frequently occurring words and 10% most frequently occurring hashtags as nodes

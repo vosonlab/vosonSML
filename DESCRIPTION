@@ -28,6 +28,7 @@ Imports:
 Suggests:
     knitr,
     rmarkdown,
+    stopwords,
     testthat,
     tictoc,
     tidyr,
@@ -37,7 +38,7 @@ Encoding: UTF-8
 Author: Timothy Graham, Robert Ackland, Chung-hong Chan, Bryan Gertzel
 Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
 License: GPL (>= 3)
-RoxygenNote: 7.1.0
+RoxygenNote: 7.1.1
 NeedsCompilation: no
 VignetteBuilder: knitr
 URL: https://github.com/vosonlab/vosonSML

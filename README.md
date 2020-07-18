@@ -18,14 +18,14 @@ Unfortunately we are no longer able to maintain `facebook` and `instagram` colle
 
 ## Installation
 
-Install the latest release via CRAN (v0.29.10):
+Install the latest release via CRAN (v0.29.13):
 ``` r
 install.packages("vosonSML")
 ```
 
-Install the latest release via GitHub (v0.29.12):
+Install the latest release via GitHub (v0.29.13):
 ``` r
-install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.12/vosonSML-0.29.12.tar.gz",
+install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.13/vosonSML-0.29.13.tar.gz",
   repo = NULL, type = "source")
 ```
 
@@ -168,7 +168,7 @@ actorNetwork <- twitterData %>%
 
 Nodes are concepts represented as common words and hashtags, edges represent the occurence of a word and hashtag in the same tweet.
 ``` r
-install.packages(c("tidytext", "tidyr")) # install additional required packages
+install.packages(c("tidyr", "tidytext", "stopwords")) # install additional required packages
 
 # create a semantic network excluding the hashtag #auspol, include only the top 10%
 # most frequent words and 20% most frequent hashtags as nodes
@@ -187,22 +187,22 @@ semanticNetwork <- twitterData %>%
 #> -------------------------
 #> collected tweets           | 100
 #> tokens                     | 2737
-#> removed specified          | 95 
-#> removed users              | 97 
-#> hashtag count              | 82 
-#> unique hashtags            | 60 
-#> top 20% hashtags (freq>=2) | 13 
+#> removed specified          | 95
+#> removed users              | 97
+#> hashtag count              | 82
+#> unique hashtags            | 60
+#> top 20% hashtags (freq>=2) | 13
 #> term count                 | 1159
 #> unique terms               | 836
 #> top 10% terms (freq>=2)    | 186
 #> nodes                      | 199
-#> edges                      | 95 
+#> edges                      | 95
 #> -------------------------
 #> Done.
 #> Creating igraph network graph...
 #> GRAPHML file written: D:/wd/2020-04-20_003304-TwitterSemantic.graphml
 #> Done.
-#> IGRAPH ae1da92 UNWB 199 95 -- 
+#> IGRAPH ae1da92 UNWB 199 95 --
 #> + attr: type (g/c), name (v/c), n (v/n), type (v/c), label (v/c), weight (e/n)
 ```
 

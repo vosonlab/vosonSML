@@ -282,9 +282,9 @@ them occurring in tweet text with other top percentage frequency terms.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='co'># twitter semantic network creation additionally requires the tidyr and tidytext packages</span>
+<span class='co'># twitter semantic network creation additionally requires the tidyr, tidytext and stopwords packages</span>
 <span class='co'># for working with text data</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"tidytext"</span>, <span class='st'>"tidyr"</span>))
+<span class='fu'><a href='https://rdrr.io/r/utils/install.packages.html'>install.packages</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"tidyr"</span>, <span class='st'>"tidytext"</span>, <span class='st'>"stopwords"</span>))
 
 <span class='co'># create a twitter semantic network graph removing the hashtag '#auspol' and using the</span>
 <span class='co'># top 2% frequently occurring words and 10% most frequently occurring hashtags as nodes</span>
