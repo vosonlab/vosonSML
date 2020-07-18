@@ -108,14 +108,14 @@
 
       
 
-      </header><script src="Intro-to-vosonSML_files/header-attrs-2.2/header-attrs.js"></script><div class="row">
+      </header><script src="Intro-to-vosonSML_files/header-attrs-2.3/header-attrs.js"></script><script src="Intro-to-vosonSML_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to vosonSML</h1>
             <h3 class="subtitle">VOSON Lab, Australian National University</h3>
                         <h4 class="author">Robert Ackland, Bryan Gertzel, Francisca Borquez</h4>
             
-            <h4 class="date">18 June, 2020</h4>
+            <h4 class="date">17 July, 2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/master/vignettes/Intro-to-vosonSML.Rmd"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
       <div class="hidden name"><code>Intro-to-vosonSML.Rmd</code></div>
@@ -327,7 +327,10 @@ IGRAPH e60c486 DN-- 1408 662 --
 <h3 class="hasAnchor">
 <a href="#mode-network" class="anchor"></a>2-mode Network</h3>
 <p>In the Twitter <em>2-mode network</em>, the two types of nodes are actors (Twitter users) and hashtags. There is an edge from user <em>i</em> to hashtag <em>j</em> if user <em>i</em> authored a tweet containing hashtag <em>j</em>.</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">twomodeNetwork</span> <span class="kw">&lt;-</span> <span class="no">twitterData</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span>(<span class="st">"twomode"</span>, <span class="kw">removeTermsOrHashtags</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#auspol"</span>))
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="co"># additional required packages</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"tidytext"</span>)
+
+<span class="no">twomodeNetwork</span> <span class="kw">&lt;-</span> <span class="no">twitterData</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span>(<span class="st">"twomode"</span>, <span class="kw">removeTermsOrHashtags</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#auspol"</span>))
 <span class="no">twomodeGraph</span> <span class="kw">&lt;-</span> <span class="no">twomodeNetwork</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/vosonSML-colon-colon-Graph.html">Graph</a></span>(<span class="kw">writeToFile</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
 <p><code><a href="../reference/Create.html">Create("twomode")</a></code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity). Note that in this example, the <code>removeTermsOrHashtags</code> argument was used to exclude ‘#auspol’, since by construction all tweets contained this hashtag.</p>
 <div class="sourceCode" id="cb23"><html><body><pre class="r">&gt; twomodeNetwork
@@ -383,7 +386,10 @@ IGRAPH 68bd240 DN-- 1146 1675 --
 <h3 class="hasAnchor">
 <a href="#semantic-network" class="anchor"></a>Semantic Network</h3>
 <p>In the Twitter <em>semantic network</em>, nodes represent entities extracted from the tweet text: common words, hashtags and usernames. Edges reflect co-occurrence i.e. there is an edge between entities <em>i</em> and <em>j</em> if they both occurred in the same tweet.</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="no">semanticNetwork</span> <span class="kw">&lt;-</span> <span class="no">twitterData</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span>(<span class="st">"semantic"</span>,
+<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="co"># additional required packages</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"tidyr"</span>, <span class="st">"tidytext"</span>, <span class="st">"stopwords"</span>))
+
+<span class="no">semanticNetwork</span> <span class="kw">&lt;-</span> <span class="no">twitterData</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span>(<span class="st">"semantic"</span>,
                                           <span class="kw">removeTermsOrHashtags</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#auspol"</span>, <span class="st">"auspol"</span>, <span class="st">"australia"</span>),
                                           <span class="kw">termFreq</span> <span class="kw">=</span> <span class="fl">5</span>)
 <span class="no">semanticGraph</span> <span class="kw">&lt;-</span> <span class="no">semanticNetwork</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="../reference/vosonSML-colon-colon-Graph.html">Graph</a></span>(<span class="kw">writeToFile</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">directed</span> <span class="kw">=</span> <span class="fl">FALSE</span>)</pre></body></html></div>

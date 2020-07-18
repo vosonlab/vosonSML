@@ -128,10 +128,10 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Install the latest release via CRAN (v0.29.10):</p>
+<p>Install the latest release via CRAN (v0.29.13):</p>
 <div class="sourceCode" id="cb1"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"vosonSML"</span>)</pre></div>
-<p>Install the latest release via GitHub (v0.29.12):</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"https://github.com/vosonlab/vosonSML/releases/download/v0.29.12/vosonSML-0.29.12.tar.gz"</span>,
+<p>Install the latest release via GitHub (v0.29.13):</p>
+<div class="sourceCode" id="cb2"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="st">"https://github.com/vosonlab/vosonSML/releases/download/v0.29.13/vosonSML-0.29.13.tar.gz"</span>,
   <span class="kw">repo</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">type</span> <span class="kw">=</span> <span class="st">"source"</span>)</pre></div>
 <p>Install the latest development version (v0.29.13):</p>
 <div class="sourceCode" id="cb3"><pre class="r"><span class="co"># library(devtools)</span>
@@ -259,7 +259,7 @@
 <h5 class="hasAnchor">
 <a href="#semantic-network" class="anchor"></a>Semantic network</h5>
 <p>Nodes are concepts represented as common words and hashtags, edges represent the occurence of a word and hashtag in the same tweet.</p>
-<div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"tidytext"</span>, <span class="st">"tidyr"</span>)) <span class="co"># install additional required packages</span>
+<div class="sourceCode" id="cb12"><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"tidyr"</span>, <span class="st">"tidytext"</span>, <span class="st">"stopwords"</span>)) <span class="co"># install additional required packages</span>
 
 <span class="co"># create a semantic network excluding the hashtag #auspol, include only the top 10%</span>
 <span class="co"># most frequent words and 20% most frequent hashtags as nodes</span>
@@ -276,22 +276,22 @@
 #&gt; -------------------------
 #&gt; collected tweets           | 100
 #&gt; tokens                     | 2737
-#&gt; removed specified          | 95 
-#&gt; removed users              | 97 
-#&gt; hashtag count              | 82 
-#&gt; unique hashtags            | 60 
-#&gt; top 20% hashtags (freq&gt;=2) | 13 
+#&gt; removed specified          | 95
+#&gt; removed users              | 97
+#&gt; hashtag count              | 82
+#&gt; unique hashtags            | 60
+#&gt; top 20% hashtags (freq&gt;=2) | 13
 #&gt; term count                 | 1159
 #&gt; unique terms               | 836
 #&gt; top 10% terms (freq&gt;=2)    | 186
 #&gt; nodes                      | 199
-#&gt; edges                      | 95 
+#&gt; edges                      | 95
 #&gt; -------------------------
 #&gt; Done.
 #&gt; Creating igraph network graph...
 #&gt; GRAPHML file written: D:/wd/2020-04-20_003304-TwitterSemantic.graphml
 #&gt; Done.
-#&gt; IGRAPH ae1da92 UNWB 199 95 -- 
+#&gt; IGRAPH ae1da92 UNWB 199 95 --
 #&gt; + attr: type (g/c), name (v/c), n (v/n), type (v/c), label (v/c), weight (e/n)</pre></div>
 </div>
 <div id="2-mode-network" class="section level5">

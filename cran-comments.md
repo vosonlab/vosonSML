@@ -1,7 +1,12 @@
 ## Test environments
-* local MacOS X, R 3.6.0
-* local Windows 10, R 3.6.3
-* R-Devel r78276 Windows (Winbuilder)
+* local MacOS X, R 4.0.2
+* local Windows 10, R 4.0.2
+* Winbuilder (R-release, R-oldrelease)
+* R-Devel r78868 Windows (Winbuilder)
 
 ## R CMD check results
 0 errors | 0 warnings
+
+R-Devel error:
+* checking package dependencies ... ERROR
+Package required but not available: 'igraph'

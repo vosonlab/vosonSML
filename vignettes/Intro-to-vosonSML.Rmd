@@ -294,6 +294,9 @@ It should be noted that a limitation of the Twitter API is that retweet chains a
 In the Twitter *2-mode network*, the two types of nodes are actors (Twitter users) and hashtags. There is an edge from user *i* to hashtag *j* if user *i* authored a tweet containing hashtag *j*. 
 
 ```{r eval=FALSE}
+# additional required packages
+install.packages("tidytext")
+
 twomodeNetwork <- twitterData %>% Create("twomode", removeTermsOrHashtags = c("#auspol"))
 twomodeGraph <- twomodeNetwork %>% Graph(writeToFile = TRUE)
 ``` 
@@ -364,6 +367,9 @@ dev.off()
 In the Twitter *semantic network*, nodes represent entities extracted from the tweet text: common words, hashtags and usernames. Edges reflect co-occurrence i.e. there is an edge between entities *i* and *j* if they both occurred in the same tweet. 
 
 ```{r eval=FALSE}
+# additional required packages
+install.packages(c("tidyr", "tidytext", "stopwords"))
+
 semanticNetwork <- twitterData %>% Create("semantic",
                                           removeTermsOrHashtags = c("#auspol", "auspol", "australia"),
                                           termFreq = 5)
