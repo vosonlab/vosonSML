@@ -31,8 +31,8 @@ install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.1
 
 Install the latest development version (v0.29.13):
 ``` r
-# library(devtools)
-devtools::install_github("vosonlab/vosonSML")
+# library(remotes)
+remotes::install_github("vosonlab/vosonSML")
 ```
 
 ## Getting started
@@ -531,4 +531,4 @@ For more detailed information about functions and their parameters, please refer
 
 ## Special thanks
 
-This package would not be possible without key packages by other authors in the R community, particularly: [igraph](https://github.com/igraph/rigraph), [rtweet](https://github.com/mkearney/rtweet), [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [data.table](https://github.com/Rdatatable/data.table), [magrittr](https://CRAN.R-project.org/package=magrittr), [httr](https://github.com/hadley/httr) and [dplyr](https://github.com/hadley/dplyr).
+This package would not be possible without key packages by other authors in the R community, particularly: [data.table](https://github.com/Rdatatable/data.table), [dplyr](https://github.com/hadley/dplyr), [httr](https://github.com/hadley/httr), [igraph](https://github.com/igraph/rigraph), [magrittr](https://CRAN.R-project.org/package=magrittr), [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [rtweet](https://github.com/mkearney/rtweet) and [tidytext](https://github.com/juliasilge/tidytext).
