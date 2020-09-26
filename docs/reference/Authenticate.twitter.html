@@ -89,7 +89,7 @@ https://developer.twitter.com/en/docs/basics/authentication/overview/oauth." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.14.9000</span>
       </span>
     </div>
 
@@ -180,15 +180,15 @@ users to access the twitter API with vosonSML via a single developer account and
     </div>
 
     <pre class="usage"><span class='co'># S3 method for twitter</span>
-<span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(
-  <span class='no'>socialmedia</span>,
-  <span class='no'>appName</span>,
-  <span class='no'>apiKey</span>,
-  <span class='no'>apiSecret</span>,
-  <span class='no'>accessToken</span>,
-  <span class='no'>accessTokenSecret</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'><a href='Authenticate.html'>Authenticate</a></span><span class='op'>(</span>
+  <span class='va'>socialmedia</span>,
+  <span class='va'>appName</span>,
+  <span class='va'>apiKey</span>,
+  <span class='va'>apiSecret</span>,
+  <span class='va'>accessToken</span>,
+  <span class='va'>accessTokenSecret</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -229,24 +229,26 @@ users to access the twitter API with vosonSML via a single developer account and
 <code>$socialmedia</code> set to <code>"twitter"</code>. Object has the class names <code>"credential"</code> and <code>"twitter"</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># twitter authentication using developer app API keys</span>
-<span class='no'>myDevKeys</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>appName</span> <span class='kw'>=</span> <span class='st'>"My App"</span>, <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>,
-  <span class='kw'>apiSecret</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>, <span class='kw'>accessToken</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>,
-  <span class='kw'>accessTokenSecret</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>)
+<span class='va'>myDevKeys</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>appName <span class='op'>=</span> <span class='st'>"My App"</span>, apiKey <span class='op'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>,
+  apiSecret <span class='op'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>, accessToken <span class='op'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>,
+  accessTokenSecret <span class='op'>=</span> <span class='st'>"xxxxxxxxxxxx"</span><span class='op'>)</span>
 
-<span class='no'>twitterAuth</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='st'>"twitter"</span>, <span class='kw'>appName</span> <span class='kw'>=</span> <span class='no'>myDevKeys</span>$<span class='no'>appName</span>,
-  <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='no'>myDevKeys</span>$<span class='no'>apiKey</span>, <span class='kw'>apiSecret</span> <span class='kw'>=</span> <span class='no'>myDevKeys</span>$<span class='no'>apiSecret</span>, <span class='kw'>accessToken</span> <span class='kw'>=</span> <span class='no'>myDevKeys</span>$<span class='no'>accessToken</span>,
-  <span class='kw'>accessTokenSecret</span> <span class='kw'>=</span> <span class='no'>myDevKeys</span>$<span class='no'>accessTokenSecret</span>)
+<span class='va'>twitterAuth</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span><span class='op'>(</span><span class='st'>"twitter"</span>, appName <span class='op'>=</span> <span class='va'>myDevKeys</span><span class='op'>$</span><span class='va'>appName</span>, 
+  apiKey <span class='op'>=</span> <span class='va'>myDevKeys</span><span class='op'>$</span><span class='va'>apiKey</span>, apiSecret <span class='op'>=</span> <span class='va'>myDevKeys</span><span class='op'>$</span><span class='va'>apiSecret</span>, accessToken <span class='op'>=</span> <span class='va'>myDevKeys</span><span class='op'>$</span><span class='va'>accessToken</span>, 
+  accessTokenSecret <span class='op'>=</span> <span class='va'>myDevKeys</span><span class='op'>$</span><span class='va'>accessTokenSecret</span><span class='op'>)</span>
 
 <span class='co'># twitter authentication via authorization of an app to their user account</span>
 <span class='co'># requires the apps consumer API keys</span>
 <span class='co'># apiKey and apiSecret parameters are equivalent to the apps consumer key and secret</span>
 <span class='co'># will open a web browser to twitter prompting the user to log in and authorize the app</span>
-<span class='no'>twitterAuth</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span>(<span class='st'>"twitter"</span>, <span class='kw'>appName</span> <span class='kw'>=</span> <span class='st'>"An App"</span>,
-  <span class='kw'>apiKey</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>, <span class='kw'>apiSecret</span> <span class='kw'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>
-)
-}</div></pre>
+<span class='va'>twitterAuth</span> <span class='op'>&lt;-</span> <span class='fu'><a href='Authenticate.html'>Authenticate</a></span><span class='op'>(</span><span class='st'>"twitter"</span>, appName <span class='op'>=</span> <span class='st'>"An App"</span>,
+  apiKey <span class='op'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>, apiSecret <span class='op'>=</span> <span class='st'>"xxxxxxxxxxxx"</span>
+<span class='op'>)</span>
+<span class='op'>}</span>
+ 
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -262,7 +264,7 @@ users to access the twitter API with vosonSML via a single developer account and
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

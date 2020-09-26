@@ -90,7 +90,7 @@ https://developers.google.com/youtube/v3/getting-started" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.13</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.29.14.9000</span>
       </span>
     </div>
 
@@ -182,14 +182,14 @@ of 100 reply comments collected per top-level comment.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for youtube</span>
-<span class='fu'><a href='Collect.html'>Collect</a></span>(
-  <span class='no'>credential</span>,
-  <span class='no'>videoIDs</span>,
-  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>maxComments</span> <span class='kw'>=</span> <span class='fl'>1e+10</span>,
-  <span class='no'>...</span>
-)</pre>
+<span class='fu'><a href='Collect.html'>Collect</a></span><span class='op'>(</span>
+  <span class='va'>credential</span>,
+  <span class='va'>videoIDs</span>,
+  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  writeToFile <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  maxComments <span class='op'>=</span> <span class='fl'>1e+10</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -235,20 +235,22 @@ greater than expected. For example, if <code>maxComments</code> is set to 10 and
 has 5 reply comments then the total number of comments collected will be 15 for that video. Comments data for 
 multiple youtube videos can be requested in a single operation, <code>maxComments</code> is applied to each individual 
 video and not the combined total of comments.</p>
-<p>To help extract video ids for videos the function <code><a href='vosonSML-colon-colon-GetYoutubeVideoIDs.html'>GetYoutubeVideoIDs</a></code> can be used. It accepts input of 
+<p>To help extract video ids for videos the function <code><a href='vosonSML::GetYoutubeVideoIDs.html'>GetYoutubeVideoIDs</a></code> can be used. It accepts input of 
 a vector or file containing video urls and creates a chracter vector suitable as input for the <code>videoIDs</code> 
 parameter.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># create a list of youtube video ids to collect on</span>
-<span class='no'>videoIDs</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vosonSML-colon-colon-GetYoutubeVideoIDs.html'>GetYoutubeVideoIDs</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"https://www.youtube.com/watch?v=xxxxxxxx"</span>,
-                                 <span class='st'>"https://youtu.be/xxxxxxxx"</span>))
+<span class='va'>videoIDs</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vosonSML::GetYoutubeVideoIDs.html'>GetYoutubeVideoIDs</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"https://www.youtube.com/watch?v=xxxxxxxx"</span>, 
+                                 <span class='st'>"https://youtu.be/xxxxxxxx"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># collect approximately 200 threads/comments for each youtube video</span>
-<span class='no'>youtubeData</span> <span class='kw'>&lt;-</span> <span class='no'>youtubeAuth</span> <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='Collect.html'>Collect</a></span>(<span class='kw'>videoIDs</span> <span class='kw'>=</span> <span class='no'>videoIDs</span>, <span class='kw'>writeToFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>maxComments</span> <span class='kw'>=</span> <span class='fl'>200</span>)
-}</div></pre>
+<span class='va'>youtubeData</span> <span class='op'>&lt;-</span> <span class='va'>youtubeAuth</span> <span class='op'>%&gt;%</span> 
+  <span class='fu'><a href='Collect.html'>Collect</a></span><span class='op'>(</span>videoIDs <span class='op'>=</span> <span class='va'>videoIDs</span>, writeToFile <span class='op'>=</span> <span class='cn'>TRUE</span>, verbose <span class='op'>=</span> <span class='cn'>FALSE</span>, maxComments <span class='op'>=</span> <span class='fl'>200</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -264,7 +266,7 @@ parameter.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

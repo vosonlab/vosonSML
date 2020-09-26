@@ -100,12 +100,9 @@ The `Collect()` function returns a tibble (an enhanced dataframe which has featu
 ...
 ```
 
-Note that if you read the Twitter dataframe from disk, you will need to modify the class values for the object before you can use it with `vosonSML`. This can be done manually or by using the handy `ImportData()` function:
+Note that if you are reading a previously saved `writeToFile` Twitter dataframe from disk, you simply need to use the `readRDS` function:
 ```{r eval=FALSE}
-twitterData <- readRDS("/path/to/data/data.rds")
-class(twitterData) <- append(class(twitterData), c("datasource", "twitter"))
-
-twitterData <- ImportData("/path/to/data/data.rds", "twitter")
+twitterData <- readRDS("2020-09-26_095354-TwitterData.rds")
 ```
 
 ## Creating Twitter Networks
@@ -504,12 +501,10 @@ Classes ‘dataource’, ‘youtube’ and 'data.frame':	603 obs. of  12 variabl
  $ VideoID              : chr  "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" ...
 ```
 
-Note that if you read the YouTube dataframe from disk, you will need to modify the class values for the object, before you can use it with `vosonSML`:
+Note that if you are reading a previously saved `writeToFile` YouTube dataframe from disk, you simply need to use the `readRDS` function:
 ```{r eval=FALSE}
-youtubeData <- readRDS("/path/to/data/data.rds")
-class(youtubeData) <- append(class(youtubeData), c("datasource", "youtube"))
+youtubeData <- readRDS("2020-09-26_095354-YoutubeData.rds")
 ```
-
 
 ## Creating YouTube Networks
 
@@ -787,10 +782,9 @@ Classes ‘tbl_df’, ‘tbl’, ‘datasource’, ‘reddit’ and 'data.frame'
  $ thread_id       : chr  "elcb9b" "elcb9b" "elcb9b" "elcb9b" ...
 ```
 
-Note that if you read the Reddit dataframe from disk, you will need to modify the class values for the object, before you can use it with `vosonSML`:
+Note that if you are reading a previously saved `writeToFile` Reddit dataframe from disk, you simply need to use the `readRDS` function:
 ```{r eval=FALSE}
-redditData <- readRDS("/path/to/data/data.rds")
-class(redditData) <- append(class(redditData), c("datasource", "reddit"))
+redditData <- readRDS("2020-09-26_095354-RedditData.rds")
 ```
 
 ## Creating Reddit Networks

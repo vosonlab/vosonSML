@@ -69,18 +69,25 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
   tryCatch({
     rtlimit <- rtweet::rate_limit(authToken, "search/tweets")
   }, error = function(e) {
-    cat("Unable to determine rate limit. retryOnRateLimit set to FALSE.\n")
-    retryOnRateLimit <<- FALSE
+    cat("Unable to determine rate limit.\n")
+    # cat("Unable to determine rate limit. retryOnRateLimit set to FALSE.\n")
+    # retryOnRateLimit <<- FALSE
   })
   
   if (!is.null(rtlimit)) {
-    remaining <- rtlimit[["remaining"]] * 100
-    cat(paste0("Requested ", numTweets, " tweets of ", remaining, " in this search rate limit.\n"))
-    if (retryOnRateLimit == TRUE & numTweets < remaining) {
-      cat("Less tweets requested than remaining limit retryOnRateLimit set to FALSE.\n")
-      retryOnRateLimit <- FALSE
+    remaining <- rtlimit[["remaining"]]
+    
+    if (!is.null(remaining) && is.numeric(remaining) && (remaining > 0)) {
+      remaining <- remaining * 100 # 100 is num tweets returned per api request
+      cat(paste0("Requested ", numTweets, " tweets of ", remaining, " in this search rate limit.\n"))
+      
+      if (retryOnRateLimit == TRUE & numTweets < remaining) {
+        cat("Less tweets requested than remaining limit retryOnRateLimit set to FALSE.\n")
+        retryOnRateLimit <- FALSE
+      }
     }
-    cat(paste0("Rate limit reset: ", rtlimit$reset_at, "\n"))   
+    cat(paste0("Rate limit reset: ", rtlimit$reset_at, "\n"))
+      
   } else {
     cat(paste0("Requested ", numTweets, " tweets.\n"))
   }
@@ -110,15 +117,14 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
       dplyr::arrange(.data$status_id)
     
     results_df$screen_name <- paste0("@", results_df$screen_name)
-    
+    cat("\n")
     printResultTable(results_df)
   }
   cat(paste0("Collected ", nrow(tweets_df), " tweets.\n"))
   
-  # rds chosen over csv to avoid flattening lists in the data
+  class(tweets_df) <- append(c("datasource", "twitter"), class(tweets_df))
   if (writeToFile) { writeOutputFile(tweets_df, "rds", "TwitterData") }
   
-  class(tweets_df) <- append(class(tweets_df), c("datasource", "twitter"))
   cat("Done.\n")
   
   tweets_df

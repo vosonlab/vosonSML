@@ -53,11 +53,11 @@ ImportData <- function(path, socialmedia, type = NULL) {
     stop("Read data is not a dataframe.", call. = FALSE)
   }
   
-  class(df) <- union(class(df), c("datasource"))
+  class(df) <- union(c("datasource"), class(df))
   class(df) <-switch(tolower(trimws(socialmedia)),
-    twitter = { union(class(df), c("twitter")) },
-    youtube = { union(class(df), c("youtube")) },
-    reddit = { union(class(df), c("reddit")) },
+    twitter = { union(c("twitter"), class(df)) },
+    youtube = { union(c("youtube"), class(df)) },
+    reddit = { union(c("reddit"), class(df)) },
     stop("Unknown social media type provided as datasource.", call. = FALSE))
   
   df

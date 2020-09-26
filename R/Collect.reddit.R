@@ -81,8 +81,6 @@ Collect.reddit <- function(credential, threadUrls, waitTime = c(3, 10), ua = get
                                  results_df$title)
       printResultTable(results_df)
       cat(paste0("Collected ", nrow(threads_df), " total comments.\n"))
-      
-      if (writeToFile) { writeOutputFile(threads_df, "rds", "RedditData") }
     } else {
       cat(paste0("No comments were collected.\n"))
     }
@@ -90,7 +88,9 @@ Collect.reddit <- function(credential, threadUrls, waitTime = c(3, 10), ua = get
     cat(paste0("Collection dataframe is null.\n"))
   }
   
-  class(threads_df) <- append(class(threads_df), c("datasource", "reddit"))
+  class(threads_df) <- append(c("datasource", "reddit"), class(threads_df))
+  if (writeToFile) { writeOutputFile(threads_df, "rds", "RedditData") }
+  
   cat("Done.\n")
   
   threads_df

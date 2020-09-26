@@ -48,20 +48,24 @@ writeOutputFile <- function(data, type = "rds", name = "File", datetime = TRUE, 
   }
   
   path <- paste0(getwd(), "/", name)
-  con <- file(path, open = "wb", encoding = "native.enc")
-  result <- tryCatch({
-    switch(type,
-      "graphml" = {
-        write.graph(data, file = con, format = "graphml")
-      }, "csv" = {
-        write.csv(data, file = con)
-      }, {
-        saveRDS(data, file = con)
-      })
-  }, error = function(e) {
-    cat(paste0("Error writing: ", path, "\n", e))
-  }, finally = { })
-  close(con)
+  
+  if (type == "rds") {
+    result <- tryCatch({
+      saveRDS(data, path)
+    }, error = function(e) {
+      cat(paste0("Error writing rds: ", path, "\n", e))
+    })
+  } else {
+    con <- file(path, open = "wb", encoding = "native.enc")
+    result <- tryCatch({
+      switch(type,
+             "graphml" = { write.graph(data, file = con, format = "graphml") },
+             "csv" = { write.csv(data, file = con) })
+    }, error = function(e) {
+      cat(paste0("Error writing: ", path, "\n", e))
+    }, finally = { })
+    close(con)
+  }
   
   if (length(result) == 0) {
     if (msg) {

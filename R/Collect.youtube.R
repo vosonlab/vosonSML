@@ -267,13 +267,13 @@ Collect.youtube <- function(credential, videoIDs, verbose = FALSE, writeToFile =
     cat(paste0("(Estimated API unit cost: ", total_api_cost, ")\n"))
   }
   
-  if (writeToFile) { writeOutputFile(dataCombined, "rds", "YoutubeData") }
-  
   #############################################################################
   # return dataframe to environment
   
   dataCombined <- tibble::as_tibble(dataCombined) # convert type to tibble for package consistency
-  class(dataCombined) <- append(class(dataCombined), c("datasource", "youtube"))
+  class(dataCombined) <- append(c("datasource", "youtube"), class(dataCombined))
+  if (writeToFile) { writeOutputFile(dataCombined, "rds", "YoutubeData") }
+  
   cat("Done.\n")
   flush.console()
   
