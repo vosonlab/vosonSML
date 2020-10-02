@@ -82,7 +82,6 @@ twitterData <- twitterAuth %>%
                        verbose = TRUE)
 ```
 
-
 The `Collect()` function takes the following arguments (when used for collecting Twitter data): `credential` (object generated from `Authenticate()` with class name "twitter"(above we pass this via the pipe), `searchTerm` (character string that specifies a Twitter search term), `searchType` (character string indicating how to filter returned tweets with options 'recent', 'mixed' or 'popular'; default type is 'recent'), `numTweets` (numeric vector that specifies how many tweets to be collected; default is 100), `includeRetweets` (whether the search should filter out retweets or not; default is TRUE), `retryOnRateLimit` (whether to automatically pause collection when the Twitter API rate limit is reached, and then restart; default is FALSE.), `writeToFile` (whether to write the returned dataframe to disk as an `.rds` file; default is FALSE), and `verbose` (whether to output information about the data collection; default is FALSE).
 
 The `Collect()` function returns a tibble (an enhanced dataframe which has features that can make working with the data easier). We can view the data we just collected (the following has been modified to anonymise the data):
@@ -100,9 +99,23 @@ The `Collect()` function returns a tibble (an enhanced dataframe which has featu
 ...
 ```
 
-Note that if you are reading a previously saved `writeToFile` Twitter dataframe from disk, you simply need to use the `readRDS` function:
+### Importing saved collection data from file
+
+If you are reading a previously saved `writeToFile` Twitter dataframe from disk, you simply need to use the `readRDS` function:
+
 ```{r eval=FALSE}
 twitterData <- readRDS("2020-09-26_095354-TwitterData.rds")
+```
+
+Note that for `vosonSML` version `0.29.13` and earlier you will need to modify the class values for the object before you can use it with `vosonSML`. This can be done manually or by using the handy `ImportData()` function:
+
+```{r eval=FALSE}
+# use import data
+twitterData <- ImportData("2020-09-26_095354-TwitterData.rds", "twitter")
+
+# or manually add class names to data
+twitterData <- readRDS("2020-09-26_095354-TwitterData.rds")
+class(twitterData) <- append(c("datasource", "twitter"), class(twitterData))
 ```
 
 ## Creating Twitter Networks
@@ -501,9 +514,23 @@ Classes ‘dataource’, ‘youtube’ and 'data.frame':	603 obs. of  12 variabl
  $ VideoID              : chr  "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" ...
 ```
 
-Note that if you are reading a previously saved `writeToFile` YouTube dataframe from disk, you simply need to use the `readRDS` function:
+### Importing saved collection data from file
+
+If you are reading a previously saved `writeToFile` YouTube dataframe from disk, you simply need to use the `readRDS` function:
+
 ```{r eval=FALSE}
 youtubeData <- readRDS("2020-09-26_095354-YoutubeData.rds")
+```
+
+Note that for `vosonSML` version `0.29.13` and earlier you will need to modify the class values for the object before you can use it with `vosonSML`. This can be done manually or by using the handy `ImportData()` function:
+
+```{r eval=FALSE}
+# use import data
+youtubeData <- ImportData("2020-09-26_095354-YoutubeData.rds", "youtube")
+
+# or manually add class names to data
+youtubeData <- readRDS("2020-09-26_095354-YoutubeData.rds")
+class(twitterData) <- append(c("datasource", "youtube"), class(youtubeData))
 ```
 
 ## Creating YouTube Networks
@@ -782,9 +809,23 @@ Classes ‘tbl_df’, ‘tbl’, ‘datasource’, ‘reddit’ and 'data.frame'
  $ thread_id       : chr  "elcb9b" "elcb9b" "elcb9b" "elcb9b" ...
 ```
 
-Note that if you are reading a previously saved `writeToFile` Reddit dataframe from disk, you simply need to use the `readRDS` function:
+### Importing saved collection data from file
+
+If you are reading a previously saved `writeToFile` Reddit dataframe from disk, you simply need to use the `readRDS` function:
+
 ```{r eval=FALSE}
 redditData <- readRDS("2020-09-26_095354-RedditData.rds")
+```
+
+Note that for `vosonSML` version `0.29.13` and earlier you will need to modify the class values for the object before you can use it with `vosonSML`. This can be done manually or by using the handy `ImportData()` function:
+
+```{r eval=FALSE}
+# use import data
+redditData <- ImportData("2020-09-26_095354-RedditData.rds", "reddit")
+
+# or manually add class names to data
+redditData <- readRDS("2020-09-26_095354-RedditData.rds")
+class(redditData) <- append(c("datasource", "reddit"), class(redditData))
 ```
 
 ## Creating Reddit Networks
