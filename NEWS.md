@@ -3,6 +3,7 @@
 ## Minor Changes
 - Prepending instead of appeneding S3 class names to `Collect` dataframes to avoid `dplyr` issues.
 - Removed `retryOnRateLimit` set to `FALSE` if rate limit cannot be determined.
+- `ImportData` will now accept a file path or a dataframe.
 
 ## Bug Fixes
 - S3 class names were being added to `Collect` dataframes after `writeToFile`. Should no longer be required to manually add class names or use `ImportData` to load RDS files to use previously saved data with `Create` functions.
