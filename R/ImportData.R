@@ -20,6 +20,7 @@
 #' 
 #' # import collected data from dataframe
 #' twitterData <- ImportData(rtweetData, "twitter")
+#' }
 #' 
 #' @aliases ImportData
 #' @name vosonSML::ImportData

@@ -5,10 +5,10 @@
 \alias{ImportData}
 \title{Import collected data previously saved to file}
 \usage{
-ImportData(path, socialmedia, type = NULL)
+ImportData(file, socialmedia, type = NULL)
 }
 \arguments{
-\item{path}{Character string. Collected data file path.}
+\item{file}{Character string or dataframe. Collected data file path or dataframe object.}
 
 \item{socialmedia}{Character string. Social media type of collected data \code{twitter}, \code{youtube} or 
 \code{reddit}.}
@@ -17,9 +17,21 @@ ImportData(path, socialmedia, type = NULL)
 \code{NULL} to use extension.}
 }
 \value{
-A dataframe with datasource class attributes.
+A dataframe with datasource and socialmedia class attributes.
 }
 \description{
-Imports collected data from file into a dataframe of class \code{datasource} and specified 
-\code{socialmedia} type that is usable by \code{\link{Create}} functions.
+Imports collected data from file or dataframe. Ensures \code{datasource} and specified 
+\code{socialmedia} type are set so data is usable by \code{\link{Create}} functions. Not required
+if collected data was collected by \code{vosonSML} and saved as an \code{rds} file, use \code{\link{readRDS}}
+instead.
+}
+\examples{
+\dontrun{
+# import collected data from file
+twitterData <- ImportData("./data.csv", "twitter")
+
+# import collected data from dataframe
+twitterData <- ImportData(rtweetData, "twitter")
+}
+
 }

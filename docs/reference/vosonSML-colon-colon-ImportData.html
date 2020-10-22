@@ -49,8 +49,10 @@
   
 
 <meta property="og:title" content="Import collected data previously saved to file — vosonSML::ImportData" />
-<meta property="og:description" content="Imports collected data from file into a dataframe of class datasource and specified 
-socialmedia type that is usable by Create functions." />
+<meta property="og:description" content="Imports collected data from file or dataframe. Ensures datasource and specified 
+socialmedia type are set so data is usable by Create functions. Not required
+if collected data was collected by vosonSML and saved as an rds file, use readRDS
+instead." />
 
 
 
@@ -161,18 +163,20 @@ socialmedia type that is usable by Create functions." />
     </div>
 
     <div class="ref-description">
-    <p>Imports collected data from file into a dataframe of class <code>datasource</code> and specified 
-<code>socialmedia</code> type that is usable by <code><a href='Create.html'>Create</a></code> functions.</p>
+    <p>Imports collected data from file or dataframe. Ensures <code>datasource</code> and specified 
+<code>socialmedia</code> type are set so data is usable by <code><a href='Create.html'>Create</a></code> functions. Not required
+if collected data was collected by <code>vosonSML</code> and saved as an <code>rds</code> file, use <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></code>
+instead.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ImportData</span><span class='op'>(</span><span class='va'>path</span>, <span class='va'>socialmedia</span>, type <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ImportData</span><span class='op'>(</span><span class='va'>file</span>, <span class='va'>socialmedia</span>, type <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>path</th>
-      <td><p>Character string. Collected data file path.</p></td>
+      <th>file</th>
+      <td><p>Character string or dataframe. Collected data file path or dataframe object.</p></td>
     </tr>
     <tr>
       <th>socialmedia</th>
@@ -188,8 +192,18 @@ socialmedia type that is usable by Create functions." />
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A dataframe with datasource class attributes.</p>
+    <p>A dataframe with datasource and socialmedia class attributes.</p>
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
+<span class='co'># import collected data from file</span>
+<span class='va'>twitterData</span> <span class='op'>&lt;-</span> <span class='fu'>ImportData</span><span class='op'>(</span><span class='st'>"./data.csv"</span>, <span class='st'>"twitter"</span><span class='op'>)</span>
+
+<span class='co'># import collected data from dataframe</span>
+<span class='va'>twitterData</span> <span class='op'>&lt;-</span> <span class='fu'>ImportData</span><span class='op'>(</span><span class='va'>rtweetData</span>, <span class='st'>"twitter"</span><span class='op'>)</span>
+<span class='op'>}</span>
+
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

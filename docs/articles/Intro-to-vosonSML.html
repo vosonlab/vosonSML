@@ -108,14 +108,14 @@
 
       
 
-      </header><script src="Intro-to-vosonSML_files/header-attrs-2.3/header-attrs.js"></script><script src="Intro-to-vosonSML_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
+      </header><script src="Intro-to-vosonSML_files/header-attrs-2.4/header-attrs.js"></script><script src="Intro-to-vosonSML_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to vosonSML</h1>
             <h3 class="subtitle">VOSON Lab, Australian National University</h3>
                         <h4 class="author">Robert Ackland, Bryan Gertzel, Francisca Borquez</h4>
             
-            <h4 class="date">03 October, 2020</h4>
+            <h4 class="date">22 October, 2020</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/master/vignettes/Intro-to-vosonSML.Rmd"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
       <div class="hidden name"><code>Intro-to-vosonSML.Rmd</code></div>
@@ -194,10 +194,10 @@
 <p>If you are reading a previously saved <code>writeToFile</code> Twitter dataframe from disk, you simply need to use the <code>readRDS</code> function:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit">
 <span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span><span class="op">)</span></pre></div>
-<p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and earlier you will need to modify the class values for the object before you can use it with <code>vosonSML</code>. This can be done manually or by using the handy <code><a href="../reference/vosonSML-colon-colon-ImportData.html">ImportData()</a></code> function:</p>
+<p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and earlier you will need to modify the class values for the object before you can use it with <code>vosonSML</code>. This can be done manually or by using the handy <code><a href="../reference/vosonSML::ImportData.html">ImportData()</a></code> function:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="co"># use import data</span>
-<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vosonSML-colon-colon-ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span>, <span class="st">"twitter"</span><span class="op">)</span>
+<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vosonSML::ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span>, <span class="st">"twitter"</span><span class="op">)</span>
 
 <span class="co"># or manually add class names to data</span>
 <span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span><span class="op">)</span>
@@ -250,7 +250,7 @@
 <p>The Twitter actor network contains a graph attribute <code>type</code> which is set to “twitter” (this attribute is required for <code>VOSON Dashboard</code>). The following node attributes are collected from the Twitter profile data: <code>name</code> (Twitter ID), <code>screen_name</code> (Twitter handle or screen name) and <code>label</code> (a concatenation of the ID and screen name). The edge attributes are: <code>edge_type</code> (whether the edge is a mention, reply, retweet, quoted retweet or self-loop), <code>timestamp</code> (when the tweet that led to the creation of the edge was authored) and <code>status_id</code> (the Twitter ID for the tweet).</p>
 <p>The example actor network contains 1158 nodes and 1725 edges. The following code uses <code>igraph</code> functions to: (1) remove all edges other than reply edges; (2) construct a subnetwork consisting of the giant component (the largest set of connected nodes); (3) plot this network.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit">
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://igraph.org">igraph</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span>
 
 <span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/delete_edges.html">delete.edges</a></span><span class="op">(</span><span class="va">actorGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">edge_type</span><span class="op">!=</span><span class="st">"reply"</span><span class="op">)</span><span class="op">)</span>
 <span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html">clusters</a></span><span class="op">(</span><span class="va">g2</span><span class="op">)</span>
@@ -534,10 +534,10 @@
 <p>If you are reading a previously saved <code>writeToFile</code> YouTube dataframe from disk, you simply need to use the <code>readRDS</code> function:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit">
 <span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span><span class="op">)</span></pre></div>
-<p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and earlier you will need to modify the class values for the object before you can use it with <code>vosonSML</code>. This can be done manually or by using the handy <code><a href="../reference/vosonSML-colon-colon-ImportData.html">ImportData()</a></code> function:</p>
+<p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and earlier you will need to modify the class values for the object before you can use it with <code>vosonSML</code>. This can be done manually or by using the handy <code><a href="../reference/vosonSML::ImportData.html">ImportData()</a></code> function:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit">
 <span class="co"># use import data</span>
-<span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vosonSML-colon-colon-ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span>, <span class="st">"youtube"</span><span class="op">)</span>
+<span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vosonSML::ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span>, <span class="st">"youtube"</span><span class="op">)</span>
 
 <span class="co"># or manually add class names to data</span>
 <span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span><span class="op">)</span>
@@ -773,10 +773,10 @@
 <p>If you are reading a previously saved <code>writeToFile</code> Reddit dataframe from disk, you simply need to use the <code>readRDS</code> function:</p>
 <div class="sourceCode" id="cb53"><pre class="downlit">
 <span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span><span class="op">)</span></pre></div>
-<p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and earlier you will need to modify the class values for the object before you can use it with <code>vosonSML</code>. This can be done manually or by using the handy <code><a href="../reference/vosonSML-colon-colon-ImportData.html">ImportData()</a></code> function:</p>
+<p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and earlier you will need to modify the class values for the object before you can use it with <code>vosonSML</code>. This can be done manually or by using the handy <code><a href="../reference/vosonSML::ImportData.html">ImportData()</a></code> function:</p>
 <div class="sourceCode" id="cb54"><pre class="downlit">
 <span class="co"># use import data</span>
-<span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vosonSML-colon-colon-ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span>, <span class="st">"reddit"</span><span class="op">)</span>
+<span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vosonSML::ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span>, <span class="st">"reddit"</span><span class="op">)</span>
 
 <span class="co"># or manually add class names to data</span>
 <span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span><span class="op">)</span>
@@ -937,7 +937,7 @@
   <span class="fu"><a href="../reference/Collect.html">Collect</a></span><span class="op">(</span>searchTerm <span class="op">=</span> <span class="st">"#auspol"</span>, searchType <span class="op">=</span> <span class="st">"recent"</span>, numTweets <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 
 <span class="co"># import data from file using ImportData</span>
-<span class="va">prevTwitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vosonSML-colon-colon-ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-02-26_143505-TwitterData.rds"</span>, <span class="st">"twitter"</span><span class="op">)</span>
+<span class="va">prevTwitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vosonSML::ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-02-26_143505-TwitterData.rds"</span>, <span class="st">"twitter"</span><span class="op">)</span>
 
 <span class="co"># add to imported data the new data using rbind</span>
 <span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">prevTwitterData</span>, <span class="va">newTwitterData</span><span class="op">)</span></pre></div>
@@ -954,7 +954,7 @@
 
 <span class="co"># combine imported data from files with apply and rbind</span>
 <span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">importFiles</span>, 
-                                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="../reference/vosonSML-colon-colon-ImportData.html">ImportData</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"twitter"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span><span class="op">)</span></pre></div>
+                                       <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="../reference/vosonSML::ImportData.html">ImportData</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"twitter"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span><span class="op">)</span></pre></div>
 </div>
 <div id="duplicate-data" class="section level2">
 <h2 class="hasAnchor">
