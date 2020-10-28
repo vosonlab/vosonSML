@@ -19,12 +19,16 @@ Imports:
     purrr,
     RCurl,
     rlang (>= 0.3.0.1),
+    robotstxt,
     rtweet (>= 0.6.8),
+    rvest,
     stats,
     stringr,
     textutils,
     tibble,
-    utils
+    urltools,
+    utils,
+    xml2
 Suggests:
     knitr,
     rmarkdown,
