@@ -18,7 +18,7 @@ Graph <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
     # create igraph object from dataframes
     g <- igraph::graph_from_data_frame(d = net$edges, directed = directed, vertices = net$nodes)
   }
-  
+
   # searches the class list of net for matching method
   UseMethod("Graph", net)
 }
@@ -87,6 +87,17 @@ Graph.activity.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...
 }
 
 #' @noRd
+#' @export
+Graph.activity.web <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  g <- set_graph_attr(g, "type", "web")
+  
+  graphOutputFile(g, "graphml", writeToFile, "WebActivity")
+  cat("Done.\n")
+  
+  g
+}
+
+#' @noRd
 #' @method Graph actor
 #' @export
 Graph.actor <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
@@ -137,6 +148,17 @@ Graph.actor.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
   cat("Done.\n")
   
   g  
+}
+
+#' @noRd
+#' @export
+Graph.actor.web <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  g <- set_graph_attr(g, "type", "web")
+  
+  graphOutputFile(g, "graphml", writeToFile, "WebActor")
+  cat("Done.\n")
+  
+  g
 }
 
 #' @noRd

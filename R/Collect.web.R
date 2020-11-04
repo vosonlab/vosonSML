@@ -44,7 +44,7 @@ get_delay <- function(crawl_delay = NULL) {
   if (is.null(crawl_delay)) { return(sample(1:max_sleep, 1)) }
   
   get_value <- function(crawl_delay, ua) {
-    v <- filter(crawl_delay, useragent == ua)
+    v <- filter(crawl_delay, .data$useragent == ua)
     if (nrow(v)) { return(v$value) }
     NULL
   }
