@@ -89,6 +89,8 @@ Graph.activity.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...
 #' @noRd
 #' @export
 Graph.activity.web <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  V(g)$label <- V(g)$name
+  
   g <- set_graph_attr(g, "type", "web")
   
   graphOutputFile(g, "graphml", writeToFile, "WebActivity")
@@ -153,6 +155,8 @@ Graph.actor.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
 #' @noRd
 #' @export
 Graph.actor.web <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+  V(g)$label <- V(g)$name
+  
   g <- set_graph_attr(g, "type", "web")
   
   graphOutputFile(g, "graphml", writeToFile, "WebActor")
