@@ -4,26 +4,12 @@
 \alias{Collect.web}
 \title{Collect hyperlinks from web pages}
 \usage{
-\method{Collect}{web}(
-  credential,
-  pages,
-  waitTime = c(3, 10),
-  ua = getOption("HTTPUserAgent"),
-  writeToFile = FALSE,
-  verbose = TRUE,
-  ...
-)
+\method{Collect}{web}(credential, pages, writeToFile = FALSE, verbose = TRUE, ...)
 }
 \arguments{
-\item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.}
+\item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"web"}.}
 
-\item{pages}{List. List of web pages to crawl.}
-
-\item{waitTime}{Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
-Minimum is 3 seconds. Default is \code{c(3, 10)} for a wait time chosen from between 3 and 10 seconds.}
-
-\item{ua}{Character string. Override User-Agent string to use in web page requests. Default is
-\code{option("HTTPUserAgent")} value as set by vosonSML.}
+\item{pages}{Dataframe. Dataframe of web pages to crawl.}
 
 \item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
 
@@ -32,7 +18,7 @@ Minimum is 3 seconds. Default is \code{c(3, 10)} for a wait time chosen from bet
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-A \code{data.frame} object with class names \code{"datasource"} and \code{"reddit"}.
+A \code{data.frame} object with class names \code{"datasource"} and \code{"web"}.
 }
 \description{
 Collects hyperlinks from web pages and structures the data into a dataframe with the

@@ -39,8 +39,8 @@
 #' @importFrom robotstxt robotstxt
 #' @importFrom rtweet create_token rate_limit search_tweets users_data lookup_users
 #' @importFrom rvest html_attr html_nodes
-#' @importFrom stats na.omit setNames
-#' @importFrom stringr str_extract str_replace_all str_match_all str_replace
+#' @importFrom stats na.omit setNames runif
+#' @importFrom stringr str_extract str_replace_all str_match_all str_replace str_detect
 #' @importFrom textutils HTMLdecode
 #' @importFrom tibble as_tibble tibble
 #' @importFrom urltools url_decode
