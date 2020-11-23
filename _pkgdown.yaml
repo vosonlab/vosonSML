@@ -60,21 +60,25 @@ reference:
   - '`Authenticate.reddit`'
   - '`Authenticate.twitter`'
   - '`Authenticate.youtube`'
+  - '`Authenticate.web`'
 - title: Collect
   contents:  
   - '`Collect`'
   - '`Collect.twitter`'
   - '`Collect.youtube`'
-  - '`Collect.reddit`'  
+  - '`Collect.reddit`'
+  - '`Collect.web`'
 - title: Create
   contents:
   - '`Create`'
   - '`Create.activity.twitter`'
   - '`Create.activity.youtube`'
-  - '`Create.activity.reddit`' 
+  - '`Create.activity.reddit`'
+  - '`Create.activity.web`'
   - '`Create.actor.twitter`'
   - '`Create.actor.youtube`'
   - '`Create.actor.reddit`'
+  - '`Create.actor.web`'
   - '`Create.twomode.twitter`'
   - '`Create.semantic.twitter`'
 - title: Helpers

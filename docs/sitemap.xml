@@ -13,6 +13,9 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.twitter.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.web.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.youtube.html</loc>
   </url>
   <url>
@@ -25,6 +28,9 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.twitter.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Collect.web.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.youtube.html</loc>
   </url>
   <url>
@@ -34,6 +40,9 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.activity.twitter.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Create.activity.web.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.activity.youtube.html</loc>
   </url>
   <url>
@@ -41,6 +50,9 @@
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.actor.twitter.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Create.actor.web.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.actor.youtube.html</loc>

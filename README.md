@@ -3,16 +3,18 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)](https://github.com/vosonlab/vosonSML/releases)
-[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.29.14.9000&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.30.00.9000&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
 [![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 
 `vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
 
-`vosonSML` is the `SocialMediaLab` package, with significant improvements and enhancements. We renamed the package because we thought that `SocialMediaLab` sounded a bit generic and also we wanted to indicate the connection to the [Virtual Observatory for the Study of Online Networks Lab](http://vosonlab.net), where te package was created. The original `SocialMediaLab` package was created by [Timothy Graham](https://github.com/timothyjgraham) and [Robert Ackland](https://github.com/rjackland) with major contributions by [Chung-hong Chan](https://github.com/chainsawriot). The development and maintenance of `vosonSML` is led by [Bryan Gertzel](https://github.com/mishoryu).
+`vosonSML` is the `SocialMediaLab` package, with significant improvements and enhancements. We renamed the package because we thought that `SocialMediaLab` sounded a bit generic and also we wanted to indicate the connection to the [Virtual Observatory for the Study of Online Networks Lab](http://vosonlab.net), where the package was created. The original `SocialMediaLab` package was created by [Timothy Graham](https://github.com/timothyjgraham) and [Robert Ackland](https://github.com/rjackland) with major contributions by [Chung-hong Chan](https://github.com/chainsawriot).
+
+The re-writing of the package, ongoing development and maintenance of `vosonSML` is led by Bryan Gertzel.
 
 ### Supported Social Media
 
-`vosonSML` currently features the collection of data and generation of networks from `twitter`, `youtube` and `reddit`.
+`vosonSML` currently features the collection of data and generation of networks from `twitter`, `youtube`, `reddit` and hyperlink networks from `web` sites.
 
 Unfortunately we are no longer able to maintain `facebook` and `instagram` collection, however code for these platforms is still available in [releases](https://github.com/vosonlab/vosonSML/releases) prior to version `0.25.0`.
 
@@ -29,7 +31,8 @@ install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.1
   repo = NULL, type = "source")
 ```
 
-Install the latest development version (v0.29.14.9000):
+Install the latest development version (v0.30.00.9000):
+* includes early implementation of [web crawler and hyperlink networks](https://vosonlab.github.io/vosonSML/news/index.html)
 ``` r
 # library(remotes)
 remotes::install_github("vosonlab/vosonSML")

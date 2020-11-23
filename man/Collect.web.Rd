@@ -9,7 +9,12 @@
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"web"}.}
 
-\item{pages}{Dataframe. Dataframe of web pages to crawl.}
+\item{pages}{Dataframe. Dataframe of web pages to crawl. The dataframe must have the columns \code{page} (character),
+\code{type} (character) and \code{max_depth} (integer). Each row is a seed web page to crawl, with the \code{page}
+value being the page URL. The \code{type} value is type of crawl as either \code{"int"}, \code{"ext"} or
+\code{"all"}, directing the crawler to follow only internal links, follow only external links (different domain to
+the seed page) or follow all links.
+The \code{max_depth} value determines how many levels of hyperlinks to follow from the seed site.}
 
 \item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
 
@@ -26,8 +31,13 @@ class names \code{"datasource"} and \code{"web"}.
 }
 \examples{
 \dontrun{
+pages <- data.frame(page = c("http://vosonlab.net",
+                             "https://rsss.cass.anu.edu.au"),
+                    type = c("int", "all"),
+                    max_depth = c(2, 2))
+                    
 webData <- webAuth \%>\%
-  Collect(pages = list(), writeToFile = TRUE)
+  Collect(pages, writeToFile = TRUE)
 }
 
 }
