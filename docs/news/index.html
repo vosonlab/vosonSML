@@ -157,6 +157,18 @@
       <small>Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="vosonsml-030009000" class="section level1">
+<h1 class="page-header" data-toc-text="0.30.00.9000">
+<a href="#vosonsml-030009000" class="anchor"></a>vosonSML 0.30.00.9000<small> Unreleased </small>
+</h1>
+<div id="major-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#major-changes" class="anchor"></a>Major Changes</h2>
+<ul>
+<li>Added a web crawler <code>Collect</code> method with hyperlink network creation. The <code>Create</code> function with <code>activity</code> type parameter creates a network where nodes are <code>web pages</code> and edges the <code>hyperlinks</code> linking them (extracted from <code>a href</code> HTML tags). The <code>actor</code> network has page or <code>site domains</code> as the nodes and again the <code>hyperlinks</code> from linking pages between domains.</li>
+</ul>
+</div>
+</div>
     <div id="vosonsml-029149000" class="section level1">
 <h1 class="page-header" data-toc-text="0.29.14.9000">
 <a href="#vosonsml-029149000" class="anchor"></a>vosonSML 0.29.14.9000<small> Unreleased </small>
@@ -399,9 +411,9 @@
 <h1 class="page-header" data-toc-text="0.29.0">
 <a href="#vosonsml-0290" class="anchor"></a>vosonSML 0.29.0<small> Unreleased </small>
 </h1>
-<div id="major-changes" class="section level2">
+<div id="major-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-1" class="anchor"></a>Major Changes</h2>
 <ul>
 <li>Created the <code>AddText</code> function to add collected text data to networks. This feature applies to <code>activity</code> and <code>actor</code> networks and will typically add a node attribute to activity networks and an edge attribute to actor networks. For example, this function will add the column <code>vosonTxt_tweets</code> containing tweet text to <code>$nodes</code> if passed an activity network, and to <code>$edges</code> if passed an actor network.</li>
 <li>Generation of <code>igraph</code> graph objects and subsequent writing to file has been removed from the <code>Create</code> function and placed in a new function <code>Graph</code>. This change abstracts the graph creation and makes it optional, but also allows supplemental network steps such as <code>AddText</code> to be performed prior to creating the final igraph object.</li>
@@ -434,9 +446,9 @@
 <h1 class="page-header" data-toc-text="0.28.0">
 <a href="#vosonsml-0280" class="anchor"></a>vosonSML 0.28.0<small> Unreleased </small>
 </h1>
-<div id="major-changes-1" class="section level2">
+<div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-1" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-2" class="anchor"></a>Major Changes</h2>
 <ul>
 <li>Added new <code>activity</code> network type for twitter and youtube <code>Create</code> function. In this network nodes are the items collected such as tweets returned from a twitter search and comments posted to youtube videos. Edges represent the platform relationship between the tweets or comments.</li>
 </ul>
@@ -499,9 +511,9 @@
 <li>Fixed a bug in <code>Collect.twitter</code> in which any additional <code>twitter API</code> parameters e.g <code>lang</code> or <code>until</code> were not being passed properly to <code><a href="https://rdrr.io/pkg/rtweet/man/search_tweets.html">rtweet::search_tweets</a></code>. This resulted in the additional parameters being ignored.</li>
 </ul>
 </div>
-<div id="major-changes-2" class="section level2">
+<div id="major-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-2" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-3" class="anchor"></a>Major Changes</h2>
 <ul>
 <li>Removed the <code>SaveCredential</code> and <code>LoadCredential</code> functions, as well as the <code>useCachedToken</code> parameter for <code>Authenticate.twitter</code>. These were simply calling the <code>saveRDS</code> and <code>readRDS</code> functions and not performing any additional processing. Using <code>saveRDS</code> and <code>readRDS</code> directly to save and load an <code>Authenticate</code> credential object to file is simpler.</li>
 <li>Changed the way that the <code>cleanText</code> parameter works in <code>Create.actor.reddit</code> so that it is more permissive. Addresses encoding issues with apostrophes and pound symbols and removes unicode characters not permitted by the XML 1.0 standard as used in <code>graphml</code> files. This is best effort and does not resolve all <code>reddit</code> text encoding issues.</li>
@@ -547,9 +559,9 @@
 <li>Fixed a bug in <code>Create.actor.twitter</code> and <code>Create.bimodal.twitter</code> in which the vertices dataframe provided to the <code>graph_from_data_frame</code> function as a contained duplicate names raising an error.</li>
 </ul>
 </div>
-<div id="major-changes-3" class="section level2">
+<div id="major-changes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-3" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-4" class="anchor"></a>Major Changes</h2>
 <ul>
 <li>Revised and updated <code>roxygen</code> documentation and examples for all package functions.</li>
 <li>Updated all <code>Authenticate</code>, <code>Collect</code> and <code>Create</code> S3 methods to implement function routing based on object class names.</li>
@@ -568,9 +580,9 @@
 <h1 class="page-header" data-toc-text="0.25.0">
 <a href="#vosonsml-0250" class="anchor"></a>vosonSML 0.25.0<small> Unreleased </small>
 </h1>
-<div id="major-changes-4" class="section level2">
+<div id="major-changes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#major-changes-4" class="anchor"></a>Major Changes</h2>
+<a href="#major-changes-5" class="anchor"></a>Major Changes</h2>
 <ul>
 <li>Replaced the <code>twitteR</code> twitter collection implementation with the <code>rtweet</code> package.</li>
 <li>A users <code>twitter</code> authentication token can now be cached in the <code>.twitter_oauth_token</code> file and used for subsequent <code>twitter API</code> requests without re-authentication. A new authentication token can be cached by deleting this file and using the re-using the parameter <code>useCachedToken = TRUE</code>.</li>

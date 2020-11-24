@@ -27,20 +27,24 @@
 #' @importFrom data.table data.table setkey ':='
 #' @importFrom dplyr rename group_by summarise ungroup left_join select mutate filter coalesce
 #' row_number distinct anti_join mutate_all mutate_at ends_with vars funs bind_rows arrange
-#' case_when if_else contains n rowwise starts_with count
+#' case_when if_else contains n rowwise starts_with count slice
 #' @importFrom Hmisc escapeRegex
 #' @importFrom igraph delete.vertices simplify write.graph V 'V<-' vcount
 #' graph_from_data_frame delete_vertex_attr set_graph_attr
 #' @importFrom jsonlite fromJSON
 #' @importFrom lubridate as_datetime
 #' @importFrom magrittr '%>%' '%<>%'
-#' @importFrom purrr transpose flatten_chr
+#' @importFrom purrr transpose flatten_chr map_dfr map_if
 #' @importFrom rlang '.data'
+#' @importFrom robotstxt robotstxt
 #' @importFrom rtweet create_token rate_limit search_tweets users_data lookup_users
-#' @importFrom stats na.omit setNames
-#' @importFrom stringr str_extract str_replace_all str_match_all
+#' @importFrom rvest html_attr html_nodes
+#' @importFrom stats na.omit setNames runif
+#' @importFrom stringr str_extract str_replace_all str_match_all str_replace str_detect
 #' @importFrom textutils HTMLdecode
 #' @importFrom tibble as_tibble tibble
+#' @importFrom urltools url_decode
 #' @importFrom utils "flush.console" head tail "install.packages" "read.table" "write.csv"
 #' "read.csv" "capture.output"
+#' @importFrom xml2 read_html 
 NULL
