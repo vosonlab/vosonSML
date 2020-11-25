@@ -24,3 +24,4 @@
 ^.*\.pdf$
 ^doc$
 ^Meta$
+^\.github$
