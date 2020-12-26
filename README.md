@@ -3,7 +3,7 @@
 [![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)](https://github.com/vosonlab/vosonSML/releases)
-[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.30.00.9000&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.30.0.9000&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
 [![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 [![R build status](https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg)](https://github.com/vosonlab/vosonSML/actions)
 
