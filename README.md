@@ -32,7 +32,7 @@ install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.1
   repo = NULL, type = "source")
 ```
 
-Install the latest development version (v0.30.00.9000):
+Install the latest development version (v0.30.0.9000):
 * includes early implementation of [web crawler and hyperlink networks](https://vosonlab.github.io/vosonSML/news/index.html)
 ``` r
 # library(remotes)
