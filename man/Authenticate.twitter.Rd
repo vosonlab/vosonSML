@@ -30,7 +30,7 @@
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-A \code{credential} object containing an access token \code{$auth} and social media type descriptor 
+A \code{credential} object containing an access token \code{$auth} and social media type descriptor
 \code{$socialmedia} set to \code{"twitter"}. Object has the class names \code{"credential"} and \code{"twitter"}.
 }
 \description{
@@ -41,9 +41,9 @@ There is another method available commonly used by third-party apps in which an 
 authorized by a user to use the twitter API on their behalf. The implementation
 of this method in vosonSML does not require a developer account but does still require
 the user to have access to a developers apps two consumer API keys. This allows multiple
-users to access the twitter API with vosonSML via a single developer account and app. 
+users to access the twitter API with vosonSML via a single developer account and app.
 
-The twitter OAuth process is described here: 
+The twitter OAuth process is described here:
 \url{https://developer.twitter.com/en/docs/basics/authentication/overview/oauth}.
 }
 \examples{
@@ -53,8 +53,8 @@ myDevKeys <- list(appName = "My App", apiKey = "xxxxxxxxxxxx",
   apiSecret = "xxxxxxxxxxxx", accessToken = "xxxxxxxxxxxx",
   accessTokenSecret = "xxxxxxxxxxxx")
 
-twitterAuth <- Authenticate("twitter", appName = myDevKeys$appName, 
-  apiKey = myDevKeys$apiKey, apiSecret = myDevKeys$apiSecret, accessToken = myDevKeys$accessToken, 
+twitterAuth <- Authenticate("twitter", appName = myDevKeys$appName,
+  apiKey = myDevKeys$apiKey, apiSecret = myDevKeys$apiSecret, accessToken = myDevKeys$accessToken,
   accessTokenSecret = myDevKeys$accessTokenSecret)
 
 # twitter authentication via authorization of an app to their user account
@@ -65,5 +65,5 @@ twitterAuth <- Authenticate("twitter", appName = "An App",
   apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx"
 )
 }
- 
+
 }

@@ -71,7 +71,7 @@ AddText.activity.twitter <- function(net, data, ...) {
                                                       ifelse(!is.na(.data$qtext), .data$qtext, .data$rtext))) %>%
     dplyr::select(-c(.data$qtext, .data$rtext)) %>% dplyr::rename(vosonTxt_tweet = .data$text)
 
-  net$nodes$vosonTxt_tweet <- HTMLdecode(net$nodes$vosonTxt_tweet)
+  net$nodes$vosonTxt_tweet <- textutils::HTMLdecode(net$nodes$vosonTxt_tweet)
 
   class(net) <- union(class(net), c("vosontxt"))
   cat("Done.\n")
@@ -161,7 +161,7 @@ AddText.actor.twitter <- function(net, data, ...) {
                                 by = c("status_id")) %>%
                dplyr::rename(vosonTxt_tweet = .data$text)
 
-  net$edges$vosonTxt_tweet <- HTMLdecode(net$edges$vosonTxt_tweet)
+  net$edges$vosonTxt_tweet <- textutils::HTMLdecode(net$edges$vosonTxt_tweet)
 
   class(net) <- union(class(net), c("vosontxt"))
   cat("Done.\n")
@@ -218,9 +218,9 @@ AddText.actor.youtube <- function(net, data, repliesFromText = FALSE, atRepliesO
     net$edges$at_id <- sapply(vid_comments, function(x) {
       for (name_at in net$nodes$screen_name) {
         if (atRepliesOnly) {
-          name_at_regex <- paste0("^", Hmisc::escapeRegex(paste0("@", name_at)))
+          name_at_regex <- paste0("^", escape_regex(paste0("@", name_at)))
         } else {
-          name_at_regex <- paste0("^[@]?", Hmisc::escapeRegex(name_at))
+          name_at_regex <- paste0("^[@]?", escape_regex(name_at))
         }
 
         if (grepl(name_at_regex, x$vosonTxt_comment)) {

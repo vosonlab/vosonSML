@@ -3,24 +3,45 @@
 \docType{package}
 \name{vosonSML-package}
 \alias{vosonSML-package}
+\alias{_PACKAGE}
 \alias{vosonSML}
-\title{Collection and network analysis of social media data}
+\title{Collecting Social Media Data and Generating Networks for Analysis}
 \description{
 The goal of the \pkg{vosonSML} package is to provide a suite of easy-to-use tools for collecting data
-from social media and generating different types of networks suited to Social Network Analysis (SNA) and text
-analytics. It offers tools to create unimodal, multimodal, and semantic networks. Excellent packages such as
-\pkg{rtweet}, \pkg{RedditExtractoR}, \pkg{magrittr}, \pkg{dplyr} and \pkg{igraph} were drawn on to provide an
-integrated work flow for creating different types of networks out of social media data. Creating networks from
-online social media is often non-trivial and time consuming. This package simplifies such tasks so users can focus
-on analysis.
+from social media and generating different types of networks suited to Social Network Analysis (SNA). It offers
+tools to create unimodal, multimodal, and semantic networks. Excellent packages such as \pkg{rtweet},
+\pkg{RedditExtractoR}, \pkg{dplyr} and \pkg{igraph} were drawn on to provide an integrated work flow for creating
+different types of networks out of social media data. Creating networks from online social media is often non-trivial
+and time consuming. This package simplifies such tasks so users can focus on analysis.
 
 \pkg{vosonSML} uses a straightforward S3 class system. Data collected with this package produces \code{data.frame}
-inheritable objects that are assigned the class \code{"datasource"}. Additionally, \code{"datasource"} objects are
+inheritable objects that are assigned the class \code{"datasource"}. Additionally, \code{datasource} objects are
 attributed a class identifying the source of data, such as \code{"twitter"} or \code{"youtube"}. In this way
 \code{datasource} objects are fast, easy to work with, and can be used as input to easily construct different kinds
 of networks. For example, the function \code{Collect} can be used to collect twitter data, which is then passed to
-the \code{Create} function resulting in a twitter network (as igraph object) that is ready for analysis.
+the \code{Create} function resulting in a twitter network that is ready for analysis.
+}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/vosonlab/vosonSML}
+  \item Report bugs at \url{https://github.com/vosonlab/vosonSML/issues}
+}
+
 }
 \author{
-Created by Bryan Gertzel, Robert Ackland and Timothy Graham.
+\strong{Maintainer}: Bryan Gertzel \email{bryan.gertzel@anu.edu.au}
+
+Authors:
+\itemize{
+  \item Robert Ackland \email{robert.ackland@anu.edu.au} (\href{https://orcid.org/0000-0002-0008-1766}{ORCID})
+  \item Timothy Graham (\href{https://orcid.org/0000-0002-4053-9313}{ORCID})
 }
+
+Other contributors:
+\itemize{
+  \item Chung-hong Chan (\href{https://orcid.org/0000-0002-6232-7530}{ORCID}) [contributor]
+}
+
+}
+\keyword{internal}

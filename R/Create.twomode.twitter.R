@@ -53,7 +53,7 @@ Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NUL
   datasource <- datasource %>% dplyr::select(.data$status_id, .data$user_id, .data$screen_name,
                                              .data$text, .data$created_at, .data$is_retweet,
                                              .data$is_quote)
-  datasource$text = HTMLdecode(datasource$text)
+  datasource$text = textutils::HTMLdecode(datasource$text)
 
   capture.output(
     tokens_df <- datasource %>% tidytext::unnest_tokens(.data$word, .data$text, token = "tweets", to_lower = TRUE)

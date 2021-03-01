@@ -46,6 +46,10 @@ write_output_file <-
       return(NULL)
     }
 
+    if (type == "csv") {
+      stop_req_pkgs(c("readr"))
+    }
+
     if (datetime) {
       name <- sys_time_filename(name, type)
     }
@@ -221,4 +225,19 @@ network_stats <-
 # remove collect classes from list
 rm_collect_cls <- function(cls_lst) {
   cls_lst[!cls_lst %in% c("datasource", "twitter", "youtube", "reddit", "web")]
+}
+
+# check for required packages and stop with a message if missing
+stop_req_pkgs <- function(pkgs, from = "this function") {
+  req <- sapply(pkgs, function(x) { requireNamespace(x, quietly = TRUE) })
+  if (any(req == FALSE)) {
+    stop(paste0("Please install ", paste0(names(which(req == FALSE)), collapse = ', '),
+                " package", ifelse(length(which(req == FALSE)) > 1, "s", ""),
+                " before calling ", from, ".", call. = FALSE))
+  }
+}
+
+# escape value for use as literal in a regex
+escape_regex <- function(x) {
+  gsub("([.|()\\^{}+$*?]|\\[|\\])", "\\\\\\1", x)
 }

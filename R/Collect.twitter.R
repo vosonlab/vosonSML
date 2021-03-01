@@ -50,10 +50,7 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
                             includeRetweets = TRUE, retryOnRateLimit = FALSE, writeToFile = FALSE,
                             verbose = FALSE, ...) {
 
-  if (!requireNamespace("rtweet", quietly = TRUE)) {
-    stop("Please install the rtweet package before calling Collect.", call. = FALSE)
-  }
-
+  stop_req_pkgs(c("rtweet"), "Collect.twitter")
   cat("Collecting tweets for search query...\n")
 
   authToken <- credential$auth

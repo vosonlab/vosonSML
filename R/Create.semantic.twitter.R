@@ -111,7 +111,7 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
   class(datasource) <- rm_collect_cls(class(datasource))
 
   datasource <- datasource %>% dplyr::select(.data$status_id, .data$text, .data$hashtags)
-  datasource$text = HTMLdecode(datasource$text)
+  datasource$text = textutils::HTMLdecode(datasource$text)
 
   capture.output(
     tokens_df <- datasource %>% tidytext::unnest_tokens(.data$word, .data$text, token = "tweets", to_lower = TRUE)

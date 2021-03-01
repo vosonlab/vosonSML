@@ -27,7 +27,7 @@ get_json <- function(req_url, ua = NULL) {
     req_headers <- append(req_headers, c("User-Agent" = ua))
   }
 
-  resp <- httr::GET(req_url, add_headers(.headers = req_headers))
+  resp <- httr::GET(req_url, httr::add_headers(.headers = req_headers))
   res$status <- resp$status
 
   if (httr::http_error(resp) | as.numeric(resp$status) != 200) {
@@ -38,7 +38,7 @@ get_json <- function(req_url, ua = NULL) {
   if (httr::http_type(resp) == "application/json") {
     res$data <- tryCatch({
       res$msg <- "http response json"
-      jsonlite::fromJSON(content(resp, as = "text"), simplifyVector = FALSE)
+      jsonlite::fromJSON(httr::content(resp, as = "text"), simplifyVector = FALSE)
     }, error = function(e) {
       res$msg <- e
       NULL
