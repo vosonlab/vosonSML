@@ -12,22 +12,23 @@ Create(datasource, type, ...)
 \item{type}{Character string. Type of network to be created, can be \code{"activity"}, \code{"actor"},
 \code{"twomode"} or \code{"semantic"}.}
 
-\item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social 
-media network creation.}
+\item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social media
+network creation.}
 }
 \description{
-This function creates networks from social media data as produced from \code{\link{Collect}}. 
-\code{Create} is the final step of the \code{\link{Authenticate}}, \code{\link{Collect}} and \code{Create} workflow.
+This function creates networks from social media data as produced from \code{\link{Collect}}.
+  \code{Create} is the final step of the \code{\link{Authenticate}}, \code{\link{Collect}} and \code{Create}
+  workflow.
 
-There are four types of networks that can be created from collected data: \code{activity}, \code{actor}, 
-\code{twomode} or \code{semantic}.
+  There are four types of networks that can be created from collected data: \code{activity}, \code{actor},
+  \code{twomode} or \code{semantic}.
 
-For \code{activity} networks refer to \code{\link{Create.activity.twitter}}, \code{\link{Create.activity.youtube}} 
-and \code{\link{Create.activity.reddit}} for parameters and usage.
+  For \code{activity} networks refer to \code{\link{Create.activity.twitter}}, \code{\link{Create.activity.youtube}}
+  and \code{\link{Create.activity.reddit}} for parameters and usage.
 
-For \code{actor} networks refer to \code{\link{Create.actor.twitter}}, \code{\link{Create.actor.youtube}} and 
-\code{\link{Create.actor.reddit}}.
+  For \code{actor} networks refer to \code{\link{Create.actor.twitter}}, \code{\link{Create.actor.youtube}} and
+  \code{\link{Create.actor.reddit}}.
 
-For \code{twomode} and \code{semantic} networks refer to \code{\link{Create.twomode.twitter}} and 
-\code{\link{Create.semantic.twitter}} functions for parameters and usage respectively.
+  For \code{twomode} and \code{semantic} networks refer to \code{\link{Create.twomode.twitter}} and
+  \code{\link{Create.semantic.twitter}} functions for parameters and usage respectively.
 }

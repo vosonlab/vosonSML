@@ -18,13 +18,12 @@
 #' @name vosonSML-package
 #' @aliases vosonSML-package vosonSML
 #' @docType package
-#' @author Created by Timothy Graham and Robert Ackland with major contributions by Chung-hong Chan. The current lead
-#' developer and maintainer is Bryan Gertzel.
+#' @author Created by Bryan Gertzel, Robert Ackland and Timothy Graham.
 #' @import httpuv
 #' @import httr
 #' @import methods
 #' @import RCurl
-#' @importFrom data.table data.table setkey ':='
+#' @importFrom data.table data.table fcase fifelse setkey ':='
 #' @importFrom dplyr rename group_by summarise ungroup left_join select mutate filter coalesce
 #' row_number distinct anti_join mutate_all mutate_at ends_with vars funs bind_rows arrange
 #' case_when if_else contains n rowwise starts_with count slice
@@ -32,7 +31,7 @@
 #' @importFrom igraph delete.vertices simplify write.graph V 'V<-' vcount
 #' graph_from_data_frame delete_vertex_attr set_graph_attr
 #' @importFrom jsonlite fromJSON
-#' @importFrom lubridate as_datetime
+#' @importFrom lubridate as_datetime is.POSIXt
 #' @importFrom magrittr '%>%' '%<>%'
 #' @importFrom purrr transpose flatten_chr map_dfr map_if
 #' @importFrom rlang '.data'
@@ -46,5 +45,5 @@
 #' @importFrom urltools url_decode
 #' @importFrom utils "flush.console" head tail "install.packages" "read.table" "write.csv"
 #' "read.csv" "capture.output"
-#' @importFrom xml2 read_html 
+#' @importFrom xml2 read_html
 NULL

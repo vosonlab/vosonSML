@@ -1,12 +1,12 @@
 #' @title Extract the ids from a list of youtube video urls
 #'
 #' @description This function reads youtube video urls from a list and or a text file and converts them to a vector of
-#' video ids. For example, URL \code{https://www.youtube.com/watch?v=73I5dRucCds} returns the id \code{73I5dRucCds}.
-#' This function can be used to create a vector for the youtube \code{\link{Collect.youtube}} functions \code{videoIDs}
-#' parameter.
+#'   video ids. For example, URL \code{https://www.youtube.com/watch?v=73I5dRucCds} returns the id \code{73I5dRucCds}.
+#'   This function can be used to create a vector for the youtube \code{\link{Collect.youtube}} functions
+#'   \code{videoIDs} parameter.
 #'
 #' @note Accepts youtube url formats \code{https://youtu.be/xxxxxxxx} and
-#' \code{https://www.youtube.com/watch?v=xxxxxxxx}.
+#'   \code{https://www.youtube.com/watch?v=xxxxxxxx}.
 #'
 #' @param urls Character vector. List of youtube urls.
 #' @param file Character string. Text file containing youtube urls, one per line.

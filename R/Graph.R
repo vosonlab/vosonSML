@@ -14,6 +14,11 @@ Graph <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
   cat("Creating igraph network graph...")
   if (writeToFile) { cat("\n") }
 
+  # igraph warning converting a dataframe with an POSIXct column to an igraph object
+  # https://github.com/igraph/rigraph/pull/250
+  net$nodes %<>% dplyr::mutate_if(lubridate::is.POSIXt, as.character)
+  net$edges %<>% dplyr::mutate_if(lubridate::is.POSIXt, as.character)
+
   if (!all(c("semantic", "twitter") %in% class(net))) {
     # create igraph object from dataframes
     g <- igraph::graph_from_data_frame(d = net$edges, directed = directed, vertices = net$nodes)
