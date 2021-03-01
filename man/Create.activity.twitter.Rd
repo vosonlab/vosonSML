@@ -28,7 +28,7 @@ and will be isolates.
 \dontrun{
 # create a twitter activity network graph
 activityNetwork <- twitterData \%>\% Create("activity")
-  
+
 # network
 # activityNetwork$nodes
 # activityNetwork$edges

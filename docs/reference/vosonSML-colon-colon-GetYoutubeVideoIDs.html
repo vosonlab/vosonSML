@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract the ids from a list of youtube video URLs — vosonSML::GetYoutubeVideoIDs • vosonSML</title>
+<title>Extract the ids from a list of youtube video urls — vosonSML::GetYoutubeVideoIDs • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,10 +48,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Extract the ids from a list of youtube video URLs — vosonSML::GetYoutubeVideoIDs" />
-<meta property="og:description" content="This function reads youtube video urls from a list and or a text file and converts them to a vector of 
-video ids. For example, URL https://www.youtube.com/watch?v=73I5dRucCds returns the id 73I5dRucCds. 
-This function can be used to create a vector for the youtube Collect.youtube functions videoIDs 
+<meta property="og:title" content="Extract the ids from a list of youtube video urls — vosonSML::GetYoutubeVideoIDs" />
+<meta property="og:description" content="This function reads youtube video urls from a list and or a text file and converts them to a vector of
+video ids. For example, URL https://www.youtube.com/watch?v=73I5dRucCds returns the id 73I5dRucCds.
+This function can be used to create a vector for the youtube Collect.youtube functions videoIDs
 parameter." />
 
 
@@ -84,7 +84,7 @@ parameter." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.00.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.1.9000</span>
       </span>
     </div>
 
@@ -92,27 +92,27 @@ parameter." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
+    <span class="fas fa-file-alt"></span>
      
     Changelog
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-cubes"></span>
+    <span class="fas fa-cubes"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -128,19 +128,19 @@ parameter." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://vosonlab.net/">
-    <span class="fa fa-flask fa-lg"></span>
+    <span class="fas fa-flask fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://twitter.com/vosonlab">
-    <span class="fa fa-twitter-square fa-lg"></span>
+    <span class="fab fa-twitter-square fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/vosonlab/vosonSML">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -157,15 +157,15 @@ parameter." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract the ids from a list of youtube video URLs</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Utils.youtube.R'><code>R/Utils.youtube.R</code></a></small>
+    <h1>Extract the ids from a list of youtube video urls</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/utils_youtube.R'><code>R/utils_youtube.R</code></a></small>
     <div class="hidden name"><code>vosonSML-colon-colon-GetYoutubeVideoIDs.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>This function reads youtube video urls from a list and or a text file and converts them to a vector of 
-video ids. For example, URL <code>https://www.youtube.com/watch?v=73I5dRucCds</code> returns the id <code>73I5dRucCds</code>. 
-This function can be used to create a vector for the youtube <code><a href='Collect.youtube.html'>Collect.youtube</a></code> functions <code>videoIDs</code> 
+    <p>This function reads youtube video urls from a list and or a text file and converts them to a vector of
+video ids. For example, URL <code>https://www.youtube.com/watch?v=73I5dRucCds</code> returns the id <code>73I5dRucCds</code>.
+This function can be used to create a vector for the youtube <code><a href='Collect.youtube.html'>Collect.youtube</a></code> functions <code>videoIDs</code>
 parameter.</p>
     </div>
 
@@ -176,11 +176,11 @@ parameter.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>urls</th>
-      <td><p>Character vector. List of youtube URLs.</p></td>
+      <td><p>Character vector. List of youtube urls.</p></td>
     </tr>
     <tr>
       <th>file</th>
-      <td><p>Character string. Text file containing youtube URLs.</p></td>
+      <td><p>Character string. Text file containing youtube urls, one per line.</p></td>
     </tr>
     </table>
 
@@ -189,7 +189,7 @@ parameter.</p>
     <p>A vector of youtube video ids as character strings that were extracted from input video urls.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Accepts youtube URL formats <code>https://youtu.be/xxxxxxxx</code> and 
+    <p>Accepts youtube url formats <code>https://youtu.be/xxxxxxxx</code> and
 <code>https://www.youtube.com/watch?v=xxxxxxxx</code>.</p>
 
   </div>
@@ -203,7 +203,7 @@ parameter.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://vosonlab.net'><span>VOSON Lab</span></a>.</p>
+  <p>Developed by Bryan Gertzel, Robert Ackland, Timothy Graham.</p>
 </div>
 
 <div class="pkgdown">

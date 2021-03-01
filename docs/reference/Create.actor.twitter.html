@@ -49,9 +49,9 @@
   
 
 <meta property="og:title" content="Create twitter actor network — Create.actor.twitter" />
-<meta property="og:description" content="Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who 
-have tweeted / retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges 
-of different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted 
+<meta property="og:description" content="Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who
+have tweeted / retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges
+of different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted
 without relations to other users will appear in the network graph as isolate nodes." />
 
 
@@ -84,7 +84,7 @@ without relations to other users will appear in the network graph as isolate nod
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.00.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.1.9000</span>
       </span>
     </div>
 
@@ -92,27 +92,27 @@ without relations to other users will appear in the network graph as isolate nod
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
+    <span class="fas fa-file-alt"></span>
      
     Changelog
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-cubes"></span>
+    <span class="fas fa-cubes"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -128,19 +128,19 @@ without relations to other users will appear in the network graph as isolate nod
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://vosonlab.net/">
-    <span class="fa fa-flask fa-lg"></span>
+    <span class="fas fa-flask fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://twitter.com/vosonlab">
-    <span class="fa fa-twitter-square fa-lg"></span>
+    <span class="fab fa-twitter-square fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/vosonlab/vosonSML">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -163,9 +163,9 @@ without relations to other users will appear in the network graph as isolate nod
     </div>
 
     <div class="ref-description">
-    <p>Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who 
-have tweeted / retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges 
-of different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted 
+    <p>Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who
+have tweeted / retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges
+of different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted
 without relations to other users will appear in the network graph as isolate nodes.</p>
     </div>
 
@@ -200,12 +200,12 @@ without relations to other users will appear in the network graph as isolate nod
 
     <p>When creating twitter actor networks, a network with additional user information can be generated using the
 <code><a href='vosonSML::AddUserData.html'>AddUserData</a></code> function. Additional calls can be made to the twitter API to get information
-about users that were identified as nodes during network creation but did not tweet (meaning no user profile 
+about users that were identified as nodes during network creation but did not tweet (meaning no user profile
 information was initially collected for them).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># create a twitter actor network graph and output to console additional information </span>
+<span class='co'># create a twitter actor network graph and output to console additional information</span>
 <span class='co'># during network creation (verbose)</span>
 <span class='va'>actorNetwork</span> <span class='op'>&lt;-</span> <span class='va'>twitterData</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='Create.html'>Create</a></span><span class='op'>(</span><span class='st'>"actor"</span><span class='op'>)</span>
 
@@ -226,7 +226,7 @@ information was initially collected for them).</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://vosonlab.net'><span>VOSON Lab</span></a>.</p>
+  <p>Developed by Bryan Gertzel, Robert Ackland, Timothy Graham.</p>
 </div>
 
 <div class="pkgdown">

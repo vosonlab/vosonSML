@@ -17,7 +17,7 @@
 Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
-Creates a reddit actor network from thread comments on subreddits. Users who have commented on a thread 
+Creates a reddit actor network from thread comments on subreddits. Users who have commented on a thread
 are actor nodes and comment replies to each other are represented as directed edges.
 }
 \examples{

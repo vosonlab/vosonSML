@@ -7,7 +7,7 @@
 [![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 [![R build status](https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg)](https://github.com/vosonlab/vosonSML/actions)
 
-`vosonSML` is an R package that provides a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
+The `vosonSML` R package is a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
 
 `vosonSML` is the `SocialMediaLab` package, with significant improvements and enhancements. We renamed the package because we thought that `SocialMediaLab` sounded a bit generic and also we wanted to indicate the connection to the [Virtual Observatory for the Study of Online Networks Lab](http://vosonlab.net), where the package was created. The original `SocialMediaLab` package was created by [Timothy Graham](https://github.com/timothyjgraham) and [Robert Ackland](https://github.com/rjackland) with major contributions by [Chung-hong Chan](https://github.com/chainsawriot).
 

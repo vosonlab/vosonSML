@@ -35,7 +35,7 @@ pages <- data.frame(page = c("http://vosonlab.net",
                              "https://rsss.cass.anu.edu.au"),
                     type = c("int", "all"),
                     max_depth = c(2, 2))
-                    
+
 webData <- webAuth \%>\%
   Collect(pages, writeToFile = TRUE)
 }

@@ -49,18 +49,18 @@
   
 
 <meta property="og:title" content="Collect tweet data from twitter search — Collect.twitter" />
-<meta property="og:description" content="This function collects tweet data based on search terms and structures the data into a dataframe with 
+<meta property="og:description" content="This function collects tweet data based on search terms and structures the data into a dataframe with
 the class names &quot;datasource&quot; and &quot;twitter&quot;.
-The twitter Standard search API sets a rate limit of 180 requests every 15 minutes. A maximum of 100 tweets can be 
-collected per search request meaning the maximum number of tweets per operation is 18000 / 15 minutes. More tweets 
-can be collected by using retryOnRateLimit = TRUE parameter which will cause the collection to pause if the 
-rate limit is reached and resume when the rate limit resets (in approximately 15 minutes). Alternatively the twitter 
-API parameter since_id can be used in a later session to resume a twitter search collection from the last 
-tweet previously collected as tweet status id's are sequential. The Standard API only returns tweets for the last 
+The twitter Standard search API sets a rate limit of 180 requests every 15 minutes. A maximum of 100 tweets can be
+collected per search request meaning the maximum number of tweets per operation is 18000 / 15 minutes. More tweets
+can be collected by using retryOnRateLimit = TRUE parameter which will cause the collection to pause if the
+rate limit is reached and resume when the rate limit resets (in approximately 15 minutes). Alternatively the twitter
+API parameter since_id can be used in a later session to resume a twitter search collection from the last
+tweet previously collected as tweet status id's are sequential. The Standard API only returns tweets for the last
 7 days.
-All of the search query operators available through the twitter API can be used in the searchTerm field. 
-For example, to search for tweets containing the term &quot;love&quot; or &quot;hate&quot; the &quot;OR&quot; operator can be 
-used in the term field: searchTerm = &quot;love OR hate&quot;. For more information refer to the twitter API 
+All of the search query operators available through the twitter API can be used in the searchTerm field.
+For example, to search for tweets containing the term &quot;love&quot; or &quot;hate&quot; the &quot;OR&quot; operator can be
+used in the term field: searchTerm = &quot;love OR hate&quot;. For more information refer to the twitter API
 documentation for query operators: https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators." />
 
 
@@ -93,7 +93,7 @@ documentation for query operators: https://developer.twitter.com/en/docs/tweets/
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.00.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.1.9000</span>
       </span>
     </div>
 
@@ -101,27 +101,27 @@ documentation for query operators: https://developer.twitter.com/en/docs/tweets/
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
+    <span class="fas fa-file-alt"></span>
      
     Changelog
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-cubes"></span>
+    <span class="fas fa-cubes"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -137,19 +137,19 @@ documentation for query operators: https://developer.twitter.com/en/docs/tweets/
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://vosonlab.net/">
-    <span class="fa fa-flask fa-lg"></span>
+    <span class="fas fa-flask fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://twitter.com/vosonlab">
-    <span class="fa fa-twitter-square fa-lg"></span>
+    <span class="fab fa-twitter-square fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/vosonlab/vosonSML">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -172,18 +172,18 @@ documentation for query operators: https://developer.twitter.com/en/docs/tweets/
     </div>
 
     <div class="ref-description">
-    <p>This function collects tweet data based on search terms and structures the data into a dataframe with 
+    <p>This function collects tweet data based on search terms and structures the data into a dataframe with
 the class names <code>"datasource"</code> and <code>"twitter"</code>.</p>
-<p>The twitter Standard search API sets a rate limit of 180 requests every 15 minutes. A maximum of 100 tweets can be 
-collected per search request meaning the maximum number of tweets per operation is 18000 / 15 minutes. More tweets 
-can be collected by using <code>retryOnRateLimit = TRUE</code> parameter which will cause the collection to pause if the 
-rate limit is reached and resume when the rate limit resets (in approximately 15 minutes). Alternatively the twitter 
-API parameter <code>since_id</code> can be used in a later session to resume a twitter search collection from the last 
-tweet previously collected as tweet status id's are sequential. The Standard API only returns tweets for the last 
+<p>The twitter Standard search API sets a rate limit of 180 requests every 15 minutes. A maximum of 100 tweets can be
+collected per search request meaning the maximum number of tweets per operation is 18000 / 15 minutes. More tweets
+can be collected by using <code>retryOnRateLimit = TRUE</code> parameter which will cause the collection to pause if the
+rate limit is reached and resume when the rate limit resets (in approximately 15 minutes). Alternatively the twitter
+API parameter <code>since_id</code> can be used in a later session to resume a twitter search collection from the last
+tweet previously collected as tweet status id's are sequential. The Standard API only returns tweets for the last
 7 days.</p>
-<p>All of the search query operators available through the twitter API can be used in the <code>searchTerm</code> field. 
-For example, to search for tweets containing the term <code>"love"</code> or <code>"hate"</code> the <code>"OR"</code> operator can be 
-used in the term field: <code>searchTerm = "love OR hate"</code>. For more information refer to the twitter API 
+<p>All of the search query operators available through the twitter API can be used in the <code>searchTerm</code> field.
+For example, to search for tweets containing the term <code>"love"</code> or <code>"hate"</code> the <code>"OR"</code> operator can be
+used in the term field: <code>searchTerm = "love OR hate"</code>. For more information refer to the twitter API
 documentation for query operators: <a href='https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators'>https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators</a>.</p>
     </div>
 
@@ -209,12 +209,12 @@ documentation for query operators: <a href='https://developer.twitter.com/en/doc
     </tr>
     <tr>
       <th>searchTerm</th>
-      <td><p>Character string. Specifies a twitter search term. For example, <code>"Australian politics"</code> or 
+      <td><p>Character string. Specifies a twitter search term. For example, <code>"Australian politics"</code> or
 the hashtag <code>"#auspol"</code>.</p></td>
     </tr>
     <tr>
       <th>searchType</th>
-      <td><p>Character string. Returns filtered tweets as per search type <code>recent</code>, <code>mixed</code> or 
+      <td><p>Character string. Returns filtered tweets as per search type <code>recent</code>, <code>mixed</code> or
 <code>popular</code>. Default type is <code>recent</code>.</p></td>
     </tr>
     <tr>
@@ -279,18 +279,18 @@ will be the only way to access these variables.</p></dd>
     <p>A data.frame object with class names <code>"datasource"</code> and <code>"twitter"</code>.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p>Additional parameters passed to this function in the ellipsis <code>...</code> will also be passed to the Twitter 
-search API request. Most parameters have been covered but a complete list can be found here: 
+    <p>Additional parameters passed to this function in the ellipsis <code>...</code> will also be passed to the Twitter
+search API request. Most parameters have been covered but a complete list can be found here:
 <a href='https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets'>https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets</a>
-A useful additional parameter is <code>language</code> allowing the user can restrict tweets returned to a particular 
-language using an ISO 639-1 code. For example, to restrict a search to tweets in English the value 
+A useful additional parameter is <code>language</code> allowing the user can restrict tweets returned to a particular
+language using an ISO 639-1 code. For example, to restrict a search to tweets in English the value
 <code>language = "en"</code> can be passed to this function.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># search and collect 100 recent tweets for the hashtag #auspol</span>
-<span class='va'>myTwitterData</span> <span class='op'>&lt;-</span> <span class='va'>twitterAuth</span> <span class='op'>%&gt;%</span> 
-  <span class='fu'><a href='Collect.html'>Collect</a></span><span class='op'>(</span>searchTerm <span class='op'>=</span> <span class='st'>"#auspol"</span>, searchType <span class='op'>=</span> <span class='st'>"recent"</span>, numTweets <span class='op'>=</span> <span class='fl'>100</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, 
+<span class='va'>myTwitterData</span> <span class='op'>&lt;-</span> <span class='va'>twitterAuth</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='Collect.html'>Collect</a></span><span class='op'>(</span>searchTerm <span class='op'>=</span> <span class='st'>"#auspol"</span>, searchType <span class='op'>=</span> <span class='st'>"recent"</span>, numTweets <span class='op'>=</span> <span class='fl'>100</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
           includeRetweets <span class='op'>=</span> <span class='cn'>FALSE</span>, retryOnRateLimit <span class='op'>=</span> <span class='cn'>TRUE</span>, writeToFile <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 <span class='op'>}</span>
 
@@ -306,7 +306,7 @@ language using an ISO 639-1 code. For example, to restrict a search to tweets in
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://vosonlab.net'><span>VOSON Lab</span></a>.</p>
+  <p>Developed by Bryan Gertzel, Robert Ackland, Timothy Graham.</p>
 </div>
 
 <div class="pkgdown">

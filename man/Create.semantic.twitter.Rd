@@ -25,7 +25,7 @@
 
 \item{type}{Character string. Type of network to be created, set to \code{"semantic"}.}
 
-\item{removeTermsOrHashtags}{Character vector. Words or hashtags to remove from the semantic network. For example, 
+\item{removeTermsOrHashtags}{Character vector. Words or hashtags to remove from the semantic network. For example,
 this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
 nodes with matching name. Default is \code{NULL} to remove none.}
 
@@ -43,12 +43,12 @@ such as \code{2020} will be removed but not mixed values such as \code{G20}. Def
 \item{removeUrls}{Logical. Removes twitter shortened URL tokens from the tweet text. Default is \code{TRUE}.}
 
 \item{termFreq}{Numeric integer. Specifies the percentage of most frequent words to include. For example,
-\code{termFreq = 20} means that the 20 percent most frequently occurring \code{words} will be included in the 
-semantic network as nodes. A larger percentage will increase the number of nodes and therefore the size of graph. 
+\code{termFreq = 20} means that the 20 percent most frequently occurring \code{words} will be included in the
+semantic network as nodes. A larger percentage will increase the number of nodes and therefore the size of graph.
 The default value is \code{5}, meaning the top 5 percent most frequent words are used.}
 
-\item{hashtagFreq}{Numeric integer. Specifies the percentage of most frequent \code{hashtags} to include. For 
-example, \code{hashtagFreq = 20} means that the 20 percent most frequently occurring hashtags will be included 
+\item{hashtagFreq}{Numeric integer. Specifies the percentage of most frequent \code{hashtags} to include. For
+example, \code{hashtagFreq = 20} means that the 20 percent most frequently occurring hashtags will be included
 in the semantic network as nodes. The default value is \code{50}.}
 
 \item{assoc}{Character string. Association of nodes. A value of \code{"limited"} includes only edges between
@@ -63,8 +63,8 @@ occurring hashtags and terms, hashtags and hashtags, and terms and terms. Defaul
 Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
-Creates a semantic network from tweets returned from the twitter search query. Semantic networks 
-describe the semantic relationships between concepts. In this network the concepts are significant words and 
+Creates a semantic network from tweets returned from the twitter search query. Semantic networks
+describe the semantic relationships between concepts. In this network the concepts are significant words and
 hashtags extracted from the tweet text. Network edges are weighted and represent occurrence of words and
 hashtags in the same tweets.
 
@@ -97,7 +97,7 @@ install.packages(c("tidyr", "tidytext", "stopwords"))
 
 # create a twitter semantic network graph removing the hashtag '#auspol' and using the
 # top 2\% frequently occurring words and 10\% most frequently occurring hashtags as nodes
-semanticNetwork <- twitterData \%>\% 
+semanticNetwork <- twitterData \%>\%
                    Create("semantic", removeTermsOrHashtags = c("#auspol"),
                           termFreq = 2, hashtagFreq = 10, verbose = TRUE)
 

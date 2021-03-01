@@ -1,15 +1,15 @@
 title: vosonSML
 url: http://vosonlab.github.io/vosonSML
-    
-authors:
-  Bryan Gertzel:
-    href: "https://vosonlab.net"
-    html: "<span>VOSON Lab</span>"
 
-#template:
-#  params:
-#    bootswatch: flatly
-    
+# authors:
+#   Bryan Gertzel:
+#     href: "https://vosonlab.net"
+#     html: "<span>VOSON Lab</span>"
+
+# template:
+#   params:
+#     bootswatch: flatly
+
 navbar:
   structure:
     left:
@@ -26,9 +26,9 @@ navbar:
       icon: fa-home fa-lg
       href: index.html
     news:
-      icon: fa-newspaper-o
+      icon: fa-file-alt
       text: "Changelog"
-      href: news/index.html    
+      href: news/index.html
     reference:
       icon: fa-cubes
       text: "Reference"
@@ -43,10 +43,10 @@ navbar:
       icon: fa-flask fa-lg
       href: http://vosonlab.net/
     twitter:
-      icon: fa-twitter-square fa-lg
-      href: https://twitter.com/vosonlab    
+      icon: fab fa-twitter-square fa-lg
+      href: https://twitter.com/vosonlab
     github:
-      icon: fa-github fa-lg
+      icon: fab fa-github fa-lg
       href: https://github.com/vosonlab/vosonSML
 
 reference:
@@ -62,7 +62,7 @@ reference:
   - '`Authenticate.youtube`'
   - '`Authenticate.web`'
 - title: Collect
-  contents:  
+  contents:
   - '`Collect`'
   - '`Collect.twitter`'
   - '`Collect.youtube`'
@@ -91,7 +91,7 @@ reference:
   - '`vosonSML::AddUserData.actor.twitter`'
   - '`vosonSML::AddVideoData`'
   - '`vosonSML::AddVideoData.actor.youtube`'
-  - '`vosonSML::Graph`'  
+  - '`vosonSML::Graph`'
   - '`vosonSML::GetYoutubeVideoIDs`'
   - '`vosonSML::ImportData`'
 

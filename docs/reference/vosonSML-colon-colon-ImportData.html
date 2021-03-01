@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Import collected data previously saved to file — vosonSML::ImportData • vosonSML</title>
+<title>Import collected data from dataframe or previously saved to file — vosonSML::ImportData • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,11 +48,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Import collected data previously saved to file — vosonSML::ImportData" />
-<meta property="og:description" content="Imports collected data from file or dataframe. Ensures datasource and specified 
-socialmedia type are set so data is usable by Create functions. Not required
-if collected data was collected by vosonSML and saved as an rds file, use readRDS
-instead." />
+<meta property="og:title" content="Import collected data from dataframe or previously saved to file — vosonSML::ImportData" />
+<meta property="og:description" content="Imports collected data from file or dataframe. Ensures datasource and specified
+  socialmedia type are set so data is usable by Create functions. Not required if collected data
+  was collected by vosonSML and saved as an rds file, use readRDS instead." />
 
 
 
@@ -84,7 +83,7 @@ instead." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.00.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.1.9000</span>
       </span>
     </div>
 
@@ -92,27 +91,27 @@ instead." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
+    <span class="fas fa-file-alt"></span>
      
     Changelog
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-cubes"></span>
+    <span class="fas fa-cubes"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fa fa-book"></span>
+    <span class="fas fa-book"></span>
      
     Articles
      
@@ -128,19 +127,19 @@ instead." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://vosonlab.net/">
-    <span class="fa fa-flask fa-lg"></span>
+    <span class="fas fa-flask fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://twitter.com/vosonlab">
-    <span class="fa fa-twitter-square fa-lg"></span>
+    <span class="fab fa-twitter-square fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/vosonlab/vosonSML">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -157,35 +156,34 @@ instead." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Import collected data previously saved to file</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/ImportData.R'><code>R/ImportData.R</code></a></small>
+    <h1>Import collected data from dataframe or previously saved to file</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/import_data.R'><code>R/import_data.R</code></a></small>
     <div class="hidden name"><code>vosonSML-colon-colon-ImportData.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Imports collected data from file or dataframe. Ensures <code>datasource</code> and specified 
-<code>socialmedia</code> type are set so data is usable by <code><a href='Create.html'>Create</a></code> functions. Not required
-if collected data was collected by <code>vosonSML</code> and saved as an <code>rds</code> file, use <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></code>
-instead.</p>
+    <p>Imports collected data from file or dataframe. Ensures <code>datasource</code> and specified
+  <code>socialmedia</code> type are set so data is usable by <code><a href='Create.html'>Create</a></code> functions. Not required if collected data
+  was collected by <code>vosonSML</code> and saved as an <code>rds</code> file, use <code><a href='https://rdrr.io/r/base/readRDS.html'>readRDS</a></code> instead.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>ImportData</span><span class='op'>(</span><span class='va'>file</span>, <span class='va'>socialmedia</span>, type <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>ImportData</span><span class='op'>(</span><span class='va'>data</span>, <span class='va'>socialmedia</span>, type <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>file</th>
+      <th>data</th>
       <td><p>Character string or dataframe. Collected data file path or dataframe object.</p></td>
     </tr>
     <tr>
       <th>socialmedia</th>
-      <td><p>Character string. Social media type of collected data <code>twitter</code>, <code>youtube</code> or 
+      <td><p>Character string. Social media type of collected data <code>twitter</code>, <code>youtube</code> or
 <code>reddit</code>.</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>Character string. Type of file or file format of file to import <code>csv</code> or <code>rds</code>. Default is 
+      <td><p>Character string. Type of file or file format of file to import <code>csv</code> or <code>rds</code>. Default is
 <code>NULL</code> to use extension.</p></td>
     </tr>
     </table>
@@ -197,10 +195,10 @@ instead.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># import collected data from file</span>
-<span class='va'>twitterData</span> <span class='op'>&lt;-</span> <span class='fu'>ImportData</span><span class='op'>(</span><span class='st'>"./data.csv"</span>, <span class='st'>"twitter"</span><span class='op'>)</span>
+<span class='va'>twitter_data</span> <span class='op'>&lt;-</span> <span class='fu'>ImportData</span><span class='op'>(</span><span class='st'>"./data.csv"</span>, <span class='st'>"twitter"</span><span class='op'>)</span>
 
 <span class='co'># import collected data from dataframe</span>
-<span class='va'>twitterData</span> <span class='op'>&lt;-</span> <span class='fu'>ImportData</span><span class='op'>(</span><span class='va'>rtweetData</span>, <span class='st'>"twitter"</span><span class='op'>)</span>
+<span class='va'>twitter_data</span> <span class='op'>&lt;-</span> <span class='fu'>ImportData</span><span class='op'>(</span><span class='va'>rtweet_data</span>, <span class='st'>"twitter"</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 </div></pre>
@@ -215,7 +213,7 @@ instead.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://vosonlab.net'><span>VOSON Lab</span></a>.</p>
+  <p>Developed by Bryan Gertzel, Robert Ackland, Timothy Graham.</p>
 </div>
 
 <div class="pkgdown">
