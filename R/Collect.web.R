@@ -30,7 +30,9 @@
 #' @export
 Collect.web <- function(credential, pages, writeToFile = FALSE, verbose = TRUE, ...) {
 
+  rlang::check_installed(c("robotstxt", "rvest", "urltools", "xml2"), "for Collect.web")
   stop_req_pkgs(c("robotstxt", "rvest", "urltools", "xml2"), "Collect.web")
+
   cat("Collecting web page hyperlinks...\n")
 
   robots_opts <- getOption("robotstxt_warn")

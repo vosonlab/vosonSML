@@ -50,7 +50,9 @@ Collect.twitter <- function(credential, searchTerm = "", searchType = "recent", 
                             includeRetweets = TRUE, retryOnRateLimit = FALSE, writeToFile = FALSE,
                             verbose = FALSE, ...) {
 
+  rlang::check_installed("rtweet", "for Collect.twitter")
   stop_req_pkgs(c("rtweet"), "Collect.twitter")
+
   cat("Collecting tweets for search query...\n")
 
   authToken <- credential$auth

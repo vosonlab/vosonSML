@@ -229,6 +229,7 @@ rm_collect_cls <- function(cls_lst) {
 
 # check for required packages and stop with a message if missing
 stop_req_pkgs <- function(pkgs, from = "this function") {
+  # load the namespace of pkgs loadedNamespaces()
   req <- sapply(pkgs, function(x) { requireNamespace(x, quietly = TRUE) })
   if (any(req == FALSE)) {
     stop(paste0("Please install ", paste0(names(which(req == FALSE)), collapse = ', '),

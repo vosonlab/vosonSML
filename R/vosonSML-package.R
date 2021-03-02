@@ -19,19 +19,18 @@
 #' @docType package
 #' @keywords internal
 "_PACKAGE"
-
 #' @importFrom data.table "data.table" setkey ":=" fcase fifelse
-#' @importFrom dplyr anti_join arrange bind_rows case_when coalesce contains count
+#' @importFrom dplyr anti_join arrange bind_rows case_when coalesce contains count desc
 #' distinct ends_with filter funs group_by if_else left_join mutate mutate_all mutate_at
-#' n rename row_number rowwise select slice starts_with summarise ungroup vars
+#' n rename row_number rowwise select slice starts_with summarise tally ungroup vars
 #' @importFrom igraph graph_from_data_frame set_graph_attr V "V<-" write_graph
 #' @importFrom jsonlite fromJSON
 #' @importFrom lubridate as_datetime "is.POSIXt"
 #' @importFrom magrittr "%>%" "%<>%"
 #' @importFrom methods new
 #' @importFrom purrr flatten_chr map_dfr map_if transpose
-#' @importFrom rlang ".data"
-#' @importFrom stats "na.omit" setNames runif
+#' @importFrom rlang ".data" check_installed
+#' @importFrom stats "na.omit" runif setNames
 #' @importFrom stringr str_detect str_extract str_match_all str_replace str_replace_all
 #' @importFrom textutils HTMLdecode
 #' @importFrom tibble as_tibble tibble
