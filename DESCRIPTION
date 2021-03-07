@@ -23,7 +23,6 @@ Imports:
 Suggests:
     httpuv,
     knitr,
-    openssl,
     readr,
     rmarkdown,
     robotstxt,

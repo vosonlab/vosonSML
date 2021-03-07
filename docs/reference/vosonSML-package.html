@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Collection and network analysis of social media data — vosonSML-package • vosonSML</title>
+<title>Collecting Social Media Data and Generating Networks for Analysis — vosonSML-package • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,20 +48,19 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Collection and network analysis of social media data — vosonSML-package" />
+<meta property="og:title" content="Collecting Social Media Data and Generating Networks for Analysis — vosonSML-package" />
 <meta property="og:description" content="The goal of the vosonSML package is to provide a suite of easy-to-use tools for collecting data
-from social media and generating different types of networks suited to Social Network Analysis (SNA) and text
-analytics. It offers tools to create unimodal, multimodal, and semantic networks. Excellent packages such as
-rtweet, RedditExtractoR, magrittr, dplyr and igraph were drawn on to provide an
-integrated work flow for creating different types of networks out of social media data. Creating networks from
-online social media is often non-trivial and time consuming. This package simplifies such tasks so users can focus
-on analysis.
+  from social media and generating different types of networks suited to Social Network Analysis (SNA). It offers
+  tools to create unimodal, multimodal, and semantic networks. Excellent packages such as rtweet,
+  RedditExtractoR, dplyr and igraph were drawn on to provide an integrated work flow for creating
+  different types of networks out of social media data. Creating networks from online social media is often
+  non-trivial and time consuming. This package simplifies such tasks so users can focus on analysis.
 vosonSML uses a straightforward S3 class system. Data collected with this package produces data.frame
-inheritable objects that are assigned the class &quot;datasource&quot;. Additionally, &quot;datasource&quot; objects are
-attributed a class identifying the source of data, such as &quot;twitter&quot; or &quot;youtube&quot;. In this way
-datasource objects are fast, easy to work with, and can be used as input to easily construct different kinds
-of networks. For example, the function Collect can be used to collect twitter data, which is then passed to
-the Create function resulting in a twitter network (as igraph object) that is ready for analysis." />
+  inheritable objects that are assigned the class &quot;datasource&quot;. Additionally, datasource objects are
+  attributed a class identifying the source of data, such as &quot;twitter&quot; or &quot;youtube&quot;. In this way
+  datasource objects are fast, easy to work with, and can be used as input to easily construct different kinds
+  of networks. For example, the function Collect can be used to collect twitter data, which is then passed to
+  the Create function resulting in a twitter network that is ready for analysis." />
 
 
 
@@ -93,7 +92,7 @@ the Create function resulting in a twitter network (as igraph object) that is re
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.3.9000</span>
       </span>
     </div>
 
@@ -166,33 +165,49 @@ the Create function resulting in a twitter network (as igraph object) that is re
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Collection and network analysis of social media data</h1>
+    <h1>Collecting Social Media Data and Generating Networks for Analysis</h1>
     <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/vosonSML-package.R'><code>R/vosonSML-package.R</code></a></small>
     <div class="hidden name"><code>vosonSML-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>The goal of the <span class="pkg">vosonSML</span> package is to provide a suite of easy-to-use tools for collecting data
-from social media and generating different types of networks suited to Social Network Analysis (SNA) and text
-analytics. It offers tools to create unimodal, multimodal, and semantic networks. Excellent packages such as
-<span class="pkg">rtweet</span>, <span class="pkg">RedditExtractoR</span>, <span class="pkg">magrittr</span>, <span class="pkg">dplyr</span> and <span class="pkg">igraph</span> were drawn on to provide an
-integrated work flow for creating different types of networks out of social media data. Creating networks from
-online social media is often non-trivial and time consuming. This package simplifies such tasks so users can focus
-on analysis.</p>
+  from social media and generating different types of networks suited to Social Network Analysis (SNA). It offers
+  tools to create unimodal, multimodal, and semantic networks. Excellent packages such as <span class="pkg">rtweet</span>,
+  <span class="pkg">RedditExtractoR</span>, <span class="pkg">dplyr</span> and <span class="pkg">igraph</span> were drawn on to provide an integrated work flow for creating
+  different types of networks out of social media data. Creating networks from online social media is often
+  non-trivial and time consuming. This package simplifies such tasks so users can focus on analysis.</p>
 <p><span class="pkg">vosonSML</span> uses a straightforward S3 class system. Data collected with this package produces <code>data.frame</code>
-inheritable objects that are assigned the class <code>"datasource"</code>. Additionally, <code>"datasource"</code> objects are
-attributed a class identifying the source of data, such as <code>"twitter"</code> or <code>"youtube"</code>. In this way
-<code>datasource</code> objects are fast, easy to work with, and can be used as input to easily construct different kinds
-of networks. For example, the function <code>Collect</code> can be used to collect twitter data, which is then passed to
-the <code>Create</code> function resulting in a twitter network (as igraph object) that is ready for analysis.</p>
+  inheritable objects that are assigned the class <code>"datasource"</code>. Additionally, <code>datasource</code> objects are
+  attributed a class identifying the source of data, such as <code>"twitter"</code> or <code>"youtube"</code>. In this way
+  <code>datasource</code> objects are fast, easy to work with, and can be used as input to easily construct different kinds
+  of networks. For example, the function <code>Collect</code> can be used to collect twitter data, which is then passed to
+  the <code>Create</code> function resulting in a twitter network that is ready for analysis.</p>
     </div>
 
 
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>Useful links:</p><ul>
+<li><p><a href='https://github.com/vosonlab/vosonSML'>https://github.com/vosonlab/vosonSML</a></p></li>
+<li><p>Report bugs at <a href='https://github.com/vosonlab/vosonSML/issues'>https://github.com/vosonlab/vosonSML/issues</a></p></li>
+</ul>
+
+</div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
-    <p>Created by Timothy Graham and Robert Ackland with major contributions by Chung-hong Chan. The current lead
-developer and maintainer is Bryan Gertzel.</p>
+    <p><strong>Maintainer</strong>: Bryan Gertzel <a href='mailto:bryan.gertzel@anu.edu.au'>bryan.gertzel@anu.edu.au</a></p>
+<p>Authors:</p><ul>
+<li><p>Robert Ackland <a href='mailto:robert.ackland@anu.edu.au'>robert.ackland@anu.edu.au</a> (<a href='https://orcid.org/0000-0002-0008-1766'>ORCID</a>)</p></li>
+<li><p>Timothy Graham (<a href='https://orcid.org/0000-0002-4053-9313'>ORCID</a>)</p></li>
+</ul>
+
+<p>Other contributors:</p><ul>
+<li><p>Chung-hong Chan (<a href='https://orcid.org/0000-0002-6232-7530'>ORCID</a>) [contributor]</p></li>
+</ul>
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -38,12 +38,12 @@
 #' @export
 Create.twomode.twitter <- function(datasource, type, removeTermsOrHashtags = NULL, weighted = TRUE,
                                    verbose = FALSE, ...) {
+
+  rlang::check_installed(c("tidytext"), "for Create.twomode.twitter")
+  stop_req_pkgs(c("tidytext"), "Create.twomode.twitter")
+
   cat("Generating twitter 2-mode network...")
   if (verbose) { cat("\n") }
-
-  if (!requireNamespace("tidytext", quietly = TRUE)) {
-    stop(paste0("Please install the tidytext package before calling Create.twomode.twitter.", call. = FALSE))
-  }
 
   if (verbose) { df_stats <- network_stats(NULL, "collected tweets", nrow(datasource)) }
 

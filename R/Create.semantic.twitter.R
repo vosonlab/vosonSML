@@ -78,15 +78,11 @@ Create.semantic.twitter <- function(datasource, type, removeTermsOrHashtags = NU
                                     assoc = "limited",
                                     verbose = FALSE, ...) {
 
+  rlang::check_installed(c("tidytext"), "for Create.semantic.twitter")
+  stop_req_pkgs(c("tidytext"), "Create.semantic.twitter")
+
   cat("Generating twitter semantic network...")
   if (verbose) { cat("\n") }
-
-  requiredPackages <- sapply(c("tidyr", "tidytext"), function(x) { requireNamespace(x, quietly = TRUE) })
-  if (any(requiredPackages == FALSE)) {
-    stop(paste0("Please install ", paste0(names(which(requiredPackages == FALSE)), collapse = ', '),
-                " package", ifelse(length(which(requiredPackages == FALSE)) > 1, "s", ""),
-                " before calling Create.semantic.twitter.", call. = FALSE))
-  }
 
   isPerc <- function(x, desc) {
     if (!is.numeric(x) || x > 100 || x < 1) {

@@ -3,7 +3,7 @@ get_version <- function() {
   if ("vosonSML" %in% loadedNamespaces()) {
     return(utils::packageVersion("vosonSML"))
   }
-  "unknown"
+  "_"
 }
 
 # return a file name with system time prefix
