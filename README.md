@@ -1,23 +1,13 @@
-# vosonSML <img src="https://vosonlab.github.io/vosonSML/images/logo.png" width="140px" align="right" />
+# vosonSML - Social Media Lab<img src="https://vosonlab.github.io/vosonSML/images/logo.png" width="140px" align="right" />
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)](https://github.com/vosonlab/vosonSML/releases)
-[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.30.2.9000&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.30.3.9000&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
 [![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 [![R build status](https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg)](https://github.com/vosonlab/vosonSML/actions)
 
-The `vosonSML` R package is a suite of tools for collecting and constructing networks from social media data. It provides easy-to-use functions for collecting data across popular platforms and generating different types of networks for analysis.
-
-`vosonSML` is the `SocialMediaLab` package, with significant improvements and enhancements. We renamed the package because we thought that `SocialMediaLab` sounded a bit generic and also we wanted to indicate the connection to the [Virtual Observatory for the Study of Online Networks Lab](http://vosonlab.net), where the package was created. The original `SocialMediaLab` package was created by [Timothy Graham](https://github.com/timothyjgraham) and [Robert Ackland](https://github.com/rjackland) with major contributions by [Chung-hong Chan](https://github.com/chainsawriot).
-
-The re-writing of the package, ongoing development and maintenance of `vosonSML` is led by Bryan Gertzel.
-
-### Supported Social Media
-
-`vosonSML` currently features the collection of data and generation of networks from `twitter`, `youtube`, `reddit` and hyperlink networks from `web` sites.
-
-Unfortunately we are no longer able to maintain `facebook` and `instagram` collection, however code for these platforms is still available in [releases](https://github.com/vosonlab/vosonSML/releases) prior to version `0.25.0`.
+The `vosonSML` R package is a suite of easy to use functions for collecting and generating different types of networks from social media data. The package supports the API authentication and collection of data from `twitter`, `youtube` and `reddit` as well as `hyperlink` data from web sites. Networks in the form of node and edge lists are produced with additional metadata that can be used to create graphs and further analyse networks.
 
 ## Installation
 
@@ -28,24 +18,27 @@ install.packages("vosonSML")
 
 Install the latest release via GitHub (v0.29.13):
 ``` r
-install.packages("https://github.com/vosonlab/vosonSML/releases/download/v0.29.13/vosonSML-0.29.13.tar.gz",
+install.packages(
+  paste0("https://github.com/vosonlab/vosonSML/releases/download/",
+         "v0.29.13/vosonSML-0.29.13.tar.gz"),
   repo = NULL, type = "source")
 ```
 
-Install the latest development version (v0.30.0.9000):
-* includes early implementation of [web crawler and hyperlink networks](https://vosonlab.github.io/vosonSML/news/index.html)
+Install the latest development version (v0.30.3.9000):
 ``` r
-# library(remotes)
+library(remotes)
 remotes::install_github("vosonlab/vosonSML")
 ```
 
 ## Getting started
 
-The following usage examples will provide a quick start to using `vosonSML` functions. There are also several "how to" guides, including an "Absolute Beginners Guide to vosonSML" tutorial aimed at people with little or no programming experience on the [vosonSML page of the VOSON website](http://vosonlab.net/SocialMediaLab). Additionally there is an [Introduction to vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html) vignette included with the `vosonSML` package is that is a practical and explanatory guide to collecting data and creating networks.
+The following usage examples will provide a quick start to using `vosonSML` functions. Additionally there is an [Introduction to vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html) vignette that is a practical and explanatory guide to collecting data and creating networks.
 
 Further resources:
 - [Function Reference](https://vosonlab.github.io/vosonSML/reference/index.html)
-- [Updates & Changelog](https://vosonlab.github.io/vosonSML/news/index.html)
+- [Package Updates](https://vosonlab.github.io/vosonSML/news/index.html)
+- [Coding Blog](https://vosonlab.github.io/)
+- [VOSON Lab Software](http://vosonlab.net/tools)
 
 ### Usage
 
@@ -53,7 +46,7 @@ The process of authentication, data collection and creating social network in `v
 
 ### Twitter Examples
 
-#### 'Authenticate' with the Twitter API
+#### Authenticate with the Twitter API
 
 `Authenticate` is used to create an object that contains an OAuth token for accessing the twitter API. This can and should be re-used by saving it once to file after calling `Authenticate` and then by loading it again during future sessions.
 
@@ -77,7 +70,7 @@ saveRDS(twitterAuth, file = "~/.twitter_auth")
 twitterAuth <- readRDS("~/.twitter_auth")
 ```
 
-#### 'Collect' tweets for the '#auspol' hashtag
+#### Collect tweets for the #auspol hashtag
 
 `Collect` can be used to perform a twitter search with a search term. The following example collects 100 `recent` tweets for the hashtag `#auspol` and creates a dataframe with the collected tweet data.
 
@@ -106,7 +99,7 @@ twitterData <- twitterAuth %>%
 #> Done.
 ```
 
-#### 'Create' twitter 'activity', 'actor', 'semantic' and '2-mode' network graphs
+#### Create twitter activity, actor, semantic and 2-mode network graphs
 
 The twitter `Create` function accepts the data from `Collect` and a type parameter of `activity`, `actor`, `semantic` or `twomode` that specifies the type of network to create from the collected data. `Create` produces two dataframes, one for network `nodes` and one for node relations or `edges` in the network. These can then undergo further processing as per the [supplemental functions](#supplemental-functions) section or be passed to the `Graph` function that creates an `igraph` object.
 
@@ -245,7 +238,7 @@ twomodeNetwork <- twitterData %>%
 
 ### Youtube Examples
 
-#### 'Authenticate' and 'Collect' comments from youtube videos
+#### Authenticate and Collect comments from youtube videos
 
 Youtube uses an API key rather than an OAuth token and is simply set by calling `Authenticate` with the key as a parameter.
 ``` r
@@ -294,7 +287,7 @@ youtubeData <- youtubeAuth %>%
 #> Done.
 ```
 
-#### 'Create' youtube 'activity' and 'actor' network graphs
+#### Create youtube activity and actor network graphs
 
 The youtube `Create` function accepts the data from `Collect` and a network type parameter of `activity` or `actor`.
 
@@ -337,9 +330,9 @@ actorNetwork <- youtubeData %>% Create("actor") %>% Graph() %>% summary()
 
 ### Reddit Examples
 
-#### 'Authenticate' and 'Collect' from reddit threads
+#### Authenticate and Collect from reddit threads
 
-The reddit API end-point used by `vosonSML` does not require authentication but an `Authenticate` object is still used to set up the collection and creation operations as part of a reddit workflow. The reddit `Collect` function can then be used to collect comments from reddit threads specified by url's.
+The reddit API end-point used by `vosonSML` does not require authentication but an `Authenticate` object is still used to set up the collection and creation operations as part of a reddit workflow. The reddit `Collect` function can then be used to collect comments from reddit threads specified by URL's.
 ``` r
 # specify reddit threads to collect by url
 redditUrls <- c("https://www.reddit.com/r/datascience/comments/g2k5zi/xxxx_xxxx_xxxxxxxxxx/",
@@ -364,7 +357,7 @@ redditData <- Authenticate("reddit") %>% Collect(threadUrls = redditUrls)
 
 Please note that because of the API end-point used that `Collect` is limited to the first 500 comments per thread. It is therefore suited to collecting only smaller threads in their entirety.
 
-#### 'Create' reddit 'activity' and 'actor' networks
+#### Create reddit activity and actor networks
 
 ##### Activity network
 
@@ -406,7 +399,7 @@ actorNetwork <- redditData %>% Create("actor") %>% Graph() %>% summary()
 
 ### <a name="supplemental-functions"></a>Supplemental Functions
 
-#### 'AddText' adds collected text data to networks as node or edge attributes
+#### AddText adds collected text data to networks as node or edge attributes
 
 The `AddText` function can be used following the creation of `activity` or `actor` networks for `twitter`, `youtube` and `reddit`. It will add an attribute starting with `vosonTxt_` to nodes of `activity` networks and to edges of `actor` networks. It requires a collected `datasource` from which to extract text data.
 ``` r
@@ -448,7 +441,7 @@ actorNetwork <- actorNetwork %>%
           repliesFromText = TRUE)
 ```
 
-#### 'AddUserData' requests and adds user profile data to networks
+#### AddUserData requests and adds user profile data to networks
 
 `AddUserData` adds user profile information to as many users in a twitter `actor` network as possible. If the profile information is not available in the collect data and the `lookupUsers` parameter is set then it will make twitter API requests to retrieve them. The profile information is added as additional node attributes.
 ``` r
@@ -483,11 +476,11 @@ actorNetwork <- actorNetwork %>% Graph() %>% summary()
 #> | account_lang (v/c), profile_banner_url (v/c), profile_background_url (v/c),
 #> | profile_image_url (v/c), label (v/c), edge_type (e/c), timestamp (e/c), status_id (e/c)
 ```
-#### 'AddVideoData' requests and adds video data to networks
+#### AddVideoData requests and adds video data to networks
 
 `AddVideoData` adds video information as node attributes in youtube `actor` networks and replaces the video ID nodes with a user (channel owner or publisher). The `actorSubOnly` parameter can be used to only perform the ID substitution.
 ``` r
-# replaces 'VIDEOID:xxxxxx' references in actor network with their publishers
+# replaces VIDEOID:xxxxxx references in actor network with their publishers
 # user id (channel ID) and adds additional collected youtube video info to actor
 # network graph as node attributes
 actorNetwork <- actorNetwork %>% 
@@ -518,10 +511,10 @@ actorNetwork <- actorNetwork %>% Graph() %>% summary()
 
 Save and reuse twitter and youtube authentication objects in future sessions.
 ``` r
-# save the object after 'Authenticate'
+# save the object after Authenticate
 saveRDS(myYoutubeAuth, file = "~/.youtube_auth")
 
-# load a previously saved authentication object for use in 'Collect'
+# load a previously saved authentication object for use in Collect
 myYoutubeAuth <- readRDS("~/.youtube_auth")
 ```
 

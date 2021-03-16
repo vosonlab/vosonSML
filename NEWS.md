@@ -1,4 +1,4 @@
-# vosonSML 0.30.2.9000
+# vosonSML 0.30.3.9000
 
 ## Major Changes
 - Added a web crawler `Collect` method with hyperlink network creation. The `Create` function with `activity` type parameter creates a network where nodes are `web pages` and edges the `hyperlinks` linking them (extracted from `a href` HTML tags). The `actor` network has page or `site domains` as the nodes and again the `hyperlinks` from linking pages between domains.

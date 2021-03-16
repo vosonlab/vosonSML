@@ -74,9 +74,8 @@ AddUserData.actor.default <- function(net, ...) {
 #' @export
 AddUserData.actor.twitter <- function(net, data, lookupUsers = TRUE, twitterAuth = NULL, verbose = TRUE, ...) {
 
-  if (!requireNamespace("rtweet", quietly = TRUE)) {
-    stop("Please install the rtweet package before calling AddUserData.", call. = FALSE)
-  }
+  rlang::check_installed("rtweet", "for AddUserData.actor.twitter")
+  stop_req_pkgs(c("rtweet"), "AddUserData.actor.twitter")
 
   cat("Adding user profile data to network...")
   if (verbose) { cat("\n") }
