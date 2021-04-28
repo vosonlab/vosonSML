@@ -3,16 +3,22 @@
 #  library(vosonSML)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  myDevKeys <- list(appName = "My App", apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx",
-#                    accessToken = "xxxxxxxxxxxx", accessTokenSecret = "xxxxxxxxxxxx")
-#  
-#  twitterAuth <- Authenticate("twitter", appName = myDevKeys$appName, apiKey = myDevKeys$apiKey,
-#                              apiSecret = myDevKeys$apiSecret, accessToken = myDevKeys$accessToken,
-#                              accessTokenSecret = myDevKeys$accessTokenSecret)
+#  twitterAuth <-
+#     Authenticate(
+#        "twitter",
+#        appName = "My App",
+#        apiKey = "xxxxxxxx",
+#        apiSecret = "xxxxxxxx",
+#        accessToken = "xxxxxxxx",
+#        accessTokenSecret = "xxxxxxxx")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  twitterAuth <- Authenticate("twitter", appName = "An App",
-#  	                          apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx")
+#  twitterAuth <-
+#     Authenticate(
+#        "twitter",
+#        appName = "An App",
+#        apiKey = "xxxxxxxxxxxx",
+#        apiSecret = "xxxxxxxxxxxx")
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  saveRDS(twitterAuth, file = "twitter_auth")
@@ -22,9 +28,12 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  twitterData <- twitterAuth %>%
-#                 Collect(searchTerm = "#auspol", numTweets = 1000,
-#                         includeRetweets = FALSE, retryOnRateLimit = TRUE, writeToFile = TRUE,
-#                         verbose = TRUE)
+#     Collect(
+#        searchTerm = "#auspol",
+#        numTweets = 1000,
+#        includeRetweets = FALSE,
+#        retryOnRateLimit = TRUE,
+#        writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > twitterData
@@ -54,7 +63,7 @@
 #  actorGraph <- actorNetwork %>% Graph(writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#   > actorNetwork
+#  > actorNetwork
 #  $edges
 #  # A tibble: 1,725 x 5
 #     from             to              edge_type timestamp         status_id
@@ -90,41 +99,58 @@
 ## ----eval=FALSE---------------------------------------------------------------
 #  library(igraph)
 #  
-#  g2 <- delete.edges(actorGraph, which(E(actorGraph)$edge_type!="reply"))
+#  # remove edges that are not reply edges
+#  g2 <- delete.edges(actorGraph, which(E(actorGraph)$edge_type != "reply"))
+#  
+#  # get the giant component
 #  cc <- clusters(g2)
-#  g2 <- induced_subgraph(g2,which(cc$membership == which.max(cc$csize)))
-#  png("twitter_actor_reply_gc.png", width=600, height=600)
-#  plot(g2, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+#  g2 <- induced_subgraph(g2, which(cc$membership == which.max(cc$csize)))
+#  
+#  # open and write plot to a png file
+#  png("twitter_actor_reply_gc.png", width = 600, height = 600)
+#  plot(g2, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  actorGraphWithText <- twitterData %>% Create("actor") %>% AddText(twitterData) %>% Graph()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  #vector of igraph vertices - the users who tweeted with "bushfire"
-#  ind <- tail_of(actorGraphWithText,grep("bushfire",tolower(E(actorGraphWithText)$vosonTxt_tweet)))
+#  # get the index of nodes or users who tweeted the word "bushfire"
+#  ind <- tail_of(actorGraphWithText,
+#                 grep("bushfire", tolower(E(actorGraphWithText)$vosonTxt_tweet)))
+#  
+#  # set node attribute
 #  V(actorGraphWithText)$tweetedBushfires <- "no"
 #  V(actorGraphWithText)$tweetedBushfires[ind] <- "yes"
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  g3 <- delete.edges(actorGraphWithText, which(E(actorGraphWithText)$edge_type!="reply"))
+#  # remove edges that are not reply edges
+#  g3 <- delete.edges(actorGraphWithText, which(E(actorGraphWithText)$edge_type != "reply"))
+#  
+#  # get the giant component
 #  cc <- clusters(g3)
-#  g3 <- induced_subgraph(g3,which(cc$membership == which.max(cc$csize)))
-#  V(g3)$color <- ifelse(V(g3)$tweetedBushfires=="yes","red","grey")
-#  png("twitter_actor_reply_gc_bushfires.png", width=600, height=600)
-#  plot(g3, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+#  g3 <- induced_subgraph(g3, which(cc$membership == which.max(cc$csize)))
+#  
+#  # set node colour based on tweeted bushfires attribute value
+#  V(g3)$color <- ifelse(V(g3)$tweetedBushfires == "yes", "red", "grey")
+#  
+#  # open and write plot to a png file
+#  png("twitter_actor_reply_gc_bushfires.png", width = 600, height = 600)
+#  plot(g3, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  write.graph(g3, "twitter_reply_gc_bushfires.graphml", format="graphml")
+#  # save the graph as a graphml file
+#  write.graph(g3, "twitter_reply_gc_bushfires.graphml", format = "graphml")
 
 ## ----eval=FALSE---------------------------------------------------------------
+#  # create an actor network with user metadata
 #  actorGraphWithUserAttr <- actorNetwork %>%
-#                            AddUserData(twitterData,
-#                                        lookupUsers = TRUE,
-#                                        twitterAuth = twitterAuth) %>% Graph(writeToFile = TRUE)
+#    AddUserData(twitterData, lookupUsers = TRUE, twitterAuth = twitterAuth) %>%
+#    Graph(writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
+#  # create an activity network with tweet text
 #  activityNetwork <- twitterData %>% Create("activity") %>% AddText(twitterData)
 #  activityGraph <- activityNetwork %>% Graph(writeToFile = TRUE)
 
@@ -163,21 +189,28 @@
 #  + ... omitted several edges
 
 ## ----eval=FALSE---------------------------------------------------------------
+#  # create a subgraph containing nodes of components that have more than 5 nodes
 #  cc <- clusters(activityGraph)
-#  g2 <- induced_subgraph(activityGraph,which(cc$membership %in% which(cc$csize>5)))
-#  ind <- grep("bushfire",tolower(V(g2)$vosonTxt_tweet))
-#  V(g2)$color <- "grey"
-#  V(g2)$color[ind] <- "red"
-#  png("twitter_activity.png", width=600, height=600)
-#  plot(g2, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+#  g4 <- induced_subgraph(activityGraph,
+#                         which(cc$membership %in% which(cc$csize > 5)))
+#  
+#  # set node colour based on if tweet contains the word "bushfire"
+#  ind <- grep("bushfire", tolower(V(g4)$vosonTxt_tweet))
+#  V(g4)$color <- "grey"
+#  V(g4)$color[ind] <- "red"
+#  
+#  # open and write plot to a png file
+#  png("twitter_activity.png", width = 600, height = 600)
+#  plot(g4, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # additional required packages
+#  # requires the tidytext package for tokenizing text
 #  install.packages("tidytext")
 #  
+#  # create a 2-mode network with the hashtag "#auspol" removed
 #  twomodeNetwork <- twitterData %>% Create("twomode", removeTermsOrHashtags = c("#auspol"))
-#  twomodeGraph <- twomodeNetwork %>% Graph(writeToFile = TRUE)
+#  twomodeGraph <- twomodeNetwork %>% Graph()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > twomodeNetwork
@@ -216,26 +249,45 @@
 #  + ... omitted several edges
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  ind <- order(degree(twomodeGraph, mode="in"), decreasing=TRUE)[1:5] # top-5 hashtags
-#  # users who tweet with these hashtags
-#  ind2 <- unlist(lapply(ind, function(x){neighbors(twomodeGraph, x, mode="in")}))
-#  g2 <- induced_subgraph(twomodeGraph, c(ind, as.numeric(ind2)))
-#  V(g2)$color <- "grey"
-#  V(g2)$color[which(degree(g2, mode="in")>0)] <- "blue"
-#  V(g2)$label2 <- ifelse(degree(g2, mode="in")>0, V(g2)$label, "")
-#  png("twitter_twomode.png", width=600, height=600)
-#  plot(g2, vertex.label=V(g2)$label2, vertex.size=4, edge.arrow.size=0.5, vertex.label.cex=1.8,
-#       vertex.label.color="red")
+#  # get index of nodes that are in the top 5 by highest in-degree
+#  # this is the top 5 used hashtags, as all users have 0 in-degree in this network
+#  ind <- order(degree(twomodeGraph, mode = "in"), decreasing = TRUE)[1:5]
+#  
+#  # get index of nodes with an edge directed to the top 5 hashtags
+#  # this is users who have tweeted with these hashtags
+#  ind2 <- unlist(lapply(ind, function(x) {
+#     neighbors(twomodeGraph, x, mode = "in")
+#  }))
+#  
+#  # create a subgraph containing only the top 5 used hashtags and related users
+#  g5 <- induced_subgraph(twomodeGraph, c(ind, as.numeric(ind2)))
+#  
+#  # set node colour and label based on in-degree
+#  # only hashtag nodes are set to blue and with label attribute set
+#  V(g5)$color <- "grey"
+#  V(g5)$color[which(degree(g5, mode = "in") > 0)] <- "blue"
+#  V(g5)$label2 <- ifelse(degree(g5, mode = "in") > 0, V(g5)$label, "")
+#  
+#  # open and write plot to a png file
+#  png("twitter_twomode.png", width = 600, height = 600)
+#  plot(g5, vertex.label = V(g5)$label2, vertex.size = 4, edge.arrow.size = 0.5,
+#       vertex.label.cex = 1.8, vertex.label.color = "red")
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # additional required packages
+#  # additional required packages for tokenization and stopwords
 #  install.packages(c("tidyr", "tidytext", "stopwords"))
 #  
-#  semanticNetwork <- twitterData %>% Create("semantic",
-#                                            removeTermsOrHashtags = c("#auspol", "auspol", "australia"),
-#                                            termFreq = 5)
-#  semanticGraph <- semanticNetwork %>% Graph(writeToFile = TRUE, directed = FALSE)
+#  # create a semantic network with some common terms removed
+#  # include only the top 5% occurring terms in the network
+#  semanticNetwork <- twitterData %>% Create(
+#     "semantic",
+#     removeTermsOrHashtags = c("#auspol", "auspol", "australia"),
+#     termFreq = 5
+#  )
+#  
+#  # create an undirected graph
+#  semanticGraph <- semanticNetwork %>% Graph(directed = FALSE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > semanticNetwork
@@ -290,15 +342,22 @@
 #  + ... omitted several edges
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  ind <- grep("bushfire",tolower(V(semanticGraph)$name))
-#  g2 <- induced_subgraph(semanticGraph,ind)
-#  png("twitter_semantic.png", width=600, height=600)
-#  plot(g2, layout=layout_with_lgl(g2), vertex.shape="none", vertex.size=4, edge.width=1+log(E(g2)$weight))
+#  # get index of the nodes whose term contains "bushfire"
+#  ind <- grep("bushfire", tolower(V(semanticGraph)$name))
+#  
+#  # create a subgraph containing only bushfire terms
+#  g6 <- induced_subgraph(semanticGraph, ind)
+#  
+#  # open and write plot to a png file
+#  # plotted with large-graph-layout algorithm and edge weights
+#  png("twitter_semantic.png", width = 600, height = 600)
+#  plot(g6, layout = layout_with_lgl(g6), vertex.shape = "none", vertex.size = 4,
+#       edge.width = 1 + log(E(g2)$weight))
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  myAPIKey <- "xxxxxxxxxxxx"
-#  youtubeAuth <- Authenticate("youtube", apiKey = myAPIKey)
+#  # create auth object with api key
+#  youtubeAuth <- Authenticate("youtube", apiKey = "xxxxxxxx")
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  videoIDs <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx",
@@ -306,8 +365,7 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  videoIDs <- GetYoutubeVideoIDs("https://www.youtube.com/watch?v=pJ_NyEYRkLQ")
-#  youtubeData <- youtubeAuth %>%
-#                 Collect(videoIDs = videoIDs, maxComments = 500, writeToFile = TRUE)
+#  youtubeData <- youtubeAuth %>% Collect(videoIDs, maxComments = 500, writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > str(youtubeData)
@@ -328,6 +386,7 @@
 #   $ VideoID              : chr  "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" ...
 
 ## ----eval=FALSE---------------------------------------------------------------
+#  # read dataframe from file
 #  youtubeData <- readRDS("2020-09-26_095354-YoutubeData.rds")
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -366,8 +425,7 @@
 #  [1] "list"       "network"    "actor"      "youtube"    "voson_text"
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  actorGraph <- youtubeData %>% Create("actor") %>% AddText(youtubeData) %>%
-#                Graph(writeToFile = TRUE)
+#  actorGraph <- youtubeData %>% Create("actor") %>% AddText(youtubeData) %>% Graph()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > actorGraph
@@ -383,29 +441,38 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > table(E(actorGraph)$edge_type)
-#        comment reply-comment     self-loop
-#            500           103             1
+#     comment reply-comment     self-loop
+#         500           103             1
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  V(actorGraph)$color <- ifelse(V(actorGraph)$node_type=="video", "red", "grey")
-#  png("youtube_actor.png", width=600, height=600)
-#  plot(actorGraph, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+#  # change color of nodes with type video to red and others grey
+#  V(actorGraph)$color <- ifelse(V(actorGraph)$node_type == "video", "red", "grey")
+#  
+#  # open and write plot to a png file
+#  png("youtube_actor.png", width = 600, height = 600)
+#  plot(actorGraph, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  g2 <- delete.edges(actorGraph, which(E(actorGraph)$edge_type!="reply-comment"))
-#  #By deleting edges other than "reply-comment", we now have 417 isolates
-#  #> length(which(degree(g2)==0))
-#  #[1] 417
+#  # removed edges that are not of type reply-comment
+#  g2 <- delete.edges(actorGraph, which(E(actorGraph)$edge_type != "reply-comment"))
 #  
-#  g2 <- delete.vertices(g2, which(degree(g2)==0))                    #remove the isolates
+#  # check number of isolates
+#  > length(which(degree(g2) == 0))
+#  [1] 417
 #  
+#  # remove isolates
+#  g2 <- delete.vertices(g2, which(degree(g2) == 0))
+#  
+#  # get node indexes for the tails of edges that have comments containing words of interest
+#  # change the indexed node colors to red and others grey
 #  V(g2)$color <- "grey"
-#  ind <- tail_of(actorGraph,grep("arson|backburn|climate change",tolower(E(g2)$vosonTxt_comment)))
+#  ind <- tail_of(actorGraph, grep("arson|backburn|climate change", tolower(E(g2)$vosonTxt_comment)))
 #  V(g2)$color[ind] <- "red"
 #  
-#  png("youtube_actor_reply.png", width=600, height=600)
-#  plot(g2, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+#  # open and write plot to a png file
+#  png("youtube_actor_reply.png", width = 600, height = 600)
+#  plot(g2, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -444,7 +511,7 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  activityNetwork <- youtubeData %>% Create("activity") %>% AddText(youtubeData)
-#  activityGraph <- activityNetwork %>% Graph(writeToFile = TRUE)
+#  activityGraph <- activityNetwork %>% Graph()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > activityNetwork
@@ -484,12 +551,18 @@
 #  + ... omitted several edges
 
 ## ----eval=FALSE---------------------------------------------------------------
+#  # set all video node colors to red and others to grey
 #  V(activityGraph)$color <- "grey"
-#  V(activityGraph)$color[which(V(activityGraph)$node_type=="video")] <- "red"
-#  ind <- grep("arson|backburn|climate change",tolower(V(activityGraph)$vosonTxt_comment))
+#  V(activityGraph)$color[which(V(activityGraph)$node_type == "video")] <- "red"
+#  
+#  # get node indexes of comments that contain terms of interest
+#  # set their node colors to blue
+#  ind <- grep("arson|backburn|climate change", tolower(V(activityGraph)$vosonTxt_comment))
 #  V(activityGraph)$color[ind] <- "blue"
-#  png("youtube_activity.png", width=600, height=600)
-#  plot(activityGraph, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+#  
+#  # open and write plot to a png file
+#  png("youtube_activity.png", width = 600, height = 600)
+#  plot(activityGraph, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -581,12 +654,19 @@
 #  + ... omitted several edges
 
 ## ----eval=FALSE---------------------------------------------------------------
+#  # set node color of original post to red based on presence of title edge attribute
+#  # set other node colors to grey
 #  V(actorGraph)$color <- "grey"
 #  V(actorGraph)$color[tail_of(actorGraph, which(!is.na(E(actorGraph)$title)))] <- "red"
-#  ind <- tail_of(actorGraph,grep("arson|starting fires",tolower(E(actorGraph)$vosonTxt_comment)))
+#  
+#  # get node indexes for the tails of edges that have comments containing words of interest
+#  # set their node colors to blue
+#  ind <- tail_of(actorGraph, grep("arson|starting fires", tolower(E(actorGraph)$vosonTxt_comment)))
 #  V(actorGraph)$color[ind] <- "blue"
-#  png("reddit_actor.png", width=600, height=600)
-#  plot(actorGraph, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+#  
+#  # open and write plot to a png file
+#  png("reddit_actor.png", width = 600, height = 600)
+#  plot(actorGraph, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -634,12 +714,19 @@
 #  + ... omitted several edges
 
 ## ----eval=FALSE---------------------------------------------------------------
+#  # set original post node colors to red based on a node type of thread
+#  # set other node colors to grey
 #  V(activityGraph)$color <- "grey"
-#  V(activityGraph)$color[which(V(activityGraph)$node_type=="thread")] <- "red"
-#  ind <- grep("arson|starting fires",tolower(V(activityGraph)$vosonTxt_comment))
+#  V(activityGraph)$color[which(V(activityGraph)$node_type == "thread")] <- "red"
+#  
+#  # get node indexes for nodes that have comment attributes containing words of interest
+#  # set their node colors to blue
+#  ind <- grep("arson|starting fires", tolower(V(activityGraph)$vosonTxt_comment))
 #  V(activityGraph)$color[ind] <- "blue"
-#  png("reddit_activity.png", width=600, height=600)
-#  plot(activityGraph, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+#  
+#  # open and write plot to a png file
+#  png("reddit_activity.png", width = 600, height = 600)
+#  plot(activityGraph, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -672,32 +759,29 @@
 #                            full.names = TRUE)
 #  
 #  # combine imported data from files with apply and rbind
-#  twitterData <- do.call("rbind", lapply(importFiles,
-#                                         function(x) { ImportData(x, "twitter") }))
-#  
+#  twitterData <- do.call("rbind", lapply(importFiles, function(x) { ImportData(x, "twitter") }))
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # load dplyr
 #  library(dplyr)
 #  
 #  # combine the collected data using rbind and remove duplicates with distinct based on tweet status_id
-#  twitterData <- rbind(auspolTwitterData, bushfireTwitterData) %>%
-#     distinct(status_id, .keep_all = TRUE)
+#  twitterData <- rbind(auspolTwitterData, bushfireTwitterData) %>% distinct(status_id, .keep_all = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # manually combine data sets in reverse chronological order and remove duplicates based on status_id
 #  twitterData <- rbind(bushfireTwitterData, auspolTwitterData) %>%
-#     distinct(status_id, .keep_all = TRUE)
+#    distinct(status_id, .keep_all = TRUE)
 #  
 #  # arrange combined youtube data by updated timestamp and remove duplicates, keeping the version of a
 #  # duplicate video comment that was most recently updated
 #  youtubeData <- youtubeData %>%
-#     arrange(desc(UpdatedAt)) %>% distinct(VideoID, CommentID, .keep_all = TRUE)
+#    arrange(desc(UpdatedAt)) %>% distinct(VideoID, CommentID, .keep_all = TRUE)
 #  
 #  # arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of a
 #  # duplicate thread comment that was most recently updated
 #  redditData <- redditData %>%
-#     arrange(desc(comm_date_unix)) %>% distinct(thread_id, comm_id, .keep_all = TRUE)
+#    arrange(desc(comm_date_unix)) %>% distinct(thread_id, comm_id, .keep_all = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # create an igraph of twitter actor network
@@ -705,5 +789,5 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  V(g3)$vosonCA_tweetedBushfires <- V(g3)$tweetedBushfires
-#  write.graph(g3, "g3.graphml", format="graphml")
+#  write.graph(g3, "g3.graphml", format = "graphml")
 
