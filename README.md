@@ -2,12 +2,12 @@
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Downloads](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
-[![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github&colorB=8065ac)](https://github.com/vosonlab/vosonSML/releases)
-[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.30.3.9000&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML)
-[![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&color=659DBD&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
+[![Github Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github)](https://github.com/vosonlab/vosonSML/releases)
+[![Dev](https://img.shields.io/static/v1?label=dev&message=v0.30.5.9000&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Last Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 [![R build status](https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg)](https://github.com/vosonlab/vosonSML/actions)
 
-The `vosonSML` R package is a suite of easy to use functions for collecting and generating different types of networks from social media data. The package supports the API authentication and collection of data from `twitter`, `youtube` and `reddit` as well as `hyperlink` data from web sites. Networks in the form of node and edge lists are produced with additional metadata that can be used to create graphs and further analyse networks.
+The `vosonSML` R package is a suite of easy to use functions for collecting and generating different types of networks from social media data. The package supports the collection of data from `twitter`, `youtube` and `reddit`, as well as `hyperlinks` from web sites. Networks in the form of node and edge lists can be generated from collected data, supplemented with additional metadata and used to create graphs for Social Network Analysis.
 
 ## Installation
 
@@ -34,14 +34,9 @@ remotes::install_github("vosonlab/vosonSML")
 
 The following usage examples will provide a quick start to using `vosonSML` functions. Additionally there is an [Introduction to vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html) vignette that is a practical and explanatory guide to collecting data and creating networks.
 
-Further resources:
-- [Function Reference](https://vosonlab.github.io/vosonSML/reference/index.html)
-- [Package Updates](https://vosonlab.github.io/vosonSML/news/index.html)
-- [Code Blog](https://vosonlab.github.io/)
-
 ### Usage
 
-The process of authentication, data collection and creating social network in `vosonSML` is expressed with the three functions: *Authenticate*, *Collect* and *Create*. The following are some examples of their usage for supported social media:
+The process of authentication, data collection and creating networks in `vosonSML` is expressed with the three functions: *Authenticate*, *Collect* and *Create*. The following are some examples of their usage for supported social media:
 
 ### Twitter Examples
 

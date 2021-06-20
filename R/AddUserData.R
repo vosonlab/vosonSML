@@ -73,6 +73,7 @@ AddUserData.actor.default <- function(net, ...) {
 #' # "friends_count", "listed_count", "statuses_count", "favourites_count"
 #' # "account_created_at", "verified", "profile_url", "profile_expanded_url"
 #' # "account_lang", "profile_banner_url", "profile_background_url", "profile_image_url"
+#' }
 #'
 #' @return Network as a named list of two dataframes containing \code{$nodes}, \code{$edges} and
 #' \code{$users}. Nodes include columns for additional user data.

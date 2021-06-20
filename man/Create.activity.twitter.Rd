@@ -4,12 +4,15 @@
 \alias{Create.activity.twitter}
 \title{Create twitter activity network}
 \usage{
-\method{Create}{activity.twitter}(datasource, type, verbose = TRUE, ...)
+\method{Create}{activity.twitter}(datasource, type, rmNodeTypes = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"activity"}.}
+
+\item{rmNodeTypes}{Character vector. List of tweet types to remove from network. Options are \code{"tweet"},
+\code{"retweet"}, \code{"reply"} and \code{"quote"}. Default is \code{NULL}.}
 
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
 
@@ -20,18 +23,24 @@ Network as a named list of two dataframes containing \code{$nodes} and \code{$ed
 }
 \description{
 Creates a twitter activity network from collected tweets. Nodes are tweets and directed edges represent
-the relationship of tweets to one another. For example, there is a directed edge from a quote tweet towards the
-tweet that was quoted. Stand-alone tweets that are not replies, retweets or quote tweets have no relation to others
-and will be isolates.
+  the relationship of tweets to one another. For example, there is a directed edge from a quote tweet towards the
+  tweet that was quoted. Stand-alone tweets that are not replies, retweets or quote tweets have no relation to others
+  and will be isolates.
 }
 \examples{
 \dontrun{
-# create a twitter activity network graph
-activityNetwork <- twitterData \%>\% Create("activity")
+# create a twitter activity network with retweets removed
+activity_net <- twitter_data \%>\%
+  Create("activity", rmNodeTypes = c("retweet"))
 
-# network
-# activityNetwork$nodes
-# activityNetwork$edges
+# network nodes and edges
+names(activity_net)
+# "nodes", "edges"
+names(activity_net$nodes)
+# "status_id", "author_id", "author_screen_name", "created_at"
+names(activity_net$edges)
+# "from", "to", "user_id", "screen_name", "created_at", "edge_type"
+
 }
 
 }

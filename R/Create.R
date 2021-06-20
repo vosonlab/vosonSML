@@ -66,15 +66,6 @@ Create.activity <- function(datasource, type, ...) {
   UseMethod("Create.activity", datasource)
 }
 
-#' @title Create activity networks from social media data
-#'
-#' @noRd
-#' @method Create activity2
-#' @export
-Create.activity2 <- function(datasource, type, ...) {
-  UseMethod("Create.activity2", datasource)
-}
-
 #' @noRd
 #' @export
 Create.activity.default <- function(datasource, type, ...) {
@@ -88,15 +79,6 @@ Create.activity.default <- function(datasource, type, ...) {
 #' @export
 Create.actor <- function(datasource, type, ...) {
   UseMethod("Create.actor", datasource)
-}
-
-#' @title Create actor network from social media data
-#'
-#' @noRd
-#' @method Create actor2
-#' @export
-Create.actor2 <- function(datasource, type, ...) {
-  UseMethod("Create.actor2", datasource)
 }
 
 #' @noRd

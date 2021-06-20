@@ -50,9 +50,9 @@
 
 <meta property="og:title" content="Create twitter actor network — Create.actor.twitter" />
 <meta property="og:description" content="Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who
-have tweeted / retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges
-of different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted
-without relations to other users will appear in the network graph as isolate nodes." />
+  have tweeted, retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges of
+  different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted
+  without ties to other users will appear in the network graph as nodes with self-loops." />
 
 
 
@@ -84,7 +84,7 @@ without relations to other users will appear in the network graph as isolate nod
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.3.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.5.9000</span>
       </span>
     </div>
 
@@ -92,27 +92,27 @@ without relations to other users will appear in the network graph as isolate nod
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fas fa-file-alt"></span>
+    <span class="fa fa-file-alt"></span>
      
     Changelog
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fas fa-cubes"></span>
+    <span class="fa fa-cubes"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-book"></span>
+    <span class="fa fa-book"></span>
      
     Articles
      
@@ -128,7 +128,7 @@ without relations to other users will appear in the network graph as isolate nod
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://vosonlab.net/">
-    <span class="fas fa-flask fa-lg"></span>
+    <span class="fa fa-flask fa-lg"></span>
      
   </a>
 </li>
@@ -164,13 +164,21 @@ without relations to other users will appear in the network graph as isolate nod
 
     <div class="ref-description">
     <p>Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who
-have tweeted / retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges
-of different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted
-without relations to other users will appear in the network graph as isolate nodes.</p>
+  have tweeted, retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges of
+  different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted
+  without ties to other users will appear in the network graph as nodes with self-loops.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for actor.twitter</span>
-<span class='fu'><a href='Create.html'>Create</a></span><span class='op'>(</span><span class='va'>datasource</span>, <span class='va'>type</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span>, <span class='va'>...</span><span class='op'>)</span></pre>
+<span class='fu'><a href='Create.html'>Create</a></span><span class='op'>(</span>
+  <span class='va'>datasource</span>,
+  <span class='va'>type</span>,
+  rmEdgeTypes <span class='op'>=</span> <span class='cn'>NULL</span>,
+  inclMentions <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  inclRtMentions <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -182,6 +190,21 @@ without relations to other users will appear in the network graph as isolate nod
     <tr>
       <th>type</th>
       <td><p>Character string. Type of network to be created, set to <code>"actor"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>rmEdgeTypes</th>
+      <td><p>Character vector. List of edge types to remove from network. Options are <code>"tweet"</code>,
+<code>"retweet"</code>, <code>"reply"</code> and <code>"quote"</code>. Default is <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>inclMentions</th>
+      <td><p>Logical. Create edges for users mentioned or tagged in tweets. Default is <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>inclRtMentions</th>
+      <td><p>Logical. Create edges for users mentioned or tagged in retweets. For tweet types other than
+retweets the collected tweet author has created the mention, for retweets the original tweet author has created the
+mention not the retweeter. Default is <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>verbose</th>
@@ -199,19 +222,24 @@ without relations to other users will appear in the network graph as isolate nod
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>When creating twitter actor networks, a network with additional user information can be generated using the
-<code><a href='vosonSML::AddUserData.html'>AddUserData</a></code> function. Additional calls can be made to the twitter API to get information
-about users that were identified as nodes during network creation but did not tweet (meaning no user profile
-information was initially collected for them).</p>
+  <code><a href='vosonSML::AddUserData.html'>AddUserData</a></code> function. Additional calls can be made to the twitter API to get information about users
+  that were identified as nodes during network creation but did not tweet (meaning no user profile information was
+  initially collected for them).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># create a twitter actor network graph and output to console additional information</span>
-<span class='co'># during network creation (verbose)</span>
-<span class='va'>actorNetwork</span> <span class='op'>&lt;-</span> <span class='va'>twitterData</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='Create.html'>Create</a></span><span class='op'>(</span><span class='st'>"actor"</span><span class='op'>)</span>
+<span class='co'># create a twitter actor network excluding retweet, quote tweets and mention edges</span>
+<span class='va'>actor_net</span> <span class='op'>&lt;-</span> <span class='va'>twitter_data</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='Create.html'>Create</a></span><span class='op'>(</span><span class='st'>"actor"</span>, rmEdgeTypes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"retweet"</span>, <span class='st'>"quote"</span><span class='op'>)</span>, inclMentions <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
-<span class='co'># network</span>
-<span class='co'># actorNetwork$nodes</span>
-<span class='co'># actorNetwork$edges</span>
+<span class='co'># network nodes and edges</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>actor_net</span><span class='op'>)</span>
+<span class='co'># "nodes", "edges"</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>actor_net</span><span class='op'>$</span><span class='va'>nodes</span><span class='op'>)</span>
+<span class='co'># "user_id", "screen_name"</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>actor_net</span><span class='op'>$</span><span class='va'>edges</span><span class='op'>)</span>
+<span class='co'># "from", "to", "status_id", "created_at", "edge_type"</span>
+
 <span class='op'>}</span>
 
 </div></pre>

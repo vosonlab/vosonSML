@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Collecting Social Media Data and Generating Networks for Analysis — vosonSML-package • vosonSML</title>
+<title>vosonSML: Collecting Social Media Data and Generating Networks for Analysis — vosonSML-package • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,19 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Collecting Social Media Data and Generating Networks for Analysis — vosonSML-package" />
-<meta property="og:description" content="The goal of the vosonSML package is to provide a suite of easy-to-use tools for collecting data
-  from social media and generating different types of networks suited to Social Network Analysis (SNA). It offers
-  tools to create unimodal, multimodal, and semantic networks. Excellent packages such as rtweet,
-  RedditExtractoR, dplyr and igraph were drawn on to provide an integrated work flow for creating
-  different types of networks out of social media data. Creating networks from online social media is often
-  non-trivial and time consuming. This package simplifies such tasks so users can focus on analysis.
-vosonSML uses a straightforward S3 class system. Data collected with this package produces data.frame
-  inheritable objects that are assigned the class &quot;datasource&quot;. Additionally, datasource objects are
-  attributed a class identifying the source of data, such as &quot;twitter&quot; or &quot;youtube&quot;. In this way
-  datasource objects are fast, easy to work with, and can be used as input to easily construct different kinds
-  of networks. For example, the function Collect can be used to collect twitter data, which is then passed to
-  the Create function resulting in a twitter network that is ready for analysis." />
+<meta property="og:title" content="vosonSML: Collecting Social Media Data and Generating Networks for Analysis — vosonSML-package" />
+<meta property="og:description" content="A suite of easy to use functions for collecting social media data and generating networks for analysis. Supports Twitter, Youtube, Reddit and web site data sources." />
 
 
 
@@ -92,7 +81,7 @@ vosonSML uses a straightforward S3 class system. Data collected with this packag
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.3.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.5.9000</span>
       </span>
     </div>
 
@@ -100,27 +89,27 @@ vosonSML uses a straightforward S3 class system. Data collected with this packag
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa-home fa-lg"></span>
+    <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fas fa-file-alt"></span>
+    <span class="fa fa-file-alt"></span>
      
     Changelog
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fas fa-cubes"></span>
+    <span class="fa fa-cubes"></span>
      
     Reference
   </a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    <span class="fas fa-book"></span>
+    <span class="fa fa-book"></span>
      
     Articles
      
@@ -136,7 +125,7 @@ vosonSML uses a straightforward S3 class system. Data collected with this packag
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="http://vosonlab.net/">
-    <span class="fas fa-flask fa-lg"></span>
+    <span class="fa fa-flask fa-lg"></span>
      
   </a>
 </li>
@@ -165,24 +154,13 @@ vosonSML uses a straightforward S3 class system. Data collected with this packag
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Collecting Social Media Data and Generating Networks for Analysis</h1>
+    <h1>vosonSML: Collecting Social Media Data and Generating Networks for Analysis</h1>
     <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/vosonSML-package.R'><code>R/vosonSML-package.R</code></a></small>
     <div class="hidden name"><code>vosonSML-package.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>The goal of the <span class="pkg">vosonSML</span> package is to provide a suite of easy-to-use tools for collecting data
-  from social media and generating different types of networks suited to Social Network Analysis (SNA). It offers
-  tools to create unimodal, multimodal, and semantic networks. Excellent packages such as <span class="pkg">rtweet</span>,
-  <span class="pkg">RedditExtractoR</span>, <span class="pkg">dplyr</span> and <span class="pkg">igraph</span> were drawn on to provide an integrated work flow for creating
-  different types of networks out of social media data. Creating networks from online social media is often
-  non-trivial and time consuming. This package simplifies such tasks so users can focus on analysis.</p>
-<p><span class="pkg">vosonSML</span> uses a straightforward S3 class system. Data collected with this package produces <code>data.frame</code>
-  inheritable objects that are assigned the class <code>"datasource"</code>. Additionally, <code>datasource</code> objects are
-  attributed a class identifying the source of data, such as <code>"twitter"</code> or <code>"youtube"</code>. In this way
-  <code>datasource</code> objects are fast, easy to work with, and can be used as input to easily construct different kinds
-  of networks. For example, the function <code>Collect</code> can be used to collect twitter data, which is then passed to
-  the <code>Create</code> function resulting in a twitter network that is ready for analysis.</p>
+    <p>A suite of easy to use functions for collecting social media data and generating networks for analysis. Supports Twitter, Youtube, Reddit and web site data sources.</p>
     </div>
 
 
