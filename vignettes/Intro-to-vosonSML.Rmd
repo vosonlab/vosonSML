@@ -79,7 +79,7 @@ twitterAuth <- readRDS("twitter_auth")
 
 ## Collecting Data from Twitter
 
-The syntax for collecting Twitter data follow [Twitter's rules and filtering documentation](https://developer.twitter.com/en/docs/tweets/rules-and-filtering/overview/standard-operators). It is possible to collect tweets including particular terms (e.g. hashtags), and boolean searches (see [standard search operators](https://developer.twitter.com/en/docs/tweets/rules-and-filtering/overview/standard-operators)) are also possible. The collection may be filtered by, for example, type of Twitter activity (e.g. to include retweets only), number of collected tweets, language of tweet. As an example, the following collects 1000 recent tweets containing the '#auspol' hashtag (a prominent hashtag for Australian politics), with retweets not being collected.
+The syntax for collecting Twitter data follow [Twitter's rules and filtering documentation](https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query). It is possible to collect tweets including particular terms (e.g. hashtags), and boolean searches (see [standard search operators](https://developer.twitter.com/en/docs/twitter-api/v1/rules-and-filtering/search-operators)) are also possible. The collection may be filtered by, for example, type of Twitter activity (e.g. to include retweets only), number of collected tweets, language of tweet. As an example, the following collects 1000 recent tweets containing the '#auspol' hashtag (a prominent hashtag for Australian politics), with retweets not being collected.
 
 ```{r eval=FALSE}
 twitterData <- twitterAuth %>%

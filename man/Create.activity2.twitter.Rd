@@ -34,8 +34,13 @@ activity_net <- twitter_data \%>\%
   Create("activity2", rmNodeTypes = c("retweet"))
 
 # network nodes and edges
-# activity_net$nodes
-# activity_net$edges
+names(activity_net)
+# "nodes", "edges"
+names(activity_net$nodes)
+# "status_id", "created_at"
+names(activity_net$edges)
+# "from", "to", "user_id", "created_at", "edge_type"
+
 }
 
 }

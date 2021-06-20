@@ -23,109 +23,159 @@
 #' }
 #'
 #' @export
-Create.activity.twitter <- function(datasource, type, verbose = TRUE, ...) {
-  cat("Generating twitter activity network...")
-  if (verbose) { cat("\n") }
+Create.activity.twitter <-
+  function(datasource, type, verbose = TRUE, ...) {
+    cat("Generating twitter activity network...")
+    if (verbose) {
+      cat("\n")
+    }
 
-  # df <- tibble::as_tibble(datasource)
-  class(datasource) <- rm_collect_cls(class(datasource))
+    # df <- tibble::as_tibble(datasource)
+    class(datasource) <- rm_collect_cls(class(datasource))
 
-  df_stats <- network_stats(NULL, "collected tweets", nrow(datasource))
+    df_stats <-
+      network_stats(NULL, "collected tweets", nrow(datasource))
 
-  # edges
-  df_relations <- datasource %>% dplyr::select(.data$status_id,
-                                 .data$reply_to_status_id,
-                                 .data$quoted_status_id,
-                                 .data$retweet_status_id) %>%
-    dplyr::mutate(edge_type = case_when(!is.na(.data$reply_to_status_id) ~ "reply",
-                                   !is.na(.data$quoted_status_id) ~ "quote",
-                                   !is.na(.data$retweet_status_id) ~ "retweet",
-                                   TRUE ~ "tweet")) %>%
-    # dplyr::mutate(to = if_else(.data$edge_type == "reply", .data$reply_to_status_id,
-    #                      if_else(.data$edge_type == "quote", .data$quoted_status_id,
-    #                        if_else(.data$edge_type == "retweet", .data$retweet_status_id,
-    #                                as.character(NA))))) %>%
-    dplyr::mutate(to = ifelse(.data$edge_type == "reply", .data$reply_to_status_id,
-                         ifelse(.data$edge_type == "quote", .data$quoted_status_id,
-                           ifelse(.data$edge_type == "retweet", .data$retweet_status_id, NA)))) %>%
-    dplyr::rename("from" = .data$status_id) %>%
-    dplyr::select(.data$from, .data$to, .data$edge_type)
+    # edges
+    df_relations <- datasource %>% dplyr::select(
+      .data$status_id,
+      .data$reply_to_status_id,
+      .data$quoted_status_id,
+      .data$retweet_status_id
+    ) %>%
+      dplyr::mutate(
+        edge_type = dplyr::case_when(
+          !is.na(.data$reply_to_status_id) ~ "reply",!is.na(.data$quoted_status_id) ~ "quote",!is.na(.data$retweet_status_id) ~ "retweet",
+          TRUE ~ "tweet"
+        )
+      ) %>%
+      # dplyr::mutate(to = if_else(.data$edge_type == "reply", .data$reply_to_status_id,
+      #                      if_else(.data$edge_type == "quote", .data$quoted_status_id,
+      #                        if_else(.data$edge_type == "retweet", .data$retweet_status_id,
+      #                                as.character(NA))))) %>%
+      dplyr::mutate(to = ifelse(
+        .data$edge_type == "reply",
+        .data$reply_to_status_id,
+        ifelse(
+          .data$edge_type == "quote",
+          .data$quoted_status_id,
+          ifelse(.data$edge_type == "retweet", .data$retweet_status_id, NA)
+        )
+      )) %>%
+      dplyr::rename("from" = .data$status_id) %>%
+      dplyr::select(.data$from, .data$to, .data$edge_type)
 
-  edge_summary <- df_relations %>% dplyr::group_by(.data$edge_type) %>%
-    summarise(num = dplyr::n())
+    edge_summary <-
+      df_relations %>% dplyr::group_by(.data$edge_type) %>%
+      dplyr::summarise(num = dplyr::n())
 
-  for (row in 1:nrow(edge_summary)) {
-    type <- edge_summary[row, "edge_type"]
-    if (type == "tweet") df_stats <- network_stats(df_stats, "tweets", edge_summary[row, "num"])
-    else if (type == "retweet") df_stats <- network_stats(df_stats, "retweets", edge_summary[row, "num"])
-    else if (type == "quote") df_stats <- network_stats(df_stats, "quote tweets", edge_summary[row, "num"])
-    else if (type == "reply") df_stats <- network_stats(df_stats, "reply tweets", edge_summary[row, "num"])
+    for (row in 1:nrow(edge_summary)) {
+      type <- edge_summary[row, "edge_type"]
+      if (type == "tweet")
+        df_stats <-
+          network_stats(df_stats, "tweets", edge_summary[row, "num"])
+      else if (type == "retweet")
+        df_stats <-
+          network_stats(df_stats, "retweets", edge_summary[row, "num"])
+      else if (type == "quote")
+        df_stats <-
+          network_stats(df_stats, "quote tweets", edge_summary[row, "num"])
+      else if (type == "reply")
+        df_stats <-
+          network_stats(df_stats, "reply tweets", edge_summary[row, "num"])
+    }
+
+    # remove stand alone tweets as they have no relations
+    df_relations <-
+      dplyr::filter(df_relations, .data$edge_type != "tweet")
+
+    # vertices
+    df_nodes <-
+      datasource %>% dplyr::select(.data$status_id,
+                                   .data$user_id,
+                                   .data$screen_name,
+                                   .data$created_at)
+
+    # order of binding rows for nodes in data based on completeness
+
+    df_quotes <- dplyr::select(
+      datasource,
+      .data$quoted_status_id,
+      .data$quoted_user_id,
+      .data$quoted_screen_name,
+      .data$quoted_created_at
+    ) %>%
+      dplyr::filter(!is.na(.data$quoted_status_id))  %>%
+      dplyr::rename(
+        "status_id" = .data$quoted_status_id,
+        "user_id" = .data$quoted_user_id,
+        "screen_name" = .data$quoted_screen_name,
+        "created_at" = .data$quoted_created_at
+      ) %>%
+      dplyr::distinct(.data$status_id, .keep_all = TRUE)
+
+    if (nrow(df_quotes)) {
+      df_nodes <-
+        dplyr::bind_rows(df_nodes,
+                         dplyr::anti_join(df_quotes, df_nodes, by = "status_id"))
+    }
+
+    df_replies <- dplyr::select(
+      datasource,
+      .data$reply_to_status_id,
+      .data$reply_to_user_id,
+      .data$reply_to_screen_name
+    ) %>%
+      dplyr::filter(!is.na(.data$reply_to_status_id))  %>%
+      dplyr::rename(
+        "status_id" = .data$reply_to_status_id,
+        "user_id" = .data$reply_to_user_id,
+        "screen_name" = .data$reply_to_screen_name
+      ) %>%
+      dplyr::distinct(.data$status_id, .keep_all = TRUE)
+
+    if (nrow(df_replies)) {
+      df_nodes <-
+        dplyr::bind_rows(df_nodes,
+                         dplyr::anti_join(df_replies, df_nodes, by = "status_id"))
+    }
+
+    df_retweets <- dplyr::select(datasource,
+                                 .data$retweet_status_id,
+                                 .data$retweet_created_at) %>%
+      dplyr::filter(!is.na(.data$retweet_status_id))  %>%
+      dplyr::rename(
+        "status_id" = .data$retweet_status_id,
+        "created_at" = .data$retweet_created_at
+      ) %>%
+      dplyr::distinct(.data$status_id, .keep_all = TRUE)
+
+    if (nrow(df_retweets)) {
+      df_nodes <-
+        dplyr::bind_rows(df_nodes,
+                         dplyr::anti_join(df_retweets, df_nodes, by = "status_id"))
+    }
+
+    # handle igraph warnings due to dttm class columns
+    df_nodes <-
+      dplyr::mutate_at(df_nodes, dplyr::vars(dplyr::contains('created_at')), as.character)
+
+    df_stats <-
+      network_stats(df_stats, "nodes from data", nrow(df_nodes) - nrow(datasource))
+    df_stats <- network_stats(df_stats, "nodes", nrow(df_nodes))
+    df_stats <- network_stats(df_stats, "edges", nrow(df_relations))
+
+    # print stats
+    if (verbose) {
+      network_stats(df_stats, print = TRUE)
+    }
+
+    func_output <- list("nodes" = df_nodes,
+                        "edges" = df_relations)
+
+    class(func_output) <-
+      append(class(func_output), c("network", "activity", "twitter"))
+    cat("Done.\n")
+
+    func_output
   }
-
-  # remove stand alone tweets as they have no relations
-  df_relations <- dplyr::filter(df_relations, .data$edge_type != "tweet")
-
-  # vertices
-  df_nodes <- datasource %>% dplyr::select(.data$status_id, .data$user_id, .data$screen_name, .data$created_at)
-
-  # order of binding rows for nodes in data based on completeness
-
-  df_quotes <- dplyr::select(datasource, .data$quoted_status_id,
-                             .data$quoted_user_id,
-                             .data$quoted_screen_name,
-                             .data$quoted_created_at) %>%
-    dplyr::filter(!is.na(.data$quoted_status_id))  %>%
-    dplyr::rename("status_id" = .data$quoted_status_id,
-                  "user_id" = .data$quoted_user_id,
-                  "screen_name" = .data$quoted_screen_name,
-                  "created_at" = .data$quoted_created_at) %>%
-    dplyr::distinct(.data$status_id, .keep_all = TRUE)
-
-  if (nrow(df_quotes)) {
-    df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(df_quotes, df_nodes, by = "status_id"))
-  }
-
-  df_replies <- dplyr::select(datasource, .data$reply_to_status_id,
-                              .data$reply_to_user_id,
-                              .data$reply_to_screen_name) %>%
-    dplyr::filter(!is.na(.data$reply_to_status_id))  %>%
-    dplyr::rename("status_id" = .data$reply_to_status_id,
-                  "user_id" = .data$reply_to_user_id,
-                  "screen_name" = .data$reply_to_screen_name) %>%
-    dplyr::distinct(.data$status_id, .keep_all = TRUE)
-
-  if (nrow(df_replies)) {
-    df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(df_replies, df_nodes, by = "status_id"))
-  }
-
-  df_retweets <- dplyr::select(datasource, .data$retweet_status_id,
-                               .data$retweet_created_at) %>%
-    dplyr::filter(!is.na(.data$retweet_status_id))  %>%
-    dplyr::rename("status_id" = .data$retweet_status_id,
-                  "created_at" = .data$retweet_created_at) %>%
-    dplyr::distinct(.data$status_id, .keep_all = TRUE)
-
-  if (nrow(df_retweets)) {
-    df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(df_retweets, df_nodes, by = "status_id"))
-  }
-
-  # handle igraph warnings due to dttm class columns
-  df_nodes <- dplyr::mutate_at(df_nodes, vars(contains('created_at')), as.character)
-
-  df_stats <- network_stats(df_stats, "nodes from data", nrow(df_nodes) - nrow(datasource))
-  df_stats <- network_stats(df_stats, "nodes", nrow(df_nodes))
-  df_stats <- network_stats(df_stats, "edges", nrow(df_relations))
-
-  # print stats
-  if (verbose) { network_stats(df_stats, print = TRUE) }
-
-  func_output <- list(
-    "nodes" = df_nodes,
-    "edges" = df_relations
-  )
-
-  class(func_output) <- append(class(func_output), c("network", "activity", "twitter"))
-  cat("Done.\n")
-
-  func_output
-}

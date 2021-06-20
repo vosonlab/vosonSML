@@ -55,23 +55,48 @@ AddText.activity.default <- function(net, ...) {
 #' @noRd
 #' @export
 AddText.activity.twitter <- function(net, data, ...) {
+  # only text, quoted_text and retweet_text
+
   # data <- tibble::as_tibble(data)
   class(data) <- rm_collect_cls(class(data))
 
-  net$nodes <- dplyr::left_join(net$nodes, dplyr::select(data, .data$status_id, .data$text), by = "status_id")
-  net$nodes <- dplyr::left_join(net$nodes,
-                                dplyr::select(data, .data$quoted_status_id, .data$quoted_text) %>%
-                                  dplyr::rename(status_id =.data$quoted_status_id, qtext = .data$quoted_text) %>%
-                                  dplyr::distinct(), by = "status_id")
-  net$nodes <- dplyr::left_join(net$nodes,
-                                dplyr::select(data, .data$retweet_status_id, .data$retweet_text) %>%
-                                  dplyr::rename(status_id =.data$retweet_status_id, rtext = .data$retweet_text) %>%
-                                  dplyr::distinct(), by = "status_id")
-  net$nodes <- dplyr::mutate(net$nodes, text = ifelse(!is.na(.data$text), .data$text,
-                                                      ifelse(!is.na(.data$qtext), .data$qtext, .data$rtext))) %>%
+  net$nodes <-
+    dplyr::left_join(net$nodes,
+                     dplyr::select(data, .data$status_id, .data$text),
+                     by = "status_id")
+
+  net$nodes <- dplyr::left_join(
+    net$nodes,
+    dplyr::select(data, .data$quoted_status_id, .data$quoted_text) %>%
+      dplyr::rename(
+        status_id = .data$quoted_status_id,
+        qtext = .data$quoted_text
+      ) %>%
+      dplyr::distinct(),
+    by = "status_id"
+  )
+
+  net$nodes <- dplyr::left_join(
+    net$nodes,
+    dplyr::select(data, .data$retweet_status_id, .data$retweet_text) %>%
+      dplyr::rename(
+        status_id = .data$retweet_status_id,
+        rtext = .data$retweet_text
+      ) %>%
+      dplyr::distinct(),
+    by = "status_id"
+  )
+
+  net$nodes <-
+    dplyr::mutate(net$nodes, text = ifelse(
+      !is.na(.data$text),
+      .data$text,
+      ifelse(!is.na(.data$qtext), .data$qtext, .data$rtext)
+    )) %>%
     dplyr::select(-c(.data$qtext, .data$rtext)) %>% dplyr::rename(vosonTxt_tweet = .data$text)
 
-  net$nodes$vosonTxt_tweet <- textutils::HTMLdecode(net$nodes$vosonTxt_tweet)
+  net$nodes$vosonTxt_tweet <-
+    textutils::HTMLdecode(net$nodes$vosonTxt_tweet)
 
   class(net) <- union(class(net), c("vosontxt"))
   cat("Done.\n")
@@ -85,10 +110,15 @@ AddText.activity.youtube <- function(net, data, ...) {
   # data <- tibble::as_tibble(data)
   class(data) <- rm_collect_cls(class(data))
 
-  net$nodes <- dplyr::left_join(net$nodes,
-                                dplyr::select(data, .data$CommentID, .data$Comment) %>%
-                                  dplyr::rename(id = .data$CommentID, vosonTxt_comment = .data$Comment),
-                                by = c("id"))
+  net$nodes <- dplyr::left_join(
+    net$nodes,
+    dplyr::select(data, .data$CommentID, .data$Comment) %>%
+      dplyr::rename(
+        id = .data$CommentID,
+        vosonTxt_comment = .data$Comment
+      ),
+    by = c("id")
+  )
 
   class(net) <- union(class(net), c("vosontxt"))
   cat("Done.\n")
@@ -110,32 +140,42 @@ AddText.activity.youtube <- function(net, data, ...) {
 #' @aliases AddText.activity.reddit
 #' @name vosonSML::AddText.activity.reddit
 #' @export
-AddText.activity.reddit <- function(net, data, cleanText = FALSE, ...) {
-  # data <- tibble::as_tibble(data)
-  class(data) <- rm_collect_cls(class(data))
+AddText.activity.reddit <-
+  function(net, data, cleanText = FALSE, ...) {
+    # data <- tibble::as_tibble(data)
+    class(data) <- rm_collect_cls(class(data))
 
-  net$nodes <- dplyr::left_join(net$nodes,
-                                dplyr::mutate(data, id = paste0(.data$thread_id, ".", .data$structure)) %>%
-                                  dplyr::select(.data$id, .data$subreddit, .data$comment),
-                                by = c("id", "subreddit"))
+    net$nodes <- dplyr::left_join(
+      net$nodes,
+      dplyr::mutate(data, id = paste0(.data$thread_id, ".", .data$structure)) %>%
+        dplyr::select(.data$id, .data$subreddit, .data$comment),
+      by = c("id", "subreddit")
+    )
 
-  threads <- dplyr::select(data, .data$subreddit, .data$thread_id, .data$title, .data$post_text) %>%
-    dplyr::distinct() %>% dplyr::mutate(id = paste0(.data$thread_id, ".0"), thread_id = NULL)
+    threads <-
+      dplyr::select(data,
+                    .data$subreddit,
+                    .data$thread_id,
+                    .data$title,
+                    .data$post_text) %>%
+      dplyr::distinct() %>% dplyr::mutate(id = paste0(.data$thread_id, ".0"), thread_id = NULL)
 
-  net$nodes <- dplyr::left_join(net$nodes, threads, by = c("id", "subreddit")) %>%
-    dplyr::mutate(comment = ifelse(.data$node_type == "thread", .data$post_text, .data$comment)) %>%
-    dplyr::select(-c(.data$post_text)) %>% dplyr::rename(vosonTxt_comment = .data$comment)
+    net$nodes <-
+      dplyr::left_join(net$nodes, threads, by = c("id", "subreddit")) %>%
+      dplyr::mutate(comment = ifelse(.data$node_type == "thread", .data$post_text, .data$comment)) %>%
+      dplyr::select(-c(.data$post_text)) %>% dplyr::rename(vosonTxt_comment = .data$comment)
 
-  if (cleanText) {
-    net$nodes$vosonTxt_comment <- xml_clean_reddit(net$nodes$vosonTxt_comment)
-    net$nodes$title <- xml_clean_reddit(net$nodes$title)
+    if (cleanText) {
+      net$nodes$vosonTxt_comment <-
+        xml_clean_reddit(net$nodes$vosonTxt_comment)
+      net$nodes$title <- xml_clean_reddit(net$nodes$title)
+    }
+
+    class(net) <- union(class(net), c("vosontxt"))
+    cat("Done.\n")
+
+    net
   }
-
-  class(net) <- union(class(net), c("vosontxt"))
-  cat("Done.\n")
-
-  net
-}
 
 #' @noRd
 #' @method AddText actor
@@ -159,9 +199,10 @@ AddText.actor.twitter <- function(net, data, ...) {
   net$edges <- dplyr::left_join(net$edges,
                                 dplyr::select(data, .data$status_id, .data$text),
                                 by = c("status_id")) %>%
-               dplyr::rename(vosonTxt_tweet = .data$text)
+    dplyr::rename(vosonTxt_tweet = .data$text)
 
-  net$edges$vosonTxt_tweet <- textutils::HTMLdecode(net$edges$vosonTxt_tweet)
+  net$edges$vosonTxt_tweet <-
+    textutils::HTMLdecode(net$edges$vosonTxt_tweet)
 
   class(net) <- union(class(net), c("vosontxt"))
   cat("Done.\n")
@@ -202,45 +243,67 @@ AddText.actor.twitter <- function(net, data, ...) {
 #' @aliases AddText.actor.youtube
 #' @name vosonSML::AddText.actor.youtube
 #' @export
-AddText.actor.youtube <- function(net, data, repliesFromText = FALSE, atRepliesOnly = TRUE, ...) {
-  # data <- tibble::as_tibble(data)
-  class(data) <- rm_collect_cls(class(data))
+AddText.actor.youtube <-
+  function(net,
+           data,
+           repliesFromText = FALSE,
+           atRepliesOnly = TRUE,
+           ...) {
+    # data <- tibble::as_tibble(data)
+    class(data) <- rm_collect_cls(class(data))
 
-  net$edges %<>% dplyr::left_join(dplyr::select(data, .data$CommentID, .data$Comment) %>%
-                                  dplyr::rename(comment_id = .data$CommentID, vosonTxt_comment = .data$Comment),
-                                  by = c("comment_id"))
+    net$edges %<>% dplyr::left_join(
+      dplyr::select(data, .data$CommentID, .data$Comment) %>%
+        dplyr::rename(
+          comment_id = .data$CommentID,
+          vosonTxt_comment = .data$Comment
+        ),
+      by = c("comment_id")
+    )
 
-  # in comment reply to's
-  if (repliesFromText) {
-    net$edges %<>% dplyr::left_join(dplyr::select(net$nodes, -.data$node_type), by = c("from" = "id"))
-    vid_comments <- dplyr::select(net$edges, .data$video_id, .data$vosonTxt_comment) %>% purrr::transpose()
+    # in comment reply to's
+    if (repliesFromText) {
+      net$edges %<>% dplyr::left_join(dplyr::select(net$nodes,-.data$node_type),
+                                      by = c("from" = "id"))
+      vid_comments <-
+        dplyr::select(net$edges, .data$video_id, .data$vosonTxt_comment) %>% purrr::transpose()
 
-    net$edges$at_id <- sapply(vid_comments, function(x) {
-      for (name_at in net$nodes$screen_name) {
-        if (atRepliesOnly) {
-          name_at_regex <- paste0("^", escape_regex(paste0("@", name_at)))
-        } else {
-          name_at_regex <- paste0("^[@]?", escape_regex(name_at))
+      net$edges$at_id <- sapply(vid_comments, function(x) {
+        for (name_at in net$nodes$screen_name) {
+          if (atRepliesOnly) {
+            name_at_regex <- paste0("^", escape_regex(paste0("@", name_at)))
+          } else {
+            name_at_regex <- paste0("^[@]?", escape_regex(name_at))
+          }
+
+          if (grepl(name_at_regex, x$vosonTxt_comment)) {
+            to_id <-
+              dplyr::filter(net$edges,
+                            .data$screen_name == name_at & .data$video_id == x$video_id) %>%
+              dplyr::select(.data$from) %>% dplyr::distinct()
+            if (nrow(to_id)) {
+              return(as.character(tail(to_id, n = 1)))
+            } # choose last match - best effort
+          }
         }
+        return(as.character(NA))
+      })
+      net$edges %<>% dplyr::mutate(
+        to = ifelse(is.na(.data$at_id), .data$to, .data$at_id),
+        edge_type = ifelse(
+          is.na(.data$at_id),
+          .data$edge_type,
+          "reply-comment-text"
+        )
+      )
+      # , at_id = NULL # leave in for reference
+    }
 
-        if (grepl(name_at_regex, x$vosonTxt_comment)) {
-          to_id <- dplyr::filter(net$edges, .data$screen_name == name_at & .data$video_id == x$video_id) %>%
-                   dplyr::select(.data$from) %>% dplyr::distinct()
-          if (nrow(to_id)) { return( as.character(tail(to_id, n = 1)) ) } # choose last match - best effort
-        }
-      }
-      return(as.character(NA))
-    })
-    net$edges %<>% dplyr::mutate(to = ifelse(is.na(.data$at_id), .data$to, .data$at_id),
-                                 edge_type = ifelse(is.na(.data$at_id), .data$edge_type, "reply-comment-text"))
-    # , at_id = NULL # leave in for reference
+    class(net) <- union(class(net), c("vosontxt"))
+    cat("Done.\n")
+
+    net
   }
-
-  class(net) <- union(class(net), c("vosontxt"))
-  cat("Done.\n")
-
-  net
-}
 
 #' @title Add columns containing text data to reddit actor network dataframes
 #'
@@ -256,32 +319,59 @@ AddText.actor.youtube <- function(net, data, repliesFromText = FALSE, atRepliesO
 #' @aliases AddText.actor.reddit
 #' @name vosonSML::AddText.actor.reddit
 #' @export
-AddText.actor.reddit <- function(net, data, cleanText = FALSE, ...) {
-  # data <- tibble::as_tibble(data)
-  class(data) <- rm_collect_cls(class(data))
+AddText.actor.reddit <-
+  function(net, data, cleanText = FALSE, ...) {
+    # data <- tibble::as_tibble(data)
+    class(data) <- rm_collect_cls(class(data))
 
-  # rename the edge attribute containing the thread comment
-  net$edges <- dplyr::left_join(net$edges,
-                                dplyr::select(data, .data$subreddit, .data$thread_id, .data$id, .data$comment),
-                                by = c("subreddit", "thread_id", "comment_id" = "id")) %>%
-               dplyr::rename(vosonTxt_comment = .data$comment)
+    # rename the edge attribute containing the thread comment
+    net$edges <- dplyr::left_join(
+      net$edges,
+      dplyr::select(
+        data,
+        .data$subreddit,
+        .data$thread_id,
+        .data$id,
+        .data$comment
+      ),
+      by = c("subreddit", "thread_id", "comment_id" = "id")
+    ) %>%
+      dplyr::rename(vosonTxt_comment = .data$comment)
 
-  authors <- dplyr::select(data, .data$subreddit, .data$thread_id, .data$title, .data$post_text) %>%
-    dplyr::distinct() %>% dplyr::mutate(comment_id = 0)
+    authors <-
+      dplyr::select(data,
+                    .data$subreddit,
+                    .data$thread_id,
+                    .data$title,
+                    .data$post_text) %>%
+      dplyr::distinct() %>% dplyr::mutate(comment_id = 0)
 
-  net$edges <- dplyr::left_join(net$edges, authors, by = c("subreddit", "thread_id", "comment_id")) %>%
-    dplyr::mutate(vosonTxt_comment = ifelse(.data$comment_id == 0, .data$post_text, .data$vosonTxt_comment),
-                  post_text = NULL)
+    net$edges <-
+      dplyr::left_join(net$edges,
+                       authors,
+                       by = c("subreddit", "thread_id", "comment_id")) %>%
+      dplyr::mutate(
+        vosonTxt_comment = ifelse(
+          .data$comment_id == 0,
+          .data$post_text,
+          .data$vosonTxt_comment
+        ),
+        post_text = NULL
+      )
 
-  net$edges$vosonTxt_comment <- ifelse(trimws(net$edges$vosonTxt_comment) == "", NA, net$edges$vosonTxt_comment)
+    net$edges$vosonTxt_comment <-
+      ifelse(trimws(net$edges$vosonTxt_comment) == "",
+             NA,
+             net$edges$vosonTxt_comment)
 
-  if (cleanText) {
-    net$edges$vosonTxt_comment <- xml_clean_reddit(net$edges$vosonTxt_comment)
-    net$edges$title <- xml_clean_reddit(net$edges$title)
+    if (cleanText) {
+      net$edges$vosonTxt_comment <-
+        xml_clean_reddit(net$edges$vosonTxt_comment)
+      net$edges$title <- xml_clean_reddit(net$edges$title)
+    }
+
+    class(net) <- union(class(net), c("vosontxt"))
+    cat("Done.\n")
+
+    net
   }
-
-  class(net) <- union(class(net), c("vosontxt"))
-  cat("Done.\n")
-
-  net
-}

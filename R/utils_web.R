@@ -17,17 +17,17 @@ get_domain_robots <- function(url, verbose = TRUE) {
 get_crawl_delay <- function(crawl_delay = NULL,
                             use_delay = NULL) {
   rand_fast_delay <- runif(1, 0.5, 1.0)
-  
+
   if (is.null(crawl_delay) && is.null(use_delay)) {
     return(rand_fast_delay)
   }
-  
+
   if (!is.null(use_delay)) {
     if (is.numeric(use_delay) && use_delay > 0) {
       return(use_delay)
     }
   }
-  
+
   get_ua_delay_value <- function(delay_df, ua) {
     if (ua == "*") {
       v <-
@@ -42,7 +42,7 @@ get_crawl_delay <- function(crawl_delay = NULL,
     }
     NULL
   }
-  
+
   if (inherits(crawl_delay, "data.frame") && nrow(crawl_delay)) {
     for (ua in c(getOption("HTTPUserAgent"), "*")) {
       delay <- get_ua_delay_value(crawl_delay, ua)
@@ -51,7 +51,7 @@ get_crawl_delay <- function(crawl_delay = NULL,
       }
     }
   }
-  
+
   rand_fast_delay
 }
 
@@ -63,9 +63,9 @@ local_to_full_url <- function(parent_page, link) {
             ignore.case = TRUE)) {
     return(link)
   }
-  
+
   parent_page <- gsub("/$", "", parent_page) # remove trailing slash
-  
+
   if (is.null(link) || is.na(link)) {
     return(parent_page)
   }
@@ -75,7 +75,7 @@ local_to_full_url <- function(parent_page, link) {
   if (grepl("^#$", trimws(link))) {
     return(parent_page)
   }
-  
+
   # relative to root
   if (grepl("^/", link)) {
     u <- urltools::url_parse(parent_page) # parse page url

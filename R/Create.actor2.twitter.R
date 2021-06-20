@@ -14,7 +14,7 @@
 #' @param type Character string. Type of network to be created, set to \code{"actor"}.
 #' @param rmEdgeTypes Character vector. List of edge types to remove from network. Options are \code{"tweet"},
 #'   \code{"retweet"}, \code{"reply"} and \code{"quote"}. Default is \code{NULL}.
-#' @param inclMentions Logical. Create edges for users mentioned or tagged in tweets. Default is \code{TRUE}.
+#' @param inclMentions Logical. Create edges for users mentioned or tagged in tweets. Default is \code{FALSE}.
 #' @param inclRtMentions Logical. Create edges for users mentioned or tagged in retweets. For tweet types other than
 #'   retweets the collected tweet author has created the mention, for retweets the original tweet author has created the
 #'   mention not the retweeter. Default is \code{FALSE}.
@@ -27,11 +27,16 @@
 #' \dontrun{
 #' # create a twitter actor network excluding retweet, quote tweets and mention edges
 #' actor_net <- twitter_data %>%
-#'   Create("actor2", rmEdgeTypes = c("retweet", "quote"), inclMentions = FALSE)
+#'   Create("actor2", rmEdgeTypes = c("retweet", "quote"), inclMentions = TRUE)
 #'
 #' # network nodes and edges
-#' # actor_net$nodes
-#' # actor_net$edges
+#' names(actor_net)
+#' # "nodes", "edges"
+#' names(actor_net$nodes)
+#' # "user_id", "screen_name"
+#' names(actor_net$edges)
+#' # "from", "to", "status_id", "created_at", "edge_type"
+#'
 #' }
 #'
 #' @export
@@ -39,14 +44,16 @@ Create.actor2.twitter <-
   function(datasource,
            type,
            rmEdgeTypes = NULL,
-           inclMentions = TRUE,
+           inclMentions = FALSE,
            inclRtMentions = FALSE,
            verbose = TRUE,
            ...) {
-
     cat("Generating twitter actor network...")
-    if (verbose) { cat("\n") }
-    df_stats <- network_stats(NULL, "collected tweets", nrow(datasource))
+    if (verbose) {
+      cat("\n")
+    }
+    df_stats <-
+      network_stats(NULL, "collected tweets", nrow(datasource))
 
     # select data columns
     datasource <- datasource %>%
@@ -67,20 +74,24 @@ Create.actor2.twitter <-
         type = data.table::fcase(
           .data$is_retweet == TRUE,
           "retweet",
-          !is.na(.data$reply_to_status_id) & .data$is_quote == TRUE,
+          !is.na(.data$reply_to_status_id) &
+            .data$is_quote == TRUE,
           "reply,quote",
-          !is.na(.data$reply_to_status_id) & .data$is_quote == FALSE,
+          !is.na(.data$reply_to_status_id) &
+            .data$is_quote == FALSE,
           "reply",
-          is.na(.data$reply_to_status_id) & .data$is_quote == TRUE,
+          is.na(.data$reply_to_status_id) &
+            .data$is_quote == TRUE,
           "quote",
           default = "tweet"
         )
       )
 
     types <- c("tweet", "retweet", "reply", "quote", "reply,quote")
-    rmEdgeTypes <- rmEdgeTypes[trimws(tolower(rmEdgeTypes)) %in% types]
+    rmEdgeTypes <-
+      rmEdgeTypes[trimws(tolower(rmEdgeTypes)) %in% types]
 
-    edges <- edges %>% filter(!(.data$type %in% rmEdgeTypes))
+    edges <- edges %>% dplyr::filter(!(.data$type %in% rmEdgeTypes))
 
     # extract mentions
     # reply,quote mentions are treated as reply mentions
@@ -166,7 +177,8 @@ Create.actor2.twitter <-
       dplyr::filter(type == "reply,quote") %>%
       tidyr::separate_rows(type, sep = ",", convert = FALSE)
 
-    edges_rq <- edges_rq %>% filter(!(.data$type %in% rmEdgeTypes))
+    edges_rq <-
+      edges_rq %>% dplyr::filter(!(.data$type %in% rmEdgeTypes))
 
     # from to edge list
     edges <- edges %>%

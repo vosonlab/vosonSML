@@ -87,12 +87,12 @@ tweet previously collected as tweet status id's are sequential. The Standard API
 All of the search query operators available through the twitter API can be used in the \code{searchTerm} field.
 For example, to search for tweets containing the term \code{"love"} or \code{"hate"} the \code{"OR"} operator can be
 used in the term field: \code{searchTerm = "love OR hate"}. For more information refer to the twitter API
-documentation for query operators: \url{https://developer.twitter.com/en/docs/tweets/search/guides/standard-operators}.
+documentation for query operators: \url{https://developer.twitter.com/en/docs/twitter-api/v1/tweets/search/guides/standard-operators}.
 }
 \note{
 Additional parameters passed to this function in the ellipsis \code{...} will also be passed to the Twitter
 search API request. Most parameters have been covered but a complete list can be found here:
-\url{https://developer.twitter.com/en/docs/tweets/search/api-reference/get-search-tweets}
+\url{https://developer.twitter.com/en/docs/twitter-api/v1/tweets/search/api-reference/get-search-tweets}
 A useful additional parameter is \code{language} allowing the user can restrict tweets returned to a particular
 language using an ISO 639-1 code. For example, to restrict a search to tweets in English the value
 \code{language = "en"} can be passed to this function.

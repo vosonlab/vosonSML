@@ -51,11 +51,13 @@ Authenticate.twitter <-
            accessToken,
            accessTokenSecret,
            ...) {
-
     rlang::check_installed("rtweet", "for Authenticate.twitter")
     stop_req_pkgs(c("rtweet"), "Authenticate.twitter")
 
-    credential <- list(socialmedia = "twitter", auth = NULL, bearer = NULL)
+    credential <-
+      list(socialmedia = "twitter",
+           auth = NULL,
+           bearer = NULL)
     class(credential) <-
       append(class(credential), c("credential", "twitter"))
 

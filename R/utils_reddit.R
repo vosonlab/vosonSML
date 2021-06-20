@@ -27,7 +27,8 @@ get_json <- function(req_url, ua = NULL) {
     req_headers <- append(req_headers, c("User-Agent" = ua))
   }
 
-  resp <- httr::GET(req_url, httr::add_headers(.headers = req_headers))
+  resp <-
+    httr::GET(req_url, httr::add_headers(.headers = req_headers))
   res$status <- resp$status
 
   if (httr::http_error(resp) | as.numeric(resp$status) != 200) {

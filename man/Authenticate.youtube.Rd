@@ -14,7 +14,7 @@
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-A \code{credential} object containing an api key \code{$auth} and social media type descriptor 
+A \code{credential} object containing an api key \code{$auth} and social media type descriptor
 \code{$socialmedia} set to \code{"youtube"}. Object has the class names \code{"credential"} and \code{"youtube"}.
 }
 \description{

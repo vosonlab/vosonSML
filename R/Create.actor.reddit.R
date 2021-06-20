@@ -37,22 +37,39 @@ Create.actor.reddit <- function(datasource, type, ...) {
 
   # select cols and rename id and user
   df_relations <- datasource %>%
-    dplyr::select(.data$id, .data$subreddit, .data$thread_id, .data$comm_id, .data$structure,
-                  .data$user, .data$author) %>%
+    dplyr::select(
+      .data$id,
+      .data$subreddit,
+      .data$thread_id,
+      .data$comm_id,
+      .data$structure,
+      .data$user,
+      .data$author
+    ) %>%
     dplyr::rename("comment_id" = .data$id, "sender" = .data$user)
 
   df_relations %<>%
     # response_to = "" if structure doesnt contain an underscore
     # else set to structure minus last digit '1_1_2' response_to = '1_1'
-    dplyr::mutate(response_to = ifelse(!grepl("_", .data$structure), "", gsub("_\\d+$", "", .data$structure))) %>%
+    dplyr::mutate(response_to = ifelse(
+      !grepl("_", .data$structure),
+      "",
+      gsub("_\\d+$", "", .data$structure)
+    )) %>%
 
     # select structure and user from original df
     # rename structure to response_to and user to receiver
     # left join df_relations to response_to, receiver by response_to
     # FIXED: crossing threads by joining only on structure (response_to)
-    dplyr::left_join(datasource %>%
-      dplyr::select(.data$thread_id, .data$structure, .data$user) %>%
-      dplyr::rename("response_to" = .data$structure, "receiver" = .data$user), by = c("response_to", "thread_id"))
+    dplyr::left_join(
+      datasource %>%
+        dplyr::select(.data$thread_id, .data$structure, .data$user) %>%
+        dplyr::rename(
+          "response_to" = .data$structure,
+          "receiver" = .data$user
+        ),
+      by = c("response_to", "thread_id")
+    )
 
   df_relations %<>%
     # inserts author into missing receiver values
@@ -67,32 +84,60 @@ Create.actor.reddit <- function(datasource, type, ...) {
     # have to decide on deleted, self loops are fine
     # removed comments have the value "[removed]"
     # dplyr::mutate(count = 1) %>%
-    dplyr::select(.data$sender, .data$receiver, .data$comment_id, .data$subreddit, .data$comm_id, .data$thread_id)
+    dplyr::select(
+      .data$sender,
+      .data$receiver,
+      .data$comment_id,
+      .data$subreddit,
+      .data$comm_id,
+      .data$thread_id
+    )
 
   # attempt to add authors thread posts as self-loops
-  authors <- dplyr::select(datasource, .data$subreddit, .data$thread_id, .data$author) %>% dplyr::distinct() %>%
-    dplyr::mutate(sender = .data$author, receiver = .data$author, comment_id = 0, author = NULL)
+  authors <-
+    dplyr::select(datasource, .data$subreddit, .data$thread_id, .data$author) %>% dplyr::distinct() %>%
+    dplyr::mutate(
+      sender = .data$author,
+      receiver = .data$author,
+      comment_id = 0,
+      author = NULL
+    )
 
   df_relations <- dplyr::bind_rows(df_relations, authors)
 
-  df_nodes <- data.frame(user = with(df_relations, { unique(c(sender, receiver)) }), stringsAsFactors = FALSE) %>%
-                tibble::as_tibble() %>%
-                dplyr::mutate(id = as.integer(dplyr::row_number())) %>%  # dplyr::row_number() - 1
-                dplyr::select(.data$id, .data$user)
+  df_nodes <-
+    data.frame(user = with(df_relations, {
+      unique(c(sender, receiver))
+    }),
+    stringsAsFactors = FALSE) %>%
+    tibble::as_tibble() %>%
+    dplyr::mutate(id = as.integer(dplyr::row_number())) %>%  # dplyr::row_number() - 1
+    dplyr::select(.data$id, .data$user)
 
   df_relations %<>%
-    dplyr::left_join(df_nodes %>%
-      dplyr::rename("sender" = .data$user, "from" = .data$id), by = c("sender" = "sender")) %>%
-    dplyr::left_join(df_nodes %>% dplyr::rename("receiver" = .data$user, "to" = .data$id),
-      by = c("receiver" = "receiver")) %>%
-    dplyr::select(.data$from, .data$to, .data$subreddit, .data$thread_id, .data$comment_id, .data$comm_id)
+    dplyr::left_join(
+      df_nodes %>%
+        dplyr::rename("sender" = .data$user, "from" = .data$id),
+      by = c("sender" = "sender")
+    ) %>%
+    dplyr::left_join(
+      df_nodes %>% dplyr::rename("receiver" = .data$user, "to" = .data$id),
+      by = c("receiver" = "receiver")
+    ) %>%
+    dplyr::select(
+      .data$from,
+      .data$to,
+      .data$subreddit,
+      .data$thread_id,
+      .data$comment_id,
+      .data$comm_id
+    )
 
-  func_output <- list(
-    "nodes" = df_nodes,
-    "edges" = df_relations
-  )
+  func_output <- list("nodes" = df_nodes,
+                      "edges" = df_relations)
 
-  class(func_output) <- append(class(func_output), c("network", "actor", "reddit"))
+  class(func_output) <-
+    append(class(func_output), c("network", "actor", "reddit"))
   cat("Done.\n")
 
   func_output

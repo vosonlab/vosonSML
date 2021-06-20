@@ -10,19 +10,42 @@
 #' @aliases Graph
 #' @name vosonSML::Graph
 #' @export
-Graph <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
+Graph <- function(net,
+                  directed = TRUE,
+                  writeToFile = FALSE,
+                  ...) {
+
+  rlang::check_installed("igraph", "for Graph")
+  stop_req_pkgs(c("igraph"), "Graph")
+
   cat("Creating igraph network graph...")
-  if (writeToFile) { cat("\n") }
+  if (writeToFile) {
+    cat("\n")
+  }
 
   # igraph warning converting a dataframe with an POSIXct column to an igraph object
   # https://github.com/igraph/rigraph/pull/250
-  net$nodes %<>% dplyr::mutate_if(lubridate::is.POSIXt, as.character)
-  net$edges %<>% dplyr::mutate_if(lubridate::is.POSIXt, as.character)
-
-  if (!all(c("semantic", "twitter") %in% class(net))) {
-    # create igraph object from dataframes
-    g <- igraph::graph_from_data_frame(d = net$edges, directed = directed, vertices = net$nodes)
+  # https://github.com/igraph/rigraph/issues/251
+  if (is.data.frame(net$nodes) & is.data.frame(net$edges)) {
+    net$nodes %<>% dplyr::mutate_if(lubridate::is.POSIXt, as.character)
+    net$edges %<>% dplyr::mutate_if(lubridate::is.POSIXt, as.character)
   }
+
+  if (any(c("twitter", "youtube", "reddit", "web") %in% class(net)) &
+      any(c("activity", "actor", "twomode") %in% class(net))) {
+    g <-
+      igraph::graph_from_data_frame(d = net$edges,
+                                    directed = directed,
+                                    vertices = net$nodes)
+  }
+
+  # if (!all(c("semantic", "twitter") %in% class(net))) {
+  #   # create igraph object from dataframes
+  #   g <-
+  #     igraph::graph_from_data_frame(d = net$edges,
+  #                                   directed = directed,
+  #                                   vertices = net$nodes)
+  # }
 
   # searches the class list of net for matching method
   UseMethod("Graph", net)
@@ -37,9 +60,13 @@ Graph.default <- function(...) {
 #' @noRd
 #' @method Graph activity
 #' @export
-Graph.activity <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  UseMethod("Graph.activity", net)
-}
+Graph.activity <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    UseMethod("Graph.activity", net)
+  }
 
 #' @noRd
 #' @export
@@ -49,67 +76,101 @@ Graph.activity.default <- function(...) {
 
 #' @noRd
 #' @export
-Graph.activity.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  igraph::V(g)$label <- ifelse(!is.na(igraph::V(g)$screen_name),
-                               paste0(igraph::V(g)$name, " (", igraph::V(g)$screen_name, ")"),
-                               igraph::V(g)$name)
-  g <- set_graph_attr(g, "type", "twitter")
+Graph.activity.twitter <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    # igraph::V(g)$label <- paste0(igraph::V(g)$screen_name)
+    # igraph::V(g)$label <-
+    #   ifelse(
+    #     !is.na(igraph::V(g)$screen_name),
+    #     paste0(igraph::V(g)$name, " (", igraph::V(g)$screen_name, ")"),
+    #     igraph::V(g)$name
+    #   )
+    g <- igraph::set_graph_attr(g, "type", "twitter")
 
-  graphOutputFile(g, "graphml", writeToFile, "TwitterActivity")
-  cat("Done.\n")
+    graphOutputFile(g, "graphml", writeToFile, "TwitterActivity")
+    cat("Done.\n")
 
-  g
-}
-
-#' @noRd
-#' @export
-Graph.activity.youtube <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  igraph::V(g)$label <- ifelse(!is.na(igraph::V(g)$screen_name),
-                               paste0(igraph::V(g)$name, " (", igraph::V(g)$screen_name, ")"),
-                               igraph::V(g)$name)
-  g <- set_graph_attr(g, "type", "youtube")
-
-  graphOutputFile(g, "graphml", writeToFile, "YoutubeActivity")
-  cat("Done.\n")
-
-  g
-}
+    g
+  }
 
 #' @noRd
 #' @export
-Graph.activity.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  # V(g)$label <- ifelse(!is.na(V(g)$user), paste0(V(g)$name, " (", V(g)$user, ")"), V(g)$name)
-  V(g)$label <- paste0(V(g)$thread_id,
-                       ifelse(!is.na(V(g)$comm_id), paste0(".", V(g)$comm_id), ""),
-                       ifelse(!is.na(V(g)$user), paste0(" (", V(g)$user, ")"), ""))
+Graph.activity.youtube <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    # igraph::V(g)$label <- ifelse(
+    #   !is.na(igraph::V(g)$screen_name),
+    #   paste0(igraph::V(g)$name, " (", igraph::V(g)$screen_name, ")"),
+    #   igraph::V(g)$name
+    # )
+    g <- igraph::set_graph_attr(g, "type", "youtube")
 
-  g <- set_graph_attr(g, "type", "reddit")
+    graphOutputFile(g, "graphml", writeToFile, "YoutubeActivity")
+    cat("Done.\n")
 
-  graphOutputFile(g, "graphml", writeToFile, "RedditActivity")
-  cat("Done.\n")
-
-  g
-}
+    g
+  }
 
 #' @noRd
 #' @export
-Graph.activity.web <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$label <- V(g)$name
+Graph.activity.reddit <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    # V(g)$label <- ifelse(!is.na(V(g)$user), paste0(V(g)$name, " (", V(g)$user, ")"), V(g)$name)
+    # igraph::V(g)$label <- paste0(igraph::V(g)$thread_id,
+    #                              ifelse(
+    #                                !is.na(igraph::V(g)$comm_id),
+    #                                paste0(".", igraph::V(g)$comm_id),
+    #                                ""
+    #                              ),
+    #                              ifelse(
+    #                                !is.na(igraph::V(g)$user),
+    #                                paste0(" (", igraph::V(g)$user, ")"),
+    #                                ""
+    #                              ))
 
-  g <- set_graph_attr(g, "type", "web")
+    g <- igraph::set_graph_attr(g, "type", "reddit")
 
-  graphOutputFile(g, "graphml", writeToFile, "WebActivity")
-  cat("Done.\n")
+    graphOutputFile(g, "graphml", writeToFile, "RedditActivity")
+    cat("Done.\n")
 
-  g
-}
+    g
+  }
+
+#' @noRd
+#' @export
+Graph.activity.web <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    # igraph::V(g)$label <- igraph::V(g)$name
+
+    g <- igraph::set_graph_attr(g, "type", "web")
+
+    graphOutputFile(g, "graphml", writeToFile, "WebActivity")
+    cat("Done.\n")
+
+    g
+  }
 
 #' @noRd
 #' @method Graph actor
 #' @export
-Graph.actor <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  UseMethod("Graph.actor", net)
-}
+Graph.actor <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    UseMethod("Graph.actor", net)
+  }
 
 #' @noRd
 #' @export
@@ -119,63 +180,95 @@ Graph.actor.default <- function(...) {
 
 #' @noRd
 #' @export
-Graph.actor.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$label <- ifelse(is.na(V(g)$screen_name), paste0("ID:", V(g)$name),
-                             paste0(V(g)$screen_name, " (", V(g)$name, ")"))
-  g <- set_graph_attr(g, "type", "twitter")
+Graph.actor.twitter <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    # igraph::V(g)$label <-
+    #   ifelse(
+    #     is.na(igraph::V(g)$screen_name),
+    #     paste0("ID:", igraph::V(g)$name),
+    #     paste0(igraph::V(g)$screen_name, " (", igraph::V(g)$name, ")")
+    #   )
+    g <- igraph::set_graph_attr(g, "type", "twitter")
 
-  graphOutputFile(g, "graphml", writeToFile, "TwitterActor")
-  cat("Done.\n")
+    graphOutputFile(g, "graphml", writeToFile, "TwitterActor")
+    cat("Done.\n")
 
-  g
-}
-
-#' @noRd
-#' @export
-Graph.actor.youtube <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$label <- ifelse(is.na(V(g)$screen_name), V(g)$name,
-                             paste0(V(g)$screen_name, " (", V(g)$name, ")"))
-  g <- set_graph_attr(g, "type", "youtube")
-
-  graphOutputFile(g, "graphml", writeToFile, "YoutubeActor")
-  cat("Done.\n")
-
-  g
-}
+    g
+  }
 
 #' @noRd
 #' @export
-Graph.actor.reddit <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$label <- ifelse(is.na(V(g)$user), paste0("ID:", V(g)$name),
-                       paste0(V(g)$user, " (", V(g)$name, ")"))
+Graph.actor.youtube <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    # igraph::V(g)$label <-
+    #   ifelse(
+    #     is.na(igraph::V(g)$screen_name),
+    #     igraph::V(g)$name,
+    #     paste0(igraph::V(g)$screen_name, " (", igraph::V(g)$name, ")")
+    #   )
+    g <- igraph::set_graph_attr(g, "type", "youtube")
 
-  g <- set_graph_attr(g, "type", "reddit")
+    graphOutputFile(g, "graphml", writeToFile, "YoutubeActor")
+    cat("Done.\n")
 
-  graphOutputFile(g, "graphml", writeToFile, "RedditActor")
-  cat("Done.\n")
-
-  g
-}
+    g
+  }
 
 #' @noRd
 #' @export
-Graph.actor.web <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  V(g)$label <- V(g)$name
+Graph.actor.reddit <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    # igraph::V(g)$label <-
+    #   ifelse(
+    #     is.na(igraph::V(g)$user),
+    #     paste0("ID:", igraph::V(g)$name),
+    #     paste0(igraph::V(g)$user, " (", igraph::V(g)$name, ")")
+    #   )
 
-  g <- set_graph_attr(g, "type", "web")
+    g <- igraph::set_graph_attr(g, "type", "reddit")
 
-  graphOutputFile(g, "graphml", writeToFile, "WebActor")
-  cat("Done.\n")
+    graphOutputFile(g, "graphml", writeToFile, "RedditActor")
+    cat("Done.\n")
 
-  g
-}
+    g
+  }
+
+#' @noRd
+#' @export
+Graph.actor.web <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    # igraph::V(g)$label <- igraph::V(g)$name
+
+    g <- igraph::set_graph_attr(g, "type", "web")
+
+    graphOutputFile(g, "graphml", writeToFile, "WebActor")
+    cat("Done.\n")
+
+    g
+  }
 
 #' @noRd
 #' @method Graph semantic
 #' @export
-Graph.semantic <- function(net, directed = FALSE, writeToFile = FALSE, ...) {
-  UseMethod("Graph.semantic", net)
-}
+Graph.semantic <-
+  function(net,
+           directed = FALSE,
+           writeToFile = FALSE,
+           ...) {
+    UseMethod("Graph.semantic", net)
+  }
 
 #' @noRd
 #' @export
@@ -185,25 +278,36 @@ Graph.semantic.default <- function(...) {
 
 #' @noRd
 #' @export
-Graph.semantic.twitter <- function(net, directed = FALSE, writeToFile = FALSE, ...) {
-  # create igraph object from dataframes
-  g <- igraph::graph_from_data_frame(d = net$edges, directed = directed, vertices = net$nodes)
+Graph.semantic.twitter <-
+  function(net,
+           directed = FALSE,
+           writeToFile = FALSE,
+           ...) {
+    # create igraph object from dataframes
+    g <-
+      igraph::graph_from_data_frame(d = net$edges,
+                                    directed = directed,
+                                    vertices = net$nodes)
 
-  V(g)$label <- V(g)$name
-  g <- set_graph_attr(g, "type", "twitter")
+    # igraph::V(g)$label <- igraph::V(g)$name
+    g <- igraph::set_graph_attr(g, "type", "twitter")
 
-  graphOutputFile(g, "graphml", writeToFile, "TwitterSemantic")
-  cat("Done.\n")
+    graphOutputFile(g, "graphml", writeToFile, "TwitterSemantic")
+    cat("Done.\n")
 
-  g
-}
+    g
+  }
 
 #' @noRd
 #' @method Graph twomode
 #' @export
-Graph.twomode <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  UseMethod("Graph.twomode", net)
-}
+Graph.twomode <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    UseMethod("Graph.twomode", net)
+  }
 
 #' @noRd
 #' @export
@@ -213,17 +317,21 @@ Graph.twomode.default <- function(...) {
 
 #' @noRd
 #' @export
-Graph.twomode.twitter <- function(net, directed = TRUE, writeToFile = FALSE, ...) {
-  # V(g)$label <- ifelse(is.na(V(g)$user_id), V(g)$name, paste0(V(g)$name, " (", V(g)$user_id, ")"))
-  V(g)$label <- V(g)$name
+Graph.twomode.twitter <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           ...) {
+    # igraph::V(g)$label <- ifelse(is.na(igraph::V(g)$user_id), igraph::V(g)$name, paste0(igraph::V(g)$name, " (", igraph::V(g)$user_id, ")"))
+    # igraph::V(g)$label <- igraph::V(g)$name
 
-  g <- set_graph_attr(g, "type", "twitter")
+    g <- igraph::set_graph_attr(g, "type", "twitter")
 
-  graphOutputFile(g, "graphml", writeToFile, "Twitter2mode")
-  cat("Done.\n")
+    graphOutputFile(g, "graphml", writeToFile, "Twitter2mode")
+    cat("Done.\n")
 
-  g
-}
+    g
+  }
 
 # set output file name
 # if wtof is logical use def as file name

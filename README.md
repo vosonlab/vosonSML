@@ -11,12 +11,12 @@ The `vosonSML` R package is a suite of easy to use functions for collecting and 
 
 ## Installation
 
-Install the latest release via CRAN (v0.29.13):
+Install the latest release via CRAN:
 ``` r
 install.packages("vosonSML")
 ```
 
-Install the latest release via GitHub (v0.29.13):
+Install the latest release via GitHub:
 ``` r
 install.packages(
   paste0("https://github.com/vosonlab/vosonSML/releases/download/",
@@ -24,7 +24,7 @@ install.packages(
   repo = NULL, type = "source")
 ```
 
-Install the latest development version (v0.30.3.9000):
+Install the development version:
 ``` r
 library(remotes)
 remotes::install_github("vosonlab/vosonSML")
@@ -37,8 +37,7 @@ The following usage examples will provide a quick start to using `vosonSML` func
 Further resources:
 - [Function Reference](https://vosonlab.github.io/vosonSML/reference/index.html)
 - [Package Updates](https://vosonlab.github.io/vosonSML/news/index.html)
-- [Coding Blog](https://vosonlab.github.io/)
-- [VOSON Lab Software](http://vosonlab.net/tools)
+- [Code Blog](https://vosonlab.github.io/)
 
 ### Usage
 
@@ -528,4 +527,4 @@ For more detailed information about functions and their parameters, please refer
 
 ## Special thanks
 
-This package would not be possible without key packages by other authors in the R community, particularly: [data.table](https://github.com/Rdatatable/data.table), [dplyr](https://github.com/hadley/dplyr), [httr](https://github.com/hadley/httr), [igraph](https://github.com/igraph/rigraph), [magrittr](https://CRAN.R-project.org/package=magrittr), [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [rtweet](https://github.com/mkearney/rtweet) and [tidytext](https://github.com/juliasilge/tidytext).
+This package would not be possible without key packages by other authors in the R community, particularly: [data.table](https://github.com/Rdatatable/data.table), [dplyr](https://github.com/tidyverse/dplyr), [httr](https://github.com/r-lib/httr), [igraph](https://github.com/igraph/rigraph), [magrittr](https://CRAN.R-project.org/package=magrittr), [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [rtweet](https://github.com/ropensci/rtweet) and [tidytext](https://github.com/juliasilge/tidytext).

@@ -31,8 +31,12 @@ Create <- function(datasource, type, ...) {
 #' @export
 Create.default <- function(datasource, type, ...) {
   # check datasource
-  if (!is.data.frame(datasource)) { stop("Datasource is not a dataframe.", call. = FALSE) }
-  if (nrow(datasource) < 1) { stop("Empty datasource passed to create.", call. = FALSE) }
+  if (!is.data.frame(datasource)) {
+    stop("Datasource is not a dataframe.", call. = FALSE)
+  }
+  if (nrow(datasource) < 1) {
+    stop("Empty datasource passed to create.", call. = FALSE)
+  }
 
   # check if network type is a character string
   if (!is.character(type)) {
@@ -130,4 +134,3 @@ Create.twomode <- function(datasource, type, ...) {
 Create.twomode.default <- function(datasource, type, ...) {
   stop("Unknown datasource passed to create twomode network.", call. = FALSE)
 }
-
