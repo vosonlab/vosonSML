@@ -20,7 +20,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The following guide provides an introduction to using [vosonSML](https://github.com/vosonlab/vosonSML), which is available both on GitHub and [CRAN](https://cran.r-project.org/package=vosonSML). More resources are available on the VOSON Lab website ([vosonSML](http://vosonlab.net/socialmedialab) and [training materials](http://vosonlab.net/training_workshops)).  For a full list of functions, please refer to the [reference page](https://vosonlab.github.io/vosonSML/reference/index.html).  The companion package to `vosonSML` is [VOSON Dashboard](https://github.com/vosonlab/VOSONDash), which provides an R/Shiny graphical user interface for data collection (via `vosonSML`), network and text analysis. 
+The following guide provides an introduction to using [vosonSML](https://github.com/vosonlab/vosonSML), which is available both on GitHub and [CRAN](https://cran.r-project.org/package=vosonSML). More resources are available on the VOSON Lab website ([vosonSML](http://vosonlab.net/socialmedialab) and [training materials](http://vosonlab.net/training_workshops)). For a full list of functions, please refer to the [reference page](https://vosonlab.github.io/vosonSML/reference/index.html). The companion package to `vosonSML` is [VOSON Dashboard](https://github.com/vosonlab/VOSONDash), which provides an R/Shiny graphical user interface for data collection (via `vosonSML`), network and text analysis. 
 
 To use `vosonSML`, you first need to it and the `magrittr` package into the session:
 
@@ -44,19 +44,25 @@ Twitter data are collected via [rtweet](https://cran.r-project.org/package=rtwee
 The first step is to authorise access to the Twitter API. There are two ways of generating an access token. The "Dev Auth" approach involves authenticating using Twitter developer app API keys, which can be created after the user has been granted a [Twitter developer account](https://developer.twitter.com/en/apply-for-access):
 
 ```{r eval=FALSE}
-myDevKeys <- list(appName = "My App", apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx", 
-                  accessToken = "xxxxxxxxxxxx", accessTokenSecret = "xxxxxxxxxxxx")
-  
-twitterAuth <- Authenticate("twitter", appName = myDevKeys$appName, apiKey = myDevKeys$apiKey, 
-                            apiSecret = myDevKeys$apiSecret, accessToken = myDevKeys$accessToken,
-                            accessTokenSecret = myDevKeys$accessTokenSecret)
+twitterAuth <-
+   Authenticate(
+      "twitter",
+      appName = "My App",
+      apiKey = "xxxxxxxx",
+      apiSecret = "xxxxxxxx",
+      accessToken = "xxxxxxxx",
+      accessTokenSecret = "xxxxxxxx")
 ```
 
-The "Web Auth" approach undertakes Twitter authentication via user authorisation of an app that the user has access to (either because the user created the app, or else it was created by a third-party and access granted to the user).  This will open a web browser, prompting the user to log into Twitter and authorise the app using Twitter app's consumer key and secret. The Web Auth approach therefore does not require a Twitter developer account, as long as the user has a Twitter account and access to a Twitter app.
+The "Web Auth" approach undertakes Twitter authentication via user authorization of an app that the user has access to (either because the user created the app, or else it was created by a third-party and access granted to the user).  This will open a web browser, prompting the user to log into Twitter and authorize the app using Twitter app's consumer key and secret. The Web Auth approach therefore does not require a Twitter developer account, as long as the user has a Twitter account and access to a Twitter app.
 
 ```{r eval=FALSE}
-twitterAuth <- Authenticate("twitter", appName = "An App",
-	                          apiKey = "xxxxxxxxxxxx", apiSecret = "xxxxxxxxxxxx")
+twitterAuth <-
+   Authenticate(
+      "twitter",
+      appName = "An App",
+      apiKey = "xxxxxxxxxxxx",
+      apiSecret = "xxxxxxxxxxxx")
 ```
 
 In both cases, Twitter authentication creates an access token, which can be re-used by saving it to disk:
@@ -73,13 +79,16 @@ twitterAuth <- readRDS("twitter_auth")
 
 ## Collecting Data from Twitter
 
-The syntax for collecting Twitter data follow [Twitter's rules and filtering documentation](https://developer.twitter.com/en/docs/tweets/rules-and-filtering/overview/standard-operators). It is possible to collect tweets including particular terms (e.g. hashtags), and boolean searches (see [standard search operators](https://developer.twitter.com/en/docs/tweets/rules-and-filtering/overview/standard-operators)) are also possible. The collection may be filtered by, for example, type of Twitter activity (e.g. to include retweets only), number of collected tweets, language of tweet. As an example, the following collects 1000 recent tweets containing the '#auspol' hashtag (a prominent hashtag for Australian politics), with retweets not being collected.
+The syntax for collecting Twitter data follow [Twitter's rules and filtering documentation](https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query). It is possible to collect tweets including particular terms (e.g. hashtags), and boolean searches (see [standard search operators](https://developer.twitter.com/en/docs/twitter-api/v1/rules-and-filtering/search-operators)) are also possible. The collection may be filtered by, for example, type of Twitter activity (e.g. to include retweets only), number of collected tweets, language of tweet. As an example, the following collects 1000 recent tweets containing the '#auspol' hashtag (a prominent hashtag for Australian politics), with retweets not being collected.
 
 ```{r eval=FALSE}
 twitterData <- twitterAuth %>%
-               Collect(searchTerm = "#auspol", numTweets = 1000, 
-                       includeRetweets = FALSE, retryOnRateLimit = TRUE, writeToFile = TRUE, 
-                       verbose = TRUE)
+   Collect(
+      searchTerm = "#auspol",
+      numTweets = 1000,
+      includeRetweets = FALSE,
+      retryOnRateLimit = TRUE,
+      writeToFile = TRUE)
 ```
 
 The `Collect()` function takes the following arguments (when used for collecting Twitter data): `credential` (object generated from `Authenticate()` with class name "twitter"(above we pass this via the pipe), `searchTerm` (character string that specifies a Twitter search term), `searchType` (character string indicating how to filter returned tweets with options 'recent', 'mixed' or 'popular'; default type is 'recent'), `numTweets` (numeric vector that specifies how many tweets to be collected; default is 100), `includeRetweets` (whether the search should filter out retweets or not; default is TRUE), `retryOnRateLimit` (whether to automatically pause collection when the Twitter API rate limit is reached, and then restart; default is FALSE.), `writeToFile` (whether to write the returned dataframe to disk as an `.rds` file; default is FALSE), and `verbose` (whether to output information about the data collection; default is FALSE).
@@ -134,7 +143,7 @@ actorGraph <- actorNetwork %>% Graph(writeToFile = TRUE)
 `Create("actor")` returns a named list containing two dataframes named "nodes" and "edges" (the following has been modified to preserve anonymity):
 
 ```{r eval=FALSE}
- > actorNetwork
+> actorNetwork
 $edges
 # A tibble: 1,725 x 5
    from             to              edge_type timestamp         status_id       
@@ -176,11 +185,16 @@ The example actor network contains 1158 nodes and 1725 edges. The following code
 ```{r eval=FALSE}
 library(igraph)
 
-g2 <- delete.edges(actorGraph, which(E(actorGraph)$edge_type!="reply"))
+# remove edges that are not reply edges
+g2 <- delete.edges(actorGraph, which(E(actorGraph)$edge_type != "reply"))
+
+# get the giant component
 cc <- clusters(g2)
-g2 <- induced_subgraph(g2,which(cc$membership == which.max(cc$csize)))
-png("twitter_actor_reply_gc.png", width=600, height=600)
-plot(g2, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+g2 <- induced_subgraph(g2, which(cc$membership == which.max(cc$csize)))
+
+# open and write plot to a png file
+png("twitter_actor_reply_gc.png", width = 600, height = 600)
+plot(g2, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 dev.off()
 ```
 
@@ -191,23 +205,33 @@ It is often useful to have the tweet text content in the network. This can be ac
 ```{r eval=FALSE}
 actorGraphWithText <- twitterData %>% Create("actor") %>% AddText(twitterData) %>% Graph()
 ```
-Now we have tweet text cotent stored as an edge attribute, we can use it for text analysis or creating new node attributes. As an example, the following creates a new node attribute `tweetedBushfires` which has the value "yes" if the Twitter user authored at least one tweet containing the word "bushfire" and "no" otherwise.
+Now we have tweet text content stored as an edge attribute, we can use it for text analysis or creating new node attributes. As an example, the following creates a new node attribute `tweetedBushfires` which has the value "yes" if the Twitter user authored at least one tweet containing the word "bushfire" and "no" otherwise.
 
 ```{r eval=FALSE}
-#vector of igraph vertices - the users who tweeted with "bushfire" 
-ind <- tail_of(actorGraphWithText,grep("bushfire",tolower(E(actorGraphWithText)$vosonTxt_tweet)))
+# get the index of nodes or users who tweeted the word "bushfire"
+ind <- tail_of(actorGraphWithText,
+               grep("bushfire", tolower(E(actorGraphWithText)$vosonTxt_tweet)))
+
+# set node attribute
 V(actorGraphWithText)$tweetedBushfires <- "no"
 V(actorGraphWithText)$tweetedBushfires[ind] <- "yes"
 ```
 The following creates and plots the giant component in the reply network, with red nodes indicating those users who tweeted using the term "bushfire".
 
 ```{r eval=FALSE}
-g3 <- delete.edges(actorGraphWithText, which(E(actorGraphWithText)$edge_type!="reply"))
+# remove edges that are not reply edges
+g3 <- delete.edges(actorGraphWithText, which(E(actorGraphWithText)$edge_type != "reply"))
+
+# get the giant component
 cc <- clusters(g3)
-g3 <- induced_subgraph(g3,which(cc$membership == which.max(cc$csize)))
-V(g3)$color <- ifelse(V(g3)$tweetedBushfires=="yes","red","grey")
-png("twitter_actor_reply_gc_bushfires.png", width=600, height=600)
-plot(g3, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+g3 <- induced_subgraph(g3, which(cc$membership == which.max(cc$csize)))
+
+# set node colour based on tweeted bushfires attribute value
+V(g3)$color <- ifelse(V(g3)$tweetedBushfires == "yes", "red", "grey")
+
+# open and write plot to a png file
+png("twitter_actor_reply_gc_bushfires.png", width = 600, height = 600)
+plot(g3, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 dev.off()
 ```
 
@@ -216,7 +240,8 @@ dev.off()
 The `igraph` graph object can then be saved to disk as a `GraphML` file using the `igraph` function `write.graph`, and later imported into network analysis software such as `igraph`, `VOSON Dashboard` and [Gephi](https://gephi.org/): 
 
 ```{r eval=FALSE}
-write.graph(g3, "twitter_reply_gc_bushfires.graphml", format="graphml")
+# save the graph as a graphml file
+write.graph(g3, "twitter_reply_gc_bushfires.graphml", format = "graphml")
 ```
 
 Finally, the `AddUserData()` function can be used to create additional node attributes from the Twitter profile, for example, number of followers and number of tweets authored by the user.
@@ -224,10 +249,10 @@ Finally, the `AddUserData()` function can be used to create additional node attr
 Note that by default, `vosonSML` will only collect Twitter profile data for those users who authored tweets that have been collected. That is, in the above example, profile data will not be collected (by default) for a user who was mentioned in a tweet that contained #auspol, but did not author such a tweet. The `lookupUsers` argument can be used to make additional Twitter API calls and collect the profile data for mentioned users whose profile data is absent, so that their additional profile attributes can also be added:
 
 ```{r eval=FALSE}
+# create an actor network with user metadata
 actorGraphWithUserAttr <- actorNetwork %>% 
-                          AddUserData(twitterData, 
-                                      lookupUsers = TRUE,
-                                      twitterAuth = twitterAuth) %>% Graph(writeToFile = TRUE)
+  AddUserData(twitterData, lookupUsers = TRUE, twitterAuth = twitterAuth) %>%
+  Graph(writeToFile = TRUE)
 ```
 
 
@@ -236,6 +261,7 @@ actorGraphWithUserAttr <- actorNetwork %>%
 In the Twitter *activity network*, nodes represent tweets and edge types are: replies, retweets and quoted retweets.
 
 ```{r eval=FALSE}
+# create an activity network with tweet text
 activityNetwork <- twitterData %>% Create("activity") %>% AddText(twitterData)
 activityGraph <- activityNetwork %>% Graph(writeToFile = TRUE)
 ```
@@ -282,33 +308,40 @@ IGRAPH e60c486 DN-- 1408 662 --
 
 The Twitter activity network contains a graph attribute `type` (set to "twitter"). The node attributes are: `name` (Twitter ID for the tweet), `user_id` (Twitter ID for the user who authored the tweet), `screen_name` (Twitter handle or screen name of the user who authored the tweet), `created_at` (timestamp when the tweet was authored), `vosonTxt_tweet` (text content of the tweet) and `label` (a concatenation of `name` and `user_id`).  The edge attribute is `edge_type` which can have the value 'reply', 'retweet' or 'quote'.
 
-The example Twitter activity network contains 1408 nodes and 662 edges. The following is a visualisation of the network, where nodes are tweets and tweets mentioning bushfires are indicated in red.
+The example Twitter activity network contains 1408 nodes and 662 edges. The following is a visualization of the network, where nodes are tweets and tweets mentioning bushfires are indicated in red.
 
 ```{r eval=FALSE}
+# create a subgraph containing nodes of components that have more than 5 nodes 
 cc <- clusters(activityGraph)
-g2 <- induced_subgraph(activityGraph,which(cc$membership %in% which(cc$csize>5)))
-ind <- grep("bushfire",tolower(V(g2)$vosonTxt_tweet))
-V(g2)$color <- "grey"
-V(g2)$color[ind] <- "red"
-png("twitter_activity.png", width=600, height=600)
-plot(g2, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+g4 <- induced_subgraph(activityGraph,
+                       which(cc$membership %in% which(cc$csize > 5)))
+
+# set node colour based on if tweet contains the word "bushfire"
+ind <- grep("bushfire", tolower(V(g4)$vosonTxt_tweet))
+V(g4)$color <- "grey"
+V(g4)$color[ind] <- "red"
+
+# open and write plot to a png file
+png("twitter_activity.png", width = 600, height = 600)
+plot(g4, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 dev.off()
 ```
 
 ![Twitter activity network (red indicates tweets mentioning bushfires)](https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/twitter_activity.png)
 
-It should be noted that a limitation of the Twitter API is that retweet chains are not provided. That is: if user *i* tweeted an original tweet, and then user *j* retweeted this tweet, and user *k* retweeted *j*'s retweet, the activity network will show edges connecting the two retweets to the original tweet.
+It should be noted that a limitation of the Twitter API is that retweet chains are not provided. This means that if user *i* tweeted an original tweet, and then user *j* retweeted this tweet, and user *k* retweeted *j*'s retweet, the activity network will show edges connecting the two retweets to the original tweet.
 
 ### 2-mode Network
 
 In the Twitter *2-mode network*, the two types of nodes are actors (Twitter users) and hashtags. There is an edge from user *i* to hashtag *j* if user *i* authored a tweet containing hashtag *j*. 
 
 ```{r eval=FALSE}
-# additional required packages
+# requires the tidytext package for tokenizing text
 install.packages("tidytext")
 
+# create a 2-mode network with the hashtag "#auspol" removed
 twomodeNetwork <- twitterData %>% Create("twomode", removeTermsOrHashtags = c("#auspol"))
-twomodeGraph <- twomodeNetwork %>% Graph(writeToFile = TRUE)
+twomodeGraph <- twomodeNetwork %>% Graph()
 ``` 
 
 `Create("twomode")` returns a named list containing two dataframes named "nodes" and "edges" (the following has been modified to preserve anonymity). Note that in this example, the `removeTermsOrHashtags` argument was used to exclude '#auspol', since by construction all tweets contained this hashtag.
@@ -356,16 +389,29 @@ IGRAPH 68bd240 DN-- 1146 1675 --
 The Twitter 2-model network has a graph attribute `type` (set to "twitter"). The node attributes are: `name` (hashtag or Twitter user ID), `display_name` (hashtag or Twitter handle or screen name), `label` (for users, a concatenation of `name` and `display_name`, while for hashtags it is `name`). The edge attributes are: `edge_type` ('hashtag'), `timestamp` (timestamp of the tweet that led to the edge), `status_id` (Twitter ID of the tweet that led to the edge).
 
 ```{r eval=FALSE}
-ind <- order(degree(twomodeGraph, mode="in"), decreasing=TRUE)[1:5] # top-5 hashtags
-# users who tweet with these hashtags
-ind2 <- unlist(lapply(ind, function(x){neighbors(twomodeGraph, x, mode="in")}))
-g2 <- induced_subgraph(twomodeGraph, c(ind, as.numeric(ind2)))
-V(g2)$color <- "grey"
-V(g2)$color[which(degree(g2, mode="in")>0)] <- "blue"
-V(g2)$label2 <- ifelse(degree(g2, mode="in")>0, V(g2)$label, "")
-png("twitter_twomode.png", width=600, height=600)
-plot(g2, vertex.label=V(g2)$label2, vertex.size=4, edge.arrow.size=0.5, vertex.label.cex=1.8,
-     vertex.label.color="red")
+# get index of nodes that are in the top 5 by highest in-degree
+# this is the top 5 used hashtags, as all users have 0 in-degree in this network
+ind <- order(degree(twomodeGraph, mode = "in"), decreasing = TRUE)[1:5]
+
+# get index of nodes with an edge directed to the top 5 hashtags
+# this is users who have tweeted with these hashtags
+ind2 <- unlist(lapply(ind, function(x) {
+   neighbors(twomodeGraph, x, mode = "in")
+}))
+
+# create a subgraph containing only the top 5 used hashtags and related users 
+g5 <- induced_subgraph(twomodeGraph, c(ind, as.numeric(ind2)))
+
+# set node colour and label based on in-degree
+# only hashtag nodes are set to blue and with label attribute set
+V(g5)$color <- "grey"
+V(g5)$color[which(degree(g5, mode = "in") > 0)] <- "blue"
+V(g5)$label2 <- ifelse(degree(g5, mode = "in") > 0, V(g5)$label, "")
+
+# open and write plot to a png file
+png("twitter_twomode.png", width = 600, height = 600)
+plot(g5, vertex.label = V(g5)$label2, vertex.size = 4, edge.arrow.size = 0.5,
+     vertex.label.cex = 1.8, vertex.label.color = "red")
 dev.off()
 ```
 
@@ -377,13 +423,19 @@ dev.off()
 In the Twitter *semantic network*, nodes represent entities extracted from the tweet text: common words, hashtags and usernames. Edges reflect co-occurrence i.e. there is an edge between entities *i* and *j* if they both occurred in the same tweet. 
 
 ```{r eval=FALSE}
-# additional required packages
+# additional required packages for tokenization and stopwords
 install.packages(c("tidyr", "tidytext", "stopwords"))
 
-semanticNetwork <- twitterData %>% Create("semantic",
-                                          removeTermsOrHashtags = c("#auspol", "auspol", "australia"),
-                                          termFreq = 5)
-semanticGraph <- semanticNetwork %>% Graph(writeToFile = TRUE, directed = FALSE)
+# create a semantic network with some common terms removed
+# include only the top 5% occurring terms in the network
+semanticNetwork <- twitterData %>% Create(
+   "semantic",
+   removeTermsOrHashtags = c("#auspol", "auspol", "australia"),
+   termFreq = 5
+)
+
+# create an undirected graph
+semanticGraph <- semanticNetwork %>% Graph(directed = FALSE)
 ```
 
 `Create("semantic")` returns a named list containing two dataframes named "nodes" and "edges":
@@ -451,15 +503,21 @@ The Twitter semantic network node contains a graph attribute `type` (set to "twi
 The example Twitter semantic network has 799 nodes and 10990 edges.  The following produces a visualisation of subnetwork of terms that contain the string "bushfire": 
 
 ```{r eval=FALSE}
-ind <- grep("bushfire",tolower(V(semanticGraph)$name))
-g2 <- induced_subgraph(semanticGraph,ind)
-png("twitter_semantic.png", width=600, height=600)
-plot(g2, layout=layout_with_lgl(g2), vertex.shape="none", vertex.size=4, edge.width=1+log(E(g2)$weight))
+# get index of the nodes whose term contains "bushfire" 
+ind <- grep("bushfire", tolower(V(semanticGraph)$name))
+
+# create a subgraph containing only bushfire terms
+g6 <- induced_subgraph(semanticGraph, ind)
+
+# open and write plot to a png file
+# plotted with large-graph-layout algorithm and edge weights
+png("twitter_semantic.png", width = 600, height = 600)
+plot(g6, layout = layout_with_lgl(g6), vertex.shape = "none", vertex.size = 4,
+     edge.width = 1 + log(E(g2)$weight))
 dev.off()
 ```
 
 ![Twitter semantic network - entities containing the word "bushfire" (edge thickness proportional to edge weight)](https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/twitter_semantic.png)
-
 
 # YouTube
 
@@ -468,8 +526,8 @@ dev.off()
 To collect YouTube data, it is necessary to first create a Google app with access to the YouTube Data API via the [Google APIs console](https://console.developers.google.com/apis) and generate an associated API key. The following shows the creation of a YouTube access token by passing a Google developer API key to the `Autnenticate()` function: 
 
 ```{r eval=FALSE}
-myAPIKey <- "xxxxxxxxxxxx"
-youtubeAuth <- Authenticate("youtube", apiKey = myAPIKey)
+# create auth object with api key
+youtubeAuth <- Authenticate("youtube", apiKey = "xxxxxxxx")
 ```
 
 As with the Twitter example above, the YouTube access token can optionally be saved to disk for use in a later session.
@@ -487,13 +545,12 @@ The character vector containing the YouTube video IDs is then passed as a parame
 
 ```{r eval=FALSE}
 videoIDs <- GetYoutubeVideoIDs("https://www.youtube.com/watch?v=pJ_NyEYRkLQ")
-youtubeData <- youtubeAuth %>%
-               Collect(videoIDs = videoIDs, maxComments = 500, writeToFile = TRUE)
+youtubeData <- youtubeAuth %>% Collect(videoIDs, maxComments = 500, writeToFile = TRUE)
 ```
 
-The `Collect()` function takes the following arguments (when used for collecting YouTube data): `credential` (object generated from `Authenticate()` with class name "youtube" (above we pass this via the pipe), `videoIDs` (character vector specifying one or more youtube video IDs), `maxComments` (numeric integer specifying how many top-level comments to collect from each video; default is 1e+13), `writeToFile` (whether to write the returned dataframe to disk as an `.rds` file; default is FALSE), and `verbose` (whether to output information about the data collection; default is FALSE).
+The `Collect()` function takes the following arguments (when used for collecting YouTube data): `credential` (object generated from `Authenticate()` with class name "youtube" (above we pass this via the pipe), `videoIDs` (character vector specifying one or more youtube video IDs), `maxComments` (numeric integer specifying how many top-level comments to collect from each video), `writeToFile` (whether to write the returned dataframe to disk as an `.rds` file; default is FALSE), and `verbose` (whether to output information about the data collection; default is FALSE).
 
-`Collect()` returns a standard R dataframe (not a tibble) with the following structure (data have been modified to preserve anonymity):
+`Collect()` returns an R dataframe with the following structure (data have been modified to preserve anonymity):
 
 ```{r eval=FALSE}
 > str(youtubeData)
@@ -519,6 +576,7 @@ Classes ‘dataource’, ‘youtube’ and 'data.frame':	603 obs. of  12 variabl
 If you are reading a previously saved `writeToFile` YouTube dataframe from disk, you simply need to use the `readRDS` function:
 
 ```{r eval=FALSE}
+# read dataframe from file
 youtubeData <- readRDS("2020-09-26_095354-YoutubeData.rds")
 ```
 
@@ -572,16 +630,15 @@ attr(,"class")
 [1] "list"       "network"    "actor"      "youtube"    "voson_text"
 ```
 
-Note that in the above, `AddText()` was used to add the comment text data to the network dataframe, stored as an edge attribute.  Also, note that there is an optional parameter `replies_from_text` that can be passed to `AddText()` when used with YouTube network creation, to extract the "reply to reply" comments.
+Note that in the above, `AddText()` was used to add the comment text data to the network dataframe, stored as an edge attribute. Also, note that there is an optional parameter `replies_from_text` that can be passed to `AddText()` when used with YouTube network creation, to extract the "reply to reply" comments.
 
 This list is then passed to `Graph()`, which returns an `igraph` graph object. Remember that it is possible to achieve the above using a single line of code:
 
 ```{r eval=FALSE}
-actorGraph <- youtubeData %>% Create("actor") %>% AddText(youtubeData) %>% 
-              Graph(writeToFile = TRUE)
+actorGraph <- youtubeData %>% Create("actor") %>% AddText(youtubeData) %>% Graph()
 ```
 
-The following is an an annonymised summary of the `igraph` graph object:
+The following is an an annonymised summary of the `igraph` graph object.
 
 ```{r eval=FALSE}
 > actorGraph
@@ -600,40 +657,48 @@ The YouTube actor network node contains a graph attribute `type` (set to "youtub
 
 The example YouTube actor network contains 522 nodes and 604 edges. The following indicates that there were 500 top-level comments (we constrained the collection to this number), 103 replies to top-level comments (note: we did not use `AddText()` to collect replies embedded within the text), and there is the single self-loop from the video to itself.
 
-
 ```{r eval=FALSE}
 > table(E(actorGraph)$edge_type)
-      comment reply-comment     self-loop 
-          500           103             1 
+   comment reply-comment     self-loop 
+       500           103             1 
 ```
 
-We can visualise this network, using red to identify the video node
+We can visualize this network, using red to identify the video nodes.
 
 ```{r eval=FALSE}
-V(actorGraph)$color <- ifelse(V(actorGraph)$node_type=="video", "red", "grey")
-png("youtube_actor.png", width=600, height=600)
-plot(actorGraph, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+# change color of nodes with type video to red and others grey
+V(actorGraph)$color <- ifelse(V(actorGraph)$node_type == "video", "red", "grey")
+
+# open and write plot to a png file
+png("youtube_actor.png", width = 600, height = 600)
+plot(actorGraph, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 dev.off()
 ```
 
 ![YouTube actor network (red node is video)](https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/youtube_actor.png)
 
-The following creates a subnetwork containing only the replies to top-level comments. In removing the other edges (top-level comments and the self-loop) we create a number isolate nodes (nodes with no connections): these are also removed.  We have also used red to indicate the people who have written comments containing particular terms that have been present in the online commentary about the bushfires.
+The following creates a sub-network containing only the replies to top-level comments. In removing the other edges (top-level comments and the self-loop) we create a number isolate nodes (nodes with no connections) that we also remove. We have also used red to indicate the people who have written comments containing particular terms that have been present in the online commentary about the bushfires.
 
 ```{r eval=FALSE}
-g2 <- delete.edges(actorGraph, which(E(actorGraph)$edge_type!="reply-comment"))
-#By deleting edges other than "reply-comment", we now have 417 isolates
-#> length(which(degree(g2)==0))
-#[1] 417
+# removed edges that are not of type reply-comment
+g2 <- delete.edges(actorGraph, which(E(actorGraph)$edge_type != "reply-comment"))
 
-g2 <- delete.vertices(g2, which(degree(g2)==0))                    #remove the isolates
+# check number of isolates
+> length(which(degree(g2) == 0))
+[1] 417
 
+# remove isolates
+g2 <- delete.vertices(g2, which(degree(g2) == 0))
+
+# get node indexes for the tails of edges that have comments containing words of interest
+# change the indexed node colors to red and others grey
 V(g2)$color <- "grey"
-ind <- tail_of(actorGraph,grep("arson|backburn|climate change",tolower(E(g2)$vosonTxt_comment)))
+ind <- tail_of(actorGraph, grep("arson|backburn|climate change", tolower(E(g2)$vosonTxt_comment)))
 V(g2)$color[ind] <- "red"
 
-png("youtube_actor_reply.png", width=600, height=600)
-plot(g2, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+# open and write plot to a png file
+png("youtube_actor_reply.png", width = 600, height = 600)
+plot(g2, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 dev.off()
 ```
 
@@ -645,7 +710,7 @@ Finally, the `AddVideoData()` function supplements the network data with additio
 actorNetwork_withVideoInfo <- actorNetwork %>% AddVideoData(youtubeAuth)
 ```
 
-`AddVideoData()` returns a named list containing three dataframes named "nodes" (identical to the dataframe contained in the list `actorNetwork` in the example able), "edges" (this has three additional columns:  "video_title", "video_description", "video_published_at") and a new dataframe "videos" (the following has been modified to preserve anonymity):
+`AddVideoData()` returns a named list containing three dataframes named "nodes" (identical to the dataframe contained in the list `actorNetwork` in the example able), "edges" (this has three additional columns: "video_title", "video_description", "video_published_at") and a new dataframe "videos" (the following has been modified to preserve anonymity):
 
 ```{r eval=FALSE}
 > actorNetwork_withVideoInfo
@@ -687,10 +752,10 @@ In the YouTube *activity network*, nodes are either comments or videos (videos r
 
 ```{r eval=FALSE}
 activityNetwork <- youtubeData %>% Create("activity") %>% AddText(youtubeData)
-activityGraph <- activityNetwork %>% Graph(writeToFile = TRUE)
+activityGraph <- activityNetwork %>% Graph()
 ```
 
-`Create("activity")` returns a named list containing two dataframes named "nodes" and "edges" (the following has been modified to preserve anonymity):
+`Create("activity")` returns a named list containing two dataframes named "nodes" and "edges" (the following has been modified to preserve anonymity).
 
 ```{r eval=FALSE}
 > activityNetwork
@@ -716,7 +781,7 @@ attr(,"class")
 [1] "list"       "network"    "activity"   "youtube"    "voson_text"
 ```
 
-Note that in the above, `AddText()` was used to add the comment text data to the network dataframe, stored as a node attribute. This list is then passed to `Graph()`, which returns an `igraph` graph object (this has been anonymised): 
+Note that in the above, `AddText()` was used to add the comment text data to the network dataframe, stored as a node attribute. This list is then passed to `Graph()`, which returns an `igraph` graph object (this has been anonymised).
 
 ```{r eval=FALSE}
 IGRAPH 02664d1 DN-- 604 603 -- 
@@ -735,25 +800,29 @@ IGRAPH 02664d1 DN-- 604 603 --
 
 The YouTube activity network contains a graph attribute `type` (set to "youtube"). The node attributes are: `name` (character string ID number for the comment or video), `video_id` (character string ID of the video for which the comments collected - in this example, "pJ_NyEYRkLQ"), `published_at` (timestamp of when the comment was published, this is `NA` for the video itself), `updated_at` (timestamp of when a comment was updated), `author_id` (user's Channel ID), `screen_name` (user's display name), `node_type` (whether the node is a 'comment' i.e. top-level comment, 'reply-comment' i.e. reply to top-level comment or reply to reply or 'video'), `vosonText_comment` (the comment text, `NA` for the video), `label` (concatenation of `name` and `screen_name`). The edge attributes `edge_type` which is 'comment' for all edges connecting a top-level comment to the video, and 'reply-comment' for all other edges. 
 
-The example YouTube activity network contains 604 nodes and 603 edges. The following is an `igrahp` visualisation of the network, where the video is indicated by a red node, and blue indicates comments that include one of the following terms: "arson", "bakcburn", "climate change".
+The example YouTube activity network contains 604 nodes and 603 edges. The following is an `igraph` visualization of the network, where the video is indicated by a red node, and blue indicates comments that include one of the following terms: "arson", "bakcburn", "climate change".
 
 ```{r eval=FALSE}
+# set all video node colors to red and others to grey
 V(activityGraph)$color <- "grey"
-V(activityGraph)$color[which(V(activityGraph)$node_type=="video")] <- "red"
-ind <- grep("arson|backburn|climate change",tolower(V(activityGraph)$vosonTxt_comment))
+V(activityGraph)$color[which(V(activityGraph)$node_type == "video")] <- "red"
+
+# get node indexes of comments that contain terms of interest
+# set their node colors to blue
+ind <- grep("arson|backburn|climate change", tolower(V(activityGraph)$vosonTxt_comment))
 V(activityGraph)$color[ind] <- "blue"
-png("youtube_activity.png", width=600, height=600)
-plot(activityGraph, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+
+# open and write plot to a png file
+png("youtube_activity.png", width = 600, height = 600)
+plot(activityGraph, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 dev.off()
 ```
 
-
 ![YouTube activity network (red node is video, blue nodes are comments mentioning particular terms)](https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/youtube_activity.png)
-
 
 # Reddit
 
-The Reddit collection in `vosonSML` is based on the approach in [RedditExtractoR](https://cran.r-project.org/package=RedditExtractoR).
+The Reddit collection in `vosonSML` is based on the approach used in the [RedditExtractoR](https://cran.r-project.org/package=RedditExtractoR) package.
 
 ## Authenticating with the Reddit API
 
@@ -811,13 +880,13 @@ Classes ‘tbl_df’, ‘tbl’, ‘datasource’, ‘reddit’ and 'data.frame'
 
 ### Importing saved collection data from file
 
-If you are reading a previously saved `writeToFile` Reddit dataframe from disk, you simply need to use the `readRDS` function:
+If you are reading a previously saved `writeToFile` Reddit dataframe from disk, you simply need to use the `readRDS` function.
 
 ```{r eval=FALSE}
 redditData <- readRDS("2020-09-26_095354-RedditData.rds")
 ```
 
-Note that for `vosonSML` version `0.29.13` and earlier you will need to modify the class values for the object before you can use it with `vosonSML`. This can be done manually or by using the handy `ImportData()` function:
+Note that for `vosonSML` version `0.29.13` and earlier you will need to modify the class values for the object before you can use it with `vosonSML`. This can be done manually or by using the handy `ImportData()` function.
 
 ```{r eval=FALSE}
 # use import data
@@ -869,7 +938,7 @@ attr(,"class")
 [1] "list"       "network"    "actor"      "reddit"     "voson_text"
 ```
 
-Note that in the above, `AddText()` was used to add the comment text data to the network dataframe, stored as an edge attribute. This list is then passed to `Graph()`, which returns an `igraph` graph object: 
+Note that in the above, `AddText()` was used to add the comment text data to the network dataframe, stored as an edge attribute. This list is then passed to `Graph()`, which returns an `igraph` graph object.
 
 ```{r eval=FALSE}
 > actorGraph
@@ -889,15 +958,22 @@ IGRAPH 5a5d5b9 DN-- 439 768 --
 
 The Reddit actor network contains a graph attribute `type` (set to "reddit"). The node attributes are: `name` (sequential ID number for actor, generated by `vosonSML`), `user` (Reddit handle or screen name)) and `label` (a concatenation of the ID and screen name). The edge attributes are: `subreddit` (the subreddit from which the post is collected), `thread_id` (the 6 character ID of the thread or post), `comment_id` (sequential ID number for comment, generated by `vosonSML`). There is also an edge attribute `title`, which is set to `NA` for all comments except the comment representing the original post. Further note that the original post is represented as a self-loop edge from the user who authored the post (and this is how the post text can be accessed, as an edge attribute), however with the Reddit actor network, there is no `edge_type` attribute. Finally, because we used `AddText()` in the above example, there is also an edge attribute `vosonTxt_comment` which is the text associated with the comment, or original post.
 
-The example Reddit actor network contains 439 nodes and 768 edges. The following is a visualisation of the actor network, where the author of the post is indicated by a red node, and blue nodes indicate those people who mentioned "arson" or "starting fires" in at least one of their comments.
+The example Reddit actor network contains 439 nodes and 768 edges. The following is a visualization of the actor network, where the author of the post is indicated by a red node, and blue nodes indicate those people who mentioned "arson" or "starting fires" in at least one of their comments.
 
 ```{r eval=FALSE}
+# set node color of original post to red based on presence of title edge attribute
+# set other node colors to grey
 V(actorGraph)$color <- "grey"
 V(actorGraph)$color[tail_of(actorGraph, which(!is.na(E(actorGraph)$title)))] <- "red"
-ind <- tail_of(actorGraph,grep("arson|starting fires",tolower(E(actorGraph)$vosonTxt_comment)))
+
+# get node indexes for the tails of edges that have comments containing words of interest
+# set their node colors to blue
+ind <- tail_of(actorGraph, grep("arson|starting fires", tolower(E(actorGraph)$vosonTxt_comment)))
 V(actorGraph)$color[ind] <- "blue"
-png("reddit_actor.png", width=600, height=600)
-plot(actorGraph, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+
+# open and write plot to a png file
+png("reddit_actor.png", width = 600, height = 600)
+plot(actorGraph, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 dev.off()
 ```
 
@@ -940,7 +1016,7 @@ attr(,"class")
 
 ```
 
-Note that in the above, `AddText()` was used to add the comment text data to the network dataframe, stored as a node attribute. This list is then passed to `Graph()`, which returns an `igraph` graph object: 
+Note that in the above, `AddText()` was used to add the comment text data to the network dataframe, stored as a node attribute. This list is then passed to `Graph()`, which returns an `igraph` graph object.
 
 ```{r eval=FALSE}
 > activityGraph
@@ -958,22 +1034,28 @@ IGRAPH 09e30ea DN-- 768 767 --
 + ... omitted several edges
 ```
 
-The Reddit activity network contains a graph attribute `type` (set to "reddit"). The node attributes are: `name` (string showing position of the comment in the thread), `date` (date when the comment was authored, in DD-MM-YY format), `subreddit` (the subreddit from which the post is collected), `user` (Reddit handle or screen name of the user who authored the comment or post), `node_type` ('comment' or 'thread'), `title` (`NA` for all nodes except that representing the original post), `label` (a concatenation of `name` and `user`).  Because we used `AddText()` in the above example, there is also a node attribute `vosonTxt_comment` which is the text from the comment, or original post. The edge attributes is `edge_type` which is 'comment' for all edges. 
+The Reddit activity network contains a graph attribute `type` (set to "reddit"). The node attributes are: `name` (string showing position of the comment in the thread), `date` (date when the comment was authored, in DD-MM-YY format), `subreddit` (the subreddit from which the post is collected), `user` (Reddit handle or screen name of the user who authored the comment or post), `node_type` ('comment' or 'thread'), `title` (`NA` for all nodes except that representing the original post), `label` (a concatenation of `name` and `user`).  Because we used `AddText()` in the above example, there is also a node attribute `vosonTxt_comment` which is the text from the comment, or original post. The edge attributes is `edge_type` which is 'comment' for all edges.
 
 The example Reddit activity network contains 768 nodes and 767 edges. The following is a visualisation of the network, where the post is indicated by a red node, and blue indicates those comments that include the words "arson" or "starting fires".
 
 ```{r eval=FALSE}
+# set original post node colors to red based on a node type of thread
+# set other node colors to grey
 V(activityGraph)$color <- "grey"
-V(activityGraph)$color[which(V(activityGraph)$node_type=="thread")] <- "red"
-ind <- grep("arson|starting fires",tolower(V(activityGraph)$vosonTxt_comment))
+V(activityGraph)$color[which(V(activityGraph)$node_type == "thread")] <- "red"
+
+# get node indexes for nodes that have comment attributes containing words of interest
+# set their node colors to blue
+ind <- grep("arson|starting fires", tolower(V(activityGraph)$vosonTxt_comment))
 V(activityGraph)$color[ind] <- "blue"
-png("reddit_activity.png", width=600, height=600)
-plot(activityGraph, vertex.label="", vertex.size=4, edge.arrow.size=0.5)
+
+# open and write plot to a png file
+png("reddit_activity.png", width = 600, height = 600)
+plot(activityGraph, vertex.label = "", vertex.size = 4, edge.arrow.size = 0.5)
 dev.off()
 ```
 
 ![Reddit activity network (red node is intial post, blue nodes are comments mentioning arson)](https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/reddit_activity.png)
-
 
 # Merging Collected Data
 
@@ -1027,9 +1109,7 @@ importFiles <- list.files(path = "D:\\2019TwitterBushfireData",
                           full.names = TRUE)
 
 # combine imported data from files with apply and rbind
-twitterData <- do.call("rbind", lapply(importFiles, 
-                                       function(x) { ImportData(x, "twitter") }))
-
+twitterData <- do.call("rbind", lapply(importFiles, function(x) { ImportData(x, "twitter") }))
 ```
 
 ## Duplicate data
@@ -1041,8 +1121,7 @@ Depending on type of collections being performed, there may be duplicate data or
 library(dplyr)
 
 # combine the collected data using rbind and remove duplicates with distinct based on tweet status_id 
-twitterData <- rbind(auspolTwitterData, bushfireTwitterData) %>%
-   distinct(status_id, .keep_all = TRUE)
+twitterData <- rbind(auspolTwitterData, bushfireTwitterData) %>% distinct(status_id, .keep_all = TRUE)
 ```
 
 If unique rows can change over time such as a tweets retweet count, or perhaps youtube video / reddit thread comments being updated then a strategy will need to be adopted to choose the desired version to keep between dataframes. The `distinct` function will keep the first found row that contains a duplicate identifier, so it is often useful to arrange the rows so that more recent record comes first in the combined dataframe and is kept. With twitter data, the easiest way to do this is to perform the `rbind` with twitter dataframes in reverse order (chronological) with the most recent collect data first. For youtube and reddit, the rows can be arranged by the "UpdatedAt" and "comm_date_unix" timestamp values respectively. The `dplyr` package again provides a convenient function for sorting or arranging rows called `arrange`. 
@@ -1050,17 +1129,17 @@ If unique rows can change over time such as a tweets retweet count, or perhaps y
 ```{r eval=FALSE}
 # manually combine data sets in reverse chronological order and remove duplicates based on status_id 
 twitterData <- rbind(bushfireTwitterData, auspolTwitterData) %>%
-   distinct(status_id, .keep_all = TRUE)
+  distinct(status_id, .keep_all = TRUE)
 
 # arrange combined youtube data by updated timestamp and remove duplicates, keeping the version of a
 # duplicate video comment that was most recently updated
 youtubeData <- youtubeData %>% 
-   arrange(desc(UpdatedAt)) %>% distinct(VideoID, CommentID, .keep_all = TRUE)
+  arrange(desc(UpdatedAt)) %>% distinct(VideoID, CommentID, .keep_all = TRUE)
 
 # arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of a
 # duplicate thread comment that was most recently updated
 redditData <- redditData %>%
-   arrange(desc(comm_date_unix)) %>% distinct(thread_id, comm_id, .keep_all = TRUE)
+  arrange(desc(comm_date_unix)) %>% distinct(thread_id, comm_id, .keep_all = TRUE)
 ```
 
 ## Creating a network and graph from merged data
@@ -1080,13 +1159,12 @@ Above, we created a Twitter subnetwork: the giant component in the reply network
 
 ```{r eval=FALSE}
 V(g3)$vosonCA_tweetedBushfires <- V(g3)$tweetedBushfires
-write.graph(g3, "g3.graphml", format="graphml")
+write.graph(g3, "g3.graphml", format = "graphml")
 ```
 
 The following shows a screenshot of `VOSON Dashboard` with this network loaded and the "tweetedBushfires" attribute has been seleced to be reflected in the node colour.
 
 ![VOSON Dashboard with Twitter network of users who tweeted using the word "bushfire"](https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/voson_dashboard.png)
-
 
 # Acknowledgements
 

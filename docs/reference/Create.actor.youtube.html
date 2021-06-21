@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create youtube actor network — Create.actor.youtube • vosonSML</title>
+<title>Create YouTube actor network — Create.actor.youtube • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,10 +48,10 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Create youtube actor network — Create.actor.youtube" />
-<meta property="og:description" content="Creates a youtube actor network from comment threads on youtube videos. Users who have made comments to 
-a video (top-level comments) and users who have replied to those comments are actor nodes. The comments are 
-represented as directed edges between the actors. The video id is also included as an actor node, representative of 
+<meta property="og:title" content="Create YouTube actor network — Create.actor.youtube" />
+<meta property="og:description" content="Creates a YouTube actor network from comment threads on YouTube videos. Users who have made comments to
+a video (top-level comments) and users who have replied to those comments are actor nodes. The comments are
+represented as directed edges between the actors. The video id is also included as an actor node, representative of
 the videos publisher with top-level comments as directed edges towards them." />
 
 
@@ -84,7 +84,7 @@ the videos publisher with top-level comments as directed edges towards them." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.00.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.5.9000</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@ the videos publisher with top-level comments as directed edges towards them." />
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
+    <span class="fa fa-file-alt"></span>
      
     Changelog
   </a>
@@ -120,7 +120,25 @@ the videos publisher with top-level comments as directed edges towards them." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Intro-to-vosonSML.html">Introduction to vosonSML</a>
+      <a href="../articles/Intro-to-vosonSML.html">
+        <span class="far fa-file-alt"></span>
+         
+        Introduction to vosonSML
+      </a>
+    </li>
+    <li>
+      <a href="https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml/">
+        <span class="far fa-file-alt"></span>
+         
+        Hyperlink Networks with vosonSML
+      </a>
+    </li>
+    <li>
+      <a href="https://vosonlab.github.io/posts/2021-02-11_twitter_vsml_from_rtweet/">
+        <span class="far fa-file-alt"></span>
+         
+        Creating Twitter Networks with vosonSML using rtweet Data
+      </a>
     </li>
   </ul>
 </li>
@@ -134,13 +152,13 @@ the videos publisher with top-level comments as directed edges towards them." />
 </li>
 <li>
   <a href="https://twitter.com/vosonlab">
-    <span class="fa fa-twitter-square fa-lg"></span>
+    <span class="fab fa-twitter-square fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/vosonlab/vosonSML">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -157,15 +175,15 @@ the videos publisher with top-level comments as directed edges towards them." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create youtube actor network</h1>
+    <h1>Create YouTube actor network</h1>
     <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.actor.youtube.R'><code>R/Create.actor.youtube.R</code></a></small>
     <div class="hidden name"><code>Create.actor.youtube.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates a youtube actor network from comment threads on youtube videos. Users who have made comments to 
-a video (top-level comments) and users who have replied to those comments are actor nodes. The comments are 
-represented as directed edges between the actors. The video id is also included as an actor node, representative of 
+    <p>Creates a YouTube actor network from comment threads on YouTube videos. Users who have made comments to
+a video (top-level comments) and users who have replied to those comments are actor nodes. The comments are
+represented as directed edges between the actors. The video id is also included as an actor node, representative of
 the videos publisher with top-level comments as directed edges towards them.</p>
     </div>
 
@@ -195,7 +213,7 @@ the videos publisher with top-level comments as directed edges towards them.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># create a youtube actor network graph</span>
+<span class='co'># create a YouTube actor network graph</span>
 <span class='va'>actorNetwork</span> <span class='op'>&lt;-</span> <span class='va'>youtubeData</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='Create.html'>Create</a></span><span class='op'>(</span><span class='st'>"actor"</span><span class='op'>)</span>
 
 <span class='co'># network</span>
@@ -215,7 +233,7 @@ the videos publisher with top-level comments as directed edges towards them.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://vosonlab.net'><span>VOSON Lab</span></a>.</p>
+  <p>Developed by Bryan Gertzel, Robert Ackland, Timothy Graham.</p>
 </div>
 
 <div class="pkgdown">

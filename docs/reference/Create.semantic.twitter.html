@@ -49,8 +49,8 @@
   
 
 <meta property="og:title" content="Create twitter semantic network — Create.semantic.twitter" />
-<meta property="og:description" content="Creates a semantic network from tweets returned from the twitter search query. Semantic networks 
-describe the semantic relationships between concepts. In this network the concepts are significant words and 
+<meta property="og:description" content="Creates a semantic network from tweets returned from the twitter search query. Semantic networks
+describe the semantic relationships between concepts. In this network the concepts are significant words and
 hashtags extracted from the tweet text. Network edges are weighted and represent occurrence of words and
 hashtags in the same tweets.
 The creation of twitter semantic networks requires text processing and the tokenization of tweets. As such
@@ -87,7 +87,7 @@ this." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.00.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.5.9000</span>
       </span>
     </div>
 
@@ -101,7 +101,7 @@ this." />
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
+    <span class="fa fa-file-alt"></span>
      
     Changelog
   </a>
@@ -123,7 +123,25 @@ this." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Intro-to-vosonSML.html">Introduction to vosonSML</a>
+      <a href="../articles/Intro-to-vosonSML.html">
+        <span class="far fa-file-alt"></span>
+         
+        Introduction to vosonSML
+      </a>
+    </li>
+    <li>
+      <a href="https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml/">
+        <span class="far fa-file-alt"></span>
+         
+        Hyperlink Networks with vosonSML
+      </a>
+    </li>
+    <li>
+      <a href="https://vosonlab.github.io/posts/2021-02-11_twitter_vsml_from_rtweet/">
+        <span class="far fa-file-alt"></span>
+         
+        Creating Twitter Networks with vosonSML using rtweet Data
+      </a>
     </li>
   </ul>
 </li>
@@ -137,13 +155,13 @@ this." />
 </li>
 <li>
   <a href="https://twitter.com/vosonlab">
-    <span class="fa fa-twitter-square fa-lg"></span>
+    <span class="fab fa-twitter-square fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/vosonlab/vosonSML">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -166,8 +184,8 @@ this." />
     </div>
 
     <div class="ref-description">
-    <p>Creates a semantic network from tweets returned from the twitter search query. Semantic networks 
-describe the semantic relationships between concepts. In this network the concepts are significant words and 
+    <p>Creates a semantic network from tweets returned from the twitter search query. Semantic networks
+describe the semantic relationships between concepts. In this network the concepts are significant words and
 hashtags extracted from the tweet text. Network edges are weighted and represent occurrence of words and
 hashtags in the same tweets.</p>
 <p>The creation of twitter semantic networks requires text processing and the tokenization of tweets. As such
@@ -188,7 +206,7 @@ this.</p>
   termFreq <span class='op'>=</span> <span class='fl'>5</span>,
   hashtagFreq <span class='op'>=</span> <span class='fl'>50</span>,
   assoc <span class='op'>=</span> <span class='st'>"limited"</span>,
-  verbose <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -205,7 +223,7 @@ this.</p>
     </tr>
     <tr>
       <th>removeTermsOrHashtags</th>
-      <td><p>Character vector. Words or hashtags to remove from the semantic network. For example, 
+      <td><p>Character vector. Words or hashtags to remove from the semantic network. For example,
 this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
 nodes with matching name. Default is <code>NULL</code> to remove none.</p></td>
     </tr>
@@ -235,14 +253,14 @@ such as <code>2020</code> will be removed but not mixed values such as <code>G20
     <tr>
       <th>termFreq</th>
       <td><p>Numeric integer. Specifies the percentage of most frequent words to include. For example,
-<code>termFreq = 20</code> means that the 20 percent most frequently occurring <code>words</code> will be included in the 
-semantic network as nodes. A larger percentage will increase the number of nodes and therefore the size of graph. 
+<code>termFreq = 20</code> means that the 20 percent most frequently occurring <code>words</code> will be included in the
+semantic network as nodes. A larger percentage will increase the number of nodes and therefore the size of graph.
 The default value is <code>5</code>, meaning the top 5 percent most frequent words are used.</p></td>
     </tr>
     <tr>
       <th>hashtagFreq</th>
-      <td><p>Numeric integer. Specifies the percentage of most frequent <code>hashtags</code> to include. For 
-example, <code>hashtagFreq = 20</code> means that the 20 percent most frequently occurring hashtags will be included 
+      <td><p>Numeric integer. Specifies the percentage of most frequent <code>hashtags</code> to include. For
+example, <code>hashtagFreq = 20</code> means that the 20 percent most frequently occurring hashtags will be included
 in the semantic network as nodes. The default value is <code>50</code>.</p></td>
     </tr>
     <tr>
@@ -253,7 +271,7 @@ occurring hashtags and terms, hashtags and hashtags, and terms and terms. Defaul
     </tr>
     <tr>
       <th>verbose</th>
-      <td><p>Logical. Output additional information about the network creation. Default is <code>FALSE</code>.</p></td>
+      <td><p>Logical. Output additional information about the network creation. Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -288,7 +306,7 @@ them occurring in tweet text with other top percentage frequency terms.</p>
 
 <span class='co'># create a twitter semantic network graph removing the hashtag '#auspol' and using the</span>
 <span class='co'># top 2% frequently occurring words and 10% most frequently occurring hashtags as nodes</span>
-<span class='va'>semanticNetwork</span> <span class='op'>&lt;-</span> <span class='va'>twitterData</span> <span class='op'>%&gt;%</span> 
+<span class='va'>semanticNetwork</span> <span class='op'>&lt;-</span> <span class='va'>twitterData</span> <span class='op'>%&gt;%</span>
                    <span class='fu'><a href='Create.html'>Create</a></span><span class='op'>(</span><span class='st'>"semantic"</span>, removeTermsOrHashtags <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"#auspol"</span><span class='op'>)</span>,
                           termFreq <span class='op'>=</span> <span class='fl'>2</span>, hashtagFreq <span class='op'>=</span> <span class='fl'>10</span>, verbose <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 
@@ -309,7 +327,7 @@ them occurring in tweet text with other top percentage frequency terms.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://vosonlab.net'><span>VOSON Lab</span></a>.</p>
+  <p>Developed by Bryan Gertzel, Robert Ackland, Timothy Graham.</p>
 </div>
 
 <div class="pkgdown">

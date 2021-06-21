@@ -2,7 +2,7 @@
 % Please edit documentation in R/Create.actor.youtube.R
 \name{Create.actor.youtube}
 \alias{Create.actor.youtube}
-\title{Create youtube actor network}
+\title{Create YouTube actor network}
 \usage{
 \method{Create}{actor.youtube}(datasource, type, ...)
 }
@@ -17,14 +17,14 @@
 Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
-Creates a youtube actor network from comment threads on youtube videos. Users who have made comments to 
-a video (top-level comments) and users who have replied to those comments are actor nodes. The comments are 
-represented as directed edges between the actors. The video id is also included as an actor node, representative of 
+Creates a YouTube actor network from comment threads on YouTube videos. Users who have made comments to
+a video (top-level comments) and users who have replied to those comments are actor nodes. The comments are
+represented as directed edges between the actors. The video id is also included as an actor node, representative of
 the videos publisher with top-level comments as directed edges towards them.
 }
 \examples{
 \dontrun{
-# create a youtube actor network graph
+# create a YouTube actor network graph
 actorNetwork <- youtubeData \%>\% Create("actor")
 
 # network

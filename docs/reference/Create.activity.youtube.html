@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Create youtube activity network — Create.activity.youtube • vosonSML</title>
+<title>Create YouTube activity network — Create.activity.youtube • vosonSML</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,8 +48,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Create youtube activity network — Create.activity.youtube" />
-<meta property="og:description" content="Creates an activity network from collected youtube video comment threads. Nodes are top-level
+<meta property="og:title" content="Create YouTube activity network — Create.activity.youtube" />
+<meta property="og:description" content="Creates an activity network from collected YouTube video comment threads. Nodes are top-level
 comments, reply comments and videos. Edges are directed between the nodes and represent commenting activity." />
 
 
@@ -82,7 +82,7 @@ comments, reply comments and videos. Edges are directed between the nodes and re
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.00.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.5.9000</span>
       </span>
     </div>
 
@@ -96,7 +96,7 @@ comments, reply comments and videos. Edges are directed between the nodes and re
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fa fa-newspaper-o"></span>
+    <span class="fa fa-file-alt"></span>
      
     Changelog
   </a>
@@ -118,7 +118,25 @@ comments, reply comments and videos. Edges are directed between the nodes and re
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Intro-to-vosonSML.html">Introduction to vosonSML</a>
+      <a href="../articles/Intro-to-vosonSML.html">
+        <span class="far fa-file-alt"></span>
+         
+        Introduction to vosonSML
+      </a>
+    </li>
+    <li>
+      <a href="https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml/">
+        <span class="far fa-file-alt"></span>
+         
+        Hyperlink Networks with vosonSML
+      </a>
+    </li>
+    <li>
+      <a href="https://vosonlab.github.io/posts/2021-02-11_twitter_vsml_from_rtweet/">
+        <span class="far fa-file-alt"></span>
+         
+        Creating Twitter Networks with vosonSML using rtweet Data
+      </a>
     </li>
   </ul>
 </li>
@@ -132,13 +150,13 @@ comments, reply comments and videos. Edges are directed between the nodes and re
 </li>
 <li>
   <a href="https://twitter.com/vosonlab">
-    <span class="fa fa-twitter-square fa-lg"></span>
+    <span class="fab fa-twitter-square fa-lg"></span>
      
   </a>
 </li>
 <li>
   <a href="https://github.com/vosonlab/vosonSML">
-    <span class="fa fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -155,13 +173,13 @@ comments, reply comments and videos. Edges are directed between the nodes and re
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Create youtube activity network</h1>
+    <h1>Create YouTube activity network</h1>
     <small class="dont-index">Source: <a href='https://github.com/vosonlab/vosonSML/blob/master/R/Create.activity.youtube.R'><code>R/Create.activity.youtube.R</code></a></small>
     <div class="hidden name"><code>Create.activity.youtube.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates an activity network from collected youtube video comment threads. Nodes are top-level
+    <p>Creates an activity network from collected YouTube video comment threads. Nodes are top-level
 comments, reply comments and videos. Edges are directed between the nodes and represent commenting activity.</p>
     </div>
 
@@ -195,7 +213,7 @@ comments, reply comments and videos. Edges are directed between the nodes and re
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># create a youtube activity network graph</span>
+<span class='co'># create a YouTube activity network graph</span>
 <span class='va'>activityNetwork</span> <span class='op'>&lt;-</span> <span class='va'>youtubeData</span> <span class='op'>%&gt;%</span> <span class='fu'><a href='Create.html'>Create</a></span><span class='op'>(</span><span class='st'>"activity"</span><span class='op'>)</span>
 
 <span class='co'># network</span>
@@ -215,7 +233,7 @@ comments, reply comments and videos. Edges are directed between the nodes and re
 
       <footer>
       <div class="copyright">
-  <p>Developed by <a href='https://vosonlab.net'><span>VOSON Lab</span></a>.</p>
+  <p>Developed by Bryan Gertzel, Robert Ackland, Timothy Graham.</p>
 </div>
 
 <div class="pkgdown">

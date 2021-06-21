@@ -35,7 +35,7 @@ Minimum is 3 seconds. Default is \code{c(3, 10)} for a wait time chosen from bet
 A \code{data.frame} object with class names \code{"datasource"} and \code{"reddit"}.
 }
 \description{
-Collects comments made by users on one or more specified subreddit conversation threads and structures 
+Collects comments made by users on one or more specified subreddit conversation threads and structures
 the data into a dataframe with the class names \code{"datasource"} and \code{"reddit"}.
 }
 \note{

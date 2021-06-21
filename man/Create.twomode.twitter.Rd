@@ -9,7 +9,7 @@
   type,
   removeTermsOrHashtags = NULL,
   weighted = TRUE,
-  verbose = FALSE,
+  verbose = TRUE,
   ...
 )
 }
@@ -18,14 +18,14 @@
 
 \item{type}{Character string. Type of network to be created, set to \code{"twomode"}.}
 
-\item{removeTermsOrHashtags}{Character vector. Users or hashtags to remove from the twomode network. For example, 
+\item{removeTermsOrHashtags}{Character vector. Users or hashtags to remove from the twomode network. For example,
 this parameter could be used to remove the user or hashtag that was used to collect the data by removing any
 nodes with matching name. Default is \code{NULL} to remove none.}
 
-\item{weighted}{Logical. Add weights to network edges. If set to \code{FALSE} tweet \code{status_id} and 
+\item{weighted}{Logical. Add weights to network edges. If set to \code{FALSE} tweet \code{status_id} and
 \code{created_at} fields will be preserved for edges in the dataframe. Default is \code{TRUE}.}
 
-\item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
+\item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
@@ -33,7 +33,7 @@ nodes with matching name. Default is \code{NULL} to remove none.}
 Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
-Creates a 2-mode network from tweets returned from the twitter search query. In this network there are 
+Creates a 2-mode network from tweets returned from the twitter search query. In this network there are
 two types of nodes, twitter users who authored or were mentioned in collected tweets and hashtags found within
 tweets. Network edges represent a users tweets that contain hashtags or mention users screen names.
 
@@ -46,9 +46,9 @@ this function requires the additional installation of the \pkg{tidytext} package
 # for working with text data
 install.packages("tidytext")
 
-# create a twitter 2-mode network graph removing the hashtag '#auspol' as it was used in 
+# create a twitter 2-mode network graph removing the hashtag '#auspol' as it was used in
 # the twitter search query
-twomodeNetwork <- twitterData \%>\% 
+twomodeNetwork <- twitterData \%>\%
                   Create("twomode", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
 
 # network

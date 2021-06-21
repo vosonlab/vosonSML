@@ -2,7 +2,7 @@
 % Please edit documentation in R/Authenticate.youtube.R
 \name{Authenticate.youtube}
 \alias{Authenticate.youtube}
-\title{Youtube API authentication}
+\title{YouTube API authentication}
 \usage{
 \method{Authenticate}{youtube}(socialmedia, apiKey, ...)
 }
@@ -14,11 +14,11 @@
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-A \code{credential} object containing an api key \code{$auth} and social media type descriptor 
+A \code{credential} object containing an api key \code{$auth} and social media type descriptor
 \code{$socialmedia} set to \code{"youtube"}. Object has the class names \code{"credential"} and \code{"youtube"}.
 }
 \description{
-Youtube authentication uses OAuth2 and requires a Google Developer API key as described here:
+YouTube authentication uses OAuth2 and requires a Google Developer API key as described here:
 \url{https://developers.google.com/youtube/v3/docs/}.
 }
 \examples{
