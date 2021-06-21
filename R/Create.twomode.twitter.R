@@ -14,7 +14,7 @@
 #' nodes with matching name. Default is \code{NULL} to remove none.
 #' @param weighted Logical. Add weights to network edges. If set to \code{FALSE} tweet \code{status_id} and
 #' \code{created_at} fields will be preserved for edges in the dataframe. Default is \code{TRUE}.
-#' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
 #' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
@@ -41,7 +41,7 @@ Create.twomode.twitter <-
            type,
            removeTermsOrHashtags = NULL,
            weighted = TRUE,
-           verbose = FALSE,
+           verbose = TRUE,
            ...) {
     rlang::check_installed(c("tidytext"), "for Create.twomode.twitter")
     stop_req_pkgs(c("tidytext"), "Create.twomode.twitter")

@@ -2,7 +2,7 @@
 % Please edit documentation in R/Create.activity.youtube.R
 \name{Create.activity.youtube}
 \alias{Create.activity.youtube}
-\title{Create youtube activity network}
+\title{Create YouTube activity network}
 \usage{
 \method{Create}{activity.youtube}(datasource, type, verbose = TRUE, ...)
 }
@@ -19,12 +19,12 @@
 Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
-Creates an activity network from collected youtube video comment threads. Nodes are top-level
+Creates an activity network from collected YouTube video comment threads. Nodes are top-level
 comments, reply comments and videos. Edges are directed between the nodes and represent commenting activity.
 }
 \examples{
 \dontrun{
-# create a youtube activity network graph
+# create a YouTube activity network graph
 activityNetwork <- youtubeData \%>\% Create("activity")
 
 # network

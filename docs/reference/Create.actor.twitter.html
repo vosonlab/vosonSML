@@ -120,7 +120,25 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/Intro-to-vosonSML.html">Introduction to vosonSML</a>
+      <a href="../articles/Intro-to-vosonSML.html">
+        <span class="far fa-file-alt"></span>
+         
+        Introduction to vosonSML
+      </a>
+    </li>
+    <li>
+      <a href="https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml/">
+        <span class="far fa-file-alt"></span>
+         
+        Hyperlink Networks with vosonSML
+      </a>
+    </li>
+    <li>
+      <a href="https://vosonlab.github.io/posts/2021-02-11_twitter_vsml_from_rtweet/">
+        <span class="far fa-file-alt"></span>
+         
+        Creating Twitter Networks with vosonSML using rtweet Data
+      </a>
     </li>
   </ul>
 </li>
@@ -174,7 +192,7 @@
   <span class='va'>datasource</span>,
   <span class='va'>type</span>,
   rmEdgeTypes <span class='op'>=</span> <span class='cn'>NULL</span>,
-  inclMentions <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  inclMentions <span class='op'>=</span> <span class='cn'>TRUE</span>,
   inclRtMentions <span class='op'>=</span> <span class='cn'>FALSE</span>,
   verbose <span class='op'>=</span> <span class='cn'>TRUE</span>,
   <span class='va'>...</span>
@@ -198,7 +216,7 @@
     </tr>
     <tr>
       <th>inclMentions</th>
-      <td><p>Logical. Create edges for users mentioned or tagged in tweets. Default is <code>FALSE</code>.</p></td>
+      <td><p>Logical. Create edges for users mentioned or tagged in tweets. Default is <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>inclRtMentions</th>
@@ -222,7 +240,7 @@ mention not the retweeter. Default is <code>FALSE</code>.</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>When creating twitter actor networks, a network with additional user information can be generated using the
-  <code><a href='vosonSML::AddUserData.html'>AddUserData</a></code> function. Additional calls can be made to the twitter API to get information about users
+  <code><a href='AddUserData.html'>AddUserData</a></code> function. Additional calls can be made to the twitter API to get information about users
   that were identified as nodes during network creation but did not tweet (meaning no user profile information was
   initially collected for them).</p>
 
@@ -230,7 +248,7 @@ mention not the retweeter. Default is <code>FALSE</code>.</p></td>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># create a twitter actor network excluding retweet, quote tweets and mention edges</span>
 <span class='va'>actor_net</span> <span class='op'>&lt;-</span> <span class='va'>twitter_data</span> <span class='op'>%&gt;%</span>
-  <span class='fu'><a href='Create.html'>Create</a></span><span class='op'>(</span><span class='st'>"actor"</span>, rmEdgeTypes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"retweet"</span>, <span class='st'>"quote"</span><span class='op'>)</span>, inclMentions <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
+  <span class='fu'><a href='Create.html'>Create</a></span><span class='op'>(</span><span class='st'>"actor"</span>, rmEdgeTypes <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"retweet"</span>, <span class='st'>"quote"</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'># network nodes and edges</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>actor_net</span><span class='op'>)</span>
@@ -239,7 +257,6 @@ mention not the retweeter. Default is <code>FALSE</code>.</p></td>
 <span class='co'># "user_id", "screen_name"</span>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>actor_net</span><span class='op'>$</span><span class='va'>edges</span><span class='op'>)</span>
 <span class='co'># "from", "to", "status_id", "created_at", "edge_type"</span>
-
 <span class='op'>}</span>
 
 </div></pre>

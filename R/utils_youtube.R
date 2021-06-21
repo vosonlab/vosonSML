@@ -1,27 +1,27 @@
-#' @title Extract the ids from a list of youtube video urls
+#' @title Extract the ids from a list of YouTube video urls
 #'
-#' @description This function reads youtube video urls from a list and or a text file and converts them to a vector of
+#' @description This function reads YouTube video urls from a list and or a text file and converts them to a vector of
 #'   video ids. For example, URL \code{https://www.youtube.com/watch?v=73I5dRucCds} returns the id \code{73I5dRucCds}.
-#'   This function can be used to create a vector for the youtube \code{\link{Collect.youtube}} functions
+#'   This function can be used to create a vector for the YouTube \code{\link{Collect.youtube}} functions
 #'   \code{videoIDs} parameter.
 #'
-#' @note Accepts youtube url formats \code{https://youtu.be/xxxxxxxx} and
+#' @note Accepts YouTube url formats \code{https://youtu.be/xxxxxxxx} and
 #'   \code{https://www.youtube.com/watch?v=xxxxxxxx}.
 #'
-#' @param urls Character vector. List of youtube urls.
-#' @param file Character string. Text file containing youtube urls, one per line.
+#' @param urls Character vector. List of YouTube urls.
+#' @param file Character string. Text file containing YouTube urls, one per line.
 #'
-#' @return A vector of youtube video ids as character strings that were extracted from input video urls.
+#' @return A vector of YouTube video ids as character strings that were extracted from input video urls.
 #'
 #' @aliases GetYoutubeVideoIDs
-#' @name vosonSML::GetYoutubeVideoIDs
+#' @name GetYoutubeVideoIDs
 #' @export
 GetYoutubeVideoIDs <-
   get_video_ids <- function(urls = NULL, file = NULL) {
     video_ids <- c()
 
     if (is.null(urls) & is.null(file)) {
-      cat("Please provide a vector and or file of youtube video urls.\n")
+      cat("Please provide a vector and or file of YouTube video urls.\n")
       return(video_ids)
     }
 
@@ -46,7 +46,7 @@ GetYoutubeVideoIDs <-
     }
 
     if (length(video_ids) < 1) {
-      cat("No youtube video ids found.\n")
+      cat("No YouTube video ids found.\n")
     } else {
       cat(paste0("Extracted ", length(video_ids), " video ids.\n"))
     }
@@ -54,7 +54,7 @@ GetYoutubeVideoIDs <-
     video_ids
   }
 
-# extract the id from a youtube video url
+# extract the id from a YouTube video url
 get_video_id <- function(url) {
   id_pattern <- "^[0-9A-Za-z_\\-]+$"
 

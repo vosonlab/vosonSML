@@ -48,7 +48,7 @@
 #' @param assoc Character string. Association of nodes. A value of \code{"limited"} includes only edges between
 #' most frequently occurring hashtags and terms. A value of \code{"full"} includes ties between most frequently
 #' occurring hashtags and terms, hashtags and hashtags, and terms and terms. Default is \code{"limited"}.
-#' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
 #' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
@@ -83,7 +83,7 @@ Create.semantic.twitter <-
            termFreq = 5,
            hashtagFreq = 50,
            assoc = "limited",
-           verbose = FALSE,
+           verbose = TRUE,
            ...) {
     rlang::check_installed(c("tidytext"), "for Create.semantic.twitter")
     stop_req_pkgs(c("tidytext"), "Create.semantic.twitter")

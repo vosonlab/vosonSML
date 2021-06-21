@@ -13,7 +13,7 @@
 #' including columns for additional user data.
 #'
 #' @aliases AddUserData
-#' @name vosonSML::AddUserData
+#' @name AddUserData
 #' @export
 AddUserData <- function(net, data, ...) {
   # searches the class list of net for matching method
@@ -79,7 +79,7 @@ AddUserData.actor.default <- function(net, ...) {
 #' \code{$users}. Nodes include columns for additional user data.
 #'
 #' @aliases AddUserData.actor.twitter
-#' @name vosonSML::AddUserData.actor.twitter
+#' @name AddUserData.actor.twitter
 #' @export
 AddUserData.actor.twitter <-
   function(net,

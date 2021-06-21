@@ -1,6 +1,6 @@
-#' @title Youtube API authentication
+#' @title YouTube API authentication
 #'
-#' @description Youtube authentication uses OAuth2 and requires a Google Developer API key as described here:
+#' @description YouTube authentication uses OAuth2 and requires a Google Developer API key as described here:
 #' \url{https://developers.google.com/youtube/v3/docs/}.
 #'
 #' @param socialmedia Character string. Identifier for social media API to authenticate, set to \code{"youtube"}.
@@ -21,11 +21,11 @@
 #' @export
 Authenticate.youtube <- function(socialmedia, apiKey, ...) {
   if (missing(apiKey)) {
-    stop("Missing youtube API key.", call. = FALSE)
+    stop("Missing YouTube API key.", call. = FALSE)
   }
 
   if (!is.character(apiKey)) {
-    stop("Requires youtube API key as string.", call. = FALSE)
+    stop("Requires YouTube API key as string.", call. = FALSE)
   }
 
   credential <- list(socialmedia = "youtube", auth = apiKey)

@@ -29,7 +29,7 @@ test_that("Collect.twitter output", {
 })
 
 test_that("GetYoutubeVideoIDs output", {
-  expect_output(GetYoutubeVideoIDs(), "Please provide a vector and or file of youtube video urls.")
+  expect_output(GetYoutubeVideoIDs(), "Please provide a vector and or file of YouTube video urls.")
   suppress_cat(expect_match(GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=IVjZMIWhz3Y")), "IVjZMIWhz3Y"))
   suppress_cat(expect_match(GetYoutubeVideoIDs(c("https://youtu.be/IVjZMIWhz3Y")), "IVjZMIWhz3Y"))
   expect_output(GetYoutubeVideoIDs(c("https://youtu.be/IVjZMIWhz3Y")), "Extracted 1 video ids.")
@@ -41,18 +41,18 @@ test_that("Collect.youtube input", {
   auth <- list()
   class(auth) <- append(class(auth), "youtube")
   auth$auth <- NULL
-  invalid_msg <- "Please provide a valid youtube api key."
+  invalid_msg <- "Please provide a valid YouTube api key."
   expect_error(suppress_cat(Collect(auth)), invalid_msg)
   auth$auth <- ""
   expect_error(suppress_cat(Collect(auth)), invalid_msg)
 
   auth$auth <- "xxx"
-  expect_error(suppress_cat(Collect(auth)), "Please provide a vector of one or more youtube video ids.")
+  expect_error(suppress_cat(Collect(auth)), "Please provide a vector of one or more YouTube video ids.")
 })
 
 test_that("Collect.youtube output", {
   skip_on_cran()
-  skip_if_not(file.exists("~/.youtube_auth"), message = "youtube auth file exists")
+  skip_if_not(file.exists("~/.youtube_auth"), message = "YouTube auth file exists")
 
   auth <- readRDS("~/.youtube_auth")
   suppress_cat(data <- auth %>% Collect(videoIDs = c("IVjZMIWhz3Y"),

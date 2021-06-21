@@ -7,7 +7,7 @@
 #'
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"twitter"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.
-#' @param rmNodeTypes Character vector. List of tweet types to remove from network. Options are \code{"tweet"},
+#' @param rmEdgeTypes Character vector. List of tweet edge types to remove from network. Options are \code{"tweet"},
 #'   \code{"retweet"}, \code{"reply"} and \code{"quote"}. Default is \code{NULL}.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
@@ -18,7 +18,7 @@
 #' \dontrun{
 #' # create a twitter activity network with retweets removed
 #' activity_net <- twitter_data %>%
-#'   Create("activity", rmNodeTypes = c("retweet"))
+#'   Create("activity", rmEdgeTypes = c("retweet"))
 #'
 #' # network nodes and edges
 #' names(activity_net)
@@ -27,14 +27,13 @@
 #' # "status_id", "author_id", "author_screen_name", "created_at"
 #' names(activity_net$edges)
 #' # "from", "to", "user_id", "screen_name", "created_at", "edge_type"
-#'
 #' }
 #'
 #' @export
 Create.activity.twitter <-
   function(datasource,
            type,
-           rmNodeTypes = NULL,
+           rmEdgeTypes = NULL,
            verbose = TRUE,
            ...) {
     cat("Generating twitter activity network...")
@@ -63,13 +62,13 @@ Create.activity.twitter <-
           .data$is_retweet == TRUE,
           "retweet",
           (!is.na(.data$reply_to_status_id) &
-             .data$is_quote == TRUE),
+            .data$is_quote == TRUE),
           "reply,quote",
           (!is.na(.data$reply_to_status_id) &
-             .data$is_quote == FALSE),
+            .data$is_quote == FALSE),
           "reply",
           (is.na(.data$reply_to_status_id) &
-             .data$is_quote == TRUE),
+            .data$is_quote == TRUE),
           "quote",
           default = "tweet"
         )
@@ -77,12 +76,32 @@ Create.activity.twitter <-
 
     # remove edge type list
     types <- c("tweet", "retweet", "reply", "quote")
-    rmNodeTypes <-
-      rmNodeTypes[trimws(tolower(rmNodeTypes)) %in% types]
+    rmEdgeTypes <-
+      rmEdgeTypes[trimws(tolower(rmEdgeTypes)) %in% types]
+
+    if (length(rmEdgeTypes)) {
+      if (verbose) {
+        cat(paste0("Removing edge types: ",
+                   paste0(rmEdgeTypes, collapse = ", "),
+                   "\n"))
+      }
+    }
 
     edges <- edges %>%
       tidyr::separate_rows(type, sep = ",", convert = FALSE) %>%
-      dplyr::filter(!(.data$type %in% rmNodeTypes))
+      dplyr::filter(!(.data$type %in% rmEdgeTypes))
+
+    # edge stats
+    edge_stats <-
+      edges %>%
+      dplyr::group_by(.data$type) %>%
+      dplyr::tally() %>%
+      dplyr::arrange(dplyr::desc(.data$type))
+
+    for (row in 1:nrow(edge_stats)) {
+      df_stats <-
+        network_stats(df_stats, edge_stats[row, "type"], edge_stats[row, "n"], TRUE)
+    }
 
     # reply to created_at and text not in data
     edges <- edges %>%
@@ -132,9 +151,10 @@ Create.activity.twitter <-
 
     nodes <- dplyr::bind_rows(
       edges %>% dplyr::select(.data$status_id,
-                              author_id = .data$user_id,
-                              author_screen_name = .data$screen_name,
-                              .data$created_at),
+        author_id = .data$user_id,
+        author_screen_name = .data$screen_name,
+        .data$created_at
+      ),
       edges %>% dplyr::select(
         status_id = .data$to,
         author_id = .data$to_user_id,

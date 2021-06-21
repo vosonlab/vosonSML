@@ -22,7 +22,7 @@
 #' }
 #'
 #' @aliases ImportData
-#' @name vosonSML::ImportData
+#' @name ImportData
 #' @export
 ImportData <-
   import_data <- function(data, socialmedia, type = NULL) {

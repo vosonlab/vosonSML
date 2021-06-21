@@ -4,14 +4,14 @@
 \alias{Create.activity.twitter}
 \title{Create twitter activity network}
 \usage{
-\method{Create}{activity.twitter}(datasource, type, rmNodeTypes = NULL, verbose = TRUE, ...)
+\method{Create}{activity.twitter}(datasource, type, rmEdgeTypes = NULL, verbose = TRUE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"activity"}.}
 
-\item{rmNodeTypes}{Character vector. List of tweet types to remove from network. Options are \code{"tweet"},
+\item{rmEdgeTypes}{Character vector. List of tweet edge types to remove from network. Options are \code{"tweet"},
 \code{"retweet"}, \code{"reply"} and \code{"quote"}. Default is \code{NULL}.}
 
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
@@ -31,7 +31,7 @@ Creates a twitter activity network from collected tweets. Nodes are tweets and d
 \dontrun{
 # create a twitter activity network with retweets removed
 activity_net <- twitter_data \%>\%
-  Create("activity", rmNodeTypes = c("retweet"))
+  Create("activity", rmEdgeTypes = c("retweet"))
 
 # network nodes and edges
 names(activity_net)
@@ -40,7 +40,6 @@ names(activity_net$nodes)
 # "status_id", "author_id", "author_screen_name", "created_at"
 names(activity_net$edges)
 # "from", "to", "user_id", "screen_name", "created_at", "edge_type"
-
 }
 
 }

@@ -35,10 +35,17 @@ navbar:
       href: reference/index.html
     articles:
       icon: fa-book
-      text: Articles
+      text: "Articles"
       menu:
       - text: "Introduction to vosonSML"
         href: articles/Intro-to-vosonSML.html
+        icon: far fa-file-alt
+      - text: "Hyperlink Networks with vosonSML"
+        href: https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml/
+        icon: far fa-file-alt
+      - text: "Creating Twitter Networks with vosonSML using rtweet Data"
+        href: https://vosonlab.github.io/posts/2021-02-11_twitter_vsml_from_rtweet/
+        icon: far fa-file-alt
     vosonlab:
       icon: fa-flask fa-lg
       href: http://vosonlab.net/
@@ -83,17 +90,17 @@ reference:
   - '`Create.semantic.twitter`'
 - title: Helpers
   contents:
-  - '`vosonSML::AddText`'
-  - '`vosonSML::AddText.actor.youtube`'
-  - '`vosonSML::AddText.activity.reddit`'
-  - '`vosonSML::AddText.actor.reddit`'
-  - '`vosonSML::AddUserData`'
-  - '`vosonSML::AddUserData.actor.twitter`'
-  - '`vosonSML::AddVideoData`'
-  - '`vosonSML::AddVideoData.actor.youtube`'
-  - '`vosonSML::Graph`'
-  - '`vosonSML::GetYoutubeVideoIDs`'
-  - '`vosonSML::ImportData`'
+  - '`AddText`'
+  - '`AddText.actor.youtube`'
+  - '`AddText.activity.reddit`'
+  - '`AddText.actor.reddit`'
+  - '`AddUserData`'
+  - '`AddUserData.actor.twitter`'
+  - '`AddVideoData`'
+  - '`AddVideoData.actor.youtube`'
+  - '`Graph`'
+  - '`GetYoutubeVideoIDs`'
+  - '`ImportData`'
 
 toc:
   depth: 2

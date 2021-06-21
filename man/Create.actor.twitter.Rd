@@ -8,7 +8,7 @@
   datasource,
   type,
   rmEdgeTypes = NULL,
-  inclMentions = FALSE,
+  inclMentions = TRUE,
   inclRtMentions = FALSE,
   verbose = TRUE,
   ...
@@ -22,7 +22,7 @@
 \item{rmEdgeTypes}{Character vector. List of edge types to remove from network. Options are \code{"tweet"},
 \code{"retweet"}, \code{"reply"} and \code{"quote"}. Default is \code{NULL}.}
 
-\item{inclMentions}{Logical. Create edges for users mentioned or tagged in tweets. Default is \code{FALSE}.}
+\item{inclMentions}{Logical. Create edges for users mentioned or tagged in tweets. Default is \code{TRUE}.}
 
 \item{inclRtMentions}{Logical. Create edges for users mentioned or tagged in retweets. For tweet types other than
 retweets the collected tweet author has created the mention, for retweets the original tweet author has created the
@@ -51,7 +51,7 @@ When creating twitter actor networks, a network with additional user information
 \dontrun{
 # create a twitter actor network excluding retweet, quote tweets and mention edges
 actor_net <- twitter_data \%>\%
-  Create("actor", rmEdgeTypes = c("retweet", "quote"), inclMentions = TRUE)
+  Create("actor", rmEdgeTypes = c("retweet", "quote"))
 
 # network nodes and edges
 names(actor_net)
@@ -60,7 +60,6 @@ names(actor_net$nodes)
 # "user_id", "screen_name"
 names(actor_net$edges)
 # "from", "to", "status_id", "created_at", "edge_type"
-
 }
 
 }

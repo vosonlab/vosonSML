@@ -14,7 +14,7 @@
 #' @param type Character string. Type of network to be created, set to \code{"actor"}.
 #' @param rmEdgeTypes Character vector. List of edge types to remove from network. Options are \code{"tweet"},
 #'   \code{"retweet"}, \code{"reply"} and \code{"quote"}. Default is \code{NULL}.
-#' @param inclMentions Logical. Create edges for users mentioned or tagged in tweets. Default is \code{FALSE}.
+#' @param inclMentions Logical. Create edges for users mentioned or tagged in tweets. Default is \code{TRUE}.
 #' @param inclRtMentions Logical. Create edges for users mentioned or tagged in retweets. For tweet types other than
 #'   retweets the collected tweet author has created the mention, for retweets the original tweet author has created the
 #'   mention not the retweeter. Default is \code{FALSE}.
@@ -27,7 +27,7 @@
 #' \dontrun{
 #' # create a twitter actor network excluding retweet, quote tweets and mention edges
 #' actor_net <- twitter_data %>%
-#'   Create("actor", rmEdgeTypes = c("retweet", "quote"), inclMentions = TRUE)
+#'   Create("actor", rmEdgeTypes = c("retweet", "quote"))
 #'
 #' # network nodes and edges
 #' names(actor_net)
@@ -36,7 +36,6 @@
 #' # "user_id", "screen_name"
 #' names(actor_net$edges)
 #' # "from", "to", "status_id", "created_at", "edge_type"
-#'
 #' }
 #'
 #' @export
@@ -44,7 +43,7 @@ Create.actor.twitter <-
   function(datasource,
            type,
            rmEdgeTypes = NULL,
-           inclMentions = FALSE,
+           inclMentions = TRUE,
            inclRtMentions = FALSE,
            verbose = TRUE,
            ...) {
@@ -91,31 +90,41 @@ Create.actor.twitter <-
     rmEdgeTypes <-
       rmEdgeTypes[trimws(tolower(rmEdgeTypes)) %in% types]
 
+    if (length(rmEdgeTypes)) {
+      if (verbose) {
+        cat(paste0("Removing edge types: ",
+                   paste0(rmEdgeTypes, collapse = ", "),
+                   "\n"))
+      }
+    }
+
     edges <- edges %>% dplyr::filter(!(.data$type %in% rmEdgeTypes))
 
     # extract mentions
     # reply,quote mentions are treated as reply mentions
     edges_mentions <- NULL
     if (inclMentions) {
-      tweet_mentions <-
-        retweet_mentions <- reply_mentions <- quote_mentions <- NULL
+      tweet_mentions <- retweet_mentions <- reply_mentions <- quote_mentions <- NULL
 
       # unnest mentions for tweets that have them
       edges_mentions_unnest <-
-        edges %>% dplyr::filter(!is.na(.data$mentions_user_id)) %>%
+        edges %>%
+        dplyr::filter(!is.na(.data$mentions_user_id)) %>%
         tidyr::unnest(cols = c("mentions_user_id", "mentions_screen_name"))
 
       # mentions in the tweet
       if (!("tweet" %in% rmEdgeTypes)) {
         tweet_mentions <-
-          edges_mentions_unnest %>% dplyr::filter(.data$type == "tweet") %>%
+          edges_mentions_unnest %>%
+          dplyr::filter(.data$type == "tweet") %>%
           dplyr::mutate(type = "tweet mention")
       }
 
       # mentions in the retweet
       if (!("retweet" %in% rmEdgeTypes) && inclRtMentions) {
         retweet_mentions <-
-          edges_mentions_unnest %>% dplyr::filter(.data$type == "retweet") %>%
+          edges_mentions_unnest %>%
+          dplyr::filter(.data$type == "retweet") %>%
           dplyr::mutate(
             type = data.table::fifelse(
               .data$retweet_user_id != .data$mentions_user_id,
@@ -131,7 +140,7 @@ Create.actor.twitter <-
         reply_mentions <-
           edges_mentions_unnest %>%
           dplyr::filter(.data$type == "reply" |
-                          .data$type == "reply,quote") %>%
+            .data$type == "reply,quote") %>%
           dplyr::mutate(
             type = data.table::fifelse(
               .data$reply_to_user_id != .data$mentions_user_id,
@@ -151,10 +160,12 @@ Create.actor.twitter <-
       }
 
       edges_mentions <-
-        dplyr::bind_rows(tweet_mentions,
-                         retweet_mentions,
-                         reply_mentions,
-                         quote_mentions)
+        dplyr::bind_rows(
+          tweet_mentions,
+          retweet_mentions,
+          reply_mentions,
+          quote_mentions
+        )
 
       # mentions from to edge list
       if (nrow(edges_mentions)) {
@@ -223,7 +234,10 @@ Create.actor.twitter <-
 
     # edge stats
     edge_stats <-
-      edges %>% dplyr::group_by(.data$type) %>% dplyr::tally() %>% dplyr::arrange(dplyr::desc(.data$type))
+      edges %>%
+      dplyr::group_by(.data$type) %>%
+      dplyr::tally() %>%
+      dplyr::arrange(dplyr::desc(.data$type))
     for (row in 1:nrow(edge_stats)) {
       df_stats <-
         network_stats(df_stats, edge_stats[row, "type"], edge_stats[row, "n"], TRUE)
@@ -235,17 +249,19 @@ Create.actor.twitter <-
       dplyr::select(edges, user_id = "to", screen_name = "to_screen_name")
     ) %>%
       dplyr::distinct() %>%
-      dplyr::group_by(.data$user_id) %>% # if multiple screen names then merge
+      dplyr::group_by(.data$user_id) %>%
+      # if multiple screen names then merge
       dplyr::mutate(screen_name = paste0(.data$screen_name, collapse = ", ")) %>%
       dplyr::ungroup() %>%
       dplyr::distinct(.data$user_id, .keep_all = TRUE)
 
     edges <-
       edges %>% dplyr::select(.data$from,
-                              .data$to,
-                              .data$status_id,
-                              .data$created_at,
-                              edge_type = .data$type)
+        .data$to,
+        .data$status_id,
+        .data$created_at,
+        edge_type = .data$type
+      )
 
     # print stats
     if (verbose) {

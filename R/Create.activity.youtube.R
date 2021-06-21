@@ -1,6 +1,6 @@
-#' @title Create youtube activity network
+#' @title Create YouTube activity network
 #'
-#' @description Creates an activity network from collected youtube video comment threads. Nodes are top-level
+#' @description Creates an activity network from collected YouTube video comment threads. Nodes are top-level
 #' comments, reply comments and videos. Edges are directed between the nodes and represent commenting activity.
 #'
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"youtube"} class names.
@@ -12,7 +12,7 @@
 #'
 #' @examples
 #' \dontrun{
-#' # create a youtube activity network graph
+#' # create a YouTube activity network graph
 #' activityNetwork <- youtubeData %>% Create("activity")
 #'
 #' # network
@@ -33,7 +33,7 @@ Create.activity.youtube <-
     class(datasource) <- rm_collect_cls(class(datasource))
 
     df_stats <-
-      network_stats(NULL, "collected youtube comments", nrow(datasource))
+      network_stats(NULL, "collected YouTube comments", nrow(datasource))
 
     # edges
     df_relations <-

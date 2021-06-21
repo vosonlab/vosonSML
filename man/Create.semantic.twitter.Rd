@@ -16,7 +16,7 @@
   termFreq = 5,
   hashtagFreq = 50,
   assoc = "limited",
-  verbose = FALSE,
+  verbose = TRUE,
   ...
 )
 }
@@ -55,7 +55,7 @@ in the semantic network as nodes. The default value is \code{50}.}
 most frequently occurring hashtags and terms. A value of \code{"full"} includes ties between most frequently
 occurring hashtags and terms, hashtags and hashtags, and terms and terms. Default is \code{"limited"}.}
 
-\item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
+\item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
