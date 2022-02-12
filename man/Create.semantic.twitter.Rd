@@ -79,9 +79,9 @@ completely rather than simply filtered out of the final network.
 
 The top percentage of frequently occurring hashtags \code{hashtagFreq} and words \code{termFreq} are calculated to a
 minimum frequency and all terms that have an equal or greater frequency than the minimum are included in the network
-as nodes. For example, of unique hashtags of varying frequencies in a dataset the top 50% of total
+as nodes. For example, of unique hashtags of varying frequencies in a dataset the top 50\% of total
 frequency or most common hashtags may calculate to being the first 20 hashtags. The frequency of the 20th hashtag is
-then used as the minimum and all hashtags of equal or greater frequency are included as part of the top 50%
+then used as the minimum and all hashtags of equal or greater frequency are included as part of the top 50\%
 most frequently occurring hashtags. So the number of top hashtags may end up being greater than 20 if there is more
 than one hashtag that has frequency matching the minimum. The exception to this is if the minimum frequency is 1
 and the \code{hashtagFreq} is set to less than 100, in this case only the first 20 hashtags will be included.

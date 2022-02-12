@@ -37,15 +37,15 @@ Network as a named list of two dataframes containing \code{$nodes} and \code{$ed
 }
 \description{
 Creates a twitter actor network from tweets returned from the twitter search query. Twitter users who
-  have tweeted, retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges of
-  different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted
-  without ties to other users will appear in the network graph as nodes with self-loops.
+have tweeted, retweeted or been mentioned in a tweet are actor nodes. The created network is directed with edges of
+different types representing retweets, quote tweets, mentions and replies to other users. Users who have tweeted
+without ties to other users will appear in the network graph as nodes with self-loops.
 }
 \note{
 When creating twitter actor networks, a network with additional user information can be generated using the
-  \code{\link{AddUserData}} function. Additional calls can be made to the twitter API to get information about users
-  that were identified as nodes during network creation but did not tweet (meaning no user profile information was
-  initially collected for them).
+\code{\link{AddUserData}} function. Additional calls can be made to the twitter API to get information about users
+that were identified as nodes during network creation but did not tweet (meaning no user profile information was
+initially collected for them).
 }
 \examples{
 \dontrun{

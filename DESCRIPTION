@@ -1,7 +1,9 @@
 Package: vosonSML
-Version: 0.30.5.9000
+Version: 0.30.6
 Title: Collecting Social Media Data and Generating Networks for Analysis
-Description: A suite of easy to use functions for collecting social media data and generating networks for analysis. Supports Twitter, Youtube, Reddit and web site data sources.
+Description: A suite of easy to use functions for collecting social media
+    data and generating networks for analysis. Supports Twitter, Youtube,
+    Reddit and web site data sources.
 Type: Package
 Imports:
     data.table,
@@ -32,21 +34,25 @@ Suggests:
     tidytext,
     urltools,
     xml2
-Depends: R (>= 3.6.0)
+Depends: R (>= 3.6)
 Encoding: UTF-8
 Authors@R: c( 
     person("Bryan", "Gertzel",
-           email = "bryan.gertzel@anu.edu.au", role = c("aut", "cre")), 
+           email = "bryan.gertzel@anu.edu.au",
+           role = c("aut", "cre")), 
     person("Robert", "Ackland",
-           email = "robert.ackland@anu.edu.au", role = "aut",
+           email = "robert.ackland@anu.edu.au",
+           role = "aut",
            comment = c(ORCID = "0000-0002-0008-1766")),
-    person("Timothy", "Graham", role = "aut",
+    person("Timothy", "Graham",
+           role = "aut",
            comment = c(ORCID = "0000-0002-4053-9313")),
-    person("Chung-hong", "Chan", role = "ctb",
-           comment = c(ORCID = "0000-0002-6232-7530")))
+    person("Francisca", "Borquez",
+           role = "ctb"))
 Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
 License: GPL (>= 3)
-RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
 NeedsCompilation: no
 VignetteBuilder: knitr
 URL: https://github.com/vosonlab/vosonSML

@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.30.5.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.30.6</span>
       </span>
     </div>
 
@@ -52,14 +54,14 @@
 </li>
 <li>
   <a href="../news/index.html">
-    <span class="fa fa-file-alt"></span>
+    <span class="fa fa-newspaper"></span>
      
     Changelog
   </a>
 </li>
 <li>
   <a href="../reference/index.html">
-    <span class="fa fa-cubes"></span>
+    <span class="fa fa-cubes fa-lg"></span>
      
     Reference
   </a>
@@ -81,14 +83,21 @@
       </a>
     </li>
     <li>
-      <a href="https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml/">
+      <a href="https://vosonlab.github.io/posts/2021-10-01-testing-bot-status-of-twitter-users" class="external-link">
+        <span class="far fa-file-alt"></span>
+         
+        Testing the bot status of users in Twitter networks collected via vosonSML
+      </a>
+    </li>
+    <li>
+      <a href="https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml" class="external-link">
         <span class="far fa-file-alt"></span>
          
         Hyperlink Networks with vosonSML
       </a>
     </li>
     <li>
-      <a href="https://vosonlab.github.io/posts/2021-02-11_twitter_vsml_from_rtweet/">
+      <a href="https://vosonlab.github.io/posts/2021-02-11_twitter_vosonsml_from_rtweet" class="external-link">
         <span class="far fa-file-alt"></span>
          
         Creating Twitter Networks with vosonSML using rtweet Data
@@ -99,19 +108,19 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="http://vosonlab.net/">
+  <a href="http://vosonlab.net/" class="external-link">
     <span class="fa fa-flask fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/vosonlab">
+  <a href="https://twitter.com/vosonlab" class="external-link">
     <span class="fab fa-twitter-square fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://github.com/vosonlab/vosonSML">
+  <a href="https://github.com/vosonlab/vosonSML" class="external-link">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -126,27 +135,27 @@
 
       
 
-      </header><script src="Intro-to-vosonSML_files/header-attrs-2.9/header-attrs.js"></script><div class="row">
+      </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to vosonSML</h1>
-            <h3 class="subtitle">VOSON Lab, Australian National University</h3>
-                        <h4 class="author">Robert Ackland, Bryan Gertzel, Francisca Borquez</h4>
+            <h3 data-toc-skip class="subtitle">VOSON Lab, Australian National University</h3>
+                        <h4 data-toc-skip class="author">Robert Ackland, Bryan Gertzel, Francisca Borquez</h4>
             
-            <h4 class="date">21 June, 2021</h4>
+            <h4 data-toc-skip class="date">13 February, 2022</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/master/vignettes/Intro-to-vosonSML.Rmd"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/HEAD/vignettes/Intro-to-vosonSML.Rmd" class="external-link"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
       <div class="hidden name"><code>Intro-to-vosonSML.Rmd</code></div>
 
     </div>
 
     
     
-<p>The following guide provides an introduction to using <a href="https://github.com/vosonlab/vosonSML">vosonSML</a>, which is available both on GitHub and <a href="https://cran.r-project.org/package=vosonSML">CRAN</a>. More resources are available on the VOSON Lab website (<a href="http://vosonlab.net/socialmedialab">vosonSML</a> and <a href="http://vosonlab.net/training_workshops">training materials</a>). For a full list of functions, please refer to the <a href="https://vosonlab.github.io/vosonSML/reference/index.html">reference page</a>. The companion package to <code>vosonSML</code> is <a href="https://github.com/vosonlab/VOSONDash">VOSON Dashboard</a>, which provides an R/Shiny graphical user interface for data collection (via <code>vosonSML</code>), network and text analysis.</p>
+<p>The following guide provides an introduction to using <a href="https://github.com/vosonlab/vosonSML" class="external-link">vosonSML</a>, which is available both on GitHub and <a href="https://cran.r-project.org/package=vosonSML" class="external-link">CRAN</a>. More resources are available on the VOSON Lab website (<a href="http://vosonlab.net/socialmedialab" class="external-link">vosonSML</a> and <a href="http://vosonlab.net/training_workshops" class="external-link">training materials</a>). For a full list of functions, please refer to the <a href="https://vosonlab.github.io/vosonSML/reference/index.html" class="external-link">reference page</a>. The companion package to <code>vosonSML</code> is <a href="https://github.com/vosonlab/VOSONDash" class="external-link">VOSON Dashboard</a>, which provides an R/Shiny graphical user interface for data collection (via <code>vosonSML</code>), network and text analysis.</p>
 <p>To use <code>vosonSML</code>, you first need to it and the <code>magrittr</code> package into the session:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org">magrittr</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vosonlab/vosonSML">vosonSML</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vosonlab/vosonSML" class="external-link">vosonSML</a></span><span class="op">)</span></code></pre></div>
 <p>There are three steps involved in data collection and network creation using <code>vosonSML</code>. These are:</p>
 <ol style="list-style-type: decimal">
 <li>
@@ -159,14 +168,14 @@
 <em>Create</em> networks from the collected data, using <code><a href="../reference/Create.html">Create()</a></code> and <code><a href="../reference/Graph.html">Graph()</a></code>
 </li>
 </ol>
-<div id="twitter" class="section level1">
-<h1 class="hasAnchor">
-<a href="#twitter" class="anchor"></a>Twitter</h1>
-<p>Twitter data are collected via <a href="https://cran.r-project.org/package=rtweet">rtweet</a>.</p>
-<div id="authenticating-with-the-twitter-api" class="section level2">
-<h2 class="hasAnchor">
-<a href="#authenticating-with-the-twitter-api" class="anchor"></a>Authenticating with the Twitter API</h2>
-<p>The first step is to authorise access to the Twitter API. There are two ways of generating an access token. The “Dev Auth” approach involves authenticating using Twitter developer app API keys, which can be created after the user has been granted a <a href="https://developer.twitter.com/en/apply-for-access">Twitter developer account</a>:</p>
+<div class="section level2">
+<h2 id="twitter">Twitter<a class="anchor" aria-label="anchor" href="#twitter"></a>
+</h2>
+<p>Twitter data are collected via <a href="https://cran.r-project.org/package=rtweet" class="external-link">rtweet</a>.</p>
+<div class="section level3">
+<h3 id="authenticating-with-the-twitter-api">Authenticating with the Twitter API<a class="anchor" aria-label="anchor" href="#authenticating-with-the-twitter-api"></a>
+</h3>
+<p>The first step is to authorise access to the Twitter API. There are two ways of generating an access token. The “Dev Auth” approach involves authenticating using Twitter developer app API keys, which can be created after the user has been granted a <a href="https://developer.twitter.com/en/apply-for-access" class="external-link">Twitter developer account</a>:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">twitterAuth</span> <span class="op">&lt;-</span>
    <span class="fu"><a href="../reference/Authenticate.html">Authenticate</a></span><span class="op">(</span>
@@ -186,17 +195,17 @@
       apiSecret <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span><span class="op">)</span></code></pre></div>
 <p>In both cases, Twitter authentication creates an access token, which can be re-used by saving it to disk:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">saveRDS</a></span><span class="op">(</span><span class="va">twitterAuth</span>, file <span class="op">=</span> <span class="st">"twitter_auth"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">twitterAuth</span>, file <span class="op">=</span> <span class="st">"twitter_auth"</span><span class="op">)</span></code></pre></div>
 <p>The following loads into the current session a previously-created access token:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">twitterAuth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"twitter_auth"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">twitterAuth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"twitter_auth"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="collecting-data-from-twitter" class="section level2">
-<h2 class="hasAnchor">
-<a href="#collecting-data-from-twitter" class="anchor"></a>Collecting Data from Twitter</h2>
-<p>The syntax for collecting Twitter data follow <a href="https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query">Twitter’s rules and filtering documentation</a>. It is possible to collect tweets including particular terms (e.g. hashtags), and boolean searches (see <a href="https://developer.twitter.com/en/docs/twitter-api/v1/rules-and-filtering/search-operators">standard search operators</a>) are also possible. The collection may be filtered by, for example, type of Twitter activity (e.g. to include retweets only), number of collected tweets, language of tweet. As an example, the following collects 1000 recent tweets containing the ‘#auspol’ hashtag (a prominent hashtag for Australian politics), with retweets not being collected.</p>
+<div class="section level3">
+<h3 id="collecting-data-from-twitter">Collecting Data from Twitter<a class="anchor" aria-label="anchor" href="#collecting-data-from-twitter"></a>
+</h3>
+<p>The syntax for collecting Twitter data follow <a href="https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query" class="external-link">Twitter’s rules and filtering documentation</a>. It is possible to collect tweets including particular terms (e.g. hashtags), and boolean searches (see <a href="https://developer.twitter.com/en/docs/twitter-api/v1/rules-and-filtering/search-operators" class="external-link">standard search operators</a>) are also possible. The collection may be filtered by, for example, type of Twitter activity (e.g. to include retweets only), number of collected tweets, language of tweet. As an example, the following collects 1000 recent tweets containing the ‘#auspol’ hashtag (a prominent hashtag for Australian politics), with retweets not being collected.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="va">twitterAuth</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="va">twitterAuth</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
    <span class="fu"><a href="../reference/Collect.html">Collect</a></span><span class="op">(</span>
       searchTerm <span class="op">=</span> <span class="st">"#auspol"</span>,
       numTweets <span class="op">=</span> <span class="fl">1000</span>,
@@ -215,34 +224,34 @@
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="st"> [snip]</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="st"> … with 989 more rows, and 84 more variables: display_text_width &lt;dbl&gt;,</span></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="st">...</span></span></code></pre></div>
-<div id="importing-saved-collection-data-from-file" class="section level3">
-<h3 class="hasAnchor">
-<a href="#importing-saved-collection-data-from-file" class="anchor"></a>Importing saved collection data from file</h3>
+<div class="section level4">
+<h4 id="importing-saved-collection-data-from-file">Importing saved collection data from file<a class="anchor" aria-label="anchor" href="#importing-saved-collection-data-from-file"></a>
+</h4>
 <p>If you are reading a previously saved <code>writeToFile</code> Twitter dataframe from disk, you simply need to use the <code>readRDS</code> function:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span><span class="op">)</span></code></pre></div>
 <p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and earlier you will need to modify the class values for the object before you can use it with <code>vosonSML</code>. This can be done manually or by using the handy <code><a href="../reference/ImportData.html">ImportData()</a></code> function:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># use import data</span>
 <span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span>, <span class="st">"twitter"</span><span class="op">)</span>
 
 <span class="co"># or manually add class names to data</span>
-<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"datasource"</span>, <span class="st">"twitter"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"datasource"</span>, <span class="st">"twitter"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="creating-twitter-networks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-twitter-networks" class="anchor"></a>Creating Twitter Networks</h2>
+<div class="section level3">
+<h3 id="creating-twitter-networks">Creating Twitter Networks<a class="anchor" aria-label="anchor" href="#creating-twitter-networks"></a>
+</h3>
 <p>It is currently possible to create four types of networks using Twitter data: (1) <em>actor network</em>; (2) <em>activity network</em>; (3) <em>2-mode network</em> and (4) <em>semantic network</em>.</p>
-<div id="actor-network" class="section level3">
-<h3 class="hasAnchor">
-<a href="#actor-network" class="anchor"></a>Actor Network</h3>
+<div class="section level4">
+<h4 id="actor-network">Actor Network<a class="anchor" aria-label="anchor" href="#actor-network"></a>
+</h4>
 <p>In the Twitter <em>actor network</em>, nodes are users who have either tweeted using the target search terms (#auspol in the above example) or else are mentioned or replied to in tweets featuring the search terms. Edges represent interactions between Twitter users, and an edge attribute indicates whether the interaction is a mention, reply, retweet, quoted retweet or self-loop. Self-loop edges are created in two situations: (1) a user authors a tweet and mentions or replies to themself; (2) a user authors a tweet containing the search term, but does not mention or reply to any other user in that tweet.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">actorNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="va">actorGraph</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><code><a href="../reference/Create.html">Create("actor")</a></code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity):</p>
+<code class="sourceCode R"><span class="va">actorNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">actorGraph</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><code>Create("actor")</code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity):</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> actorNetwork</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>edges</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1,725 x 5</span></span>
@@ -277,74 +286,74 @@
 <p>The Twitter actor network contains a graph attribute <code>type</code> which is set to “twitter” (this attribute is required for <code>VOSON Dashboard</code>). The following node attributes are collected from the Twitter profile data: <code>name</code> (Twitter ID), <code>screen_name</code> (Twitter handle or screen name) and <code>label</code> (a concatenation of the ID and screen name). The edge attributes are: <code>edge_type</code> (whether the edge is a mention, reply, retweet, quoted retweet or self-loop), <code>timestamp</code> (when the tweet that led to the creation of the edge was authored) and <code>status_id</code> (the Twitter ID for the tweet).</p>
 <p>The example actor network contains 1158 nodes and 1725 edges. The following code uses <code>igraph</code> functions to: (1) remove all edges other than reply edges; (2) construct a subnetwork consisting of the giant component (the largest set of connected nodes); (3) plot this network.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org">igraph</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://igraph.org" class="external-link">igraph</a></span><span class="op">)</span>
 
 <span class="co"># remove edges that are not reply edges</span>
-<span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/delete_edges.html">delete.edges</a></span><span class="op">(</span><span class="va">actorGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">edge_type</span> <span class="op">!=</span> <span class="st">"reply"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/delete_edges.html" class="external-link">delete.edges</a></span><span class="op">(</span><span class="va">actorGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">edge_type</span> <span class="op">!=</span> <span class="st">"reply"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># get the giant component</span>
-<span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html">clusters</a></span><span class="op">(</span><span class="va">g2</span><span class="op">)</span>
-<span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html">induced_subgraph</a></span><span class="op">(</span><span class="va">g2</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">membership</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">csize</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html" class="external-link">clusters</a></span><span class="op">(</span><span class="va">g2</span><span class="op">)</span>
+<span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html" class="external-link">induced_subgraph</a></span><span class="op">(</span><span class="va">g2</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">membership</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.max</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">csize</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># open and write plot to a png file</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span><span class="op">(</span><span class="st">"twitter_actor_reply_gc.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g2</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="st">"twitter_actor_reply_gc.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g2</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/twitter_actor_reply_gc.png" alt=""><p class="caption">Twitter actor network - replies only - giant component</p>
 </div>
 <p>It is often useful to have the tweet text content in the network. This can be achieved by using the <code>status_id</code> edge attribute to pull the tweet text content from the dataframe returned by <code><a href="../reference/Collect.html">Collect()</a></code>, and store it as an edge attribute. <code>vosonSML</code> makes this easy with the <code><a href="../reference/AddText.html">AddText()</a></code> function, with the following example creating a graph with an edge attribute <code>vosonTxt_tweet</code> which stores the tweet text content.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">actorGraphWithText</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">actorGraphWithText</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>Now we have tweet text content stored as an edge attribute, we can use it for text analysis or creating new node attributes. As an example, the following creates a new node attribute <code>tweetedBushfires</code> which has the value “yes” if the Twitter user authored at least one tweet containing the word “bushfire” and “no” otherwise.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># get the index of nodes or users who tweeted the word "bushfire"</span>
-<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/tail_of.html">tail_of</a></span><span class="op">(</span><span class="va">actorGraphWithText</span>,
-               <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"bushfire"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">actorGraphWithText</span><span class="op">)</span><span class="op">$</span><span class="va">vosonTxt_tweet</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/tail_of.html" class="external-link">tail_of</a></span><span class="op">(</span><span class="va">actorGraphWithText</span>,
+               <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"bushfire"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">actorGraphWithText</span><span class="op">)</span><span class="op">$</span><span class="va">vosonTxt_tweet</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># set node attribute</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">actorGraphWithText</span><span class="op">)</span><span class="op">$</span><span class="va">tweetedBushfires</span> <span class="op">&lt;-</span> <span class="st">"no"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">actorGraphWithText</span><span class="op">)</span><span class="op">$</span><span class="va">tweetedBushfires</span><span class="op">[</span><span class="va">ind</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"yes"</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">actorGraphWithText</span><span class="op">)</span><span class="op">$</span><span class="va">tweetedBushfires</span> <span class="op">&lt;-</span> <span class="st">"no"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">actorGraphWithText</span><span class="op">)</span><span class="op">$</span><span class="va">tweetedBushfires</span><span class="op">[</span><span class="va">ind</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"yes"</span></code></pre></div>
 <p>The following creates and plots the giant component in the reply network, with red nodes indicating those users who tweeted using the term “bushfire”.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># remove edges that are not reply edges</span>
-<span class="va">g3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/delete_edges.html">delete.edges</a></span><span class="op">(</span><span class="va">actorGraphWithText</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">actorGraphWithText</span><span class="op">)</span><span class="op">$</span><span class="va">edge_type</span> <span class="op">!=</span> <span class="st">"reply"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">g3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/delete_edges.html" class="external-link">delete.edges</a></span><span class="op">(</span><span class="va">actorGraphWithText</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">actorGraphWithText</span><span class="op">)</span><span class="op">$</span><span class="va">edge_type</span> <span class="op">!=</span> <span class="st">"reply"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># get the giant component</span>
-<span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html">clusters</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span>
-<span class="va">g3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html">induced_subgraph</a></span><span class="op">(</span><span class="va">g3</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">membership</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html">which.max</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">csize</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html" class="external-link">clusters</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span>
+<span class="va">g3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html" class="external-link">induced_subgraph</a></span><span class="op">(</span><span class="va">g3</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">membership</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.max</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">csize</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># set node colour based on tweeted bushfires attribute value</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span><span class="op">$</span><span class="va">tweetedBushfires</span> <span class="op">==</span> <span class="st">"yes"</span>, <span class="st">"red"</span>, <span class="st">"grey"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span><span class="op">$</span><span class="va">tweetedBushfires</span> <span class="op">==</span> <span class="st">"yes"</span>, <span class="st">"red"</span>, <span class="st">"grey"</span><span class="op">)</span>
 
 <span class="co"># open and write plot to a png file</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span><span class="op">(</span><span class="st">"twitter_actor_reply_gc_bushfires.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g3</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="st">"twitter_actor_reply_gc_bushfires.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g3</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/twitter_actor_reply_gc_bushfires.png" alt=""><p class="caption">Twitter actor network - replies only - giant component (red nodes indicate who tweeted at least once about bushfires)</p>
 </div>
-<p>The <code>igraph</code> graph object can then be saved to disk as a <code>GraphML</code> file using the <code>igraph</code> function <code>write.graph</code>, and later imported into network analysis software such as <code>igraph</code>, <code>VOSON Dashboard</code> and <a href="https://gephi.org/">Gephi</a>:</p>
+<p>The <code>igraph</code> graph object can then be saved to disk as a <code>GraphML</code> file using the <code>igraph</code> function <code>write.graph</code>, and later imported into network analysis software such as <code>igraph</code>, <code>VOSON Dashboard</code> and <a href="https://gephi.org/" class="external-link">Gephi</a>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># save the graph as a graphml file</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/write_graph.html">write.graph</a></span><span class="op">(</span><span class="va">g3</span>, <span class="st">"twitter_reply_gc_bushfires.graphml"</span>, format <span class="op">=</span> <span class="st">"graphml"</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/write_graph.html" class="external-link">write.graph</a></span><span class="op">(</span><span class="va">g3</span>, <span class="st">"twitter_reply_gc_bushfires.graphml"</span>, format <span class="op">=</span> <span class="st">"graphml"</span><span class="op">)</span></code></pre></div>
 <p>Finally, the <code><a href="../reference/AddUserData.html">AddUserData()</a></code> function can be used to create additional node attributes from the Twitter profile, for example, number of followers and number of tweets authored by the user.</p>
 <p>Note that by default, <code>vosonSML</code> will only collect Twitter profile data for those users who authored tweets that have been collected. That is, in the above example, profile data will not be collected (by default) for a user who was mentioned in a tweet that contained #auspol, but did not author such a tweet. The <code>lookupUsers</code> argument can be used to make additional Twitter API calls and collect the profile data for mentioned users whose profile data is absent, so that their additional profile attributes can also be added:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create an actor network with user metadata</span>
-<span class="va">actorGraphWithUserAttr</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="../reference/AddUserData.html">AddUserData</a></span><span class="op">(</span><span class="va">twitterData</span>, lookupUsers <span class="op">=</span> <span class="cn">TRUE</span>, twitterAuth <span class="op">=</span> <span class="va">twitterAuth</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<span class="va">actorGraphWithUserAttr</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="../reference/AddUserData.html">AddUserData</a></span><span class="op">(</span><span class="va">twitterData</span>, lookupUsers <span class="op">=</span> <span class="cn">TRUE</span>, twitterAuth <span class="op">=</span> <span class="va">twitterAuth</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="activity-network" class="section level3">
-<h3 class="hasAnchor">
-<a href="#activity-network" class="anchor"></a>Activity Network</h3>
+<div class="section level4">
+<h4 id="activity-network">Activity Network<a class="anchor" aria-label="anchor" href="#activity-network"></a>
+</h4>
 <p>In the Twitter <em>activity network</em>, nodes represent tweets and edge types are: replies, retweets and quoted retweets.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create an activity network with tweet text</span>
-<span class="va">activityNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span>
-<span class="va">activityGraph</span> <span class="op">&lt;-</span> <span class="va">activityNetwork</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><code><a href="../reference/Create.html">Create("activity")</a></code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity):</p>
+<span class="va">activityNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span>
+<span class="va">activityGraph</span> <span class="op">&lt;-</span> <span class="va">activityNetwork</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><code>Create("activity")</code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity):</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> activityNetwork</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1,408 x 5</span></span>
@@ -380,36 +389,36 @@
 <p>The example Twitter activity network contains 1408 nodes and 662 edges. The following is a visualization of the network, where nodes are tweets and tweets mentioning bushfires are indicated in red.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create a subgraph containing nodes of components that have more than 5 nodes </span>
-<span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html">clusters</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span>
-<span class="va">g4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html">induced_subgraph</a></span><span class="op">(</span><span class="va">activityGraph</span>,
-                       <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">membership</span> <span class="op">%in%</span> <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">csize</span> <span class="op">&gt;</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html" class="external-link">clusters</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span>
+<span class="va">g4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html" class="external-link">induced_subgraph</a></span><span class="op">(</span><span class="va">activityGraph</span>,
+                       <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">membership</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">csize</span> <span class="op">&gt;</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># set node colour based on if tweet contains the word "bushfire"</span>
-<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"bushfire"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g4</span><span class="op">)</span><span class="op">$</span><span class="va">vosonTxt_tweet</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g4</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"grey"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g4</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="va">ind</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span>
+<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"bushfire"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g4</span><span class="op">)</span><span class="op">$</span><span class="va">vosonTxt_tweet</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g4</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"grey"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g4</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="va">ind</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span>
 
 <span class="co"># open and write plot to a png file</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span><span class="op">(</span><span class="st">"twitter_activity.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g4</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="st">"twitter_activity.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g4</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/twitter_activity.png" alt=""><p class="caption">Twitter activity network (red indicates tweets mentioning bushfires)</p>
 </div>
 <p>It should be noted that a limitation of the Twitter API is that retweet chains are not provided. This means that if user <em>i</em> tweeted an original tweet, and then user <em>j</em> retweeted this tweet, and user <em>k</em> retweeted <em>j</em>’s retweet, the activity network will show edges connecting the two retweets to the original tweet.</p>
 </div>
-<div id="mode-network" class="section level3">
-<h3 class="hasAnchor">
-<a href="#mode-network" class="anchor"></a>2-mode Network</h3>
+<div class="section level4">
+<h4 id="mode-network">2-mode Network<a class="anchor" aria-label="anchor" href="#mode-network"></a>
+</h4>
 <p>In the Twitter <em>2-mode network</em>, the two types of nodes are actors (Twitter users) and hashtags. There is an edge from user <em>i</em> to hashtag <em>j</em> if user <em>i</em> authored a tweet containing hashtag <em>j</em>.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># requires the tidytext package for tokenizing text</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"tidytext"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidytext"</span><span class="op">)</span>
 
 <span class="co"># create a 2-mode network with the hashtag "#auspol" removed</span>
-<span class="va">twomodeNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"twomode"</span>, removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span><span class="op">)</span>
-<span class="va">twomodeGraph</span> <span class="op">&lt;-</span> <span class="va">twomodeNetwork</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><code><a href="../reference/Create.html">Create("twomode")</a></code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity). Note that in this example, the <code>removeTermsOrHashtags</code> argument was used to exclude ‘#auspol’, since by construction all tweets contained this hashtag.</p>
+<span class="va">twomodeNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"twomode"</span>, removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">twomodeGraph</span> <span class="op">&lt;-</span> <span class="va">twomodeNetwork</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><code>Create("twomode")</code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity). Note that in this example, the <code>removeTermsOrHashtags</code> argument was used to exclude ‘#auspol’, since by construction all tweets contained this hashtag.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> twomodeNetwork</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1,146 x 2</span></span>
@@ -447,51 +456,51 @@
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># get index of nodes that are in the top 5 by highest in-degree</span>
 <span class="co"># this is the top 5 used hashtags, as all users have 0 in-degree in this network</span>
-<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html">degree</a></span><span class="op">(</span><span class="va">twomodeGraph</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
+<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">twomodeGraph</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>, decreasing <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">5</span><span class="op">]</span>
 
 <span class="co"># get index of nodes with an edge directed to the top 5 hashtags</span>
 <span class="co"># this is users who have tweeted with these hashtags</span>
-<span class="va">ind2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">ind</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
-   <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/neighbors.html">neighbors</a></span><span class="op">(</span><span class="va">twomodeGraph</span>, <span class="va">x</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>
+<span class="va">ind2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">ind</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span>
+   <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/neighbors.html" class="external-link">neighbors</a></span><span class="op">(</span><span class="va">twomodeGraph</span>, <span class="va">x</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span>
 <span class="op">}</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># create a subgraph containing only the top 5 used hashtags and related users </span>
-<span class="va">g5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html">induced_subgraph</a></span><span class="op">(</span><span class="va">twomodeGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="va">ind</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span><span class="op">(</span><span class="va">ind2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="va">g5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html" class="external-link">induced_subgraph</a></span><span class="op">(</span><span class="va">twomodeGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ind</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">ind2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># set node colour and label based on in-degree</span>
 <span class="co"># only hashtag nodes are set to blue and with label attribute set</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g5</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"grey"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g5</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html">degree</a></span><span class="op">(</span><span class="va">g5</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"blue"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g5</span><span class="op">)</span><span class="op">$</span><span class="va">label2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html">degree</a></span><span class="op">(</span><span class="va">g5</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g5</span><span class="op">)</span><span class="op">$</span><span class="va">label</span>, <span class="st">""</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g5</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"grey"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g5</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">g5</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"blue"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g5</span><span class="op">)</span><span class="op">$</span><span class="va">label2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/degree.html" class="external-link">degree</a></span><span class="op">(</span><span class="va">g5</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g5</span><span class="op">)</span><span class="op">$</span><span class="va">label</span>, <span class="st">""</span><span class="op">)</span>
 
 <span class="co"># open and write plot to a png file</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span><span class="op">(</span><span class="st">"twitter_twomode.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g5</span>, vertex.label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g5</span><span class="op">)</span><span class="op">$</span><span class="va">label2</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span>,
+<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="st">"twitter_twomode.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g5</span>, vertex.label <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g5</span><span class="op">)</span><span class="op">$</span><span class="va">label2</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span>,
      vertex.label.cex <span class="op">=</span> <span class="fl">1.8</span>, vertex.label.color <span class="op">=</span> <span class="st">"red"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/twitter_twomode.png" alt=""><p class="caption">Twitter 2-mode network - top-5 hashtags, and the users who tweeted them</p>
 </div>
 </div>
-<div id="semantic-network" class="section level3">
-<h3 class="hasAnchor">
-<a href="#semantic-network" class="anchor"></a>Semantic Network</h3>
+<div class="section level4">
+<h4 id="semantic-network">Semantic Network<a class="anchor" aria-label="anchor" href="#semantic-network"></a>
+</h4>
 <p>In the Twitter <em>semantic network</em>, nodes represent entities extracted from the tweet text: common words, hashtags and usernames. Edges reflect co-occurrence i.e. there is an edge between entities <em>i</em> and <em>j</em> if they both occurred in the same tweet.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># additional required packages for tokenization and stopwords</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"tidyr"</span>, <span class="st">"tidytext"</span>, <span class="st">"stopwords"</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tidyr"</span>, <span class="st">"tidytext"</span>, <span class="st">"stopwords"</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># create a semantic network with some common terms removed</span>
 <span class="co"># include only the top 5% occurring terms in the network</span>
-<span class="va">semanticNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span>
+<span class="va">semanticNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span>
    <span class="st">"semantic"</span>,
-   removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"#auspol"</span>, <span class="st">"auspol"</span>, <span class="st">"australia"</span><span class="op">)</span>,
+   removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span>, <span class="st">"auspol"</span>, <span class="st">"australia"</span><span class="op">)</span>,
    termFreq <span class="op">=</span> <span class="fl">5</span>
 <span class="op">)</span>
 
 <span class="co"># create an undirected graph</span>
-<span class="va">semanticGraph</span> <span class="op">&lt;-</span> <span class="va">semanticNetwork</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>directed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
-<p><code><a href="../reference/Create.html">Create("semantic")</a></code> returns a named list containing two dataframes named “nodes” and “edges”:</p>
+<span class="va">semanticGraph</span> <span class="op">&lt;-</span> <span class="va">semanticNetwork</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>directed <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></code></pre></div>
+<p><code>Create("semantic")</code> returns a named list containing two dataframes named “nodes” and “edges”:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> semanticNetwork</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 799 x 1</span></span>
@@ -546,46 +555,46 @@
 <p>The example Twitter semantic network has 799 nodes and 10990 edges. The following produces a visualisation of subnetwork of terms that contain the string “bushfire”:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># get index of the nodes whose term contains "bushfire" </span>
-<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"bushfire"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">semanticGraph</span><span class="op">)</span><span class="op">$</span><span class="va">name</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"bushfire"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">semanticGraph</span><span class="op">)</span><span class="op">$</span><span class="va">name</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># create a subgraph containing only bushfire terms</span>
-<span class="va">g6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html">induced_subgraph</a></span><span class="op">(</span><span class="va">semanticGraph</span>, <span class="va">ind</span><span class="op">)</span>
+<span class="va">g6</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html" class="external-link">induced_subgraph</a></span><span class="op">(</span><span class="va">semanticGraph</span>, <span class="va">ind</span><span class="op">)</span>
 
 <span class="co"># open and write plot to a png file</span>
 <span class="co"># plotted with large-graph-layout algorithm and edge weights</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span><span class="op">(</span><span class="st">"twitter_semantic.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">g6</span>, layout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/layout_with_lgl.html">layout_with_lgl</a></span><span class="op">(</span><span class="va">g6</span><span class="op">)</span>, vertex.shape <span class="op">=</span> <span class="st">"none"</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>,
-     edge.width <span class="op">=</span> <span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">g2</span><span class="op">)</span><span class="op">$</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="st">"twitter_semantic.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">g6</span>, layout <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/layout_with_lgl.html" class="external-link">layout_with_lgl</a></span><span class="op">(</span><span class="va">g6</span><span class="op">)</span>, vertex.shape <span class="op">=</span> <span class="st">"none"</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>,
+     edge.width <span class="op">=</span> <span class="fl">1</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/Log.html" class="external-link">log</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">g2</span><span class="op">)</span><span class="op">$</span><span class="va">weight</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/twitter_semantic.png" alt=""><p class="caption">Twitter semantic network - entities containing the word “bushfire” (edge thickness proportional to edge weight)</p>
 </div>
 </div>
 </div>
 </div>
-<div id="youtube" class="section level1">
-<h1 class="hasAnchor">
-<a href="#youtube" class="anchor"></a>YouTube</h1>
-<div id="authenticating-with-the-youtube-api" class="section level2">
-<h2 class="hasAnchor">
-<a href="#authenticating-with-the-youtube-api" class="anchor"></a>Authenticating with the YouTube API</h2>
-<p>To collect YouTube data, it is necessary to first create a Google app with access to the YouTube Data API via the <a href="https://console.developers.google.com/apis">Google APIs console</a> and generate an associated API key. The following shows the creation of a YouTube access token by passing a Google developer API key to the <code>Autnenticate()</code> function:</p>
+<div class="section level2">
+<h2 id="youtube">YouTube<a class="anchor" aria-label="anchor" href="#youtube"></a>
+</h2>
+<div class="section level3">
+<h3 id="authenticating-with-the-youtube-api">Authenticating with the YouTube API<a class="anchor" aria-label="anchor" href="#authenticating-with-the-youtube-api"></a>
+</h3>
+<p>To collect YouTube data, it is necessary to first create a Google app with access to the YouTube Data API via the <a href="https://console.developers.google.com/apis" class="external-link">Google APIs console</a> and generate an associated API key. The following shows the creation of a YouTube access token by passing a Google developer API key to the <code>Autnenticate()</code> function:</p>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create auth object with api key</span>
 <span class="va">youtubeAuth</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"youtube"</span>, apiKey <span class="op">=</span> <span class="st">"xxxxxxxx"</span><span class="op">)</span></code></pre></div>
 <p>As with the Twitter example above, the YouTube access token can optionally be saved to disk for use in a later session.</p>
 </div>
-<div id="collecting-data-from-youtube" class="section level2">
-<h2 class="hasAnchor">
-<a href="#collecting-data-from-youtube" class="anchor"></a>Collecting Data from YouTube</h2>
+<div class="section level3">
+<h3 id="collecting-data-from-youtube">Collecting Data from YouTube<a class="anchor" aria-label="anchor" href="#collecting-data-from-youtube"></a>
+</h3>
 <p>The YouTube video IDs (the part after “=” in the YouTube URL) are required in order to collect YouTube comment data. These IDs can either be manually extracted or else automatically extracted from the URLs with the following command:</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">videoIDs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,
+<code class="sourceCode R"><span class="va">videoIDs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,
                                  <span class="st">"https://youtu.be/xxxxxxxx"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p>The character vector containing the YouTube video IDs is then passed as a parameter to the <code><a href="../reference/Collect.html">Collect()</a></code> function (the following code also shows the YouTube access token being piped to <code><a href="../reference/Collect.html">Collect()</a></code>). In the following example, we are collecting comments from a YouTube video titled “Australia bushfires - a national catastrophe | DW News”, which was uploaded by the German Deutsche Welle news service on 5th January 2020. The comment data were collected on 10th January 2020: the total number of comments at that time was over 1100, but we are using the <code>maxComments</code> parameter to collect a maximum of 500 top-level comments (and all the reply comments to these top-level comments).</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">videoIDs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=pJ_NyEYRkLQ"</span><span class="op">)</span>
-<span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="va">youtubeAuth</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Collect.html">Collect</a></span><span class="op">(</span><span class="va">videoIDs</span>, maxComments <span class="op">=</span> <span class="fl">500</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="va">youtubeAuth</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Collect.html">Collect</a></span><span class="op">(</span><span class="va">videoIDs</span>, maxComments <span class="op">=</span> <span class="fl">500</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>The <code><a href="../reference/Collect.html">Collect()</a></code> function takes the following arguments (when used for collecting YouTube data): <code>credential</code> (object generated from <code><a href="../reference/Authenticate.html">Authenticate()</a></code> with class name “youtube” (above we pass this via the pipe), <code>videoIDs</code> (character vector specifying one or more youtube video IDs), <code>maxComments</code> (numeric integer specifying how many top-level comments to collect from each video), <code>writeToFile</code> (whether to write the returned dataframe to disk as an <code>.rds</code> file; default is FALSE), and <code>verbose</code> (whether to output information about the data collection; default is FALSE).</p>
 <p><code><a href="../reference/Collect.html">Collect()</a></code> returns an R dataframe with the following structure (data have been modified to preserve anonymity):</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(youtubeData)</span>
@@ -604,35 +613,35 @@
 <span id="cb34-14"><a href="#cb34-14" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> CommentID            <span class="sc">:</span> chr  <span class="st">"xx"</span> <span class="st">"xx"</span> <span class="st">"xx"</span> <span class="st">"xx"</span> ...</span>
 <span id="cb34-15"><a href="#cb34-15" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> ParentID             <span class="sc">:</span> chr  <span class="cn">NA</span> <span class="cn">NA</span> <span class="cn">NA</span> <span class="cn">NA</span> ...</span>
 <span id="cb34-16"><a href="#cb34-16" aria-hidden="true" tabindex="-1"></a> <span class="sc">$</span> VideoID              <span class="sc">:</span> chr  <span class="st">"pJ_NyEYRkLQ"</span> <span class="st">"pJ_NyEYRkLQ"</span> <span class="st">"pJ_NyEYRkLQ"</span> <span class="st">"pJ_NyEYRkLQ"</span> ...</span></code></pre></div>
-<div id="importing-saved-collection-data-from-file-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#importing-saved-collection-data-from-file-1" class="anchor"></a>Importing saved collection data from file</h3>
+<div class="section level4">
+<h4 id="importing-saved-collection-data-from-file-1">Importing saved collection data from file<a class="anchor" aria-label="anchor" href="#importing-saved-collection-data-from-file-1"></a>
+</h4>
 <p>If you are reading a previously saved <code>writeToFile</code> YouTube dataframe from disk, you simply need to use the <code>readRDS</code> function:</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># read dataframe from file</span>
-<span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span><span class="op">)</span></code></pre></div>
+<span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span><span class="op">)</span></code></pre></div>
 <p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and earlier you will need to modify the class values for the object before you can use it with <code>vosonSML</code>. This can be done manually or by using the handy <code><a href="../reference/ImportData.html">ImportData()</a></code> function:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># use import data</span>
 <span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span>, <span class="st">"youtube"</span><span class="op">)</span>
 
 <span class="co"># or manually add class names to data</span>
-<span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"datasource"</span>, <span class="st">"youtube"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">youtubeData</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"datasource"</span>, <span class="st">"youtube"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">youtubeData</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="creating-youtube-networks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-youtube-networks" class="anchor"></a>Creating YouTube Networks</h2>
+<div class="section level3">
+<h3 id="creating-youtube-networks">Creating YouTube Networks<a class="anchor" aria-label="anchor" href="#creating-youtube-networks"></a>
+</h3>
 <p>It is currently possible to create two types of networks using YouTube data: (1) <em>actor network</em> and (2) <em>activity network</em>.</p>
-<div id="actor-network-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#actor-network-1" class="anchor"></a>Actor Network</h3>
+<div class="section level4">
+<h4 id="actor-network-1">Actor Network<a class="anchor" aria-label="anchor" href="#actor-network-1"></a>
+</h4>
 <p>In the YouTube <em>actor network</em> the nodes are users who have commented on videos (and the videos themselves are included in the network as special nodes) and the edges are the interactions between users in the comments. We can distinguish a <em>top-level comment</em>, which is a comment that is directed to a video from a <em>reply comment</em>, which is a comment directed to a top-level comment. The YouTube user interface does not allow a user to direct a reply to another reply. However, users can achieve the “reply to a reply” functionality by starting their comment with the username of the person that they are replying to (and they often prepend the username with “@”). So there will be an edge from user <em>i</em> to user <em>j</em> if <em>i</em> replied to a top-level comment authored by <em>j</em> or else <em>i</em> prepended their comment with <em>j</em>’s username.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">actorNetwork</span> <span class="op">&lt;-</span> <span class="va">youtubeData</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">youtubeData</span><span class="op">)</span>
-<span class="va">actorGraph</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><code><a href="../reference/Create.html">Create("actor")</a></code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity):</p>
+<code class="sourceCode R"><span class="va">actorNetwork</span> <span class="op">&lt;-</span> <span class="va">youtubeData</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">youtubeData</span><span class="op">)</span>
+<span class="va">actorGraph</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><code>Create("actor")</code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity):</p>
 <div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> actorNetwork</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 522 x 3</span></span>
@@ -657,7 +666,7 @@
 <p>Note that in the above, <code><a href="../reference/AddText.html">AddText()</a></code> was used to add the comment text data to the network dataframe, stored as an edge attribute. Also, note that there is an optional parameter <code>replies_from_text</code> that can be passed to <code><a href="../reference/AddText.html">AddText()</a></code> when used with YouTube network creation, to extract the “reply to reply” comments.</p>
 <p>This list is then passed to <code><a href="../reference/Graph.html">Graph()</a></code>, which returns an <code>igraph</code> graph object. Remember that it is possible to achieve the above using a single line of code:</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">actorGraph</span> <span class="op">&lt;-</span> <span class="va">youtubeData</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">youtubeData</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">actorGraph</span> <span class="op">&lt;-</span> <span class="va">youtubeData</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">youtubeData</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <p>The following is an an annonymised summary of the <code>igraph</code> graph object.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> actorGraph</span>
 <span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>IGRAPH <span class="fl">79e5456</span> DN<span class="sc">--</span> <span class="dv">522</span> <span class="dv">604</span> <span class="sc">--</span> </span>
@@ -677,12 +686,12 @@
 <p>We can visualize this network, using red to identify the video nodes.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># change color of nodes with type video to red and others grey</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">node_type</span> <span class="op">==</span> <span class="st">"video"</span>, <span class="st">"red"</span>, <span class="st">"grey"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/ifelse.html" class="external-link">ifelse</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">node_type</span> <span class="op">==</span> <span class="st">"video"</span>, <span class="st">"red"</span>, <span class="st">"grey"</span><span class="op">)</span>
 
 <span class="co"># open and write plot to a png file</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span><span class="op">(</span><span class="st">"youtube_actor.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">actorGraph</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="st">"youtube_actor.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">actorGraph</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/youtube_actor.png" alt=""><p class="caption">YouTube actor network (red node is video)</p>
 </div>
@@ -712,7 +721,7 @@
 </div>
 <p>Finally, the <code><a href="../reference/AddVideoData.html">AddVideoData()</a></code> function supplements the network data with additional video information.</p>
 <div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">actorNetwork_withVideoInfo</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/AddVideoData.html">AddVideoData</a></span><span class="op">(</span><span class="va">youtubeAuth</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">actorNetwork_withVideoInfo</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/AddVideoData.html">AddVideoData</a></span><span class="op">(</span><span class="va">youtubeAuth</span><span class="op">)</span></code></pre></div>
 <p><code><a href="../reference/AddVideoData.html">AddVideoData()</a></code> returns a named list containing three dataframes named “nodes” (identical to the dataframe contained in the list <code>actorNetwork</code> in the example able), “edges” (this has three additional columns: “video_title”, “video_description”, “video_published_at”) and a new dataframe “videos” (the following has been modified to preserve anonymity):</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> actorNetwork_withVideoInfo</span>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
@@ -745,14 +754,14 @@
 <span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a><span class="st">[5] "</span>voson_text<span class="st">"       "</span>voson_video_data<span class="st">"</span></span></code></pre></div>
 <p>It should also be noted that <code><a href="../reference/AddVideoData.html">AddVideoData()</a></code> can optionally substitute references to the video ID in the “nodes” and “edges” dataframes with the video publishers channel ID (this is done by setting the parameter <code>actorSubOnly</code> to TRUE.</p>
 </div>
-<div id="activity-network-1" class="section level3">
-<h3 class="hasAnchor">
-<a href="#activity-network-1" class="anchor"></a>Activity Network</h3>
+<div class="section level4">
+<h4 id="activity-network-1">Activity Network<a class="anchor" aria-label="anchor" href="#activity-network-1"></a>
+</h4>
 <p>In the YouTube <em>activity network</em>, nodes are either comments or videos (videos represent a starting comment).</p>
 <div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">activityNetwork</span> <span class="op">&lt;-</span> <span class="va">youtubeData</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">youtubeData</span><span class="op">)</span>
-<span class="va">activityGraph</span> <span class="op">&lt;-</span> <span class="va">activityNetwork</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
-<p><code><a href="../reference/Create.html">Create("activity")</a></code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity).</p>
+<code class="sourceCode R"><span class="va">activityNetwork</span> <span class="op">&lt;-</span> <span class="va">youtubeData</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">youtubeData</span><span class="op">)</span>
+<span class="va">activityGraph</span> <span class="op">&lt;-</span> <span class="va">activityNetwork</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<p><code>Create("activity")</code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity).</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> activityNetwork</span>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>edges</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 603 x 3</span></span>
@@ -791,47 +800,47 @@
 <p>The example YouTube activity network contains 604 nodes and 603 edges. The following is an <code>igraph</code> visualization of the network, where the video is indicated by a red node, and blue indicates comments that include one of the following terms: “arson”, “bakcburn”, “climate change”.</p>
 <div class="sourceCode" id="cb49"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># set all video node colors to red and others to grey</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"grey"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">node_type</span> <span class="op">==</span> <span class="st">"video"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"grey"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">node_type</span> <span class="op">==</span> <span class="st">"video"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span>
 
 <span class="co"># get node indexes of comments that contain terms of interest</span>
 <span class="co"># set their node colors to blue</span>
-<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"arson|backburn|climate change"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">vosonTxt_comment</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="va">ind</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"blue"</span>
+<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"arson|backburn|climate change"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">vosonTxt_comment</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="va">ind</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"blue"</span>
 
 <span class="co"># open and write plot to a png file</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span><span class="op">(</span><span class="st">"youtube_activity.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">activityGraph</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="st">"youtube_activity.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">activityGraph</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/youtube_activity.png" alt=""><p class="caption">YouTube activity network (red node is video, blue nodes are comments mentioning particular terms)</p>
 </div>
 </div>
 </div>
 </div>
-<div id="reddit" class="section level1">
-<h1 class="hasAnchor">
-<a href="#reddit" class="anchor"></a>Reddit</h1>
-<p>The Reddit collection in <code>vosonSML</code> is based on the approach used in the <a href="https://cran.r-project.org/package=RedditExtractoR">RedditExtractoR</a> package.</p>
-<div id="authenticating-with-the-reddit-api" class="section level2">
-<h2 class="hasAnchor">
-<a href="#authenticating-with-the-reddit-api" class="anchor"></a>Authenticating with the Reddit API</h2>
+<div class="section level2">
+<h2 id="reddit">Reddit<a class="anchor" aria-label="anchor" href="#reddit"></a>
+</h2>
+<p>The Reddit collection in <code>vosonSML</code> is based on the approach used in the <a href="https://cran.r-project.org/package=RedditExtractoR" class="external-link">RedditExtractoR</a> package.</p>
+<div class="section level3">
+<h3 id="authenticating-with-the-reddit-api">Authenticating with the Reddit API<a class="anchor" aria-label="anchor" href="#authenticating-with-the-reddit-api"></a>
+</h3>
 <p>The <code>vosonSML</code> does not require Reddit API credentials to be provided. However, to keep the workflow consistent with the other data sources, we still need to create a “dummy” access token, using the <code><a href="../reference/Authenticate.html">Authenticate()</a></code> function (see below).</p>
 </div>
-<div id="collecting-data-from-reddit" class="section level2">
-<h2 class="hasAnchor">
-<a href="#collecting-data-from-reddit" class="anchor"></a>Collecting Data from Reddit</h2>
+<div class="section level3">
+<h3 id="collecting-data-from-reddit">Collecting Data from Reddit<a class="anchor" aria-label="anchor" href="#collecting-data-from-reddit"></a>
+</h3>
 <p>To collect Reddit comment data, first construct a character vector containing the post URL(s).</p>
 <div class="sourceCode" id="cb50"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">myThreadUrls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>,
+<code class="sourceCode R"><span class="va">myThreadUrls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span>,
                   <span class="st">"https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"</span><span class="op">)</span></code></pre></div>
-<p>This character vector is then passed as an argument to the <code><a href="../reference/Collect.html">Collect()</a></code> function. In the example below, a post relating to the politics around the Australian bushfires was used: <a href="https://www.reddit.com/r/worldnews/comments/elcb9b/australias_leaders_deny_link_between_climate/" class="uri">https://www.reddit.com/r/worldnews/comments/elcb9b/australias_leaders_deny_link_between_climate/</a>. This post was created on 7th January 2020 and by the time of data collection (10th January), it had attracted over 4000 comments. The maximum number of comments available for retrieval is 500 per thread or post.</p>
+<p>This character vector is then passed as an argument to the <code><a href="../reference/Collect.html">Collect()</a></code> function. In the example below, a post relating to the politics around the Australian bushfires was used: <a href="https://www.reddit.com/r/worldnews/comments/elcb9b/australias_leaders_deny_link_between_climate/" class="external-link uri">https://www.reddit.com/r/worldnews/comments/elcb9b/australias_leaders_deny_link_between_climate/</a>. This post was created on 7th January 2020 and by the time of data collection (10th January), it had attracted over 4000 comments. The maximum number of comments available for retrieval is 500 per thread or post.</p>
 <p>Reddit has implemented a feature in their latest site re-design to branch off into new threads, when a thread reaches a breadth (diameter) of 10 comments. These appear as ‘Continue this thread’ links in thread discussions on the reddit site, and as new listing markers within the collected thread data. <code>vosonSML</code> follows these links with additional thread requests and collects comments from those as well, capturing a more complete data set, as the limit of 500 comments applies to each ‘new’ thread.</p>
 <div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">myThreadUrls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"https://www.reddit.com/r/worldnews/comments/elcb9b/australias_leaders_deny_link_between_climate/"</span><span class="op">)</span>
-<span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"reddit"</span><span class="op">)</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">myThreadUrls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.reddit.com/r/worldnews/comments/elcb9b/australias_leaders_deny_link_between_climate/"</span><span class="op">)</span>
+<span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"reddit"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span>
               <span class="fu"><a href="../reference/Collect.html">Collect</a></span><span class="op">(</span>threadUrls <span class="op">=</span> <span class="va">myThreadUrls</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p>The <code><a href="../reference/Collect.html">Collect()</a></code> function takes the following arguments (when used for collecting Reddit data): <code>credential</code> (an object generated from <code><a href="../reference/Authenticate.html">Authenticate()</a></code> with class name “reddit” (above we pass this via the pipe), <code>threadUrls</code> (character vector of Reddit thread urls), <code>waitTime</code> (a numeric vector giving the time range in seconds to select random wait url collection requests; default is <code><a href="https://rdrr.io/r/base/c.html">c(3, 10)</a></code> i.e. random wait between 3 and 10 seconds), <code>ua</code> (User-Agent string; default is <code><a href="https://rdrr.io/r/base/options.html">option("HTTPUserAgent")</a></code> as set by vosonSML, <code>writeToFile</code> (whether to write the returned dataframe to file as an <code>.rds</code> file; default is FALSE), <code>verbose</code> (whether to output information about the data collection; default is TRUE).</p>
+<p>The <code><a href="../reference/Collect.html">Collect()</a></code> function takes the following arguments (when used for collecting Reddit data): <code>credential</code> (an object generated from <code><a href="../reference/Authenticate.html">Authenticate()</a></code> with class name “reddit” (above we pass this via the pipe), <code>threadUrls</code> (character vector of Reddit thread urls), <code>waitTime</code> (a numeric vector giving the time range in seconds to select random wait url collection requests; default is <code>c(3, 10)</code> i.e. random wait between 3 and 10 seconds), <code>ua</code> (User-Agent string; default is <code>option("HTTPUserAgent")</code> as set by vosonSML, <code>writeToFile</code> (whether to write the returned dataframe to file as an <code>.rds</code> file; default is FALSE), <code>verbose</code> (whether to output information about the data collection; default is TRUE).</p>
 <p>The <code><a href="../reference/Collect.html">Collect()</a></code> function returns a <code>tibble</code> dataframe (this output has been anonymised):</p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">str</span>(redditData)</span>
 <span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>Classes ‘tbl_df’, ‘tbl’, ‘datasource’, ‘reddit’ and <span class="st">'data.frame'</span><span class="sc">:</span>   <span class="dv">767</span> obs. of  <span class="dv">22</span> variables<span class="sc">:</span></span>
@@ -857,35 +866,35 @@
 <span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a><span class="st"> $ domain          : chr  "</span>theglobeandmail.com<span class="st">" "</span>theglobeandmail.com<span class="st">" "</span>theglobeandmail.com<span class="st">" "</span>theglobeandmail.com<span class="st">" ...</span></span>
 <span id="cb52-23"><a href="#cb52-23" aria-hidden="true" tabindex="-1"></a><span class="st"> $ url             : chr  "</span>https<span class="sc">:</span><span class="er">//</span>www.reddit.com<span class="sc">/</span>r<span class="sc">/</span>worldnews<span class="sc">/</span>comments<span class="sc">/</span>elcb9b<span class="sc">/</span>australias_leaders_deny_link_between_climate<span class="sc">/</span><span class="st">" "</span>https<span class="sc">:</span><span class="er">//</span>www.reddit.com<span class="sc">/</span>r<span class="sc">/</span>worldnews<span class="sc">/</span>comments<span class="sc">/</span>elcb9b<span class="sc">/</span>australias_leaders_deny_link_between_climate<span class="sc">/</span><span class="st">" "</span>https<span class="sc">:</span><span class="er">//</span>www.reddit.com<span class="sc">/</span>r<span class="sc">/</span>worldnews<span class="sc">/</span>comments<span class="sc">/</span>elcb9b<span class="sc">/</span>australias_leaders_deny_link_between_climate<span class="sc">/</span><span class="st">" "</span>https<span class="sc">:</span><span class="er">//</span>www.reddit.com<span class="sc">/</span>r<span class="sc">/</span>worldnews<span class="sc">/</span>comments<span class="sc">/</span>elcb9b<span class="sc">/</span>australias_leaders_deny_link_between_climate<span class="sc">/</span><span class="st">" ...</span></span>
 <span id="cb52-24"><a href="#cb52-24" aria-hidden="true" tabindex="-1"></a><span class="st"> $ thread_id       : chr  "</span>elcb9b<span class="st">" "</span>elcb9b<span class="st">" "</span>elcb9b<span class="st">" "</span>elcb9b<span class="st">" ...</span></span></code></pre></div>
-<div id="importing-saved-collection-data-from-file-2" class="section level3">
-<h3 class="hasAnchor">
-<a href="#importing-saved-collection-data-from-file-2" class="anchor"></a>Importing saved collection data from file</h3>
+<div class="section level4">
+<h4 id="importing-saved-collection-data-from-file-2">Importing saved collection data from file<a class="anchor" aria-label="anchor" href="#importing-saved-collection-data-from-file-2"></a>
+</h4>
 <p>If you are reading a previously saved <code>writeToFile</code> Reddit dataframe from disk, you simply need to use the <code>readRDS</code> function.</p>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span><span class="op">)</span></code></pre></div>
 <p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and earlier you will need to modify the class values for the object before you can use it with <code>vosonSML</code>. This can be done manually or by using the handy <code><a href="../reference/ImportData.html">ImportData()</a></code> function.</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># use import data</span>
 <span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span>, <span class="st">"reddit"</span><span class="op">)</span>
 
 <span class="co"># or manually add class names to data</span>
-<span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">redditData</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="st">"datasource"</span>, <span class="st">"reddit"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html">class</a></span><span class="op">(</span><span class="va">redditData</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">redditData</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"datasource"</span>, <span class="st">"reddit"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">redditData</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="creating-reddit-networks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-reddit-networks" class="anchor"></a>Creating Reddit Networks</h2>
+<div class="section level3">
+<h3 id="creating-reddit-networks">Creating Reddit Networks<a class="anchor" aria-label="anchor" href="#creating-reddit-networks"></a>
+</h3>
 <p>It is currently possible to create two types of networks using Reddit data: (1) <em>actor network</em> and (2) <em>activity network</em>.</p>
-<div id="actor-network-2" class="section level3">
-<h3 class="hasAnchor">
-<a href="#actor-network-2" class="anchor"></a>Actor Network</h3>
+<div class="section level4">
+<h4 id="actor-network-2">Actor Network<a class="anchor" aria-label="anchor" href="#actor-network-2"></a>
+</h4>
 <p>In the Reddit <em>actor network</em>, nodes represent users who have posted original posts and comments and the edges are the interactions between users in the comments i.e. where there is an edge from user <em>i</em> to user <em>j</em> if <em>i</em> writes a comment that replies to user <em>j</em>’s comment (or the original post).</p>
 <p>The following creates a Reddit <em>actor network</em> with comment text as an edge attribute (as above, this can be achieved in a single line of code, but we split it into two lines to better explain the objects that are created).</p>
 <div class="sourceCode" id="cb55"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">actorNetwork</span> <span class="op">&lt;-</span> <span class="va">redditData</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">redditData</span><span class="op">)</span>
-<span class="va">actorGraph</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><code><a href="../reference/Create.html">Create("actor")</a></code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity):</p>
+<code class="sourceCode R"><span class="va">actorNetwork</span> <span class="op">&lt;-</span> <span class="va">redditData</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">redditData</span><span class="op">)</span>
+<span class="va">actorGraph</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><code>Create("actor")</code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity):</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> actorNetwork</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 439 x 2</span></span>
@@ -926,30 +935,30 @@
 <div class="sourceCode" id="cb58"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># set node color of original post to red based on presence of title edge attribute</span>
 <span class="co"># set other node colors to grey</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"grey"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/tail_of.html">tail_of</a></span><span class="op">(</span><span class="va">actorGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">title</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"grey"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/tail_of.html" class="external-link">tail_of</a></span><span class="op">(</span><span class="va">actorGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">title</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span>
 
 <span class="co"># get node indexes for the tails of edges that have comments containing words of interest</span>
 <span class="co"># set their node colors to blue</span>
-<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/tail_of.html">tail_of</a></span><span class="op">(</span><span class="va">actorGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"arson|starting fires"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html">E</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">vosonTxt_comment</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="va">ind</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"blue"</span>
+<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/tail_of.html" class="external-link">tail_of</a></span><span class="op">(</span><span class="va">actorGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"arson|starting fires"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">vosonTxt_comment</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="va">ind</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"blue"</span>
 
 <span class="co"># open and write plot to a png file</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span><span class="op">(</span><span class="st">"reddit_actor.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">actorGraph</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="st">"reddit_actor.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">actorGraph</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/reddit_actor.png" alt=""><p class="caption">Reddit actor network (red node is author of post, blue nodes are users who mentioned arson)</p>
 </div>
 </div>
-<div id="activity-network-2" class="section level3">
-<h3 class="hasAnchor">
-<a href="#activity-network-2" class="anchor"></a>Activity Network</h3>
+<div class="section level4">
+<h4 id="activity-network-2">Activity Network<a class="anchor" aria-label="anchor" href="#activity-network-2"></a>
+</h4>
 <p>In the Reddit <em>activity network</em>, nodes are either comments and/or initial thread posts and the edges represent replies to the original post, or replies to comments.</p>
 <div class="sourceCode" id="cb59"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">activityNetwork</span> <span class="op">&lt;-</span> <span class="va">redditData</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">redditData</span><span class="op">)</span>
-<span class="va">activityGraph</span> <span class="op">&lt;-</span> <span class="va">activityNetwork</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
-<p><code><a href="../reference/Create.html">Create("activity")</a></code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity):</p>
+<code class="sourceCode R"><span class="va">activityNetwork</span> <span class="op">&lt;-</span> <span class="va">redditData</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">redditData</span><span class="op">)</span>
+<span class="va">activityGraph</span> <span class="op">&lt;-</span> <span class="va">activityNetwork</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<p><code>Create("activity")</code> returns a named list containing two dataframes named “nodes” and “edges” (the following has been modified to preserve anonymity):</p>
 <div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> activityNetwork</span>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 768 x 10</span></span>
@@ -991,126 +1000,126 @@
 <div class="sourceCode" id="cb62"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># set original post node colors to red based on a node type of thread</span>
 <span class="co"># set other node colors to grey</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"grey"</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">node_type</span> <span class="op">==</span> <span class="st">"thread"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span> <span class="op">&lt;-</span> <span class="st">"grey"</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">node_type</span> <span class="op">==</span> <span class="st">"thread"</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"red"</span>
 
 <span class="co"># get node indexes for nodes that have comment attributes containing words of interest</span>
 <span class="co"># set their node colors to blue</span>
-<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">grep</a></span><span class="op">(</span><span class="st">"arson|starting fires"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">vosonTxt_comment</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="va">ind</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"blue"</span>
+<span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"arson|starting fires"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">vosonTxt_comment</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span><span class="op">$</span><span class="va">color</span><span class="op">[</span><span class="va">ind</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"blue"</span>
 
 <span class="co"># open and write plot to a png file</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html">png</a></span><span class="op">(</span><span class="st">"reddit_activity.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">activityGraph</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/png.html" class="external-link">png</a></span><span class="op">(</span><span class="st">"reddit_activity.png"</span>, width <span class="op">=</span> <span class="fl">600</span>, height <span class="op">=</span> <span class="fl">600</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">activityGraph</span>, vertex.label <span class="op">=</span> <span class="st">""</span>, vertex.size <span class="op">=</span> <span class="fl">4</span>, edge.arrow.size <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/grDevices/dev.html" class="external-link">dev.off</a></span><span class="op">(</span><span class="op">)</span></code></pre></div>
 <div class="figure">
 <img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/reddit_activity.png" alt=""><p class="caption">Reddit activity network (red node is intial post, blue nodes are comments mentioning arson)</p>
 </div>
 </div>
 </div>
 </div>
-<div id="merging-collected-data" class="section level1">
-<h1 class="hasAnchor">
-<a href="#merging-collected-data" class="anchor"></a>Merging Collected Data</h1>
+<div class="section level2">
+<h2 id="merging-collected-data">Merging Collected Data<a class="anchor" aria-label="anchor" href="#merging-collected-data"></a>
+</h2>
 <p>Data that was collected at different times, used different collect parameters or was saved to multiple files can be merged by using functions that operate on dataframes. The data from <code>Collect</code> is output in <code>tibble</code> (dataframe) format and provided each collected data set are from the same social media type can be combined using the <code>rbind</code> function.</p>
-<p>In the examples below or cases that involve large datasets, it can sometimes be more efficient or timely to substitute optimized functions such as <code><a href="https://dplyr.tidyverse.org/reference/bind.html">dplyr::bind_rows</a></code> for <code>rbind</code> or <code><a href="https://Rdatatable.gitlab.io/data.table/reference/rbindlist.html">data.table::rbindlist</a></code> instead of <code><a href="https://rdrr.io/r/base/do.call.html">do.call("rbind", list)</a></code>.</p>
-<div id="merging-from-multiple-collect-operations" class="section level2">
-<h2 class="hasAnchor">
-<a href="#merging-from-multiple-collect-operations" class="anchor"></a>Merging from multiple Collect operations</h2>
+<p>In the examples below or cases that involve large datasets, it can sometimes be more efficient or timely to substitute optimized functions such as <code><a href="https://dplyr.tidyverse.org/reference/bind.html" class="external-link">dplyr::bind_rows</a></code> for <code>rbind</code> or <code><a href="https://Rdatatable.gitlab.io/data.table/reference/rbindlist.html" class="external-link">data.table::rbindlist</a></code> instead of <code>do.call("rbind", list)</code>.</p>
+<div class="section level3">
+<h3 id="merging-from-multiple-collect-operations">Merging from multiple Collect operations<a class="anchor" aria-label="anchor" href="#merging-from-multiple-collect-operations"></a>
+</h3>
 <p>Data collected in the same session can be merged using the <code>rbind</code> function. The following twitter example combines tweet data collected using different search parameters. The result is combined most <code>recent</code> tweets using the <code>#auspol</code> hashtag and most <code>popular</code> tweets using the <code>#bushfire</code> hashtag.</p>
 <div class="sourceCode" id="cb63"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># collect twitter data for the #auspol hashtag</span>
-<span class="va">auspolTwitterData</span> <span class="op">&lt;-</span> <span class="va">twitterAuth</span> <span class="op">%&gt;%</span>
+<span class="va">auspolTwitterData</span> <span class="op">&lt;-</span> <span class="va">twitterAuth</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/Collect.html">Collect</a></span><span class="op">(</span>searchTerm <span class="op">=</span> <span class="st">"#auspol"</span>, searchType <span class="op">=</span> <span class="st">"recent"</span>, numTweets <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 
 <span class="co"># collect twitter data for the #bushfire hashtag</span>
-<span class="va">bushfireTwitterData</span> <span class="op">&lt;-</span> <span class="va">twitterAuth</span> <span class="op">%&gt;%</span>
+<span class="va">bushfireTwitterData</span> <span class="op">&lt;-</span> <span class="va">twitterAuth</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/Collect.html">Collect</a></span><span class="op">(</span>searchTerm <span class="op">=</span> <span class="st">"#bushfire"</span>, searchType <span class="op">=</span> <span class="st">"popular"</span>, numTweets <span class="op">=</span> <span class="fl">50</span><span class="op">)</span>
 
 <span class="co"># combine the collected data for the different hashtags using rbind</span>
-<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">auspolTwitterData</span>, <span class="va">bushfireTwitterData</span><span class="op">)</span></code></pre></div>
+<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">auspolTwitterData</span>, <span class="va">bushfireTwitterData</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="merging-from-file" class="section level2">
-<h2 class="hasAnchor">
-<a href="#merging-from-file" class="anchor"></a>Merging from file</h2>
+<div class="section level3">
+<h3 id="merging-from-file">Merging from file<a class="anchor" aria-label="anchor" href="#merging-from-file"></a>
+</h3>
 <p><code>vosonSML</code> has a function for importing previously saved collected data from file so that, it can be correctly handled and used in subsequent processsing functions. This example shows how to import and merge twitter data collected the previous day with newly collected data using <code>rbind</code> and the <code>ImportData</code> function.</p>
 <p>Please note that <code>ImportData</code> requires the file path and social media type either “twitter”, “youtube” or “reddit” to be specified as parameters.</p>
 <div class="sourceCode" id="cb64"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># collect twitter data</span>
-<span class="va">newTwitterData</span> <span class="op">&lt;-</span> <span class="va">twitterAuth</span> <span class="op">%&gt;%</span>
+<span class="va">newTwitterData</span> <span class="op">&lt;-</span> <span class="va">twitterAuth</span> <span class="op"><a href="https://rdrr.io/pkg/igraph/man/pipe.html" class="external-link">%&gt;%</a></span>
   <span class="fu"><a href="../reference/Collect.html">Collect</a></span><span class="op">(</span>searchTerm <span class="op">=</span> <span class="st">"#auspol"</span>, searchType <span class="op">=</span> <span class="st">"recent"</span>, numTweets <span class="op">=</span> <span class="fl">100</span><span class="op">)</span>
 
 <span class="co"># import data from file using ImportData</span>
 <span class="va">prevTwitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-02-26_143505-TwitterData.rds"</span>, <span class="st">"twitter"</span><span class="op">)</span>
 
 <span class="co"># add to imported data the new data using rbind</span>
-<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">prevTwitterData</span>, <span class="va">newTwitterData</span><span class="op">)</span></code></pre></div>
+<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">prevTwitterData</span>, <span class="va">newTwitterData</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="merging-files-in-a-directory" class="section level2">
-<h2 class="hasAnchor">
-<a href="#merging-files-in-a-directory" class="anchor"></a>Merging files in a directory</h2>
+<div class="section level3">
+<h3 id="merging-files-in-a-directory">Merging files in a directory<a class="anchor" aria-label="anchor" href="#merging-files-in-a-directory"></a>
+</h3>
 <p>If there are many data collections to be merged from file it may be useful to use <code>rbind</code> in conjuction with <code>lapply</code>. In this example a list of twitter collection files in the <code>2019TwitterBushfireData</code> directory that end in “TwitterData.rds” are passed into an <code>lapply</code> function. This imports each dataset with <code>ImportData</code> and is then added to a list of dataframes that is combined with <code>rbind</code> for the final result.</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># vector of file names matching *TwitterData.rds to combine from directory</span>
-<span class="va">importFiles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"D:\\2019TwitterBushfireData"</span>,
+<span class="va">importFiles</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span>path <span class="op">=</span> <span class="st">"D:\\2019TwitterBushfireData"</span>,
                           pattern <span class="op">=</span> <span class="st">"*TwitterData.rds"</span>,
                           full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># combine imported data from files with apply and rbind</span>
-<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span><span class="op">(</span><span class="va">importFiles</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="../reference/ImportData.html">ImportData</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"twitter"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">importFiles</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="../reference/ImportData.html">ImportData</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"twitter"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="duplicate-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#duplicate-data" class="anchor"></a>Duplicate data</h2>
-<p>Depending on type of collections being performed, there may be duplicate data or rows in the combined dataframes. This is generally not a problem for <code>vosonSML</code> network creation, however it may sometimes be useful to address in order to reduce the size of the data being processed. This can be achieved in many ways but is probably acomplished most easily using the <code>unique</code> or <code><a href="https://dplyr.tidyverse.org/reference/distinct.html">dplyr::distinct</a></code> function. In the example below the unique tweet identifier “status_id” is used with <code>distinct</code> to choose which columns to identify distinct values from. For youtube the identifier columns “VideoID” and “CommentID” and for reddit “thread_id” and “comm_id” can be used instead of “status_id”.</p>
+<div class="section level3">
+<h3 id="duplicate-data">Duplicate data<a class="anchor" aria-label="anchor" href="#duplicate-data"></a>
+</h3>
+<p>Depending on type of collections being performed, there may be duplicate data or rows in the combined dataframes. This is generally not a problem for <code>vosonSML</code> network creation, however it may sometimes be useful to address in order to reduce the size of the data being processed. This can be achieved in many ways but is probably acomplished most easily using the <code>unique</code> or <code><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">dplyr::distinct</a></code> function. In the example below the unique tweet identifier “status_id” is used with <code>distinct</code> to choose which columns to identify distinct values from. For youtube the identifier columns “VideoID” and “CommentID” and for reddit “thread_id” and “comm_id” can be used instead of “status_id”.</p>
 <div class="sourceCode" id="cb66"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># load dplyr</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org">dplyr</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
 
 <span class="co"># combine the collected data using rbind and remove duplicates with distinct based on tweet status_id </span>
-<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">auspolTwitterData</span>, <span class="va">bushfireTwitterData</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">status_id</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">auspolTwitterData</span>, <span class="va">bushfireTwitterData</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">status_id</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>If unique rows can change over time such as a tweets retweet count, or perhaps youtube video / reddit thread comments being updated then a strategy will need to be adopted to choose the desired version to keep between dataframes. The <code>distinct</code> function will keep the first found row that contains a duplicate identifier, so it is often useful to arrange the rows so that more recent record comes first in the combined dataframe and is kept. With twitter data, the easiest way to do this is to perform the <code>rbind</code> with twitter dataframes in reverse order (chronological) with the most recent collect data first. For youtube and reddit, the rows can be arranged by the “UpdatedAt” and “comm_date_unix” timestamp values respectively. The <code>dplyr</code> package again provides a convenient function for sorting or arranging rows called <code>arrange</code>.</p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># manually combine data sets in reverse chronological order and remove duplicates based on status_id </span>
-<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="va">bushfireTwitterData</span>, <span class="va">auspolTwitterData</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">status_id</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">bushfireTwitterData</span>, <span class="va">auspolTwitterData</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">status_id</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># arrange combined youtube data by updated timestamp and remove duplicates, keeping the version of a</span>
 <span class="co"># duplicate video comment that was most recently updated</span>
-<span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="va">youtubeData</span> <span class="op">%&gt;%</span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">UpdatedAt</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">VideoID</span>, <span class="va">CommentID</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="va">youtubeData</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">UpdatedAt</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">VideoID</span>, <span class="va">CommentID</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 
 <span class="co"># arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of a</span>
 <span class="co"># duplicate thread comment that was most recently updated</span>
-<span class="va">redditData</span> <span class="op">&lt;-</span> <span class="va">redditData</span> <span class="op">%&gt;%</span>
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html">desc</a></span><span class="op">(</span><span class="va">comm_date_unix</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html">distinct</a></span><span class="op">(</span><span class="va">thread_id</span>, <span class="va">comm_id</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="va">redditData</span> <span class="op">&lt;-</span> <span class="va">redditData</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span>
+  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">comm_date_unix</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">thread_id</span>, <span class="va">comm_id</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="creating-a-network-and-graph-from-merged-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#creating-a-network-and-graph-from-merged-data" class="anchor"></a>Creating a network and graph from merged data</h2>
+<div class="section level3">
+<h3 id="creating-a-network-and-graph-from-merged-data">Creating a network and graph from merged data<a class="anchor" aria-label="anchor" href="#creating-a-network-and-graph-from-merged-data"></a>
+</h3>
 <p>Once the data is merged then it can then simply be passed to the <code>Create</code> function to create a network as per the usual <code>vosonSML</code> work flow.</p>
 <div class="sourceCode" id="cb68"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create an igraph of twitter actor network</span>
-<span class="va">actorGraph</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<span class="va">actorGraph</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div id="voson-dashboard" class="section level1">
-<h1 class="hasAnchor">
-<a href="#voson-dashboard" class="anchor"></a>VOSON Dashboard</h1>
+<div class="section level2">
+<h2 id="voson-dashboard">VOSON Dashboard<a class="anchor" aria-label="anchor" href="#voson-dashboard"></a>
+</h2>
 <p>It is possible to import a network created using <code>vosonSML</code>, and saved as a “.graphml” file, into <code>VOSON Dashboard</code>. However, if you have created a categorical node attribute in the network and wish to plot networks in <code>VOSON Dashboard</code> with node colour reflecting the node attribute, then the node attribute name has to be pre-pended with “vosonCA_”. This let’s <code>VOSON Dashboard</code> know the attribute is to be treated as categorical.</p>
 <p>Above, we created a Twitter subnetwork: the giant component in the reply network, with red nodes indicating those users who tweeted using the word “bushfire”. We did this by created a node attribute “tweetedBushfires”. For <code>VOSON Dashboard</code> to recognise this node attribute, it has to be named “vosonCA_tweetedBushfires”. The following code creates a new node attribute with this name, and sames the network as a graphml file:</p>
 <div class="sourceCode" id="cb69"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span><span class="op">$</span><span class="va">vosonCA_tweetedBushfires</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html">V</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span><span class="op">$</span><span class="va">tweetedBushfires</span>
-<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/write_graph.html">write.graph</a></span><span class="op">(</span><span class="va">g3</span>, <span class="st">"g3.graphml"</span>, format <span class="op">=</span> <span class="st">"graphml"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span><span class="op">$</span><span class="va">vosonCA_tweetedBushfires</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span><span class="op">$</span><span class="va">tweetedBushfires</span>
+<span class="fu"><a href="https://rdrr.io/pkg/igraph/man/write_graph.html" class="external-link">write.graph</a></span><span class="op">(</span><span class="va">g3</span>, <span class="st">"g3.graphml"</span>, format <span class="op">=</span> <span class="st">"graphml"</span><span class="op">)</span></code></pre></div>
 <p>The following shows a screenshot of <code>VOSON Dashboard</code> with this network loaded and the “tweetedBushfires” attribute has been seleced to be reflected in the node colour.</p>
 <div class="figure">
 <img src="https://vosonlab.github.io/vosonSML/images/intro-to-vosonsml/voson_dashboard.png" alt=""><p class="caption">VOSON Dashboard with Twitter network of users who tweeted using the word “bushfire”</p>
 </div>
 </div>
-<div id="acknowledgements" class="section level1">
-<h1 class="hasAnchor">
-<a href="#acknowledgements" class="anchor"></a>Acknowledgements</h1>
-<p><code>vosonSML</code> and <code>VOSON Dashboard</code> are developed and maintained at the <a href="http://vosonlab.net/">Virtual Observatory for the Study of Online Networks (VOSON) Lab</a> at the Australian National University.</p>
+<div class="section level2">
+<h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
+</h2>
+<p><code>vosonSML</code> and <code>VOSON Dashboard</code> are developed and maintained at the <a href="http://vosonlab.net/" class="external-link">Virtual Observatory for the Study of Online Networks (VOSON) Lab</a> at the Australian National University.</p>
 <p><code>vosonSML</code> was originally released on CRAN in November 2015 as the package <code>SocialMediaLab</code> (Timothy Graham was the lead developer), with the significantly revised and renamed <code>vosonSML</code> being released on CRAN in July 2018 (Bryan Gertzel is the lead developer).</p>
 <p>We acknowledge the contributions of Chung-hong Chan who implemented a revised UI (involving <code>magrittr</code>) in the original <code>SocialMediaLab</code> package and Xiaolan Cai who has contributed to documentation.</p>
 </div>
@@ -1127,11 +1136,13 @@
 
 
       <footer><div class="copyright">
-  <p>Developed by Bryan Gertzel, Robert Ackland, Timothy Graham.</p>
+  <p></p>
+<p>Developed by Bryan Gertzel, Robert Ackland, Timothy Graham.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
       </footer>
@@ -1139,6 +1150,8 @@
 
   
 
+
+  
 
   </body>
 </html>
