@@ -6,10 +6,6 @@ url: http://vosonlab.github.io/vosonSML
 #     href: "https://vosonlab.net"
 #     html: "<span>VOSON Lab</span>"
 
-# template:
-#   params:
-#     bootswatch: flatly
-
 navbar:
   structure:
     left:
@@ -26,11 +22,11 @@ navbar:
       icon: fa-home fa-lg
       href: index.html
     news:
-      icon: fa-file-alt
+      icon: fa-newspaper
       text: "Changelog"
       href: news/index.html
     reference:
-      icon: fa-cubes
+      icon: fa-cubes fa-lg
       text: "Reference"
       href: reference/index.html
     articles:
