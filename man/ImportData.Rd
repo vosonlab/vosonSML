@@ -20,8 +20,8 @@ A dataframe with datasource and socialmedia class attributes.
 }
 \description{
 Imports collected data from file or dataframe. Ensures \code{datasource} and specified
-  \code{socialmedia} type are set so data is usable by \code{\link{Create}} functions. Not required if collected data
-  was collected by \code{vosonSML} and saved as an \code{rds} file, use \code{\link{readRDS}} instead.
+\code{socialmedia} type are set so data is usable by \code{\link{Create}} functions. Not required if collected data
+was collected by \code{vosonSML} and saved as an \code{rds} file, use \code{\link{readRDS}} instead.
 }
 \examples{
 \dontrun{

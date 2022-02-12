@@ -28,7 +28,7 @@ Authors:
 
 Other contributors:
 \itemize{
-  \item Chung-hong Chan (\href{https://orcid.org/0000-0002-6232-7530}{ORCID}) [contributor]
+  \item Francisca Borquez [contributor]
 }
 
 }

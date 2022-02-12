@@ -1,4 +1,9 @@
-# vosonSML 0.30.5.9000
+# vosonSML 0.30.6
+
+## Minor Changes
+- Updated standard package documentation, added citation and README.Rmd.
+
+# vosonSML 0.30.5
 
 ## Major Changes
 - Re-implemented `Create.actor.twitter` and `Create.activity.twitter` to use `dplyr` and `data.table` techniques consistent with other package network creation functions. Both functions are significantly faster for large collection dataframes.

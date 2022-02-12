@@ -23,9 +23,9 @@ Network as a named list of two dataframes containing \code{$nodes} and \code{$ed
 }
 \description{
 Creates a twitter activity network from collected tweets. Nodes are tweets and directed edges represent
-  the relationship of tweets to one another. For example, there is a directed edge from a quote tweet towards the
-  tweet that was quoted. Stand-alone tweets that are not replies, retweets or quote tweets have no relation to others
-  and will be isolates.
+the relationship of tweets to one another. For example, there is a directed edge from a quote tweet towards the
+tweet that was quoted. Stand-alone tweets that are not replies, retweets or quote tweets have no relation to others
+and will be isolates.
 }
 \examples{
 \dontrun{
