@@ -655,3 +655,6 @@ For more detailed information about functions and their parameters, please refer
 
 This package would not be possible without key packages by other authors in the R community, particularly: [data.table](https://github.com/Rdatatable/data.table), [dplyr](https://github.com/tidyverse/dplyr), [httr](https://github.com/r-lib/httr), [igraph](https://github.com/igraph/rigraph), [magrittr](https://CRAN.R-project.org/package=magrittr), [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [rtweet](https://github.com/ropensci/rtweet) and [tidytext](https://github.com/juliasilge/tidytext).
 
+## Code of Conduct
+  
+Please note that the VOSON Lab projects are released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
