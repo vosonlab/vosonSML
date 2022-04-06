@@ -1,16 +1,17 @@
 #' @title Collect comments data from reddit threads
 #'
 #' @description Collects comments made by users on one or more specified subreddit conversation threads and structures
-#' the data into a dataframe with the class names \code{"datasource"} and \code{"reddit"}.
+#'   the data into a dataframe with the class names \code{"datasource"} and \code{"reddit"}.
 #'
 #' @note The reddit web endpoint used for collection has maximum limit of 500 comments per thread url.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.
+#' @param endpoint API endpoint. Not used in this method.
 #' @param threadUrls Character vector. Reddit thread urls to collect data from.
 #' @param waitTime Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
-#' Minimum is 3 seconds. Default is \code{c(3, 10)} for a wait time chosen from between 3 and 10 seconds.
+#'   Minimum is 3 seconds. Default is \code{c(3, 10)} for a wait time chosen from between 3 and 10 seconds.
 #' @param ua Character string. Override User-Agent string to use in Reddit thread requests. Default is
-#' \code{option("HTTPUserAgent")} value as set by vosonSML.
+#'   \code{option("HTTPUserAgent")} value as set by vosonSML.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
@@ -29,7 +30,8 @@
 #' @export
 Collect.reddit <-
   function(credential,
-           threadUrls,
+           endpoint,
+           threadUrls = c(),
            waitTime = c(3, 10),
            ua = getOption("HTTPUserAgent"),
            writeToFile = FALSE,

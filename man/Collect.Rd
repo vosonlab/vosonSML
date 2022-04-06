@@ -4,10 +4,13 @@
 \alias{Collect}
 \title{Collect data from social media for generating networks}
 \usage{
-Collect(credential, ...)
+Collect(credential, endpoint = NULL, ...)
 }
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate}.}
+
+\item{endpoint}{Character string. API endpoint. If \code{twitter} can be \code{"search"} or \code{"timeline"}.
+Default is \code{NULL}.}
 
 \item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social media
 API collection.}
@@ -17,6 +20,6 @@ This function collects data from social media and structures it into a dataframe
 creating networks for further analysis. \code{Collect} is the second step of the \code{\link{Authenticate}},
 \code{Collect}, and \code{\link{Create}} workflow.
 
-Refer to \code{\link{Collect.twitter}}, \code{\link{Collect.youtube}} and
-\code{\link{Collect.reddit}} for parameters and usage.
+Refer to \code{\link{Collect.search.twitter}}, \code{\link{Collect.timeline.twitter}},
+\code{\link{Collect.youtube}}, \code{\link{Collect.reddit}} and \code{\link{Collect.web}} for parameters and usage.
 }

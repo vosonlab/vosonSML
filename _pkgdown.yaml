@@ -70,7 +70,8 @@ reference:
 - title: Collect
   contents:
   - '`Collect`'
-  - '`Collect.twitter`'
+  - '`Collect.search.twitter`'
+  - '`Collect.timeline.twitter`'
   - '`Collect.youtube`'
   - '`Collect.reddit`'
   - '`Collect.web`'

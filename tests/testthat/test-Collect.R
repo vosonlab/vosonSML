@@ -1,7 +1,7 @@
 context("Collect")
 
 test_that("Collect", {
-  suppress_cat(expect_error(Collect("xxx"), "Unknown social media type passed to collect."))
+  suppress_cat(expect_error(Collect("xxx"), "Unknown credential social media or endpoint passed to collect."))
 })
 
 test_that("Collect.twitter input", {

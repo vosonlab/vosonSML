@@ -58,6 +58,9 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.twitter.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.twitter2.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.web.html</loc>
   </url>
   <url>
@@ -68,6 +71,12 @@
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.reddit.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Collect.search.twitter.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Collect.timeline.twitter.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.twitter.html</loc>

@@ -6,7 +6,8 @@
 \usage{
 \method{Collect}{reddit}(
   credential,
-  threadUrls,
+  endpoint,
+  threadUrls = c(),
   waitTime = c(3, 10),
   ua = getOption("HTTPUserAgent"),
   writeToFile = FALSE,
@@ -16,6 +17,8 @@
 }
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.}
+
+\item{endpoint}{API endpoint. Not used in this method.}
 
 \item{threadUrls}{Character vector. Reddit thread urls to collect data from.}
 

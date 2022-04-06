@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.30.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.31.0</span>
       </span>
     </div>
 
@@ -43,7 +43,7 @@
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-book"></span>
      
     Articles
@@ -111,10 +111,19 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.30.6" id="vosonsml-0306">vosonSML 0.30.6<a class="anchor" aria-label="anchor" href="#vosonsml-0306"></a></h2>
+<h2 class="page-header" data-toc-text="0.31.0" id="vosonsml-0310">vosonSML 0.31.0<a class="anchor" aria-label="anchor" href="#vosonsml-0310"></a></h2>
 <div class="section level3">
-<h3 id="minor-changes-0-30-6">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-30-6"></a></h3>
-<ul><li>Updated standard package documentation, added citation and README.Rmd.</li>
+<h3 id="bug-fixes-0-31-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-31-0"></a></h3>
+<ul><li>Incorrectly ordered tweets by <code>status ID</code> to summarise collected tweet range. The <code>Min ID</code> and <code>Max ID</code> are not necessarily the earliest and latest tweet in the tweets collected and therefore not ideal for subsequent collections. Instead the two <code>Earliest Obs</code> and two <code>Latest Obs</code> tweets as returned by the <code>Twitter API</code> are now reported.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="major-changes-0-31-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-31-0"></a></h3>
+<ul><li>Added <code>enpoint</code> parameter to <code>Collect</code>, allowing <code>search</code> or <code>timeline</code> to be specified for a <code>twitter</code> data collection.</li>
+<li>The <code>timeline</code> collection accepts a <code>users</code> vector of user names or ID’s or a mixture of both, and</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-changes-0-31-0">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-31-0"></a></h3>
+<ul><li>Updated standard package documentation, added citation, code of conduct and README.Rmd.</li>
 </ul></div>
 </div>
     <div class="section level2">

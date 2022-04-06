@@ -1,38 +1,39 @@
 #' @title Collect comments data for YouTube videos
 #'
-#' @description This function collects public comments data for one or more YouTube videos using the YouTube Data API
-#' v3 and structures the data into a dataframe with the class names \code{"datasource"} and \code{"youtube"}.
+#' @description This function collects public comments data for one or more YouTube videos using the YouTube Data API v3
+#'   and structures the data into a dataframe with the class names \code{"datasource"} and \code{"youtube"}.
 #'
-#' YouTube has a quota unit system as a rate limit with most developers having either 10,000 or 1,000,000 units per
-#' day. Many read operations cost a base of 1 unit such as retrieving individual comments, plus 1 or 2 units for text
-#' snippets. Retrieving threads or top-level comments with text costs 3 units per request (maximum 100 comments per
-#' request). Using this function a video with 250 top-level comments and 10 of those having reply comments of up to 100
-#' each, should cost (9 + 20) 29 quota units and return between 260 and 1260 total comments. There is currently a limit
-#' of 100 reply comments collected per top-level comment.
+#'   YouTube has a quota unit system as a rate limit with most developers having either 10,000 or 1,000,000 units per
+#'   day. Many read operations cost a base of 1 unit such as retrieving individual comments, plus 1 or 2 units for text
+#'   snippets. Retrieving threads or top-level comments with text costs 3 units per request (maximum 100 comments per
+#'   request). Using this function a video with 250 top-level comments and 10 of those having reply comments of up to
+#'   100 each, should cost (9 + 20) 29 quota units and return between 260 and 1260 total comments. There is currently a
+#'   limit of 100 reply comments collected per top-level comment.
 #'
-#' More information about the YouTube Data API v3 can be found here:
-#' \url{https://developers.google.com/youtube/v3/getting-started}
+#'   More information about the YouTube Data API v3 can be found here:
+#'   \url{https://developers.google.com/youtube/v3/getting-started}
 #'
 #' @note Due to specifications of the YouTube Data API it is currently not efficient to specify the exact number of
-#' comments to return from the API using \code{maxComments} parameter. The \code{maxComments} parameter is applied to
-#' top-level comments only and not the replies to these comments. As such the number of comments collected is usually
-#' greater than expected. For example, if \code{maxComments} is set to 10 and one of the videos 10 top-level comments
-#' has 5 reply comments then the total number of comments collected will be 15 for that video. Comments data for
-#' multiple YouTube videos can be requested in a single operation, \code{maxComments} is applied to each individual
-#' video and not the combined total of comments.
+#'   comments to return from the API using \code{maxComments} parameter. The \code{maxComments} parameter is applied to
+#'   top-level comments only and not the replies to these comments. As such the number of comments collected is usually
+#'   greater than expected. For example, if \code{maxComments} is set to 10 and one of the videos 10 top-level comments
+#'   has 5 reply comments then the total number of comments collected will be 15 for that video. Comments data for
+#'   multiple YouTube videos can be requested in a single operation, \code{maxComments} is applied to each individual
+#'   video and not the combined total of comments.
 #'
-#' To help extract video ids for videos the function \code{\link{GetYoutubeVideoIDs}} can be used. It accepts input of
-#' a vector or file containing video urls and creates a chracter vector suitable as input for the \code{videoIDs}
-#' parameter.
+#'   To help extract video ids for videos the function \code{\link{GetYoutubeVideoIDs}} can be used. It accepts input of
+#'   a vector or file containing video urls and creates a chracter vector suitable as input for the \code{videoIDs}
+#'   parameter.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"youtube"}.
+#' @param endpoint API endpoint. Not used in this method.
 #' @param videoIDs Character vector. Specifies one or more YouTube video IDs. For example, if the video URL is
-#' \code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use \code{videoIDs = c("xxxxxxxxxxx")}.
+#'   \code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use \code{videoIDs = c("xxxxxxxxxxx")}.
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{FALSE}.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
-#' @param maxComments Numeric integer. Specifies how many top-level comments to collect from each video. This value
-#' does not consider replies to top-level comments. The total number of comments returned for a video will usually be
-#' greater than \code{maxComments} depending on the number of reply comments present.
+#' @param maxComments Numeric integer. Specifies how many top-level comments to collect from each video. This value does
+#'   not consider replies to top-level comments. The total number of comments returned for a video will usually be
+#'   greater than \code{maxComments} depending on the number of reply comments present.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
 #' @return A tibble object with class names \code{"datasource"} and \code{"youtube"}.
@@ -51,12 +52,12 @@
 #' @export
 Collect.youtube <-
   function(credential,
-           videoIDs,
+           endpoint,
+           videoIDs = c(),
            verbose = FALSE,
            writeToFile = FALSE,
            maxComments = 1e10,
            ...) {
-    # 10000000000000
 
     cat("Collecting comment threads for YouTube videos...\n")
     flush.console()

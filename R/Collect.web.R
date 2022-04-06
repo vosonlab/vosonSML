@@ -1,15 +1,16 @@
 #' @title Collect hyperlinks from web pages
 #'
-#' @description Collects hyperlinks from web pages and structures the data into a dataframe with the
-#' class names \code{"datasource"} and \code{"web"}.
+#' @description Collects hyperlinks from web pages and structures the data into a dataframe with the class names
+#'   \code{"datasource"} and \code{"web"}.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"web"}.
+#' @param endpoint API endpoint. Not used in this method.
 #' @param pages Dataframe. Dataframe of web pages to crawl. The dataframe must have the columns \code{page} (character),
-#' \code{type} (character) and \code{max_depth} (integer). Each row is a seed web page to crawl, with the \code{page}
-#' value being the page URL. The \code{type} value is type of crawl as either \code{"int"}, \code{"ext"} or
-#' \code{"all"}, directing the crawler to follow only internal links, follow only external links (different domain to
-#' the seed page) or follow all links.
-#' The \code{max_depth} value determines how many levels of hyperlinks to follow from the seed site.
+#'   \code{type} (character) and \code{max_depth} (integer). Each row is a seed web page to crawl, with the \code{page}
+#'   value being the page URL. The \code{type} value is type of crawl as either \code{"int"}, \code{"ext"} or
+#'   \code{"all"}, directing the crawler to follow only internal links, follow only external links (different domain to
+#'   the seed page) or follow all links. The \code{max_depth} value determines how many levels of hyperlinks to follow
+#'   from the seed site.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
@@ -30,7 +31,8 @@
 #' @export
 Collect.web <-
   function(credential,
-           pages,
+           endpoint,
+           pages = data.frame(),
            writeToFile = FALSE,
            verbose = TRUE,
            ...) {
