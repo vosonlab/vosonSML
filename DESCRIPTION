@@ -33,7 +33,6 @@ Suggests:
     tictoc,
     tidytext,
     urltools,
-    voson.tcn,
     xml2
 Depends: R (>= 3.6)
 Encoding: UTF-8
@@ -53,7 +52,7 @@ Authors@R: c(
 Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
 License: GPL (>= 3)
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 NeedsCompilation: no
 VignetteBuilder: knitr
 URL: https://github.com/vosonlab/vosonSML

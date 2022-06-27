@@ -1,12 +1,13 @@
 #' @title Collect tweet data from twitter timelines
 #'
 #' @description This function collects user timeline tweets and structures the data into a dataframe with the class
-#'   names \code{"datasource"} and \code{"twitter"}. A maximum of 3,200 tweets can be retrieved per user.
+#'   names \code{"datasource"} and \code{"twitter"}. The Twitter API limits collection to a maximum of 3,200 of the most
+#'   recent timeline tweets per user.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"twitter"}.
 #' @param endpoint API endpoint.
 #' @param users Character vector. Specifies one or more twitter users. Can be user names, user ids or a mixture.
-#' @param numTweets Numeric. Specifies how many tweets to be collected per user. Defaults is \code{100}.
+#' @param numTweets Numeric vector. Specifies how many tweets to be collected per user. Defaults to single value of \code{100}.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{FALSE}.
 #' @inheritDotParams rtweet::get_timeline -token -user -n -max_id -home
@@ -18,7 +19,7 @@ Collect.timeline.twitter <-
   function(credential,
            endpoint,
            users = c(),
-           numTweets = 100,
+           numTweets = c(100),
            writeToFile = FALSE,
            verbose = FALSE,
            ...) {
@@ -36,11 +37,21 @@ Collect.timeline.twitter <-
       )
     }
 
+    if (!is.vector(users) || length(users) < 1) {
+      stop("Please provide a vector of one or more users.",
+           call. = FALSE)
+    }
+
+    if (!is.numeric(numTweets) || numTweets < 1 || numTweets > 3200) {
+      stop("Please provide a value for numTweets between 1 and 3200.",
+           call. = FALSE)
+    }
+
     tl_params <- list()
     tl_params[['token']] <- authToken
 
-    tl_params['user'] <- users
-    tl_params['n'] <- numTweets
+    tl_params[['user']] <- users
+    tl_params[['n']] <- numTweets
     tl_params['verbose'] <- verbose
 
     # additional twitter api params

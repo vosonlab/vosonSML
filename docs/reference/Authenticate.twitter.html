@@ -130,62 +130,77 @@ multiple users to access the twitter API with vosonSML via a single developer ac
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for twitter</span>
-<span class="fu"><a href="Authenticate.html">Authenticate</a></span><span class="op">(</span>
-  <span class="va">socialmedia</span>,
-  <span class="va">appName</span>,
-  <span class="va">apiKey</span>,
-  <span class="va">apiSecret</span>,
-  <span class="va">accessToken</span>,
-  <span class="va">accessTokenSecret</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for twitter</span></span>
+<span><span class="fu"><a href="Authenticate.html">Authenticate</a></span><span class="op">(</span></span>
+<span>  <span class="va">socialmedia</span>,</span>
+<span>  <span class="va">appName</span>,</span>
+<span>  <span class="va">apiKey</span>,</span>
+<span>  <span class="va">apiSecret</span>,</span>
+<span>  <span class="va">accessToken</span>,</span>
+<span>  <span class="va">accessTokenSecret</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>socialmedia</dt>
 <dd><p>Character string. Identifier for social media API to authenticate, set to <code>"twitter"</code>.</p></dd>
+
+
 <dt>appName</dt>
 <dd><p>Character string. Registered twitter app name associated with the API keys.</p></dd>
+
+
 <dt>apiKey</dt>
 <dd><p>Character string. API consumer key to authenticate.</p></dd>
+
+
 <dt>apiSecret</dt>
 <dd><p>Character string. API consumer secret to authenticate.</p></dd>
+
+
 <dt>accessToken</dt>
 <dd><p>Character string. API access token to authenticate.</p></dd>
+
+
 <dt>accessTokenSecret</dt>
 <dd><p>Character string. API access token secret to authenticate.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters passed to function. Not used in this method.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>credential</code> object containing an access token <code>$auth</code> and social media type descriptor
+    
+
+<p>A <code>credential</code> object containing an access token <code>$auth</code> and social media type descriptor
 <code>$socialmedia</code> set to <code>"twitter"</code>. Object has the class names <code>"credential"</code> and <code>"twitter"</code>.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># twitter authentication using developer app API keys</span></span>
-<span class="r-in"><span class="va">myDevKeys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>appName <span class="op">=</span> <span class="st">"My App"</span>, apiKey <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span>,</span>
-<span class="r-in">  apiSecret <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span>, accessToken <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span>,</span>
-<span class="r-in">  accessTokenSecret <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">twitterAuth</span> <span class="op">&lt;-</span> <span class="fu"><a href="Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"twitter"</span>, appName <span class="op">=</span> <span class="va">myDevKeys</span><span class="op">$</span><span class="va">appName</span>,</span>
-<span class="r-in">  apiKey <span class="op">=</span> <span class="va">myDevKeys</span><span class="op">$</span><span class="va">apiKey</span>, apiSecret <span class="op">=</span> <span class="va">myDevKeys</span><span class="op">$</span><span class="va">apiSecret</span>, accessToken <span class="op">=</span> <span class="va">myDevKeys</span><span class="op">$</span><span class="va">accessToken</span>,</span>
-<span class="r-in">  accessTokenSecret <span class="op">=</span> <span class="va">myDevKeys</span><span class="op">$</span><span class="va">accessTokenSecret</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># twitter authentication via authorization of an app to their user account</span></span>
-<span class="r-in"><span class="co"># requires the apps consumer API keys</span></span>
-<span class="r-in"><span class="co"># apiKey and apiSecret parameters are equivalent to the apps consumer key and secret</span></span>
-<span class="r-in"><span class="co"># will open a web browser to twitter prompting the user to log in and authorize the app</span></span>
-<span class="r-in"><span class="va">twitterAuth</span> <span class="op">&lt;-</span> <span class="fu"><a href="Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"twitter"</span>, appName <span class="op">=</span> <span class="st">"An App"</span>,</span>
-<span class="r-in">  apiKey <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span>, apiSecret <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># twitter authentication using developer app API keys</span></span></span>
+<span class="r-in"><span><span class="va">myDevKeys</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>appName <span class="op">=</span> <span class="st">"My App"</span>, apiKey <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span>,</span></span>
+<span class="r-in"><span>  apiSecret <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span>, accessToken <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span>,</span></span>
+<span class="r-in"><span>  accessTokenSecret <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">twitterAuth</span> <span class="op">&lt;-</span> <span class="fu"><a href="Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"twitter"</span>, appName <span class="op">=</span> <span class="va">myDevKeys</span><span class="op">$</span><span class="va">appName</span>,</span></span>
+<span class="r-in"><span>  apiKey <span class="op">=</span> <span class="va">myDevKeys</span><span class="op">$</span><span class="va">apiKey</span>, apiSecret <span class="op">=</span> <span class="va">myDevKeys</span><span class="op">$</span><span class="va">apiSecret</span>, accessToken <span class="op">=</span> <span class="va">myDevKeys</span><span class="op">$</span><span class="va">accessToken</span>,</span></span>
+<span class="r-in"><span>  accessTokenSecret <span class="op">=</span> <span class="va">myDevKeys</span><span class="op">$</span><span class="va">accessTokenSecret</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># twitter authentication via authorization of an app to their user account</span></span></span>
+<span class="r-in"><span><span class="co"># requires the apps consumer API keys</span></span></span>
+<span class="r-in"><span><span class="co"># apiKey and apiSecret parameters are equivalent to the apps consumer key and secret</span></span></span>
+<span class="r-in"><span><span class="co"># will open a web browser to twitter prompting the user to log in and authorize the app</span></span></span>
+<span class="r-in"><span><span class="va">twitterAuth</span> <span class="op">&lt;-</span> <span class="fu"><a href="Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"twitter"</span>, appName <span class="op">=</span> <span class="st">"An App"</span>,</span></span>
+<span class="r-in"><span>  apiKey <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span>, apiSecret <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -200,7 +215,7 @@ multiple users to access the twitter API with vosonSML via a single developer ac
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

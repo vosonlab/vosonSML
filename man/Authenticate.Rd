@@ -8,7 +8,7 @@ Authenticate(socialmedia, ...)
 }
 \arguments{
 \item{socialmedia}{Character string. Identifier for social media API to authenticate with. Supported social media
-are \code{"twitter"}, \code{"youtube"} and \code{"reddit"}.}
+are \code{"twitter"}, \code{"youtube"}, \code{"reddit"} and \code{"web"}.}
 
 \item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social media
 API access.}
@@ -20,5 +20,5 @@ access token or key, and a class name identifying the social media that grants a
 the first step of the \code{Authenticate}, \code{\link{Collect}} and \code{\link{Create}} workflow.
 
 Refer to \code{\link{Authenticate.twitter}}, \code{\link{Authenticate.youtube}} and
-\code{\link{Authenticate.reddit}} for parameters and usage.
+\code{\link{Authenticate.reddit}}, \code{\link{Authenticate.web}} for parameters and usage.
 }

@@ -8,7 +8,7 @@
   credential,
   endpoint,
   users = c(),
-  numTweets = 100,
+  numTweets = c(100),
   writeToFile = FALSE,
   verbose = FALSE,
   ...
@@ -21,7 +21,7 @@
 
 \item{users}{Character vector. Specifies one or more twitter users. Can be user names, user ids or a mixture.}
 
-\item{numTweets}{Numeric. Specifies how many tweets to be collected per user. Defaults is \code{100}.}
+\item{numTweets}{Numeric vector. Specifies how many tweets to be collected per user. Defaults to single value of \code{100}.}
 
 \item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
 
@@ -44,5 +44,6 @@ A data.frame object with class names \code{"datasource"} and \code{"twitter"}.
 }
 \description{
 This function collects user timeline tweets and structures the data into a dataframe with the class
-names \code{"datasource"} and \code{"twitter"}. A maximum of 3,200 tweets can be retrieved per user.
+names \code{"datasource"} and \code{"twitter"}. The Twitter API limits collection to a maximum of 3,200 of the most
+recent timeline tweets per user.
 }

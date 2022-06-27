@@ -2,7 +2,7 @@
 #'
 #' @description Network is supplemented with additional social media text data applied as node or edge attributes.
 #'
-#' @note Supports all \code{activity} and \code{actor} networks. Refer to \code{\link{AddText.activity.reddit}} and
+#' @note Supports social media \code{activity} and \code{actor} networks. Refer to \code{\link{AddText.activity.reddit}} and
 #' \code{\link{AddText.actor.reddit}} for additional reddit parameters. Refer to \code{\link{AddText.actor.youtube}}
 #' for additional YouTube actor network parameters.
 #'

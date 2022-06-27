@@ -128,68 +128,95 @@ this.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for semantic.twitter</span>
-<span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span>
-  <span class="va">datasource</span>,
-  <span class="va">type</span>,
-  removeTermsOrHashtags <span class="op">=</span> <span class="cn">NULL</span>,
-  stopwords <span class="op">=</span> <span class="cn">TRUE</span>,
-  stopwordsLang <span class="op">=</span> <span class="st">"en"</span>,
-  stopwordsSrc <span class="op">=</span> <span class="st">"smart"</span>,
-  removeNumbers <span class="op">=</span> <span class="cn">TRUE</span>,
-  removeUrls <span class="op">=</span> <span class="cn">TRUE</span>,
-  termFreq <span class="op">=</span> <span class="fl">5</span>,
-  hashtagFreq <span class="op">=</span> <span class="fl">50</span>,
-  assoc <span class="op">=</span> <span class="st">"limited"</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for semantic.twitter</span></span>
+<span><span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span></span>
+<span>  <span class="va">datasource</span>,</span>
+<span>  <span class="va">type</span>,</span>
+<span>  removeTermsOrHashtags <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  stopwords <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  stopwordsLang <span class="op">=</span> <span class="st">"en"</span>,</span>
+<span>  stopwordsSrc <span class="op">=</span> <span class="st">"smart"</span>,</span>
+<span>  removeNumbers <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  removeUrls <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  termFreq <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  hashtagFreq <span class="op">=</span> <span class="fl">50</span>,</span>
+<span>  assoc <span class="op">=</span> <span class="st">"limited"</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>datasource</dt>
 <dd><p>Collected social media data with <code>"datasource"</code> and <code>"twitter"</code> class names.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>Character string. Type of network to be created, set to <code>"semantic"</code>.</p></dd>
+
+
 <dt>removeTermsOrHashtags</dt>
 <dd><p>Character vector. Words or hashtags to remove from the semantic network. For example,
 this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
 nodes with matching name. Default is <code>NULL</code> to remove none.</p></dd>
+
+
 <dt>stopwords</dt>
 <dd><p>Logical. Removes stopwords from the tweet data. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>stopwordsLang</dt>
 <dd><p>Character string. Language of stopwords to use. Refer to the <span class="pkg">stopwords</span> package for
 further information on supported languages. Default is <code>"en"</code>.</p></dd>
+
+
 <dt>stopwordsSrc</dt>
 <dd><p>Character string. Source of stopwords list. Refer to the <span class="pkg">stopwords</span> package for
 further information on supported sources. Default is <code>"smart"</code>.</p></dd>
+
+
 <dt>removeNumbers</dt>
 <dd><p>Logical. Removes whole numerical tokens from the tweet text. For example, a year value
 such as <code>2020</code> will be removed but not mixed values such as <code>G20</code>. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>removeUrls</dt>
 <dd><p>Logical. Removes twitter shortened URL tokens from the tweet text. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>termFreq</dt>
 <dd><p>Numeric integer. Specifies the percentage of most frequent words to include. For example,
 <code>termFreq = 20</code> means that the 20 percent most frequently occurring <code>words</code> will be included in the
 semantic network as nodes. A larger percentage will increase the number of nodes and therefore the size of graph.
 The default value is <code>5</code>, meaning the top 5 percent most frequent words are used.</p></dd>
+
+
 <dt>hashtagFreq</dt>
 <dd><p>Numeric integer. Specifies the percentage of most frequent <code>hashtags</code> to include. For
 example, <code>hashtagFreq = 20</code> means that the 20 percent most frequently occurring hashtags will be included
 in the semantic network as nodes. The default value is <code>50</code>.</p></dd>
+
+
 <dt>assoc</dt>
 <dd><p>Character string. Association of nodes. A value of <code>"limited"</code> includes only edges between
 most frequently occurring hashtags and terms. A value of <code>"full"</code> includes ties between most frequently
 occurring hashtags and terms, hashtags and hashtags, and terms and terms. Default is <code>"limited"</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical. Output additional information about the network creation. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters passed to function. Not used in this method.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Network as a named list of two dataframes containing <code>$nodes</code> and <code>$edges</code>.</p>
+    
+
+<p>Network as a named list of two dataframes containing <code>$nodes</code> and <code>$edges</code>.</p>
     </div>
     <div id="note">
     <h2>Note</h2>
@@ -210,22 +237,22 @@ them occurring in tweet text with other top percentage frequency terms.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># twitter semantic network creation additionally requires the tidyr, tidytext and stopwords packages</span></span>
-<span class="r-in"><span class="co"># for working with text data</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tidyr"</span>, <span class="st">"tidytext"</span>, <span class="st">"stopwords"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># create a twitter semantic network graph removing the hashtag '#auspol' and using the</span></span>
-<span class="r-in"><span class="co"># top 2% frequently occurring words and 10% most frequently occurring hashtags as nodes</span></span>
-<span class="r-in"><span class="va">semanticNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">                   <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"semantic"</span>, removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span>,</span>
-<span class="r-in">                          termFreq <span class="op">=</span> <span class="fl">2</span>, hashtagFreq <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># network</span></span>
-<span class="r-in"><span class="co"># semanticNetwork$nodes</span></span>
-<span class="r-in"><span class="co"># semanticNetwork$edges</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># twitter semantic network creation additionally requires the tidyr, tidytext and stopwords packages</span></span></span>
+<span class="r-in"><span><span class="co"># for working with text data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tidyr"</span>, <span class="st">"tidytext"</span>, <span class="st">"stopwords"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create a twitter semantic network graph removing the hashtag '#auspol' and using the</span></span></span>
+<span class="r-in"><span><span class="co"># top 2% frequently occurring words and 10% most frequently occurring hashtags as nodes</span></span></span>
+<span class="r-in"><span><span class="va">semanticNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>                   <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"semantic"</span>, removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                          termFreq <span class="op">=</span> <span class="fl">2</span>, hashtagFreq <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># network</span></span></span>
+<span class="r-in"><span><span class="co"># semanticNetwork$nodes</span></span></span>
+<span class="r-in"><span><span class="co"># semanticNetwork$edges</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -240,7 +267,7 @@ them occurring in tweet text with other top percentage frequency terms.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

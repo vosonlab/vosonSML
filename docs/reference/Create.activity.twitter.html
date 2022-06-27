@@ -122,45 +122,56 @@ and will be isolates.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for activity.twitter</span>
-<span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="va">datasource</span>, <span class="va">type</span>, rmEdgeTypes <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for activity.twitter</span></span>
+<span><span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="va">datasource</span>, <span class="va">type</span>, rmEdgeTypes <span class="op">=</span> <span class="cn">NULL</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>datasource</dt>
 <dd><p>Collected social media data with <code>"datasource"</code> and <code>"twitter"</code> class names.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>Character string. Type of network to be created, set to <code>"activity"</code>.</p></dd>
+
+
 <dt>rmEdgeTypes</dt>
 <dd><p>Character vector. List of tweet edge types to remove from network. Options are <code>"tweet"</code>,
 <code>"retweet"</code>, <code>"reply"</code> and <code>"quote"</code>. Default is <code>NULL</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical. Output additional information about the network creation. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters passed to function. Not used in this method.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Network as a named list of two dataframes containing <code>$nodes</code> and <code>$edges</code>.</p>
+    
+
+<p>Network as a named list of two dataframes containing <code>$nodes</code> and <code>$edges</code>.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># create a twitter activity network with retweets removed</span></span>
-<span class="r-in"><span class="va">activity_net</span> <span class="op">&lt;-</span> <span class="va">twitter_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span>, rmEdgeTypes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"retweet"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># network nodes and edges</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">activity_net</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># "nodes", "edges"</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">activity_net</span><span class="op">$</span><span class="va">nodes</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># "status_id", "author_id", "author_screen_name", "created_at"</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">activity_net</span><span class="op">$</span><span class="va">edges</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># "from", "to", "user_id", "screen_name", "created_at", "edge_type"</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># create a twitter activity network with retweets removed</span></span></span>
+<span class="r-in"><span><span class="va">activity_net</span> <span class="op">&lt;-</span> <span class="va">twitter_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span>, rmEdgeTypes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"retweet"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># network nodes and edges</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">activity_net</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># "nodes", "edges"</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">activity_net</span><span class="op">$</span><span class="va">nodes</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># "status_id", "author_id", "author_screen_name", "created_at"</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">activity_net</span><span class="op">$</span><span class="va">edges</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># "from", "to", "user_id", "screen_name", "created_at", "edge_type"</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -175,7 +186,7 @@ and will be isolates.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

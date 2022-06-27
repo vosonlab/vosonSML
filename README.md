@@ -84,11 +84,12 @@ saveRDS(twitter_auth, file = "~/.twitter_oauth1.0a")
 twitter_auth <- readRDS("~/.twitter_oauth1.0a")
 ```
 
-#### Collect tweets for the #auspol hashtag
+#### Collect tweets using a search or from user timelines
 
-`Collect` can be used to perform a twitter search with a search term.
-The following example collects 100 `recent` tweets for the hashtag
-`#auspol` and creates a dataframe with the collected tweet data.
+`Collect` can be used to perform a twitter search with a search term or
+collect tweets from timelines using user names. The following example
+collects 100 `recent` tweets for the hashtag `#auspol` and creates a
+dataframe with the collected tweet data.
 
 ``` r
 # collect 100 recent tweets for the hashtag #auspol
@@ -105,17 +106,44 @@ twitter_data <- twitter_auth %>%
 # Search term: #auspol
 # Requested 100 tweets of 18000 in this search rate limit.
 # Less tweets requested than remaining limit retryOnRateLimit set to FALSE.
-# Rate limit reset: 2021-06-21 12:30:34
-# 
-# tweet    | status_id           | created             | screen_name   
-# ---------------------------------------------------------------------
-# Min ID   | 1406797594622251009 | 2021-06-21 02:14:18 | rxxxxxxxxxxxxx
-# Max ID   | 1406797912982523908 | 2021-06-21 02:15:34 | jxxxxxxx      
-# Last Obs | 1406797594622251009 | 2021-06-21 02:14:18 | rxxxxxxxxxxxxx
+# Rate limit reset: 2022-06-26 22:01:16
+
+# tweet        | status_id           | created             | screen_name  
+# ------------------------------------------------------------------------
+# Latest Obs   | 1541025025230536706 | 2022-06-26 11:46:11 | cxxxxxxxxxxj
+#              | 1541024998550380544 | 2022-06-26 11:46:05 | Txxxxxxxxd
+#              | 1541013838601920513 | 2022-06-26 11:01:44 | Cxxxxxxxxxx0
+# Earliest Obs | 1541013673325449216 | 2022-06-26 11:01:05 | sxxxxxxxxxxe
 # Collected 100 tweets.
 # Done.
-# Elapsed time: 0 hrs 0 mins 1 secs (1.42)
 ```
+
+The next example collects the 100 most recents tweets from the
+`@vosonlab` twitter account. Note that this method requires the
+`endpoint = "timeline"` parameter.
+
+``` r
+# collect 100 timeline tweets for @vosonlab
+twitter_data <- my_twitter_auth %>%
+  Collect(endpoint = "timeline",
+          users = "vosonlab",
+          numTweets = 100,
+          verbose = TRUE)
+
+# Collecting timeline tweets for users...
+#
+# tweet        | status_id           | created             | screen_name
+# ----------------------------------------------------------------------
+# Latest Obs   | 1532653021280468992 | 2022-06-03 09:18:50 | vosonlab
+#              | 1524954513664159744 | 2022-05-13 03:27:42 | vosonlab
+#              | 1263251756907024384 | 2020-05-20 23:34:23 | vosonlab
+# Earliest Obs | 1261151247731548162 | 2020-05-15 04:27:43 | vosonlab
+# Collected 100 tweets.
+# Done.
+```
+
+The output for these methods also lists the 2 earliest and 2 latest
+tweets collected as well as the number of tweets collected.
 
 #### Create twitter activity, actor, semantic and 2-mode network graphs
 

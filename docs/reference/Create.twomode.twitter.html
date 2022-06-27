@@ -124,57 +124,70 @@ this function requires the additional installation of the <span class="pkg">tidy
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for twomode.twitter</span>
-<span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span>
-  <span class="va">datasource</span>,
-  <span class="va">type</span>,
-  removeTermsOrHashtags <span class="op">=</span> <span class="cn">NULL</span>,
-  weighted <span class="op">=</span> <span class="cn">TRUE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for twomode.twitter</span></span>
+<span><span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span></span>
+<span>  <span class="va">datasource</span>,</span>
+<span>  <span class="va">type</span>,</span>
+<span>  removeTermsOrHashtags <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  weighted <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>datasource</dt>
 <dd><p>Collected social media data with <code>"datasource"</code> and <code>"twitter"</code> class names.</p></dd>
+
+
 <dt>type</dt>
 <dd><p>Character string. Type of network to be created, set to <code>"twomode"</code>.</p></dd>
+
+
 <dt>removeTermsOrHashtags</dt>
 <dd><p>Character vector. Users or hashtags to remove from the twomode network. For example,
 this parameter could be used to remove the user or hashtag that was used to collect the data by removing any
 nodes with matching name. Default is <code>NULL</code> to remove none.</p></dd>
+
+
 <dt>weighted</dt>
 <dd><p>Logical. Add weights to network edges. If set to <code>FALSE</code> tweet <code>status_id</code> and
 <code>created_at</code> fields will be preserved for edges in the dataframe. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical. Output additional information about the network creation. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters passed to function. Not used in this method.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Network as a named list of two dataframes containing <code>$nodes</code> and <code>$edges</code>.</p>
+    
+
+<p>Network as a named list of two dataframes containing <code>$nodes</code> and <code>$edges</code>.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># twitter 2-mode network creation additionally requires the tidytext package</span></span>
-<span class="r-in"><span class="co"># for working with text data</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidytext"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># create a twitter 2-mode network graph removing the hashtag '#auspol' as it was used in</span></span>
-<span class="r-in"><span class="co"># the twitter search query</span></span>
-<span class="r-in"><span class="va">twomodeNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">                  <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"twomode"</span>, removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># network</span></span>
-<span class="r-in"><span class="co"># twomodeNetwork$nodes</span></span>
-<span class="r-in"><span class="co"># twomodeNetwork$edges</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># twitter 2-mode network creation additionally requires the tidytext package</span></span></span>
+<span class="r-in"><span><span class="co"># for working with text data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidytext"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create a twitter 2-mode network graph removing the hashtag '#auspol' as it was used in</span></span></span>
+<span class="r-in"><span><span class="co"># the twitter search query</span></span></span>
+<span class="r-in"><span><span class="va">twomodeNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>                  <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"twomode"</span>, removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># network</span></span></span>
+<span class="r-in"><span><span class="co"># twomodeNetwork$nodes</span></span></span>
+<span class="r-in"><span><span class="co"># twomodeNetwork$edges</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -189,7 +202,7 @@ nodes with matching name. Default is <code>NULL</code> to remove none.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>

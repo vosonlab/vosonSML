@@ -118,23 +118,27 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for web</span>
-<span class="fu"><a href="Collect.html">Collect</a></span><span class="op">(</span>
-  <span class="va">credential</span>,
-  <span class="va">endpoint</span>,
-  pages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span>,
-  writeToFile <span class="op">=</span> <span class="cn">FALSE</span>,
-  verbose <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for web</span></span>
+<span><span class="fu"><a href="Collect.html">Collect</a></span><span class="op">(</span></span>
+<span>  <span class="va">credential</span>,</span>
+<span>  <span class="va">endpoint</span>,</span>
+<span>  pages <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  writeToFile <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>credential</dt>
 <dd><p>A <code>credential</code> object generated from <code>Authenticate</code> with class name <code>"web"</code>.</p></dd>
+
+
 <dt>endpoint</dt>
 <dd><p>API endpoint. Not used in this method.</p></dd>
+
+
 <dt>pages</dt>
 <dd><p>Dataframe. Dataframe of web pages to crawl. The dataframe must have the columns <code>page</code> (character),
 <code>type</code> (character) and <code>max_depth</code> (integer). Each row is a seed web page to crawl, with the <code>page</code>
@@ -142,30 +146,39 @@ value being the page URL. The <code>type</code> value is type of crawl as either
 <code>"all"</code>, directing the crawler to follow only internal links, follow only external links (different domain to
 the seed page) or follow all links. The <code>max_depth</code> value determines how many levels of hyperlinks to follow
 from the seed site.</p></dd>
+
+
 <dt>writeToFile</dt>
 <dd><p>Logical. Write collected data to file. Default is <code>FALSE</code>.</p></dd>
+
+
 <dt>verbose</dt>
 <dd><p>Logical. Output additional information about the data collection. Default is <code>TRUE</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters passed to function. Not used in this method.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>data.frame</code> object with class names <code>"datasource"</code> and <code>"web"</code>.</p>
+    
+
+<p>A <code>data.frame</code> object with class names <code>"datasource"</code> and <code>"web"</code>.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="va">pages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>page <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"http://vosonlab.net"</span>,</span>
-<span class="r-in">                             <span class="st">"https://rsss.cass.anu.edu.au"</span><span class="op">)</span>,</span>
-<span class="r-in">                    type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"int"</span>, <span class="st">"all"</span><span class="op">)</span>,</span>
-<span class="r-in">                    max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">webData</span> <span class="op">&lt;-</span> <span class="va">webAuth</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span class="r-in">  <span class="fu"><a href="Collect.html">Collect</a></span><span class="op">(</span><span class="va">pages</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="va">pages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>page <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"http://vosonlab.net"</span>,</span></span>
+<span class="r-in"><span>                             <span class="st">"https://rsss.cass.anu.edu.au"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"int"</span>, <span class="st">"all"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                    max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">webData</span> <span class="op">&lt;-</span> <span class="va">webAuth</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Collect.html">Collect</a></span><span class="op">(</span><span class="va">pages</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -180,7 +193,7 @@ from the seed site.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
 </div>
 
       </footer></div>
