@@ -28,7 +28,7 @@ for additional YouTube actor network parameters.
 \examples{
 \dontrun{
 # add text to an activity network
-activityNetwork <- collectData \%>\% Create("activity") \%>\% AddText(collectData)
+activityNetwork <- collectData |> Create("activity") |> AddText(collectData)
 
 # network
 # activityNetwork$nodes

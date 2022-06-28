@@ -27,8 +27,8 @@ Graph <- function(net,
   # https://github.com/igraph/rigraph/pull/250
   # https://github.com/igraph/rigraph/issues/251
   if (is.data.frame(net$nodes) & is.data.frame(net$edges)) {
-    net$nodes %<>% dplyr::mutate_if(lubridate::is.POSIXt, as.character)
-    net$edges %<>% dplyr::mutate_if(lubridate::is.POSIXt, as.character)
+    net$nodes <- net$nodes |> dplyr::mutate_if(lubridate::is.POSIXt, as.character)
+    net$edges <- net$edges |> dplyr::mutate_if(lubridate::is.POSIXt, as.character)
   }
 
   if (any(c("twitter", "youtube", "reddit", "web") %in% class(net)) &

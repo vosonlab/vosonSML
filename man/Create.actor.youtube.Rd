@@ -25,7 +25,7 @@ the videos publisher with top-level comments as directed edges towards them.
 \examples{
 \dontrun{
 # create a YouTube actor network graph
-actorNetwork <- youtubeData \%>\% Create("actor")
+actorNetwork <- youtubeData |> Create("actor")
 
 # network
 # actorNetwork$nodes

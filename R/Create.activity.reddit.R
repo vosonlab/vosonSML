@@ -13,7 +13,7 @@
 #' @examples
 #' \dontrun{
 #' # create a reddit activity network graph
-#' activityNetwork <- redditData %>% Create("activity")
+#' activityNetwork <- redditData |> Create("activity")
 #'
 #' # network
 #' # activityNetwork$nodes
@@ -36,22 +36,22 @@ Create.activity.reddit <-
 
     # would be better with the unique comment fullname ids
     # comment id format <thread_id>.<structure>
-    datasource %<>% dplyr::mutate(comment_id = paste0(.data$thread_id, ".", .data$structure))
+    datasource <- datasource |> dplyr::mutate(comment_id = paste0(.data$thread_id, ".", .data$structure))
 
     # edges
-    df_relations <- datasource %>%
-      dplyr::rename("from" = .data$comment_id) %>%
+    df_relations <- datasource |>
+      dplyr::rename("from" = .data$comment_id) |>
       dplyr::mutate(to = ifelse(
         !grepl("_", .data$structure),
         paste0(.data$thread_id, ".0"),
         gsub("_\\d+$", "", .data$from)
-      )) %>%
-      dplyr::mutate(edge_type = "comment") %>%
+      )) |>
+      dplyr::mutate(edge_type = "comment") |>
       dplyr::select(.data$from, .data$to, .data$edge_type)
 
     # nodes
     df_nodes <-
-      datasource %>% dplyr::select(
+      datasource |> dplyr::select(
         .data$comment_id,
         .data$thread_id,
         .data$comm_id,
@@ -59,36 +59,36 @@ Create.activity.reddit <-
         .data$comm_date_unix,
         .data$subreddit,
         .data$user
-      ) %>%
+      ) |>
       dplyr::rename(
         "id" = .data$comment_id,
         "datetime" = .data$comm_date,
         "ts" = .data$comm_date_unix
-      ) %>%
+      ) |>
       dplyr::mutate(node_type = "comment")
 
     # add thread posts to nodes
     thread_ids <-
-      datasource %>% dplyr::select(
+      datasource |> dplyr::select(
         .data$subreddit,
         .data$author,
         .data$thread_id,
         .data$post_date,
         .data$post_date_unix
-      ) %>%
-      dplyr::mutate(id = paste0(.data$thread_id, ".0")) %>%
-      dplyr::distinct(.data$subreddit, .data$id, .keep_all = TRUE) %>%
+      ) |>
+      dplyr::mutate(id = paste0(.data$thread_id, ".0")) |>
+      dplyr::distinct(.data$subreddit, .data$id, .keep_all = TRUE) |>
       dplyr::rename(
         "user" = .data$author,
         "datetime" = .data$post_date,
         "ts" = .data$post_date_unix
-      ) %>%
+      ) |>
       dplyr::select(.data$id,
                     .data$thread_id,
                     .data$datetime,
                     .data$ts,
                     .data$subreddit,
-                    .data$user) %>%
+                    .data$user) |>
       dplyr::mutate(node_type = "thread")
 
     df_nodes <-

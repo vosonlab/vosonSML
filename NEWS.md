@@ -1,4 +1,4 @@
-# vosonSML 0.31.0
+# vosonSML 0.31.1
 
 ## Bug Fixes
 - Incorrectly ordered tweets by `status ID` to summarise collected tweet range. The `Min ID` and `Max ID` are not necessarily the earliest and latest tweet in the tweets collected and therefore not ideal for subsequent collections. Instead the two `Earliest Obs` and two `Latest Obs` tweets as returned by the `Twitter API` are now reported.
@@ -6,9 +6,11 @@
 ## Major Changes
 - Added `enpoint` parameter to `Collect`, allowing `search` or `timeline` to be specified for a `twitter` data collection. If it is not specified the default is a twitter `search`.
 - The `timeline` collection accepts a `users` vector of user names or ID's or a mixture of both, and will return up to 3,200 of each users most recent tweets.
+- Minimum required version of R has changed from 3.6 to 4.1.
 
 ## Minor Changes
 - Updated standard package documentation, added citation, code of conduct and README.Rmd.
+- Replaced magrittr pipes with native pipe operators.
 
 # vosonSML 0.30.5
 

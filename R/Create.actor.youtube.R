@@ -14,7 +14,7 @@
 #' @examples
 #' \dontrun{
 #' # create a YouTube actor network graph
-#' actorNetwork <- youtubeData %>% Create("actor")
+#' actorNetwork <- youtubeData |> Create("actor")
 #'
 #' # network
 #' # actorNetwork$nodes
@@ -33,21 +33,21 @@ Create.actor.youtube <- function(datasource, type, ...) {
   # nodes are authors and videos, edges are comments and self-loops
 
   parent_authors <-
-    datasource %>% dplyr::select(.data$CommentID, .data$AuthorChannelID) %>%
-    dplyr::distinct(.data$CommentID, .keep_all = TRUE) %>%
+    datasource |> dplyr::select(.data$CommentID, .data$AuthorChannelID) |>
+    dplyr::distinct(.data$CommentID, .keep_all = TRUE) |>
     dplyr::rename("ParentID" = .data$CommentID,
                   "ParentAuthorID" = .data$AuthorChannelID)
 
-  df_relations <- datasource %>%
-    dplyr::left_join(parent_authors, by = c("ParentID")) %>%
+  df_relations <- datasource |>
+    dplyr::left_join(parent_authors, by = c("ParentID")) |>
     dplyr::select(
       .data$AuthorChannelID,
       .data$ParentID,
       .data$ParentAuthorID,
       .data$VideoID,
       .data$CommentID
-    ) %>%
-    dplyr::mutate(edge_type = dplyr::case_when((!is.na(.data$ParentID)) ~ "reply-comment", TRUE ~ "comment")) %>%
+    ) |>
+    dplyr::mutate(edge_type = dplyr::case_when((!is.na(.data$ParentID)) ~ "reply-comment", TRUE ~ "comment")) |>
     dplyr::mutate(
       to = dplyr::if_else(
         .data$edge_type == "reply-comment",
@@ -58,13 +58,13 @@ Create.actor.youtube <- function(datasource, type, ...) {
           as.character(NA)
         )
       )
-    ) %>%
+    ) |>
 
     dplyr::rename(
       "from" = .data$AuthorChannelID,
       "video_id" = .data$VideoID,
       "comment_id" = .data$CommentID
-    ) %>%
+    ) |>
     dplyr::select(.data$from,
                   .data$to,
                   .data$video_id,
@@ -72,19 +72,19 @@ Create.actor.youtube <- function(datasource, type, ...) {
                   .data$edge_type)
 
   df_nodes <-
-    datasource %>% dplyr::select(.data$AuthorChannelID, .data$AuthorDisplayName) %>%
-    dplyr::distinct(.data$AuthorChannelID, .keep_all = TRUE) %>%
-    dplyr::mutate(node_type = "actor") %>%
+    datasource |> dplyr::select(.data$AuthorChannelID, .data$AuthorDisplayName) |>
+    dplyr::distinct(.data$AuthorChannelID, .keep_all = TRUE) |>
+    dplyr::mutate(node_type = "actor") |>
     dplyr::rename("id" = .data$AuthorChannelID,
                   "screen_name" = .data$AuthorDisplayName)
 
   video_ids <-
-    datasource %>% dplyr::distinct(.data$VideoID) %>% dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID)) %>%
+    datasource |> dplyr::distinct(.data$VideoID) |> dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID)) |>
     dplyr::rename(video_id = .data$VideoID)
 
   df_relations <- dplyr::bind_rows(
     df_relations,
-    video_ids %>% dplyr::mutate(
+    video_ids |> dplyr::mutate(
       from = .data$id,
       to = .data$id,
       edge_type = "self-loop",
@@ -92,10 +92,10 @@ Create.actor.youtube <- function(datasource, type, ...) {
     )
   )
 
-  video_ids <- video_ids %>% dplyr::select(-.data$video_id)
+  video_ids <- video_ids |> dplyr::select(-.data$video_id)
 
   if (nrow(video_ids)) {
-    video_ids %<>% dplyr::mutate(node_type = "video")
+    video_ids <- video_ids |> dplyr::mutate(node_type = "video")
     df_nodes <-
       dplyr::bind_rows(df_nodes, dplyr::anti_join(video_ids, df_nodes, by = "id"))
   }

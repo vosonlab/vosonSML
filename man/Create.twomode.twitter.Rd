@@ -48,7 +48,7 @@ install.packages("tidytext")
 
 # create a twitter 2-mode network graph removing the hashtag '#auspol' as it was used in
 # the twitter search query
-twomodeNetwork <- twitterData \%>\%
+twomodeNetwork <- twitterData |>
                   Create("twomode", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
 
 # network

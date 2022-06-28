@@ -33,7 +33,7 @@ differ from the top-level comment author.
 \dontrun{
 # add text to an actor network ignoring references to actors at the beginning of
 # comment text
-activityNetwork <- collectData \%>\% Create("activity") \%>\%
+activityNetwork <- collectData |> Create("activity") |>
                                    AddText(collectData, repliesFromText = FALSE)
 
 # network

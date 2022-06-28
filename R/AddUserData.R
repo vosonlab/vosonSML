@@ -58,8 +58,8 @@ AddUserData.actor.default <- function(net, ...) {
 #' @examples
 #' \dontrun{
 #' # add user info to a twitter actor network
-#' actor_net <- twitter_data %>%
-#'   Create("actor") %>%
+#' actor_net <- twitter_data |>
+#'   Create("actor") |>
 #'   AddUserData(twitter_data,
 #'               lookupUsers = TRUE,
 #'               twitterAuth = twitter_auth)
@@ -100,16 +100,16 @@ AddUserData.actor.twitter <-
 
     dfUsers <- net$nodes
 
-    dfUsers %<>% dplyr::mutate_all(as.character) # changes all col types to character
+    dfUsers <- dfUsers |> dplyr::mutate_all(as.character) # changes all col types to character
 
     df_users_info <-
-      rtweet::users_data(data) %>%
+      rtweet::users_data(data) |>
       dplyr::distinct(.data$user_id, .keep_all = TRUE)
 
-    df_users_info %<>% dplyr::mutate_all(as.character) # changes all col types to character
+    df_users_info <- df_users_info |> dplyr::mutate_all(as.character) # changes all col types to character
 
     df_missing_users <-
-      dplyr::anti_join(dfUsers, df_users_info, by = "user_id") %>%
+      dplyr::anti_join(dfUsers, df_users_info, by = "user_id") |>
       dplyr::distinct(.data$user_id, .keep_all = TRUE)
 
     df_missing_users_info <- NULL
@@ -172,10 +172,10 @@ AddUserData.actor.twitter <-
         dplyr::bind_rows(df_users_info, df_missing_users)
     }
 
-    df_users_info_all %<>% dplyr::rename("display_name" = .data$name) # , "name" = .data$user_id
+    df_users_info_all <- df_users_info_all |> dplyr::rename("display_name" = .data$name) # , "name" = .data$user_id
 
     # numeric value column names in rtweet collected data end with "count"
-    df_users_info_all %<>% dplyr::mutate_at(dplyr::vars(dplyr::ends_with("count")),
+    df_users_info_all <- df_users_info_all |> dplyr::mutate_at(dplyr::vars(dplyr::ends_with("count")),
                                             # funs(ifelse(is.na(.data$.), as.integer(0), as.integer(.data$.)))
                                             list(function(x)
                                               ifelse(is.na(x), as.integer(0), as.integer(x))))

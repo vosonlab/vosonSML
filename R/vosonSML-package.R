@@ -4,7 +4,6 @@
 #' @keywords internal
 "_PACKAGE"
 #' @importFrom data.table data.table setkey ":="
-#' @importFrom magrittr "%>%" "%<>%"
 #' @importFrom methods new
 #' @importFrom rlang ".data" check_installed
 #' @importFrom stats na.omit runif setNames

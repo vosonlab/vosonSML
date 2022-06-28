@@ -104,7 +104,7 @@ can be passed to this function.
 \examples{
 \dontrun{
 # search and collect 100 recent tweets for the hashtag #auspol
-myTwitterData <- twitterAuth \%>\%
+myTwitterData <- twitterAuth |>
   Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100, verbose = TRUE,
           includeRetweets = FALSE, retryOnRateLimit = TRUE, writeToFile = TRUE)
 }

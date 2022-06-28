@@ -13,7 +13,7 @@
 #' @examples
 #' \dontrun{
 #' # create a YouTube activity network graph
-#' activityNetwork <- youtubeData %>% Create("activity")
+#' activityNetwork <- youtubeData |> Create("activity")
 #'
 #' # network
 #' # activityNetwork$nodes
@@ -37,8 +37,8 @@ Create.activity.youtube <-
 
     # edges
     df_relations <-
-      datasource %>% dplyr::select(.data$CommentID, .data$ParentID, .data$VideoID) %>%
-      dplyr::mutate(edge_type = dplyr::case_when((!is.na(.data$ParentID)) ~ "reply-comment", TRUE ~ "comment")) %>%
+      datasource |> dplyr::select(.data$CommentID, .data$ParentID, .data$VideoID) |>
+      dplyr::mutate(edge_type = dplyr::case_when((!is.na(.data$ParentID)) ~ "reply-comment", TRUE ~ "comment")) |>
       dplyr::mutate(
         to = dplyr::if_else(
           .data$edge_type == "reply-comment",
@@ -49,13 +49,13 @@ Create.activity.youtube <-
             as.character(NA)
           )
         )
-      ) %>%
-      dplyr::rename(from = .data$CommentID) %>%
+      ) |>
+      dplyr::rename(from = .data$CommentID) |>
       dplyr::select(.data$from, .data$to, .data$edge_type)
 
     # nodes
     df_nodes <-
-      datasource %>% dplyr::select(
+      datasource |> dplyr::select(
         .data$CommentID,
         .data$VideoID,
         .data$ParentID,
@@ -63,13 +63,13 @@ Create.activity.youtube <-
         .data$UpdatedAt,
         .data$AuthorChannelID,
         .data$AuthorDisplayName
-      ) %>%
+      ) |>
       dplyr::mutate(node_type = dplyr::case_when((!is.na(.data$ParentID)) ~ "reply-comment", TRUE ~ "comment"))
 
     # add unique parent ids not already in node list
     parent_ids <-
-      dplyr::distinct(df_nodes, .data$ParentID) %>% dplyr::filter(!is.na(.data$ParentID)) %>%
-      dplyr::rename(CommentID = .data$ParentID) %>%
+      dplyr::distinct(df_nodes, .data$ParentID) |> dplyr::filter(!is.na(.data$ParentID)) |>
+      dplyr::rename(CommentID = .data$ParentID) |>
       dplyr::mutate(node_type = "comment") # node type for parent ids are comment
 
     if (nrow(parent_ids)) {
@@ -80,7 +80,7 @@ Create.activity.youtube <-
 
     # add unique video ids not already in node list
     video_ids <-
-      dplyr::distinct(df_nodes, .data$VideoID) %>% dplyr::rename(CommentID = .data$VideoID) %>%
+      dplyr::distinct(df_nodes, .data$VideoID) |> dplyr::rename(CommentID = .data$VideoID) |>
       dplyr::mutate(node_type = "video")
     video_ids$CommentID <- paste0("VIDEOID:", video_ids$CommentID)
 
@@ -100,8 +100,8 @@ Create.activity.youtube <-
         .data$AuthorChannelID,
         .data$AuthorDisplayName,
         .data$node_type
-      ) %>%
-      dplyr::mutate_at(dplyr::vars(dplyr::contains("At")), as.character) %>%
+      ) |>
+      dplyr::mutate_at(dplyr::vars(dplyr::contains("At")), as.character) |>
       dplyr::rename(
         id = .data$CommentID,
         video_id = .data$VideoID,
@@ -112,7 +112,7 @@ Create.activity.youtube <-
       )
 
     node_summary <-
-      df_nodes %>% dplyr::group_by(.data$node_type) %>%
+      df_nodes |> dplyr::group_by(.data$node_type) |>
       dplyr::summarise(num = dplyr::n())
 
     for (row in 1:nrow(node_summary)) {

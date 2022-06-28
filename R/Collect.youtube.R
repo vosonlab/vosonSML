@@ -45,7 +45,7 @@
 #'                                  "https://youtu.be/xxxxxxxx"))
 #'
 #' # collect approximately 200 threads/comments for each YouTube video
-#' youtubeData <- youtubeAuth %>%
+#' youtubeData <- youtubeAuth |>
 #'   Collect(videoIDs = videoIDs, writeToFile = TRUE, verbose = FALSE, maxComments = 200)
 #' }
 #'

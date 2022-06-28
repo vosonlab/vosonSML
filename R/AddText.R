@@ -16,7 +16,7 @@
 #' @examples
 #' \dontrun{
 #' # add text to an activity network
-#' activityNetwork <- collectData %>% Create("activity") %>% AddText(collectData)
+#' activityNetwork <- collectData |> Create("activity") |> AddText(collectData)
 #'
 #' # network
 #' # activityNetwork$nodes
@@ -67,22 +67,22 @@ AddText.activity.twitter <- function(net, data, ...) {
 
   net$nodes <- dplyr::left_join(
     net$nodes,
-    dplyr::select(data, .data$quoted_status_id, .data$quoted_text) %>%
+    dplyr::select(data, .data$quoted_status_id, .data$quoted_text) |>
       dplyr::rename(
         status_id = .data$quoted_status_id,
         qtext = .data$quoted_text
-      ) %>%
+      ) |>
       dplyr::distinct(),
     by = "status_id"
   )
 
   net$nodes <- dplyr::left_join(
     net$nodes,
-    dplyr::select(data, .data$retweet_status_id, .data$retweet_text) %>%
+    dplyr::select(data, .data$retweet_status_id, .data$retweet_text) |>
       dplyr::rename(
         status_id = .data$retweet_status_id,
         rtext = .data$retweet_text
-      ) %>%
+      ) |>
       dplyr::distinct(),
     by = "status_id"
   )
@@ -92,8 +92,8 @@ AddText.activity.twitter <- function(net, data, ...) {
       !is.na(.data$text),
       .data$text,
       ifelse(!is.na(.data$qtext), .data$qtext, .data$rtext)
-    )) %>%
-    dplyr::select(-c(.data$qtext, .data$rtext)) %>% dplyr::rename(vosonTxt_tweet = .data$text)
+    )) |>
+    dplyr::select(-c(.data$qtext, .data$rtext)) |> dplyr::rename(vosonTxt_tweet = .data$text)
 
   net$nodes$vosonTxt_tweet <-
     textutils::HTMLdecode(net$nodes$vosonTxt_tweet)
@@ -112,7 +112,7 @@ AddText.activity.youtube <- function(net, data, ...) {
 
   net$nodes <- dplyr::left_join(
     net$nodes,
-    dplyr::select(data, .data$CommentID, .data$Comment) %>%
+    dplyr::select(data, .data$CommentID, .data$Comment) |>
       dplyr::rename(
         id = .data$CommentID,
         vosonTxt_comment = .data$Comment
@@ -147,7 +147,7 @@ AddText.activity.reddit <-
 
     net$nodes <- dplyr::left_join(
       net$nodes,
-      dplyr::mutate(data, id = paste0(.data$thread_id, ".", .data$structure)) %>%
+      dplyr::mutate(data, id = paste0(.data$thread_id, ".", .data$structure)) |>
         dplyr::select(.data$id, .data$subreddit, .data$comment),
       by = c("id", "subreddit")
     )
@@ -157,13 +157,13 @@ AddText.activity.reddit <-
                     .data$subreddit,
                     .data$thread_id,
                     .data$title,
-                    .data$post_text) %>%
-      dplyr::distinct() %>% dplyr::mutate(id = paste0(.data$thread_id, ".0"), thread_id = NULL)
+                    .data$post_text) |>
+      dplyr::distinct() |> dplyr::mutate(id = paste0(.data$thread_id, ".0"), thread_id = NULL)
 
     net$nodes <-
-      dplyr::left_join(net$nodes, threads, by = c("id", "subreddit")) %>%
-      dplyr::mutate(comment = ifelse(.data$node_type == "thread", .data$post_text, .data$comment)) %>%
-      dplyr::select(-c(.data$post_text)) %>% dplyr::rename(vosonTxt_comment = .data$comment)
+      dplyr::left_join(net$nodes, threads, by = c("id", "subreddit")) |>
+      dplyr::mutate(comment = ifelse(.data$node_type == "thread", .data$post_text, .data$comment)) |>
+      dplyr::select(-c(.data$post_text)) |> dplyr::rename(vosonTxt_comment = .data$comment)
 
     if (cleanText) {
       net$nodes$vosonTxt_comment <-
@@ -198,7 +198,7 @@ AddText.actor.twitter <- function(net, data, ...) {
 
   net$edges <- dplyr::left_join(net$edges,
                                 dplyr::select(data, .data$status_id, .data$text),
-                                by = c("status_id")) %>%
+                                by = c("status_id")) |>
     dplyr::rename(vosonTxt_tweet = .data$text)
 
   net$edges$vosonTxt_tweet <-
@@ -232,7 +232,7 @@ AddText.actor.twitter <- function(net, data, ...) {
 #' \dontrun{
 #' # add text to an actor network ignoring references to actors at the beginning of
 #' # comment text
-#' activityNetwork <- collectData %>% Create("activity") %>%
+#' activityNetwork <- collectData |> Create("activity") |>
 #'                                    AddText(collectData, repliesFromText = FALSE)
 #'
 #' # network
@@ -252,8 +252,8 @@ AddText.actor.youtube <-
     # data <- tibble::as_tibble(data)
     class(data) <- rm_collect_cls(class(data))
 
-    net$edges %<>% dplyr::left_join(
-      dplyr::select(data, .data$CommentID, .data$Comment) %>%
+    net$edges <- net$edges |> dplyr::left_join(
+      dplyr::select(data, .data$CommentID, .data$Comment) |>
         dplyr::rename(
           comment_id = .data$CommentID,
           vosonTxt_comment = .data$Comment
@@ -263,10 +263,10 @@ AddText.actor.youtube <-
 
     # in comment reply to's
     if (repliesFromText) {
-      net$edges %<>% dplyr::left_join(dplyr::select(net$nodes,-.data$node_type),
+      net$edges <- net$edges |> dplyr::left_join(dplyr::select(net$nodes,-.data$node_type),
                                       by = c("from" = "id"))
       vid_comments <-
-        dplyr::select(net$edges, .data$video_id, .data$vosonTxt_comment) %>% purrr::transpose()
+        dplyr::select(net$edges, .data$video_id, .data$vosonTxt_comment) |> purrr::transpose()
 
       net$edges$at_id <- sapply(vid_comments, function(x) {
         for (name_at in net$nodes$screen_name) {
@@ -279,8 +279,8 @@ AddText.actor.youtube <-
           if (grepl(name_at_regex, x$vosonTxt_comment)) {
             to_id <-
               dplyr::filter(net$edges,
-                            .data$screen_name == name_at & .data$video_id == x$video_id) %>%
-              dplyr::select(.data$from) %>% dplyr::distinct()
+                            .data$screen_name == name_at & .data$video_id == x$video_id) |>
+              dplyr::select(.data$from) |> dplyr::distinct()
             if (nrow(to_id)) {
               return(as.character(tail(to_id, n = 1)))
             } # choose last match - best effort
@@ -288,7 +288,7 @@ AddText.actor.youtube <-
         }
         return(as.character(NA))
       })
-      net$edges %<>% dplyr::mutate(
+      net$edges <- net$edges |> dplyr::mutate(
         to = ifelse(is.na(.data$at_id), .data$to, .data$at_id),
         edge_type = ifelse(
           is.na(.data$at_id),
@@ -335,7 +335,7 @@ AddText.actor.reddit <-
         .data$comment
       ),
       by = c("subreddit", "thread_id", "comment_id" = "id")
-    ) %>%
+    ) |>
       dplyr::rename(vosonTxt_comment = .data$comment)
 
     authors <-
@@ -343,13 +343,13 @@ AddText.actor.reddit <-
                     .data$subreddit,
                     .data$thread_id,
                     .data$title,
-                    .data$post_text) %>%
-      dplyr::distinct() %>% dplyr::mutate(comment_id = 0)
+                    .data$post_text) |>
+      dplyr::distinct() |> dplyr::mutate(comment_id = 0)
 
     net$edges <-
       dplyr::left_join(net$edges,
                        authors,
-                       by = c("subreddit", "thread_id", "comment_id")) %>%
+                       by = c("subreddit", "thread_id", "comment_id")) |>
       dplyr::mutate(
         vosonTxt_comment = ifelse(
           .data$comment_id == 0,

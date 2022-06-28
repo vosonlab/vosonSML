@@ -61,7 +61,7 @@
 #'
 #' # create a twitter semantic network graph removing the hashtag '#auspol' and using the
 #' # top 2% frequently occurring words and 10% most frequently occurring hashtags as nodes
-#' semanticNetwork <- twitterData %>%
+#' semanticNetwork <- twitterData |>
 #'                    Create("semantic", removeTermsOrHashtags = c("#auspol"),
 #'                           termFreq = 2, hashtagFreq = 10, verbose = TRUE)
 #'
@@ -120,12 +120,12 @@ Create.semantic.twitter <-
     class(datasource) <- rm_collect_cls(class(datasource))
 
     datasource <-
-      datasource %>% dplyr::select(.data$status_id, .data$text, .data$hashtags)
+      datasource |> dplyr::select(.data$status_id, .data$text, .data$hashtags)
     datasource$text = textutils::HTMLdecode(datasource$text)
 
     capture.output(
       tokens_df <-
-        datasource %>% tidytext::unnest_tokens(
+        datasource |> tidytext::unnest_tokens(
           .data$word,
           .data$text,
           token = "tweets",
@@ -154,7 +154,7 @@ Create.semantic.twitter <-
           "\n"
         ))
       }
-      tokens_df %<>% dplyr::filter(!(.data$word %in% removeTermsOrHashtags))
+      tokens_df <- tokens_df |> dplyr::filter(!(.data$word %in% removeTermsOrHashtags))
 
       if (verbose) {
         df_stats <-
@@ -169,13 +169,13 @@ Create.semantic.twitter <-
       if (verbose) {
         cat("Removing stopwords.\n")
       }
-      capture.output(tokens_df %<>% dplyr::anti_join(rem_stopwords)
+      capture.output(tokens_df <- tokens_df |> dplyr::anti_join(rem_stopwords)
                      , type = "output")
     }
 
-    freq_df <- tokens_df %>% dplyr::count(.data$word, sort = TRUE)
+    freq_df <- tokens_df |> dplyr::count(.data$word, sort = TRUE)
     # clasify words as hashtags, users, numbers, urls and terms
-    freq_df %<>% dplyr::mutate(type = dplyr::if_else(
+    freq_df <- freq_df |> dplyr::mutate(type = dplyr::if_else(
       grepl("^#.*", .data$word),
       "hashtag",
       dplyr::if_else(
@@ -194,24 +194,24 @@ Create.semantic.twitter <-
     ))
 
     if (removeNumbers) {
-      freq_df %<>% dplyr::filter(type != "number")
+      freq_df <- freq_df |> dplyr::filter(type != "number")
     }
     if (removeUrls) {
-      freq_df %<>% dplyr::filter(type != "url")
+      freq_df <- freq_df |> dplyr::filter(type != "url")
     }
 
     type_tally <-
-      freq_df %>% dplyr::group_by(type) %>% dplyr::tally(.data$n) %>% tibble::deframe()
+      freq_df |> dplyr::group_by(type) |> dplyr::tally(.data$n) |> tibble::deframe()
 
     # remove users
-    freq_df %<>% dplyr::filter(type != "user")
+    freq_df <- freq_df |> dplyr::filter(type != "user")
 
     if (verbose) {
       # tidytext unnest_tokens is changing hashtags starting with digits such as #9news to words i.e 9news
       # this causes a discrepancy between generated tokens and original hashtags data field count
 
       unique_hashtags <-
-        nrow(freq_df %>% dplyr::filter(type == "hashtag"))
+        nrow(freq_df |> dplyr::filter(type == "hashtag"))
     }
 
     if (verbose) {
@@ -229,7 +229,7 @@ Create.semantic.twitter <-
 
     rm_words <- function(rm_type, keep_perc) {
       type_df <-
-        freq_df %>% dplyr::filter(type == rm_type) %>% dplyr::arrange(dplyr::desc(.data$n))
+        freq_df |> dplyr::filter(type == rm_type) |> dplyr::arrange(dplyr::desc(.data$n))
 
       if (nrow(type_df) > 0) {
         keep_count <- round(((nrow(type_df) / 100) * keep_perc), digits = 0)
@@ -237,7 +237,7 @@ Create.semantic.twitter <-
 
         # keep top number of rows
         if (n_value <= 1 & keep_perc != 100) {
-          rm_values <- type_df %>% dplyr::slice(keep_count + 1:dplyr::n())
+          rm_values <- type_df |> dplyr::slice(keep_count + 1:dplyr::n())
           if (verbose) {
             df_stats <<-
               network_stats(df_stats,
@@ -247,7 +247,7 @@ Create.semantic.twitter <-
           }
         } else {
           # keep tokens above n value cutoff
-          rm_values <- type_df %>% dplyr::filter(.data$n < n_value)
+          rm_values <- type_df |> dplyr::filter(.data$n < n_value)
           if (verbose) {
             df_stats <<-
               network_stats(
@@ -261,13 +261,13 @@ Create.semantic.twitter <-
                   n_value,
                   ")"
                 ),
-                nrow(type_df %>% dplyr::filter(.data$n >= n_value)),
+                nrow(type_df |> dplyr::filter(.data$n >= n_value)),
                 FALSE
               )
           }
         }
 
-        freq_df %>% dplyr::filter(!(.data$word %in% rm_values$word))
+        freq_df |> dplyr::filter(!(.data$word %in% rm_values$word))
       } else {
         freq_df
       }
@@ -283,51 +283,51 @@ Create.semantic.twitter <-
       }
 
       unique_terms <-
-        nrow(dplyr::distinct(freq_df %>% dplyr::filter(type == "term"), .data$word))
+        nrow(dplyr::distinct(freq_df |> dplyr::filter(type == "term"), .data$word))
       df_stats <-
         network_stats(df_stats, "unique terms", unique_terms, FALSE)
     }
 
     freq_df <- rm_words("term", termFreq)
-    freq_df %<>% dplyr::arrange(dplyr::desc(.data$n))
+    freq_df <- freq_df |> dplyr::arrange(dplyr::desc(.data$n))
 
     if (tolower(assoc) == "full") {
       edges <-
-        dplyr::inner_join((tokens_df %>% dplyr::select(-.data$hashtags)),
-                          (freq_df %>% dplyr::select(-.data$n, -.data$type)),
+        dplyr::inner_join((tokens_df |> dplyr::select(-.data$hashtags)),
+                          (freq_df |> dplyr::select(-.data$n, -.data$type)),
                           by = "word")
 
       edges <-
-        dplyr::inner_join(edges, (edges %>% dplyr::select(.data$status_id, .data$word)), by = "status_id") %>%
-        dplyr::group_by(.data$status_id) %>%
-        dplyr::filter(.data$word.x != .data$word.y) %>%
-        dplyr::ungroup() %>%
+        dplyr::inner_join(edges, (edges |> dplyr::select(.data$status_id, .data$word)), by = "status_id") |>
+        dplyr::group_by(.data$status_id) |>
+        dplyr::filter(.data$word.x != .data$word.y) |>
+        dplyr::ungroup() |>
 
-        dplyr::select(-.data$status_id) %>%
-        dplyr::mutate(from = .data$word.x, to = .data$word.y) %>%
-        dplyr::group_by(.data$from, .data$to) %>%
+        dplyr::select(-.data$status_id) |>
+        dplyr::mutate(from = .data$word.x, to = .data$word.y) |>
+        dplyr::group_by(.data$from, .data$to) |>
         dplyr::summarise(weight = dplyr::n())
     } else {
-      keep_hashtags <- freq_df %>% dplyr::filter(type == "hashtag")
-      keep_terms <- freq_df %>% dplyr::filter(type == "term")
+      keep_hashtags <- freq_df |> dplyr::filter(type == "hashtag")
+      keep_terms <- freq_df |> dplyr::filter(type == "term")
 
       class(tokens_df) <-
         c("tbl_df", "tbl", "data.frame") # unnest had a problem with vosonsml classes in class list
 
       edges <-
-        dplyr::inner_join(tokens_df, freq_df, by = "word") %>%
-        tidyr::unnest(.data$hashtags) %>%
+        dplyr::inner_join(tokens_df, freq_df, by = "word") |>
+        tidyr::unnest(.data$hashtags) |>
         dplyr::mutate(hashtags = ifelse(is.na(.data$hashtags), NA, paste0("#", tolower(.data$hashtags))))
 
-      edges %<>% dplyr::filter(
+      edges <- edges |> dplyr::filter(
         .data$hashtags %in% unique(keep_hashtags$word) &
           .data$word %in% unique(keep_terms$word)
-      ) %>%
+      ) |>
         dplyr::select(-.data$n, -.data$type)
 
-      edges %<>% dplyr::select(.data$hashtags, .data$word) %>%
-        dplyr::mutate(from = .data$hashtags, to = .data$word) %>%
-        dplyr::group_by(.data$from, .data$to) %>% dplyr::summarise(weight = dplyr::n())
+      edges <- edges |> dplyr::select(.data$hashtags, .data$word) |>
+        dplyr::mutate(from = .data$hashtags, to = .data$word) |>
+        dplyr::group_by(.data$from, .data$to) |> dplyr::summarise(weight = dplyr::n())
     }
 
     if (verbose) {

@@ -25,7 +25,7 @@ posts, edges form the discussion structure and signify to which comment or post 
 \examples{
 \dontrun{
 # create a reddit activity network graph
-activityNetwork <- redditData \%>\% Create("activity")
+activityNetwork <- redditData |> Create("activity")
 
 # network
 # activityNetwork$nodes

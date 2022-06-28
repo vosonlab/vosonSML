@@ -185,7 +185,7 @@ initially collected for them).</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># create a twitter actor network excluding retweet, quote tweets and mention edges</span></span></span>
-<span class="r-in"><span><span class="va">actor_net</span> <span class="op">&lt;-</span> <span class="va">twitter_data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">actor_net</span> <span class="op">&lt;-</span> <span class="va">twitter_data</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span>, rmEdgeTypes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"retweet"</span>, <span class="st">"quote"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># network nodes and edges</span></span></span>

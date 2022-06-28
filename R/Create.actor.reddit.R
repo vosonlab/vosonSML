@@ -12,7 +12,7 @@
 #' @examples
 #' \dontrun{
 #' # create a reddit actor network graph with comment text as edge attributes
-#' actorNetwork <- redditData %>% Create("actor")
+#' actorNetwork <- redditData |> Create("actor")
 #'
 #' # network
 #' # actorNetwork$nodes
@@ -36,7 +36,7 @@ Create.actor.reddit <- function(datasource, type, ...) {
   # include_author <- TRUE
 
   # select cols and rename id and user
-  df_relations <- datasource %>%
+  df_relations <- datasource |>
     dplyr::select(
       .data$id,
       .data$subreddit,
@@ -45,25 +45,25 @@ Create.actor.reddit <- function(datasource, type, ...) {
       .data$structure,
       .data$user,
       .data$author
-    ) %>%
+    ) |>
     dplyr::rename("comment_id" = .data$id, "sender" = .data$user)
 
-  df_relations %<>%
+  df_relations <- df_relations |>
     # response_to = "" if structure doesnt contain an underscore
     # else set to structure minus last digit '1_1_2' response_to = '1_1'
     dplyr::mutate(response_to = ifelse(
       !grepl("_", .data$structure),
       "",
       gsub("_\\d+$", "", .data$structure)
-    )) %>%
+    )) |>
 
     # select structure and user from original df
     # rename structure to response_to and user to receiver
     # left join df_relations to response_to, receiver by response_to
     # FIXED: crossing threads by joining only on structure (response_to)
     dplyr::left_join(
-      datasource %>%
-        dplyr::select(.data$thread_id, .data$structure, .data$user) %>%
+      datasource |>
+        dplyr::select(.data$thread_id, .data$structure, .data$user) |>
         dplyr::rename(
           "response_to" = .data$structure,
           "receiver" = .data$user
@@ -71,19 +71,19 @@ Create.actor.reddit <- function(datasource, type, ...) {
       by = c("response_to", "thread_id")
     )
 
-  df_relations %<>%
+  df_relations <- df_relations |>
     # inserts author into missing receiver values
     # FIXED: coalesce was crossing threads
-    # dplyr::mutate(receiver = dplyr::coalesce(.data$receiver, ifelse(include_author, .data$author, ""))) %>%
-    dplyr::mutate(receiver = ifelse(is.na(.data$receiver), .data$author, .data$receiver)) %>%
+    # dplyr::mutate(receiver = dplyr::coalesce(.data$receiver, ifelse(include_author, .data$author, ""))) |>
+    dplyr::mutate(receiver = ifelse(is.na(.data$receiver), .data$author, .data$receiver)) |>
 
     # filter out when sender and receiver same, or if either deleted or empty string
     # dplyr::filter(.data$sender != .data$receiver,
     #               !(.data$sender %in% c("[deleted]", "")),
-    #               !(.data$receiver %in% c("[deleted]", ""))) %>%
+    #               !(.data$receiver %in% c("[deleted]", ""))) |>
     # have to decide on deleted, self loops are fine
     # removed comments have the value "[removed]"
-    # dplyr::mutate(count = 1) %>%
+    # dplyr::mutate(count = 1) |>
     dplyr::select(
       .data$sender,
       .data$receiver,
@@ -95,7 +95,7 @@ Create.actor.reddit <- function(datasource, type, ...) {
 
   # attempt to add authors thread posts as self-loops
   authors <-
-    dplyr::select(datasource, .data$subreddit, .data$thread_id, .data$author) %>% dplyr::distinct() %>%
+    dplyr::select(datasource, .data$subreddit, .data$thread_id, .data$author) |> dplyr::distinct() |>
     dplyr::mutate(
       sender = .data$author,
       receiver = .data$author,
@@ -109,21 +109,21 @@ Create.actor.reddit <- function(datasource, type, ...) {
     data.frame(user = with(df_relations, {
       unique(c(sender, receiver))
     }),
-    stringsAsFactors = FALSE) %>%
-    tibble::as_tibble() %>%
-    dplyr::mutate(id = as.integer(dplyr::row_number())) %>%  # dplyr::row_number() - 1
+    stringsAsFactors = FALSE) |>
+    tibble::as_tibble() |>
+    dplyr::mutate(id = as.integer(dplyr::row_number())) |>  # dplyr::row_number() - 1
     dplyr::select(.data$id, .data$user)
 
-  df_relations %<>%
+  df_relations <- df_relations |>
     dplyr::left_join(
-      df_nodes %>%
+      df_nodes |>
         dplyr::rename("sender" = .data$user, "from" = .data$id),
       by = c("sender" = "sender")
-    ) %>%
+    ) |>
     dplyr::left_join(
-      df_nodes %>% dplyr::rename("receiver" = .data$user, "to" = .data$id),
+      df_nodes |> dplyr::rename("receiver" = .data$user, "to" = .data$id),
       by = c("receiver" = "receiver")
-    ) %>%
+    ) |>
     dplyr::select(
       .data$from,
       .data$to,

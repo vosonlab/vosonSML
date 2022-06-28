@@ -25,7 +25,7 @@ comments, reply comments and videos. Edges are directed between the nodes and re
 \examples{
 \dontrun{
 # create a YouTube activity network graph
-activityNetwork <- youtubeData \%>\% Create("activity")
+activityNetwork <- youtubeData |> Create("activity")
 
 # network
 # activityNetwork$nodes

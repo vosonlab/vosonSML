@@ -30,7 +30,7 @@ and will be isolates.
 \examples{
 \dontrun{
 # create a twitter activity network with retweets removed
-activity_net <- twitter_data \%>\%
+activity_net <- twitter_data |>
   Create("activity", rmEdgeTypes = c("retweet"))
 
 # network nodes and edges

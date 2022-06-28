@@ -38,10 +38,10 @@ the video details.
 \dontrun{
 # replace video id references with actors and add video id, title, description and plublish time
 # to an actor network
-actorNetwork <- collectData \%>\% Create("actor") \%>\% AddVideoData(youtubeAuth)
+actorNetwork <- collectData |> Create("actor") |> AddVideoData(youtubeAuth)
 
 # only replace video id references with actors that published videos in network
-actorNetwork <- collectData \%>\% Create("actor") \%>\% AddVideoData(youtubeAuth, actorSubOnly = TRUE)
+actorNetwork <- collectData |> Create("actor") |> AddVideoData(youtubeAuth, actorSubOnly = TRUE)
 
 # network
 # actorNetwork$nodes

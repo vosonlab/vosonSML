@@ -49,7 +49,7 @@ The reddit web endpoint used for collection has maximum limit of 500 comments pe
 # subreddit url to collect threads from
 threadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
 
-redditData <- redditAuth \%>\%
+redditData <- redditAuth |>
   Collect(threadUrls = threadUrls, writeToFile = TRUE)
 }
 

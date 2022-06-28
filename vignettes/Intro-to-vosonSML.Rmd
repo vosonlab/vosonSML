@@ -22,10 +22,9 @@ vignette: >
 
 The following guide provides an introduction to using [vosonSML](https://github.com/vosonlab/vosonSML), which is available both on GitHub and [CRAN](https://cran.r-project.org/package=vosonSML). More resources are available on the VOSON Lab website ([vosonSML](http://vosonlab.net/socialmedialab) and [training materials](http://vosonlab.net/training_workshops)). For a full list of functions, please refer to the [reference page](https://vosonlab.github.io/vosonSML/reference/index.html). The companion package to `vosonSML` is [VOSON Dashboard](https://github.com/vosonlab/VOSONDash), which provides an R/Shiny graphical user interface for data collection (via `vosonSML`), network and text analysis. 
 
-To use `vosonSML`, you first need to it and the `magrittr` package into the session:
+To use `vosonSML`, you first need to load it into the session:
 
 ```{r eval=FALSE}
-library(magrittr)
 library(vosonSML)
 ```
 
@@ -82,7 +81,7 @@ twitterAuth <- readRDS("twitter_auth")
 The syntax for collecting Twitter data follow [Twitter's rules and filtering documentation](https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query). It is possible to collect tweets including particular terms (e.g. hashtags), and boolean searches (see [standard search operators](https://developer.twitter.com/en/docs/twitter-api/v1/rules-and-filtering/search-operators)) are also possible. The collection may be filtered by, for example, type of Twitter activity (e.g. to include retweets only), number of collected tweets, language of tweet. As an example, the following collects 1000 recent tweets containing the '#auspol' hashtag (a prominent hashtag for Australian politics), with retweets not being collected.
 
 ```{r eval=FALSE}
-twitterData <- twitterAuth %>%
+twitterData <- twitterAuth |>
    Collect(
       searchTerm = "#auspol",
       numTweets = 1000,
@@ -136,8 +135,8 @@ It is currently possible to create four types of networks using Twitter data: (1
 In the Twitter *actor network*, nodes are users who have either tweeted using the target search terms (#auspol in the above example) or else are mentioned or replied to in tweets featuring the search terms.  Edges represent interactions between Twitter users, and an edge attribute indicates whether the interaction is a mention, reply, retweet, quoted retweet or self-loop. Self-loop edges are created in two situations: (1) a user authors a tweet and mentions or replies to themself; (2) a user authors a tweet containing the search term, but does not mention or reply to any other user in that tweet.   
 
 ```{r eval=FALSE}
-actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TRUE)
-actorGraph <- actorNetwork %>% Graph(writeToFile = TRUE)
+actorNetwork <- twitterData |> Create("actor", writeToFile = TRUE, verbose = TRUE)
+actorGraph <- actorNetwork |> Graph(writeToFile = TRUE)
 ```
 
 `Create("actor")` returns a named list containing two dataframes named "nodes" and "edges" (the following has been modified to preserve anonymity):
@@ -203,7 +202,7 @@ dev.off()
 It is often useful to have the tweet text content in the network. This can be achieved by using the `status_id` edge attribute to pull the tweet text content from the dataframe returned by `Collect()`, and store it as an edge attribute. `vosonSML` makes this easy with the `AddText()` function, with the following example creating a graph with an edge attribute `vosonTxt_tweet` which stores the tweet text content.
 
 ```{r eval=FALSE}
-actorGraphWithText <- twitterData %>% Create("actor") %>% AddText(twitterData) %>% Graph()
+actorGraphWithText <- twitterData |> Create("actor") |> AddText(twitterData) |> Graph()
 ```
 Now we have tweet text content stored as an edge attribute, we can use it for text analysis or creating new node attributes. As an example, the following creates a new node attribute `tweetedBushfires` which has the value "yes" if the Twitter user authored at least one tweet containing the word "bushfire" and "no" otherwise.
 
@@ -250,8 +249,8 @@ Note that by default, `vosonSML` will only collect Twitter profile data for thos
 
 ```{r eval=FALSE}
 # create an actor network with user metadata
-actorGraphWithUserAttr <- actorNetwork %>% 
-  AddUserData(twitterData, lookupUsers = TRUE, twitterAuth = twitterAuth) %>%
+actorGraphWithUserAttr <- actorNetwork |> 
+  AddUserData(twitterData, lookupUsers = TRUE, twitterAuth = twitterAuth) |>
   Graph(writeToFile = TRUE)
 ```
 
@@ -262,8 +261,8 @@ In the Twitter *activity network*, nodes represent tweets and edge types are: re
 
 ```{r eval=FALSE}
 # create an activity network with tweet text
-activityNetwork <- twitterData %>% Create("activity") %>% AddText(twitterData)
-activityGraph <- activityNetwork %>% Graph(writeToFile = TRUE)
+activityNetwork <- twitterData |> Create("activity") |> AddText(twitterData)
+activityGraph <- activityNetwork |> Graph(writeToFile = TRUE)
 ```
 
 `Create("activity")` returns a named list containing two dataframes named "nodes" and "edges" (the following has been modified to preserve anonymity):
@@ -340,8 +339,8 @@ In the Twitter *2-mode network*, the two types of nodes are actors (Twitter user
 install.packages("tidytext")
 
 # create a 2-mode network with the hashtag "#auspol" removed
-twomodeNetwork <- twitterData %>% Create("twomode", removeTermsOrHashtags = c("#auspol"))
-twomodeGraph <- twomodeNetwork %>% Graph()
+twomodeNetwork <- twitterData |> Create("twomode", removeTermsOrHashtags = c("#auspol"))
+twomodeGraph <- twomodeNetwork |> Graph()
 ``` 
 
 `Create("twomode")` returns a named list containing two dataframes named "nodes" and "edges" (the following has been modified to preserve anonymity). Note that in this example, the `removeTermsOrHashtags` argument was used to exclude '#auspol', since by construction all tweets contained this hashtag.
@@ -428,14 +427,14 @@ install.packages(c("tidyr", "tidytext", "stopwords"))
 
 # create a semantic network with some common terms removed
 # include only the top 5% occurring terms in the network
-semanticNetwork <- twitterData %>% Create(
+semanticNetwork <- twitterData |> Create(
    "semantic",
    removeTermsOrHashtags = c("#auspol", "auspol", "australia"),
    termFreq = 5
 )
 
 # create an undirected graph
-semanticGraph <- semanticNetwork %>% Graph(directed = FALSE)
+semanticGraph <- semanticNetwork |> Graph(directed = FALSE)
 ```
 
 `Create("semantic")` returns a named list containing two dataframes named "nodes" and "edges":
@@ -545,7 +544,7 @@ The character vector containing the YouTube video IDs is then passed as a parame
 
 ```{r eval=FALSE}
 videoIDs <- GetYoutubeVideoIDs("https://www.youtube.com/watch?v=pJ_NyEYRkLQ")
-youtubeData <- youtubeAuth %>% Collect(videoIDs, maxComments = 500, writeToFile = TRUE)
+youtubeData <- youtubeAuth |> Collect(videoIDs, maxComments = 500, writeToFile = TRUE)
 ```
 
 The `Collect()` function takes the following arguments (when used for collecting YouTube data): `credential` (object generated from `Authenticate()` with class name "youtube" (above we pass this via the pipe), `videoIDs` (character vector specifying one or more youtube video IDs), `maxComments` (numeric integer specifying how many top-level comments to collect from each video), `writeToFile` (whether to write the returned dataframe to disk as an `.rds` file; default is FALSE), and `verbose` (whether to output information about the data collection; default is FALSE).
@@ -600,8 +599,8 @@ It is currently possible to create two types of networks using YouTube data: (1)
 In the YouTube *actor network* the nodes are users who have commented on videos (and the videos themselves are included in the network as special nodes) and the edges are the interactions between users in the comments. We can distinguish a *top-level comment*, which is a comment that is directed to a video from a *reply comment*, which is a comment directed to a top-level comment. The YouTube user interface does not allow a user to direct a reply to another reply. However, users can achieve the "reply to a reply" functionality by starting their comment with the username of the person that they are replying to (and they often prepend the username with "@"). So there will be an edge from user *i* to user *j* if *i* replied to a top-level comment authored by *j* or else *i* prepended their comment with *j*'s username.
 
 ```{r eval=FALSE}
-actorNetwork <- youtubeData %>% Create("actor") %>% AddText(youtubeData)
-actorGraph <- actorNetwork %>% Graph(writeToFile = TRUE)
+actorNetwork <- youtubeData |> Create("actor") |> AddText(youtubeData)
+actorGraph <- actorNetwork |> Graph(writeToFile = TRUE)
 ```
 
 `Create("actor")` returns a named list containing two dataframes named "nodes" and "edges" (the following has been modified to preserve anonymity):
@@ -635,7 +634,7 @@ Note that in the above, `AddText()` was used to add the comment text data to the
 This list is then passed to `Graph()`, which returns an `igraph` graph object. Remember that it is possible to achieve the above using a single line of code:
 
 ```{r eval=FALSE}
-actorGraph <- youtubeData %>% Create("actor") %>% AddText(youtubeData) %>% Graph()
+actorGraph <- youtubeData |> Create("actor") |> AddText(youtubeData) |> Graph()
 ```
 
 The following is an an annonymised summary of the `igraph` graph object.
@@ -707,7 +706,7 @@ dev.off()
 Finally, the `AddVideoData()` function supplements the network data with additional video information. 
 
 ```{r eval=FALSE}
-actorNetwork_withVideoInfo <- actorNetwork %>% AddVideoData(youtubeAuth)
+actorNetwork_withVideoInfo <- actorNetwork |> AddVideoData(youtubeAuth)
 ```
 
 `AddVideoData()` returns a named list containing three dataframes named "nodes" (identical to the dataframe contained in the list `actorNetwork` in the example able), "edges" (this has three additional columns: "video_title", "video_description", "video_published_at") and a new dataframe "videos" (the following has been modified to preserve anonymity):
@@ -751,8 +750,8 @@ It should also be noted that `AddVideoData()` can optionally substitute referenc
 In the YouTube *activity network*, nodes are either comments or videos (videos represent a starting comment).
 
 ```{r eval=FALSE}
-activityNetwork <- youtubeData %>% Create("activity") %>% AddText(youtubeData)
-activityGraph <- activityNetwork %>% Graph()
+activityNetwork <- youtubeData |> Create("activity") |> AddText(youtubeData)
+activityGraph <- activityNetwork |> Graph()
 ```
 
 `Create("activity")` returns a named list containing two dataframes named "nodes" and "edges" (the following has been modified to preserve anonymity).
@@ -843,7 +842,7 @@ Reddit has implemented a feature in their latest site re-design to branch off in
 
 ```{r eval=FALSE}
 myThreadUrls <- c("https://www.reddit.com/r/worldnews/comments/elcb9b/australias_leaders_deny_link_between_climate/")
-redditData <- Authenticate("reddit") %>%
+redditData <- Authenticate("reddit") |>
               Collect(threadUrls = myThreadUrls, writeToFile = TRUE)
 ```
 
@@ -908,8 +907,8 @@ In the Reddit *actor network*, nodes represent users who have posted original po
 The following creates a Reddit *actor network* with comment text as an edge attribute (as above, this can be achieved in a single line of code, but we split it into two lines to better explain the objects that are created).
 
 ```{r eval=FALSE}
-actorNetwork <- redditData %>% Create("actor") %>% AddText(redditData)
-actorGraph <- actorNetwork %>% Graph(writeToFile = TRUE)
+actorNetwork <- redditData |> Create("actor") |> AddText(redditData)
+actorGraph <- actorNetwork |> Graph(writeToFile = TRUE)
 ```
 
 `Create("actor")` returns a named list containing two dataframes named "nodes" and "edges" (the following has been modified to preserve anonymity):
@@ -984,8 +983,8 @@ dev.off()
 In the Reddit *activity network*, nodes are either comments and/or initial thread posts and the edges represent replies to the original post, or replies to comments.
 
 ```{r eval=FALSE}
-activityNetwork <- redditData %>% Create("activity") %>% AddText(redditData)
-activityGraph <- activityNetwork %>% Graph(writeToFile = TRUE)
+activityNetwork <- redditData |> Create("activity") |> AddText(redditData)
+activityGraph <- activityNetwork |> Graph(writeToFile = TRUE)
 ```
 
 `Create("activity")` returns a named list containing two dataframes named "nodes" and "edges" (the following has been modified to preserve anonymity):
@@ -1069,11 +1068,11 @@ Data collected in the same session can be merged using the `rbind` function. The
 
 ```{r eval=FALSE}
 # collect twitter data for the #auspol hashtag
-auspolTwitterData <- twitterAuth %>%
+auspolTwitterData <- twitterAuth |>
   Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100)
 
 # collect twitter data for the #bushfire hashtag
-bushfireTwitterData <- twitterAuth %>%
+bushfireTwitterData <- twitterAuth |>
   Collect(searchTerm = "#bushfire", searchType = "popular", numTweets = 50)
 
 # combine the collected data for the different hashtags using rbind
@@ -1088,7 +1087,7 @@ Please note that `ImportData` requires the file path and social media type eithe
 
 ```{r eval=FALSE}
 # collect twitter data
-newTwitterData <- twitterAuth %>%
+newTwitterData <- twitterAuth |>
   Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100)
 
 # import data from file using ImportData
@@ -1121,25 +1120,25 @@ Depending on type of collections being performed, there may be duplicate data or
 library(dplyr)
 
 # combine the collected data using rbind and remove duplicates with distinct based on tweet status_id 
-twitterData <- rbind(auspolTwitterData, bushfireTwitterData) %>% distinct(status_id, .keep_all = TRUE)
+twitterData <- rbind(auspolTwitterData, bushfireTwitterData) |> distinct(status_id, .keep_all = TRUE)
 ```
 
 If unique rows can change over time such as a tweets retweet count, or perhaps youtube video / reddit thread comments being updated then a strategy will need to be adopted to choose the desired version to keep between dataframes. The `distinct` function will keep the first found row that contains a duplicate identifier, so it is often useful to arrange the rows so that more recent record comes first in the combined dataframe and is kept. With twitter data, the easiest way to do this is to perform the `rbind` with twitter dataframes in reverse order (chronological) with the most recent collect data first. For youtube and reddit, the rows can be arranged by the "UpdatedAt" and "comm_date_unix" timestamp values respectively. The `dplyr` package again provides a convenient function for sorting or arranging rows called `arrange`. 
 
 ```{r eval=FALSE}
 # manually combine data sets in reverse chronological order and remove duplicates based on status_id 
-twitterData <- rbind(bushfireTwitterData, auspolTwitterData) %>%
+twitterData <- rbind(bushfireTwitterData, auspolTwitterData) |>
   distinct(status_id, .keep_all = TRUE)
 
 # arrange combined youtube data by updated timestamp and remove duplicates, keeping the version of a
 # duplicate video comment that was most recently updated
-youtubeData <- youtubeData %>% 
-  arrange(desc(UpdatedAt)) %>% distinct(VideoID, CommentID, .keep_all = TRUE)
+youtubeData <- youtubeData |> 
+  arrange(desc(UpdatedAt)) |> distinct(VideoID, CommentID, .keep_all = TRUE)
 
 # arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of a
 # duplicate thread comment that was most recently updated
-redditData <- redditData %>%
-  arrange(desc(comm_date_unix)) %>% distinct(thread_id, comm_id, .keep_all = TRUE)
+redditData <- redditData |>
+  arrange(desc(comm_date_unix)) |> distinct(thread_id, comm_id, .keep_all = TRUE)
 ```
 
 ## Creating a network and graph from merged data
@@ -1148,7 +1147,7 @@ Once the data is merged then it can then simply be passed to the `Create` functi
 
 ```{r eval=FALSE}
 # create an igraph of twitter actor network
-actorGraph <- twitterData %>% Create("actor") %>% Graph(writeToFile = TRUE)
+actorGraph <- twitterData |> Create("actor") |> Graph(writeToFile = TRUE)
 ```
 
 # VOSON Dashboard
@@ -1172,4 +1171,4 @@ The following shows a screenshot of `VOSON Dashboard` with this network loaded a
 
 `vosonSML` was originally released on CRAN in November 2015 as the package `SocialMediaLab` (Timothy Graham was the lead developer), with the significantly revised and renamed `vosonSML` being released on CRAN in July 2018 (Bryan Gertzel is the lead developer).
 
-We acknowledge the contributions of Chung-hong Chan who implemented a revised UI (involving `magrittr`) in the original `SocialMediaLab` package and Xiaolan Cai who has contributed to documentation.
+We acknowledge the contributions of Chung-hong Chan who implemented a revised UI (involving `magrittr` pipes) in the original `SocialMediaLab` package and Xiaolan Cai who has contributed to documentation.

@@ -24,7 +24,7 @@ Creates a web page activity network from pages. Nodes are web pages.
 \examples{
 \dontrun{
 # create a web activity network graph
-activityNetwork <- webData \%>\% Create("activity")
+activityNetwork <- webData |> Create("activity")
 
 # network
 # activityNetwork$nodes

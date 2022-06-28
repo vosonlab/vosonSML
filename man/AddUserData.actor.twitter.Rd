@@ -42,8 +42,8 @@ before hitting the rate limit. It does not wait and retry upon hitting rate limi
 \examples{
 \dontrun{
 # add user info to a twitter actor network
-actor_net <- twitter_data \%>\%
-  Create("actor") \%>\%
+actor_net <- twitter_data |>
+  Create("actor") |>
   AddUserData(twitter_data,
               lookupUsers = TRUE,
               twitterAuth = twitter_auth)

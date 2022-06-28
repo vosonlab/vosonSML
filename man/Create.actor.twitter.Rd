@@ -50,7 +50,7 @@ initially collected for them).
 \examples{
 \dontrun{
 # create a twitter actor network excluding retweet, quote tweets and mention edges
-actor_net <- twitter_data \%>\%
+actor_net <- twitter_data |>
   Create("actor", rmEdgeTypes = c("retweet", "quote"))
 
 # network nodes and edges

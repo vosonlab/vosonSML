@@ -27,7 +27,7 @@
 #'
 #' # create a twitter 2-mode network graph removing the hashtag '#auspol' as it was used in
 #' # the twitter search query
-#' twomodeNetwork <- twitterData %>%
+#' twomodeNetwork <- twitterData |>
 #'                   Create("twomode", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
 #'
 #' # network
@@ -60,7 +60,7 @@ Create.twomode.twitter <-
     class(datasource) <- rm_collect_cls(class(datasource))
 
     datasource <-
-      datasource %>% dplyr::select(
+      datasource |> dplyr::select(
         .data$status_id,
         .data$user_id,
         .data$screen_name,
@@ -73,7 +73,7 @@ Create.twomode.twitter <-
 
     capture.output(
       tokens_df <-
-        datasource %>% tidytext::unnest_tokens(
+        datasource |> tidytext::unnest_tokens(
           .data$word,
           .data$text,
           token = "tweets",
@@ -82,7 +82,7 @@ Create.twomode.twitter <-
       ,
       type = "output"
     )
-    tokens_df %<>% dplyr::mutate(at_name = paste0("@", tolower(.data$screen_name)))
+    tokens_df <- tokens_df |> dplyr::mutate(at_name = paste0("@", tolower(.data$screen_name)))
 
     if (!is.null(removeTermsOrHashtags) &&
         length(removeTermsOrHashtags) > 0) {
@@ -96,7 +96,7 @@ Create.twomode.twitter <-
           "\n"
         ))
       }
-      tokens_df %<>% dplyr::filter(
+      tokens_df <- tokens_df |> dplyr::filter(
         !(.data$word %in% removeTermsOrHashtags) &
           !(.data$user_id %in% removeTermsOrHashtags) &
           !(tolower(.data$screen_name) %in% removeTermsOrHashtags) &
@@ -112,11 +112,11 @@ Create.twomode.twitter <-
       }
     }
 
-    tokens_df %<>% dplyr::mutate(type = dplyr::if_else(
+    tokens_df <- tokens_df |> dplyr::mutate(type = dplyr::if_else(
       grepl("^#.*", .data$word),
       "hashtag",
       dplyr::if_else(grepl("^@.*", .data$word), "user", "term")
-    )) %>%
+    )) |>
       dplyr::filter(.data$type %in% c("hashtag", "user") &
                       .data$at_name != .data$word)
 
@@ -124,17 +124,17 @@ Create.twomode.twitter <-
       df_stats <-
         network_stats(df_stats,
                       "users",
-                      nrow(tokens_df %>% dplyr::filter(.data$type == "user")),
+                      nrow(tokens_df |> dplyr::filter(.data$type == "user")),
                       FALSE)
       df_stats <-
         network_stats(df_stats,
                       "hashtags",
-                      nrow(tokens_df %>% dplyr::filter(.data$type == "hashtag")),
+                      nrow(tokens_df |> dplyr::filter(.data$type == "hashtag")),
                       FALSE)
     }
 
     edges <-
-      tokens_df %>% dplyr::mutate(from = .data$at_name, to = .data$word) %>%
+      tokens_df |> dplyr::mutate(from = .data$at_name, to = .data$word) |>
       dplyr::select(
         .data$from,
         .data$to,
@@ -145,13 +145,13 @@ Create.twomode.twitter <-
       )
 
     if (weighted) {
-      edges %<>% dplyr::count(.data$from, .data$to, name = "weight")
+      edges <- edges |> dplyr::count(.data$from, .data$to, name = "weight")
     }
 
     nodes <-
-      dplyr::distinct(tibble::tibble(name = c(edges$to, edges$from))) %>%
+      dplyr::distinct(tibble::tibble(name = c(edges$to, edges$from))) |>
       dplyr::left_join(
-        tokens_df %>% dplyr::select(.data$at_name, .data$user_id) %>%
+        tokens_df |> dplyr::select(.data$at_name, .data$user_id) |>
           dplyr::distinct(),
         by = c("name" = "at_name")
       )

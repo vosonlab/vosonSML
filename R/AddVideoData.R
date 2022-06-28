@@ -66,10 +66,10 @@ AddVideoData.actor.default <-
 #' \dontrun{
 #' # replace video id references with actors and add video id, title, description and plublish time
 #' # to an actor network
-#' actorNetwork <- collectData %>% Create("actor") %>% AddVideoData(youtubeAuth)
+#' actorNetwork <- collectData |> Create("actor") |> AddVideoData(youtubeAuth)
 #'
 #' # only replace video id references with actors that published videos in network
-#' actorNetwork <- collectData %>% Create("actor") %>% AddVideoData(youtubeAuth, actorSubOnly = TRUE)
+#' actorNetwork <- collectData |> Create("actor") |> AddVideoData(youtubeAuth, actorSubOnly = TRUE)
 #'
 #' # network
 #' # actorNetwork$nodes
@@ -95,7 +95,7 @@ AddVideoData.actor.youtube <-
       }
 
       videoIds <-
-        net$nodes %>% dplyr::filter(.data$node_type == "video") %>% dplyr::select(.data$id) %>%
+        net$nodes |> dplyr::filter(.data$node_type == "video") |> dplyr::select(.data$id) |>
         dplyr::mutate_at(.vars = "id", .funs = rm_videoid_str)
       videoIds <- unlist(unname(as.list(videoIds)))
     }
@@ -111,16 +111,16 @@ AddVideoData.actor.youtube <-
     }
 
     # downloaded video data
-    video_df %<>% dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID))
+    video_df <- video_df |> dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID))
     ch_details <-
-      video_df %>% dplyr::select(.data$id, .data$ChannelTitle, .data$ChannelID) %>%
+      video_df |> dplyr::select(.data$id, .data$ChannelTitle, .data$ChannelID) |>
       dplyr::rename(
         video_author_title = .data$ChannelTitle,
         video_author_id = .data$ChannelID
       )
 
     # replace video id values in nodes with the video publishers id (channel id) and screen name
-    net$nodes %<>% dplyr::left_join(ch_details, by = c("id")) %>%
+    net$nodes <- net$nodes |> dplyr::left_join(ch_details, by = c("id")) |>
       dplyr::mutate(
         id = dplyr::if_else(
           !is.na(.data$video_author_id),
@@ -135,13 +135,13 @@ AddVideoData.actor.youtube <-
         node_type = dplyr::if_else(!is.na(.data$video_author_id), "actor", .data$node_type),
         video_author_id = NULL,
         video_author_title = NULL
-      ) %>%
+      ) |>
       dplyr::distinct(.data$id, .keep_all = TRUE)
 
-    ch_details %<>% dplyr::select(-.data$video_author_title)
+    ch_details <- ch_details |> dplyr::select(-.data$video_author_title)
 
     # replace from and to video id values in edges with the video publishers id (channel id)
-    net$edges %<>% dplyr::left_join(ch_details, by = c("from" = "id")) %>%
+    net$edges <- net$edges |> dplyr::left_join(ch_details, by = c("from" = "id")) |>
       dplyr::mutate(
         from = dplyr::if_else(
           !is.na(.data$video_author_id),
@@ -149,8 +149,8 @@ AddVideoData.actor.youtube <-
           .data$from
         ),
         video_author_id = NULL
-      ) %>%
-      dplyr::left_join(ch_details, by = c("to" = "id")) %>%
+      ) |>
+      dplyr::left_join(ch_details, by = c("to" = "id")) |>
       dplyr::mutate(
         to = dplyr::if_else(
           !is.na(.data$video_author_id),
@@ -161,11 +161,11 @@ AddVideoData.actor.youtube <-
       )
 
     # change node type from actor to publisher if they published a video in network
-    net$nodes %<>% dplyr::left_join(
-      dplyr::filter(net$edges, .data$edge_type == "self-loop") %>%
-        dplyr::select(.data$from, .data$edge_type) %>% dplyr::distinct(.keep_all = TRUE),
+    net$nodes <- net$nodes |> dplyr::left_join(
+      dplyr::filter(net$edges, .data$edge_type == "self-loop") |>
+        dplyr::select(.data$from, .data$edge_type) |> dplyr::distinct(.keep_all = TRUE),
       by = c("id" = "from")
-    ) %>%
+    ) |>
       dplyr::mutate(
         node_type = dplyr::if_else(!is.na(.data$edge_type), "publisher", .data$node_type),
         edge_type = NULL
@@ -173,8 +173,8 @@ AddVideoData.actor.youtube <-
 
     # add video title, description and publish time
     if (actorSubOnly == FALSE) {
-      net$edges %<>% dplyr::left_join(dplyr::select(video_df, dplyr::starts_with("Video")),
-                                      by = c("video_id" = "VideoID")) %>%
+      net$edges <- net$edges |> dplyr::left_join(dplyr::select(video_df, dplyr::starts_with("Video")),
+                                      by = c("video_id" = "VideoID")) |>
         dplyr::rename(
           video_title = .data$VideoTitle,
           video_description = .data$VideoDescription,

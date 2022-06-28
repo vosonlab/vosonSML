@@ -68,16 +68,16 @@ Collect.timeline.twitter <-
         n_show <- 2
       }
 
-      first_tweets <- tweets_df %>%
-        dplyr::slice_head(n = n_show) %>%
+      first_tweets <- tweets_df |>
+        dplyr::slice_head(n = n_show) |>
         dplyr::mutate(tweet = c("Latest Obs", "")[1:n_show])
 
-      last_tweets <- tweets_df %>%
-        dplyr::slice_tail(n = n_show) %>%
+      last_tweets <- tweets_df |>
+        dplyr::slice_tail(n = n_show) |>
         dplyr::mutate(tweet = c("", "Earliest Obs")[1:n_show])
 
-      results_df <- dplyr::bind_rows(first_tweets, last_tweets) %>%
-        dplyr::mutate(created = as.character(.data$created_at)) %>%
+      results_df <- dplyr::bind_rows(first_tweets, last_tweets) |>
+        dplyr::mutate(created = as.character(.data$created_at)) |>
         dplyr::select(.data$tweet,
                       .data$status_id,
                       .data$created,

@@ -257,7 +257,7 @@ can be passed to this function.</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># search and collect 100 recent tweets for the hashtag #auspol</span></span></span>
-<span class="r-in"><span><span class="va">myTwitterData</span> <span class="op">&lt;-</span> <span class="va">twitterAuth</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span></span>
+<span class="r-in"><span><span class="va">myTwitterData</span> <span class="op">&lt;-</span> <span class="va">twitterAuth</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="Collect.html">Collect</a></span><span class="op">(</span>searchTerm <span class="op">=</span> <span class="st">"#auspol"</span>, searchType <span class="op">=</span> <span class="st">"recent"</span>, numTweets <span class="op">=</span> <span class="fl">100</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>          includeRetweets <span class="op">=</span> <span class="cn">FALSE</span>, retryOnRateLimit <span class="op">=</span> <span class="cn">TRUE</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>

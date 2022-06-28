@@ -11,7 +11,6 @@ Imports:
     httr,
     jsonlite,
     lubridate,
-    magrittr,
     methods,
     purrr,
     rlang (>= 0.3.0.1),
@@ -34,7 +33,7 @@ Suggests:
     tidytext,
     urltools,
     xml2
-Depends: R (>= 3.6)
+Depends: R (>= 4.1)
 Encoding: UTF-8
 Authors@R: c( 
     person("Bryan", "Gertzel",

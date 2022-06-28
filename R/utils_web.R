@@ -87,7 +87,7 @@ local_to_full_url <- function(parent_page, link) {
 
 # read a web page and get a list of hyperlinks
 get_ahrefs <- function(page) {
-  hrefs <- xml2::read_html(page, options = c("NOWARNING")) %>%
-    rvest::html_nodes("a") %>%
+  hrefs <- xml2::read_html(page, options = c("NOWARNING")) |>
+    rvest::html_nodes("a") |>
     rvest::html_attr("href")
 }

@@ -17,7 +17,7 @@
 #' @examples
 #' \dontrun{
 #' # create a twitter activity network with retweets removed
-#' activity_net <- twitter_data %>%
+#' activity_net <- twitter_data |>
 #'   Create("activity", rmEdgeTypes = c("retweet"))
 #'
 #' # network nodes and edges
@@ -44,7 +44,7 @@ Create.activity.twitter <-
       network_stats(NULL, "collected tweets", nrow(datasource))
 
     # select data columns
-    datasource <- datasource %>%
+    datasource <- datasource |>
       dplyr::select(
         dplyr::ends_with("status_id"),
         # .data$user_id,
@@ -56,7 +56,7 @@ Create.activity.twitter <-
       )
 
     # classify edges
-    edges <- datasource %>%
+    edges <- datasource |>
       dplyr::mutate(
         type = data.table::fcase(
           .data$is_retweet == TRUE,
@@ -87,15 +87,15 @@ Create.activity.twitter <-
       }
     }
 
-    edges <- edges %>%
-      tidyr::separate_rows(type, sep = ",", convert = FALSE) %>%
+    edges <- edges |>
+      tidyr::separate_rows(type, sep = ",", convert = FALSE) |>
       dplyr::filter(!(.data$type %in% rmEdgeTypes))
 
     # edge stats
     edge_stats <-
-      edges %>%
-      dplyr::group_by(.data$type) %>%
-      dplyr::tally() %>%
+      edges |>
+      dplyr::group_by(.data$type) |>
+      dplyr::tally() |>
       dplyr::arrange(dplyr::desc(.data$type))
 
     for (row in 1:nrow(edge_stats)) {
@@ -104,7 +104,7 @@ Create.activity.twitter <-
     }
 
     # reply to created_at and text not in data
-    edges <- edges %>%
+    edges <- edges |>
       dplyr::mutate(
         to = data.table::fcase(
           .data$type == "tweet",
@@ -150,22 +150,22 @@ Create.activity.twitter <-
       )
 
     nodes <- dplyr::bind_rows(
-      edges %>% dplyr::select(.data$status_id,
+      edges |> dplyr::select(.data$status_id,
         author_id = .data$user_id,
         author_screen_name = .data$screen_name,
         .data$created_at
       ),
-      edges %>% dplyr::select(
+      edges |> dplyr::select(
         status_id = .data$to,
         author_id = .data$to_user_id,
         author_screen_name = .data$to_screen_name,
         created_at = .data$to_created_at
       )
-    ) %>%
-      dplyr::arrange(.data$status_id, .data$created_at) %>%
+    ) |>
+      dplyr::arrange(.data$status_id, .data$created_at) |>
       dplyr::distinct(.data$status_id, .keep_all = TRUE)
 
-    edges <- edges %>%
+    edges <- edges |>
       dplyr::select(
         from = .data$status_id,
         .data$to,

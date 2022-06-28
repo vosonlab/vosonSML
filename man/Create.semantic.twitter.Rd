@@ -97,7 +97,7 @@ install.packages(c("tidyr", "tidytext", "stopwords"))
 
 # create a twitter semantic network graph removing the hashtag '#auspol' and using the
 # top 2\% frequently occurring words and 10\% most frequently occurring hashtags as nodes
-semanticNetwork <- twitterData \%>\%
+semanticNetwork <- twitterData |>
                    Create("semantic", removeTermsOrHashtags = c("#auspol"),
                           termFreq = 2, hashtagFreq = 10, verbose = TRUE)
 

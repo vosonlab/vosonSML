@@ -24,7 +24,7 @@
 #'                     type = c("int", "all"),
 #'                     max_depth = c(2, 2))
 #'
-#' webData <- webAuth %>%
+#' webData <- webAuth |>
 #'   Collect(pages, writeToFile = TRUE)
 #' }
 #'
@@ -81,8 +81,8 @@ get_page_hrefs <- function(page, verbose = TRUE) {
   }
 
   urls <- tryCatch({
-    hrefs <- xml2::read_html(page, options = c("NOWARNING")) %>%
-      rvest::html_nodes("a") %>%
+    hrefs <- xml2::read_html(page, options = c("NOWARNING")) |>
+      rvest::html_nodes("a") |>
       rvest::html_attr("href")
 
     hrefs <- urltools::url_decode(hrefs)
@@ -197,7 +197,7 @@ get_hyperlinks <-
         if (!is_err) {
           if (length(hrefs) > 0) {
             df <-
-              tibble::tibble(url = as.character(hrefs)) %>% dplyr::count(.data$url)
+              tibble::tibble(url = as.character(hrefs)) |> dplyr::count(.data$url)
             df$page_err <- NA
           }
         }
@@ -209,7 +209,7 @@ get_hyperlinks <-
 
       if (!is.null(df)) {
         uu <- stringr::str_replace(page_url, "/$", "")
-        df <- df %>% dplyr::mutate(
+        df <- df |> dplyr::mutate(
           page = uu,
           depth = depth,
           max_depth = max_depth,
@@ -217,7 +217,7 @@ get_hyperlinks <-
         )
 
         # remove fragments or anchors
-        df <- df %>% dplyr::mutate(url = ifelse(
+        df <- df |> dplyr::mutate(url = ifelse(
           !is.na(.data$parse$fragment),
           stringr::str_replace(.data$url, paste0("#", .data$parse$fragment, "$"), ""),
           # gsub(paste0("#", .data$parse$fragment, "$"), "", .data$url),

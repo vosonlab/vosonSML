@@ -23,7 +23,7 @@
 #' # subreddit url to collect threads from
 #' threadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
 #'
-#' redditData <- redditAuth %>%
+#' redditData <- redditAuth |>
 #'   Collect(threadUrls = threadUrls, writeToFile = TRUE)
 #' }
 #'
@@ -99,13 +99,13 @@ Collect.reddit <-
           textutils::HTMLdecode(threads_df$comment)
 
         # summary
-        results_df <- threads_df %>%
-          dplyr::group_by(.data$thread_id) %>%
+        results_df <- threads_df |>
+          dplyr::group_by(.data$thread_id) |>
           dplyr::summarise(
             title = paste0(unique(.data$title), collapse = ","),
             subreddit = paste0(unique(.data$subreddit), collapse = ","),
             count = dplyr::n()
-          ) %>%
+          ) |>
           dplyr::ungroup()
 
         results_df$title <-
@@ -195,7 +195,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
       # if comments returned
       if (nrow(cont_df)) {
         cont_df <-
-          cont_df %>% dplyr::mutate(structure = paste0(struct, "_", .data$structure)) # append structure
+          cont_df |> dplyr::mutate(structure = paste0(struct, "_", .data$structure)) # append structure
 
         # insert new comments into thread dataframe using position
         if (cont_index == 1) {
@@ -225,9 +225,9 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
           useBytes = TRUE
         ) # extract thread id
       branch_df <-
-        branch_df %>% dplyr::filter(.data$rm == FALSE) # remove continue thread entries
+        branch_df |> dplyr::filter(.data$rm == FALSE) # remove continue thread entries
       branch_df <-
-        branch_df %>% dplyr::arrange(.data$thread_id, .data$id) %>% dplyr::mutate(id = 1:nrow(branch_df)) # re-index
+        branch_df |> dplyr::arrange(.data$thread_id, .data$id) |> dplyr::mutate(id = 1:nrow(branch_df)) # re-index
     }
 
     branch_df

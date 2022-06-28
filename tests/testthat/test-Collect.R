@@ -17,7 +17,7 @@ test_that("Collect.twitter output", {
 
   auth <- readRDS("~/.twitter_auth")
   suppress_cat(
-    data <- auth %>% Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 10, verbose = FALSE,
+    data <- auth |> Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 10, verbose = FALSE,
                              includeRetweets = FALSE, retryOnRateLimit = TRUE, writeToFile = FALSE)
   )
 
@@ -55,7 +55,7 @@ test_that("Collect.youtube output", {
   skip_if_not(file.exists("~/.youtube_auth"), message = "YouTube auth file exists")
 
   auth <- readRDS("~/.youtube_auth")
-  suppress_cat(data <- auth %>% Collect(videoIDs = c("IVjZMIWhz3Y"),
+  suppress_cat(data <- auth |> Collect(videoIDs = c("IVjZMIWhz3Y"),
                                     maxComments = 50, writeToFile = FALSE, verbose = FALSE))
 
   expect_s3_class(data, "datasource")
@@ -74,7 +74,7 @@ test_that("Collect.reddit output", {
   auth <- Authenticate("reddit")
   threads <- c("https://www.reddit.com/r/redditdev/comments/ezz3td/upcoming_api_change_post_apisubmit/")
   suppress_cat(
-    data <- auth %>% Collect(threadUrls = threads, writeToFile = FALSE)
+    data <- auth |> Collect(threadUrls = threads, writeToFile = FALSE)
   )
 
   expect_s3_class(data, "datasource")
