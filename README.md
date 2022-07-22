@@ -24,13 +24,13 @@ Social Network Analysis.
 Install the previous version of `rtweet` v0.7.0 as follows:
 
 ``` r
-# library(devtools)
-devtools::install_version(
+# library(remotes)
+remotes::install_version(
   "rtweet", version = "0.7.0", repos = "https://cloud.r-project.org/"
 )
 ```
 
-## Installation Options
+## vosonSML Installation Options
 
 Install the most recent CRAN release:
 
