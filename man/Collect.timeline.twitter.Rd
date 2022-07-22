@@ -30,13 +30,23 @@
 \item{...}{
   Arguments passed on to \code{\link[rtweet:get_timeline]{rtweet::get_timeline}}
   \describe{
-    \item{\code{parse}}{Logical, indicating whether to return parsed
-(data.frames) or nested list object. By default, \code{parse =
-TRUE} saves users from the time [and frustrations] associated
-with disentangling the Twitter API return objects.}
-    \item{\code{check}}{Logical indicating whether to remove check available
-rate limit. Ensures the request does not exceed the maximum
-remaining number of calls.  Defaults to TRUE.}
+    \item{\code{since_id}}{Supply a vector of ids or a data frame of previous results to
+find tweets \strong{newer} than \code{since_id}.}
+    \item{\code{parse}}{If \code{TRUE}, the default, returns a tidy data frame. Use \code{FALSE}
+to return the "raw" list corresponding to the JSON returned from the
+Twitter API.}
+    \item{\code{check}}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+    \item{\code{retryonratelimit}}{If \code{TRUE}, and a rate limit is exhausted, will wait
+until it refreshes. Most Twitter rate limits refresh every 15 minutes.
+If \code{FALSE}, and the rate limit is exceeded, the function will terminate
+early with a warning; you'll still get back all results received up to
+that point. The default value, \code{NULL}, consults the option
+\code{rtweet.retryonratelimit} so that you can globally set it to \code{TRUE},
+if desired.
+
+If you expect a query to take hours or days to perform, you should not
+rely soley on \code{retryonratelimit} because it does not handle other common
+failure modes like temporarily losing your internet connection.}
   }}
 }
 \value{

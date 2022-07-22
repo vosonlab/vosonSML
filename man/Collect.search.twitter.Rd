@@ -42,34 +42,14 @@ hashtag \code{"#auspol"}.}
   Arguments passed on to \code{\link[rtweet:search_tweets]{rtweet::search_tweets}}
   \describe{
     \item{\code{geocode}}{Geographical limiter of the template
-"latitude,longitude,radius" e.g., \code{geocode =
-"37.78,-122.40,1mi"}.}
-    \item{\code{max_id}}{Character, returns results with an ID less
-than (that is, older than) or equal to `max_id`.  Especially
-useful for large data returns that require multiple iterations
-interrupted by user time constraints. For searches exceeding
-18,000 tweets, users are encouraged to take advantage of rtweet's
-internal automation procedures for waiting on rate limits by
-setting \code{retryonratelimit} argument to TRUE.  It some cases,
-it is possible that due to processing time and rate limits,
-retrieving several million tweets can take several hours or even
-multiple days. In these cases, it would likely be useful to
-leverage \code{retryonratelimit} for sets of tweets and
-\code{max_id} to allow results to continue where previous efforts
-left off.}
-    \item{\code{parse}}{Logical, indicating whether to return parsed
-data.frame, if true, or nested list, if false. By default,
-\code{parse = TRUE} saves users from the wreck of time and
-frustration associated with disentangling the nasty nested list
-returned from Twitter's API. As Twitter's APIs are subject to
-change, this argument would be especially useful when changes to
-Twitter's APIs affect performance of internal parsers. Setting
-\code{parse = FALSE} also ensures the maximum amount of possible
-information is returned. By default, the rtweet parse process
-returns nearly all bits of information returned from
-Twitter. However, users may occasionally encounter new or
-omitted variables. In these rare cases, the nested list object
-will be the only way to access these variables.}
+"latitude,longitude,radius" e.g., \code{geocode = "37.78,-122.40,1mi"}.}
+    \item{\code{since_id}}{Supply a vector of ids or a data frame of previous results to
+find tweets \strong{newer} than \code{since_id}.}
+    \item{\code{max_id}}{Supply a vector of ids or a data frame of previous results to
+find tweets \strong{older} than \code{max_id}.}
+    \item{\code{parse}}{If \code{TRUE}, the default, returns a tidy data frame. Use \code{FALSE}
+to return the "raw" list corresponding to the JSON returned from the
+Twitter API.}
   }}
 }
 \value{

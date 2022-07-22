@@ -16,35 +16,39 @@ pkg <- "vosonSML"
 
 The `vosonSML` R package is a suite of easy to use functions for collecting and generating different types of networks from social media data. The package supports the collection of data from `twitter`, `youtube` and `reddit`, as well as `hyperlinks` from web sites. Networks in the form of node and edge lists can be generated from collected data, supplemented with additional metadata and used to create graphs for Social Network Analysis.
 
-## Installation
+## Installation Options
 
-Install the latest release via CRAN:
+Install the most recent CRAN release:
 ``` r
 install.packages("`r pkg`")
 ```
 
 ```{r release, include=FALSE}
-rel_path <- NULL
-if (all(sapply(c("httr", "dplyr", "jsonlite"), require, character.only = TRUE))) {
+dl_url <- NULL
+if (all(sapply(c("httr", "dplyr", "jsonlite", "tidyr"), require, character.only = TRUE))) {
   rel_resp <- GET(paste0("https://api.github.com/repos/vosonlab/", pkg, "/releases"),
                   add_headers(Accept = "application/vnd.github.v3+json"))
   if (rel_resp$status_code == 200) {
     resp_content <- fromJSON(rawToChar(rel_resp$content))
     if ("tag_name" %in% names(resp_content)) {
-      meta <- select(slice_head(resp_content), tag_name, tarball_url)
-      rel_path <- pull(meta, tarball_url, tag_name)
-      rel_inst <- paste0("Install the latest release via GitHub:\n\n",
+      meta <- select(slice_head(resp_content), tag_name, tarball_url, assets)
+      assets <- meta |> select(assets) |> unnest(cols = c(assets)) |>
+        filter(grepl("tar\\.gz$", name))
+      dl_url <- assets |> pull(browser_download_url)
+      rel_inst <- paste0("Install the most recent release tag via GitHub:\n\n",
                          "``` r\n",
-                         "install.packages(\"", rel_path, "\",\n",
-                         "                 repo = NULL, type = \"source\")\n",
+                         "install.packages(\n",
+                         "  \"", dl_url, "\",\n",
+                         "  repo = NULL, type = \"source\")\n",
                          "```\n")
     }
   }
 }
 ```
-`r if(!is.null(rel_path)) rel_inst`
+`r if(!is.null(dl_url)) rel_inst`
 
-Install the development version:
+Install the latest development version:
+
 ``` r
 # library(remotes)
 remotes::install_github("vosonlab/`r pkg`")

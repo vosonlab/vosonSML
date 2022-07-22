@@ -5,7 +5,7 @@
 [![CRAN_Monthly](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![CRAN_Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Github_Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github)](https://github.com/vosonlab/vosonSML/releases)
-[![Github_Dev](https://img.shields.io/static/v1?label=dev&message=v0.31.0&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Github_Dev](https://img.shields.io/static/v1?label=dev&message=v0.31.1&logo=github)](https://github.com/vosonlab/vosonSML)
 [![Last_Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 [![Build_Status](https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg)](https://github.com/vosonlab/vosonSML/actions)
 
@@ -17,22 +17,23 @@ in the form of node and edge lists can be generated from collected data,
 supplemented with additional metadata and used to create graphs for
 Social Network Analysis.
 
-## Installation
+## Installation Options
 
-Install the latest release via CRAN:
+Install the most recent CRAN release:
 
 ``` r
 install.packages("vosonSML")
 ```
 
-Install the latest release via GitHub:
+Install the most recent release tag via GitHub:
 
 ``` r
-install.packages("https://api.github.com/repos/vosonlab/vosonSML/tarball/v0.29.13",
-                 repo = NULL, type = "source")
+install.packages(
+  "https://github.com/vosonlab/vosonSML/releases/download/v0.29.13/vosonSML-0.29.13.tar.gz",
+  repo = NULL, type = "source")
 ```
 
-Install the development version:
+Install the latest development version:
 
 ``` r
 # library(remotes)
