@@ -17,22 +17,36 @@ in the form of node and edge lists can be generated from collected data,
 supplemented with additional metadata and used to create graphs for
 Social Network Analysis.
 
-## Installation
+| * Breaking twitter changes with rtweet package v1.0.2 * |
+| ------------- |
+| Please note that the recent major CRAN release of the `rtweet` package has introduced changes that break `vosonSML`'s twitter features. If you wish to continue using `vosonSML` for twitter collection and analysis please use the previous version of `rtweet` v0.7.0 until `vosonSML` is updated.|
 
-Install the latest release via CRAN:
+Install the previous version of `rtweet` v0.7.0 as follows:
+
+``` r
+# library(devtools)
+devtools::install_version(
+  "rtweet", version = "0.7.0", repos = "https://cloud.r-project.org/"
+)
+```
+
+## Installation Options
+
+Install the most recent CRAN release:
 
 ``` r
 install.packages("vosonSML")
 ```
 
-Install the latest release via GitHub:
+Install the most recent release tag via GitHub:
 
 ``` r
-install.packages("https://api.github.com/repos/vosonlab/vosonSML/tarball/v0.29.13",
-                 repo = NULL, type = "source")
+install.packages(
+  "https://github.com/vosonlab/vosonSML/releases/download/v0.30.6/vosonSML-0.30.6.tar.gz",
+  repo = NULL, type = "source")
 ```
 
-Install the development version:
+Install the latest development version:
 
 ``` r
 # library(remotes)
