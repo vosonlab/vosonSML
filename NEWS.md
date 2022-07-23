@@ -1,3 +1,8 @@
+# vosonSML 0.32.0
+
+## Major Changes
+- Modified data collected by `rtweet` 1.0.2 to work with `vosonSML` twitter functions.
+
 # vosonSML 0.31.1
 
 ## Bug Fixes

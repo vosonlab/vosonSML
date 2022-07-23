@@ -80,7 +80,7 @@ Collect.search.twitter <-
 
     rtlimit <- NULL
     tryCatch({
-      rtlimit <- rtweet::rate_limit(authToken, "search/tweets")
+      rtlimit <- rtweet::rate_limit("search/tweets", token = authToken)
     }, error = function(e) {
       cat("Unable to determine rate limit.\n")
       # cat("Unable to determine rate limit. retryOnRateLimit set to FALSE.\n")
@@ -124,6 +124,7 @@ Collect.search.twitter <-
     search_params['include_rts'] <- includeRetweets
     search_params['retryonratelimit'] <- retryOnRateLimit
     search_params['verbose'] <- verbose
+    search_params['parse'] <- FALSE
 
     # additional twitter api params
     dots <- substitute(...())
@@ -131,28 +132,29 @@ Collect.search.twitter <-
 
     tweets_df <- do.call(rtweet::search_tweets, search_params)
 
+    # modified parsing step
+    # so created_at is not converted to local time
+    tweets <- lapply(tweets_df, "[[", "statuses")
+    tweets_df <- rtweet::tweets_with_users(tweets)
+
+    tweets_df <- tweets_df |> modify_tweet_data()
+
     # summary
     if (nrow(tweets_df) > 0) {
 
-      n_show <- 1
-      if (nrow(tweets_df) >= 2) {
-        n_show <- 2
-      }
-
       first_tweets <- tweets_df |>
-        dplyr::slice_head(n = n_show) |>
-        dplyr::mutate(tweet = c("Latest Obs", "")[1:n_show])
+        dplyr::slice_head(n = 1) |>
+        dplyr::mutate(tweet = "Latest Obs")
 
       last_tweets <- tweets_df |>
-        dplyr::slice_tail(n = n_show) |>
-        dplyr::mutate(tweet = c("", "Earliest Obs")[1:n_show])
+        dplyr::slice_tail(n = 1) |>
+        dplyr::mutate(tweet = "Earliest Obs")
 
       results_df <- dplyr::bind_rows(first_tweets, last_tweets) |>
         dplyr::mutate(created = as.character(.data$created_at)) |>
         dplyr::select(.data$tweet,
                       .data$status_id,
-                      .data$created,
-                      .data$screen_name)
+                      .data$created)
 
       cat("\n")
       print_summary(results_df)

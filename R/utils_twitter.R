@@ -1,6 +1,6 @@
 # print current twitter search api rate limit and reset time for token
 print_rate_limit <- function(token) {
-  rtlimit <- rtweet::rate_limit(token, "search/tweets")
+  rtlimit <- rtweet::rate_limit("search/tweets", token = token)
   remaining <-
     rtlimit[["remaining"]] * 100  # 100 returned tweets per request
   reset <- rtlimit[["reset"]]
@@ -11,7 +11,94 @@ print_rate_limit <- function(token) {
 
 # get remaining tweets in current search api rate limit
 remaining_num_tweets <- function(token) {
-  rtlimit <- rtweet::rate_limit(token, "search/tweets")
+  rtlimit <- rtweet::rate_limit("search/tweets", token = token)
   remaining <-
     rtlimit[["remaining"]] * 100 # 100 tweets returned per request
+}
+
+# modify rtweet 1.0 format tweet data
+modify_tweet_data <- function(data) {
+  data <- data |>
+    dplyr::rename(status_id = .data$id_str) |>
+    dplyr::relocate(.data$status_id)
+
+  users_data <- rtweet::users_data(data)
+  users_data <- users_data |>
+    dplyr::rename(user_id = .data$id_str) |>
+    dplyr::rename_with(function(x) paste0("u.", x)) |>
+    dplyr::select(.data$u.user_id, .data$u.screen_name)
+
+  data <- data |> dplyr::bind_cols(users_data)
+
+  # -----
+
+  api_dt_fmt <- "%a %b %d %H:%M:%S +0000 %Y"
+
+  mod_data <- data |>
+    dplyr::mutate_at(dplyr::vars(dplyr::contains(c("_id", "created_at"))), as.character) |>
+
+    # unnest necessary retweet and quote metadata
+    dplyr::rename(rts = .data$retweeted_status, qs = .data$quoted_status) |>
+    dplyr::mutate_at(dplyr::vars("rts", "qs"), as.list) |>
+    tidyr::hoist(
+      .col = .data$rts,
+      rts.id = "id_str",
+      rts.created_at = "created_at",
+      rts.user_id = list("user", "id_str"),
+      rts.screen_name = list("user", "screen_name")
+    ) |>
+    tidyr::hoist(
+      .col = .data$qs,
+      qs.id = "id_str",
+      qs.created_at = "created_at",
+      qs.user_id = list("user", "id_str"),
+      qs.screen_name = list("user", "screen_name")
+    ) |>
+    dplyr::mutate_at(dplyr::vars(dplyr::starts_with(c("rts.", "qs."))), as.character) |>
+
+    dplyr::mutate(
+      # status_id,
+      # created_at,
+      user_id = .data$u.user_id,
+      screen_name = .data$u.screen_name,
+
+      reply_to_status_id = .data$in_reply_to_status_id_str,
+      reply_to_user_id = .data$in_reply_to_user_id_str,
+      reply_to_screen_name = .data$in_reply_to_screen_name,
+
+      is_retweet = ifelse(!is.na(.data$rts.id), TRUE, FALSE),
+      retweet_status_id = .data$rts.id,
+      # retweet_created_at = .data$rts.created_at,
+      retweet_user_id = .data$rts.user_id,
+      retweet_screen_name = .data$rts.screen_name,
+
+      is_quote = ifelse(!is.na(.data$qs.id), TRUE, FALSE),
+      quoted_status_id.orig = .data$quoted_status_id,
+      quoted_status_id = .data$qs.id,
+      # quoted_created_at = .data$qs.created_at,
+      quoted_user_id = .data$qs.user_id,
+      quoted_screen_name = .data$qs.screen_name,
+
+      created_at = ifelse(
+        is.na(.data$created_at), NA_character_,
+        as.character(as.POSIXct(.data$created_at, format = api_dt_fmt, tz = "UTC"))
+      ),
+      retweet_created_at = ifelse(
+        is.na(.data$rts.created_at), NA_character_,
+        as.character(as.POSIXct(.data$rts.created_at, format = api_dt_fmt, tz = "UTC"))
+      ),
+      quoted_created_at = ifelse(
+        is.na(.data$qs.created_at), NA_character_,
+        as.character(as.POSIXct(.data$qs.created_at, format = api_dt_fmt, tz = "UTC"))
+      )
+    ) |>
+    dplyr::select(-dplyr::starts_with(c("rts.", "qs."))) |>
+    dplyr::mutate_at(dplyr::vars(dplyr::contains("created_at")),
+                     lubridate::as_datetime, tz = "UTC") |>
+
+    # clean up
+    dplyr::select(-dplyr::starts_with(c("in_reply_to_", "u.")))
+
+  mod_data
+
 }

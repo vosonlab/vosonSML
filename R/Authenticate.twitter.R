@@ -51,8 +51,6 @@ Authenticate.twitter <-
            accessToken,
            accessTokenSecret,
            ...) {
-    rlang::check_installed("rtweet", "for Authenticate.twitter")
-    stop_req_pkgs(c("rtweet"), "Authenticate.twitter")
 
     credential <-
       list(socialmedia = "twitter",
@@ -61,37 +59,47 @@ Authenticate.twitter <-
     class(credential) <-
       append(class(credential), c("credential", "twitter"))
 
-    if (missing(appName)) {
-      stop("Missing twitter app name.", call. = FALSE)
-    }
-
     if (missing(apiKey) || missing(apiSecret)) {
       stop("Missing twitter consumer API keys.", call. = FALSE)
     }
 
-    # application only keys
+    app <- httr::oauth_app(
+      appName,
+      key = apiKey,
+      secret = apiSecret
+    )
+
+    # for user context
     if (missing(accessToken) || missing(accessTokenSecret)) {
       rlang::check_installed("httpuv", "for Authenticate.twitter")
 
-      credential$auth <- rtweet::create_token(
-        app = appName,
-        consumer_key = apiKey,
-        consumer_secret = apiSecret,
-        set_renv = FALSE
+      token <- TwitterToken1.0$new(
+        app = app,
+        endpoint = httr::oauth_endpoints("twitter"),
+        params = list(as_header = TRUE),
+        cache_path = FALSE
       )
+
+      credential$auth <- token
 
       return(credential)
     }
 
-    # developer keys
-    credential$auth <- rtweet::create_token(
-      app = appName,
-      consumer_key = apiKey,
-      consumer_secret = apiSecret,
-      access_token = accessToken,
-      access_secret = accessTokenSecret,
-      set_renv = FALSE
+    # for developer context
+    credentials <- list(
+      oauth_token = accessToken,
+      oauth_token_secret = accessTokenSecret
     )
+
+    token <- httr::Token1.0$new(
+      app = app,
+      endpoint = httr::oauth_endpoints("twitter"),
+      params = list(as_header = TRUE),
+      credentials = credentials,
+      cache_path = FALSE
+    )
+
+    credential$auth <- token
 
     credential
   }
