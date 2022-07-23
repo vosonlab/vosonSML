@@ -50,19 +50,33 @@ Collect.timeline.twitter <-
     tl_params <- list()
     tl_params[['token']] <- authToken
 
-    tl_params[['user']] <- users
+    # tl_params[['user']] <- users
     tl_params[['n']] <- numTweets
     tl_params['verbose'] <- verbose
+    tl_params['parse'] <- TRUE
 
     # additional twitter api params
     dots <- substitute(...())
     tl_params <- append(tl_params, dots)
 
-    tweets_df <- do.call(rtweet::get_timeline, tl_params)
+    tweets_df <- tweets_df_users <- NULL
+    for (u in users) {
+      tl_params[['user']] <- u
+      df <- do.call(rtweet::get_timeline, tl_params)
+      df_users <- attr(df, "users", exact = TRUE)
 
-    tweets_df <- tweets_df |>
-      dplyr::rename(status_id = id) |>
-      dplyr::relocate(status_id)
+      if (!is.null(tweets_df)) {
+        tweets_df_users <- attr(tweets_df, "users", exact = TRUE)
+        tweets_df <- tweets_df |> dplyr::bind_rows(df)
+        tweets_df_users <- dplyr::bind_rows(tweets_df_users, df_users)
+
+        attr(tweets_df, "users") <- tweets_df_users
+      } else {
+        tweets_df <- df
+      }
+    }
+
+    tweets_df <- tweets_df |> modify_tweet_data(rtweet_created_at = TRUE)
 
     # summary
     if (nrow(tweets_df) > 0) {

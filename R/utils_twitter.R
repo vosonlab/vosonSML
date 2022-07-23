@@ -17,7 +17,11 @@ remaining_num_tweets <- function(token) {
 }
 
 # modify rtweet 1.0 format tweet data
-modify_tweet_data <- function(data) {
+modify_tweet_data <- function(data, rtweet_created_at = FALSE) {
+
+  if (is.null(data)) return(NULL)
+  if (is.data.frame(data) && nrow(data) < 1) return(NULL)
+
   data <- data |>
     dplyr::rename(status_id = .data$id_str) |>
     dplyr::relocate(.data$status_id)
@@ -45,14 +49,16 @@ modify_tweet_data <- function(data) {
       rts.id = "id_str",
       rts.created_at = "created_at",
       rts.user_id = list("user", "id_str"),
-      rts.screen_name = list("user", "screen_name")
+      rts.screen_name = list("user", "screen_name"),
+      .remove = FALSE
     ) |>
     tidyr::hoist(
       .col = .data$qs,
       qs.id = "id_str",
       qs.created_at = "created_at",
       qs.user_id = list("user", "id_str"),
-      qs.screen_name = list("user", "screen_name")
+      qs.screen_name = list("user", "screen_name"),
+      .remove = FALSE
     ) |>
     dplyr::mutate_at(dplyr::vars(dplyr::starts_with(c("rts.", "qs."))), as.character) |>
 
@@ -62,6 +68,7 @@ modify_tweet_data <- function(data) {
       user_id = .data$u.user_id,
       screen_name = .data$u.screen_name,
 
+      is_reply = ifelse(!is.na(.data$in_reply_to_status_id_str), TRUE, FALSE),
       reply_to_status_id = .data$in_reply_to_status_id_str,
       reply_to_user_id = .data$in_reply_to_user_id_str,
       reply_to_screen_name = .data$in_reply_to_screen_name,
@@ -73,16 +80,17 @@ modify_tweet_data <- function(data) {
       retweet_screen_name = .data$rts.screen_name,
 
       is_quote = ifelse(!is.na(.data$qs.id), TRUE, FALSE),
+      is_quote_status.orig = is_quote_status,
       quoted_status_id.orig = .data$quoted_status_id,
       quoted_status_id = .data$qs.id,
       # quoted_created_at = .data$qs.created_at,
       quoted_user_id = .data$qs.user_id,
       quoted_screen_name = .data$qs.screen_name,
 
-      created_at = ifelse(
-        is.na(.data$created_at), NA_character_,
-        as.character(as.POSIXct(.data$created_at, format = api_dt_fmt, tz = "UTC"))
-      ),
+      # created_at = ifelse(
+      #   is.na(.data$created_at), NA_character_,
+      #   as.character(as.POSIXct(.data$created_at, format = api_dt_fmt, tz = "UTC"))
+      # ),
       retweet_created_at = ifelse(
         is.na(.data$rts.created_at), NA_character_,
         as.character(as.POSIXct(.data$rts.created_at, format = api_dt_fmt, tz = "UTC"))
@@ -93,11 +101,31 @@ modify_tweet_data <- function(data) {
       )
     ) |>
     dplyr::select(-dplyr::starts_with(c("rts.", "qs."))) |>
-    dplyr::mutate_at(dplyr::vars(dplyr::contains("created_at")),
+    dplyr::mutate_at(dplyr::vars(dplyr::contains("_created_at")),
                      lubridate::as_datetime, tz = "UTC") |>
 
     # clean up
-    dplyr::select(-dplyr::starts_with(c("in_reply_to_", "u.")))
+    dplyr::select(-.data$id,
+                  # -.data$is_quote_status,
+                  -dplyr::starts_with(c("in_reply_to_", "u."))) |>
+    dplyr::relocate(.data$is_reply, .after = .data$status_id) |>
+    dplyr::relocate(.data$is_quote, .after = .data$is_reply) |>
+    dplyr::relocate(.data$is_retweet, .after = .data$is_quote)
+
+
+    if (rtweet_created_at == FALSE) {
+      mod_data <- mod_data |>
+        dplyr::mutate(
+          created_at = ifelse(
+            is.na(.data$created_at), NA_character_,
+            as.character(as.POSIXct(.data$created_at, format = api_dt_fmt, tz = "UTC"))
+          )
+        ) |>
+        dplyr::mutate_at(
+          dplyr::vars("created_at"),
+          lubridate::as_datetime, tz = "UTC"
+        )
+    }
 
   mod_data
 

@@ -119,6 +119,7 @@ print_summary <- function(df) {
   col_len <- sapply(col_names, nchar)
 
   for (i in 1:length(col_names)) {
+    df[[i]] <- sapply(df[[i]], function(x) { ifelse(is.na(x), "-", x) })
     temp_len <- max_chrlen_in_list(df[[i]])
     col_len[i] <-
       ifelse(temp_len > col_len[i], temp_len, col_len[i])

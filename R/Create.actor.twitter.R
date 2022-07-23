@@ -70,7 +70,8 @@ Create.actor.twitter <-
       # rtweet 1.0 changes --
       tidyr::hoist(
         .col = .data$entities,
-        mentions = list("user_mentions")
+        mentions = list("user_mentions"),
+        .remove = FALSE
       ) |>
       dplyr::mutate(
         mentions_user_id = purrr::map(.data$mentions, ~ dplyr::select(., "m.id" = .data$id_str)),
@@ -120,12 +121,13 @@ Create.actor.twitter <-
       # unnest mentions for tweets that have them
       edges_mentions_unnest <-
         edges |>
-        dplyr::filter(!is.na(.data$mentions_user_id)) |>
+        # dplyr::filter(!is.na(.data$mentions_user_id)) |>
         # tidyr::unnest(cols = c("mentions_user_id", "mentions_screen_name"))
         # rtweet 1.0 changes --
         tidyr::unnest(cols = c("mentions_user_id", "mentions_screen_name")) |>
         dplyr::mutate(mentions_user_id = .data$m.id,
                       mentions_screen_name = .data$m.screen_name) |>
+        dplyr::filter(!is.na(.data$mentions_user_id)) |>
         dplyr::select(-.data$m.id, -.data$m.screen_name)
         # --
 
