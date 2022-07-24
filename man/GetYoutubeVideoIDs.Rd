@@ -4,12 +4,12 @@
 \alias{GetYoutubeVideoIDs}
 \title{Extract the ids from a list of YouTube video urls}
 \usage{
-GetYoutubeVideoIDs(urls = NULL, file = NULL)
+GetYoutubeVideoIDs(urls = c(), verbose = FALSE)
 }
 \arguments{
-\item{urls}{Character vector. List of YouTube urls.}
+\item{urls}{Character vector. List of YouTube urls or ids.}
 
-\item{file}{Character string. Text file containing YouTube urls, one per line.}
+\item{verbose}{Logical. Output additional information. Default is \code{FALSE}.}
 }
 \value{
 A vector of YouTube video ids as character strings that were extracted from input video urls.

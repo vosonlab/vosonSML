@@ -19,8 +19,8 @@
 
 \item{endpoint}{API endpoint. Not used in this method.}
 
-\item{videoIDs}{Character vector. Specifies one or more YouTube video IDs. For example, if the video URL is
-\code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use \code{videoIDs = c("xxxxxxxxxxx")}.}
+\item{videoIDs}{Character vector. Specifies YouTube video URLs or IDs. For example, if the video URL is
+\code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use URL or ID \code{videoIDs = c("xxxxxxxxxxx")}.}
 
 \item{verbose}{Logical. Output additional information about the data collection. Default is \code{FALSE}.}
 
@@ -61,16 +61,4 @@ video and not the combined total of comments.
 To help extract video ids for videos the function \code{\link{GetYoutubeVideoIDs}} can be used. It accepts input of
 a vector or file containing video urls and creates a chracter vector suitable as input for the \code{videoIDs}
 parameter.
-}
-\examples{
-\dontrun{
-# create a list of YouTube video ids to collect on
-videoIDs <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx",
-                                 "https://youtu.be/xxxxxxxx"))
-
-# collect approximately 200 threads/comments for each YouTube video
-youtubeData <- youtubeAuth |>
-  Collect(videoIDs = videoIDs, writeToFile = TRUE, verbose = FALSE, maxComments = 200)
-}
-
 }

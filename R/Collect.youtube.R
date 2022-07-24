@@ -27,8 +27,8 @@
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"youtube"}.
 #' @param endpoint API endpoint. Not used in this method.
-#' @param videoIDs Character vector. Specifies one or more YouTube video IDs. For example, if the video URL is
-#'   \code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use \code{videoIDs = c("xxxxxxxxxxx")}.
+#' @param videoIDs Character vector. Specifies YouTube video URLs or IDs. For example, if the video URL is
+#'   \code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use URL or ID \code{videoIDs = c("xxxxxxxxxxx")}.
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{FALSE}.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
 #' @param maxComments Numeric integer. Specifies how many top-level comments to collect from each video. This value does
@@ -40,13 +40,14 @@
 #'
 #' @examples
 #' \dontrun{
-#' # create a list of YouTube video ids to collect on
-#' videoIDs <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx",
-#'                                  "https://youtu.be/xxxxxxxx"))
+#' # list of YouTube video urls or ids to collect
+#' video_ids <- c("https://www.youtube.com/watch?v=xxxxxxxx",
+#'                "https://youtu.be/xxxxxxxx",
+#'                "xxxxxxx")
 #'
 #' # collect approximately 200 threads/comments for each YouTube video
 #' youtubeData <- youtubeAuth |>
-#'   Collect(videoIDs = videoIDs, writeToFile = TRUE, verbose = FALSE, maxComments = 200)
+#'   Collect(videoIDs = video_ids, writeToFile = TRUE, verbose = FALSE, maxComments = 200)
 #' }
 #'
 #' @export
@@ -59,18 +60,25 @@ Collect.youtube <-
            maxComments = 1e10,
            ...) {
 
-    cat("Collecting comment threads for YouTube videos...\n")
-    flush.console()
+    dbg <- lgl_debug(list(...)$debug)
+
+    msg("Collecting comment threads for YouTube videos...\n")
 
     apiKey <- credential$auth
     if (is.null(apiKey) || nchar(apiKey) < 1) {
       stop("Please provide a valid YouTube api key.", call. = FALSE)
     }
 
-    if (missing(videoIDs) ||
-        !is.vector(videoIDs) || length(videoIDs) < 1) {
-      stop("Please provide a vector of one or more YouTube video ids.",
+    if (!is.vector(videoIDs) || length(videoIDs) < 1) {
+      stop("Please provide a vector of YouTube video urls or ids.",
            call. = FALSE)
+    }
+
+    video_ids <- get_yt_video_ids(videoIDs)
+    video_ids <- video_ids[!is.na(video_ids)]
+
+    if (length(video_ids) < 1) {
+      stop("Failed to extract any YouTube video ids.", call. = FALSE)
     }
 
     api_cost <- total_api_cost <- 0
@@ -95,14 +103,14 @@ Collect.youtube <-
       stringsAsFactors = FALSE
     )
 
-    # Iterate through the videos in videoIDs, adding to dataCombined.
-    for (k in 1:length(videoIDs)) {
-      cat(paste0("Video ", k, " of ", length(videoIDs), "\n", sep = "")) # DEBUG
-      cat("---------------------------------------------------------------\n")
+    # Iterate through the videos in video_ids, adding to dataCombined.
+    for (k in 1:length(video_ids)) {
+      msg(paste0("Video ", k, " of ", length(video_ids), "\n", sep = "")) # DEBUG
+      msg("---------------------------------------------------------------\n")
 
       ############################## Collect comment threads #############################
 
-      rObj <- yt_scraper(videoIDs, apiKey, k, verbose)
+      rObj <- yt_scraper(video_ids, apiKey, k, verbose = dbg)
 
       rObj$scrape_all(maxComments)
 
@@ -110,15 +118,13 @@ Collect.youtube <-
 
       # skip if no threads
       if (length(rObj$data) == 0)  {
-        cat("\n")
+        msg("\n")
         next
       }
 
       ## Make a dataframe out of the results
 
-      if (verbose) {
-        cat(paste0("** Creating dataframe from threads of ", videoIDs[k], ".\n"))
-      }
+      msg(paste0("** Creating dataframe from threads of ", video_ids[k], ".\n"))
 
       tempData <- lapply(rObj$data, function(x) {
         data.frame(
@@ -139,9 +145,9 @@ Collect.youtube <-
           UpdatedAt = x$snippet$topLevelComment$snippet$updatedAt,
           CommentID = x$snippet$topLevelComment$id,
           ParentID = NA,
-          VideoID = videoIDs[k],
+          VideoID = video_ids[k],
           # actual reference to API data is:
-          # x$snippet$topLevelComment$snippet$videoIDs[k]
+          # x$snippet$topLevelComment$snippet$video_ids[k]
           stringsAsFactors = FALSE
         )
       })
@@ -158,7 +164,7 @@ Collect.youtube <-
       commentIDs_with_replies <- commentIDs_with_replies$CommentID
 
       if (length(commentIDs_with_replies) > 0) {
-        cat(
+        msg(
           paste0(
             "** Collecting replies for ",
             length(commentIDs_with_replies),
@@ -181,7 +187,7 @@ Collect.youtube <-
           UpdatedAt = "timestamp",
           CommentID = "99999999123456789",
           ParentID = "foobar",
-          VideoID = videoIDs[k],
+          VideoID = video_ids[k],
           # API DOESN'T SEEM TO RETURN HERE, no matter anyway
           stringsAsFactors = FALSE
         )
@@ -210,7 +216,7 @@ Collect.youtube <-
           err <- FALSE
           if (req$status_code != 200) {
             err <- TRUE
-            cat(
+            msg(
               paste0(
                 "\nComment error: ",
                 init_results$error$code,
@@ -219,7 +225,7 @@ Collect.youtube <-
                 "\n"
               )
             )
-            cat(paste0("parentId: ", commentIDs_with_replies[i], "\n\n"))
+            msg(paste0("parentId: ", commentIDs_with_replies[i], "\n\n"))
           } else {
             api_cost <- api_cost + 2
           }
@@ -228,14 +234,14 @@ Collect.youtube <-
 
           if (verbose) {
             if (i == 1) {
-              cat("Comment replies ")
+              msg("Comment replies ")
             }
 
-            cat(paste(num_items, ""))
-            flush.console()
+            msg(paste(num_items, ""))
+
           } else {
-            cat(".")
-            flush.console()
+            msg(".")
+
           }
 
           total_replies <- total_replies + num_items
@@ -259,7 +265,7 @@ Collect.youtube <-
                 UpdatedAt = x$snippet$updatedAt,
                 CommentID = x$id,
                 ParentID = x$snippet$parentId,
-                VideoID = videoIDs[k],
+                VideoID = video_ids[k],
                 stringsAsFactors = FALSE
               )
             })
@@ -276,16 +282,16 @@ Collect.youtube <-
 
         total_api_cost <- total_api_cost + api_cost
 
-        cat(paste0("\n** Collected replies: ", total_replies, "\n"))
-        cat(paste0(
+        msg(paste0("\n** Collected replies: ", total_replies, "\n"))
+        msg(paste0(
           "** Total video comments: ",
           length(commentIDs) + total_replies,
           "\n"
         ))
         if (verbose) {
-          cat(paste0("(Video API unit cost: ", api_cost, ")\n"))
+          msg(paste0("(Video API unit cost: ", api_cost, ")\n"))
         }
-        cat("---------------------------------------------------------------\n")
+        msg("---------------------------------------------------------------\n")
 
         ############################## Combine comment threads and replies #############################
 
@@ -301,7 +307,7 @@ Collect.youtube <-
       } else {
         total_api_cost <- total_api_cost + api_cost
         dataCombined <- rbind(dataCombined, core_df)
-        cat("\n")
+        msg("\n")
       }
 
       # APPEND TO THE OVERALL DATAFRAME (I.E. MULTIPLE VIDEO COMMENTS)
@@ -309,9 +315,9 @@ Collect.youtube <-
 
       # if (err || rObj$api_error) { break }
 
-    } # end for (k in 1:length(videoIDs))
+    } # end for (k in 1:length(video_ids))
 
-    cat(paste0(
+    msg(paste0(
       "** Total comments collected for all videos ",
       nrow(dataCombined) - 1,
       ".\n",
@@ -326,13 +332,13 @@ Collect.youtube <-
       stop(
         paste0(
           "No comments could be collected from the given video Ids: ",
-          paste0(videoIDs, collapse = ", "),
+          paste0(video_ids, collapse = ", "),
           "\n"
         ),
         call. = FALSE
       )
     } else {
-      cat(paste0("(Estimated API unit cost: ", total_api_cost, ")\n"))
+      msg(paste0("(Estimated API unit cost: ", total_api_cost, ")\n"))
     }
 
     #############################################################################
@@ -346,8 +352,7 @@ Collect.youtube <-
       write_output_file(dataCombined, "rds", "YoutubeData")
     }
 
-    cat("Done.\n")
-    flush.console()
+    msg("Done.\n")
 
     dataCombined
 
@@ -412,14 +417,16 @@ yt_scraper <- setRefClass(
       if (req$status_code != 200) {
         api_error <<- TRUE
         nextPageToken <<- ""
-        cat(paste0(
-          "\nThread error: ",
-          res$error$code,
-          "\nDetail: ",
-          res$error$message,
-          "\n"
-        ))
-        cat(paste0("videoId: ", opts$videoId, "\n\n"))
+        if (verbose) {
+          cat(paste0(
+            "\nThread error: ",
+            res$error$code,
+            "\nDetail: ",
+            res$error$message,
+            "\n"
+          ))
+          cat(paste0("videoId: ", opts$videoId, "\n\n"))
+        }
         return(0)
       } else {
         api_cost <<- api_cost + 3
@@ -440,8 +447,8 @@ yt_scraper <- setRefClass(
 
     # collect all video threads until done or max comments reached
     scrape_all = function(maxComments) {
-      cat(paste0("** video Id: ", api_opts$videoId , "\n", sep = ""))
       if (verbose) {
+        cat(paste0("** video Id: ", api_opts$videoId , "\n", sep = ""))
         cat(
           paste0(
             "   [results per page: ",
@@ -470,14 +477,16 @@ yt_scraper <- setRefClass(
           nextPageToken <<- ""
 
           if (length(data) > maxComments) {
-            cat(
-              paste0(
-                "-- API returned more than max comments. Results truncated to first ",
-                maxComments,
-                " threads.\n",
-                sep = ""
+            if (verbose) {
+              cat(
+                paste0(
+                  "-- API returned more than max comments. Results truncated to first ",
+                  maxComments,
+                  " threads.\n",
+                  sep = ""
+                )
               )
-            )
+            }
 
             data <<- data[1:maxComments]
           }
@@ -493,20 +502,20 @@ yt_scraper <- setRefClass(
       if (verbose) {
         cat(paste0("** Results page count: ", page_count, "\n"))
       }
-      cat(paste0("** Collected threads: ", length(data), "\n"))
       if (verbose) {
+        cat(paste0("** Collected threads: ", length(data), "\n"))
         cat(paste0("(Threads API unit cost: ", api_cost, ")\n"))
       }
     },
 
     # quota cost approx 1 per commentThreads + 2 for snippet part, 3 per page of results
-    initialize = function(videoIDs, apiKey, k, verbose = FALSE) {
+    initialize = function(video_ids, apiKey, k, verbose = FALSE) {
       base_url <<- "https://www.googleapis.com/youtube/v3/commentThreads/"
       api_opts <<- list(
         part = "snippet",
         maxResults = 100,
         textFormat = "plainText",
-        videoId = videoIDs[k],
+        videoId = video_ids[k],
         key = apiKey,
         fields = "items,nextPageToken",
         orderBy = "published"
@@ -558,7 +567,7 @@ yt_scraper <- setRefClass(
         })
         core_df <<- do.call("rbind", sub_data)
       } else {
-        message("core_df is already up to date.\n")
+        if (verbose) { cat("core_df is already up to date.\n") }
       }
     }
   )

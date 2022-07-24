@@ -62,7 +62,7 @@ Collect.search.twitter <-
     rlang::check_installed("rtweet", "for Collect.twitter")
     stop_req_pkgs(c("rtweet"), "Collect.twitter")
 
-    cat("Collecting tweets for search query...\n")
+    msg("Collecting tweets for search query...\n")
 
     authToken <- credential$auth
 
@@ -75,16 +75,14 @@ Collect.search.twitter <-
 
     searchTerm <- trimws(searchTerm)
     if (searchTerm != "") {
-      cat(paste0("Search term: ", searchTerm, "\n"))
+      msg(paste0("Search term: ", searchTerm, "\n"))
     }
 
     rtlimit <- NULL
     tryCatch({
       rtlimit <- rtweet::rate_limit("search/tweets", token = authToken)
     }, error = function(e) {
-      cat("Unable to determine rate limit.\n")
-      # cat("Unable to determine rate limit. retryOnRateLimit set to FALSE.\n")
-      # retryOnRateLimit <<- FALSE
+      msg("Unable to determine rate limit.\n")
     })
 
     if (!is.null(rtlimit)) {
@@ -92,9 +90,9 @@ Collect.search.twitter <-
 
       if (!is.null(remaining) &&
           is.numeric(remaining) && (remaining > 0)) {
-        remaining <-
-          remaining * 100 # 100 is num tweets returned per api request
-        cat(
+        # 100 tweets returned per api request
+        remaining <- remaining * 100
+        msg(
           paste0(
             "Requested ",
             numTweets,
@@ -105,14 +103,14 @@ Collect.search.twitter <-
         )
 
         if (retryOnRateLimit == TRUE & numTweets < remaining) {
-          cat("Less tweets requested than remaining limit retryOnRateLimit set to FALSE.\n")
+          msg("Less tweets requested than remaining limit retryOnRateLimit set to FALSE.\n")
           retryOnRateLimit <- FALSE
         }
       }
-      cat(paste0("Rate limit reset: ", rtlimit$reset_at, "\n"))
+      msg(paste0("Rate limit reset: ", rtlimit$reset_at, "\n"))
 
     } else {
-      cat(paste0("Requested ", numTweets, " tweets.\n"))
+      msg(paste0("Requested ", numTweets, " tweets.\n"))
     }
 
     search_params <- list()
@@ -139,6 +137,8 @@ Collect.search.twitter <-
 
     tweets_df <- tweets_df |> modify_tweet_data()
 
+    if (is.null(tweets_df)) { tweets_df <- tibble::tibble() }
+
     # summary
     if (nrow(tweets_df) > 0) {
 
@@ -156,10 +156,10 @@ Collect.search.twitter <-
                       .data$status_id,
                       .data$created)
 
-      cat("\n")
-      print_summary(results_df)
+      msg("\n")
+      msg(print_summary(results_df))
     }
-    cat(paste0("Collected ", nrow(tweets_df), " tweets.\n"))
+    msg(paste0("Collected ", nrow(tweets_df), " tweets.\n"))
 
     class(tweets_df) <-
       append(c("datasource", "twitter"), class(tweets_df))
@@ -167,7 +167,7 @@ Collect.search.twitter <-
       write_output_file(tweets_df, "rds", "TwitterData")
     }
 
-    cat("Done.\n")
+    msg("Done.\n")
 
     tweets_df
   }

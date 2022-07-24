@@ -26,7 +26,7 @@ Collect.timeline.twitter <-
     rlang::check_installed("rtweet", "for Collect.timeline.twitter")
     stop_req_pkgs(c("rtweet"), "Collect.timeline.twitter")
 
-    cat("Collecting timeline tweets for users...\n")
+    msg("Collecting timeline tweets for users...\n")
 
     authToken <- credential$auth
 
@@ -50,7 +50,6 @@ Collect.timeline.twitter <-
     tl_params <- list()
     tl_params[['token']] <- authToken
 
-    # tl_params[['user']] <- users
     tl_params[['n']] <- numTweets
     tl_params['verbose'] <- verbose
     tl_params['parse'] <- TRUE
@@ -59,24 +58,37 @@ Collect.timeline.twitter <-
     dots <- substitute(...())
     tl_params <- append(tl_params, dots)
 
-    tweets_df <- tweets_df_users <- NULL
-    for (u in users) {
-      tl_params[['user']] <- u
-      df <- do.call(rtweet::get_timeline, tl_params)
-      df_users <- attr(df, "users", exact = TRUE)
+    # looped because of user attribute
+    get_tls <- function() {
+      tw_df <- tw_df_users <- NULL
+      for (u in users) {
+        tl_params[['user']] <- u
 
-      if (!is.null(tweets_df)) {
-        tweets_df_users <- attr(tweets_df, "users", exact = TRUE)
-        tweets_df <- tweets_df |> dplyr::bind_rows(df)
-        tweets_df_users <- dplyr::bind_rows(tweets_df_users, df_users)
+        df <- do.call(rtweet::get_timeline, tl_params)
+        df_users <- attr(df, "users", exact = TRUE)
 
-        attr(tweets_df, "users") <- tweets_df_users
-      } else {
-        tweets_df <- df
+        if (!is.null(tw_df)) {
+          tw_df_users <- attr(tw_df, "users", exact = TRUE)
+          tw_df <- tw_df |> dplyr::bind_rows(df)
+          tw_df_users <- dplyr::bind_rows(tw_df_users, df_users)
+
+          attr(tw_df, "users") <- tw_df_users
+        } else {
+          tw_df <- df
+        }
       }
+
+      tw_df
     }
 
+    # save_tz <- Sys.timezone()
+    # on.exit(Sys.setenv(TZ = save_tz), add = TRUE)
+    # Sys.setenv(TZ = "Etc/UTC")
+
+    tweets_df <- get_tls()
     tweets_df <- tweets_df |> modify_tweet_data(rtweet_created_at = TRUE)
+
+    if (is.null(tweets_df)) { tweets_df <- tibble::tibble() }
 
     # summary
     if (nrow(tweets_df) > 0) {
@@ -95,18 +107,18 @@ Collect.timeline.twitter <-
                       .data$status_id,
                       .data$created)
 
-      cat("\n")
-      print_summary(results_df)
+      msg("\n")
+      msg(print_summary(results_df))
     }
 
-    cat(paste0("Collected ", nrow(tweets_df), " tweets.\n"))
+    msg(paste0("Collected ", nrow(tweets_df), " tweets.\n"))
     class(tweets_df) <-
       append(c("datasource", "twitter"), class(tweets_df))
     if (writeToFile) {
       write_output_file(tweets_df, "rds", "TwitterData")
     }
 
-    cat("Done.\n")
+    msg("Done.\n")
 
     tweets_df
   }

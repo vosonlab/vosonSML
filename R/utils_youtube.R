@@ -8,8 +8,8 @@
 #' @note Accepts YouTube url formats \code{https://youtu.be/xxxxxxxx} and
 #'   \code{https://www.youtube.com/watch?v=xxxxxxxx}.
 #'
-#' @param urls Character vector. List of YouTube urls.
-#' @param file Character string. Text file containing YouTube urls, one per line.
+#' @param urls Character vector. List of YouTube urls or ids.
+#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
 #'
 #' @return A vector of YouTube video ids as character strings that were extracted from input video urls.
 #'
@@ -17,79 +17,45 @@
 #' @name GetYoutubeVideoIDs
 #' @export
 GetYoutubeVideoIDs <-
-  get_video_ids <- function(urls = NULL, file = NULL) {
+  get_video_ids <- function(urls = c(), verbose = FALSE) {
+    msg <- f_verbose(verbose)
+
     video_ids <- c()
 
-    if (is.null(urls) & is.null(file)) {
-      cat("Please provide a vector and or file of YouTube video urls.\n")
+    if (is.null(urls) || !is.vector(urls)) {
+      stop("Please provide a vector of YouTube video urls.")
+    }
+
+    ids <- get_yt_video_ids(urls)
+    video_ids <- ids[!is.na(ids)]
+
+    if (length(video_ids) < 1) {
+      msg("Failed to extract any ids.\n")
       return(video_ids)
-    }
-
-    if (!is.null(urls)) {
-      video_ids <-
-        append(video_ids, sapply(urls, get_video_id, USE.NAMES = FALSE))
-    }
-
-    if (!is.null(file)) {
-      video_ids_file <- tryCatch({
-        read.table(file, sep = "\n", strip.white = TRUE)
-      }, error = function(e) {
-        cat(paste0(e))
-        return(NULL)
-      })
-
-      if (!is.null(video_ids_file)) {
-        video_ids_file <- as.vector(video_ids_file$V1)
-        video_ids <-
-          append(video_ids, sapply(urls, get_video_id, USE.NAMES = FALSE))
+    } else {
+      if (any(is.na(ids))) {
+        msg("Failed to extract ids.\n")
+        failed <- paste0("- ", urls[is.na(ids)])
+        msg(paste0(failed, collapse = "\n"))
+        msg("\n")
       }
     }
 
-    if (length(video_ids) < 1) {
-      cat("No YouTube video ids found.\n")
-    } else {
-      cat(paste0("Extracted ", length(video_ids), " video ids.\n"))
-    }
+    msg(paste0("Extracted ", length(video_ids), " video ids.\n"))
 
     video_ids
   }
 
-# extract the id from a YouTube video url
-get_video_id <- function(url) {
-  id_pattern <- "^[0-9A-Za-z_\\-]+$"
+# extract youtube video ids using regex
+get_yt_video_ids <- function(x) {
+  id_regex <- "[0-9A-Za-z_\\-]+"
+  id_regex_a <- paste0("^", id_regex, "$")
+  url_regex_b <- paste0("^(?:https://)?youtu\\.be/(", id_regex, ")?/{0,1}$")
+  url_regex_c <- paste0("^(?:https://)?(?:www\\.)?youtube\\.com/watch\\?v=(", id_regex, ")?/{0,1}$")
 
-  # already an id
-  if (grepl(id_pattern, url, ignore.case = TRUE, perl = TRUE)) {
-    return(url)
-  }
+  y <- stringr::str_match(
+    as.character(x),
+    paste0("(", id_regex_a, ")|", url_regex_b, "|", url_regex_c))
 
-  url <- httr::parse_url(url)
-  video_id <- NULL
-
-  if (is.null(url$hostname)) {
-    return(NULL)
-  }
-
-  # url format https://youtu.be/xxxxxxxxxxx
-  if (tolower(trimws(url$hostname)) == "youtu.be") {
-    if (length(url$path) > 0) {
-      video_id <- url$path[1]
-    }
-  }
-
-  # url format https://www.youtube.com/watch?v=xxxxxxxxxxx
-  if (tolower(trimws(url$hostname)) == "www.youtube.com") {
-    if (!is.null(url$query$v)) {
-      video_id <- url$query$v
-    }
-  }
-
-  if (!grepl(id_pattern,
-             video_id,
-             ignore.case = TRUE,
-             perl = TRUE)) {
-    return(NULL)
-  }
-
-  video_id
+  res <- dplyr::coalesce(y[, 2], y[, 3], y[, 4])
 }

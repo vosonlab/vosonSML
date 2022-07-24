@@ -15,26 +15,20 @@
 #'
 #' @export
 Collect <- function(credential, endpoint = NULL, ...) {
-  timer_pkg <- FALSE
-  if (requireNamespace("tictoc", quietly = TRUE)) {
-    timer_pkg <- TRUE
-  }
+  msg <- f_verbose(list(...)$verbose)
 
   # set the environment encoding to UTF-8 for data collection
   saved_enc <- getOption("encoding")
   saved_ua <- getOption("HTTPUserAgent")
+  saved_tz <- Sys.timezone()
   on.exit({
-    if (timer_pkg) {
-      tictoc::toc(quiet = FALSE, func.toc = format_toc)
-    }
     options(encoding = saved_enc)
     options(HTTPUserAgent = saved_ua)
+    Sys.setenv(TZ = saved_tz)
   }, add = TRUE)
   options(encoding = "UTF-8")
   options(HTTPUserAgent = paste0("vosonSML v.", get_version(), " (R Package)"))
-  if (timer_pkg) {
-    tictoc::tic(msg = "Elapsed time")
-  }
+  Sys.setenv(TZ = "Etc/UTC")
 
   if (!is.null(endpoint)) {
     class(endpoint) <- append(class(endpoint), endpoint)
@@ -42,7 +36,6 @@ Collect <- function(credential, endpoint = NULL, ...) {
   } else {
     UseMethod("Collect", credential)
   }
-
 }
 
 #' @export

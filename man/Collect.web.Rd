@@ -9,7 +9,7 @@
   endpoint,
   pages = data.frame(),
   writeToFile = FALSE,
-  verbose = TRUE,
+  verbose = FALSE,
   ...
 )
 }
@@ -27,7 +27,7 @@ from the seed site.}
 
 \item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
 
-\item{verbose}{Logical. Output additional information about the data collection. Default is \code{TRUE}.}
+\item{verbose}{Logical. Output additional information. Default is \code{FALSE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }

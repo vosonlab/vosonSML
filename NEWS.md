@@ -1,7 +1,11 @@
-# vosonSML 0.32.0
+# vosonSML 0.32.1
 
 ## Major Changes
 - Modified data collected by `rtweet` 1.0.2 to work with `vosonSML` twitter functions.
+
+## Minor Changes
+- Re-wrote `youtube` id extraction from url function to be more robust.
+- R-worked messages. Most functions are now silent and not `verbose` by default.
 
 # vosonSML 0.31.1
 

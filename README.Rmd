@@ -340,16 +340,15 @@ youtube_auth <- Authenticate("youtube", apiKey = "xxxxxxxxxxxx")
 Once the key is set then `Collect` can be used to collect the comments from specified youtube videos. The following example collects a maximum of 100 top-level comments and all replies from each of the 2 specified video ID's. It produces a dataframe with the combined comment data.
 ``` r
 # helper to create a list of youtube video ids from urls
-youtube_video_ids <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx",
-                                          "https://youtu.be/xxxxxxxx"))
+youtube_video_ids <- c("https://www.youtube.com/watch?v=xxxxxxxx",
+                       "https://youtu.be/xxxxxxxx")
 
-# Extracted 2 video ids.
 ```
 ``` r
 youtube_data <- youtube_auth %>%
   Collect(videoIDs = youtube_video_ids,
           maxComments = 100,
-          verbose = FALSE)
+          verbose = TRUE)
 
 # Collecting comment threads for youtube videos...
 # Video 1 of 2

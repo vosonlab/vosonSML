@@ -130,7 +130,8 @@ print_summary <- function(df) {
       pad_to_len(x, col_len[match(c(x), col_names)])), collapse = " | ")
   header <-
     paste0(header, "\n", paste0(replicate(nchar(header), ""), collapse = "-"), "-\n")
-  cat(header)
+
+  lines <- ""
   for (i in 1:nrow(df)) {
     line <- ""
     values <- as.character(as.vector(df[i, ]))
@@ -140,8 +141,10 @@ print_summary <- function(df) {
                pad_to_len(values[j], col_len[j]),
                ifelse(j < length(values), " | ", ""))
     }
-    cat(paste0(line, "\n"))
+    lines <- paste0(lines, line, "\n")
   }
+
+  paste0(header, lines)
 }
 
 # format tictoc elapsed time output
@@ -255,3 +258,33 @@ stop_req_pkgs <- function(pkgs, from = "this function") {
 escape_regex <- function(x) {
   gsub("([.|()\\^{}+$*?]|\\[|\\])", "\\\\\\1", x)
 }
+
+lgl_debug <- function(x) {
+  lgl <- FALSE
+  if (!is.null(x)) {
+    if (is.logical(x)) { lgl <- x }
+  }
+  lgl
+}
+
+# assign msg functions
+f_verbose <- function(x) {
+  f <- vsml_silent
+  if (!is.null(x)) {
+    if (is.logical(x)) {
+      f <- ifelse(x, vsml_cat, vsml_silent)
+    }
+  }
+  f
+}
+
+# msg output helpers
+vsml_msg <- function(x) { message(x) }
+
+vsml_cat <- function(x) {
+  cat(x)
+  flush.console()
+  Sys.sleep(0.05)
+}
+
+vsml_silent <- function(x) { return() }

@@ -75,7 +75,6 @@ modify_tweet_data <- function(data, rtweet_created_at = FALSE) {
 
       is_retweet = ifelse(!is.na(.data$rts.id), TRUE, FALSE),
       retweet_status_id = .data$rts.id,
-      # retweet_created_at = .data$rts.created_at,
       retweet_user_id = .data$rts.user_id,
       retweet_screen_name = .data$rts.screen_name,
 
@@ -83,14 +82,9 @@ modify_tweet_data <- function(data, rtweet_created_at = FALSE) {
       is_quote_status.orig = is_quote_status,
       quoted_status_id.orig = .data$quoted_status_id,
       quoted_status_id = .data$qs.id,
-      # quoted_created_at = .data$qs.created_at,
       quoted_user_id = .data$qs.user_id,
       quoted_screen_name = .data$qs.screen_name,
 
-      # created_at = ifelse(
-      #   is.na(.data$created_at), NA_character_,
-      #   as.character(as.POSIXct(.data$created_at, format = api_dt_fmt, tz = "UTC"))
-      # ),
       retweet_created_at = ifelse(
         is.na(.data$rts.created_at), NA_character_,
         as.character(as.POSIXct(.data$rts.created_at, format = api_dt_fmt, tz = "UTC"))
@@ -101,8 +95,6 @@ modify_tweet_data <- function(data, rtweet_created_at = FALSE) {
       )
     ) |>
     dplyr::select(-dplyr::starts_with(c("rts.", "qs."))) |>
-    dplyr::mutate_at(dplyr::vars(dplyr::contains("_created_at")),
-                     lubridate::as_datetime, tz = "UTC") |>
 
     # clean up
     dplyr::select(-.data$id,
@@ -112,21 +104,19 @@ modify_tweet_data <- function(data, rtweet_created_at = FALSE) {
     dplyr::relocate(.data$is_quote, .after = .data$is_reply) |>
     dplyr::relocate(.data$is_retweet, .after = .data$is_quote)
 
-
-    if (rtweet_created_at == FALSE) {
-      mod_data <- mod_data |>
-        dplyr::mutate(
-          created_at = ifelse(
-            is.na(.data$created_at), NA_character_,
-            as.character(as.POSIXct(.data$created_at, format = api_dt_fmt, tz = "UTC"))
-          )
-        ) |>
-        dplyr::mutate_at(
-          dplyr::vars("created_at"),
-          lubridate::as_datetime, tz = "UTC"
+  if (rtweet_created_at == FALSE) {
+    mod_data <- mod_data |>
+      dplyr::mutate(
+        created_at = ifelse(
+          is.na(.data$created_at), NA_character_,
+          as.character(as.POSIXct(.data$created_at, format = api_dt_fmt, tz = "UTC"))
         )
-    }
+      )
+  }
+
+  mod_data <- mod_data |>
+    dplyr::mutate_at(dplyr::vars(dplyr::contains("created_at")),
+                     lubridate::as_datetime, tz = "UTC")
 
   mod_data
-
 }

@@ -37,7 +37,7 @@ Collect.reddit <-
            writeToFile = FALSE,
            verbose = TRUE,
            ...) {
-    cat("Collecting comment threads for reddit urls...\n")
+    msg("Collecting comment threads for reddit urls...\n")
 
     if (missing(threadUrls) ||
         !is.vector(threadUrls) || length(threadUrls) < 1) {
@@ -71,7 +71,7 @@ Collect.reddit <-
     }
 
     if (verbose) {
-      cat(
+      msg(
         paste0(
           "Waiting between ",
           waitTime[1],
@@ -94,7 +94,7 @@ Collect.reddit <-
 
     if (!is.null(threads_df)) {
       if (nrow(threads_df) > 0) {
-        cat("HTML decoding comments.\n")
+        msg("HTML decoding comments.\n")
         threads_df$comment <-
           textutils::HTMLdecode(threads_df$comment)
 
@@ -112,13 +112,13 @@ Collect.reddit <-
           ifelse(nchar(results_df$title) > 42,
                  paste0(strtrim(results_df$title, 42), "..."),
                  results_df$title)
-        print_summary(results_df)
-        cat(paste0("Collected ", nrow(threads_df), " total comments.\n"))
+        msg(print_summary(results_df))
+        msg(paste0("Collected ", nrow(threads_df), " total comments.\n"))
       } else {
-        cat(paste0("No comments were collected.\n"))
+        msg(paste0("No comments were collected.\n"))
       }
     } else {
-      cat(paste0("Collection dataframe is null.\n"))
+      msg(paste0("Collection dataframe is null.\n"))
     }
 
     class(threads_df) <-
@@ -127,7 +127,7 @@ Collect.reddit <-
       write_output_file(threads_df, "rds", "RedditData")
     }
 
-    cat("Done.\n")
+    msg("Done.\n")
 
     threads_df
   }
@@ -157,7 +157,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
       # loop protection
       if (!is.null(prev_value) &&
           extra_threads[row_i, "comm_id"] == prev_value) {
-        cat("Loop protection following continue threads. Exiting.\n")
+        msg("Loop protection following continue threads. Exiting.\n")
         break
       }
       prev_value <- extra_threads[row_i, "comm_id"]
@@ -263,10 +263,10 @@ reddit_data <-
     req_tid <- get_thread_id(req_url, TRUE)
 
     if (is.null(cont)) {
-      cat(paste0("Request thread: ", req_tid, "\n"))
+      msg(paste0("Request thread: ", req_tid, "\n"))
     } else {
       if (verbose) {
-        cat(paste0("Continue thread: ", req_tid, " - ", cont, "\n"))
+        msg(paste0("Continue thread: ", req_tid, " - ", cont, "\n"))
       }
     }
 
@@ -276,10 +276,10 @@ reddit_data <-
       Sys.sleep(sample(wait_time, 1))
 
       if (is.null(cont)) {
-        cat(paste0("Retry thread: ", req_tid, "\n"))
+        msg(paste0("Retry thread: ", req_tid, "\n"))
       } else {
         if (verbose) {
-          cat(paste0("Retry continue thread: ", req_tid, " - ", cont, "\n"))
+          msg(paste0("Retry continue thread: ", req_tid, " - ", cont, "\n"))
         }
       }
 
@@ -288,7 +288,7 @@ reddit_data <-
 
     if (is.null(req_data$status) ||
         as.numeric(req_data$status) != 200) {
-      cat(paste0("Failed: ", url,
+      msg(paste0("Failed: ", url,
                  ifelse(
                    is.null(req_data$status),
                    "",
@@ -434,7 +434,7 @@ reddit_content_plus <- function(raw_data, req_url, depth = 0) {
     if (dim(data)[1] > 0 & dim(data)[2] > 0) {
       data_extract <- rbind(data, data_extract)
     } else {
-      cat(paste0("No data: ", req_url, "\n"))
+      msg(paste0("No data: ", req_url, "\n"))
     }
   }
 

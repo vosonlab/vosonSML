@@ -1,5 +1,5 @@
 Package: vosonSML
-Version: 0.32.0
+Version: 0.32.1
 Title: Collecting Social Media Data and Generating Networks for Analysis
 Description: A suite of easy to use functions for collecting social media
     data and generating networks for analysis. Supports Twitter, Youtube,
@@ -29,7 +29,6 @@ Suggests:
     rvest,
     stopwords,
     testthat,
-    tictoc,
     tidytext,
     urltools,
     xml2
