@@ -18,7 +18,7 @@
 #' @param inclRtMentions Logical. Create edges for users mentioned or tagged in retweets. For tweet types other than
 #'   retweets the collected tweet author has created the mention, for retweets the original tweet author has created the
 #'   mention not the retweeter. Default is \code{FALSE}.
-#' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
+#' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
 #' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
@@ -45,12 +45,10 @@ Create.actor.twitter <-
            rmEdgeTypes = NULL,
            inclMentions = TRUE,
            inclRtMentions = FALSE,
-           verbose = TRUE,
+           verbose = FALSE,
            ...) {
-    cat("Generating twitter actor network...")
-    if (verbose) {
-      cat("\n")
-    }
+    msg("Generating twitter actor network...\n")
+
     df_stats <-
       network_stats(NULL, "collected tweets", nrow(datasource))
 
@@ -64,7 +62,6 @@ Create.actor.twitter <-
         dplyr::ends_with("screen_name"),
         dplyr::starts_with("reply_"),
         dplyr::ends_with("created_at"),
-        # dplyr::starts_with("mentions")
         .data$entities
       ) |>
       # rtweet 1.0 changes --
@@ -103,11 +100,8 @@ Create.actor.twitter <-
       rmEdgeTypes[trimws(tolower(rmEdgeTypes)) %in% types]
 
     if (length(rmEdgeTypes)) {
-      if (verbose) {
-        cat(paste0("Removing edge types: ",
-                   paste0(rmEdgeTypes, collapse = ", "),
-                   "\n"))
-      }
+      msg(paste0("Removing edge types: ",
+                 paste0(rmEdgeTypes, collapse = ", "), "\n"))
     }
 
     edges <- edges |> dplyr::filter(!(.data$type %in% rmEdgeTypes))
@@ -257,6 +251,7 @@ Create.actor.twitter <-
       dplyr::group_by(.data$type) |>
       dplyr::tally() |>
       dplyr::arrange(dplyr::desc(.data$type))
+
     for (row in 1:nrow(edge_stats)) {
       df_stats <-
         network_stats(df_stats, edge_stats[row, "type"], edge_stats[row, "n"], TRUE)
@@ -283,15 +278,14 @@ Create.actor.twitter <-
       )
 
     # print stats
-    if (verbose) {
-      df_stats <- network_stats(df_stats, "nodes", nrow(nodes))
-      df_stats <- network_stats(df_stats, "edges", nrow(edges))
-      network_stats(df_stats, print = TRUE)
-    }
+    df_stats <- network_stats(df_stats, "nodes", nrow(nodes))
+    df_stats <- network_stats(df_stats, "edges", nrow(edges))
+    msg(network_stats(df_stats, print = TRUE))
 
     network <- list("edges" = edges, "nodes" = nodes)
     class(network) <-
       append(c("network", "actor", "twitter"), class(network))
-    cat("Done.\n")
+    msg("Done.\n")
+
     network
   }

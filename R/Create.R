@@ -63,6 +63,8 @@ Create.default <- function(datasource, type, ...) {
 #' @method Create activity
 #' @export
 Create.activity <- function(datasource, type, ...) {
+  msg <- f_verbose(list(...)$verbose)
+
   UseMethod("Create.activity", datasource)
 }
 
@@ -78,6 +80,8 @@ Create.activity.default <- function(datasource, type, ...) {
 #' @method Create actor
 #' @export
 Create.actor <- function(datasource, type, ...) {
+  msg <- f_verbose(list(...)$verbose)
+
   UseMethod("Create.actor", datasource)
 }
 

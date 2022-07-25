@@ -182,8 +182,9 @@ network_stats <-
            edge = FALSE,
            print = FALSE) {
     if (print == TRUE) {
+      out <- ""
       if (!is.null(df) & nrow(df) > 0) {
-        cat("-------------------------\n")
+        out <- paste0(out, "-------------------------\n")
         lf <- lc <- 0
         for (i in 1:nrow(df)) {
           lf <- ifelse(nchar(df$field[i]) > lf, nchar(df$field[i]), lf)
@@ -200,12 +201,12 @@ network_stats <-
             paste0(df$field[i], paste0(replicate(lfm - nchar(df$field[i]), ""), collapse = " "), " | ")
           line <-
             paste0(line, df$count[i], paste0(replicate(lc - nchar(df$count[i]), ""), collapse = " "), "\n")
-          cat(line)
+          out <- paste0(out, line)
         }
-        cat("-------------------------\n")
+        out <- paste0(out, "-------------------------\n")
       }
 
-      return(TRUE)
+      return(out)
     }
 
     if (is.null(df)) {
