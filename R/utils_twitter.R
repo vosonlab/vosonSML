@@ -16,8 +16,12 @@ remaining_num_tweets <- function(token) {
     rtlimit[["remaining"]] * 100 # 100 tweets returned per request
 }
 
+twitter_api_dt_fmt <- function() {
+  "%a %b %d %H:%M:%S +0000 %Y"
+}
+
 # modify rtweet 1.0 format tweet data
-modify_tweet_data <- function(data, rtweet_created_at = FALSE) {
+modify_tweet_data <- function(data, users = NULL, rtweet_created_at = FALSE) {
 
   if (is.null(data)) return(NULL)
   if (is.data.frame(data) && nrow(data) < 1) return(NULL)
@@ -26,17 +30,16 @@ modify_tweet_data <- function(data, rtweet_created_at = FALSE) {
     dplyr::rename(status_id = .data$id_str) |>
     dplyr::relocate(.data$status_id)
 
-  users_data <- rtweet::users_data(data)
-  users_data <- users_data |>
-    dplyr::rename(user_id = .data$id_str) |>
-    dplyr::rename_with(function(x) paste0("u.", x)) |>
-    dplyr::select(.data$u.user_id, .data$u.screen_name)
-
-  data <- data |> dplyr::bind_cols(users_data)
+  if (is.null(users)) {
+    data <- data |> dplyr::mutate(
+      u.user_id = NA_character_, u.screen_name = NA_character_)
+  } else {
+    data <- data |> dplyr::bind_cols(users)
+  }
 
   # -----
 
-  api_dt_fmt <- "%a %b %d %H:%M:%S +0000 %Y"
+  api_dt_fmt <- twitter_api_dt_fmt()
 
   mod_data <- data |>
     dplyr::mutate_at(dplyr::vars(dplyr::contains(c("_id", "created_at"))), as.character) |>
@@ -63,8 +66,6 @@ modify_tweet_data <- function(data, rtweet_created_at = FALSE) {
     dplyr::mutate_at(dplyr::vars(dplyr::starts_with(c("rts.", "qs."))), as.character) |>
 
     dplyr::mutate(
-      # status_id,
-      # created_at,
       user_id = .data$u.user_id,
       screen_name = .data$u.screen_name,
 
@@ -98,7 +99,6 @@ modify_tweet_data <- function(data, rtweet_created_at = FALSE) {
 
     # clean up
     dplyr::select(-.data$id,
-                  # -.data$is_quote_status,
                   -dplyr::starts_with(c("in_reply_to_", "u."))) |>
     dplyr::relocate(.data$is_reply, .after = .data$status_id) |>
     dplyr::relocate(.data$is_quote, .after = .data$is_reply) |>

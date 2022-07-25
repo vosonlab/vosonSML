@@ -81,12 +81,22 @@ Collect.timeline.twitter <-
       tw_df
     }
 
-    # save_tz <- Sys.timezone()
-    # on.exit(Sys.setenv(TZ = save_tz), add = TRUE)
-    # Sys.setenv(TZ = "Etc/UTC")
-
     tweets_df <- get_tls()
-    tweets_df <- tweets_df |> modify_tweet_data(rtweet_created_at = TRUE)
+
+    users_df <- attr(tweets_df, "users", exact = TRUE)
+    user_names <- NULL
+    if (!is.null(users_df)) {
+      users_df <- users_df |>
+        dplyr::rename(user_id = .data$id_str)
+
+      attr(tweets_df, "users") <- NULL
+
+      user_names <- users_df |>
+        dplyr::select(.data$user_id, .data$screen_name) |>
+        dplyr::rename_with(function(x) paste0("u.", x))
+    }
+
+    tweets_df <- tweets_df |> modify_tweet_data(users = user_names, rtweet_created_at = TRUE)
 
     if (is.null(tweets_df)) { tweets_df <- tibble::tibble() }
 
@@ -112,8 +122,12 @@ Collect.timeline.twitter <-
     }
 
     msg(paste0("Collected ", nrow(tweets_df), " tweets.\n"))
+
     class(tweets_df) <-
       append(c("datasource", "twitter"), class(tweets_df))
+
+    attr(tweets_df, "users") <- users_df
+
     if (writeToFile) {
       write_output_file(tweets_df, "rds", "TwitterData")
     }

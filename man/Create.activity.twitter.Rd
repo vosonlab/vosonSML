@@ -4,7 +4,7 @@
 \alias{Create.activity.twitter}
 \title{Create twitter activity network}
 \usage{
-\method{Create}{activity.twitter}(datasource, type, rmEdgeTypes = NULL, verbose = TRUE, ...)
+\method{Create}{activity.twitter}(datasource, type, rmEdgeTypes = NULL, verbose = FALSE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
@@ -14,7 +14,7 @@
 \item{rmEdgeTypes}{Character vector. List of tweet edge types to remove from network. Options are \code{"tweet"},
 \code{"retweet"}, \code{"reply"} and \code{"quote"}. Default is \code{NULL}.}
 
-\item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
+\item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }

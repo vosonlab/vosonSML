@@ -62,3 +62,16 @@ To help extract video ids for videos the function \code{\link{GetYoutubeVideoIDs
 a vector or file containing video urls and creates a chracter vector suitable as input for the \code{videoIDs}
 parameter.
 }
+\examples{
+\dontrun{
+# list of YouTube video urls or ids to collect
+video_ids <- c("https://www.youtube.com/watch?v=xxxxxxxx",
+               "https://youtu.be/xxxxxxxx",
+               "xxxxxxx")
+
+# collect approximately 200 threads/comments for each YouTube video
+youtubeData <- youtubeAuth |>
+  Collect(videoIDs = video_ids, writeToFile = TRUE, verbose = FALSE, maxComments = 200)
+}
+
+}
