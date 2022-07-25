@@ -120,7 +120,7 @@ get_hyperlinks <-
       df <- NULL
 
       if (!grepl("^(https|http)://.*$", page_url, ignore.case = TRUE)) {
-        msg("- skipping uri:", page_url, "\n")
+        msg(paste0("- skipping uri:", page_url, "\n"))
         return(df)
       }
 
@@ -132,10 +132,10 @@ get_hyperlinks <-
         robotstxt_obj <- get_domain_robots(base_url)
 
         if (!is.null(robotstxt_obj)) {
-          msg("* new domain:", base_url, "\n")
+          msg(paste0("* new domain:", base_url, "\n"))
           robotstxt_list[[page_domain]] <<- robotstxt_obj
         } else {
-          msg("* no robots or error:", base_url, "\n")
+          msg(paste0("* no robots or error:", base_url, "\n"))
         }
       }
 
@@ -154,7 +154,7 @@ get_hyperlinks <-
 
           # path disallowed
         } else {
-          msg("- disallowed:", page_url, "\n")
+          msg(paste0("- disallowed:", page_url, "\n"))
           return(df)
         }
 
@@ -185,7 +185,7 @@ get_hyperlinks <-
           }
         }
       } else {
-        msg("- already done:", page_url, "\n")
+        msg(paste0("- already done:", page_url, "\n"))
       }
 
       if (!is.null(df)) {

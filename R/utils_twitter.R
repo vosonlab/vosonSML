@@ -80,7 +80,7 @@ modify_tweet_data <- function(data, users = NULL, rtweet_created_at = FALSE) {
       retweet_screen_name = .data$rts.screen_name,
 
       is_quote = ifelse(!is.na(.data$qs.id), TRUE, FALSE),
-      is_quote_status.orig = is_quote_status,
+      is_quote_status.orig = .data$is_quote_status,
       quoted_status_id.orig = .data$quoted_status_id,
       quoted_status_id = .data$qs.id,
       quoted_user_id = .data$qs.user_id,

@@ -268,6 +268,8 @@ lgl_debug <- function(x) {
   lgl
 }
 
+msg <- function(x) { vsml_cat(x) }
+
 # assign msg functions
 f_verbose <- function(x) {
   f <- vsml_silent

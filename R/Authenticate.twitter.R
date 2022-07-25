@@ -51,6 +51,8 @@ Authenticate.twitter <-
            accessToken,
            accessTokenSecret,
            ...) {
+    rlang::check_installed("rtweet", "for Authenticate.twitter")
+    stop_req_pkgs(c("rtweet"), "Authenticate.twitter")
 
     credential <-
       list(socialmedia = "twitter",
@@ -103,3 +105,33 @@ Authenticate.twitter <-
 
     credential
   }
+
+# twitter token functions from the rtweet package auth.R file
+# Kearney, M. W. (2019). rtweet: Collecting and analyzing Twitter data,
+# Journal of Open Source Software, 4, 42. 1829.
+# doi:10.21105/joss.01829
+
+TwitterToken1.0 <- R6::R6Class("TwitterToken1.0", inherit = httr::Token1.0, list(
+  init_credentials = function(force = FALSE) {
+    self$credentials <- twitter_init_oauth1.0(
+      self$endpoint,
+      self$app,
+      permission = self$params$permission,
+      private_key = self$private_key
+    )
+  }
+))
+
+twitter_init_oauth1.0 <- function(endpoint, app, permission = NULL,
+                                  is_interactive = interactive(),
+                                  private_key = NULL) {
+
+  withr::local_envvar("HTTR_SERVER" = "127.0.0.1")
+  httr::init_oauth1.0(
+    endpoint,
+    app,
+    permission = permission,
+    is_interactive = is_interactive,
+    private_key = private_key
+  )
+}
