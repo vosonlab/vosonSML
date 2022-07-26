@@ -17,6 +17,11 @@
 #' @export
 AddUserData <- function(net, data, ...) {
   msg <- f_verbose(list(...)$verbose)
+  msg("Adding user data to network...")
+
+  if ("voson.user" %in% class(net)) {
+    stop("Network already has user attribute.")
+  }
 
   # searches the class list of net for matching method
   UseMethod("AddUserData", net)
@@ -76,10 +81,6 @@ AddUserData.actor.twitter <-
            rmMisc = TRUE,
            verbose = FALSE,
            ...) {
-    rlang::check_installed("rtweet", "for AddUserData.actor.twitter")
-    stop_req_pkgs(c("rtweet"), "AddUserData.actor.twitter")
-
-    msg("Adding user profile data to network...\n")
 
     users <- attr(data, "users", exact = TRUE)
     if (is.null(users)) {
@@ -90,12 +91,10 @@ AddUserData.actor.twitter <-
       twitter_user_transforms(rm_misc = rmMisc)
 
     qs_users <- extract_nested_twitter_users(data, "qs") |>
-      twitter_user_transforms(rm_misc = rmMisc) |>
-      dplyr::distinct(.data$u.user_id, .keep_all = TRUE)
+      twitter_user_transforms(rm_misc = rmMisc)
 
     rts_users <- extract_nested_twitter_users(data, "rts") |>
-      twitter_user_transforms(rm_misc = rmMisc) |>
-      dplyr::distinct(.data$u.user_id, .keep_all = TRUE)
+      twitter_user_transforms(rm_misc = rmMisc)
 
     all_users <- dplyr::bind_rows(users, qs_users, rts_users) |>
       dplyr::distinct(.data$u.user_id, .keep_all = TRUE)
@@ -113,7 +112,7 @@ AddUserData.actor.twitter <-
 
     attr(net, "missing_users") <- missing_user_data
 
-    class(net) <- union(class(net), c("vosonuser"))
+    class(net) <- union(class(net), c("voson.user"))
     msg("Done.\n")
 
     net
@@ -123,7 +122,11 @@ AddUserData.actor.twitter <-
 extract_nested_twitter_users <- function(x, var) {
   x <- x |>
     dplyr::select({{ var }}) |>
-    tidyr::unnest(cols = c({{ var }})) |>
+    tidyr::unnest(cols = c({{ var }}))
+
+  if (!"user" %in% names(x)) { return(NULL) }
+
+  x <- x |>
     dplyr::select(.data$user) |>
     tidyr::unnest(cols = c(.data$user)) |>
     dplyr::filter(!is.na(.data$id_str)) |>
@@ -134,6 +137,8 @@ extract_nested_twitter_users <- function(x, var) {
 
 # transform tweet user data
 twitter_user_transforms <- function(x, rm_misc = TRUE) {
+  if (is.null(x)) { return(x) }
+
   x <- x |>
     dplyr::rename(display_name = .data$name)
 

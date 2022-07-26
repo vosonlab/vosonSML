@@ -28,7 +28,11 @@
 #' @export
 AddText <- function(net, data, ...) {
   msg <- f_verbose(list(...)$verbose)
-  msg("Adding text to network...")
+  msg("Adding text data to network...")
+
+  if ("voson.text" %in% class(net)) {
+    stop("Network already has text attribute.")
+  }
 
   # searches the class list of net for matching method
   UseMethod("AddText", net)
@@ -67,11 +71,10 @@ AddText.activity.default <- function(net, ...) {
 #' @name AddText.activity.twitter
 #' @export
 AddText.activity.twitter <- function(net, data, hashtags = FALSE, ...) {
-  class(data) <- rm_collect_cls(class(data))
 
   net$nodes <- add_tweet_text(net$nodes, data, hashtags)
 
-  class(net) <- union(class(net), c("vosontxt"))
+  class(net) <- union(class(net), c("voson.text"))
   msg("Done.\n")
 
   net
@@ -80,8 +83,6 @@ AddText.activity.twitter <- function(net, data, hashtags = FALSE, ...) {
 #' @noRd
 #' @export
 AddText.activity.youtube <- function(net, data, ...) {
-  # data <- tibble::as_tibble(data)
-  class(data) <- rm_collect_cls(class(data))
 
   net$nodes <- dplyr::left_join(
     net$nodes,
@@ -93,7 +94,7 @@ AddText.activity.youtube <- function(net, data, ...) {
     by = c("id")
   )
 
-  class(net) <- union(class(net), c("vosontxt"))
+  class(net) <- union(class(net), c("voson.text"))
   msg("Done.\n")
 
   net
@@ -115,8 +116,6 @@ AddText.activity.youtube <- function(net, data, ...) {
 #' @export
 AddText.activity.reddit <-
   function(net, data, cleanText = FALSE, ...) {
-    # data <- tibble::as_tibble(data)
-    class(data) <- rm_collect_cls(class(data))
 
     net$nodes <- dplyr::left_join(
       net$nodes,
@@ -144,7 +143,7 @@ AddText.activity.reddit <-
       net$nodes$title <- xml_clean_reddit(net$nodes$title)
     }
 
-    class(net) <- union(class(net), c("vosontxt"))
+    class(net) <- union(class(net), c("voson.text"))
     msg("Done.\n")
 
     net
@@ -177,11 +176,9 @@ AddText.actor.default <- function(net, ...) {
 #' @name AddText.actor.twitter
 #' @export
 AddText.actor.twitter <- function(net, data, hashtags = FALSE, ...) {
-  class(data) <- rm_collect_cls(class(data))
-
   net$edges <- add_tweet_text(net$edges, data, hashtags)
 
-  class(net) <- union(class(net), c("vosontxt"))
+  class(net) <- union(class(net), c("voson.text"))
   msg("Done.\n")
 
   net
@@ -226,8 +223,6 @@ AddText.actor.youtube <-
            repliesFromText = FALSE,
            atRepliesOnly = TRUE,
            ...) {
-    # data <- tibble::as_tibble(data)
-    class(data) <- rm_collect_cls(class(data))
 
     net$edges <- net$edges |> dplyr::left_join(
       dplyr::select(data, .data$CommentID, .data$Comment) |>
@@ -273,10 +268,9 @@ AddText.actor.youtube <-
           "reply-comment-text"
         )
       )
-      # , at_id = NULL # leave in for reference
     }
 
-    class(net) <- union(class(net), c("vosontxt"))
+    class(net) <- union(class(net), c("voson.text"))
     msg("Done.\n")
 
     net
@@ -298,8 +292,6 @@ AddText.actor.youtube <-
 #' @export
 AddText.actor.reddit <-
   function(net, data, cleanText = FALSE, ...) {
-    # data <- tibble::as_tibble(data)
-    class(data) <- rm_collect_cls(class(data))
 
     # rename the edge attribute containing the thread comment
     net$edges <- dplyr::left_join(
@@ -347,7 +339,7 @@ AddText.actor.reddit <-
       net$edges$title <- xml_clean_reddit(net$edges$title)
     }
 
-    class(net) <- union(class(net), c("vosontxt"))
+    class(net) <- union(class(net), c("voson.text"))
     msg("Done.\n")
 
     net
@@ -375,7 +367,7 @@ extract_nested_tweet_text <- function(x, var, hashtags = FALSE) {
         .remove = FALSE
       )
 
-    df$hashtags[df$hashtags == "NULL"] <- NA_character_
+    # df$hashtags[df$hashtags == "NULL"] <- NA_character_
   }
 
   df <- df |> dplyr::select(-.data$entities)
@@ -385,18 +377,17 @@ extract_nested_tweet_text <- function(x, var, hashtags = FALSE) {
 
 # extract and add text to twitter network nodes or edges
 add_tweet_text <- function(objs, data, hashtags = FALSE) {
-
   objs <-
     dplyr::left_join(
       objs,
       dplyr::select(
         data,
         .data$status_id,
-        .data$is_reply,
-        .data$is_quote,
-        .data$is_retweet,
-        .data$full_text,
-        .data$entities
+        t.is_reply = .data$is_reply,
+        t.is_quote= .data$is_quote,
+        t.is_retweet = .data$is_retweet,
+        t.full_text = .data$full_text,
+        entities = .data$entities
       ) |> dplyr::distinct(.data$status_id, .keep_all = TRUE),
       by = "status_id")
 
@@ -404,37 +395,37 @@ add_tweet_text <- function(objs, data, hashtags = FALSE) {
     objs <- objs |>
       tidyr::hoist(
         .col = .data$entities,
-        hashtags = list("hashtags", "text"),
+        t.hashtags = list("hashtags", "text"),
         .remove = FALSE
       )
 
-    objs$hashtags[objs$hashtags == "NULL"] <- NA_character_
+    # objs$t.hashtags[objs$t.hashtags == "NULL"] <- NA_character_
   }
 
   objs <- objs |>
     dplyr::select(-.data$entities) |>
     dplyr::mutate(
-      full_text = ifelse(!is.na(.data$full_text), .data$full_text, NA_character_)
+      t.full_text = ifelse(!is.na(.data$t.full_text), .data$t.full_text, NA_character_)
     )
 
-  objs <- objs |> dplyr::mutate(vosonTxt_tweet = .data$full_text)
+  objs <- objs |> dplyr::mutate(vosonTxt_tweet = .data$t.full_text)
 
   # nested quote tweets
   qs <- extract_nested_tweet_text(data, "qs", hashtags)
   if (!is.null(qs)) {
-    qs <- qs |> dplyr::rename_with(function(x) paste0("quoted_", x))
-    objs <- objs |> dplyr::left_join(qs, by = c("status_id" = "quoted_id_str")) |>
+    qs <- qs |> dplyr::rename_with(function(x) paste0("t.quoted.", x))
+    objs <- objs |> dplyr::left_join(qs, by = c("status_id" = "t.quoted.id_str")) |>
       dplyr::mutate(vosonTxt_tweet = ifelse(is.na(.data$vosonTxt_tweet),
-                                            .data$quoted_full_text, .data$vosonTxt_tweet))
+                                            .data$t.quoted.full_text, .data$vosonTxt_tweet))
   }
 
   # nested retweets
   rts <- extract_nested_tweet_text(data, "rts", hashtags)
   if (!is.null(rts)) {
-    rts <- rts |> dplyr::rename_with(function(x) paste0("retweeted_", x))
-    objs <- objs |> dplyr::left_join(rts, by = c("status_id" = "retweeted_id_str")) |>
+    rts <- rts |> dplyr::rename_with(function(x) paste0("t.retweeted.", x))
+    objs <- objs |> dplyr::left_join(rts, by = c("status_id" = "t.retweeted.id_str")) |>
       dplyr::mutate(vosonTxt_tweet = ifelse(is.na(.data$vosonTxt_tweet),
-                                            .data$retweeted_full_text, .data$vosonTxt_tweet))
+                                            .data$t.retweeted.full_text, .data$vosonTxt_tweet))
   }
 
   objs$vosonTxt_tweet <- textutils::HTMLdecode(objs$vosonTxt_tweet)

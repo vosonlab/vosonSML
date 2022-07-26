@@ -8,7 +8,7 @@
   datasource,
   type,
   removeTermsOrHashtags = NULL,
-  weighted = TRUE,
+  rmRetweets = TRUE,
   verbose = TRUE,
   ...
 )
@@ -22,8 +22,7 @@
 this parameter could be used to remove the user or hashtag that was used to collect the data by removing any
 nodes with matching name. Default is \code{NULL} to remove none.}
 
-\item{weighted}{Logical. Add weights to network edges. If set to \code{FALSE} tweet \code{status_id} and
-\code{created_at} fields will be preserved for edges in the dataframe. Default is \code{TRUE}.}
+\item{rmRetweets}{Logical. Do not process retweets in the input data. Default is \code{TRUE}.}
 
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
 
@@ -46,10 +45,10 @@ this function requires the additional installation of the \pkg{tidytext} package
 # for working with text data
 install.packages("tidytext")
 
-# create a twitter 2-mode network graph removing the hashtag '#auspol' as it was used in
-# the twitter search query
+# create a twitter 2-mode network graph with the hashtag '#auspol' removed
 twomodeNetwork <- twitterData |>
-                  Create("twomode", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
+  Create("twomode",
+         removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
 
 # network
 # twomodeNetwork$nodes

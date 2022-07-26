@@ -169,7 +169,6 @@ Create.activity.twitter <-
         edge_type = .data$type
       )
 
-    # print stats
     df_stats <- network_stats(df_stats, "nodes", nrow(nodes))
     df_stats <- network_stats(df_stats, "edges", nrow(edges))
     msg(network_stats(df_stats, print = TRUE))
