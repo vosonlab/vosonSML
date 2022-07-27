@@ -28,7 +28,6 @@ Create.activity.reddit <-
       cat("\n")
     }
 
-    # df <- tibble::as_tibble(datasource)
     class(datasource) <- rm_collect_cls(class(datasource))
 
     df_stats <-

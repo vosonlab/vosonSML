@@ -102,7 +102,7 @@ Collect.search.twitter <-
           )
         )
 
-        if (retryOnRateLimit == TRUE & numTweets < remaining) {
+        if (retryOnRateLimit == TRUE && numTweets < remaining) {
           msg("Less tweets requested than remaining limit retryOnRateLimit set to FALSE.\n")
           retryOnRateLimit <- FALSE
         }
@@ -114,15 +114,15 @@ Collect.search.twitter <-
     }
 
     search_params <- list()
-    search_params[['token']] <- authToken
+    search_params[["token"]] <- authToken
 
-    search_params['q'] <- searchTerm
-    search_params['type'] <- searchType
-    search_params['n'] <- numTweets
-    search_params['include_rts'] <- includeRetweets
-    search_params['retryonratelimit'] <- retryOnRateLimit
-    search_params['verbose'] <- verbose
-    search_params['parse'] <- FALSE
+    search_params["q"] <- searchTerm
+    search_params["type"] <- searchType
+    search_params["n"] <- numTweets
+    search_params["include_rts"] <- includeRetweets
+    search_params["retryonratelimit"] <- retryOnRateLimit
+    search_params["verbose"] <- verbose
+    search_params["parse"] <- FALSE
 
     # additional twitter api params
     dots <- substitute(...())
@@ -150,7 +150,9 @@ Collect.search.twitter <-
 
     tweets_df <- tweets_df |> modify_tweet_data(users = user_names)
 
-    if (is.null(tweets_df)) { tweets_df <- tibble::tibble() }
+    if (is.null(tweets_df)) {
+      tweets_df <- tibble::tibble()
+    }
 
     # summary
     if (nrow(tweets_df) > 0) {

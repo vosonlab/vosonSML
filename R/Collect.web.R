@@ -235,7 +235,7 @@ get_hyperlinks <-
     msg(paste0("*** end initial call", "\n"))
 
     # sort sites into internal and external
-    while (length(urls) > 0 & depth < max_depth) {
+    while (length(urls) > 0 && depth < max_depth) {
       msg(paste0("*** set depth: ", (depth + 1), "\n"))
       depth <- depth + 1
 

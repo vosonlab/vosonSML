@@ -21,7 +21,8 @@
 
 \item{users}{Character vector. Specifies one or more twitter users. Can be user names, user ids or a mixture.}
 
-\item{numTweets}{Numeric vector. Specifies how many tweets to be collected per user. Defaults to single value of \code{100}.}
+\item{numTweets}{Numeric vector. Specifies how many tweets to be collected per user. Defaults to single value of
+\code{100}.}
 
 \item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
 

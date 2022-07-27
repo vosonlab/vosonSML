@@ -7,6 +7,7 @@
 \method{Create}{semantic.twitter}(
   datasource,
   type,
+  removeRetweets = TRUE,
   removeTermsOrHashtags = NULL,
   stopwords = TRUE,
   stopwordsLang = "en",
@@ -24,6 +25,8 @@
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"twitter"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"semantic"}.}
+
+\item{removeRetweets}{Logical. Removes detected retweets from the tweet data. Default is \code{TRUE}.}
 
 \item{removeTermsOrHashtags}{Character vector. Words or hashtags to remove from the semantic network. For example,
 this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any

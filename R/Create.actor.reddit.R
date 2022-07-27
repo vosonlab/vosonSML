@@ -23,17 +23,10 @@
 Create.actor.reddit <- function(datasource, type, ...) {
   cat("Generating reddit actor network...")
 
-  # df <- tibble::as_tibble(datasource)
-  # df <- datasource
   class(datasource) <- rm_collect_cls(class(datasource))
-
-  # df_thread <- datasource
-
-  # actor_network <- RedditExtractoR::user_network(df_thread, include_author = TRUE, agg = FALSE)
 
   # modified from RedditExtractoR::user_network to include the df comment id, subreddit and thread id as edge
   # attributes to support post-processing. df_relations, df_nodes, and df_edges based on network by @ivan-rivera.
-  # include_author <- TRUE
 
   # select cols and rename id and user
   df_relations <- datasource |>
@@ -111,7 +104,7 @@ Create.actor.reddit <- function(datasource, type, ...) {
     }),
     stringsAsFactors = FALSE) |>
     tibble::as_tibble() |>
-    dplyr::mutate(id = as.integer(dplyr::row_number())) |>  # dplyr::row_number() - 1
+    dplyr::mutate(id = as.integer(dplyr::row_number())) |>
     dplyr::select(.data$id, .data$user)
 
   df_relations <- df_relations |>

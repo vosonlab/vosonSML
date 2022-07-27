@@ -124,7 +124,9 @@ extract_nested_twitter_users <- function(x, var) {
     dplyr::select({{ var }}) |>
     tidyr::unnest(cols = c({{ var }}))
 
-  if (!"user" %in% names(x)) { return(NULL) }
+  if (!"user" %in% names(x)) {
+    return(NULL)
+  }
 
   x <- x |>
     dplyr::select(.data$user) |>
@@ -137,7 +139,9 @@ extract_nested_twitter_users <- function(x, var) {
 
 # transform tweet user data
 twitter_user_transforms <- function(x, rm_misc = TRUE) {
-  if (is.null(x)) { return(x) }
+  if (is.null(x)) {
+    return(x)
+  }
 
   x <- x |>
     dplyr::rename(display_name = .data$name)
@@ -187,10 +191,8 @@ twitter_user_transforms <- function(x, rm_misc = TRUE) {
         )
       )
     ) |>
-    dplyr::mutate_at(dplyr::vars("created_at"),
-                     lubridate::as_datetime, tz = "UTC") |>
+    dplyr::mutate_at(dplyr::vars("created_at"), lubridate::as_datetime, tz = "UTC") |>
     dplyr::rename_with(function(x) paste0("u.", x))
 
   x
 }
-

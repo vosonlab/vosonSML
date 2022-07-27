@@ -58,4 +58,6 @@ get_yt_video_ids <- function(x) {
     paste0("(", id_regex_a, ")|", url_regex_b, "|", url_regex_c))
 
   res <- dplyr::coalesce(y[, 2], y[, 3], y[, 4])
+
+  res
 }

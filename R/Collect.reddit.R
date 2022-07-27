@@ -224,16 +224,19 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
           perl = TRUE,
           useBytes = TRUE
         ) # extract thread id
-      branch_df <-
-        branch_df |> dplyr::filter(.data$rm == FALSE) # remove continue thread entries
-      branch_df <-
-        branch_df |> dplyr::arrange(.data$thread_id, .data$id) |> dplyr::mutate(id = 1:nrow(branch_df)) # re-index
+      branch_df <- branch_df |>
+        dplyr::filter(.data$rm == FALSE) |> # remove continue thread entries
+        dplyr::arrange(.data$thread_id, .data$id)
+
+      branch_df$id <- seq_along(branch_df$id) # re-index
     }
 
     branch_df
   })
 
   threads_df <- dplyr::bind_rows(threads)
+
+  threads_df
 }
 
 # based on method by @ivan-rivera RedditExtractoR
@@ -243,9 +246,8 @@ reddit_data <-
            ua,
            cont = NULL,
            verbose = TRUE) {
-    if (is.null(url) |
-        length(url) == 0 |
-        !is.character(url)) {
+
+    if (is.null(url) || length(url) == 0 || !is.character(url)) {
       stop("invalid URL parameter")
     }
 
@@ -301,7 +303,7 @@ reddit_data <-
   }
 
 # based on method by @ivan-rivera RedditExtractoR
-reddit_values_list  = function(node, feature) {
+reddit_values_list  <- function(node, feature) {
   attr <- node$data[[feature]]
   if (is.null(attr)) {
     attr <- NA
@@ -321,10 +323,12 @@ reddit_values_list  = function(node, feature) {
                 lapply(reply_nodes, function(x) {
                   reddit_values_list(x, feature)
                 }))
+
+  attrs
 }
 
 # based on method by @ivan-rivera RedditExtractoR
-reddit_struct_list = function(node, depth = 0) {
+reddit_struct_list <- function(node, depth = 0) {
   if (is.null(node)) {
     return(list())
   }
@@ -340,6 +344,8 @@ reddit_struct_list = function(node, depth = 0) {
                      lapply(1:length(reply_nodes), function(x) {
                        reddit_struct_list(reply_nodes[[x]], paste0(depth, "_", x))
                      }))
+
+  structures
 }
 
 # based on method by @ivan-rivera RedditExtractoR
@@ -431,7 +437,7 @@ reddit_content_plus <- function(raw_data, req_url, depth = 0) {
 
     data$id <- 1:nrow(data)
 
-    if (dim(data)[1] > 0 & dim(data)[2] > 0) {
+    if (dim(data)[1] > 0 && dim(data)[2] > 0) {
       data_extract <- rbind(data, data_extract)
     } else {
       msg(paste0("No data: ", req_url, "\n"))

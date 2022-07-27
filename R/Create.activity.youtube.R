@@ -28,8 +28,6 @@ Create.activity.youtube <-
       cat("\n")
     }
 
-    # df <- tibble::as_tibble(datasource)
-    # df <- datasource
     class(datasource) <- rm_collect_cls(class(datasource))
 
     df_stats <-

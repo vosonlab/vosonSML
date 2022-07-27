@@ -4,7 +4,6 @@ test_csv <- "test.csv"
 
 test_that("ImportData input", {
   expect_error(ImportData(), "Please provide file path or dataframe to import.")
-  # expect_error(ImportData("xxx.rds"), "Please provide the social media type of data to import.")
 
   supported_types <- c("csv", "rds")
   not_supp_msg <-
@@ -13,12 +12,8 @@ test_that("ImportData input", {
       paste0(supported_types, collapse = ", "),
       "."
     )
-  # expect_error(ImportData("xxx", "twitter"), not_supp_msg)
-  # expect_error(ImportData("xxx.graphml", "twitter"), not_supp_msg)
   expect_error(ImportData("xxx.graphml", "twitter"),
                "Import file not found.")
-
-  # expect_error(suppressWarnings(ImportData("xxx.rds", "twitter")))
 
   if (file.exists(test_csv)) {
     expect_error(ImportData(test_csv, "twitter", "rds"))

@@ -27,6 +27,7 @@
 #'
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"twitter"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"semantic"}.
+#' @param removeRetweets Logical. Removes detected retweets from the tweet data. Default is \code{TRUE}.
 #' @param removeTermsOrHashtags Character vector. Words or hashtags to remove from the semantic network. For example,
 #' this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
 #' nodes with matching name. Default is \code{NULL} to remove none.
@@ -74,6 +75,7 @@
 Create.semantic.twitter <-
   function(datasource,
            type,
+           removeRetweets = TRUE,
            removeTermsOrHashtags = NULL,
            stopwords = TRUE,
            stopwordsLang = "en",
@@ -85,264 +87,264 @@ Create.semantic.twitter <-
            assoc = "limited",
            verbose = TRUE,
            ...) {
+
     rlang::check_installed(c("tidytext"), "for Create.semantic.twitter")
     stop_req_pkgs(c("tidytext"), "Create.semantic.twitter")
 
-    cat("Generating twitter semantic network...")
-    if (verbose) {
-      cat("\n")
-    }
+    msg("Generating twitter semantic network...\n")
 
-    isPerc <- function(x, desc) {
+    is_perc <- function(x, desc) {
       if (!is.numeric(x) || x > 100 || x < 1) {
         stop(paste0(desc, " must be a number between 1 and 100."), call. = FALSE)
       }
+
+      round(x, digits = 0)
     }
 
-    isPerc(termFreq, "termFreq")
-    isPerc(hashtagFreq, "hashtagFreq")
+    termFreq <- is_perc(termFreq, "termFreq")
+    hashtagFreq <- is_perc(hashtagFreq, "hashtagFreq")
 
-    if (stopwords) {
-      tryCatch({
-        rem_stopwords <-
-          tidytext::get_stopwords(language = stopwordsLang, source = stopwordsSrc)
-      }, error = function(e) {
-        stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
-      })
+    assoc <- check_chr(assoc, param = "assoc", accept = c("limited", "full"))
+
+    if (is.null(removeTermsOrHashtags)) {
+      removeTermsOrHashtags <- c()
+    } else {
+      if (!is.vector(removeTermsOrHashtags) && !is.list(removeTermsOrHashtags)) {
+        stop("removeTermsOrHashtags must be a vector.", call. = FALSE)
+      }
     }
 
-    if (verbose) {
-      df_stats <-
-        network_stats(NULL, "collected tweets", nrow(datasource))
-    }
+    removeRetweets <- check_lgl(removeRetweets, "removeRetweets")
+    stopwords <- check_lgl(stopwords, "stopwords")
+    removeNumbers <- check_lgl(removeNumbers, "removeNumbers")
+    removeUrls <- check_lgl(removeUrls, "removeUrls")
 
-    # datasource <- tibble::as_tibble(datasource)
+    stopwordsLang <- check_chr(stopwordsLang, param = "stopwordsLang")
+    stopwordsSrc <- check_chr(stopwordsSrc, param = "stopwordsSrc")
+
     class(datasource) <- rm_collect_cls(class(datasource))
 
-    datasource <-
-      datasource |> dplyr::select(.data$status_id, .data$text, .data$hashtags)
-    datasource$text = textutils::HTMLdecode(datasource$text)
+    data <- datasource |>
+      dplyr::select(
+        .data$status_id,
+        .data$user_id,
+        .data$screen_name,
+        .data$full_text,
+        .data$created_at,
+        .data$is_retweet,
+        .data$is_quote,
+        .data$is_reply
+      )
 
-    capture.output(
-      tokens_df <-
-        datasource |> tidytext::unnest_tokens(
-          .data$word,
-          .data$text,
-          token = "tweets",
-          to_lower = TRUE
-        )
-      ,
-      type = "output"
-    )
+    df_stats <- network_stats(NULL, "collected tweets", nrow(data))
+    df_stats <- network_stats(NULL, "retweets", nrow(data |> dplyr::filter(.data$is_retweet)))
 
-    if (verbose) {
-      df_stats <-
-        network_stats(df_stats, "tokens", nrow(tokens_df), FALSE)
+    if (removeRetweets) {
+      data <- data |>
+        dplyr::filter(!.data$is_retweet)
     }
 
-    # removal of words and hashtags before frequencies are calculated
-    # in future may want an option to do this at the end to simply filter words from result set
-    if (!is.null(removeTermsOrHashtags) &&
-        length(removeTermsOrHashtags) > 0) {
-      removeTermsOrHashtags <-
-        unlist(lapply(removeTermsOrHashtags, tolower))
-      token_count <- nrow(tokens_df)
-      if (verbose) {
-        cat(paste0(
-          "Removing terms and hashtags: ",
-          paste0(as.character(removeTermsOrHashtags), collapse = ", "),
-          "\n"
-        ))
-      }
-      tokens_df <- tokens_df |> dplyr::filter(!(.data$word %in% removeTermsOrHashtags))
+    data$text <- textutils::HTMLdecode(data$full_text)
 
-      if (verbose) {
-        df_stats <-
-          network_stats(df_stats,
-                        "removed specified",
-                        token_count - nrow(tokens_df),
-                        FALSE)
-      }
-    }
+    # --
+
+    x <- suppressMessages(
+      capture.output(
+        tokens_df <-
+          data |> tidytext::unnest_tweets(
+            .data$word,
+            .data$text
+          )
+        , type = "output"))
+
+    df_stats <- network_stats(df_stats, "tokens", nrow(tokens_df), FALSE)
+
+    tokens_df <- tokens_df |>
+      dplyr::mutate(at_name = paste0("@", tolower(.data$screen_name)))
 
     if (stopwords) {
-      if (verbose) {
-        cat("Removing stopwords.\n")
-      }
-      capture.output(tokens_df <- tokens_df |> dplyr::anti_join(rem_stopwords)
-                     , type = "output")
+      rlang::check_installed(c("stopwords"), "for Create.semantic.twitter")
+      stopwords_ <- tidytext::get_stopwords(
+        language = stopwordsLang, source = stopwordsSrc
+      )
+      tokens_df <- tokens_df |>
+        dplyr::anti_join(stopwords_, by = c("word" = "word"))
     }
+
+    if (!is.null(removeTermsOrHashtags) && length(removeTermsOrHashtags) > 0) {
+
+      removeTermsOrHashtags <- unlist(lapply(removeTermsOrHashtags, tolower))
+
+      token_count <- nrow(tokens_df)
+
+      msg(
+        paste0("Removing terms and hashtags: ",
+        paste0(as.character(removeTermsOrHashtags), collapse = ", "), "\n")
+      )
+
+      tokens_df <- tokens_df |> dplyr::filter(!.data$word %in% removeTermsOrHashtags)
+
+      df_stats <- network_stats(
+        df_stats, "removed specified",
+        token_count - nrow(tokens_df),
+        FALSE
+      )
+    }
+
+    # --
 
     freq_df <- tokens_df |> dplyr::count(.data$word, sort = TRUE)
-    # clasify words as hashtags, users, numbers, urls and terms
-    freq_df <- freq_df |> dplyr::mutate(type = dplyr::if_else(
-      grepl("^#.*", .data$word),
-      "hashtag",
-      dplyr::if_else(
-        grepl("^@.*", .data$word),
-        "user",
-        dplyr::if_else(
-          grepl("^[[:digit:]]+$", .data$word),
-          dplyr::if_else(removeNumbers, "number", "term"),
-          dplyr::if_else(
-            grepl("^https?://t\\.co/", .data$word),
-            dplyr::if_else(removeUrls, "url", "term"),
-            "term"
-          )
+
+    # classification of tokens
+    freq_df <- freq_df |>
+      dplyr::mutate(
+        type = dplyr::if_else(
+          stringr::str_detect(.data$word, "^#.+$"), "hashtag",
+            dplyr::if_else(stringr::str_detect(.data$word, "^@.+$"), "user",
+              dplyr::if_else(stringr::str_detect(.data$word, "^\\d+$"), "number",
+                dplyr::if_else(stringr::str_detect(.data$word, "^http(s)?.+"), "url", "term")))
         )
       )
-    ))
 
-    if (removeNumbers) {
-      freq_df <- freq_df |> dplyr::filter(type != "number")
-    }
-    if (removeUrls) {
-      freq_df <- freq_df |> dplyr::filter(type != "url")
-    }
+    freq_type_df <- freq_df |> dplyr::group_by(.data$type) |> dplyr::tally(.data$n)
 
-    type_tally <-
-      freq_df |> dplyr::group_by(type) |> dplyr::tally(.data$n) |> tibble::deframe()
+    n_unique_hashtags <- freq_df |> dplyr::filter(.data$type == "hashtag") |> nrow()
 
-    # remove users
-    freq_df <- freq_df |> dplyr::filter(type != "user")
-
-    if (verbose) {
-      # tidytext unnest_tokens is changing hashtags starting with digits such as #9news to words i.e 9news
-      # this causes a discrepancy between generated tokens and original hashtags data field count
-
-      unique_hashtags <-
-        nrow(freq_df |> dplyr::filter(type == "hashtag"))
-    }
-
-    if (verbose) {
-      if ("user" %in% names(type_tally)) {
-        df_stats <-
-          network_stats(df_stats, "removed users", type_tally[["user"]], FALSE)
-      }
-      if ("hashtag" %in% names(type_tally)) {
-        df_stats <-
-          network_stats(df_stats, "hashtag count", type_tally[["hashtag"]], FALSE)
-      }
-      df_stats <-
-        network_stats(df_stats, "unique hashtags", unique_hashtags, FALSE)
-    }
-
-    rm_words <- function(rm_type, keep_perc) {
-      type_df <-
-        freq_df |> dplyr::filter(type == rm_type) |> dplyr::arrange(dplyr::desc(.data$n))
-
-      if (nrow(type_df) > 0) {
-        keep_count <- round(((nrow(type_df) / 100) * keep_perc), digits = 0)
-        n_value <- type_df[keep_count, ]$n
-
-        # keep top number of rows
-        if (n_value <= 1 & keep_perc != 100) {
-          rm_values <- type_df |> dplyr::slice(keep_count + 1:dplyr::n())
-          if (verbose) {
-            df_stats <<-
-              network_stats(df_stats,
-                            paste0("top ", keep_perc , "% ", rm_type, "s"),
-                            keep_count,
-                            FALSE)
-          }
-        } else {
-          # keep tokens above n value cutoff
-          rm_values <- type_df |> dplyr::filter(.data$n < n_value)
-          if (verbose) {
-            df_stats <<-
-              network_stats(
-                df_stats,
-                paste0(
-                  "top ",
-                  keep_perc ,
-                  "% ",
-                  rm_type,
-                  "s (freq>=",
-                  n_value,
-                  ")"
-                ),
-                nrow(type_df |> dplyr::filter(.data$n >= n_value)),
-                FALSE
-              )
-          }
-        }
-
-        freq_df |> dplyr::filter(!(.data$word %in% rm_values$word))
+    # filter out types or reclassify to term
+    filter_by_type <- function(x, type, rm = TRUE) {
+      if (rm) {
+        x <- x |> dplyr::filter(.data$type != "{{ type }}")
       } else {
-        freq_df
+        x <- x |> dplyr::mutate(type = ifelse(.data$type == "{{ type }}", "term", .data$type))
+      }
+      x
+    }
+
+    freq_df <- freq_df |> filter_by_type("user", rm = TRUE)
+    freq_df <- freq_df |> filter_by_type("number", rm = removeNumbers)
+    freq_df <- freq_df |> filter_by_type("url", rm = removeUrls)
+
+    # verbose output
+    if (verbose) {
+      n_users <- freq_type_df |> dplyr::filter(.data$type == "user")
+
+      n_hashtags <- freq_df |> dplyr::filter(.data$type == "hashtag") |> dplyr::pull(.data$n) |> sum()
+      u_hashtags <- freq_df |> dplyr::filter(.data$type == "hashtag") |> nrow()
+
+      n_terms <- freq_df |> dplyr::filter(.data$type == "term") |> dplyr::pull(.data$n) |> sum()
+      u_terms <- freq_df |> dplyr::filter(.data$type == "term") |> nrow()
+
+
+      if (nrow(n_users) > 0) {
+        df_stats <- network_stats(df_stats, "removed users", n_users |> dplyr::pull(.data$n), FALSE)
+      }
+
+      if (nrow(n_hashtags) > 0) {
+        df_stats <- network_stats(df_stats, "hashtag count", n_hashtags |> dplyr::pull(.data$n), FALSE)
+        df_stats <- network_stats(df_stats, "hashtags unique", n_unique_hashtags, FALSE)
+      }
+
+      if (u_terms > 0) {
+        df_stats <- network_stats(df_stats, "term count", n_terms, FALSE)
+        df_stats <- network_stats(df_stats, "terms unique", u_terms, FALSE)
       }
     }
 
-    # keep top % of hashtags and terms
-    freq_df <- rm_words("hashtag", hashtagFreq)
+    # proportions of hashtags and terms
+    props <- list(list(type = "hashtag", p = hashtagFreq),
+                  list(type = "term", p = termFreq))
 
+    get_prop <- function(x, prop) {
+      x <- x |>
+        dplyr::filter(.data$type == prop$type) |>
+        dplyr::arrange(dplyr::desc(.data$n))
+
+      top_n <- x |>
+        dplyr::slice_head(prop = prop$p / 100)
+
+      floor_n <- top_n |>
+        dplyr::slice_tail(n = 1) |>
+        dplyr::pull(.data$n)
+
+      x <- x |> dplyr::filter(.data$n >= !!floor_n) |>
+        dplyr::mutate(floor_n = !!floor_n)
+
+      x
+    }
+
+    freq_df <- purrr::map_dfr(props, get_prop, x = freq_df)
+
+    # verbose output
     if (verbose) {
-      if ("term" %in% names(type_tally)) {
-        df_stats <-
-          network_stats(df_stats, "term count", type_tally[["term"]], FALSE)
-      }
+      hashtag_floor_n <- freq_df |> dplyr::filter(.data$type == "hashtag") |> dplyr::distinct(.data$floor_n) |>
+        dplyr::pull()
 
-      unique_terms <-
-        nrow(dplyr::distinct(freq_df |> dplyr::filter(type == "term"), .data$word))
-      df_stats <-
-        network_stats(df_stats, "unique terms", unique_terms, FALSE)
+      df_stats <- network_stats(
+        df_stats, paste0("top ", hashtagFreq, "% hashtags count (freq>=", hashtag_floor_n, ")"),
+        nrow(freq_df |> dplyr::filter(.data$type == "hashtag")),
+        FALSE
+      )
+
+      term_floor_n <- freq_df |> dplyr::filter(.data$type == "term") |> dplyr::distinct(.data$floor_n) |>
+        dplyr::pull()
+
+      df_stats <- network_stats(
+        df_stats, paste0("top ", termFreq, "% terms count (freq>=", term_floor_n, ")"),
+        nrow(freq_df |> dplyr::filter(.data$type == "term")),
+        FALSE
+      )
     }
 
-    freq_df <- rm_words("term", termFreq)
-    freq_df <- freq_df |> dplyr::arrange(dplyr::desc(.data$n))
+    # --
 
-    if (tolower(assoc) == "full") {
-      edges <-
-        dplyr::inner_join((tokens_df |> dplyr::select(-.data$hashtags)),
-                          (freq_df |> dplyr::select(-.data$n, -.data$type)),
-                          by = "word")
+    nodes <- tokens_df |> dplyr::left_join(freq_df, by = c("word" = "word")) |>
+      dplyr::filter(!is.na(.data$type)) |>
+      dplyr::select(.data$status_id, .data$word, .data$type, .data$n)
 
-      edges <-
-        dplyr::inner_join(edges, (edges |> dplyr::select(.data$status_id, .data$word)), by = "status_id") |>
-        dplyr::group_by(.data$status_id) |>
-        dplyr::filter(.data$word.x != .data$word.y) |>
-        dplyr::ungroup() |>
+    edges <- nodes |> dplyr::select(-.data$n)
+    nodes <- nodes |> dplyr::select(-.data$status_id) |> dplyr::distinct()
 
-        dplyr::select(-.data$status_id) |>
-        dplyr::mutate(from = .data$word.x, to = .data$word.y) |>
-        dplyr::group_by(.data$from, .data$to) |>
-        dplyr::summarise(weight = dplyr::n())
-    } else {
-      keep_hashtags <- freq_df |> dplyr::filter(type == "hashtag")
-      keep_terms <- freq_df |> dplyr::filter(type == "term")
+    edges <- edges |>
+      dplyr::left_join(edges, by = "status_id") |>
+      dplyr::group_by(.data$status_id) |>
+      dplyr::filter(.data$word.x != .data$word.y) |>
+      dplyr::ungroup()
 
-      class(tokens_df) <-
-        c("tbl_df", "tbl", "data.frame") # unnest had a problem with vosonsml classes in class list
+    edges <- edges |>
+      dplyr::rowwise() |>
+      dplyr::mutate(word.a = sort(c(.data$word.x, .data$word.y))[1],
+                    word.b = sort(c(.data$word.x, .data$word.y))[2])
 
-      edges <-
-        dplyr::inner_join(tokens_df, freq_df, by = "word") |>
-        tidyr::unnest(.data$hashtags) |>
-        dplyr::mutate(hashtags = ifelse(is.na(.data$hashtags), NA, paste0("#", tolower(.data$hashtags))))
+    edges <- edges |>
+      dplyr::distinct(.data$status_id, .data$word.a, .data$word.b, .keep_all = TRUE)
 
-      edges <- edges |> dplyr::filter(
-        .data$hashtags %in% unique(keep_hashtags$word) &
-          .data$word %in% unique(keep_terms$word)
-      ) |>
-        dplyr::select(-.data$n, -.data$type)
-
-      edges <- edges |> dplyr::select(.data$hashtags, .data$word) |>
-        dplyr::mutate(from = .data$hashtags, to = .data$word) |>
-        dplyr::group_by(.data$from, .data$to) |> dplyr::summarise(weight = dplyr::n())
+    if (assoc == "limited") {
+      edges <- edges |> dplyr::filter(.data$type.x != .data$type.y)
     }
 
-    if (verbose) {
-      df_stats <- network_stats(df_stats, "nodes", nrow(freq_df))
-      df_stats <- network_stats(df_stats, "edges", nrow(edges))
+    nodes <- edges |> dplyr::select(word = .data$word.x) |>
+      dplyr::bind_rows(edges |> dplyr::select(word = .data$word.y)) |>
+      dplyr::distinct() |>
+      dplyr::left_join(nodes, by = "word")
 
-      network_stats(df_stats, print = TRUE)
-    }
+    edges <- edges |>
+      dplyr::select(from = .data$word.x,
+                    to = .data$word.y,
+                    from.type = .data$type.x,
+                    to.type = .data$type.y,
+                    .data$status_id #,
+                    #.data$word.a, .data$word.b
+      )
 
-    func_output <- list("nodes" = freq_df,
-                        "edges" = edges)
+    df_stats <- network_stats(df_stats, "nodes", nrow(nodes))
+    df_stats <- network_stats(df_stats, "edges", nrow(edges))
+    msg(network_stats(df_stats, print = TRUE))
 
-    class(func_output) <-
-      append(class(func_output), c("network", "semantic", "twitter"))
-    cat("Done.\n")
+    network <- list("edges" = edges, "nodes" = nodes)
+    class(network) <-
+      append(c("network", "semantic", "twitter"), class(network))
 
-    func_output
+    msg("Done.\n")
+
+    network
   }

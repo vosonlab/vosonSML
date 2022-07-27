@@ -74,7 +74,8 @@ Create.twomode.twitter <-
     x <- suppressMessages(
       capture.output(
         tokens_df <-
-          data |> tidytext::unnest_tweets(
+          datasource |>
+          tidytext::unnest_tweets(
             .data$word,
             .data$text,
             strip_url = TRUE

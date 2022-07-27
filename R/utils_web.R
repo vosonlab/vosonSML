@@ -90,4 +90,6 @@ get_ahrefs <- function(page) {
   hrefs <- xml2::read_html(page, options = c("NOWARNING")) |>
     rvest::html_nodes("a") |>
     rvest::html_attr("href")
+
+  hrefs
 }

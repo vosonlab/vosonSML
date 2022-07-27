@@ -14,6 +14,8 @@ remaining_num_tweets <- function(token) {
   rtlimit <- rtweet::rate_limit("search/tweets", token = token)
   remaining <-
     rtlimit[["remaining"]] * 100 # 100 tweets returned per request
+
+  remaining
 }
 
 twitter_api_dt_fmt <- function() {

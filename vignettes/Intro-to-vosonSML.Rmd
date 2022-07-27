@@ -98,7 +98,7 @@ The `Collect()` function returns a tibble (an enhanced dataframe which has featu
 > twitterData
 # A tibble: 999 x 90
    user_id status_id created_at          screen_name text  source
-   <chr>   <chr>     <dttm>              <chr>       <chr> <chr> 
+   <chr>   <chr>     <dttm>              <chr>       <chr> <chr>
  1 xxxxxx… xxxxxxxx… 2020-01-09 12:02:13 xxxx        "htt… Twitt…
  2 xxxxxx… xxxxxxxx… 2020-01-09 12:01:32 xxxxxxxxx   "Fir… Twitt…
  3 xxxxxx… xxxxxxxx… 2020-01-09 12:00:44 xxxxxxxxxxx "Ser… Twitt…
@@ -145,8 +145,8 @@ actorGraph <- actorNetwork |> Graph(writeToFile = TRUE)
 > actorNetwork
 $edges
 # A tibble: 1,725 x 5
-   from             to              edge_type timestamp         status_id       
-   <fct>            <fct>           <fct>     <fct>             <fct>           
+   from             to              edge_type timestamp         status_id
+   <fct>            <fct>           <fct>     <fct>             <fct>
  1 xxxxxxxx         xxxxxxxx        quote     2020-01-09 12:00… xxxxxxxxxxxxxxx…
  2 xxxxxxxx         xxxxxxxxx       quote     2020-01-09 09:37… xxxxxxxxxxxxxxx…
 [snip]
@@ -154,10 +154,10 @@ $edges
 
 $nodes
 # A tibble: 1,158 x 2
-   user_id             screen_name   
-   <fct>               <fct>         
- 1 xxxxxxxx            xxxx          
- 2 xxxxxxxx            xxxxxxxxx     
+   user_id             screen_name
+   <fct>               <fct>
+ 1 xxxxxxxx            xxxx
+ 2 xxxxxxxx            xxxxxxxxx
 [snip]
 # … with 1,148 more rows
 
@@ -168,12 +168,12 @@ This list is then passed to `Graph()`, which returns an `igraph` graph object, a
 
 ```{r eval=FALSE}
 > actorGraph
-IGRAPH bc177a6 DN-- 1158 1725 -- 
+IGRAPH bc177a6 DN-- 1158 1725 --
 + attr: type (g/c), name (v/c), screen_name (v/c), label (v/c),
 | edge_type (e/c), timestamp (e/c), status_id (e/c)
 + edges from bc177a6 (vertex names):
- [1] xxxxxxxx           ->xxxxxxxx          
- [2] xxxxxxxx           ->xxxxxxxxx         
+ [1] xxxxxxxx           ->xxxxxxxx
+ [2] xxxxxxxx           ->xxxxxxxxx
 [snip]
 + ... omitted several edges
 ```
@@ -249,7 +249,7 @@ Note that by default, `vosonSML` will only collect Twitter profile data for thos
 
 ```{r eval=FALSE}
 # create an actor network with user metadata
-actorGraphWithUserAttr <- actorNetwork |> 
+actorGraphWithUserAttr <- actorNetwork |>
   AddUserData(twitterData, lookupUsers = TRUE, twitterAuth = twitterAuth) |>
   Graph(writeToFile = TRUE)
 ```
@@ -271,8 +271,8 @@ activityGraph <- activityNetwork |> Graph(writeToFile = TRUE)
 > activityNetwork
 $nodes
 # A tibble: 1,408 x 5
-   status_id    user_id    screen_name created_at   vosonTxt_tweet              
-   <chr>        <chr>      <chr>       <chr>        <chr>                       
+   status_id    user_id    screen_name created_at   vosonTxt_tweet
+   <chr>        <chr>      <chr>       <chr>        <chr>
  1 xxxxxxxxxxx… xxxxxxxx   xxxx        2020-01-09 … "xxxxxxxxxxxxxxxxxxxxxxxxxx…
  2 xxxxxxxxxxx… xxxxxxxx   xxxxxxxxx   2020-01-09 … "xxxxxxxxxxxxxxxxxxxxxxxxxx…
  [snip]
@@ -281,9 +281,9 @@ $nodes
 $edges
 # A tibble: 662 x 3
    from                to                  edge_type
-   <chr>               <chr>               <chr>    
- 1 xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx quote    
- 2 xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx quote    
+   <chr>               <chr>               <chr>
+ 1 xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx quote
+ 2 xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx quote
 [snip]
 # … with 652 more rows
 
@@ -295,7 +295,7 @@ Note that in the above, `AddText()` was used to add the comment text data to the
 
 ```{r eval=FALSE}
 > activityGraph
-IGRAPH e60c486 DN-- 1408 662 -- 
+IGRAPH e60c486 DN-- 1408 662 --
 + attr: type (g/c), name (v/c), user_id (v/c), screen_name (v/c),
 | created_at (v/c), vosonTxt_tweet (v/c), label (v/c), edge_type (e/c)
 + edges from e60c486 (vertex names):
@@ -310,7 +310,7 @@ The Twitter activity network contains a graph attribute `type` (set to "twitter"
 The example Twitter activity network contains 1408 nodes and 662 edges. The following is a visualization of the network, where nodes are tweets and tweets mentioning bushfires are indicated in red.
 
 ```{r eval=FALSE}
-# create a subgraph containing nodes of components that have more than 5 nodes 
+# create a subgraph containing nodes of components that have more than 5 nodes
 cc <- clusters(activityGraph)
 g4 <- induced_subgraph(activityGraph,
                        which(cc$membership %in% which(cc$csize > 5)))
@@ -349,19 +349,19 @@ twomodeGraph <- twomodeNetwork |> Graph()
 > twomodeNetwork
 $nodes
 # A tibble: 1,146 x 2
-   entity_id                    display_name                
-   <chr>                        <chr>                       
- 1 xxxxxxxx                     xxxx                        
- 2 xxxxxxxx                     xxxxxxxxx                   
- 3 #auspol2020                  #auspol2020                 
- 4 #australianbushfiredisaster  #australianbushfiredisaster 
+   entity_id                    display_name
+   <chr>                        <chr>
+ 1 xxxxxxxx                     xxxx
+ 2 xxxxxxxx                     xxxxxxxxx
+ 3 #auspol2020                  #auspol2020
+ 4 #australianbushfiredisaster  #australianbushfiredisaster
 [snip]
 # … with 1,136 more rows
 
 $edges
 # A tibble: 1,675 x 5
-   from      to                      edge_type timestamp        status_id       
-   <fct>     <fct>                   <fct>     <fct>            <fct>           
+   from      to                      edge_type timestamp        status_id
+   <fct>     <fct>                   <fct>     <fct>            <fct>
  1 xxxxxxxx  #auspol2020             hashtag   2020-01-09 12:0… xxxxxxxxxxxxxxx…
  2 xxxxxxxx  #australianbushfiredis… hashtag   2020-01-09 12:0… xxxxxxxxxxxxxxx…
 [snip]
@@ -375,12 +375,12 @@ This list is then passed to `Graph()`, which returns an `igraph` graph object (t
 
 ```{r eval=FALSE}
 > twomodeGraph
-IGRAPH 68bd240 DN-- 1146 1675 -- 
+IGRAPH 68bd240 DN-- 1146 1675 --
 + attr: type (g/c), name (v/c), display_name (v/c), label (v/c),
 | edge_type (e/c), timestamp (e/c), status_id (e/c)
 + edges from 68bd240 (vertex names):
- [1] xxxx -> #auspol2020                 
- [2] xxxx -> #australianbushfiredisaster 
+ [1] xxxx -> #auspol2020
+ [2] xxxx -> #australianbushfiredisaster
 [snip]
 + ... omitted several edges
 ```
@@ -398,7 +398,7 @@ ind2 <- unlist(lapply(ind, function(x) {
    neighbors(twomodeGraph, x, mode = "in")
 }))
 
-# create a subgraph containing only the top 5 used hashtags and related users 
+# create a subgraph containing only the top 5 used hashtags and related users
 g5 <- induced_subgraph(twomodeGraph, c(ind, as.numeric(ind2)))
 
 # set node colour and label based on in-degree
@@ -443,18 +443,18 @@ semanticGraph <- semanticNetwork |> Graph(directed = FALSE)
 > semanticNetwork
 $nodes
 # A tibble: 799 x 1
-   value 
-   <fct> 
- 1 just  
- 2 one   
- 3 fire  
- 4 going 
- 5 still 
- 6 hard  
+   value
+   <fct>
+ 1 just
+ 2 one
+ 3 fire
+ 4 going
+ 5 still
+ 6 hard
  7 trying
- 8 since 
- 9 try   
-10 sick  
+ 8 since
+ 9 try
+10 sick
 # … with 789 more rows
 
 $edges
@@ -474,7 +474,7 @@ $edges
 # … with 10,980 more rows
 
 attr(,"class")
-[1] "list"     "network"  "semantic" "twitter" 
+[1] "list"     "network"  "semantic" "twitter"
 ```
 
 The `removeTermsOrHashtags` argument is used to exclude terms that we can expect to occur frequently (e.g. because of the parameters used for the data collection). The `termFreq` parameter is used to limit the network to the top 5 percent most frequently occurring entities.
@@ -483,7 +483,7 @@ This list is then passed to `Graph()`, which returns an `igraph` graph object:
 
 ```{r eval=FALSE}
 > semanticGraph
-IGRAPH cb8c381 UNW- 799 10990 -- 
+IGRAPH cb8c381 UNW- 799 10990 --
 + attr: type (g/c), name (v/c), label (v/c), weight (e/n)
 + edges from cb8c381 (vertex names):
  [1] #australianbushfiredisaster --#auspol2020
@@ -502,7 +502,7 @@ The Twitter semantic network node contains a graph attribute `type` (set to "twi
 The example Twitter semantic network has 799 nodes and 10990 edges.  The following produces a visualisation of subnetwork of terms that contain the string "bushfire": 
 
 ```{r eval=FALSE}
-# get index of the nodes whose term contains "bushfire" 
+# get index of the nodes whose term contains "bushfire"
 ind <- grep("bushfire", tolower(V(semanticGraph)$name))
 
 # create a subgraph containing only bushfire terms
@@ -610,18 +610,18 @@ actorGraph <- actorNetwork |> Graph(writeToFile = TRUE)
 $nodes
 # A tibble: 522 x 3
    id                       screen_name                         node_type
-   <chr>                    <chr>                               <chr>    
- 1 xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx                      actor    
- 2 xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor    
-[snip] 
+   <chr>                    <chr>                               <chr>
+ 1 xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx                      actor
+ 2 xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor
+[snip]
 # … with 512 more rows
 
 $edges
 # A tibble: 604 x 6
-   from      to       video_id comment_id   edge_type vosonTxt_comment          
-   <chr>     <chr>    <chr>    <chr>        <chr>     <chr>                     
+   from      to       video_id comment_id   edge_type vosonTxt_comment
+   <chr>     <chr>    <chr>    <chr>        <chr>     <chr>
  1 xxxxxxxx… VIDEOID… pJ_NyEY… xxxxxxxxxxx… comment   "xxxxx"
- 2 xxxxxxxx… VIDEOID… pJ_NyEY… xxxxxxxxxxx… comment   "xxxxx"                  
+ 2 xxxxxxxx… VIDEOID… pJ_NyEY… xxxxxxxxxxx… comment   "xxxxx"
 [snip]
 # … with 594 more rows
 
@@ -641,7 +641,7 @@ The following is an an annonymised summary of the `igraph` graph object.
 
 ```{r eval=FALSE}
 > actorGraph
-IGRAPH 79e5456 DN-- 522 604 -- 
+IGRAPH 79e5456 DN-- 522 604 --
 + attr: type (g/c), name (v/c), screen_name (v/c), node_type (v/c),
 | label (v/c), video_id (e/c), comment_id (e/c), edge_type (e/c),
 | vosonTxt_comment (e/c)
@@ -658,8 +658,8 @@ The example YouTube actor network contains 522 nodes and 604 edges. The followin
 
 ```{r eval=FALSE}
 > table(E(actorGraph)$edge_type)
-   comment reply-comment     self-loop 
-       500           103             1 
+   comment reply-comment     self-loop
+       500           103             1
 ```
 
 We can visualize this network, using red to identify the video nodes.
@@ -716,16 +716,16 @@ actorNetwork_withVideoInfo <- actorNetwork |> AddVideoData(youtubeAuth)
 $nodes
 # A tibble: 522 x 3
    id                       screen_name                         node_type
-   <chr>                    <chr>                               <chr>    
- 1 xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor    
- 2 xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor    
+   <chr>                    <chr>                               <chr>
+ 1 xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor
+ 2 xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor
 [snip]
 # … with 512 more rows
 
 $edges
 # A tibble: 604 x 9
    from  to    video_id comment_id edge_type vosonTxt_comment video_title
-   <chr> <chr> <chr>    <chr>      <chr>     <chr>            <chr>      
+   <chr> <chr> <chr>    <chr>      <chr>     <chr>            <chr>
  1 xxxx… xxxx… pJ_NyEY… xxxxxxxxx… comment   xxxxxxxxxxxx … Australia …
  2 xxxx… xxxx… pJ_NyEY… xxxxxxxxx… comment   "xxxx"         Australia …
 [snip]
@@ -735,11 +735,11 @@ $edges
 $videos
 # A tibble: 1 x 6
   VideoID  VideoTitle  VideoDescription  VideoPublishedAt ChannelID ChannelTitle
-  <chr>    <chr>       <chr>             <chr>            <chr>     <chr>       
-1 pJ_NyEY… Australia … "As Australia ba… 2020-01-05T12:3… UCknLrEd… DW News     
+  <chr>    <chr>       <chr>             <chr>            <chr>     <chr>
+1 pJ_NyEY… Australia … "As Australia ba… 2020-01-05T12:3… UCknLrEd… DW News
 
 attr(,"class")
-[1] "list"             "network"          "actor"            "youtube"         
+[1] "list"             "network"          "actor"            "youtube"
 [5] "voson_text"       "voson_video_data"
 ```
 
@@ -761,18 +761,18 @@ activityGraph <- activityNetwork |> Graph()
 $edges
 # A tibble: 603 x 3
    from                       to                  edge_type
-   <chr>                      <chr>               <chr>    
- 1 xxxxxxxxxxxxxxxxxxxxxxxxxx VIDEOID:pJ_NyEYRkLQ comment  
- 2 xxxxxxxxxxxxxxxxxxxxxxxxxx VIDEOID:pJ_NyEYRkLQ comment  
+   <chr>                      <chr>               <chr>
+ 1 xxxxxxxxxxxxxxxxxxxxxxxxxx VIDEOID:pJ_NyEYRkLQ comment
+ 2 xxxxxxxxxxxxxxxxxxxxxxxxxx VIDEOID:pJ_NyEYRkLQ comment
 [snip]
 # … with 593 more rows
 
 $nodes
 # A tibble: 604 x 8
    id    video_id published_at updated_at author_id screen_name node_type
-   <chr> <chr>    <chr>        <chr>      <chr>     <chr>       <chr>    
- 1 xxxx… pJ_NyEY… 2020-01-10T… 2020-01-1… xxxxxxxx… xxxxxxxxxx… comment  
- 2 xxxx… pJ_NyEY… 2020-01-09T… 2020-01-0… xxxxxxxx… xxxxxxxxxx… comment  
+   <chr> <chr>    <chr>        <chr>      <chr>     <chr>       <chr>
+ 1 xxxx… pJ_NyEY… 2020-01-10T… 2020-01-1… xxxxxxxx… xxxxxxxxxx… comment
+ 2 xxxx… pJ_NyEY… 2020-01-09T… 2020-01-0… xxxxxxxx… xxxxxxxxxx… comment
 [snip]
 # … with 594 more rows, and 1 more variable: vosonTxt_comment <chr>
 
@@ -783,7 +783,7 @@ attr(,"class")
 Note that in the above, `AddText()` was used to add the comment text data to the network dataframe, stored as a node attribute. This list is then passed to `Graph()`, which returns an `igraph` graph object (this has been anonymised).
 
 ```{r eval=FALSE}
-IGRAPH 02664d1 DN-- 604 603 -- 
+IGRAPH 02664d1 DN-- 604 603 --
 + attr: type (g/c), name (v/c), video_id (v/c), published_at (v/c),
 | updated_at (v/c), author_id (v/c), screen_name (v/c), node_type
 | (v/c), vosonTxt_comment (v/c), label (v/c), edge_type (e/c)
@@ -917,10 +917,10 @@ actorGraph <- actorNetwork |> Graph(writeToFile = TRUE)
 > actorNetwork
 $nodes
 # A tibble: 439 x 2
-      id user               
-   <int> <chr>              
- 1     1 xxxxxxxxxx         
- 2     2 xxxxxxxxxxxxxx     
+      id user
+   <int> <chr>
+ 1     1 xxxxxxxxxx
+ 2     2 xxxxxxxxxxxxxx
 [snip]
 # … with 429 more rows
 
@@ -928,8 +928,8 @@ $edges
 # A tibble: 768 x 8
     from    to subreddit thread_id comment_id comm_id vosonTxt_comment     title
    <int> <int> <chr>     <chr>          <dbl> <chr>   <chr>                <chr>
- 1     1   439 worldnews elcb9b             1 xxxxxxx "xxxxxxxxxxxxxxxxxxx NA   
- 2     2    73 worldnews elcb9b             2 xxxxxxx "xxxxxxxxxxxxxxxxxxx NA   
+ 1     1   439 worldnews elcb9b             1 xxxxxxx "xxxxxxxxxxxxxxxxxxx NA
+ 2     2    73 worldnews elcb9b             2 xxxxxxx "xxxxxxxxxxxxxxxxxxx NA
 [snip]
 … with 758 more rows
 
@@ -941,17 +941,17 @@ Note that in the above, `AddText()` was used to add the comment text data to the
 
 ```{r eval=FALSE}
 > actorGraph
-IGRAPH 5a5d5b9 DN-- 439 768 -- 
+IGRAPH 5a5d5b9 DN-- 439 768 --
 + attr: type (g/c), name (v/c), user (v/c), label (v/c), subreddit
 | (e/c), thread_id (e/c), comment_id (e/n), comm_id (e/c),
 | vosonTxt_comment (e/c), title (e/c)
 + edges from 5a5d5b9 (vertex names):
- [1] 1 ->439 2 ->73  3 ->113 4 ->120 5 ->120 6 ->17  7 ->194 8 ->20  9 ->20 
-[10] 10->165 11->165 12->1   13->2   14->3   15->4   16->5   17->6   18->7  
-[19] 19->8   20->9   21->10  22->11  23->12  2 ->13  24->3   7 ->18  25->23 
-[28] 26->2   3 ->24  27->18  28->1   29->2   18->27  1 ->28  30->2   31->7  
-[37] 25->1   32->2   33->31  34->1   2 ->32  35->7   25->34  36->2   7 ->35 
-[46] 37->1   38->2   39->7   40->1   41->2   42->7   43->1   2 ->41  44->7  
+ [1] 1 ->439 2 ->73  3 ->113 4 ->120 5 ->120 6 ->17  7 ->194 8 ->20  9 ->20
+[10] 10->165 11->165 12->1   13->2   14->3   15->4   16->5   17->6   18->7
+[19] 19->8   20->9   21->10  22->11  23->12  2 ->13  24->3   7 ->18  25->23
+[28] 26->2   3 ->24  27->18  28->1   29->2   18->27  1 ->28  30->2   31->7
+[37] 25->1   32->2   33->31  34->1   2 ->32  35->7   25->34  36->2   7 ->35
+[46] 37->1   38->2   39->7   40->1   41->2   42->7   43->1   2 ->41  44->7
 + ... omitted several edges
 ```
 
@@ -994,9 +994,9 @@ activityGraph <- activityNetwork |> Graph(writeToFile = TRUE)
 $nodes
 # A tibble: 768 x 10
    id    thread_id comm_id datetime     ts subreddit user  node_type
-   <chr> <chr>     <chr>   <chr>     <dbl> <chr>     <chr> <chr>    
- 1 elcb… elcb9b    xxxxxxx 2020-01… 1.58e9 worldnews xxxx… comment  
- 2 elcb… elcb9b    xxxxxxx 2020-01… 1.58e9 worldnews xxxx… comment  
+   <chr> <chr>     <chr>   <chr>     <dbl> <chr>     <chr> <chr>
+ 1 elcb… elcb9b    xxxxxxx 2020-01… 1.58e9 worldnews xxxx… comment
+ 2 elcb… elcb9b    xxxxxxx 2020-01… 1.58e9 worldnews xxxx… comment
 [snip]
 # … with 758 more rows, and 2 more variables: vosonTxt_comment <chr>,
 #   title <chr>
@@ -1004,9 +1004,9 @@ $nodes
 $edges
 # A tibble: 767 x 3
    from                       to                       edge_type
-   <chr>                      <chr>                    <chr>    
- 1 elcb9b.1                   elcb9b.0                 comment  
- 2 elcb9b.4_1_1_1_1_1_1_1_1_1 elcb9b.4_1_1_1_1_1_1_1_1 comment  
+   <chr>                      <chr>                    <chr>
+ 1 elcb9b.1                   elcb9b.0                 comment
+ 2 elcb9b.4_1_1_1_1_1_1_1_1_1 elcb9b.4_1_1_1_1_1_1_1_1 comment
 [snip]
 # … with 757 more rows
 
@@ -1019,13 +1019,13 @@ Note that in the above, `AddText()` was used to add the comment text data to the
 
 ```{r eval=FALSE}
 > activityGraph
-IGRAPH 09e30ea DN-- 768 767 -- 
+IGRAPH 09e30ea DN-- 768 767 --
 + attr: type (g/c), name (v/c), thread_id (v/c), comm_id (v/c),
 | datetime (v/c), ts (v/n), subreddit (v/c), user (v/c), node_type
 | (v/c), vosonTxt_comment (v/c), title (v/c), label (v/c), edge_type
 | (e/c)
 + edges from 09e30ea (vertex names):
-[1] elcb9b.1                  ->elcb9b.0                
+[1] elcb9b.1                  ->elcb9b.0
 [2] elcb9b.4_1_1_1_1_1_1_1_1_1->elcb9b.4_1_1_1_1_1_1_1_1
 [3] elcb9b.4_1_1_4_2_1_1_1_1_1->elcb9b.4_1_1_4_2_1_1_1_1
 [4] elcb9b.4_1_1_4_3_1_1_1_3_1->elcb9b.4_1_1_4_3_1_1_1_3
@@ -1119,20 +1119,20 @@ Depending on type of collections being performed, there may be duplicate data or
 # load dplyr
 library(dplyr)
 
-# combine the collected data using rbind and remove duplicates with distinct based on tweet status_id 
+# combine the collected data using rbind and remove duplicates with distinct based on tweet status_id
 twitterData <- rbind(auspolTwitterData, bushfireTwitterData) |> distinct(status_id, .keep_all = TRUE)
 ```
 
 If unique rows can change over time such as a tweets retweet count, or perhaps youtube video / reddit thread comments being updated then a strategy will need to be adopted to choose the desired version to keep between dataframes. The `distinct` function will keep the first found row that contains a duplicate identifier, so it is often useful to arrange the rows so that more recent record comes first in the combined dataframe and is kept. With twitter data, the easiest way to do this is to perform the `rbind` with twitter dataframes in reverse order (chronological) with the most recent collect data first. For youtube and reddit, the rows can be arranged by the "UpdatedAt" and "comm_date_unix" timestamp values respectively. The `dplyr` package again provides a convenient function for sorting or arranging rows called `arrange`. 
 
 ```{r eval=FALSE}
-# manually combine data sets in reverse chronological order and remove duplicates based on status_id 
+# manually combine data sets in reverse chronological order and remove duplicates based on status_id
 twitterData <- rbind(bushfireTwitterData, auspolTwitterData) |>
   distinct(status_id, .keep_all = TRUE)
 
 # arrange combined youtube data by updated timestamp and remove duplicates, keeping the version of a
 # duplicate video comment that was most recently updated
-youtubeData <- youtubeData |> 
+youtubeData <- youtubeData |>
   arrange(desc(UpdatedAt)) |> distinct(VideoID, CommentID, .keep_all = TRUE)
 
 # arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of a

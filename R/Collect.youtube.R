@@ -208,7 +208,8 @@ Collect.youtube <-
           )
 
           # api cost 1 + 1 = 2 per request
-          # init_results <- httr::content(httr::GET(base_url, query = api_opts)) # TODO: should die when there is error
+          # init_results <- httr::content(httr::GET(base_url, query = api_opts))
+          # TODO: should die when there is error
 
           req <- httr::GET(base_url, query = api_opts)
           init_results <- httr::content(req)
@@ -309,11 +310,6 @@ Collect.youtube <-
         dataCombined <- rbind(dataCombined, core_df)
         msg("\n")
       }
-
-      # APPEND TO THE OVERALL DATAFRAME (I.E. MULTIPLE VIDEO COMMENTS)
-      # dataCombined <- rbind(dataCombined, dataCombinedTemp)
-
-      # if (err || rObj$api_error) { break }
 
     } # end for (k in 1:length(video_ids))
 
@@ -448,7 +444,7 @@ yt_scraper <- setRefClass(
     # collect all video threads until done or max comments reached
     scrape_all = function(maxComments) {
       if (verbose) {
-        cat(paste0("** video Id: ", api_opts$videoId , "\n", sep = ""))
+        cat(paste0("** video Id: ", api_opts$videoId, "\n", sep = ""))
         cat(
           paste0(
             "   [results per page: ",
@@ -567,7 +563,9 @@ yt_scraper <- setRefClass(
         })
         core_df <<- do.call("rbind", sub_data)
       } else {
-        if (verbose) { cat("core_df is already up to date.\n") }
+        if (verbose) {
+          cat("core_df is already up to date.\n")
+        }
       }
     }
   )

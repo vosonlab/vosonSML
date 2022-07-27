@@ -54,7 +54,7 @@ write_output_file <-
       name <- sys_time_filename(name, type)
     }
 
-    path <- name # paste0(getwd(), "/", name)
+    path <- name
 
     if (type == "rds") {
       result <- tryCatch({
@@ -119,15 +119,19 @@ print_summary <- function(df) {
   col_len <- sapply(col_names, nchar)
 
   for (i in 1:length(col_names)) {
-    df[[i]] <- sapply(df[[i]], function(x) { ifelse(is.na(x), "-", x) })
+    df[[i]] <- sapply(df[[i]], function(x) {
+      ifelse(is.na(x), "-", x)
+    })
     temp_len <- max_chrlen_in_list(df[[i]])
     col_len[i] <-
       ifelse(temp_len > col_len[i], temp_len, col_len[i])
   }
 
   header <-
-    paste0(sapply(col_names, function(x)
-      pad_to_len(x, col_len[match(c(x), col_names)])), collapse = " | ")
+    paste0(sapply(col_names, function(x) {
+      pad_to_len(x, col_len[match(c(x), col_names)])
+    }), collapse = " | ")
+
   header <-
     paste0(header, "\n", paste0(replicate(nchar(header), ""), collapse = "-"), "-\n")
 
@@ -156,7 +160,7 @@ format_toc <- function(tic, toc, msg) {
   secs <- td - (hrs * (60 * 60)) - (mins * 60)
 
   t <- ""
-  if (!is.null(msg) & !is.na(msg) & length(msg) > 0) {
+  if (!is.null(msg) && !is.na(msg) && length(msg) > 0) {
     t <- paste0(msg, ": ")
   }
   t <-
@@ -168,7 +172,7 @@ format_toc <- function(tic, toc, msg) {
       " mins ",
       secs,
       " secs (",
-      round(toc - tic, digits = 3) ,
+      round(toc - tic, digits = 3),
       ")"
     ))
 }
@@ -183,7 +187,7 @@ network_stats <-
            print = FALSE) {
     if (print == TRUE) {
       out <- ""
-      if (!is.null(df) & nrow(df) > 0) {
+      if (!is.null(df) && nrow(df) > 0) {
         out <- paste0(out, "-------------------------\n")
         lf <- lc <- 0
         for (i in 1:nrow(df)) {
@@ -243,7 +247,7 @@ stop_req_pkgs <- function(pkgs, from = "this function") {
     stop(
       paste0(
         "Please install ",
-        paste0(names(which(req == FALSE)), collapse = ', '),
+        paste0(names(which(req == FALSE)), collapse = ", "),
         " package",
         ifelse(length(which(req == FALSE)) > 1, "s", ""),
         " before calling ",
@@ -263,12 +267,17 @@ escape_regex <- function(x) {
 lgl_debug <- function(x) {
   lgl <- FALSE
   if (!is.null(x)) {
-    if (is.logical(x)) { lgl <- x }
+    if (is.logical(x)) {
+      lgl <- x
+    }
   }
+
   lgl
 }
 
-msg <- function(x) { vsml_cat(x) }
+msg <- function(x) {
+  vsml_cat(x)
+}
 
 # assign msg functions
 f_verbose <- function(x) {
@@ -282,7 +291,9 @@ f_verbose <- function(x) {
 }
 
 # msg output helpers
-vsml_msg <- function(x) { message(x) }
+vsml_msg <- function(x) {
+  message(x)
+}
 
 vsml_cat <- function(x) {
   cat(x)
@@ -290,4 +301,81 @@ vsml_cat <- function(x) {
   Sys.sleep(0.05)
 }
 
-vsml_silent <- function(x) { return() }
+# silent messages
+vsml_silent <- function(x) {
+  return()
+}
+
+# check logical input
+check_lgl <- function(x, param = "value") {
+  if (!is.null(x)) {
+    if (!is.na(x)) {
+      if (is.logical(x)) {
+        return(x)
+      }
+    }
+  }
+
+  stop(paste0(param, " must be logical."), call. = FALSE)
+}
+
+# check numeric input
+check_num <- function(x, param = "value", double = FALSE, null.ok = FALSE, na.ok = FALSE) {
+  if (!is.null(x)) {
+    if (!is.na(x)) {
+      if (is.numeric(x)) {
+        if (is.double(x)) {
+          if (double) {
+            return(x)
+          } else {
+            stop(paste0(param, " must not be a double type."), call. = FALSE)
+          }
+        }
+
+        return(x)
+      }
+    } else {
+      if (na.ok) {
+        return(x)
+      }
+    }
+  } else {
+    if (null.ok) {
+      return(x)
+    }
+  }
+
+  stop(paste0(param, " must be numeric."), call. = FALSE)
+}
+
+# check character input
+check_chr <- function(x, param = "value", accept = c(), case = "lower", null.ok = FALSE, na.ok = FALSE) {
+  if (!is.null(x)) {
+    if (!is.na(x)) {
+      if (is.character(x)) {
+        if (length(accept)) {
+          if (case == "lower") {
+            x <- tolower(x)
+          } else if (case == "upper") {
+            x <- toupper(x)
+          }
+          if (x %in% accept) {
+            return(trimws(x))
+          } else {
+            stop(paste0(param, " must be in ", paste0(accept, collapse = ",")), call. = FALSE)
+          }
+        }
+      }
+    } else {
+      if (na.ok) {
+        return(x)
+      }
+    }
+  } else {
+    if (null.ok) {
+      return(x)
+    }
+  }
+
+  stop(paste0(param, " must be a character value."), call. = FALSE)
+}

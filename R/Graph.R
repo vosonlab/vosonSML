@@ -28,12 +28,12 @@ Graph <- function(net,
   # igraph warning converting a dataframe with an POSIXct column to an igraph object
   # https://github.com/igraph/rigraph/pull/250
   # https://github.com/igraph/rigraph/issues/251
-  if (is.data.frame(net$nodes) & is.data.frame(net$edges)) {
+  if (is.data.frame(net$nodes) && is.data.frame(net$edges)) {
     net$nodes <- net$nodes |> dplyr::mutate_if(lubridate::is.POSIXt, as.character)
     net$edges <- net$edges |> dplyr::mutate_if(lubridate::is.POSIXt, as.character)
   }
 
-  if (any(c("twitter", "youtube", "reddit", "web") %in% class(net)) &
+  if (any(c("twitter", "youtube", "reddit", "web") %in% class(net)) &&
       any(c("activity", "actor", "twomode") %in% class(net))) {
     g <-
       igraph::graph_from_data_frame(d = net$edges,

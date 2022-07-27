@@ -31,7 +31,7 @@ get_json <- function(req_url, ua = NULL) {
     httr::GET(req_url, httr::add_headers(.headers = req_headers))
   res$status <- resp$status
 
-  if (httr::http_error(resp) | as.numeric(resp$status) != 200) {
+  if (httr::http_error(resp) || as.numeric(resp$status) != 200) {
     res$msg <- "http request error"
     return(res)
   }
