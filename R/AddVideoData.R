@@ -15,7 +15,12 @@
 #' @name AddVideoData
 #' @export
 AddVideoData <- function(net, youtubeAuth = NULL, ...) {
-  cat("Adding video data to network...")
+  msg <- f_verbose(list(...)$verbose)
+  msg("Adding video data to network...")
+
+  if ("voson.video" %in% class(net)) {
+    stop("Network already has video data attribute.")
+  }
 
   if (is.null(youtubeAuth)) {
     stop("AddVideoData requires Authenticate object.", call. = FALSE)
@@ -106,7 +111,7 @@ AddVideoData.actor.youtube <-
     net$videos <- video_df
 
     if (nrow(video_df) == 0) {
-      cat("No video data could be retrieved.\n")
+      msg("No video data could be retrieved.\n")
       return(net)
     }
 
@@ -182,8 +187,8 @@ AddVideoData.actor.youtube <-
         )
     }
 
-    class(net) <- union(class(net), c("vosonvideo"))
-    cat("Done.\n")
+    class(net) <- union(class(net), c("voson.video"))
+    msg("Done.\n")
 
     net
   }
@@ -204,7 +209,7 @@ GetVideoData <- function(youtubeAuth, videoIds) {
   res <- httr::content(req)
 
   if (req$status_code != 200) {
-    cat(
+    msg(
       paste0(
         "\nStatus: ",
         req$status_code,

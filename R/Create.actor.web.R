@@ -22,10 +22,7 @@
 #' @export
 Create.actor.web <-
   function(datasource, type, verbose = TRUE, ...) {
-    cat("Generating web actor network...")
-    if (verbose) {
-      cat("\n")
-    }
+    msg("Generating web actor network...\n")
 
     data <- datasource |>
       dplyr::mutate(from = urltools::domain(tolower(.data$page)),
@@ -48,7 +45,7 @@ Create.actor.web <-
 
     class(func_output) <-
       append(class(func_output), c("network", "actor", "web"))
-    cat("Done.\n")
+    msg("Done.\n")
 
     return(func_output)
   }

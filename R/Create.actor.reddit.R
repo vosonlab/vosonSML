@@ -21,7 +21,7 @@
 #'
 #' @export
 Create.actor.reddit <- function(datasource, type, ...) {
-  cat("Generating reddit actor network...")
+  msg("Generating reddit actor network...\n")
 
   class(datasource) <- rm_collect_cls(class(datasource))
 
@@ -131,7 +131,7 @@ Create.actor.reddit <- function(datasource, type, ...) {
 
   class(func_output) <-
     append(class(func_output), c("network", "actor", "reddit"))
-  cat("Done.\n")
+  msg("Done.\n")
 
   func_output
 }

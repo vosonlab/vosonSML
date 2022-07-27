@@ -106,8 +106,8 @@ Authenticate.twitter <-
     credential
   }
 
-# twitter token functions from the rtweet project package auth.R file
-# Kearney, M. W. (2019). rtweet: Collecting and analyzing Twitter data
+# twitter R6 token class and functions from the ropensci rtweet package on github by @mkearney, @hadley
+# duplicated as are not exported by rtweet
 
 TwitterToken1.0 <- R6::R6Class("TwitterToken1.0", inherit = httr::Token1.0, list(
   init_credentials = function(force = FALSE) {

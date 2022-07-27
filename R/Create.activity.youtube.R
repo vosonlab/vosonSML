@@ -23,10 +23,7 @@
 #' @export
 Create.activity.youtube <-
   function(datasource, type, verbose = TRUE, ...) {
-    cat("Generating youtube activity network...")
-    if (verbose) {
-      cat("\n")
-    }
+    msg("Generating youtube activity network...\n")
 
     class(datasource) <- rm_collect_cls(class(datasource))
 
@@ -138,7 +135,7 @@ Create.activity.youtube <-
 
     class(func_output) <-
       append(class(func_output), c("network", "activity", "youtube"))
-    cat("Done.\n")
+    msg("Done.\n")
 
     return(func_output)
   }

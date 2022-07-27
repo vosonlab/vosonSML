@@ -239,9 +239,9 @@ Create.semantic.twitter <-
         df_stats <- network_stats(df_stats, "removed users", n_users |> dplyr::pull(.data$n), FALSE)
       }
 
-      if (nrow(n_hashtags) > 0) {
-        df_stats <- network_stats(df_stats, "hashtag count", n_hashtags |> dplyr::pull(.data$n), FALSE)
-        df_stats <- network_stats(df_stats, "hashtags unique", n_unique_hashtags, FALSE)
+      if (u_hashtags > 0) {
+        df_stats <- network_stats(df_stats, "hashtag count", n_hashtags, FALSE)
+        df_stats <- network_stats(df_stats, "hashtags unique", u_hashtags, FALSE)
       }
 
       if (u_terms > 0) {

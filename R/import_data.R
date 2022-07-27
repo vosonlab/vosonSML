@@ -9,6 +9,7 @@
 #'   \code{reddit}.
 #' @param type Character string. Type of file or file format of file to import \code{csv} or \code{rds}. Default is
 #'   \code{NULL} to use extension.
+#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
 #'
 #' @return A dataframe with datasource and socialmedia class attributes.
 #'
@@ -25,7 +26,11 @@
 #' @name ImportData
 #' @export
 ImportData <-
-  import_data <- function(data, socialmedia, type = NULL) {
+  import_data <- function(data, socialmedia, type = NULL, verbose = FALSE) {
+    msg <- f_verbose(verbose)
+
+    msg("Importing data file...\n")
+
     # import data from dataframe or file and add datasource classes
     # expected import types
     supported_types <- c("csv", "rds")
@@ -86,7 +91,7 @@ ImportData <-
         ), call. = FALSE)
       })
 
-      cat(paste0(toupper(type), " file read: ", data), "\n")
+      msg(paste0(toupper(type), " file read: ", data), "\n")
     } else {
       df <- data
     }

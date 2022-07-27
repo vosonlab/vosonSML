@@ -66,7 +66,7 @@ Collect.web <-
     class(df_results) <-
       append(c("datasource", "web"), class(df_results))
     if (writeToFile) {
-      write_output_file(df_results, "rds", "WebData")
+      write_output_file(df_results, "rds", "WebData", verbose = verbose)
     }
 
     msg("Done.\n")

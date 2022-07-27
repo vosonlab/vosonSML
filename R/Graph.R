@@ -22,8 +22,7 @@ Graph <- function(net,
   rlang::check_installed("igraph", "for Graph")
   stop_req_pkgs(c("igraph"), "Graph")
 
-  msg("Creating igraph network graph...")
-  if (writeToFile) msg("\n")
+  msg("Creating igraph network graph...\n")
 
   # igraph warning converting a dataframe with an POSIXct column to an igraph object
   # https://github.com/igraph/rigraph/pull/250
@@ -58,6 +57,7 @@ Graph.activity <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
     UseMethod("Graph.activity", net)
   }
@@ -74,11 +74,12 @@ Graph.activity.twitter <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
 
     g <- igraph::set_graph_attr(g, "type", "twitter")
 
-    graphOutputFile(g, "graphml", writeToFile, "TwitterActivity")
+    graphOutputFile(g, "graphml", writeToFile, "TwitterActivity", verbose = verbose)
     msg("Done.\n")
 
     g
@@ -90,11 +91,12 @@ Graph.activity.youtube <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
 
     g <- igraph::set_graph_attr(g, "type", "youtube")
 
-    graphOutputFile(g, "graphml", writeToFile, "YoutubeActivity")
+    graphOutputFile(g, "graphml", writeToFile, "YoutubeActivity", verbose = verbose)
     msg("Done.\n")
 
     g
@@ -106,11 +108,12 @@ Graph.activity.reddit <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
 
     g <- igraph::set_graph_attr(g, "type", "reddit")
 
-    graphOutputFile(g, "graphml", writeToFile, "RedditActivity")
+    graphOutputFile(g, "graphml", writeToFile, "RedditActivity", verbose = verbose)
     msg("Done.\n")
 
     g
@@ -122,11 +125,12 @@ Graph.activity.web <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
 
     g <- igraph::set_graph_attr(g, "type", "web")
 
-    graphOutputFile(g, "graphml", writeToFile, "WebActivity")
+    graphOutputFile(g, "graphml", writeToFile, "WebActivity", verbose = verbose)
     msg("Done.\n")
 
     g
@@ -139,6 +143,7 @@ Graph.actor <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
     UseMethod("Graph.actor", net)
   }
@@ -155,11 +160,12 @@ Graph.actor.twitter <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
 
     g <- igraph::set_graph_attr(g, "type", "twitter")
 
-    graphOutputFile(g, "graphml", writeToFile, "TwitterActor")
+    graphOutputFile(g, "graphml", writeToFile, "TwitterActor", verbose = verbose)
     msg("Done.\n")
 
     g
@@ -171,11 +177,12 @@ Graph.actor.youtube <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
 
     g <- igraph::set_graph_attr(g, "type", "youtube")
 
-    graphOutputFile(g, "graphml", writeToFile, "YoutubeActor")
+    graphOutputFile(g, "graphml", writeToFile, "YoutubeActor", verbose = verbose)
     msg("Done.\n")
 
     g
@@ -187,11 +194,12 @@ Graph.actor.reddit <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
 
     g <- igraph::set_graph_attr(g, "type", "reddit")
 
-    graphOutputFile(g, "graphml", writeToFile, "RedditActor")
+    graphOutputFile(g, "graphml", writeToFile, "RedditActor", verbose = verbose)
     msg("Done.\n")
 
     g
@@ -203,11 +211,12 @@ Graph.actor.web <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
 
     g <- igraph::set_graph_attr(g, "type", "web")
 
-    graphOutputFile(g, "graphml", writeToFile, "WebActor")
+    graphOutputFile(g, "graphml", writeToFile, "WebActor", verbose = verbose)
     msg("Done.\n")
 
     g
@@ -220,6 +229,7 @@ Graph.semantic <-
   function(net,
            directed = FALSE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
     UseMethod("Graph.semantic", net)
   }
@@ -236,6 +246,7 @@ Graph.semantic.twitter <-
   function(net,
            directed = FALSE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
     # create igraph object from dataframes
     g <-
@@ -245,7 +256,7 @@ Graph.semantic.twitter <-
 
     g <- igraph::set_graph_attr(g, "type", "twitter")
 
-    graphOutputFile(g, "graphml", writeToFile, "TwitterSemantic")
+    graphOutputFile(g, "graphml", writeToFile, "TwitterSemantic", verbose = verbose)
     msg("Done.\n")
 
     g
@@ -258,6 +269,7 @@ Graph.twomode <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
     UseMethod("Graph.twomode", net)
   }
@@ -274,11 +286,12 @@ Graph.twomode.twitter <-
   function(net,
            directed = TRUE,
            writeToFile = FALSE,
+           verbose = FALSE,
            ...) {
 
     g <- igraph::set_graph_attr(g, "type", "twitter")
 
-    graphOutputFile(g, "graphml", writeToFile, "Twitter2mode")
+    graphOutputFile(g, "graphml", writeToFile, "Twitter2mode", verbose = verbose)
     msg("Done.\n")
 
     g
@@ -287,12 +300,12 @@ Graph.twomode.twitter <-
 # set output file name
 # if wtof is logical use def as file name
 # if character use wtof as file name
-graphOutputFile <- function(g, type, wtof, def) {
+graphOutputFile <- function(g, type, wtof, def, verbose = FALSE) {
 
   if (is.logical(wtof) && wtof) {
-    write_output_file(g, "graphml", def)
+    write_output_file(g, "graphml", def, verbose = verbose)
 
   } else if (is.character(wtof)) {
-    write_output_file(g, "graphml", wtof)
+    write_output_file(g, "graphml", wtof, verbose = verbose)
   }
 }

@@ -345,7 +345,7 @@ Collect.youtube <-
     class(dataCombined) <-
       append(c("datasource", "youtube"), class(dataCombined))
     if (writeToFile) {
-      write_output_file(dataCombined, "rds", "YoutubeData")
+      write_output_file(dataCombined, "rds", "YoutubeData", verbose = verbose)
     }
 
     msg("Done.\n")

@@ -9,7 +9,7 @@
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.
 #' @param rmEdgeTypes Character vector. List of tweet edge types to remove from network. Options are \code{"tweet"},
 #'   \code{"retweet"}, \code{"reply"} and \code{"quote"}. Default is \code{NULL}.
-#' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
 #' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.

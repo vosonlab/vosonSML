@@ -182,7 +182,7 @@ Collect.search.twitter <-
     attr(tweets_df, "users") <- users_df
 
     if (writeToFile) {
-      write_output_file(tweets_df, "rds", "TwitterData")
+      write_output_file(tweets_df, "rds", "TwitterData", verbose = verbose)
     }
 
     msg("Done.\n")

@@ -23,7 +23,7 @@
 #'
 #' @export
 Create.actor.youtube <- function(datasource, type, ...) {
-  cat("Generating YouTube actor network...")
+  msg("Generating YouTube actor network...\n")
 
   class(datasource) <- rm_collect_cls(class(datasource))
 
@@ -102,7 +102,7 @@ Create.actor.youtube <- function(datasource, type, ...) {
 
   class(func_output) <-
     append(class(func_output), c("network", "actor", "youtube"))
-  cat("Done.\n")
+  msg("Done.\n")
 
   func_output
 }

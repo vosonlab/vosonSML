@@ -35,8 +35,9 @@ Collect.reddit <-
            waitTime = c(3, 10),
            ua = getOption("HTTPUserAgent"),
            writeToFile = FALSE,
-           verbose = TRUE,
+           verbose = FALSE,
            ...) {
+
     msg("Collecting comment threads for reddit urls...\n")
 
     if (missing(threadUrls) ||
@@ -124,7 +125,7 @@ Collect.reddit <-
     class(threads_df) <-
       append(c("datasource", "reddit"), class(threads_df))
     if (writeToFile) {
-      write_output_file(threads_df, "rds", "RedditData")
+      write_output_file(threads_df, "rds", "RedditData", verbose = verbose)
     }
 
     msg("Done.\n")

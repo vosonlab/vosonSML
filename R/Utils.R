@@ -34,11 +34,14 @@ write_output_file <-
            type = "rds",
            name = "File",
            datetime = TRUE,
-           msg = TRUE) {
+           verbose = FALSE) {
+
+    msg <- f_verbose(verbose)
+
     supported_types <- c("graphml", "csv", "rds")
 
     if (!type %in% supported_types) {
-      cat(paste0(
+      msg(paste0(
         "File output not supported. please choose from: ",
         paste0(supported_types, collapse = ", "),
         "\n"
@@ -60,7 +63,7 @@ write_output_file <-
       result <- tryCatch({
         saveRDS(data, path)
       }, error = function(e) {
-        cat(paste0("Error writing rds: ", path, "\n", e))
+        msg(paste0("Error writing rds: ", path, "\n", e))
       })
     } else {
       con <- file(path, open = "wb", encoding = "native.enc")
@@ -73,7 +76,7 @@ write_output_file <-
                  readr::write_csv(data, file = con)
                })
       }, error = function(e) {
-        cat(paste0("Error writing: ", path, "\n", e))
+        msg(paste0("Error writing: ", path, "\n", e))
       }, finally = {
 
       })
@@ -81,13 +84,13 @@ write_output_file <-
     }
 
     if (length(result) == 0) {
-      if (msg) {
-        cat(paste0(toupper(type), " file written: "))
-        cat(paste0(path, "\n"))
+      if (verbose) {
+        msg(paste0(toupper(type), " file written: "))
+        msg(paste0(path, "\n"))
       }
     } else {
-      if (msg) {
-        cat(paste0("File unable to be written.\n"))
+      if (verbose) {
+        msg(paste0("File unable to be written.\n"))
       }
     }
   }
@@ -149,32 +152,6 @@ print_summary <- function(df) {
   }
 
   paste0(header, lines)
-}
-
-# format tictoc elapsed time output
-format_toc <- function(tic, toc, msg) {
-  td <- round(toc - tic, digits = 0)
-
-  hrs <- floor(td / (60 * 60))
-  mins <- floor(td / 60)
-  secs <- td - (hrs * (60 * 60)) - (mins * 60)
-
-  t <- ""
-  if (!is.null(msg) && !is.na(msg) && length(msg) > 0) {
-    t <- paste0(msg, ": ")
-  }
-  t <-
-    trimws(paste0(
-      t,
-      hrs,
-      " hrs ",
-      mins,
-      " mins ",
-      secs,
-      " secs (",
-      round(toc - tic, digits = 3),
-      ")"
-    ))
 }
 
 # accepts a dataframe to add or increment a field value with count
@@ -264,6 +241,7 @@ escape_regex <- function(x) {
   gsub("([.|()\\^{}+$*?]|\\[|\\])", "\\\\\\1", x)
 }
 
+# check debug parameter
 lgl_debug <- function(x) {
   lgl <- FALSE
   if (!is.null(x)) {
@@ -275,33 +253,47 @@ lgl_debug <- function(x) {
   lgl
 }
 
-msg <- function(x) {
-  vsml_cat(x)
-}
-
-# assign msg functions
+# assign message function for verbose output
+# can use options(voson.msg = "message")
 f_verbose <- function(x) {
+  opt_msg <- getOption("voson.msg")
+
+  opt_f <- vsml_cat
+  if (!is.null(opt_msg) && !is.na(opt_msg)) {
+    if (is.character(opt_msg)) {
+      if (tolower(opt_msg) == "message") {
+        opt_f <- vsml_msg
+      }
+    }
+  }
+
   f <- vsml_silent
   if (!is.null(x)) {
     if (is.logical(x)) {
-      f <- ifelse(x, vsml_cat, vsml_silent)
+      f <- ifelse(x, opt_f, vsml_silent)
     }
   }
   f
 }
 
-# msg output helpers
-vsml_msg <- function(x) {
-  message(x)
+# base function
+msg <- function(x) {
+  vsml_cat(x)
 }
 
+# message output
+vsml_msg <- function(x) {
+  message(x, appendLF = FALSE)
+}
+
+# cat output
 vsml_cat <- function(x) {
   cat(x)
   flush.console()
   Sys.sleep(0.05)
 }
 
-# silent messages
+# silent output
 vsml_silent <- function(x) {
   return()
 }
@@ -365,6 +357,8 @@ check_chr <- function(x, param = "value", accept = c(), case = "lower", null.ok 
             stop(paste0(param, " must be in ", paste0(accept, collapse = ",")), call. = FALSE)
           }
         }
+
+        return(trimws(x))
       }
     } else {
       if (na.ok) {

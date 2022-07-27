@@ -23,10 +23,7 @@
 #' @export
 Create.activity.reddit <-
   function(datasource, type, verbose = TRUE, ...) {
-    cat("Generating reddit activity network...")
-    if (verbose) {
-      cat("\n")
-    }
+    msg("Generating reddit activity network...\n")
 
     class(datasource) <- rm_collect_cls(class(datasource))
 
@@ -108,7 +105,7 @@ Create.activity.reddit <-
 
     class(func_output) <-
       append(class(func_output), c("network", "activity", "reddit"))
-    cat("Done.\n")
+    msg("Done.\n")
 
     return(func_output)
   }

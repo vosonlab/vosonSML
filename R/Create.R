@@ -97,6 +97,8 @@ Create.actor.default <- function(datasource, type, ...) {
 #' @method Create semantic
 #' @export
 Create.semantic <- function(datasource, type, ...) {
+  msg <- f_verbose(list(...)$verbose)
+
   UseMethod("Create.semantic", datasource)
 }
 

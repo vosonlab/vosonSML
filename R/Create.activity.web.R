@@ -22,10 +22,7 @@
 #' @export
 Create.activity.web <-
   function(datasource, type, verbose = TRUE, ...) {
-    cat("Generating web activity network...")
-    if (verbose) {
-      cat("\n")
-    }
+    msg("Generating web activity network...\n")
 
     data <- datasource |>
       dplyr::mutate(from = tolower(.data$page),
@@ -47,7 +44,7 @@ Create.activity.web <-
 
     class(func_output) <-
       append(class(func_output), c("network", "activity", "web"))
-    cat("Done.\n")
+    msg("Done.\n")
 
     return(func_output)
   }
