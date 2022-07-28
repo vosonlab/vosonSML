@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.31.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@ National University</h3>
                         <h4 data-toc-skip class="author">Robert Ackland,
 Bryan Gertzel, Francisca Borquez</h4>
             
-            <h4 data-toc-skip class="date">29 June, 2022</h4>
+            <h4 data-toc-skip class="date">28 July, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/HEAD/vignettes/Intro-to-vosonSML.Rmd" class="external-link"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
       <div class="hidden name"><code>Intro-to-vosonSML.Rmd</code></div>
@@ -269,7 +269,7 @@ modified to anonymise the data):</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> twitterData</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 999 x 90</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>   user_id status_id created_at          screen_name text  source</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>   <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dttm<span class="sc">&gt;</span>              <span class="er">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>   <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dttm<span class="sc">&gt;</span>              <span class="er">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxx… xxxxxxxx… <span class="dv">2020-01-09</span> <span class="dv">12</span><span class="sc">:</span><span class="dv">02</span><span class="sc">:</span><span class="dv">13</span> xxxx        <span class="st">"htt… Twitt…</span></span>
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="st"> 2 xxxxxx… xxxxxxxx… 2020-01-09 12:01:32 xxxxxxxxx   "</span>Fir… Twitt…</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> xxxxxx… xxxxxxxx… <span class="dv">2020-01-09</span> <span class="dv">12</span><span class="sc">:</span><span class="dv">00</span><span class="sc">:</span><span class="dv">44</span> xxxxxxxxxxx <span class="st">"Ser… Twitt…</span></span>
@@ -324,8 +324,8 @@ preserve anonymity):</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> actorNetwork</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>edges</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1,725 x 5</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>   from             to              edge_type timestamp         status_id       </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>fct<span class="sc">&gt;</span>            <span class="er">&lt;</span>fct<span class="sc">&gt;</span>           <span class="er">&lt;</span>fct<span class="sc">&gt;</span>     <span class="er">&lt;</span>fct<span class="sc">&gt;</span>             <span class="er">&lt;</span>fct<span class="sc">&gt;</span>           </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>   from             to              edge_type timestamp         status_id</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>fct<span class="sc">&gt;</span>            <span class="er">&lt;</span>fct<span class="sc">&gt;</span>           <span class="er">&lt;</span>fct<span class="sc">&gt;</span>     <span class="er">&lt;</span>fct<span class="sc">&gt;</span>             <span class="er">&lt;</span>fct<span class="sc">&gt;</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxx         xxxxxxxx        quote     <span class="dv">2020-01-09</span> <span class="dv">12</span><span class="sc">:</span>00… xxxxxxxxxxxxxxx…</span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxx         xxxxxxxxx       quote     <span class="dv">2020-01-09</span> <span class="dv">09</span><span class="sc">:</span>37… xxxxxxxxxxxxxxx…</span>
 <span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>[snip]</span>
@@ -333,10 +333,10 @@ preserve anonymity):</p>
 <span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1,158 x 2</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>   user_id             screen_name   </span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>fct<span class="sc">&gt;</span>               <span class="er">&lt;</span>fct<span class="sc">&gt;</span>         </span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxx            xxxx          </span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxx            xxxxxxxxx     </span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>   user_id             screen_name</span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>fct<span class="sc">&gt;</span>               <span class="er">&lt;</span>fct<span class="sc">&gt;</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxx            xxxx</span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxx            xxxxxxxxx</span>
 <span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 1,148 more rows</span></span>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a></span>
@@ -348,12 +348,12 @@ preserve anonymity):</p>
 <code>GraphML</code> format. The following shows a summary of the
 graph:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> actorGraph</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>IGRAPH bc177a6 DN<span class="sc">--</span> <span class="dv">1158</span> <span class="dv">1725</span> <span class="sc">--</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>IGRAPH bc177a6 DN<span class="sc">--</span> <span class="dv">1158</span> <span class="dv">1725</span> <span class="sc">--</span></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">screen_name</span> (v<span class="sc">/</span>c), <span class="fu">label</span> (v<span class="sc">/</span>c),</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> <span class="fu">edge_type</span> (e<span class="sc">/</span>c), <span class="fu">timestamp</span> (e<span class="sc">/</span>c), <span class="fu">status_id</span> (e<span class="sc">/</span>c)</span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> edges from <span class="fu">bc177a6</span> (vertex names)<span class="sc">:</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] xxxxxxxx           <span class="ot">-&gt;</span>xxxxxxxx          </span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a> [<span class="dv">2</span>] xxxxxxxx           <span class="ot">-&gt;</span>xxxxxxxxx         </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] xxxxxxxx           <span class="ot">-&gt;</span>xxxxxxxx</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a> [<span class="dv">2</span>] xxxxxxxx           <span class="ot">-&gt;</span>xxxxxxxxx</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> ... omitted several edges</span></code></pre></div>
 <p>The Twitter actor network contains a graph attribute
@@ -457,7 +457,7 @@ data is absent, so that their additional profile attributes can also be
 added:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create an actor network with user metadata</span></span>
-<span><span class="va">actorGraphWithUserAttr</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">actorGraphWithUserAttr</span> <span class="op">&lt;-</span> <span class="va">actorNetwork</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/AddUserData.html">AddUserData</a></span><span class="op">(</span><span class="va">twitterData</span>, lookupUsers <span class="op">=</span> <span class="cn">TRUE</span>, twitterAuth <span class="op">=</span> <span class="va">twitterAuth</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -476,8 +476,8 @@ preserve anonymity):</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> activityNetwork</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1,408 x 5</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>   status_id    user_id    screen_name created_at   vosonTxt_tweet              </span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>        <span class="er">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>chr<span class="sc">&gt;</span>        <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                       </span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>   status_id    user_id    screen_name created_at   vosonTxt_tweet</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>        <span class="er">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>chr<span class="sc">&gt;</span>        <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
 <span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxxxxx… xxxxxxxx   xxxx        <span class="dv">2020-01-09</span> … <span class="st">"xxxxxxxxxxxxxxxxxxxxxxxxxx…</span></span>
 <span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="st"> 2 xxxxxxxxxxx… xxxxxxxx   xxxxxxxxx   2020-01-09 … "</span>xxxxxxxxxxxxxxxxxxxxxxxxxx…</span>
 <span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a> [snip]</span>
@@ -486,9 +486,9 @@ preserve anonymity):</p>
 <span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>edges</span>
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 662 x 3</span></span>
 <span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>   from                to                  edge_type</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    </span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx quote    </span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx quote    </span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx quote</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxxxxx quote</span>
 <span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 652 more rows</span></span>
 <span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a></span>
@@ -500,7 +500,7 @@ This list is then passed to <code><a href="../reference/Graph.html">Graph()</a><
 <code>igraph</code> graph object (the following has been
 anonymised):</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> activityGraph</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>IGRAPH e60c486 DN<span class="sc">--</span> <span class="dv">1408</span> <span class="dv">662</span> <span class="sc">--</span> </span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>IGRAPH e60c486 DN<span class="sc">--</span> <span class="dv">1408</span> <span class="dv">662</span> <span class="sc">--</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">user_id</span> (v<span class="sc">/</span>c), <span class="fu">screen_name</span> (v<span class="sc">/</span>c),</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> <span class="fu">created_at</span> (v<span class="sc">/</span>c), <span class="fu">vosonTxt_tweet</span> (v<span class="sc">/</span>c), <span class="fu">label</span> (v<span class="sc">/</span>c), <span class="fu">edge_type</span> (e<span class="sc">/</span>c)</span>
 <span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> edges from <span class="fu">e60c486</span> (vertex names)<span class="sc">:</span></span>
@@ -522,7 +522,7 @@ which can have the value ‘reply’, ‘retweet’ or ‘quote’.</p>
 edges. The following is a visualization of the network, where nodes are
 tweets and tweets mentioning bushfires are indicated in red.</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># create a subgraph containing nodes of components that have more than 5 nodes </span></span>
+<code class="sourceCode R"><span><span class="co"># create a subgraph containing nodes of components that have more than 5 nodes</span></span>
 <span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/components.html" class="external-link">clusters</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span></span>
 <span><span class="va">g4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html" class="external-link">induced_subgraph</a></span><span class="op">(</span><span class="va">activityGraph</span>,</span>
 <span>                       <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">membership</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">csize</span> <span class="op">&gt;</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -569,19 +569,19 @@ preserve anonymity). Note that in this example, the
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> twomodeNetwork</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1,146 x 2</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>   entity_id                    display_name                </span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>                        <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                       </span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxx                     xxxx                        </span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxx                     xxxxxxxxx                   </span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> <span class="co">#auspol2020                  #auspol2020                 </span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> <span class="co">#australianbushfiredisaster  #australianbushfiredisaster </span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>   entity_id                    display_name</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>                        <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxx                     xxxx</span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxx                     xxxxxxxxx</span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> <span class="co">#auspol2020                  #auspol2020</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> <span class="co">#australianbushfiredisaster  #australianbushfiredisaster</span></span>
 <span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb24-11"><a href="#cb24-11" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 1,136 more rows</span></span>
 <span id="cb24-12"><a href="#cb24-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb24-13"><a href="#cb24-13" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>edges</span>
 <span id="cb24-14"><a href="#cb24-14" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1,675 x 5</span></span>
-<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>   from      to                      edge_type timestamp        status_id       </span>
-<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>fct<span class="sc">&gt;</span>     <span class="er">&lt;</span>fct<span class="sc">&gt;</span>                   <span class="er">&lt;</span>fct<span class="sc">&gt;</span>     <span class="er">&lt;</span>fct<span class="sc">&gt;</span>            <span class="er">&lt;</span>fct<span class="sc">&gt;</span>           </span>
+<span id="cb24-15"><a href="#cb24-15" aria-hidden="true" tabindex="-1"></a>   from      to                      edge_type timestamp        status_id</span>
+<span id="cb24-16"><a href="#cb24-16" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>fct<span class="sc">&gt;</span>     <span class="er">&lt;</span>fct<span class="sc">&gt;</span>                   <span class="er">&lt;</span>fct<span class="sc">&gt;</span>     <span class="er">&lt;</span>fct<span class="sc">&gt;</span>            <span class="er">&lt;</span>fct<span class="sc">&gt;</span></span>
 <span id="cb24-17"><a href="#cb24-17" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxx  <span class="co">#auspol2020             hashtag   2020-01-09 12:0… xxxxxxxxxxxxxxx…</span></span>
 <span id="cb24-18"><a href="#cb24-18" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxx  <span class="co">#australianbushfiredis… hashtag   2020-01-09 12:0… xxxxxxxxxxxxxxx…</span></span>
 <span id="cb24-19"><a href="#cb24-19" aria-hidden="true" tabindex="-1"></a>[snip]</span>
@@ -592,12 +592,12 @@ preserve anonymity). Note that in this example, the
 <p>This list is then passed to <code><a href="../reference/Graph.html">Graph()</a></code>, which returns an
 <code>igraph</code> graph object (this has been anonymised):</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> twomodeGraph</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>IGRAPH 68bd240 DN<span class="sc">--</span> <span class="dv">1146</span> <span class="dv">1675</span> <span class="sc">--</span> </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>IGRAPH 68bd240 DN<span class="sc">--</span> <span class="dv">1146</span> <span class="dv">1675</span> <span class="sc">--</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">display_name</span> (v<span class="sc">/</span>c), <span class="fu">label</span> (v<span class="sc">/</span>c),</span>
 <span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> <span class="fu">edge_type</span> (e<span class="sc">/</span>c), <span class="fu">timestamp</span> (e<span class="sc">/</span>c), <span class="fu">status_id</span> (e<span class="sc">/</span>c)</span>
 <span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> edges from 68bd240 (vertex names)<span class="sc">:</span></span>
-<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] xxxx <span class="ot">-&gt;</span> <span class="co">#auspol2020                 </span></span>
-<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a> [<span class="dv">2</span>] xxxx <span class="ot">-&gt;</span> <span class="co">#australianbushfiredisaster </span></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] xxxx <span class="ot">-&gt;</span> <span class="co">#auspol2020</span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a> [<span class="dv">2</span>] xxxx <span class="ot">-&gt;</span> <span class="co">#australianbushfiredisaster</span></span>
 <span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> ... omitted several edges</span></code></pre></div>
 <p>The Twitter 2-model network has a graph attribute <code>type</code>
@@ -620,7 +620,7 @@ the tweet that led to the edge).</p>
 <span>   <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/neighbors.html" class="external-link">neighbors</a></span><span class="op">(</span><span class="va">twomodeGraph</span>, <span class="va">x</span>, mode <span class="op">=</span> <span class="st">"in"</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># create a subgraph containing only the top 5 used hashtags and related users </span></span>
+<span><span class="co"># create a subgraph containing only the top 5 used hashtags and related users</span></span>
 <span><span class="va">g5</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/igraph/man/subgraph.html" class="external-link">induced_subgraph</a></span><span class="op">(</span><span class="va">twomodeGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">ind</span>, <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">as.numeric</a></span><span class="op">(</span><span class="va">ind2</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># set node colour and label based on in-degree</span></span>
@@ -665,18 +665,18 @@ dataframes named “nodes” and “edges”:</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> semanticNetwork</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 799 x 1</span></span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>   value </span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>fct<span class="sc">&gt;</span> </span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> just  </span>
-<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> one   </span>
-<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> fire  </span>
-<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> going </span>
-<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> still </span>
-<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> hard  </span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>   value</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>fct<span class="sc">&gt;</span></span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> just</span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> one</span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a> <span class="dv">3</span> fire</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a> <span class="dv">4</span> going</span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a> <span class="dv">5</span> still</span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a> <span class="dv">6</span> hard</span>
 <span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a> <span class="dv">7</span> trying</span>
-<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> since </span>
-<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> try   </span>
-<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> sick  </span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a> <span class="dv">8</span> since</span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a> <span class="dv">9</span> try</span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a><span class="dv">10</span> sick</span>
 <span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 789 more rows</span></span>
 <span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>edges</span>
@@ -696,7 +696,7 @@ dataframes named “nodes” and “edges”:</p>
 <span id="cb28-32"><a href="#cb28-32" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 10,980 more rows</span></span>
 <span id="cb28-33"><a href="#cb28-33" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-34"><a href="#cb28-34" aria-hidden="true" tabindex="-1"></a><span class="fu">attr</span>(,<span class="st">"class"</span>)</span>
-<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"list"</span>     <span class="st">"network"</span>  <span class="st">"semantic"</span> <span class="st">"twitter"</span> </span></code></pre></div>
+<span id="cb28-35"><a href="#cb28-35" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] <span class="st">"list"</span>     <span class="st">"network"</span>  <span class="st">"semantic"</span> <span class="st">"twitter"</span></span></code></pre></div>
 <p>The <code>removeTermsOrHashtags</code> argument is used to exclude
 terms that we can expect to occur frequently (e.g. because of the
 parameters used for the data collection). The <code>termFreq</code>
@@ -705,7 +705,7 @@ frequently occurring entities.</p>
 <p>This list is then passed to <code><a href="../reference/Graph.html">Graph()</a></code>, which returns an
 <code>igraph</code> graph object:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> semanticGraph</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>IGRAPH cb8c381 UNW<span class="sc">-</span> <span class="dv">799</span> <span class="dv">10990</span> <span class="sc">--</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>IGRAPH cb8c381 UNW<span class="sc">-</span> <span class="dv">799</span> <span class="dv">10990</span> <span class="sc">--</span></span>
 <span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">label</span> (v<span class="sc">/</span>c), <span class="fu">weight</span> (e<span class="sc">/</span>n)</span>
 <span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> edges from <span class="fu">cb8c381</span> (vertex names)<span class="sc">:</span></span>
 <span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="co">#australianbushfiredisaster --#auspol2020</span></span>
@@ -726,7 +726,7 @@ frequently occurring entities.</p>
 The following produces a visualisation of subnetwork of terms that
 contain the string “bushfire”:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># get index of the nodes whose term contains "bushfire" </span></span>
+<code class="sourceCode R"><span><span class="co"># get index of the nodes whose term contains "bushfire"</span></span>
 <span><span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grep</a></span><span class="op">(</span><span class="st">"bushfire"</span>, <span class="fu"><a href="https://rdrr.io/r/base/chartr.html" class="external-link">tolower</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/igraph/man/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">semanticGraph</span><span class="op">)</span><span class="op">$</span><span class="va">name</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create a subgraph containing only bushfire terms</span></span>
@@ -770,7 +770,7 @@ required in order to collect YouTube comment data. These IDs can either
 be manually extracted or else automatically extracted from the URLs with
 the following command:</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">videoIDs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,</span>
+<code class="sourceCode R"><span><span class="va">videoIDs</span> <span class="op">&lt;-</span> <span class="fu">GetYoutubeVideoIDs</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,</span>
 <span>                                 <span class="st">"https://youtu.be/xxxxxxxx"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>The character vector containing the YouTube video IDs is then passed
 as a parameter to the <code><a href="../reference/Collect.html">Collect()</a></code> function (the following
@@ -784,7 +784,7 @@ news service on 5th January 2020. The comment data were collected on
 a maximum of 500 top-level comments (and all the reply comments to these
 top-level comments).</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">videoIDs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=pJ_NyEYRkLQ"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">videoIDs</span> <span class="op">&lt;-</span> <span class="fu">GetYoutubeVideoIDs</span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=pJ_NyEYRkLQ"</span><span class="op">)</span></span>
 <span><span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="va">youtubeAuth</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/Collect.html">Collect</a></span><span class="op">(</span><span class="va">videoIDs</span>, maxComments <span class="op">=</span> <span class="fl">500</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>The <code><a href="../reference/Collect.html">Collect()</a></code> function takes the following arguments
 (when used for collecting YouTube data): <code>credential</code> (object
@@ -868,18 +868,18 @@ preserve anonymity):</p>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 522 x 3</span></span>
 <span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>   id                       screen_name                         node_type</span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>                    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                               <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    </span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx                      actor    </span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor    </span>
-<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>[snip] </span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>                    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                               <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxxx                      actor</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 512 more rows</span></span>
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>edges</span>
 <span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 604 x 6</span></span>
-<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>   from      to       video_id comment_id   edge_type vosonTxt_comment          </span>
-<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>        <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                     </span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>   from      to       video_id comment_id   edge_type vosonTxt_comment</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>        <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
 <span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxx… VIDEOID… pJ_NyEY… xxxxxxxxxxx… comment   <span class="st">"xxxxx"</span></span>
-<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxx… VIDEOID… pJ_NyEY… xxxxxxxxxxx… comment   <span class="st">"xxxxx"</span>                  </span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxx… VIDEOID… pJ_NyEY… xxxxxxxxxxx… comment   <span class="st">"xxxxx"</span></span>
 <span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 594 more rows</span></span>
 <span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a></span>
@@ -899,7 +899,7 @@ achieve the above using a single line of code:</p>
 <p>The following is an an annonymised summary of the <code>igraph</code>
 graph object.</p>
 <div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> actorGraph</span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>IGRAPH <span class="fl">79e5456</span> DN<span class="sc">--</span> <span class="dv">522</span> <span class="dv">604</span> <span class="sc">--</span> </span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>IGRAPH <span class="fl">79e5456</span> DN<span class="sc">--</span> <span class="dv">522</span> <span class="dv">604</span> <span class="sc">--</span></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">screen_name</span> (v<span class="sc">/</span>c), <span class="fu">node_type</span> (v<span class="sc">/</span>c),</span>
 <span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> <span class="fu">label</span> (v<span class="sc">/</span>c), <span class="fu">video_id</span> (e<span class="sc">/</span>c), <span class="fu">comment_id</span> (e<span class="sc">/</span>c), <span class="fu">edge_type</span> (e<span class="sc">/</span>c),</span>
 <span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> <span class="fu">vosonTxt_comment</span> (e<span class="sc">/</span>c)</span>
@@ -930,8 +930,8 @@ comments (note: we did not use <code><a href="../reference/AddText.html">AddText
 embedded within the text), and there is the single self-loop from the
 video to itself.</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> <span class="fu">table</span>(<span class="fu">E</span>(actorGraph)<span class="sc">$</span>edge_type)</span>
-<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>   comment reply<span class="sc">-</span>comment     self<span class="sc">-</span>loop </span>
-<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>       <span class="dv">500</span>           <span class="dv">103</span>             <span class="dv">1</span> </span></code></pre></div>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>   comment reply<span class="sc">-</span>comment     self<span class="sc">-</span>loop</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>       <span class="dv">500</span>           <span class="dv">103</span>             <span class="dv">1</span></span></code></pre></div>
 <p>We can visualize this network, using red to identify the video
 nodes.</p>
 <div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
@@ -989,16 +989,16 @@ been modified to preserve anonymity):</p>
 <span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 522 x 3</span></span>
 <span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>   id                       screen_name                         node_type</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>                    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                               <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    </span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor    </span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor    </span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>                    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                               <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxxxxxxxxxxxxxxxxxx xxxxxxxxxxxxx                       actor</span>
 <span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 512 more rows</span></span>
 <span id="cb45-10"><a href="#cb45-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-11"><a href="#cb45-11" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>edges</span>
 <span id="cb45-12"><a href="#cb45-12" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 604 x 9</span></span>
 <span id="cb45-13"><a href="#cb45-13" aria-hidden="true" tabindex="-1"></a>   from  to    video_id comment_id edge_type vosonTxt_comment video_title</span>
-<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>            <span class="er">&lt;</span>chr<span class="sc">&gt;</span>      </span>
+<span id="cb45-14"><a href="#cb45-14" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>            <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
 <span id="cb45-15"><a href="#cb45-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxx… xxxx… pJ_NyEY… xxxxxxxxx… comment   xxxxxxxxxxxx … Australia …</span>
 <span id="cb45-16"><a href="#cb45-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxx… xxxx… pJ_NyEY… xxxxxxxxx… comment   <span class="st">"xxxx"</span>         Australia …</span>
 <span id="cb45-17"><a href="#cb45-17" aria-hidden="true" tabindex="-1"></a>[snip]</span>
@@ -1008,11 +1008,11 @@ been modified to preserve anonymity):</p>
 <span id="cb45-21"><a href="#cb45-21" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>videos</span>
 <span id="cb45-22"><a href="#cb45-22" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 1 x 6</span></span>
 <span id="cb45-23"><a href="#cb45-23" aria-hidden="true" tabindex="-1"></a>  VideoID  VideoTitle  VideoDescription  VideoPublishedAt ChannelID ChannelTitle</span>
-<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>chr<span class="sc">&gt;</span>             <span class="er">&lt;</span>chr<span class="sc">&gt;</span>            <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>       </span>
-<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> pJ_NyEY… Australia … <span class="st">"As Australia ba… 2020-01-05T12:3… UCknLrEd… DW News     </span></span>
+<span id="cb45-24"><a href="#cb45-24" aria-hidden="true" tabindex="-1"></a>  <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>chr<span class="sc">&gt;</span>             <span class="er">&lt;</span>chr<span class="sc">&gt;</span>            <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
+<span id="cb45-25"><a href="#cb45-25" aria-hidden="true" tabindex="-1"></a><span class="dv">1</span> pJ_NyEY… Australia … <span class="st">"As Australia ba… 2020-01-05T12:3… UCknLrEd… DW News</span></span>
 <span id="cb45-26"><a href="#cb45-26" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb45-27"><a href="#cb45-27" aria-hidden="true" tabindex="-1"></a><span class="st">attr(,"</span>class<span class="st">")</span></span>
-<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a><span class="st">[1] "</span>list<span class="st">"             "</span>network<span class="st">"          "</span>actor<span class="st">"            "</span>youtube<span class="st">"         </span></span>
+<span id="cb45-28"><a href="#cb45-28" aria-hidden="true" tabindex="-1"></a><span class="st">[1] "</span>list<span class="st">"             "</span>network<span class="st">"          "</span>actor<span class="st">"            "</span>youtube<span class="st">"</span></span>
 <span id="cb45-29"><a href="#cb45-29" aria-hidden="true" tabindex="-1"></a><span class="st">[5] "</span>voson_text<span class="st">"       "</span>voson_video_data<span class="st">"</span></span></code></pre></div>
 <p>It should also be noted that <code><a href="../reference/AddVideoData.html">AddVideoData()</a></code> can
 optionally substitute references to the video ID in the “nodes” and
@@ -1034,18 +1034,18 @@ preserve anonymity).</p>
 <span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>edges</span>
 <span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 603 x 3</span></span>
 <span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>   from                       to                  edge_type</span>
-<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>                      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    </span>
-<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxxxxxxxxxxxxxxxxxxxx VIDEOID<span class="sc">:</span>pJ_NyEYRkLQ comment  </span>
-<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxxxxxxxxxxxxxxxxxxxx VIDEOID<span class="sc">:</span>pJ_NyEYRkLQ comment  </span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>                      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>               <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxxxxxxxxxxxxxxxxxxxxxxxx VIDEOID<span class="sc">:</span>pJ_NyEYRkLQ comment</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxxxxxxxxxxxxxxxxxxxxxxxx VIDEOID<span class="sc">:</span>pJ_NyEYRkLQ comment</span>
 <span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 593 more rows</span></span>
 <span id="cb47-10"><a href="#cb47-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb47-11"><a href="#cb47-11" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb47-12"><a href="#cb47-12" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 604 x 8</span></span>
 <span id="cb47-13"><a href="#cb47-13" aria-hidden="true" tabindex="-1"></a>   id    video_id published_at updated_at author_id screen_name node_type</span>
-<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>        <span class="er">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    </span>
-<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxx… pJ_NyEY… <span class="dv">2020-01</span><span class="sc">-</span>10T… <span class="dv">2020-01</span><span class="sc">-</span>1… xxxxxxxx… xxxxxxxxxx… comment  </span>
-<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxx… pJ_NyEY… <span class="dv">2020-01</span><span class="sc">-</span>09T… <span class="dv">2020-01</span><span class="sc">-</span>0… xxxxxxxx… xxxxxxxxxx… comment  </span>
+<span id="cb47-14"><a href="#cb47-14" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>        <span class="er">&lt;</span>chr<span class="sc">&gt;</span>      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>       <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
+<span id="cb47-15"><a href="#cb47-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> xxxx… pJ_NyEY… <span class="dv">2020-01</span><span class="sc">-</span>10T… <span class="dv">2020-01</span><span class="sc">-</span>1… xxxxxxxx… xxxxxxxxxx… comment</span>
+<span id="cb47-16"><a href="#cb47-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> xxxx… pJ_NyEY… <span class="dv">2020-01</span><span class="sc">-</span>09T… <span class="dv">2020-01</span><span class="sc">-</span>0… xxxxxxxx… xxxxxxxxxx… comment</span>
 <span id="cb47-17"><a href="#cb47-17" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb47-18"><a href="#cb47-18" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 594 more rows, and 1 more variable: vosonTxt_comment &lt;chr&gt;</span></span>
 <span id="cb47-19"><a href="#cb47-19" aria-hidden="true" tabindex="-1"></a></span>
@@ -1055,7 +1055,7 @@ preserve anonymity).</p>
 comment text data to the network dataframe, stored as a node attribute.
 This list is then passed to <code><a href="../reference/Graph.html">Graph()</a></code>, which returns an
 <code>igraph</code> graph object (this has been anonymised).</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>IGRAPH 02664d1 DN<span class="sc">--</span> <span class="dv">604</span> <span class="dv">603</span> <span class="sc">--</span> </span>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a>IGRAPH 02664d1 DN<span class="sc">--</span> <span class="dv">604</span> <span class="dv">603</span> <span class="sc">--</span></span>
 <span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">video_id</span> (v<span class="sc">/</span>c), <span class="fu">published_at</span> (v<span class="sc">/</span>c),</span>
 <span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> <span class="fu">updated_at</span> (v<span class="sc">/</span>c), <span class="fu">author_id</span> (v<span class="sc">/</span>c), <span class="fu">screen_name</span> (v<span class="sc">/</span>c), node_type</span>
 <span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> (v<span class="sc">/</span>c), <span class="fu">vosonTxt_comment</span> (v<span class="sc">/</span>c), <span class="fu">label</span> (v<span class="sc">/</span>c), <span class="fu">edge_type</span> (e<span class="sc">/</span>c)</span>
@@ -1237,10 +1237,10 @@ preserve anonymity):</p>
 <div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> actorNetwork</span>
 <span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 439 x 2</span></span>
-<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>      id user               </span>
-<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>              </span>
-<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span>     <span class="dv">1</span> xxxxxxxxxx         </span>
-<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span>     <span class="dv">2</span> xxxxxxxxxxxxxx     </span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a>      id user</span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span>     <span class="dv">1</span> xxxxxxxxxx</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span>     <span class="dv">2</span> xxxxxxxxxxxxxx</span>
 <span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 429 more rows</span></span>
 <span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -1248,8 +1248,8 @@ preserve anonymity):</p>
 <span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 768 x 8</span></span>
 <span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a>    from    to subreddit thread_id comment_id comm_id vosonTxt_comment     title</span>
 <span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>int<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>          <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>   <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
-<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span>     <span class="dv">1</span>   <span class="dv">439</span> worldnews elcb9b             <span class="dv">1</span> xxxxxxx <span class="st">"xxxxxxxxxxxxxxxxxxx NA   </span></span>
-<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a><span class="st"> 2     2    73 worldnews elcb9b             2 xxxxxxx "</span>xxxxxxxxxxxxxxxxxxx <span class="cn">NA</span>   </span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span>     <span class="dv">1</span>   <span class="dv">439</span> worldnews elcb9b             <span class="dv">1</span> xxxxxxx <span class="st">"xxxxxxxxxxxxxxxxxxx NA</span></span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a><span class="st"> 2     2    73 worldnews elcb9b             2 xxxxxxx "</span>xxxxxxxxxxxxxxxxxxx <span class="cn">NA</span></span>
 <span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>… with <span class="dv">758</span> more rows</span>
 <span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a></span>
@@ -1260,17 +1260,17 @@ comment text data to the network dataframe, stored as an edge attribute.
 This list is then passed to <code><a href="../reference/Graph.html">Graph()</a></code>, which returns an
 <code>igraph</code> graph object.</p>
 <div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> actorGraph</span>
-<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>IGRAPH 5a5d5b9 DN<span class="sc">--</span> <span class="dv">439</span> <span class="dv">768</span> <span class="sc">--</span> </span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a>IGRAPH 5a5d5b9 DN<span class="sc">--</span> <span class="dv">439</span> <span class="dv">768</span> <span class="sc">--</span></span>
 <span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">user</span> (v<span class="sc">/</span>c), <span class="fu">label</span> (v<span class="sc">/</span>c), subreddit</span>
 <span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> (e<span class="sc">/</span>c), <span class="fu">thread_id</span> (e<span class="sc">/</span>c), <span class="fu">comment_id</span> (e<span class="sc">/</span>n), <span class="fu">comm_id</span> (e<span class="sc">/</span>c),</span>
 <span id="cb57-5"><a href="#cb57-5" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> <span class="fu">vosonTxt_comment</span> (e<span class="sc">/</span>c), <span class="fu">title</span> (e<span class="sc">/</span>c)</span>
 <span id="cb57-6"><a href="#cb57-6" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> edges from 5a5d5b9 (vertex names)<span class="sc">:</span></span>
-<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">1</span> <span class="ot">-&gt;</span><span class="dv">439</span> <span class="dv">2</span> <span class="ot">-&gt;</span><span class="dv">73</span>  <span class="dv">3</span> <span class="ot">-&gt;</span><span class="dv">113</span> <span class="dv">4</span> <span class="ot">-&gt;</span><span class="dv">120</span> <span class="dv">5</span> <span class="ot">-&gt;</span><span class="dv">120</span> <span class="dv">6</span> <span class="ot">-&gt;</span><span class="dv">17</span>  <span class="dv">7</span> <span class="ot">-&gt;</span><span class="dv">194</span> <span class="dv">8</span> <span class="ot">-&gt;</span><span class="dv">20</span>  <span class="dv">9</span> <span class="ot">-&gt;</span><span class="dv">20</span> </span>
-<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>] <span class="dv">10</span><span class="ot">-&gt;</span><span class="dv">165</span> <span class="dv">11</span><span class="ot">-&gt;</span><span class="dv">165</span> <span class="dv">12</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">13</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">14</span><span class="ot">-&gt;</span><span class="dv">3</span>   <span class="dv">15</span><span class="ot">-&gt;</span><span class="dv">4</span>   <span class="dv">16</span><span class="ot">-&gt;</span><span class="dv">5</span>   <span class="dv">17</span><span class="ot">-&gt;</span><span class="dv">6</span>   <span class="dv">18</span><span class="ot">-&gt;</span><span class="dv">7</span>  </span>
-<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">19</span>] <span class="dv">19</span><span class="ot">-&gt;</span><span class="dv">8</span>   <span class="dv">20</span><span class="ot">-&gt;</span><span class="dv">9</span>   <span class="dv">21</span><span class="ot">-&gt;</span><span class="dv">10</span>  <span class="dv">22</span><span class="ot">-&gt;</span><span class="dv">11</span>  <span class="dv">23</span><span class="ot">-&gt;</span><span class="dv">12</span>  <span class="dv">2</span> <span class="ot">-&gt;</span><span class="dv">13</span>  <span class="dv">24</span><span class="ot">-&gt;</span><span class="dv">3</span>   <span class="dv">7</span> <span class="ot">-&gt;</span><span class="dv">18</span>  <span class="dv">25</span><span class="ot">-&gt;</span><span class="dv">23</span> </span>
-<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">28</span>] <span class="dv">26</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">3</span> <span class="ot">-&gt;</span><span class="dv">24</span>  <span class="dv">27</span><span class="ot">-&gt;</span><span class="dv">18</span>  <span class="dv">28</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">29</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">18</span><span class="ot">-&gt;</span><span class="dv">27</span>  <span class="dv">1</span> <span class="ot">-&gt;</span><span class="dv">28</span>  <span class="dv">30</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">31</span><span class="ot">-&gt;</span><span class="dv">7</span>  </span>
-<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">37</span>] <span class="dv">25</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">32</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">33</span><span class="ot">-&gt;</span><span class="dv">31</span>  <span class="dv">34</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">2</span> <span class="ot">-&gt;</span><span class="dv">32</span>  <span class="dv">35</span><span class="ot">-&gt;</span><span class="dv">7</span>   <span class="dv">25</span><span class="ot">-&gt;</span><span class="dv">34</span>  <span class="dv">36</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">7</span> <span class="ot">-&gt;</span><span class="dv">35</span> </span>
-<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">46</span>] <span class="dv">37</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">38</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">39</span><span class="ot">-&gt;</span><span class="dv">7</span>   <span class="dv">40</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">41</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">42</span><span class="ot">-&gt;</span><span class="dv">7</span>   <span class="dv">43</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">2</span> <span class="ot">-&gt;</span><span class="dv">41</span>  <span class="dv">44</span><span class="ot">-&gt;</span><span class="dv">7</span>  </span>
+<span id="cb57-7"><a href="#cb57-7" aria-hidden="true" tabindex="-1"></a> [<span class="dv">1</span>] <span class="dv">1</span> <span class="ot">-&gt;</span><span class="dv">439</span> <span class="dv">2</span> <span class="ot">-&gt;</span><span class="dv">73</span>  <span class="dv">3</span> <span class="ot">-&gt;</span><span class="dv">113</span> <span class="dv">4</span> <span class="ot">-&gt;</span><span class="dv">120</span> <span class="dv">5</span> <span class="ot">-&gt;</span><span class="dv">120</span> <span class="dv">6</span> <span class="ot">-&gt;</span><span class="dv">17</span>  <span class="dv">7</span> <span class="ot">-&gt;</span><span class="dv">194</span> <span class="dv">8</span> <span class="ot">-&gt;</span><span class="dv">20</span>  <span class="dv">9</span> <span class="ot">-&gt;</span><span class="dv">20</span></span>
+<span id="cb57-8"><a href="#cb57-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">10</span>] <span class="dv">10</span><span class="ot">-&gt;</span><span class="dv">165</span> <span class="dv">11</span><span class="ot">-&gt;</span><span class="dv">165</span> <span class="dv">12</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">13</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">14</span><span class="ot">-&gt;</span><span class="dv">3</span>   <span class="dv">15</span><span class="ot">-&gt;</span><span class="dv">4</span>   <span class="dv">16</span><span class="ot">-&gt;</span><span class="dv">5</span>   <span class="dv">17</span><span class="ot">-&gt;</span><span class="dv">6</span>   <span class="dv">18</span><span class="ot">-&gt;</span><span class="dv">7</span></span>
+<span id="cb57-9"><a href="#cb57-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">19</span>] <span class="dv">19</span><span class="ot">-&gt;</span><span class="dv">8</span>   <span class="dv">20</span><span class="ot">-&gt;</span><span class="dv">9</span>   <span class="dv">21</span><span class="ot">-&gt;</span><span class="dv">10</span>  <span class="dv">22</span><span class="ot">-&gt;</span><span class="dv">11</span>  <span class="dv">23</span><span class="ot">-&gt;</span><span class="dv">12</span>  <span class="dv">2</span> <span class="ot">-&gt;</span><span class="dv">13</span>  <span class="dv">24</span><span class="ot">-&gt;</span><span class="dv">3</span>   <span class="dv">7</span> <span class="ot">-&gt;</span><span class="dv">18</span>  <span class="dv">25</span><span class="ot">-&gt;</span><span class="dv">23</span></span>
+<span id="cb57-10"><a href="#cb57-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">28</span>] <span class="dv">26</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">3</span> <span class="ot">-&gt;</span><span class="dv">24</span>  <span class="dv">27</span><span class="ot">-&gt;</span><span class="dv">18</span>  <span class="dv">28</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">29</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">18</span><span class="ot">-&gt;</span><span class="dv">27</span>  <span class="dv">1</span> <span class="ot">-&gt;</span><span class="dv">28</span>  <span class="dv">30</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">31</span><span class="ot">-&gt;</span><span class="dv">7</span></span>
+<span id="cb57-11"><a href="#cb57-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">37</span>] <span class="dv">25</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">32</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">33</span><span class="ot">-&gt;</span><span class="dv">31</span>  <span class="dv">34</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">2</span> <span class="ot">-&gt;</span><span class="dv">32</span>  <span class="dv">35</span><span class="ot">-&gt;</span><span class="dv">7</span>   <span class="dv">25</span><span class="ot">-&gt;</span><span class="dv">34</span>  <span class="dv">36</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">7</span> <span class="ot">-&gt;</span><span class="dv">35</span></span>
+<span id="cb57-12"><a href="#cb57-12" aria-hidden="true" tabindex="-1"></a>[<span class="dv">46</span>] <span class="dv">37</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">38</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">39</span><span class="ot">-&gt;</span><span class="dv">7</span>   <span class="dv">40</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">41</span><span class="ot">-&gt;</span><span class="dv">2</span>   <span class="dv">42</span><span class="ot">-&gt;</span><span class="dv">7</span>   <span class="dv">43</span><span class="ot">-&gt;</span><span class="dv">1</span>   <span class="dv">2</span> <span class="ot">-&gt;</span><span class="dv">41</span>  <span class="dv">44</span><span class="ot">-&gt;</span><span class="dv">7</span></span>
 <span id="cb57-13"><a href="#cb57-13" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> ... omitted several edges</span></code></pre></div>
 <p>The Reddit actor network contains a graph attribute <code>type</code>
 (set to “reddit”). The node attributes are: <code>name</code>
@@ -1331,9 +1331,9 @@ preserve anonymity):</p>
 <span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>nodes</span>
 <span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 768 x 10</span></span>
 <span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a>   id    thread_id comm_id datetime     ts subreddit user  node_type</span>
-<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>   <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    </span>
-<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> elcb… elcb9b    xxxxxxx <span class="dv">2020</span><span class="sc">-</span>01… <span class="fl">1.58e9</span> worldnews xxxx… comment  </span>
-<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> elcb… elcb9b    xxxxxxx <span class="dv">2020</span><span class="sc">-</span>01… <span class="fl">1.58e9</span> worldnews xxxx… comment  </span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span>   <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>dbl<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span>     <span class="er">&lt;</span>chr<span class="sc">&gt;</span> <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> elcb… elcb9b    xxxxxxx <span class="dv">2020</span><span class="sc">-</span>01… <span class="fl">1.58e9</span> worldnews xxxx… comment</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> elcb… elcb9b    xxxxxxx <span class="dv">2020</span><span class="sc">-</span>01… <span class="fl">1.58e9</span> worldnews xxxx… comment</span>
 <span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 758 more rows, and 2 more variables: vosonTxt_comment &lt;chr&gt;,</span></span>
 <span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a><span class="co">#   title &lt;chr&gt;</span></span>
@@ -1341,9 +1341,9 @@ preserve anonymity):</p>
 <span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a><span class="sc">$</span>edges</span>
 <span id="cb60-13"><a href="#cb60-13" aria-hidden="true" tabindex="-1"></a><span class="co"># A tibble: 767 x 3</span></span>
 <span id="cb60-14"><a href="#cb60-14" aria-hidden="true" tabindex="-1"></a>   from                       to                       edge_type</span>
-<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>                      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                    <span class="er">&lt;</span>chr<span class="sc">&gt;</span>    </span>
-<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> elcb9b<span class="fl">.1</span>                   elcb9b<span class="fl">.0</span>                 comment  </span>
-<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> elcb9b<span class="fl">.4</span>_1_1_1_1_1_1_1_1_1 elcb9b<span class="fl">.4</span>_1_1_1_1_1_1_1_1 comment  </span>
+<span id="cb60-15"><a href="#cb60-15" aria-hidden="true" tabindex="-1"></a>   <span class="sc">&lt;</span>chr<span class="sc">&gt;</span>                      <span class="er">&lt;</span>chr<span class="sc">&gt;</span>                    <span class="er">&lt;</span>chr<span class="sc">&gt;</span></span>
+<span id="cb60-16"><a href="#cb60-16" aria-hidden="true" tabindex="-1"></a> <span class="dv">1</span> elcb9b<span class="fl">.1</span>                   elcb9b<span class="fl">.0</span>                 comment</span>
+<span id="cb60-17"><a href="#cb60-17" aria-hidden="true" tabindex="-1"></a> <span class="dv">2</span> elcb9b<span class="fl">.4</span>_1_1_1_1_1_1_1_1_1 elcb9b<span class="fl">.4</span>_1_1_1_1_1_1_1_1 comment</span>
 <span id="cb60-18"><a href="#cb60-18" aria-hidden="true" tabindex="-1"></a>[snip]</span>
 <span id="cb60-19"><a href="#cb60-19" aria-hidden="true" tabindex="-1"></a><span class="co"># … with 757 more rows</span></span>
 <span id="cb60-20"><a href="#cb60-20" aria-hidden="true" tabindex="-1"></a></span>
@@ -1354,13 +1354,13 @@ comment text data to the network dataframe, stored as a node attribute.
 This list is then passed to <code><a href="../reference/Graph.html">Graph()</a></code>, which returns an
 <code>igraph</code> graph object.</p>
 <div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1" aria-hidden="true" tabindex="-1"></a><span class="sc">&gt;</span> activityGraph</span>
-<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>IGRAPH <span class="fl">09e30</span>ea DN<span class="sc">--</span> <span class="dv">768</span> <span class="dv">767</span> <span class="sc">--</span> </span>
+<span id="cb61-2"><a href="#cb61-2" aria-hidden="true" tabindex="-1"></a>IGRAPH <span class="fl">09e30</span>ea DN<span class="sc">--</span> <span class="dv">768</span> <span class="dv">767</span> <span class="sc">--</span></span>
 <span id="cb61-3"><a href="#cb61-3" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">thread_id</span> (v<span class="sc">/</span>c), <span class="fu">comm_id</span> (v<span class="sc">/</span>c),</span>
 <span id="cb61-4"><a href="#cb61-4" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> <span class="fu">datetime</span> (v<span class="sc">/</span>c), <span class="fu">ts</span> (v<span class="sc">/</span>n), <span class="fu">subreddit</span> (v<span class="sc">/</span>c), <span class="fu">user</span> (v<span class="sc">/</span>c), node_type</span>
 <span id="cb61-5"><a href="#cb61-5" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> (v<span class="sc">/</span>c), <span class="fu">vosonTxt_comment</span> (v<span class="sc">/</span>c), <span class="fu">title</span> (v<span class="sc">/</span>c), <span class="fu">label</span> (v<span class="sc">/</span>c), edge_type</span>
 <span id="cb61-6"><a href="#cb61-6" aria-hidden="true" tabindex="-1"></a><span class="sc">|</span> (e<span class="sc">/</span>c)</span>
 <span id="cb61-7"><a href="#cb61-7" aria-hidden="true" tabindex="-1"></a><span class="sc">+</span> edges from <span class="fl">09e30</span><span class="fu">ea</span> (vertex names)<span class="sc">:</span></span>
-<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] elcb9b<span class="fl">.1</span>                  <span class="ot">-&gt;</span>elcb9b<span class="fl">.0</span>                </span>
+<span id="cb61-8"><a href="#cb61-8" aria-hidden="true" tabindex="-1"></a>[<span class="dv">1</span>] elcb9b<span class="fl">.1</span>                  <span class="ot">-&gt;</span>elcb9b<span class="fl">.0</span></span>
 <span id="cb61-9"><a href="#cb61-9" aria-hidden="true" tabindex="-1"></a>[<span class="dv">2</span>] elcb9b<span class="fl">.4</span>_1_1_1_1_1_1_1_1_1<span class="ot">-&gt;</span>elcb9b<span class="fl">.4</span>_1_1_1_1_1_1_1_1</span>
 <span id="cb61-10"><a href="#cb61-10" aria-hidden="true" tabindex="-1"></a>[<span class="dv">3</span>] elcb9b<span class="fl">.4</span>_1_1_4_2_1_1_1_1_1<span class="ot">-&gt;</span>elcb9b<span class="fl">.4</span>_1_1_4_2_1_1_1_1</span>
 <span id="cb61-11"><a href="#cb61-11" aria-hidden="true" tabindex="-1"></a>[<span class="dv">4</span>] elcb9b<span class="fl">.4</span>_1_1_4_3_1_1_1_3_1<span class="ot">-&gt;</span>elcb9b<span class="fl">.4</span>_1_1_4_3_1_1_1_3</span>
@@ -1502,7 +1502,7 @@ and “comm_id” can be used instead of “status_id”.</p>
 <code class="sourceCode R"><span><span class="co"># load dplyr</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># combine the collected data using rbind and remove duplicates with distinct based on tweet status_id </span></span>
+<span><span class="co"># combine the collected data using rbind and remove duplicates with distinct based on tweet status_id</span></span>
 <span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">auspolTwitterData</span>, <span class="va">bushfireTwitterData</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">status_id</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p>If unique rows can change over time such as a tweets retweet count,
 or perhaps youtube video / reddit thread comments being updated then a
@@ -1518,13 +1518,13 @@ For youtube and reddit, the rows can be arranged by the “UpdatedAt” and
 package again provides a convenient function for sorting or arranging
 rows called <code>arrange</code>.</p>
 <div class="sourceCode" id="cb67"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># manually combine data sets in reverse chronological order and remove duplicates based on status_id </span></span>
+<code class="sourceCode R"><span><span class="co"># manually combine data sets in reverse chronological order and remove duplicates based on status_id</span></span>
 <span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">bushfireTwitterData</span>, <span class="va">auspolTwitterData</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">status_id</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># arrange combined youtube data by updated timestamp and remove duplicates, keeping the version of a</span></span>
 <span><span class="co"># duplicate video comment that was most recently updated</span></span>
-<span><span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="va">youtubeData</span> <span class="op">|&gt;</span> </span>
+<span><span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="va">youtubeData</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/arrange.html" class="external-link">arrange</a></span><span class="op">(</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/desc.html" class="external-link">desc</a></span><span class="op">(</span><span class="va">UpdatedAt</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://dplyr.tidyverse.org/reference/distinct.html" class="external-link">distinct</a></span><span class="op">(</span><span class="va">VideoID</span>, <span class="va">CommentID</span>, .keep_all <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of a</span></span>
@@ -1608,7 +1608,7 @@ to documentation.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

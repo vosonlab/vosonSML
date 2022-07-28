@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.31.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
       </span>
     </div>
 
@@ -111,6 +111,25 @@
     </div>
 
     <div class="section level2">
+<h2 class="page-header" data-toc-text="0.32.2" id="vosonsml-0322">vosonSML 0.32.2<a class="anchor" aria-label="anchor" href="#vosonsml-0322"></a></h2>
+<div class="section level3">
+<h3 id="major-changes-0-32-2">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-32-2"></a></h3>
+<ul><li>Re-wrote and modified <code>vosonSML</code> <code>twitter</code> functions to support major changes made in <code>rtweet</code> release version 1.0.2.</li>
+<li>Changed output message system. <code>vosonSML</code> functions are now silent by default. Using the <code>verbose</code> parameter will again print function output.</li>
+<li>Changed output messages to use the <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> function instead of the <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code> function by default. Setting the global option <code>option(voson.msg = "cat")</code> or using the helper function <code><a href="../reference/SetOutputCat.html">SetOutputCat()</a></code> will again send function output to <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code>.</li>
+<li>The <code>twitter</code> <code>AddText</code> and <code>AddUserData</code> functions now work with all <code>twitter</code> network types.</li>
+<li>
+<code>AddUserData</code> no longer has a lookup user option. The network passed through <code>AddUserData</code> now has an additional attribute named <code>missing_users</code> that lists the ids and names of users that did not have metadata embedded in the collected data.</li>
+</ul></div>
+<div class="section level3">
+<h3 id="minor-changes-0-32-2">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-32-2"></a></h3>
+<ul><li>Re-wrote <code>youtube</code> id extraction from url function to be more robust.</li>
+<li>Removed stand-alone <code>GetYoutubeVideoIDs</code> function. The <code>youtube</code> collect function parameter <code>videoIDs</code> will now accept video ids or video urls.</li>
+<li>
+<code>AddText</code> now has a <code>hashtags</code> parameter to add a list of tweet hashtags as a network attribute.</li>
+</ul></div>
+</div>
+    <div class="section level2">
 <h2 class="page-header" data-toc-text="0.31.1" id="vosonsml-0311">vosonSML 0.31.1<a class="anchor" aria-label="anchor" href="#vosonsml-0311"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-31-1">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-31-1"></a></h3>
@@ -126,6 +145,13 @@
 <h3 id="minor-changes-0-31-1">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-31-1"></a></h3>
 <ul><li>Updated standard package documentation, added citation, code of conduct and README.Rmd.</li>
 <li>Replaced magrittr pipes with native pipe operators.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.30.6" id="vosonsml-0306">vosonSML 0.30.6<a class="anchor" aria-label="anchor" href="#vosonsml-0306"></a></h2>
+<div class="section level3">
+<h3 id="minor-changes-0-30-6">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-30-6"></a></h3>
+<ul><li>Updated standard package documentation, added citation and README.Rmd.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -228,7 +254,7 @@
 <h2 class="page-header" data-toc-text="0.29.8" id="vosonsml-0298">vosonSML 0.29.8<a class="anchor" aria-label="anchor" href="#vosonsml-0298"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-29-8">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-29-8"></a></h3>
-<ul><li>A recent intermittent problem with the Twitter API caused an issue with the <code><a href="https://rdrr.io/pkg/rtweet/man/rate_limit.html" class="external-link">rtweet::rate_limit</a></code> function that resulted in an error when using the rtweet <code>retryonratelimit</code> search parameter. The <code>rate_limit</code> function was being called by <code>vosonSML</code> to check the twitter rate limit regardless of whether the search parameter was set or not, and so was failing <code>Collect</code> with an error. A fix was made so that <code>vosonSML</code> checks if <code><a href="https://rdrr.io/pkg/rtweet/man/rate_limit.html" class="external-link">rtweet::rate_limit</a></code> succeeds, and if not automatically sets <code>retryonratelimit</code> to <code>FALSE</code> so that a twitter <code>Collect</code> can still be performed without error should this problem occur again.</li>
+<ul><li>A recent intermittent problem with the Twitter API caused an issue with the <code><a href="https://docs.ropensci.org/rtweet/reference/rate_limit.html" class="external-link">rtweet::rate_limit</a></code> function that resulted in an error when using the rtweet <code>retryonratelimit</code> search parameter. The <code>rate_limit</code> function was being called by <code>vosonSML</code> to check the twitter rate limit regardless of whether the search parameter was set or not, and so was failing <code>Collect</code> with an error. A fix was made so that <code>vosonSML</code> checks if <code><a href="https://docs.ropensci.org/rtweet/reference/rate_limit.html" class="external-link">rtweet::rate_limit</a></code> succeeds, and if not automatically sets <code>retryonratelimit</code> to <code>FALSE</code> so that a twitter <code>Collect</code> can still be performed without error should this problem occur again.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-changes-0-29-8">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-29-8"></a></h3>
@@ -342,7 +368,7 @@
 <h2 class="page-header" data-toc-text="0.27.2" id="vosonsml-0272">vosonSML 0.27.2<small>2019-07-18</small><a class="anchor" aria-label="anchor" href="#vosonsml-0272"></a></h2>
 <div class="section level3">
 <h3 id="minor-changes-0-27-2">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-27-2"></a></h3>
-<ul><li>Added twitter interactive web authorization of an app as provided by <code><a href="https://rdrr.io/pkg/rtweet/man/create_token.html" class="external-link">rtweet::create_token</a></code>. Method is used when only twitter app name and consumer keys are passed to <code>Authenticate.twitter</code> as parameters. e.g <code>Authenticate("twitter", appName = "An App", apiKey = "xxxxxxxxxxxx",   apiSecret = "xxxxxxxxxxxx")</code>. A browser tab will open asking the user to authorize the app to their twitter account to complete authentication. This is using twitters <code>Application-user authentication: OAuth 1a (access token for user context)</code> method.</li>
+<ul><li>Added twitter interactive web authorization of an app as provided by <code><a href="https://docs.ropensci.org/rtweet/reference/create_token.html" class="external-link">rtweet::create_token</a></code>. Method is used when only twitter app name and consumer keys are passed to <code>Authenticate.twitter</code> as parameters. e.g <code>Authenticate("twitter", appName = "An App", apiKey = "xxxxxxxxxxxx",   apiSecret = "xxxxxxxxxxxx")</code>. A browser tab will open asking the user to authorize the app to their twitter account to complete authentication. This is using twitters <code>Application-user authentication: OAuth 1a (access token for user context)</code> method.</li>
 <li>It is suspected that Reddit is rate-limiting some generic R UA strings. So a User-Agent string is now set for underlaying R Collect functions (e.g <code>file</code>) via the <code>HTTPUserAgent</code> option. It is temporarily set to package name and current version number for Collect e.g <code>vosonSML v.0.27.2 (R Package)</code>.</li>
 <li>Removed hex sticker (and favicons for pkgdown site).</li>
 </ul></div>
@@ -363,7 +389,7 @@
 <h2 class="page-header" data-toc-text="0.27.0" id="vosonsml-0270">vosonSML 0.27.0<a class="anchor" aria-label="anchor" href="#vosonsml-0270"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-27-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-27-0"></a></h3>
-<ul><li>Fixed a bug in <code>Collect.twitter</code> in which any additional <code>twitter API</code> parameters e.g <code>lang</code> or <code>until</code> were not being passed properly to <code><a href="https://rdrr.io/pkg/rtweet/man/search_tweets.html" class="external-link">rtweet::search_tweets</a></code>. This resulted in the additional parameters being ignored.</li>
+<ul><li>Fixed a bug in <code>Collect.twitter</code> in which any additional <code>twitter API</code> parameters e.g <code>lang</code> or <code>until</code> were not being passed properly to <code><a href="https://docs.ropensci.org/rtweet/reference/search_tweets.html" class="external-link">rtweet::search_tweets</a></code>. This resulted in the additional parameters being ignored.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="major-changes-0-27-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-27-0"></a></h3>
@@ -427,7 +453,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

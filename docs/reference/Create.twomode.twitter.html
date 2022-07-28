@@ -21,7 +21,7 @@ this function requires the additional installation of the tidytext package to ac
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.31.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@ this function requires the additional installation of the <span class="pkg">tidy
 <span>  <span class="va">datasource</span>,</span>
 <span>  <span class="va">type</span>,</span>
 <span>  removeTermsOrHashtags <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  weighted <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  rmRetweets <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -151,9 +151,8 @@ this parameter could be used to remove the user or hashtag that was used to coll
 nodes with matching name. Default is <code>NULL</code> to remove none.</p></dd>
 
 
-<dt>weighted</dt>
-<dd><p>Logical. Add weights to network edges. If set to <code>FALSE</code> tweet <code>status_id</code> and
-<code>created_at</code> fields will be preserved for edges in the dataframe. Default is <code>TRUE</code>.</p></dd>
+<dt>rmRetweets</dt>
+<dd><p>Logical. Do not process retweets in the input data. Default is <code>TRUE</code>.</p></dd>
 
 
 <dt>verbose</dt>
@@ -178,10 +177,10 @@ nodes with matching name. Default is <code>NULL</code> to remove none.</p></dd>
 <span class="r-in"><span><span class="co"># for working with text data</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidytext"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># create a twitter 2-mode network graph removing the hashtag '#auspol' as it was used in</span></span></span>
-<span class="r-in"><span><span class="co"># the twitter search query</span></span></span>
+<span class="r-in"><span><span class="co"># create a twitter 2-mode network graph with the hashtag '#auspol' removed</span></span></span>
 <span class="r-in"><span><span class="va">twomodeNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>                  <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"twomode"</span>, removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"twomode"</span>,</span></span>
+<span class="r-in"><span>         removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># network</span></span></span>
 <span class="r-in"><span><span class="co"># twomodeNetwork$nodes</span></span></span>
@@ -202,7 +201,7 @@ nodes with matching name. Default is <code>NULL</code> to remove none.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

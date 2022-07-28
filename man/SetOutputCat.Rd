@@ -7,7 +7,8 @@
 SetOutputCat(flag = TRUE)
 }
 \arguments{
-\item{flag}{Logical. Set the \code{voson.msg = "cat"} option. Set to \code{NULL} to clear. Default is \code{TRUE}.}
+\item{flag}{Logical. Set the \code{voson.msg = "cat"} option. Set to \code{FALSE} or \code{NULL} to
+clear. Default is \code{TRUE}.}
 }
 \description{
 Set function output to use the cat method instead of message

@@ -21,10 +21,6 @@
 #'   multiple YouTube videos can be requested in a single operation, \code{maxComments} is applied to each individual
 #'   video and not the combined total of comments.
 #'
-#'   To help extract video ids for videos the function \code{\link{GetYoutubeVideoIDs}} can be used. It accepts input of
-#'   a vector or file containing video urls and creates a chracter vector suitable as input for the \code{videoIDs}
-#'   parameter.
-#'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"youtube"}.
 #' @param endpoint API endpoint. Not used in this method.
 #' @param videoIDs Character vector. Specifies YouTube video URLs or IDs. For example, if the video URL is

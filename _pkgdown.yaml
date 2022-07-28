@@ -91,6 +91,8 @@ reference:
 - title: Helpers
   contents:
   - '`AddText`'
+  - '`AddText.activity.twitter`'
+  - '`AddText.actor.twitter`'
   - '`AddText.actor.youtube`'
   - '`AddText.activity.reddit`'
   - '`AddText.actor.reddit`'
@@ -99,8 +101,8 @@ reference:
   - '`AddVideoData`'
   - '`AddVideoData.actor.youtube`'
   - '`Graph`'
-  - '`GetYoutubeVideoIDs`'
   - '`ImportData`'
+  - '`SetOutputCat`'
 
 toc:
   depth: 2

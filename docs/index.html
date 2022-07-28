@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.31.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
       </span>
     </div>
 
@@ -145,16 +145,17 @@
 
 <p>The <code>vosonSML</code> R package is a suite of easy to use functions for collecting and generating different types of networks from social media data. The package supports the collection of data from <code>twitter</code>, <code>youtube</code> and <code>reddit</code>, as well as <code>hyperlinks</code> from web sites. Networks in the form of node and edge lists can be generated from collected data, supplemented with additional metadata and used to create graphs for Social Network Analysis.</p>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="installation-options">Installation Options<a class="anchor" aria-label="anchor" href="#installation-options"></a>
 </h2>
-<p>Install the latest release via CRAN:</p>
+<p>Install the most recent CRAN release:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"vosonSML"</span><span class="op">)</span></span></code></pre></div>
-<p>Install the latest release via GitHub:</p>
+<p>Install the most recent release tag via GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"https://api.github.com/repos/vosonlab/vosonSML/tarball/v0.29.13"</span>,</span>
-<span>                 repo <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
-<p>Install the development version:</p>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span></span>
+<span>  <span class="st">"https://github.com/vosonlab/vosonSML/releases/download/v0.29.13/vosonSML-0.29.13.tar.gz"</span>,</span>
+<span>  repo <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
+<p>Install the latest development version:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># library(remotes)</span></span>
 <span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"vosonlab/vosonSML"</span><span class="op">)</span></span></code></pre></div>
@@ -381,7 +382,7 @@
 <span><span class="co"># + ... omitted several edges</span></span></code></pre></div>
 </div>
 <div class="section level5">
-<h5 id="2-mode-network">2-mode network<a class="anchor" aria-label="anchor" href="#2-mode-network"></a>
+<h5 id="id_2-mode-network">2-mode network<a class="anchor" aria-label="anchor" href="#id_2-mode-network"></a>
 </h5>
 <p>Nodes are twitter <code>users</code> or <code>hashtags</code>. Edges represent the use of a <code>hashtag</code> or the reference to another <code>user</code> in a tweet.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
@@ -438,7 +439,7 @@
 <p>Once the key is set then <code>Collect</code> can be used to collect the comments from specified youtube videos. The following example collects a maximum of 100 top-level comments and all replies from each of the 2 specified video ID’s. It produces a dataframe with the combined comment data.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># helper to create a list of youtube video ids from urls</span></span>
-<span><span class="va">youtube_video_ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/GetYoutubeVideoIDs.html">GetYoutubeVideoIDs</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,</span>
+<span><span class="va">youtube_video_ids</span> <span class="op">&lt;-</span> <span class="fu">GetYoutubeVideoIDs</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=xxxxxxxx"</span>,</span>
 <span>                                          <span class="st">"https://youtu.be/xxxxxxxx"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Extracted 2 video ids.</span></span></code></pre></div>
@@ -831,7 +832,7 @@
 <li><a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="CRAN_Monthly"></a></li>
 <li><a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/vosonSML" alt="CRAN_Total"></a></li>
 <li><a href="https://github.com/vosonlab/vosonSML/releases" class="external-link"><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github" alt="Github_Release"></a></li>
-<li><a href="https://github.com/vosonlab/vosonSML" class="external-link"><img src="https://img.shields.io/static/v1?label=dev&amp;message=v0.31.0&amp;logo=github" alt="Github_Dev"></a></li>
+<li><a href="https://github.com/vosonlab/vosonSML" class="external-link"><img src="https://img.shields.io/static/v1?label=dev&amp;message=v0.31.1&amp;logo=github" alt="Github_Dev"></a></li>
 <li><a href="https://github.com/vosonlab/vosonSML/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&amp;logo=github" alt="Last_Commit"></a></li>
 <li><a href="https://github.com/vosonlab/vosonSML/actions" class="external-link"><img src="https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg" alt="Build_Status"></a></li>
 </ul>
@@ -848,7 +849,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer>

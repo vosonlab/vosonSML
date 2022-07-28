@@ -57,10 +57,6 @@ greater than expected. For example, if \code{maxComments} is set to 10 and one o
 has 5 reply comments then the total number of comments collected will be 15 for that video. Comments data for
 multiple YouTube videos can be requested in a single operation, \code{maxComments} is applied to each individual
 video and not the combined total of comments.
-
-To help extract video ids for videos the function \code{\link{GetYoutubeVideoIDs}} can be used. It accepts input of
-a vector or file containing video urls and creates a chracter vector suitable as input for the \code{videoIDs}
-parameter.
 }
 \examples{
 \dontrun{

@@ -23,7 +23,7 @@ this."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathj
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.31.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
       </span>
     </div>
 
@@ -132,6 +132,7 @@ this.</p>
 <span><span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span></span>
 <span>  <span class="va">datasource</span>,</span>
 <span>  <span class="va">type</span>,</span>
+<span>  removeRetweets <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  removeTermsOrHashtags <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  stopwords <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  stopwordsLang <span class="op">=</span> <span class="st">"en"</span>,</span>
@@ -154,6 +155,10 @@ this.</p>
 
 <dt>type</dt>
 <dd><p>Character string. Type of network to be created, set to <code>"semantic"</code>.</p></dd>
+
+
+<dt>removeRetweets</dt>
+<dd><p>Logical. Removes detected retweets from the tweet data. Default is <code>TRUE</code>.</p></dd>
 
 
 <dt>removeTermsOrHashtags</dt>
@@ -267,7 +272,7 @@ them occurring in tweet text with other top percentage frequency terms.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

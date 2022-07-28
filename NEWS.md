@@ -1,11 +1,16 @@
-# vosonSML 0.32.1
+# vosonSML 0.32.2
 
 ## Major Changes
-- Modified data collected by `rtweet` 1.0.2 to work with `vosonSML` twitter functions.
+- Re-wrote and modified `vosonSML` `twitter` functions to support major changes made in `rtweet` release version 1.0.2.
+- Changed output message system. `vosonSML` functions are now silent by default. Using the `verbose` parameter will again print function output.
+- Changed output messages to use the `message()` function instead of the `cat()` function by default. Setting the global option `option(voson.msg = "cat")` or using the helper function `SetOutputCat()` will again send function output to `cat()`.
+- The `twitter` `AddText` and `AddUserData` functions now work with all `twitter` network types.
+- `AddUserData` no longer has a lookup user option. The network passed through `AddUserData` now has an additional attribute named `missing_users` that lists the ids and names of users that did not have metadata embedded in the collected data. 
 
 ## Minor Changes
 - Re-wrote `youtube` id extraction from url function to be more robust.
-- R-worked messages. Most functions are now silent and not `verbose` by default.
+- Removed stand-alone `GetYoutubeVideoIDs` function. The `youtube` collect function parameter `videoIDs` will now accept video ids or video urls.
+- `AddText` now has a `hashtags` parameter to add a list of tweet hashtags as a network attribute.
 
 # vosonSML 0.31.1
 
@@ -20,6 +25,11 @@
 ## Minor Changes
 - Updated standard package documentation, added citation, code of conduct and README.Rmd.
 - Replaced magrittr pipes with native pipe operators.
+
+# vosonSML 0.30.6
+
+## Minor Changes
+- Updated standard package documentation, added citation and README.Rmd.
 
 # vosonSML 0.30.5
 

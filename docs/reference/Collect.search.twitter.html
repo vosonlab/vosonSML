@@ -30,7 +30,7 @@ https://developer.twitter.com/en/docs/twitter-api/v1/tweets/search/guides/standa
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.31.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
       </span>
     </div>
 
@@ -198,40 +198,22 @@ hashtag <code>"#auspol"</code>.</p></dd>
 
 
 <dt>...</dt>
-<dd><p>Arguments passed on to <code><a href="https://rdrr.io/pkg/rtweet/man/search_tweets.html" class="external-link">rtweet::search_tweets</a></code></p><dl><dt><code>geocode</code></dt>
+<dd><p>Arguments passed on to <code><a href="https://docs.ropensci.org/rtweet/reference/search_tweets.html" class="external-link">rtweet::search_tweets</a></code></p><dl><dt><code>geocode</code></dt>
 <dd><p>Geographical limiter of the template
-"latitude,longitude,radius" e.g., <code>geocode =
-"37.78,-122.40,1mi"</code>.</p></dd>
+"latitude,longitude,radius" e.g., <code>geocode = "37.78,-122.40,1mi"</code>.</p></dd>
+
+    <dt><code>since_id</code></dt>
+<dd><p>Supply a vector of ids or a data frame of previous results to
+find tweets <strong>newer</strong> than <code>since_id</code>.</p></dd>
 
     <dt><code>max_id</code></dt>
-<dd><p>Character, returns results with an ID less
-than (that is, older than) or equal to `max_id`.  Especially
-useful for large data returns that require multiple iterations
-interrupted by user time constraints. For searches exceeding
-18,000 tweets, users are encouraged to take advantage of rtweet's
-internal automation procedures for waiting on rate limits by
-setting <code>retryonratelimit</code> argument to TRUE.  It some cases,
-it is possible that due to processing time and rate limits,
-retrieving several million tweets can take several hours or even
-multiple days. In these cases, it would likely be useful to
-leverage <code>retryonratelimit</code> for sets of tweets and
-<code>max_id</code> to allow results to continue where previous efforts
-left off.</p></dd>
+<dd><p>Supply a vector of ids or a data frame of previous results to
+find tweets <strong>older</strong> than <code>max_id</code>.</p></dd>
 
     <dt><code>parse</code></dt>
-<dd><p>Logical, indicating whether to return parsed
-data.frame, if true, or nested list, if false. By default,
-<code>parse = TRUE</code> saves users from the wreck of time and
-frustration associated with disentangling the nasty nested list
-returned from Twitter's API. As Twitter's APIs are subject to
-change, this argument would be especially useful when changes to
-Twitter's APIs affect performance of internal parsers. Setting
-<code>parse = FALSE</code> also ensures the maximum amount of possible
-information is returned. By default, the rtweet parse process
-returns nearly all bits of information returned from
-Twitter. However, users may occasionally encounter new or
-omitted variables. In these rare cases, the nested list object
-will be the only way to access these variables.</p></dd>
+<dd><p>If <code>TRUE</code>, the default, returns a tidy data frame. Use <code>FALSE</code>
+to return the "raw" list corresponding to the JSON returned from the
+Twitter API.</p></dd>
 
   
 </dl></dd>
@@ -276,7 +258,7 @@ can be passed to this function.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.5.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>
