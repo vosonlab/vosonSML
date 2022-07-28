@@ -1,5 +1,5 @@
 # print current twitter search api rate limit and reset time for token
-print_rate_limit <- function(token, endpoint = "search/tweets", out = "cat") {
+print_rate_limit <- function(token, endpoint = "search/tweets", out = "message") {
   rl <- ""
   rtlimit <- rtweet::rate_limit(endpoint, token = token)
   remaining <-

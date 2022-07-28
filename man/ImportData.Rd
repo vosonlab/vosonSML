@@ -4,7 +4,7 @@
 \alias{ImportData}
 \title{Import collected data from dataframe or previously saved to file}
 \usage{
-ImportData(data, socialmedia, type = NULL)
+ImportData(data, socialmedia, type = NULL, verbose = FALSE)
 }
 \arguments{
 \item{data}{Character string or dataframe. Collected data file path or dataframe object.}
@@ -14,6 +14,8 @@ ImportData(data, socialmedia, type = NULL)
 
 \item{type}{Character string. Type of file or file format of file to import \code{csv} or \code{rds}. Default is
 \code{NULL} to use extension.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{FALSE}.}
 }
 \value{
 A dataframe with datasource and socialmedia class attributes.

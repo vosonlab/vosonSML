@@ -11,7 +11,7 @@
   waitTime = c(3, 10),
   ua = getOption("HTTPUserAgent"),
   writeToFile = FALSE,
-  verbose = TRUE,
+  verbose = FALSE,
   ...
 )
 }

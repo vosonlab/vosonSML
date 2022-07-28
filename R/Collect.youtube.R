@@ -383,7 +383,7 @@ yt_scraper <- setRefClass(
           trimws(nextPageToken) == "") {
         if (page_count >= 1) {
           if (verbose) {
-            cat(paste0(
+            message(paste0(
               "-- No nextPageToken. Returning. page_count is: ",
               page_count,
               "\n"
@@ -394,14 +394,14 @@ yt_scraper <- setRefClass(
           return(0)
         } else {
           if (verbose) {
-            cat("-- First thread page. No pageToken.\n")
+            message("-- First thread page. No pageToken.\n")
           }
         }
       } else {
         opts$pageToken <- trimws(nextPageToken)
 
         if (verbose) {
-          cat(paste0("-- Value of pageToken: ", opts$pageToken, "\n"))
+          message(paste0("-- Value of pageToken: ", opts$pageToken, "\n"))
         }
       }
 
@@ -414,14 +414,14 @@ yt_scraper <- setRefClass(
         api_error <<- TRUE
         nextPageToken <<- ""
         if (verbose) {
-          cat(paste0(
+          message(paste0(
             "\nThread error: ",
             res$error$code,
             "\nDetail: ",
             res$error$message,
             "\n"
           ))
-          cat(paste0("videoId: ", opts$videoId, "\n\n"))
+          message(paste0("videoId: ", opts$videoId, "\n\n"))
         }
         return(0)
       } else {
@@ -444,8 +444,8 @@ yt_scraper <- setRefClass(
     # collect all video threads until done or max comments reached
     scrape_all = function(maxComments) {
       if (verbose) {
-        cat(paste0("** video Id: ", api_opts$videoId, "\n", sep = ""))
-        cat(
+        message(paste0("** video Id: ", api_opts$videoId, "\n", sep = ""))
+        message(
           paste0(
             "   [results per page: ",
             api_opts$maxResults,
@@ -464,7 +464,7 @@ yt_scraper <- setRefClass(
         thread_count <- scrape()
 
         if (verbose) {
-          cat(paste0("-- Collected threads from page: ", thread_count, "\n", sep = ""))
+          message(paste0("-- Collected threads from page: ", thread_count, "\n", sep = ""))
         }
 
         if (thread_count == 0 |
@@ -474,7 +474,7 @@ yt_scraper <- setRefClass(
 
           if (length(data) > maxComments) {
             if (verbose) {
-              cat(
+              message(
                 paste0(
                   "-- API returned more than max comments. Results truncated to first ",
                   maxComments,
@@ -488,7 +488,7 @@ yt_scraper <- setRefClass(
           }
 
           if (verbose) {
-            cat(paste0("-- Done collecting threads.\n", sep = ""))
+            message(paste0("-- Done collecting threads.\n", sep = ""))
           }
 
           break
@@ -496,11 +496,11 @@ yt_scraper <- setRefClass(
       }
 
       if (verbose) {
-        cat(paste0("** Results page count: ", page_count, "\n"))
+        message(paste0("** Results page count: ", page_count, "\n"))
       }
       if (verbose) {
-        cat(paste0("** Collected threads: ", length(data), "\n"))
-        cat(paste0("(Threads API unit cost: ", api_cost, ")\n"))
+        message(paste0("** Collected threads: ", length(data), "\n"))
+        message(paste0("(Threads API unit cost: ", api_cost, ")\n"))
       }
     },
 
@@ -564,7 +564,7 @@ yt_scraper <- setRefClass(
         core_df <<- do.call("rbind", sub_data)
       } else {
         if (verbose) {
-          cat("core_df is already up to date.\n")
+          message("core_df is already up to date.\n")
         }
       }
     }

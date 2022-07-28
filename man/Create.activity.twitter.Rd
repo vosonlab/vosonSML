@@ -14,7 +14,7 @@
 \item{rmEdgeTypes}{Character vector. List of tweet edge types to remove from network. Options are \code{"tweet"},
 \code{"retweet"}, \code{"reply"} and \code{"quote"}. Default is \code{NULL}.}
 
-\item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
+\item{verbose}{Logical. Output additional information. Default is \code{FALSE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }

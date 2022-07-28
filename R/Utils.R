@@ -1,3 +1,25 @@
+#' @title Set function output to use the cat method instead of message
+#'
+#' @param flag Logical. Set the \code{voson.msg = "cat"} option. Set to \code{FALSE} or \code{NULL} to
+#'   clear. Default is \code{TRUE}.
+#'
+#' @aliases SetOutputCat
+#' @name SetOutputCat
+#' @export
+SetOutputCat <- function(flag = TRUE) {
+  if (is.null(flag)) {
+    options(voson.msg = NULL)
+  }
+
+  if (is.logical(flag)) {
+    if (flag) {
+      options(voson.msg = "cat")
+    } else {
+      options(voson.msg = NULL)
+    }
+  }
+}
+
 # package version
 get_version <- function() {
   if ("vosonSML" %in% loadedNamespaces()) {
@@ -258,11 +280,11 @@ lgl_debug <- function(x) {
 f_verbose <- function(x) {
   opt_msg <- getOption("voson.msg")
 
-  opt_f <- vsml_cat
+  opt_f <- vsml_msg
   if (!is.null(opt_msg) && !is.na(opt_msg)) {
     if (is.character(opt_msg)) {
-      if (tolower(opt_msg) == "message") {
-        opt_f <- vsml_msg
+      if (tolower(opt_msg) == "cat") {
+        opt_f <- vsml_cat
       }
     }
   }
@@ -278,7 +300,7 @@ f_verbose <- function(x) {
 
 # base function
 msg <- function(x) {
-  vsml_cat(x)
+  vsml_msg(x)
 }
 
 # message output
