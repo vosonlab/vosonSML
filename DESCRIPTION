@@ -8,7 +8,7 @@ Type: Package
 Imports:
     data.table,
     dplyr (>= 1.0),
-    httr,
+    httr (>= 1.3.0),
     jsonlite,
     lubridate,
     methods,

@@ -25,6 +25,7 @@ remaining_num_tweets <- function(token) {
   remaining
 }
 
+# api datetime format in strings
 twitter_api_dt_fmt <- function() {
   "%a %b %d %H:%M:%S +0000 %Y"
 }
