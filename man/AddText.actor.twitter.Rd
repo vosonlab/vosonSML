@@ -16,8 +16,8 @@
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}
-including columns containing text data.
+Network as a named list of two dataframes containing \code{$nodes} and \code{$edges} including columns
+containing text data.
 }
 \description{
 Add columns containing text data to twitter actor network dataframes

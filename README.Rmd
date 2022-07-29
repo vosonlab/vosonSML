@@ -94,7 +94,7 @@ twitter_auth <- readRDS("~/.twitter_oauth1.0a")
 
 ``` r
 # collect 100 recent tweets for the hashtag #auspol
-twitter_data <- twitter_auth %>%
+twitter_data <- twitter_auth |>
   Collect(searchTerm = "#auspol",
           searchType = "recent",
           numTweets = 100,
@@ -123,7 +123,7 @@ The next example collects the 100 most recents tweets from the `@vosonlab` twitt
 
 ``` r
 # collect 100 timeline tweets for @vosonlab
-twitter_data <- my_twitter_auth %>%
+twitter_data <- my_twitter_auth |>
   Collect(endpoint = "timeline",
           users = "vosonlab",
           numTweets = 100,
@@ -151,7 +151,7 @@ The twitter `Create` function accepts the data from `Collect` and a type paramet
 
 Nodes are tweets and edges are the relationship to other tweets such as `reply`, `retweet` or `quote` tweets.
 ``` r
-activity_network <- twitter_data %>% 
+activity_network <- twitter_data |> 
   Create("activity")
 
 # Generating twitter activity network...
@@ -167,7 +167,7 @@ activity_network <- twitter_data %>%
 # Done.
 ```
 ``` r
-g <- activity_network %>% Graph(writeToFile = TRUE)
+g <- activity_network |> Graph(writeToFile = TRUE)
 
 # Creating igraph network graph...
 # GRAPHML file written: 2021-06-21_122758-TwitterActivity.graphml
@@ -191,7 +191,7 @@ g <- activity_network %>% Graph(writeToFile = TRUE)
 
 Nodes are twitter users and edges are the relationship to other users in the network such as `reply`, `mention`, `retweet` and `quote` tweets. Mentions can be excluded by setting the parameter `inclMentions` to `FALSE`.
 ``` r
-actor_network <- twitter_data %>%
+actor_network <- twitter_data |>
   Create("actor", inclMentions = TRUE)
 
 # Generating twitter actor network...
@@ -209,7 +209,7 @@ actor_network <- twitter_data %>%
 # Done.
 ```
 ``` r
-g <- actor_network %>% Graph(writeToFile = TRUE)
+g <- actor_network |> Graph(writeToFile = TRUE)
 
 # Creating igraph network graph...
 # GRAPHML file written: 2021-06-21_123015-TwitterActor.graphml
@@ -237,7 +237,7 @@ install.packages(c("tidyr", "tidytext", "stopwords")) # install additional requi
 
 # create a semantic network excluding the hashtag #auspol, include only the top 10%
 # most frequent words and 20% most frequent hashtags as nodes
-semantic_network <- twitter_data %>% 
+semantic_network <- twitter_data |> 
   Create("semantic",
          removeTermsOrHashtags = c("#auspol"),
          termFreq = 10,
@@ -263,7 +263,7 @@ semantic_network <- twitter_data %>%
 # Done.
 ```
 ``` r
-g <- semantic_network %>% Graph(writeToFile = TRUE)
+g <- semantic_network |> Graph(writeToFile = TRUE)
 
 # Creating igraph network graph...
 # GRAPHML file written: 2021-06-21_123939-TwitterSemantic.graphml
@@ -289,7 +289,7 @@ Nodes are twitter `users` or `hashtags`. Edges represent the use of a `hashtag` 
 ``` r
 install.packages("tidytext") # install additional required packages
 
-twomode_network <- twitter_data %>%
+twomode_network <- twitter_data |>
   Create("twomode", 
          removeTermsOrHashtags = c("#auspol"),
          weighted = TRUE)
@@ -307,7 +307,7 @@ twomode_network <- twitter_data %>%
 # Done.
 ```
 ``` r
-g <- twomode_network %>% Graph(writeToFile = TRUE)
+g <- twomode_network |> Graph(writeToFile = TRUE)
 
 # Creating igraph network graph...
 # GRAPHML file written: 2021-06-21_125234-Twitter2mode.graphml
@@ -345,7 +345,7 @@ youtube_video_ids <- c("https://www.youtube.com/watch?v=xxxxxxxx",
 
 ```
 ``` r
-youtube_data <- youtube_auth %>%
+youtube_data <- youtube_auth |>
   Collect(videoIDs = youtube_video_ids,
           maxComments = 100,
           verbose = TRUE)
@@ -384,7 +384,7 @@ The youtube `Create` function accepts the data from `Collect` and a network type
 
 Nodes are video comments and edges represent whether they were directed to the video as a top-level comment or to another comment as a reply comment.
 ``` r
-activity_network <- youtube_data %>% Create("activity")
+activity_network <- youtube_data |> Create("activity")
 
 # Generating youtube activity network...
 # -------------------------
@@ -398,7 +398,7 @@ activity_network <- youtube_data %>% Create("activity")
 # Done.
 ```
 ``` r
-g <- activity_network %>% Graph()
+g <- activity_network |> Graph()
 
 # Creating igraph network graph...Done.
 
@@ -411,10 +411,10 @@ g <- activity_network %>% Graph()
 
 Nodes are users who have posted comments and the video publishers, edges represent comments directed at other users. 
 ``` r
-actor_network <- youtube_data %>% Create("actor")
+actor_network <- youtube_data |> Create("actor")
 ```
 ``` r
-g <- actor_network %>% Graph()
+g <- actor_network |> Graph()
 
 # Generating youtube actor network...Done.
 
@@ -436,7 +436,7 @@ reddit_thread_urls <-
     "https://www.reddit.com/r/datascience/comments/g1suaz/xx_xxxx_xxx_xxxxxxx/")
 
 # authentication does not require credentials
-reddit_data <- Authenticate("reddit") %>%
+reddit_data <- Authenticate("reddit") |>
   Collect(threadUrls = reddit_thread_urls)
 
 # Collecting comment threads for reddit urls...
@@ -461,7 +461,7 @@ Please note that because of the API end-point used that `Collect` is limited to 
 Nodes are original thread posts and comments, edges are replies directed to the original post and to comments made by others.
 ``` r
 # create an activity network
-activity_network <- reddit_data %>% Create("activity")
+activity_network <- reddit_data |> Create("activity")
 
 # Generating reddit activity network...
 # -------------------------
@@ -474,7 +474,7 @@ activity_network <- reddit_data %>% Create("activity")
 # Done.
 ```
 ``` r
-g <- activity_network %>% Graph()
+g <- activity_network |> Graph()
 
 # Creating igraph network graph...Done.
 
@@ -488,12 +488,12 @@ g <- activity_network %>% Graph()
 Nodes are reddit users who have commented on threads and edges represent replies to other users.
 ``` r
 # create an actor network
-actor_network <- reddit_data %>% Create("actor")
+actor_network <- reddit_data |> Create("actor")
 
 # Generating reddit actor network...Done.
 ```
 ``` r
-g <- actor_network %>% Graph()
+g <- actor_network |> Graph()
 
 # Creating igraph network graph...Done.
 
@@ -520,7 +520,7 @@ seed_page_urls <-
              type = c("ext", "ext", "ext"),
              max_depth = c(2, 2, 2))
 
-hyperlink_data <- Authenticate("web") %>%
+hyperlink_data <- Authenticate("web") |>
   Collect(pages = seed_page_urls)
 
 # Collecting web page hyperlinks...
@@ -555,18 +555,18 @@ actor_network <- Create(hyperlink_data, "actor")
 The `AddText` function can be used following the creation of `activity` or `actor` networks for `twitter`, `youtube` and `reddit`. It will add an attribute starting with `vosonTxt_` to nodes of `activity` networks and to edges of `actor` networks. It requires a collected `datasource` from which to extract text data.
 ``` r
 # create activity network
-activity_network <- twitter_data %>% Create("activity")
+activity_network <- twitter_data |> Create("activity")
 
 # Generating twitter activity network...Done.
 ```
 ``` r
 # activity network with text data added as node attribute
-activity_network <- activity_network %>% AddText(twitter_data)
+activity_network <- activity_network |> AddText(twitter_data)
 
 # Adding text to network...Done.
 ```
 ``` r
-g <- activity_network %>% Graph()
+g <- activity_network |> Graph()
 
 # Creating igraph network graph...Done.
 
@@ -585,10 +585,10 @@ g <- activity_network %>% Graph()
 Redirect edge between user nodes `C -> A` to `C -> B`.
 ``` r
 # create activity network
-actor_network <- youtube_data %>% Create("actor")
+actor_network <- youtube_data |> Create("actor")
 
 # detects replies to users in text
-actor_network <- actor_network %>%
+actor_network <- actor_network |>
   AddText(youtube_data,
           repliesFromText = TRUE)
 ```
@@ -598,7 +598,7 @@ actor_network <- actor_network %>%
 `AddUserData` adds user profile information to as many users in a twitter `actor` network as possible. If the profile information is not available in the collect data and the `lookupUsers` parameter is set then it will make twitter API requests to retrieve them. The profile information is added as additional node attributes.
 ``` r
 # add additional twitter user profile info
-actor_network <- actor_network %>%
+actor_network <- actor_network |>
   AddUserData(twitter_data,
               lookupUsers = TRUE,
               twitterAuth = twitter_auth)
@@ -616,7 +616,7 @@ nrow(actor_network$users)
 # [1] 80
 ```
 ``` r
-actor_network <- actor_network %>% Graph()
+actor_network <- actor_network |> Graph()
 
 # Creating igraph network graph...Done.
 
@@ -635,9 +635,9 @@ actor_network <- actor_network %>% Graph()
 # replaces VIDEOID:xxxxxx references in actor network with their publishers
 # user id (channel ID) and adds additional collected youtube video info to actor
 # network graph as node attributes
-actor_network <- actor_network %>% 
+actor_network <- actor_network |> 
   AddVideoData(youtube_auth,
-               actorSubOnly = FALSE) %>%
+               actorSubOnly = FALSE) |>
 
 # Adding video data to network...Done.
 ```
@@ -649,7 +649,7 @@ nrow(actor_network$videos)
 # [1] 2
 ```
 ``` r
-actor_network <- actor_network %>% Graph()
+actor_network <- actor_network |> Graph()
 
 # Creating igraph network graph...Done.
 

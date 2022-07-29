@@ -1,54 +1,53 @@
 #' @title Create twitter semantic network
 #'
 #' @description Creates a semantic network from tweets returned from the twitter search query. Semantic networks
-#' describe the semantic relationships between concepts. In this network the concepts are significant words and
-#' hashtags extracted from the tweet text. Network edges are weighted and represent occurrence of words and
-#' hashtags in the same tweets.
+#'   describe the semantic relationships between concepts. In this network the concepts are significant words and
+#'   hashtags extracted from the tweet text. Network edges are weighted and represent occurrence of words and hashtags
+#'   in the same tweets.
 #'
-#' The creation of twitter semantic networks requires text processing and the tokenization of tweets. As such
-#' this function requires the additional installation of the \pkg{tidyr} and \pkg{tidytext} packages to achieve
-#' this.
+#'   The creation of twitter semantic networks requires text processing and the tokenization of tweets. As such this
+#'   function requires the additional installation of the \pkg{tidyr} and \pkg{tidytext} packages to achieve this.
 #'
-#' @note The words and hashtags passed to the function in the \code{removeTermsOrHashtags} parameter are removed
-#' before word frequencies are calculated and are therefore excluded from top percentage of most frequent terms
-#' completely rather than simply filtered out of the final network.
+#' @note The words and hashtags passed to the function in the \code{removeTermsOrHashtags} parameter are removed before
+#'   word frequencies are calculated and are therefore excluded from top percentage of most frequent terms completely
+#'   rather than simply filtered out of the final network.
 #'
-#' The top percentage of frequently occurring hashtags \code{hashtagFreq} and words \code{termFreq} are calculated to a
-#' minimum frequency and all terms that have an equal or greater frequency than the minimum are included in the network
-#' as nodes. For example, of unique hashtags of varying frequencies in a dataset the top 50% of total
-#' frequency or most common hashtags may calculate to being the first 20 hashtags. The frequency of the 20th hashtag is
-#' then used as the minimum and all hashtags of equal or greater frequency are included as part of the top 50%
-#' most frequently occurring hashtags. So the number of top hashtags may end up being greater than 20 if there is more
-#' than one hashtag that has frequency matching the minimum. The exception to this is if the minimum frequency is 1
-#' and the \code{hashtagFreq} is set to less than 100, in this case only the first 20 hashtags will be included.
+#'   The top percentage of frequently occurring hashtags \code{hashtagFreq} and words \code{termFreq} are calculated to
+#'   a minimum frequency and all terms that have an equal or greater frequency than the minimum are included in the
+#'   network as nodes. For example, of unique hashtags of varying frequencies in a dataset the top 50% of total
+#'   frequency or most common hashtags may calculate to being the first 20 hashtags. The frequency of the 20th hashtag
+#'   is then used as the minimum and all hashtags of equal or greater frequency are included as part of the top 50% most
+#'   frequently occurring hashtags. So the number of top hashtags may end up being greater than 20 if there is more than
+#'   one hashtag that has frequency matching the minimum. The exception to this is if the minimum frequency is 1 and the
+#'   \code{hashtagFreq} is set to less than 100, in this case only the first 20 hashtags will be included.
 #'
-#' Hashtags and words in the top percentages are included in the network as isolates if there are no instances of
-#' them occurring in tweet text with other top percentage frequency terms.
+#'   Hashtags and words in the top percentages are included in the network as isolates if there are no instances of them
+#'   occurring in tweet text with other top percentage frequency terms.
 #'
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"twitter"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"semantic"}.
 #' @param removeRetweets Logical. Removes detected retweets from the tweet data. Default is \code{TRUE}.
 #' @param removeTermsOrHashtags Character vector. Words or hashtags to remove from the semantic network. For example,
-#' this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
-#' nodes with matching name. Default is \code{NULL} to remove none.
+#'   this parameter could be used to remove the search term or hashtag that was used to collect the data by removing any
+#'   nodes with matching name. Default is \code{NULL} to remove none.
 #' @param stopwords Logical. Removes stopwords from the tweet data. Default is \code{TRUE}.
-#' @param stopwordsLang Character string. Language of stopwords to use. Refer to the \pkg{stopwords} package for
-#' further information on supported languages. Default is \code{"en"}.
-#' @param stopwordsSrc Character string. Source of stopwords list. Refer to the \pkg{stopwords} package for
-#' further information on supported sources. Default is \code{"smart"}.
-#' @param removeNumbers Logical. Removes whole numerical tokens from the tweet text. For example, a year value
-#' such as \code{2020} will be removed but not mixed values such as \code{G20}. Default is \code{TRUE}.
+#' @param stopwordsLang Character string. Language of stopwords to use. Refer to the \pkg{stopwords} package for further
+#'   information on supported languages. Default is \code{"en"}.
+#' @param stopwordsSrc Character string. Source of stopwords list. Refer to the \pkg{stopwords} package for further
+#'   information on supported sources. Default is \code{"smart"}.
+#' @param removeNumbers Logical. Removes whole numerical tokens from the tweet text. For example, a year value such as
+#'   \code{2020} will be removed but not mixed values such as \code{G20}. Default is \code{TRUE}.
 #' @param removeUrls Logical. Removes twitter shortened URL tokens from the tweet text. Default is \code{TRUE}.
 #' @param termFreq Numeric integer. Specifies the percentage of most frequent words to include. For example,
-#' \code{termFreq = 20} means that the 20 percent most frequently occurring \code{words} will be included in the
-#' semantic network as nodes. A larger percentage will increase the number of nodes and therefore the size of graph.
-#' The default value is \code{5}, meaning the top 5 percent most frequent words are used.
+#'   \code{termFreq = 20} means that the 20 percent most frequently occurring \code{words} will be included in the
+#'   semantic network as nodes. A larger percentage will increase the number of nodes and therefore the size of graph.
+#'   The default value is \code{5}, meaning the top 5 percent most frequent words are used.
 #' @param hashtagFreq Numeric integer. Specifies the percentage of most frequent \code{hashtags} to include. For
-#' example, \code{hashtagFreq = 20} means that the 20 percent most frequently occurring hashtags will be included
-#' in the semantic network as nodes. The default value is \code{50}.
-#' @param assoc Character string. Association of nodes. A value of \code{"limited"} includes only edges between
-#' most frequently occurring hashtags and terms. A value of \code{"full"} includes ties between most frequently
-#' occurring hashtags and terms, hashtags and hashtags, and terms and terms. Default is \code{"limited"}.
+#'   example, \code{hashtagFreq = 20} means that the 20 percent most frequently occurring hashtags will be included in
+#'   the semantic network as nodes. The default value is \code{50}.
+#' @param assoc Character string. Association of nodes. A value of \code{"limited"} includes only edges between most
+#'   frequently occurring hashtags and terms. A value of \code{"full"} includes ties between most frequently occurring
+#'   hashtags and terms, hashtags and hashtags, and terms and terms. Default is \code{"limited"}.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'

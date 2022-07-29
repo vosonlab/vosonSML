@@ -43,10 +43,19 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/AddText.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/AddText.semantic.twitter.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/AddText.twomode.twitter.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/AddUserData.actor.twitter.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/AddUserData.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/AddUserData.twomode.twitter.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/AddVideoData.actor.youtube.html</loc>

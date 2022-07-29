@@ -1,7 +1,7 @@
 #' @title Create reddit actor network
 #'
 #' @description Creates a reddit actor network from thread comments on subreddits. Users who have commented on a thread
-#' are actor nodes and comment replies to each other are represented as directed edges.
+#'   are actor nodes and comment replies to each other are represented as directed edges.
 #'
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"reddit"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"actor"}.

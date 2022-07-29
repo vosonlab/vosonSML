@@ -19,8 +19,8 @@
 Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
-Creates an activity network from collected YouTube video comment threads. Nodes are top-level
-comments, reply comments and videos. Edges are directed between the nodes and represent commenting activity.
+Creates an activity network from collected YouTube video comment threads. Nodes are top-level comments,
+reply comments and videos. Edges are directed between the nodes and represent commenting activity.
 }
 \examples{
 \dontrun{

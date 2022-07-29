@@ -1,7 +1,7 @@
 #' @title Create YouTube activity network
 #'
-#' @description Creates an activity network from collected YouTube video comment threads. Nodes are top-level
-#' comments, reply comments and videos. Edges are directed between the nodes and represent commenting activity.
+#' @description Creates an activity network from collected YouTube video comment threads. Nodes are top-level comments,
+#'   reply comments and videos. Edges are directed between the nodes and represent commenting activity.
 #'
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"youtube"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.

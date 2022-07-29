@@ -1,25 +1,3 @@
-#' @title Set function output to use the cat method instead of message
-#'
-#' @param flag Logical. Set the \code{voson.msg = "cat"} option. Set to \code{FALSE} or \code{NULL} to
-#'   clear. Default is \code{TRUE}.
-#'
-#' @aliases SetOutputCat
-#' @name SetOutputCat
-#' @export
-SetOutputCat <- function(flag = TRUE) {
-  if (is.null(flag)) {
-    options(voson.msg = NULL)
-  }
-
-  if (is.logical(flag)) {
-    if (flag) {
-      options(voson.msg = "cat")
-    } else {
-      options(voson.msg = NULL)
-    }
-  }
-}
-
 # package version
 get_version <- function() {
   if ("vosonSML" %in% loadedNamespaces()) {
@@ -57,7 +35,6 @@ write_output_file <-
            name = "File",
            datetime = TRUE,
            verbose = FALSE) {
-
     msg <- f_verbose(verbose)
 
     supported_types <- c("graphml", "csv", "rds")
@@ -163,7 +140,7 @@ print_summary <- function(df) {
   lines <- ""
   for (i in 1:nrow(df)) {
     line <- ""
-    values <- as.character(as.vector(df[i, ]))
+    values <- as.character(as.vector(df[i,]))
     for (j in 1:length(values)) {
       line <-
         paste0(line,
@@ -263,24 +240,37 @@ escape_regex <- function(x) {
   gsub("([.|()\\^{}+$*?]|\\[|\\])", "\\\\\\1", x)
 }
 
-# check debug parameter
-lgl_debug <- function(x) {
-  lgl <- FALSE
-  if (!is.null(x)) {
-    if (is.logical(x)) {
-      lgl <- x
-    }
+## -- output messaging
+
+#' @title Set function output to use the cat method instead of message
+#'
+#' @param flag Logical. Set the \code{voson.msg = "cat"} option. Set to \code{FALSE} or \code{NULL} to clear. Default is
+#'   \code{TRUE}.
+#'
+#' @aliases SetOutputCat
+#' @name SetOutputCat
+#' @export
+SetOutputCat <- function(flag = TRUE) {
+  if (is.null(flag)) {
+    options(voson.msg = NULL)
   }
 
-  lgl
+  if (is.logical(flag)) {
+    if (flag) {
+      options(voson.msg = "cat")
+    } else {
+      options(voson.msg = NULL)
+    }
+  }
 }
 
 # assign message function for verbose output
-# can use options(voson.msg = "message")
 f_verbose <- function(x) {
   opt_msg <- getOption("voson.msg")
 
   opt_f <- vsml_msg
+
+  # check if cat option set
   if (!is.null(opt_msg) && !is.na(opt_msg)) {
     if (is.character(opt_msg)) {
       if (tolower(opt_msg) == "cat") {
@@ -298,7 +288,7 @@ f_verbose <- function(x) {
   f
 }
 
-# base function
+# base output function
 msg <- function(x) {
   vsml_msg(x)
 }
@@ -320,6 +310,20 @@ vsml_silent <- function(x) {
   return()
 }
 
+# check debug parameter
+lgl_debug <- function(x) {
+  lgl <- FALSE
+  if (!is.null(x)) {
+    if (is.logical(x)) {
+      lgl <- x
+    }
+  }
+
+  lgl
+}
+
+## -- check input values
+
 # check logical input
 check_lgl <- function(x, param = "value") {
   if (!is.null(x)) {
@@ -334,64 +338,75 @@ check_lgl <- function(x, param = "value") {
 }
 
 # check numeric input
-check_num <- function(x, param = "value", double = FALSE, null.ok = FALSE, na.ok = FALSE) {
-  if (!is.null(x)) {
-    if (!is.na(x)) {
-      if (is.numeric(x)) {
-        if (is.double(x)) {
-          if (double) {
-            return(x)
-          } else {
-            stop(paste0(param, " must not be a double type."), call. = FALSE)
+check_num <-
+  function(x,
+           param = "value",
+           double = FALSE,
+           null.ok = FALSE,
+           na.ok = FALSE) {
+    if (!is.null(x)) {
+      if (!is.na(x)) {
+        if (is.numeric(x)) {
+          if (is.double(x)) {
+            if (double) {
+              return(x)
+            } else {
+              stop(paste0(param, " must not be a double type."), call. = FALSE)
+            }
           }
-        }
 
-        return(x)
+          return(x)
+        }
+      } else {
+        if (na.ok) {
+          return(x)
+        }
       }
     } else {
-      if (na.ok) {
+      if (null.ok) {
         return(x)
       }
     }
-  } else {
-    if (null.ok) {
-      return(x)
-    }
-  }
 
-  stop(paste0(param, " must be numeric."), call. = FALSE)
-}
+    stop(paste0(param, " must be numeric."), call. = FALSE)
+  }
 
 # check character input
-check_chr <- function(x, param = "value", accept = c(), case = "lower", null.ok = FALSE, na.ok = FALSE) {
-  if (!is.null(x)) {
-    if (!is.na(x)) {
-      if (is.character(x)) {
-        if (length(accept)) {
-          if (case == "lower") {
-            x <- tolower(x)
-          } else if (case == "upper") {
-            x <- toupper(x)
+check_chr <-
+  function(x,
+           param = "value",
+           accept = c(),
+           case = "lower",
+           null.ok = FALSE,
+           na.ok = FALSE) {
+    if (!is.null(x)) {
+      if (!is.na(x)) {
+        if (is.character(x)) {
+          if (length(accept)) {
+            if (case == "lower") {
+              x <- tolower(x)
+            } else if (case == "upper") {
+              x <- toupper(x)
+            }
+            if (x %in% accept) {
+              return(trimws(x))
+            } else {
+              stop(paste0(param, " must be in ", paste0(accept, collapse = ",")), call. = FALSE)
+            }
           }
-          if (x %in% accept) {
-            return(trimws(x))
-          } else {
-            stop(paste0(param, " must be in ", paste0(accept, collapse = ",")), call. = FALSE)
-          }
-        }
 
-        return(trimws(x))
+          return(trimws(x))
+        }
+      } else {
+        if (na.ok) {
+          return(x)
+        }
       }
     } else {
-      if (na.ok) {
+      if (null.ok) {
         return(x)
       }
     }
-  } else {
-    if (null.ok) {
-      return(x)
-    }
-  }
 
-  stop(paste0(param, " must be a character value."), call. = FALSE)
-}
+    stop(paste0(param, " must be a character value."), call. = FALSE)
+  }

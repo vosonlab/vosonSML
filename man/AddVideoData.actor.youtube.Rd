@@ -19,20 +19,19 @@
 
 \item{videoIds}{List. Video ID's to download video information.}
 
-\item{actorSubOnly}{Logical. Only substitute video ID's for their publishers channel ID. Don't add
-additional video data to edge list.}
+\item{actorSubOnly}{Logical. Only substitute video ID's for their publishers channel ID. Don't add additional video
+data to edge list.}
 
 \item{...}{Additional parameters passed to function.}
 }
 \value{
-Network as a named list of three dataframes containing \code{$nodes}, \code{$edges}
-and \code{$videos} nodes and edges include columns for additional video data.
+Network as a named list of three dataframes containing \code{$nodes}, \code{$edges} and \code{$videos} nodes
+and edges include columns for additional video data.
 }
 \description{
-YouTube actor network is supplemented with additional downloaded video information.
-Adds video id, title, description and publish time as edge attributes. Nodes or actor references
-to video id's in the network are substituted with the actor id (video channel id) retrieved from
-the video details.
+YouTube actor network is supplemented with additional downloaded video information. Adds video id,
+title, description and publish time as edge attributes. Nodes or actor references to video id's in the network are
+substituted with the actor id (video channel id) retrieved from the video details.
 }
 \examples{
 \dontrun{

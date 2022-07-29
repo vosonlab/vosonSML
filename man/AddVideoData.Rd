@@ -14,8 +14,8 @@ AddVideoData(net, youtubeAuth = NULL, ...)
 \item{...}{Additional parameters passed to function.}
 }
 \value{
-Network as a named list of three dataframes containing \code{$nodes}, \code{$edges}
-and \code{$videos} nodes and edges include columns for additional video data.
+Network as a named list of three dataframes containing \code{$nodes}, \code{$edges} and \code{$videos} nodes
+and edges include columns for additional video data.
 }
 \description{
 Network is supplemented with additional downloaded video information.

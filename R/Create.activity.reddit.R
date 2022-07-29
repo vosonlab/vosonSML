@@ -1,7 +1,7 @@
 #' @title Create reddit activity network
 #'
 #' @description Creates a reddit activity network from subreddit thread comments. Nodes are comments and initial thread
-#' posts, edges form the discussion structure and signify to which comment or post a comment has been made to.
+#'   posts, edges form the discussion structure and signify to which comment or post a comment has been made to.
 #'
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"reddit"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.

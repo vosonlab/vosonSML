@@ -19,8 +19,8 @@
 \item{type}{Character string. Type of network to be created, set to \code{"twomode"}.}
 
 \item{removeTermsOrHashtags}{Character vector. Users or hashtags to remove from the twomode network. For example,
-this parameter could be used to remove the user or hashtag that was used to collect the data by removing any
-nodes with matching name. Default is \code{NULL} to remove none.}
+this parameter could be used to remove the user or hashtag that was used to collect the data by removing any nodes
+with matching name. Default is \code{NULL} to remove none.}
 
 \item{rmRetweets}{Logical. Do not process retweets in the input data. Default is \code{TRUE}.}
 
@@ -36,8 +36,8 @@ Creates a 2-mode network from tweets returned from the twitter search query. In 
 two types of nodes, twitter users who authored or were mentioned in collected tweets and hashtags found within
 tweets. Network edges represent a users tweets that contain hashtags or mention users screen names.
 
-The creation of twitter 2-mode networks requires text processing and the tokenization of tweets. As such
-this function requires the additional installation of the \pkg{tidytext} package to achieve this.
+The creation of twitter 2-mode networks requires text processing and the tokenization of tweets. As such this
+function requires the additional installation of the \pkg{tidytext} package to achieve this.
 }
 \examples{
 \dontrun{
