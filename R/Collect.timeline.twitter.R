@@ -9,6 +9,8 @@
 #' @param users Character vector. Specifies one or more twitter users. Can be user names, user ids or a mixture.
 #' @param numTweets Numeric vector. Specifies how many tweets to be collected per user. Defaults to single value of
 #'   \code{100}.
+#' @param retryOnRateLimit Logical. When the API rate-limit is reached should the collection wait and resume when it
+#'   resets. Default is \code{TRUE}.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{FALSE}.
 #' @inheritDotParams rtweet::get_timeline -token -user -n -max_id -home
@@ -20,123 +22,137 @@ Collect.timeline.twitter <-
   function(credential,
            endpoint,
            users = c(),
-           numTweets = c(100),
+           numTweets = 100,
+           retryOnRateLimit = TRUE,
            writeToFile = FALSE,
            verbose = FALSE,
            ...) {
 
-    rlang::check_installed("rtweet", "for Collect.timeline.twitter")
-    stop_req_pkgs(c("rtweet"), "Collect.timeline.twitter")
+    prompt_and_stop("rtweet", "Collect.timeline.twitter")
 
     msg("Collecting timeline tweets for users...\n")
 
-    authToken <- credential$auth
+    auth_token <- credential$auth
 
-    if (!("Token" %in% class(authToken))) {
+    if (!("Token" %in% class(auth_token)) && !("rtweet_bearer" %in% class(auth_token))) {
       stop(
         "OAuth token missing. Please use the Authenticate function to create and supply a token.",
         call. = FALSE
       )
     }
 
-    if (!is.vector(users) || length(users) < 1) {
-      stop("Please provide a vector of one or more users.",
-           call. = FALSE)
+    invisible({
+      check_chr(users, param = "users", min = 1)
+      check_num(numTweets, param = "numTweets")
+      check_lgl(retryOnRateLimit, param = "retryOnRateLimit")
+      check_lgl(writeToFile, param = "writeToFile")
+      check_lgl(verbose, param = "verbose")
+    })
+
+    if (any(numTweets < 1)) {
+      # max 3200
+      stop("Please provide values for numTweets between 1 and Inf.", call. = FALSE)
     }
 
-    if (!is.numeric(numTweets) || numTweets < 1 || numTweets > 3200) {
-      stop("Please provide a value for numTweets between 1 and 3200.",
-           call. = FALSE)
-    }
+    if (length(numTweets) == 1) numTweets <- rep(numTweets, length(users))
 
-    tl_params <- list()
-    tl_params[["token"]] <- authToken
+    f_params <- list()
+    f_params[["token"]] <- auth_token
+    f_params["retryonratelimit"] <- retryOnRateLimit
+    f_params["verbose"] <- verbose
+    f_params["parse"] <- TRUE
 
-    tl_params[["n"]] <- numTweets
-    tl_params["verbose"] <- verbose
-    tl_params["parse"] <- TRUE
-
-    # additional twitter api params
     dots <- substitute(...())
-    tl_params <- append(tl_params, dots)
+    f_params <- append(f_params, dots)
 
-    # looped because of user attribute
+    # get timelines looped because of parsing issue
     get_tls <- function() {
-      tw_df <- tw_df_users <- NULL
-      for (u in users) {
-        tl_params[["user"]] <- u
+      df_tweets <- df_users <- NULL
 
-        df <- do.call(rtweet::get_timeline, tl_params)
-        df_users <- attr(df, "users", exact = TRUE)
+      for (i in seq_along(users)) {
+        df_tweets_i <- df_users_i <- NULL
 
-        if (!is.null(tw_df)) {
-          tw_df_users <- attr(tw_df, "users", exact = TRUE)
-          tw_df <- tw_df |> dplyr::bind_rows(df)
-          tw_df_users <- dplyr::bind_rows(tw_df_users, df_users)
+        f_params[["user"]] <- users[i]
+        f_params[["n"]] <- numTweets[i]
 
-          attr(tw_df, "users") <- tw_df_users
+        df_tweets_i <- do.call(rtweet::get_timeline, f_params)
+        df_users_i <- attr(df_tweets_i, "users", exact = TRUE)
+
+        if (!is.null(df_tweets)) {
+          df_tweets <- df_tweets |> dplyr::bind_rows(df_tweets_i)
+          df_users <- dplyr::bind_rows(
+            attr(df_tweets, "users", exact = TRUE),
+            df_users_i
+          )
+          attr(df_tweets, "users") <- df_users
         } else {
-          tw_df <- df
+          df_tweets <- df_tweets_i
         }
       }
 
-      tw_df
+      df_tweets
     }
 
-    tweets_df <- get_tls()
+    rate_limit <- NULL
+    tryCatch({
+      rate_limit <- rtweet::rate_limit("statuses/user_timeline", token = auth_token)
+    }, error = function(e) {
+      msg("Unable to determine rate limit.\n")
+    })
 
-    users_df <- attr(tweets_df, "users", exact = TRUE)
-    user_names <- NULL
-    if (!is.null(users_df)) {
-      users_df <- users_df |>
-        dplyr::rename(user_id = .data$id_str)
+    if (!is.null(rate_limit)) {
+      remaining <- rate_limit[["remaining"]]
 
-      attr(tweets_df, "users") <- NULL
+      if (!is.null(remaining) &&
+          is.numeric(remaining) && (remaining > 0)) {
+        # 100 tweets returned per api request
+        remaining <- remaining * 100
+        msg(
+          paste0(
+            "Requested ",
+            sum(numTweets),
+            " tweets of ",
+            remaining,
+            " in this search rate limit.\n"
+          )
+        )
+      }
+      msg(paste0("Rate limit reset: ", rate_limit$reset_at, "\n"))
 
-      user_names <- users_df |>
-        dplyr::select(.data$user_id, .data$screen_name) |>
-        dplyr::rename_with(function(x) paste0("u.", x))
+    } else {
+      msg(paste0("Requested ", sum(numTweets), " tweets.\n"))
     }
 
-    tweets_df <- tweets_df |> modify_tweet_data(users = user_names, rtweet_created_at = TRUE)
+    tl_tweets <- get_tls()
 
-    if (is.null(tweets_df)) {
-      tweets_df <- tibble::tibble()
-    }
+    df_tweets <- tl_tweets |> import_rtweet(rtweet_created_at = TRUE)
+    n_tweets <- check_df_n(df_tweets$tweets)
 
     # summary
-    if (nrow(tweets_df) > 0) {
-
-      first_tweets <- tweets_df |>
+    if (n_tweets > 0) {
+      tweet_first <- df_tweets$tweets |>
         dplyr::slice_head(n = 1) |>
         dplyr::mutate(tweet = "Latest Obs")
 
-      last_tweets <- tweets_df |>
+      tweet_last <- df_tweets$tweets |>
         dplyr::slice_tail(n = 1) |>
         dplyr::mutate(tweet = "Earliest Obs")
 
-      results_df <- dplyr::bind_rows(first_tweets, last_tweets) |>
+      df_summary <- dplyr::bind_rows(tweet_first, tweet_last) |>
         dplyr::mutate(created = as.character(.data$created_at)) |>
-        dplyr::select(.data$tweet,
-                      .data$status_id,
-                      .data$created)
+        dplyr::select(.data$tweet, .data$status_id, .data$created)
 
       msg("\n")
-      msg(print_summary(results_df))
+      msg(print_summary(df_summary))
     }
 
-    msg(paste0("Collected ", nrow(tweets_df), " tweets.\n"))
-
-    class(tweets_df) <-
-      append(c("datasource", "twitter"), class(tweets_df))
-
-    attr(tweets_df, "users") <- users_df
+    msg(paste0("Collected ", n_tweets, " tweets.\n"))
 
     if (writeToFile) {
-      write_output_file(tweets_df, "rds", "TwitterData", verbose = verbose)
+      write_output_file(df_tweets, "rds", "TwitterData", verbose = verbose)
     }
 
     msg("Done.\n")
 
-    tweets_df
+    df_tweets
   }

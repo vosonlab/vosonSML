@@ -31,11 +31,14 @@ Create <- function(datasource, type, ...) {
 #' @export
 Create.default <- function(datasource, type, ...) {
   # check datasource
-  if (!is.data.frame(datasource)) {
-    stop("Datasource is not a dataframe.", call. = FALSE)
-  }
-  if (nrow(datasource) < 1) {
-    stop("Empty datasource passed to create.", call. = FALSE)
+  if (is.list(datasource) && ("tweets" %in% names(datasource))) {
+    if (check_df_n(datasource$tweets) < 1) {
+      stop("Datasource passed to Create is invalid or empty.", call. = FALSE)
+    }
+  } else {
+    if (check_df_n(datasource) < 1) {
+      stop("Datasource passed to Create is invalid or empty.", call. = FALSE)
+    }
   }
 
   # check if network type is a character string
@@ -63,7 +66,7 @@ Create.default <- function(datasource, type, ...) {
 #' @method Create activity
 #' @export
 Create.activity <- function(datasource, type, ...) {
-  msg <- f_verbose(list(...)$verbose)
+  msg <- f_verbose(check_dots("verbose", ...))
 
   UseMethod("Create.activity", datasource)
 }
@@ -80,7 +83,7 @@ Create.activity.default <- function(datasource, type, ...) {
 #' @method Create actor
 #' @export
 Create.actor <- function(datasource, type, ...) {
-  msg <- f_verbose(list(...)$verbose)
+  msg <- f_verbose(check_dots("verbose", ...))
 
   UseMethod("Create.actor", datasource)
 }
@@ -97,7 +100,7 @@ Create.actor.default <- function(datasource, type, ...) {
 #' @method Create semantic
 #' @export
 Create.semantic <- function(datasource, type, ...) {
-  msg <- f_verbose(list(...)$verbose)
+  msg <- f_verbose(check_dots("verbose", ...))
 
   UseMethod("Create.semantic", datasource)
 }

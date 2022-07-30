@@ -1,5 +1,6 @@
 ---
-output: github_document
+output:
+  github_document
 ---
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, collapse = TRUE)
@@ -58,34 +59,32 @@ remotes::install_github("vosonlab/`r pkg`")
 
 The following usage examples will provide a quick start to using `vosonSML` functions. Additionally there is an [Introduction to vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html) vignette that is a practical and explanatory guide to collecting data and creating networks.
 
-### Usage
+### General Usage
 
 The process of authentication, data collection and creating networks in `vosonSML` is expressed with the three functions: *Authenticate*, *Collect* and *Create*. The following are some examples of their usage for supported social media:
 
-### Twitter Examples
+[Twitter](#twitter-usage) | [YouTube](#youtube-usage) | [Reddit](#reddit-usage) | [Hyperlink](#hyperlink-usage) | [Supplemental Functions](#supplemental-functions)
+        
+### Twitter Usage
+
+Please note that `vosonSML` only uses the `Twitter v1.0a API` through [rtweet](https://github.com/ropensci/rtweet) and does not support the `v2 API` at this stage. The VOSON Lab [voson.tcn](https://github.com/vosonlab/voson.tcn) package for Twitter Conversation Networks does use the `v2 API` but is limited to collecting conversation threads and tweets by URL or ID.
 
 #### Authenticate with the Twitter API
 
 `Authenticate` is used to create an object that contains a Twitter OAuth 1.0a user token for accessing the twitter API. This can and should be re-used by saving it once to file after calling `Authenticate` and then by loading it again during future sessions.
 
 ``` r
-library(magrittr)
 library(vosonSML)
 
 # twitter authentication creates an access token as part of the auth object
-twitter_auth <- Authenticate("twitter", 
-                             appName = "My App",
-                             apiKey = "xxxxxxxxxxxx",
-                             apiSecret = "xxxxxxxxxxxx",
-                             accessToken = "xxxxxxxxxxxx",
-                             accessTokenSecret = "xxxxxxxxxxxx")
+twitter_auth <- Authenticate("twitter", bearerToken = "xxxxxxxxxxxx")
 
 # save the object to file after authenticate
-saveRDS(twitter_auth, file = "~/.twitter_oauth1.0a")
+saveRDS(twitter_auth, file = "~/.my_bearer_auth")
 ```
 ``` r
 # load a previously saved auth object for use in collect
-twitter_auth <- readRDS("~/.twitter_oauth1.0a")
+twitter_auth <- readRDS("~/.my_bearer_auth")
 ```
 
 #### Collect tweets using a search or from user timelines
@@ -123,7 +122,7 @@ The next example collects the 100 most recents tweets from the `@vosonlab` twitt
 
 ``` r
 # collect 100 timeline tweets for @vosonlab
-twitter_data <- my_twitter_auth |>
+twitter_data <- twitter_auth |>
   Collect(endpoint = "timeline",
           users = "vosonlab",
           numTweets = 100,
@@ -150,6 +149,7 @@ The twitter `Create` function accepts the data from `Collect` and a type paramet
 ##### Activity network
 
 Nodes are tweets and edges are the relationship to other tweets such as `reply`, `retweet` or `quote` tweets.
+
 ``` r
 activity_network <- twitter_data |> 
   Create("activity")
@@ -190,6 +190,7 @@ g <- activity_network |> Graph(writeToFile = TRUE)
 ##### Actor network
 
 Nodes are twitter users and edges are the relationship to other users in the network such as `reply`, `mention`, `retweet` and `quote` tweets. Mentions can be excluded by setting the parameter `inclMentions` to `FALSE`.
+
 ``` r
 actor_network <- twitter_data |>
   Create("actor", inclMentions = TRUE)
@@ -232,6 +233,7 @@ g <- actor_network |> Graph(writeToFile = TRUE)
 ##### Semantic network
 
 Nodes are concepts represented as common `words` and `hashtags`. Edges represent the occurence of a particular word and a particular hashtag in the same tweet.
+
 ``` r
 install.packages(c("tidyr", "tidytext", "stopwords")) # install additional required packages
 
@@ -286,6 +288,7 @@ g <- semantic_network |> Graph(writeToFile = TRUE)
 ##### 2-mode network
 
 Nodes are twitter `users` or `hashtags`. Edges represent the use of a `hashtag` or the reference to another `user` in a tweet.
+
 ``` r
 install.packages("tidytext") # install additional required packages
 
@@ -327,17 +330,19 @@ g <- twomode_network |> Graph(writeToFile = TRUE)
 # + ... omitted several edges
 ```
 
-### YouTube Examples
+### YouTube Usage
 
 #### Authenticate and Collect comments from youtube videos
 
 YouTube uses an API key rather than an OAuth token and is simply set by calling `Authenticate` with the key as a parameter.
+
 ``` r
 # youtube authentication sets the api key
 youtube_auth <- Authenticate("youtube", apiKey = "xxxxxxxxxxxx")
 ```
 
 Once the key is set then `Collect` can be used to collect the comments from specified youtube videos. The following example collects a maximum of 100 top-level comments and all replies from each of the 2 specified video ID's. It produces a dataframe with the combined comment data.
+
 ``` r
 # helper to create a list of youtube video ids from urls
 youtube_video_ids <- c("https://www.youtube.com/watch?v=xxxxxxxx",
@@ -383,6 +388,7 @@ The youtube `Create` function accepts the data from `Collect` and a network type
 ##### Activity network
 
 Nodes are video comments and edges represent whether they were directed to the video as a top-level comment or to another comment as a reply comment.
+
 ``` r
 activity_network <- youtube_data |> Create("activity")
 
@@ -409,7 +415,8 @@ g <- activity_network |> Graph()
 
 ##### Actor network
 
-Nodes are users who have posted comments and the video publishers, edges represent comments directed at other users. 
+Nodes are users who have posted comments and the video publishers, edges represent comments directed at other users.
+
 ``` r
 actor_network <- youtube_data |> Create("actor")
 ```
@@ -424,11 +431,12 @@ g <- actor_network |> Graph()
 # | video_id (e/c), comment_id (e/c), edge_type (e/c)
 ```
 
-### Reddit Examples
+### Reddit Usage
 
 #### Authenticate and Collect from reddit threads
 
 The reddit API end-point used by `vosonSML` does not require authentication but an `Authenticate` object is still used to set up the collection and creation operations as part of a reddit workflow. The reddit `Collect` function can then be used to collect comments from reddit threads specified by URL's.
+
 ``` r
 # specify reddit threads to collect by url
 reddit_thread_urls <-
@@ -459,6 +467,7 @@ Please note that because of the API end-point used that `Collect` is limited to 
 ##### Activity network
 
 Nodes are original thread posts and comments, edges are replies directed to the original post and to comments made by others.
+
 ``` r
 # create an activity network
 activity_network <- reddit_data |> Create("activity")
@@ -486,6 +495,7 @@ g <- activity_network |> Graph()
 ##### Actor network
 
 Nodes are reddit users who have commented on threads and edges represent replies to other users.
+
 ``` r
 # create an actor network
 actor_network <- reddit_data |> Create("actor")
@@ -503,7 +513,7 @@ g <- actor_network |> Graph()
 # | comment_id (e/n), comm_id (e/c)
 ```
 
-### Hyperlink Examples
+### Hyperlink Usage
 
 #### Authenticate and Collect from web sites
 
@@ -553,6 +563,7 @@ actor_network <- Create(hyperlink_data, "actor")
 #### AddText adds collected text data to networks as node or edge attributes
 
 The `AddText` function can be used following the creation of `activity` or `actor` networks for `twitter`, `youtube` and `reddit`. It will add an attribute starting with `vosonTxt_` to nodes of `activity` networks and to edges of `actor` networks. It requires a collected `datasource` from which to extract text data.
+
 ``` r
 # create activity network
 activity_network <- twitter_data |> Create("activity")
@@ -576,13 +587,16 @@ g <- activity_network |> Graph()
 ```
 
 `AddText` will also redirect some edges in a youtube `actor` network by finding user references at the beginning of reply comments text using the `repliesFromText` parameter. In the following example an edge would be redirected from `UserC` to `UserB` by text reference as opposed to `UserA` who made the top-level comment both users are replying to.
+
 ``` r
 # video comments
 # UserA: Great tutorial.
 # |- UserB: I agree, but it could have had more examples.
 # |- UserC: @UserB I thought it probably had too many.
 ```
+
 Redirect edge between user nodes `C -> A` to `C -> B`.
+
 ``` r
 # create activity network
 actor_network <- youtube_data |> Create("actor")
@@ -596,6 +610,7 @@ actor_network <- actor_network |>
 #### AddUserData requests and adds user profile data to networks
 
 `AddUserData` adds user profile information to as many users in a twitter `actor` network as possible. If the profile information is not available in the collect data and the `lookupUsers` parameter is set then it will make twitter API requests to retrieve them. The profile information is added as additional node attributes.
+
 ``` r
 # add additional twitter user profile info
 actor_network <- actor_network |>
@@ -608,7 +623,9 @@ actor_network <- actor_network |>
 # User information collected for 80 users.
 # Done.
 ```
+
 For reference the `AddUserData` function will also add a new dataframe to the `actor_network` network list containing the retrieved user profiles called `users`.
+
 ``` r
 names(actor_network)
 # [1] "edges" "nodes" "users"
@@ -628,9 +645,11 @@ actor_network <- actor_network |> Graph()
 # | account_lang (v/c), profile_banner_url (v/c), profile_background_url (v/c),
 # | profile_image_url (v/c), label (v/c), edge_type (e/c), timestamp (e/c), status_id (e/c)
 ```
+
 #### AddVideoData requests and adds video data to networks
 
 `AddVideoData` adds video information as node attributes in youtube `actor` networks and replaces the video ID nodes with a user (channel owner or publisher). The `actorSubOnly` parameter can be used to only perform the ID substitution.
+
 ``` r
 # replaces VIDEOID:xxxxxx references in actor network with their publishers
 # user id (channel ID) and adds additional collected youtube video info to actor
@@ -641,7 +660,9 @@ actor_network <- actor_network |>
 
 # Adding video data to network...Done.
 ```
+
 `AddVideoData` function will also add a new dataframe to the `actor_network` network list containing the retrieved video information called `videos`.
+
 ``` r
 names(actor_network)
 # [1] "edges" "nodes" "videos"
@@ -662,6 +683,7 @@ actor_network <- actor_network |> Graph()
 #### Save and Load Authentication Objects
 
 Save and reuse twitter and youtube authentication objects in future sessions.
+
 ``` r
 # save the object after Authenticate
 saveRDS(youtube_auth, file = "~/.youtube_auth")
@@ -680,7 +702,7 @@ For more detailed information about functions and their parameters, please refer
 
 ## Special thanks
 
-This package would not be possible without key packages by other authors in the R community, particularly: [data.table](https://github.com/Rdatatable/data.table), [dplyr](https://github.com/tidyverse/dplyr), [httr](https://github.com/r-lib/httr), [igraph](https://github.com/igraph/rigraph), [magrittr](https://CRAN.R-project.org/package=magrittr), [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [rtweet](https://github.com/ropensci/rtweet) and [tidytext](https://github.com/juliasilge/tidytext).
+This package would not be possible without key packages by other authors in the R community, particularly: [data.table](https://github.com/Rdatatable/data.table), [dplyr](https://github.com/tidyverse/dplyr), [httr](https://github.com/r-lib/httr), [igraph](https://github.com/igraph/rigraph), [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [rtweet](https://github.com/ropensci/rtweet) and [tidytext](https://github.com/juliasilge/tidytext).
 
 ## Code of Conduct
   

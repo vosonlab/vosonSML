@@ -19,7 +19,7 @@ recent timeline tweets per user.'><!-- mathjax --><script src="https://cdnjs.clo
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.5</span>
       </span>
     </div>
 
@@ -125,7 +125,8 @@ recent timeline tweets per user.</p>
 <span>  <span class="va">credential</span>,</span>
 <span>  <span class="va">endpoint</span>,</span>
 <span>  users <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  numTweets <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span>,</span>
+<span>  numTweets <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  retryOnRateLimit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  writeToFile <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -149,6 +150,11 @@ recent timeline tweets per user.</p>
 <dt>numTweets</dt>
 <dd><p>Numeric vector. Specifies how many tweets to be collected per user. Defaults to single value of
 <code>100</code>.</p></dd>
+
+
+<dt>retryOnRateLimit</dt>
+<dd><p>Logical. When the API rate-limit is reached should the collection wait and resume when it
+resets. Default is <code>TRUE</code>.</p></dd>
 
 
 <dt>writeToFile</dt>

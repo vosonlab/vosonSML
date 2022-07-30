@@ -23,3 +23,16 @@ containing text data.
 \description{
 Add columns containing text data to reddit actor network dataframes
 }
+\examples{
+\dontrun{
+# add text to an actor network ignoring references to actors at the beginning of
+# comment text
+net_actor <- data_collect |>
+  Create("actor") |> AddText(data_collect)
+
+# network
+net_actor$nodes
+net_actor$edges
+}
+
+}

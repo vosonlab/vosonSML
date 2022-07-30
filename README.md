@@ -5,7 +5,7 @@
 [![CRAN_Monthly](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![CRAN_Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Github_Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github)](https://github.com/vosonlab/vosonSML/releases)
-[![Github_Dev](https://img.shields.io/static/v1?label=dev&message=v0.31.1&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Github_Dev](https://img.shields.io/static/v1?label=dev&message=v0.32.3&logo=github)](https://github.com/vosonlab/vosonSML)
 [![Last_Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 [![Build_Status](https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg)](https://github.com/vosonlab/vosonSML/actions)
 
@@ -29,7 +29,7 @@ Install the most recent release tag via GitHub:
 
 ``` r
 install.packages(
-  "https://github.com/vosonlab/vosonSML/releases/download/v0.29.13/vosonSML-0.29.13.tar.gz",
+  "https://github.com/vosonlab/vosonSML/releases/download/v0.30.6/vosonSML-0.30.6.tar.gz",
   repo = NULL, type = "source")
 ```
 
@@ -48,14 +48,25 @@ vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html)
 vignette that is a practical and explanatory guide to collecting data
 and creating networks.
 
-### Usage
+### General Usage
 
 The process of authentication, data collection and creating networks in
 `vosonSML` is expressed with the three functions: *Authenticate*,
 *Collect* and *Create*. The following are some examples of their usage
 for supported social media:
 
-### Twitter Examples
+[Twitter](#twitter-usage) \| [YouTube](#youtube-usage) \|
+[Reddit](#reddit-usage) \| [Hyperlink](#hyperlink-usage) \|
+[Supplemental Functions](#supplemental-functions)
+
+### Twitter Usage
+
+Please note that `vosonSML` only uses the `Twitter v1.0a API` through
+[rtweet](https://github.com/ropensci/rtweet) and does not support the
+`v2 API` at this stage. The VOSON Lab
+[voson.tcn](https://github.com/vosonlab/voson.tcn) package for Twitter
+Conversation Networks does use the `v2 API` but is limited to collecting
+conversation threads and tweets by URL or ID.
 
 #### Authenticate with the Twitter API
 
@@ -65,24 +76,18 @@ re-used by saving it once to file after calling `Authenticate` and then
 by loading it again during future sessions.
 
 ``` r
-library(magrittr)
 library(vosonSML)
 
 # twitter authentication creates an access token as part of the auth object
-twitter_auth <- Authenticate("twitter", 
-                             appName = "My App",
-                             apiKey = "xxxxxxxxxxxx",
-                             apiSecret = "xxxxxxxxxxxx",
-                             accessToken = "xxxxxxxxxxxx",
-                             accessTokenSecret = "xxxxxxxxxxxx")
+twitter_auth <- Authenticate("twitter", bearerToken = "xxxxxxxxxxxx")
 
 # save the object to file after authenticate
-saveRDS(twitter_auth, file = "~/.twitter_oauth1.0a")
+saveRDS(twitter_auth, file = "~/.my_bearer_auth")
 ```
 
 ``` r
 # load a previously saved auth object for use in collect
-twitter_auth <- readRDS("~/.twitter_oauth1.0a")
+twitter_auth <- readRDS("~/.my_bearer_auth")
 ```
 
 #### Collect tweets using a search or from user timelines
@@ -94,7 +99,7 @@ dataframe with the collected tweet data.
 
 ``` r
 # collect 100 recent tweets for the hashtag #auspol
-twitter_data <- twitter_auth %>%
+twitter_data <- twitter_auth |>
   Collect(searchTerm = "#auspol",
           searchType = "recent",
           numTweets = 100,
@@ -125,7 +130,7 @@ The next example collects the 100 most recents tweets from the
 
 ``` r
 # collect 100 timeline tweets for @vosonlab
-twitter_data <- my_twitter_auth %>%
+twitter_data <- twitter_auth |>
   Collect(endpoint = "timeline",
           users = "vosonlab",
           numTweets = 100,
@@ -162,7 +167,7 @@ Nodes are tweets and edges are the relationship to other tweets such as
 `reply`, `retweet` or `quote` tweets.
 
 ``` r
-activity_network <- twitter_data %>% 
+activity_network <- twitter_data |> 
   Create("activity")
 
 # Generating twitter activity network...
@@ -179,7 +184,7 @@ activity_network <- twitter_data %>%
 ```
 
 ``` r
-g <- activity_network %>% Graph(writeToFile = TRUE)
+g <- activity_network |> Graph(writeToFile = TRUE)
 
 # Creating igraph network graph...
 # GRAPHML file written: 2021-06-21_122758-TwitterActivity.graphml
@@ -207,7 +212,7 @@ Mentions can be excluded by setting the parameter `inclMentions` to
 `FALSE`.
 
 ``` r
-actor_network <- twitter_data %>%
+actor_network <- twitter_data |>
   Create("actor", inclMentions = TRUE)
 
 # Generating twitter actor network...
@@ -226,7 +231,7 @@ actor_network <- twitter_data %>%
 ```
 
 ``` r
-g <- actor_network %>% Graph(writeToFile = TRUE)
+g <- actor_network |> Graph(writeToFile = TRUE)
 
 # Creating igraph network graph...
 # GRAPHML file written: 2021-06-21_123015-TwitterActor.graphml
@@ -257,7 +262,7 @@ install.packages(c("tidyr", "tidytext", "stopwords")) # install additional requi
 
 # create a semantic network excluding the hashtag #auspol, include only the top 10%
 # most frequent words and 20% most frequent hashtags as nodes
-semantic_network <- twitter_data %>% 
+semantic_network <- twitter_data |> 
   Create("semantic",
          removeTermsOrHashtags = c("#auspol"),
          termFreq = 10,
@@ -284,7 +289,7 @@ semantic_network <- twitter_data %>%
 ```
 
 ``` r
-g <- semantic_network %>% Graph(writeToFile = TRUE)
+g <- semantic_network |> Graph(writeToFile = TRUE)
 
 # Creating igraph network graph...
 # GRAPHML file written: 2021-06-21_123939-TwitterSemantic.graphml
@@ -312,7 +317,7 @@ Nodes are twitter `users` or `hashtags`. Edges represent the use of a
 ``` r
 install.packages("tidytext") # install additional required packages
 
-twomode_network <- twitter_data %>%
+twomode_network <- twitter_data |>
   Create("twomode", 
          removeTermsOrHashtags = c("#auspol"),
          weighted = TRUE)
@@ -331,7 +336,7 @@ twomode_network <- twitter_data %>%
 ```
 
 ``` r
-g <- twomode_network %>% Graph(writeToFile = TRUE)
+g <- twomode_network |> Graph(writeToFile = TRUE)
 
 # Creating igraph network graph...
 # GRAPHML file written: 2021-06-21_125234-Twitter2mode.graphml
@@ -351,7 +356,7 @@ g <- twomode_network %>% Graph(writeToFile = TRUE)
 # + ... omitted several edges
 ```
 
-### YouTube Examples
+### YouTube Usage
 
 #### Authenticate and Collect comments from youtube videos
 
@@ -370,17 +375,15 @@ video ID’s. It produces a dataframe with the combined comment data.
 
 ``` r
 # helper to create a list of youtube video ids from urls
-youtube_video_ids <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx",
-                                          "https://youtu.be/xxxxxxxx"))
-
-# Extracted 2 video ids.
+youtube_video_ids <- c("https://www.youtube.com/watch?v=xxxxxxxx",
+                       "https://youtu.be/xxxxxxxx")
 ```
 
 ``` r
-youtube_data <- youtube_auth %>%
+youtube_data <- youtube_auth |>
   Collect(videoIDs = youtube_video_ids,
           maxComments = 100,
-          verbose = FALSE)
+          verbose = TRUE)
 
 # Collecting comment threads for youtube videos...
 # Video 1 of 2
@@ -420,7 +423,7 @@ to the video as a top-level comment or to another comment as a reply
 comment.
 
 ``` r
-activity_network <- youtube_data %>% Create("activity")
+activity_network <- youtube_data |> Create("activity")
 
 # Generating youtube activity network...
 # -------------------------
@@ -435,7 +438,7 @@ activity_network <- youtube_data %>% Create("activity")
 ```
 
 ``` r
-g <- activity_network %>% Graph()
+g <- activity_network |> Graph()
 
 # Creating igraph network graph...Done.
 
@@ -450,11 +453,11 @@ Nodes are users who have posted comments and the video publishers, edges
 represent comments directed at other users.
 
 ``` r
-actor_network <- youtube_data %>% Create("actor")
+actor_network <- youtube_data |> Create("actor")
 ```
 
 ``` r
-g <- actor_network %>% Graph()
+g <- actor_network |> Graph()
 
 # Generating youtube actor network...Done.
 
@@ -464,7 +467,7 @@ g <- actor_network %>% Graph()
 # | video_id (e/c), comment_id (e/c), edge_type (e/c)
 ```
 
-### Reddit Examples
+### Reddit Usage
 
 #### Authenticate and Collect from reddit threads
 
@@ -481,7 +484,7 @@ reddit_thread_urls <-
     "https://www.reddit.com/r/datascience/comments/g1suaz/xx_xxxx_xxx_xxxxxxx/")
 
 # authentication does not require credentials
-reddit_data <- Authenticate("reddit") %>%
+reddit_data <- Authenticate("reddit") |>
   Collect(threadUrls = reddit_thread_urls)
 
 # Collecting comment threads for reddit urls...
@@ -510,7 +513,7 @@ to the original post and to comments made by others.
 
 ``` r
 # create an activity network
-activity_network <- reddit_data %>% Create("activity")
+activity_network <- reddit_data |> Create("activity")
 
 # Generating reddit activity network...
 # -------------------------
@@ -524,7 +527,7 @@ activity_network <- reddit_data %>% Create("activity")
 ```
 
 ``` r
-g <- activity_network %>% Graph()
+g <- activity_network |> Graph()
 
 # Creating igraph network graph...Done.
 
@@ -540,13 +543,13 @@ replies to other users.
 
 ``` r
 # create an actor network
-actor_network <- reddit_data %>% Create("actor")
+actor_network <- reddit_data |> Create("actor")
 
 # Generating reddit actor network...Done.
 ```
 
 ``` r
-g <- actor_network %>% Graph()
+g <- actor_network |> Graph()
 
 # Creating igraph network graph...Done.
 
@@ -556,7 +559,7 @@ g <- actor_network %>% Graph()
 # | comment_id (e/n), comm_id (e/c)
 ```
 
-### Hyperlink Examples
+### Hyperlink Usage
 
 #### Authenticate and Collect from web sites
 
@@ -578,7 +581,7 @@ seed_page_urls <-
              type = c("ext", "ext", "ext"),
              max_depth = c(2, 2, 2))
 
-hyperlink_data <- Authenticate("web") %>%
+hyperlink_data <- Authenticate("web") |>
   Collect(pages = seed_page_urls)
 
 # Collecting web page hyperlinks...
@@ -618,20 +621,20 @@ from which to extract text data.
 
 ``` r
 # create activity network
-activity_network <- twitter_data %>% Create("activity")
+activity_network <- twitter_data |> Create("activity")
 
 # Generating twitter activity network...Done.
 ```
 
 ``` r
 # activity network with text data added as node attribute
-activity_network <- activity_network %>% AddText(twitter_data)
+activity_network <- activity_network |> AddText(twitter_data)
 
 # Adding text to network...Done.
 ```
 
 ``` r
-g <- activity_network %>% Graph()
+g <- activity_network |> Graph()
 
 # Creating igraph network graph...Done.
 
@@ -657,10 +660,10 @@ Redirect edge between user nodes `C -> A` to `C -> B`.
 
 ``` r
 # create activity network
-actor_network <- youtube_data %>% Create("actor")
+actor_network <- youtube_data |> Create("actor")
 
 # detects replies to users in text
-actor_network <- actor_network %>%
+actor_network <- actor_network |>
   AddText(youtube_data,
           repliesFromText = TRUE)
 ```
@@ -675,7 +678,7 @@ information is added as additional node attributes.
 
 ``` r
 # add additional twitter user profile info
-actor_network <- actor_network %>%
+actor_network <- actor_network |>
   AddUserData(twitter_data,
               lookupUsers = TRUE,
               twitterAuth = twitter_auth)
@@ -698,7 +701,7 @@ nrow(actor_network$users)
 ```
 
 ``` r
-actor_network <- actor_network %>% Graph()
+actor_network <- actor_network |> Graph()
 
 # Creating igraph network graph...Done.
 
@@ -722,9 +725,9 @@ perform the ID substitution.
 # replaces VIDEOID:xxxxxx references in actor network with their publishers
 # user id (channel ID) and adds additional collected youtube video info to actor
 # network graph as node attributes
-actor_network <- actor_network %>% 
+actor_network <- actor_network |> 
   AddVideoData(youtube_auth,
-               actorSubOnly = FALSE) %>%
+               actorSubOnly = FALSE) |>
 
 # Adding video data to network...Done.
 ```
@@ -741,7 +744,7 @@ nrow(actor_network$videos)
 ```
 
 ``` r
-actor_network <- actor_network %>% Graph()
+actor_network <- actor_network |> Graph()
 
 # Creating igraph network graph...Done.
 
@@ -792,7 +795,6 @@ in the R community, particularly:
 [dplyr](https://github.com/tidyverse/dplyr),
 [httr](https://github.com/r-lib/httr),
 [igraph](https://github.com/igraph/rigraph),
-[magrittr](https://CRAN.R-project.org/package=magrittr),
 [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR),
 [rtweet](https://github.com/ropensci/rtweet) and
 [tidytext](https://github.com/juliasilge/tidytext).

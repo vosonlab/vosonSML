@@ -14,8 +14,9 @@ AddUserData(net, data, ...)
 \item{...}{Additional parameters passed to function.}
 }
 \value{
-Network as a named list of two dataframes containing \code{$nodes} and \code{$edges} including columns for
-additional user data.
+Network as a named list of three dataframes containing \code{$nodes}, \code{$edges}. Nodes include columns
+for additional user profile data and metrics. Referenced users for which no data was found are returned in
+\code{missing_users}.
 }
 \description{
 Network is supplemented with additional downloaded social media user information applied as node

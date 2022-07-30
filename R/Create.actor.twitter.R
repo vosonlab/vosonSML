@@ -47,7 +47,13 @@ Create.actor.twitter <-
            inclRtMentions = FALSE,
            verbose = FALSE,
            ...) {
+
     msg("Generating twitter actor network...\n")
+
+    datasource <- datasource$tweets
+    if (check_df_n(datasource) < 1) {
+      stop("Datasource invalid or empty.", call. = FALSE)
+    }
 
     df_stats <-
       network_stats(NULL, "collected tweets", nrow(datasource))

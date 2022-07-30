@@ -15,7 +15,7 @@
 #' @name AddVideoData
 #' @export
 AddVideoData <- function(net, youtubeAuth = NULL, ...) {
-  msg <- f_verbose(list(...)$verbose)
+  msg <- f_verbose(check_dots("verbose", ...))
   msg("Adding video data to network...")
 
   if ("voson.video" %in% class(net)) {

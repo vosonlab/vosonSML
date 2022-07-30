@@ -19,9 +19,9 @@ Default is \code{TRUE}.}
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-Network as a named list of two dataframes containing \code{$nodes}, \code{$edges}. Nodes include columns for
-additional user profile data and metrics. Referenced users for which no data was found are returned in an object
-attribute named \code{missing_users}.
+Network as a named list of three dataframes containing \code{$nodes}, \code{$edges}. Nodes include columns
+for additional user profile data and metrics. Referenced users for which no data was found are returned in
+\code{missing_users}.
 }
 \description{
 Network is supplemented with additional downloaded user information applied as actor node attributes.
@@ -29,9 +29,9 @@ Network is supplemented with additional downloaded user information applied as a
 \examples{
 \dontrun{
 # add user info to a twitter actor network
-actor_net <- twitter_data |>
+net_actor <- data_collect |>
   Create("actor") |>
-  AddUserData(twitter_data)
+  AddUserData(data_collect)
 }
 
 }

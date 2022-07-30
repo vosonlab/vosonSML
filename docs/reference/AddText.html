@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.5</span>
       </span>
     </div>
 
@@ -151,11 +151,12 @@ and <code><a href="AddText.actor.reddit.html">AddText.actor.reddit</a></code> fo
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># add text to an activity network</span></span></span>
-<span class="r-in"><span><span class="va">activityNetwork</span> <span class="op">&lt;-</span> <span class="va">collectData</span> <span class="op">|&gt;</span> <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">AddText</span><span class="op">(</span><span class="va">collectData</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">net_activity</span> <span class="op">&lt;-</span>  <span class="va">data_collect</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">AddText</span><span class="op">(</span><span class="va">data_collect</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># network</span></span></span>
-<span class="r-in"><span><span class="co"># activityNetwork$nodes</span></span></span>
-<span class="r-in"><span><span class="co"># activityNetwork$edges</span></span></span>
+<span class="r-in"><span><span class="va">net_activity</span><span class="op">$</span><span class="va">nodes</span></span></span>
+<span class="r-in"><span><span class="va">net_activity</span><span class="op">$</span><span class="va">edges</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

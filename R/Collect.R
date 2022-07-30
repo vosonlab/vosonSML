@@ -15,7 +15,7 @@
 #'
 #' @export
 Collect <- function(credential, endpoint = NULL, ...) {
-  msg <- f_verbose(list(...)$verbose)
+  msg <- f_verbose(check_dots("verbose", ...))
 
   # set the environment encoding to UTF-8 for data collection
   saved_enc <- getOption("encoding")

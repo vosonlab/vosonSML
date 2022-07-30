@@ -30,7 +30,7 @@ https://developer.twitter.com/en/docs/twitter-api/v1/tweets/search/guides/standa
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.5</span>
       </span>
     </div>
 
@@ -150,7 +150,7 @@ documentation for query operators:
 <span>  searchType <span class="op">=</span> <span class="st">"recent"</span>,</span>
 <span>  numTweets <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  includeRetweets <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  retryOnRateLimit <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  retryOnRateLimit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  writeToFile <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  <span class="va">...</span></span>
@@ -186,7 +186,7 @@ hashtag <code>"#auspol"</code>.</p></dd>
 
 
 <dt>retryOnRateLimit</dt>
-<dd><p>Logical. Default is <code>FALSE</code>.</p></dd>
+<dd><p>Logical. When the API rate-limit is reached should the collection wait and resume when it resets. Default is <code>TRUE</code>.</p></dd>
 
 
 <dt>writeToFile</dt>
@@ -194,7 +194,7 @@ hashtag <code>"#auspol"</code>.</p></dd>
 
 
 <dt>verbose</dt>
-<dd><p>Logical. Output additional information about the data collection. Default is <code>FALSE</code>.</p></dd>
+<dd><p>Logical. Output additional information. Default is <code>FALSE</code>.</p></dd>
 
 
 <dt>...</dt>

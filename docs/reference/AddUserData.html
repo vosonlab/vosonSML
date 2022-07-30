@@ -18,7 +18,7 @@ attributes."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.5</span>
       </span>
     </div>
 
@@ -139,8 +139,9 @@ attributes.</p>
     <h2>Value</h2>
     
 
-<p>Network as a named list of two dataframes containing <code>$nodes</code> and <code>$edges</code> including columns for
-additional user data.</p>
+<p>Network as a named list of three dataframes containing <code>$nodes</code>, <code>$edges</code>. Nodes include columns
+for additional user profile data and metrics. Referenced users for which no data was found are returned in
+<code>missing_users</code>.</p>
     </div>
     <div id="note">
     <h2>Note</h2>

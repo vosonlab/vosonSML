@@ -212,6 +212,11 @@ rm_collect_cls <- function(cls_lst) {
   cls_lst[!cls_lst %in% c("datasource", "twitter", "youtube", "reddit", "web")]
 }
 
+prompt_and_stop <- function(pkgs, f) {
+  rlang::check_installed(pkgs, paste0("for ", f))
+  stop_req_pkgs(pkgs, f)
+}
+
 # check for required packages and stop with a message if missing
 stop_req_pkgs <- function(pkgs, from = "this function") {
   # load the namespace of pkgs loadedNamespaces()
@@ -314,9 +319,7 @@ vsml_silent <- function(x) {
 lgl_debug <- function(x) {
   lgl <- FALSE
   if (!is.null(x)) {
-    if (is.logical(x)) {
-      lgl <- x
-    }
+    if (is.logical(x)) lgl <- x
   }
 
   lgl
@@ -344,10 +347,11 @@ check_num <-
            double = FALSE,
            null.ok = FALSE,
            na.ok = FALSE) {
-    if (!is.null(x)) {
-      if (!is.na(x)) {
-        if (is.numeric(x)) {
-          if (is.double(x)) {
+
+    if (all(!is.null(x))) {
+      if (all(!is.na(x))) {
+        if (all(is.numeric(x))) {
+          if (!all.equal(x, as.integer(x))) {
             if (double) {
               return(x)
             } else {
@@ -358,55 +362,74 @@ check_num <-
           return(x)
         }
       } else {
-        if (na.ok) {
-          return(x)
-        }
+        if (na.ok) return(x)
       }
     } else {
-      if (null.ok) {
-        return(x)
-      }
+      if (null.ok) return(x)
     }
 
     stop(paste0(param, " must be numeric."), call. = FALSE)
   }
 
+# extract value from dots parameter
+check_dots <- function(x, ...) {
+  as.list(match.call(expand.dots = TRUE))[[x]]
+}
+
+# check is dataframe and n rows
+check_df_n <- function(x) {
+  if (!inherits(x, "data.frame")) {
+    return(-1)
+  }
+
+  nrow(x)
+}
+
 # check character input
 check_chr <-
   function(x,
            param = "value",
+           min = NULL,
            accept = c(),
            case = "lower",
            null.ok = FALSE,
            na.ok = FALSE) {
-    if (!is.null(x)) {
-      if (!is.na(x)) {
-        if (is.character(x)) {
+
+    if (all(!is.null(x))) {
+      if (all(!is.na(x))) {
+        if (all(is.character(x))) {
+          if (!is.null(min)) {
+            if (any(nchar(x) < min)) {
+              if (min == 1) {
+                stop(paste0(param, " must not be an empty string."), call. = FALSE)
+              } else {
+                stop(paste0(param, " must be ", min, " or more characters long."), call. = FALSE)
+              }
+
+            }
+          }
+
           if (length(accept)) {
             if (case == "lower") {
               x <- tolower(x)
             } else if (case == "upper") {
               x <- toupper(x)
             }
-            if (x %in% accept) {
+            if (all(x %in% accept)) {
               return(trimws(x))
             } else {
-              stop(paste0(param, " must be in ", paste0(accept, collapse = ",")), call. = FALSE)
+              stop(paste0(param, " must be in ", paste0(accept, collapse = ","), "."), call. = FALSE)
             }
           }
 
           return(trimws(x))
         }
       } else {
-        if (na.ok) {
-          return(x)
-        }
+        if (na.ok) return(x)
       }
     } else {
-      if (null.ok) {
-        return(x)
-      }
+      if (null.ok) return(x)
     }
 
-    stop(paste0(param, " must be a character value."), call. = FALSE)
+    stop(paste0(param, " must be of character type."), call. = FALSE)
   }

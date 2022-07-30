@@ -32,9 +32,9 @@
 #'   \code{popular}. Default type is \code{recent}.
 #' @param numTweets Numeric. Specifies how many tweets to be collected. Defaults is \code{100}.
 #' @param includeRetweets Logical. Specifies if the search should filter out retweets. Defaults is \code{TRUE}.
-#' @param retryOnRateLimit Logical. Default is \code{FALSE}.
+#' @param retryOnRateLimit Logical. When the API rate-limit is reached should the collection wait and resume when it resets. Default is \code{TRUE}.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
-#' @param verbose Logical. Output additional information about the data collection. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
 #' @inheritDotParams rtweet::search_tweets -token -q -n -type -include_rts -retryonratelimit -verbose
 #'
 #' @return A data.frame object with class names \code{"datasource"} and \code{"twitter"}.
@@ -55,38 +55,38 @@ Collect.search.twitter <-
            searchType = "recent",
            numTweets = 100,
            includeRetweets = TRUE,
-           retryOnRateLimit = FALSE,
+           retryOnRateLimit = TRUE,
            writeToFile = FALSE,
            verbose = FALSE,
            ...) {
-    rlang::check_installed("rtweet", "for Collect.twitter")
-    stop_req_pkgs(c("rtweet"), "Collect.twitter")
+
+    prompt_and_stop("rtweet", "Collect.search.twitter")
 
     msg("Collecting tweets for search query...\n")
 
-    authToken <- credential$auth
+    auth_token <- credential$auth
 
-    if (!("Token" %in% class(authToken))) {
+    if (!("Token" %in% class(auth_token)) && !("rtweet_bearer" %in% class(auth_token))) {
       stop(
         "OAuth token missing. Please use the Authenticate function to create and supply a token.",
         call. = FALSE
       )
     }
 
-    searchTerm <- trimws(searchTerm)
+    searchTerm <- check_chr(searchTerm, param = "searchTerm")
     if (searchTerm != "") {
       msg(paste0("Search term: ", searchTerm, "\n"))
     }
 
-    rtlimit <- NULL
+    rate_limit <- NULL
     tryCatch({
-      rtlimit <- rtweet::rate_limit("search/tweets", token = authToken)
+      rate_limit <- rtweet::rate_limit("search/tweets", token = auth_token)
     }, error = function(e) {
       msg("Unable to determine rate limit.\n")
     })
 
-    if (!is.null(rtlimit)) {
-      remaining <- rtlimit[["remaining"]]
+    if (!is.null(rate_limit)) {
+      remaining <- rate_limit[["remaining"]]
 
       if (!is.null(remaining) &&
           is.numeric(remaining) && (remaining > 0)) {
@@ -95,26 +95,21 @@ Collect.search.twitter <-
         msg(
           paste0(
             "Requested ",
-            numTweets,
+            sum(numTweets),
             " tweets of ",
             remaining,
             " in this search rate limit.\n"
           )
         )
-
-        if (retryOnRateLimit == TRUE && numTweets < remaining) {
-          msg("Less tweets requested than remaining limit retryOnRateLimit set to FALSE.\n")
-          retryOnRateLimit <- FALSE
-        }
       }
-      msg(paste0("Rate limit reset: ", rtlimit$reset_at, "\n"))
+      msg(paste0("Rate limit reset: ", rate_limit$reset_at, "\n"))
 
     } else {
-      msg(paste0("Requested ", numTweets, " tweets.\n"))
+      msg(paste0("Requested ", sum(numTweets), " tweets.\n"))
     }
 
     search_params <- list()
-    search_params[["token"]] <- authToken
+    search_params[["token"]] <- auth_token
 
     search_params["q"] <- searchTerm
     search_params["type"] <- searchType
@@ -128,64 +123,44 @@ Collect.search.twitter <-
     dots <- substitute(...())
     search_params <- append(search_params, dots)
 
-    tweets_df <- do.call(rtweet::search_tweets, search_params)
+    df_tweets <- do.call(rtweet::search_tweets, search_params)
 
     # modified parsing step
     # so created_at is not converted to local time
-    tweets <- lapply(tweets_df, "[[", "statuses")
-    tweets_df <- rtweet::tweets_with_users(tweets)
+    tweets <- lapply(df_tweets, "[[", "statuses")
+    df_tweets <- rtweet::tweets_with_users(tweets)
 
-    users_df <- attr(tweets_df, "users", exact = TRUE)
-    user_names <- NULL
-    if (!is.null(users_df)) {
-      users_df <- users_df |>
-        dplyr::rename(user_id = .data$id_str)
+    df_tweets <- df_tweets |> import_rtweet()
 
-      attr(tweets_df, "users") <- NULL
-
-      user_names <- users_df |>
-        dplyr::select(.data$user_id, .data$screen_name) |>
-        dplyr::rename_with(function(x) paste0("u.", x))
-    }
-
-    tweets_df <- tweets_df |> modify_tweet_data(users = user_names)
-
-    if (is.null(tweets_df)) {
-      tweets_df <- tibble::tibble()
-    }
+    n_tweets <- check_df_n(df_tweets$tweets)
 
     # summary
-    if (nrow(tweets_df) > 0) {
+    if (n_tweets > 0) {
 
-      first_tweets <- tweets_df |>
+      first_tweets <- df_tweets$tweets |>
         dplyr::slice_head(n = 1) |>
         dplyr::mutate(tweet = "Latest Obs")
 
-      last_tweets <- tweets_df |>
+      last_tweets <- df_tweets$tweets |>
         dplyr::slice_tail(n = 1) |>
         dplyr::mutate(tweet = "Earliest Obs")
 
-      results_df <- dplyr::bind_rows(first_tweets, last_tweets) |>
+      df_summary <- dplyr::bind_rows(first_tweets, last_tweets) |>
         dplyr::mutate(created = as.character(.data$created_at)) |>
         dplyr::select(.data$tweet,
                       .data$status_id,
                       .data$created)
 
       msg("\n")
-      msg(print_summary(results_df))
+      msg(print_summary(df_summary))
     }
-    msg(paste0("Collected ", nrow(tweets_df), " tweets.\n"))
-
-    class(tweets_df) <-
-      append(c("datasource", "twitter"), class(tweets_df))
-
-    attr(tweets_df, "users") <- users_df
+    msg(paste0("Collected ", n_tweets, " tweets.\n"))
 
     if (writeToFile) {
-      write_output_file(tweets_df, "rds", "TwitterData", verbose = verbose)
+      write_output_file(df_tweets, "rds", "TwitterData", verbose = verbose)
     }
 
     msg("Done.\n")
 
-    tweets_df
+    df_tweets
   }

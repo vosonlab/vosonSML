@@ -87,10 +87,14 @@ Create.semantic.twitter <-
            verbose = TRUE,
            ...) {
 
-    rlang::check_installed(c("tidytext"), "for Create.semantic.twitter")
-    stop_req_pkgs(c("tidytext"), "Create.semantic.twitter")
+    prompt_and_stop("tidytext", "Create.twomode.twitter")
 
     msg("Generating twitter semantic network...\n")
+
+    datasource <- datasource$tweets
+    if (check_df_n(datasource) < 1) {
+      stop("Datasource invalid or empty.", call. = FALSE)
+    }
 
     is_perc <- function(x, desc) {
       if (!is.numeric(x) || x > 100 || x < 1) {

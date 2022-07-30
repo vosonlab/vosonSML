@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.5</span>
       </span>
     </div>
 
@@ -111,18 +111,19 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.32.2" id="vosonsml-0322">vosonSML 0.32.2<a class="anchor" aria-label="anchor" href="#vosonsml-0322"></a></h2>
+<h2 class="page-header" data-toc-text="0.32.5" id="vosonsml-0325">vosonSML 0.32.5<a class="anchor" aria-label="anchor" href="#vosonsml-0325"></a></h2>
 <div class="section level3">
-<h3 id="major-changes-0-32-2">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-32-2"></a></h3>
+<h3 id="major-changes-0-32-5">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-32-5"></a></h3>
 <ul><li>Re-wrote and modified <code>vosonSML</code> <code>twitter</code> functions to support major changes made in <code>rtweet</code> release version 1.0.2.</li>
 <li>Changed output message system. <code>vosonSML</code> functions are now silent by default. Using the <code>verbose</code> parameter will again print function output.</li>
 <li>Changed output messages to use the <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> function instead of the <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code> function by default. Setting the global option <code>option(voson.msg = "cat")</code> or using the helper function <code><a href="../reference/SetOutputCat.html">SetOutputCat()</a></code> will again send function output to <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code>.</li>
-<li>The <code>twitter</code> <code>AddText</code> and <code>AddUserData</code> functions now work with all <code>twitter</code> network types.</li>
+<li>The <code>twitter</code> <code>AddText</code> and <code>AddUserData</code> functions now work with most <code>twitter</code> network types.</li>
 <li>
 <code>AddUserData</code> no longer has a lookup user option. The network passed through <code>AddUserData</code> now has an additional attribute named <code>missing_users</code> that lists the ids and names of users that did not have metadata embedded in the collected data.</li>
+<li>Twitter data collection now returns a named list of two dataframes containing <code>tweets</code> and <code>users</code>.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-changes-0-32-2">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-32-2"></a></h3>
+<h3 id="minor-changes-0-32-5">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-32-5"></a></h3>
 <ul><li>Re-wrote <code>youtube</code> id extraction from url function to be more robust.</li>
 <li>Removed stand-alone <code>GetYoutubeVideoIDs</code> function. The <code>youtube</code> collect function parameter <code>videoIDs</code> will now accept video ids or video urls.</li>
 <li>

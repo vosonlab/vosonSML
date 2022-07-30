@@ -16,6 +16,8 @@
 #'
 #' @export
 Authenticate <- function(socialmedia, ...) {
+  msg <- f_verbose(check_dots("verbose", ...))
+
   # searches the class list of socialmedia for matching method
   UseMethod("Authenticate", socialmedia)
 }

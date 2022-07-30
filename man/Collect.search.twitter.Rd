@@ -11,7 +11,7 @@
   searchType = "recent",
   numTweets = 100,
   includeRetweets = TRUE,
-  retryOnRateLimit = FALSE,
+  retryOnRateLimit = TRUE,
   writeToFile = FALSE,
   verbose = FALSE,
   ...
@@ -32,11 +32,11 @@ hashtag \code{"#auspol"}.}
 
 \item{includeRetweets}{Logical. Specifies if the search should filter out retweets. Defaults is \code{TRUE}.}
 
-\item{retryOnRateLimit}{Logical. Default is \code{FALSE}.}
+\item{retryOnRateLimit}{Logical. When the API rate-limit is reached should the collection wait and resume when it resets. Default is \code{TRUE}.}
 
 \item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
 
-\item{verbose}{Logical. Output additional information about the data collection. Default is \code{FALSE}.}
+\item{verbose}{Logical. Output additional information. Default is \code{FALSE}.}
 
 \item{...}{
   Arguments passed on to \code{\link[rtweet:search_tweets]{rtweet::search_tweets}}

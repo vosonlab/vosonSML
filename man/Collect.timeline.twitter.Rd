@@ -8,7 +8,8 @@
   credential,
   endpoint,
   users = c(),
-  numTweets = c(100),
+  numTweets = 100,
+  retryOnRateLimit = TRUE,
   writeToFile = FALSE,
   verbose = FALSE,
   ...
@@ -23,6 +24,9 @@
 
 \item{numTweets}{Numeric vector. Specifies how many tweets to be collected per user. Defaults to single value of
 \code{100}.}
+
+\item{retryOnRateLimit}{Logical. When the API rate-limit is reached should the collection wait and resume when it
+resets. Default is \code{TRUE}.}
 
 \item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
 

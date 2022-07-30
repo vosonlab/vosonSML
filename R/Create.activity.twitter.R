@@ -36,7 +36,10 @@ Create.activity.twitter <-
            rmEdgeTypes = NULL,
            verbose = FALSE,
            ...) {
+
     msg("Generating twitter activity network...\n")
+
+    datasource <- datasource$tweets
 
     df_stats <-
       network_stats(NULL, "collected tweets", nrow(datasource))

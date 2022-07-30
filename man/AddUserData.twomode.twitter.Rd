@@ -19,9 +19,9 @@ Default is \code{TRUE}.}
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-Network as a named list of two dataframes containing \code{$nodes}, \code{$edges}. Nodes include columns for
-additional user profile data and metrics. Referenced users for which no data was found are returned in an object
-attribute named \code{missing_users}.
+Network as a named list of three dataframes containing \code{$nodes}, \code{$edges}. Nodes include columns
+for additional user profile data and metrics. Referenced users for which no data was found are returned in
+\code{missing_users}.
 }
 \description{
 Network is supplemented with additional downloaded user information applied as 2mode node attributes.
@@ -33,9 +33,9 @@ before hitting the rate limit. It does not wait and retry upon hitting rate limi
 \examples{
 \dontrun{
 # add user info to a twitter 2mode network
-twomode_net <- twitter_data |>
+net_2mode <- data_collect |>
   Create("twomode") |>
-  AddUserData(twitter_data)
+  AddUserData(data_collect)
 }
 
 }

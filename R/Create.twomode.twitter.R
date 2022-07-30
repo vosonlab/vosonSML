@@ -42,10 +42,15 @@ Create.twomode.twitter <-
            rmRetweets = TRUE,
            verbose = TRUE,
            ...) {
-    rlang::check_installed(c("tidytext"), "for Create.twomode.twitter")
-    stop_req_pkgs(c("tidytext"), "Create.twomode.twitter")
+
+    prompt_and_stop("tidytext", "Create.twomode.twitter")
 
     msg("Generating twitter 2-mode network...\n")
+
+    datasource <- datasource$tweets
+    if (check_df_n(datasource) < 1) {
+      stop("Datasource invalid or empty.", call. = FALSE)
+    }
 
     df_stats <-
       network_stats(NULL, "collected tweets", nrow(datasource))

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.5</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@ National University</h3>
                         <h4 data-toc-skip class="author">Robert Ackland,
 Bryan Gertzel, Francisca Borquez</h4>
             
-            <h4 data-toc-skip class="date">29 July, 2022</h4>
+            <h4 data-toc-skip class="date">31 July, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/HEAD/vignettes/Intro-to-vosonSML.Rmd" class="external-link"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
       <div class="hidden name"><code>Intro-to-vosonSML.Rmd</code></div>
@@ -284,17 +284,11 @@ Twitter dataframe from disk, you simply need to use the
 <code>readRDS</code> function:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span><span class="op">)</span></span></code></pre></div>
-<p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and
-earlier you will need to modify the class values for the object before
-you can use it with <code>vosonSML</code>. This can be done manually or
-by using the handy <code><a href="../reference/ImportData.html">ImportData()</a></code> function:</p>
+<p>If you collected tweets with <code>rtweet &gt;=v1.0</code> you can
+use the internal function <code>import_rtweet()</code>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># use import data</span></span>
-<span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span>, <span class="st">"twitter"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># or manually add class names to data</span></span>
-<span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-TwitterData.rds"</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html" class="external-link">append</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"datasource"</span>, <span class="st">"twitter"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">twitterData</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu">vosonSML</span><span class="fu">:::</span><span class="fu">import_rtweet</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"rtweet-tweets.rds"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
@@ -826,10 +820,10 @@ YouTube dataframe from disk, you simply need to use the
 <p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and
 earlier you will need to modify the class values for the object before
 you can use it with <code>vosonSML</code>. This can be done manually or
-by using the handy <code><a href="../reference/ImportData.html">ImportData()</a></code> function:</p>
+by using the handy <code>ImportData()</code> function:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># use import data</span></span>
-<span><span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span>, <span class="st">"youtube"</span><span class="op">)</span></span>
+<span><span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu">ImportData</span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span>, <span class="st">"youtube"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># or manually add class names to data</span></span>
 <span><span class="va">youtubeData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-YoutubeData.rds"</span><span class="op">)</span></span>
@@ -1201,10 +1195,10 @@ function.</p>
 <p>Note that for <code>vosonSML</code> version <code>0.29.13</code> and
 earlier you will need to modify the class values for the object before
 you can use it with <code>vosonSML</code>. This can be done manually or
-by using the handy <code><a href="../reference/ImportData.html">ImportData()</a></code> function.</p>
+by using the handy <code>ImportData()</code> function.</p>
 <div class="sourceCode" id="cb54"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># use import data</span></span>
-<span><span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span>, <span class="st">"reddit"</span><span class="op">)</span></span>
+<span><span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu">ImportData</span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span>, <span class="st">"reddit"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># or manually add class names to data</span></span>
 <span><span class="va">redditData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"2020-09-26_095354-RedditData.rds"</span><span class="op">)</span></span>
@@ -1459,7 +1453,7 @@ specified as parameters.</p>
 <span>  <span class="fu"><a href="../reference/Collect.html">Collect</a></span><span class="op">(</span>searchTerm <span class="op">=</span> <span class="st">"#auspol"</span>, searchType <span class="op">=</span> <span class="st">"recent"</span>, numTweets <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># import data from file using ImportData</span></span>
-<span><span class="va">prevTwitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportData.html">ImportData</a></span><span class="op">(</span><span class="st">"2020-02-26_143505-TwitterData.rds"</span>, <span class="st">"twitter"</span><span class="op">)</span></span>
+<span><span class="va">prevTwitterData</span> <span class="op">&lt;-</span> <span class="fu">ImportData</span><span class="op">(</span><span class="st">"2020-02-26_143505-TwitterData.rds"</span>, <span class="st">"twitter"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># add to imported data the new data using rbind</span></span>
 <span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind</a></span><span class="op">(</span><span class="va">prevTwitterData</span>, <span class="va">newTwitterData</span><span class="op">)</span></span></code></pre></div>
@@ -1482,7 +1476,7 @@ final result.</p>
 <span>                          full.names <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># combine imported data from files with apply and rbind</span></span>
-<span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">importFiles</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu"><a href="../reference/ImportData.html">ImportData</a></span><span class="op">(</span><span class="va">x</span>, <span class="st">"twitter"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span><span class="va">importFiles</span>, <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span> <span class="fu">ImportData</span><span class="op">(</span><span class="va">x</span>, <span class="st">"twitter"</span><span class="op">)</span> <span class="op">}</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="duplicate-data">Duplicate data<a class="anchor" aria-label="anchor" href="#duplicate-data"></a>

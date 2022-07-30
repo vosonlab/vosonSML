@@ -115,15 +115,12 @@ If you are reading a previously saved `writeToFile` Twitter dataframe from disk,
 twitterData <- readRDS("2020-09-26_095354-TwitterData.rds")
 ```
 
-Note that for `vosonSML` version `0.29.13` and earlier you will need to modify the class values for the object before you can use it with `vosonSML`. This can be done manually or by using the handy `ImportData()` function:
+If you collected tweets with `rtweet >=v1.0` you can use the internal function `import_rtweet()`:
 
 ```{r eval=FALSE}
 # use import data
-twitterData <- ImportData("2020-09-26_095354-TwitterData.rds", "twitter")
+twitterData <- vosonSML:::import_rtweet(readRDS("rtweet-tweets.rds"))
 
-# or manually add class names to data
-twitterData <- readRDS("2020-09-26_095354-TwitterData.rds")
-class(twitterData) <- append(c("datasource", "twitter"), class(twitterData))
 ```
 
 ## Creating Twitter Networks

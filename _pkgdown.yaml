@@ -88,7 +88,7 @@ reference:
   - '`Create.actor.web`'
   - '`Create.twomode.twitter`'
   - '`Create.semantic.twitter`'
-- title: Helpers
+- title: Supplemental
   contents:
   - '`AddText`'
   - '`AddText.activity.twitter`'
@@ -104,7 +104,8 @@ reference:
   - '`AddVideoData`'
   - '`AddVideoData.actor.youtube`'
   - '`Graph`'
-  - '`ImportData`'
+- title: Settings
+  contents:
   - '`SetOutputCat`'
 
 toc:
