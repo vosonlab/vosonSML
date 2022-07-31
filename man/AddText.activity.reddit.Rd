@@ -26,8 +26,9 @@ Add columns containing text data to reddit activity network dataframes
 \examples{
 \dontrun{
 # add text to an activity network
-net_activity <- data_collect |>
-  Create("activity") |> AddText(data_collect)
+net_activity <- collect_rd |>
+  Create("activity") |>
+  AddText(collect_rd)
 
 # network
 net_activity$nodes

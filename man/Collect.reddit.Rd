@@ -6,7 +6,7 @@
 \usage{
 \method{Collect}{reddit}(
   credential,
-  threadUrls = c(),
+  threadUrls,
   waitTime = c(3, 10),
   ua = getOption("HTTPUserAgent"),
   writeToFile = FALSE,

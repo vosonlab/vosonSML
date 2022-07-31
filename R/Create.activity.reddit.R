@@ -25,10 +25,7 @@ Create.activity.reddit <-
   function(datasource, type, verbose = TRUE, ...) {
     msg("Generating reddit activity network...\n")
 
-    class(datasource) <- rm_collect_cls(class(datasource))
-
-    df_stats <-
-      network_stats(NULL, "collected reddit comments", nrow(datasource))
+    df_stats <- network_stats(NULL, "collected reddit comments", nrow(datasource))
 
     # would be better with the unique comment fullname ids
     # comment id format <thread_id>.<structure>
@@ -96,16 +93,11 @@ Create.activity.reddit <-
     df_stats <- network_stats(df_stats, "edges", nrow(df_relations))
 
     # print stats
-    if (verbose) {
-      network_stats(df_stats, print = TRUE)
-    }
+    msg(network_stats(df_stats, print = TRUE))
 
-    func_output <- list("nodes" = df_nodes,
-                        "edges" = df_relations)
-
-    class(func_output) <-
-      append(class(func_output), c("network", "activity", "reddit"))
+    net <- list("nodes" = df_nodes, "edges" = df_relations)
+    class(net) <- append(class(net), c("network", "activity", "reddit"))
     msg("Done.\n")
 
-    return(func_output)
+    net
   }

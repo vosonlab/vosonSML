@@ -29,7 +29,7 @@
 #' @export
 Collect.reddit <-
   function(credential,
-           threadUrls = c(),
+           threadUrls,
            waitTime = c(3, 10),
            ua = getOption("HTTPUserAgent"),
            writeToFile = FALSE,
@@ -38,35 +38,27 @@ Collect.reddit <-
 
     msg("Collecting comment threads for reddit urls...\n")
 
-    if (missing(threadUrls) ||
-        !is.vector(threadUrls) || length(threadUrls) < 1) {
-      stop("Please provide a vector of one or more reddit thread urls.",
-           call. = FALSE)
+    if (missing(threadUrls)) {
+      stop("Please provide a vector of one or more reddit thread urls.", call. = FALSE)
     }
 
+    invisible(check_chr(threadUrls, param = "threadUrls"))
+
     # some protection against spamming requests
-    def_wait <- c(3, 10)
+    def_wait <- list(min = 3, max = 10)
     if (!is.numeric(waitTime)) {
       stop(
         "Please provide a numeric range as vector c(min, max) for reddit thread request waitTime parameter.",
         call. = FALSE
       )
     } else {
-      if (length(waitTime) == 1) {
-        waitTime <- c(def_wait[1], waitTime[1])
-      }
-      if (length(waitTime) != 2) {
-        waitTime <- c(waitTime[1], waitTime[2])
-      }
+      if (length(waitTime) == 1) waitTime <- c(def_wait$min, waitTime[1])
+      if (length(waitTime) != 2) waitTime <- c(waitTime[1], waitTime[2])
 
-      if (waitTime[1] < def_wait[1]) {
-        waitTime[1] <-
-          def_wait[1]
-      }      # if min < default min, set min to default
-      if (waitTime[1] >= waitTime[2]) {
-        waitTime[2] <- waitTime[1] + 1
-      } # if min >= max, set max to min + 1
-      waitTime <- waitTime[1]:waitTime[2] # create range
+      if (waitTime[1] < def_wait$min) waitTime[1] <- def_wait$min
+      if (waitTime[1] >= waitTime[2]) waitTime[2] <- waitTime[1] + 1
+
+      waitTime <- waitTime[1]:waitTime[2]
     }
 
     if (verbose) {
@@ -120,8 +112,7 @@ Collect.reddit <-
       msg(paste0("Collection dataframe is null.\n"))
     }
 
-    class(threads_df) <-
-      append(c("datasource", "reddit"), class(threads_df))
+    class(threads_df) <- append(c("datasource", "reddit"), class(threads_df))
     if (writeToFile) {
       write_output_file(threads_df, "rds", "RedditData", verbose = verbose)
     }
@@ -133,8 +124,7 @@ Collect.reddit <-
 
 reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
   threads <- lapply(threadUrls, function(x) {
-    if (length(threadUrls) > 1 &
-        (x != threadUrls[1])) {
+    if (length(threadUrls) > 1 & (x != threadUrls[1])) {
       Sys.sleep(sample(waitTime, 1))
     }
 

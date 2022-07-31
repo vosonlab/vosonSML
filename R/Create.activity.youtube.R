@@ -21,14 +21,10 @@
 #' }
 #'
 #' @export
-Create.activity.youtube <-
-  function(datasource, type, verbose = TRUE, ...) {
+Create.activity.youtube <- function(datasource, type, verbose = TRUE, ...) {
     msg("Generating youtube activity network...\n")
 
-    class(datasource) <- rm_collect_cls(class(datasource))
-
-    df_stats <-
-      network_stats(NULL, "collected YouTube comments", nrow(datasource))
+    df_stats <- network_stats(NULL, "collected YouTube comments", nrow(datasource))
 
     # edges
     df_relations <-
@@ -126,16 +122,11 @@ Create.activity.youtube <-
     df_stats <- network_stats(df_stats, "edges", nrow(df_relations))
 
     # print stats
-    if (verbose) {
-      network_stats(df_stats, print = TRUE)
-    }
+    msg(network_stats(df_stats, print = TRUE))
 
-    func_output <- list("edges" = df_relations,
-                        "nodes" = df_nodes)
-
-    class(func_output) <-
-      append(class(func_output), c("network", "activity", "youtube"))
+    net <- list("edges" = df_relations, "nodes" = df_nodes)
+    class(net) <- append(class(net), c("network", "activity", "youtube"))
     msg("Done.\n")
 
-    return(func_output)
+    net
   }

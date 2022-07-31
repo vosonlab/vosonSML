@@ -55,19 +55,20 @@
 #'
 #' @examples
 #' \dontrun{
-#' # twitter semantic network creation additionally requires the tidyr, tidytext and stopwords packages
-#' # for working with text data
-#' install.packages(c("tidyr", "tidytext", "stopwords"))
+#' # twitter semantic network creation additionally requires the tidytext
+#' # and stopwords packages for working with text data
+#' # install.packages(c("tidytext", "stopwords"))
 #'
-#' # create a twitter semantic network graph removing the hashtag '#auspol' and using the
-#' # top 2% frequently occurring words and 10% most frequently occurring hashtags as nodes
-#' semanticNetwork <- twitterData |>
-#'                    Create("semantic", removeTermsOrHashtags = c("#auspol"),
-#'                           termFreq = 2, hashtagFreq = 10, verbose = TRUE)
+#' # create a twitter semantic network graph removing the hashtag "#auspol"
+#' # and using the top 2% frequently occurring words and 10% most frequently
+#' # occurring hashtags as nodes
+#' net_semantic <- collect_tw |>
+#'   Create("semantic", removeTermsOrHashtags = c("#auspol"),
+#'          termFreq = 2, hashtagFreq = 10, verbose = TRUE)
 #'
 #' # network
-#' # semanticNetwork$nodes
-#' # semanticNetwork$edges
+#' # net_semantic$nodes
+#' # net_semantic$edges
 #' }
 #'
 #' @export
@@ -87,7 +88,7 @@ Create.semantic.twitter <-
            verbose = TRUE,
            ...) {
 
-    prompt_and_stop("tidytext", "Create.twomode.twitter")
+    prompt_and_stop(c("tidytext", "stopwords"), "Create.twomode.twitter")
 
     msg("Generating twitter semantic network...\n")
 
@@ -96,16 +97,8 @@ Create.semantic.twitter <-
       stop("Datasource invalid or empty.", call. = FALSE)
     }
 
-    is_perc <- function(x, desc) {
-      if (!is.numeric(x) || x > 100 || x < 1) {
-        stop(paste0(desc, " must be a number between 1 and 100."), call. = FALSE)
-      }
-
-      round(x, digits = 0)
-    }
-
-    termFreq <- is_perc(termFreq, "termFreq")
-    hashtagFreq <- is_perc(hashtagFreq, "hashtagFreq")
+    termFreq <- check_perc(termFreq, "termFreq")
+    hashtagFreq <- check_perc(hashtagFreq, "hashtagFreq")
 
     assoc <- check_chr(assoc, param = "assoc", accept = c("limited", "full"))
 
@@ -283,7 +276,7 @@ Create.semantic.twitter <-
         dplyr::pull()
 
       df_stats <- network_stats(
-        df_stats, paste0("top ", hashtagFreq, "% hashtags count (freq>=", hashtag_floor_n, ")"),
+        df_stats, paste0("top ", hashtagFreq, "% hashtags n (>=", hashtag_floor_n, ")"),
         nrow(freq_df |> dplyr::filter(.data$type == "hashtag")),
         FALSE
       )
@@ -292,7 +285,7 @@ Create.semantic.twitter <-
         dplyr::pull()
 
       df_stats <- network_stats(
-        df_stats, paste0("top ", termFreq, "% terms count (freq>=", term_floor_n, ")"),
+        df_stats, paste0("top ", termFreq, "% terms n (>=", term_floor_n, ")"),
         nrow(freq_df |> dplyr::filter(.data$type == "term")),
         FALSE
       )
@@ -343,11 +336,9 @@ Create.semantic.twitter <-
     df_stats <- network_stats(df_stats, "edges", nrow(edges))
     msg(network_stats(df_stats, print = TRUE))
 
-    network <- list("edges" = edges, "nodes" = nodes)
-    class(network) <-
-      append(c("network", "semantic", "twitter"), class(network))
-
+    net <- list("edges" = edges, "nodes" = nodes)
+    class(net) <- append(c("network", "semantic", "twitter"), class(net))
     msg("Done.\n")
 
-    network
+    net
   }

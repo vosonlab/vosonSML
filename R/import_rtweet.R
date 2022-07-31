@@ -1,3 +1,68 @@
+#' @title Import rtweet collected data
+#'
+#' @description Imports \pkg{rtweet} collected data from \code{rda} or \code{rds} saved object file or from an rtweet
+#'   dataframe. Ensures \code{datasource} and specified \code{socialmedia} type are set so data is usable by
+#'   \code{\link{Create}} functions. Not required if collected data was collected by \code{vosonSML} and saved as an
+#'   \code{rds} file, use \code{\link{readRDS}} instead.
+#'
+#' @note Only supports \pkg{rtweet} data collected using the \code{\link[rtweet]{search_tweets}} or
+#'   \code{\link[rtweet]{get_timeline}} functions.
+#'
+#' @param data Character string or dataframe. File path to or tibble of collected data from \pkg{rtweet}.
+#'
+#' @return A dataframe suitable for input into twitter network \code{\link{Create}} functions.
+#'
+#' @examples
+#' \dontrun{
+#' # import rtweet collected data from dataframe
+#' collect_tw <- ImportRtweet(rtweet_search_data)
+#'
+#' # import rtweet collected data from file
+#' collect_tw <- ImportRtweet("./rtweet_search_n100.rds")
+#' }
+#'
+#' @aliases ImportRtweet
+#' @name ImportRtweet
+#' @export
+ImportRtweet <- function(data) {
+  if (missing(data)) {
+    stop("Please provide file path or dataframe to import.", call. = FALSE)
+  }
+
+  if (check_df_n(data) > 0) return(import_rtweet(data))
+
+  data <- check_chr(data, param = "data")
+
+  if (!file.exists(data)) {
+    stop("Import file not found.", call. = FALSE)
+  }
+
+  type <- gsub(
+    ".*\\.([A-Za-z]{3})$",
+    "\\1",
+    data,
+    ignore.case = TRUE,
+    perl = TRUE
+  )
+
+  df <- tryCatch({
+    switch(
+      type,
+      "rda" = load(file = data),
+      "rds" = readRDS(file = data)
+    )
+  }, error = function(e) {
+    stop(paste0(
+      "Could not read: ",
+      data,
+      ".\n",
+      gsub("^Error:\\s", "", paste0(e))
+    ), call. = FALSE)
+  })
+
+  import_rtweet(df)
+}
+
 # modify rtweet v1.0 format tweet data
 import_rtweet <- function(data, rtweet_created_at = FALSE) {
 

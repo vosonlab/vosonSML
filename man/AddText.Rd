@@ -28,8 +28,8 @@ and \code{\link{AddText.actor.reddit}} for additional reddit parameters. Refer t
 \examples{
 \dontrun{
 # add text to an activity network
-net_activity <-  data_collect |>
-  Create("activity") |> AddText(data_collect)
+net_activity <- collect_data |>
+  Create("activity") |> AddText(collect_data)
 
 # network
 net_activity$nodes

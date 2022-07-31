@@ -55,8 +55,7 @@ Create.actor.twitter <-
       stop("Datasource invalid or empty.", call. = FALSE)
     }
 
-    df_stats <-
-      network_stats(NULL, "collected tweets", nrow(datasource))
+    df_stats <- network_stats(NULL, "collected tweets", nrow(datasource))
 
     # select data columns
     datasource <- datasource |>
@@ -287,10 +286,9 @@ Create.actor.twitter <-
     df_stats <- network_stats(df_stats, "edges", nrow(edges))
     msg(network_stats(df_stats, print = TRUE))
 
-    network <- list("edges" = edges, "nodes" = nodes)
-    class(network) <-
-      append(c("network", "actor", "twitter"), class(network))
+    net <- list("edges" = edges, "nodes" = nodes)
+    class(net) <- append(c("network", "actor", "twitter"), class(net))
     msg("Done.\n")
 
-    network
+    net
   }

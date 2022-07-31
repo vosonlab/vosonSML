@@ -24,11 +24,11 @@ Creates a web page domain network from pages. Nodes are site domains.
 \examples{
 \dontrun{
 # create a web actor network graph
-activityNetwork <- webData |> Create("actor")
+net_activity <- data_collect |> Create("actor")
 
 # network
-# activityNetwork$nodes
-# activityNetwork$edges
+# net_activity$nodes
+# net_activity$edges
 }
 
 }

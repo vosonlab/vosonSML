@@ -69,7 +69,6 @@ Collect.youtube <-
     }
 
     video_ids <- get_yt_video_ids(videoIDs)
-    video_ids <- video_ids[!is.na(video_ids)]
 
     if (length(video_ids) < 1) {
       stop("Failed to extract any YouTube video ids.", call. = FALSE)

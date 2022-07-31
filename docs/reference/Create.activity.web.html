@@ -117,7 +117,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for activity.web</span></span>
-<span><span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="va">datasource</span>, <span class="va">type</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="va">datasource</span>, <span class="va">type</span>, lcase <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -128,6 +128,10 @@
 
 <dt>type</dt>
 <dd><p>Character string. Type of network to be created, set to <code>"activity"</code>.</p></dd>
+
+
+<dt>lcase</dt>
+<dd><p>Logical. Convert urls and page names to lowercase.</p></dd>
 
 
 <dt>verbose</dt>
@@ -149,11 +153,11 @@
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># create a web activity network graph</span></span></span>
-<span class="r-in"><span><span class="va">activityNetwork</span> <span class="op">&lt;-</span> <span class="va">webData</span> <span class="op">|&gt;</span> <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">net_activity</span> <span class="op">&lt;-</span> <span class="va">data_collect</span> <span class="op">|&gt;</span> <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># network</span></span></span>
-<span class="r-in"><span><span class="co"># activityNetwork$nodes</span></span></span>
-<span class="r-in"><span><span class="co"># activityNetwork$edges</span></span></span>
+<span class="r-in"><span><span class="co"># net_activity$nodes</span></span></span>
+<span class="r-in"><span><span class="co"># net_activity$edges</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

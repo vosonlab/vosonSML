@@ -92,6 +92,7 @@ AddVideoData.actor.youtube <-
            videoIds = NULL,
            actorSubOnly = FALSE,
            ...) {
+
     if (is.null(videoIds)) {
       # extract video ids from network nodes
       rm_videoid_str <- function(col) {
@@ -105,19 +106,19 @@ AddVideoData.actor.youtube <-
     }
 
     videoIds <- unique(videoIds)
-    video_df <- GetVideoData(youtubeAuth, videoIds)
+    df_video <- GetVideoData(youtubeAuth, videoIds)
 
-    net$videos <- video_df
+    net$videos <- df_video
 
-    if (nrow(video_df) == 0) {
+    if (nrow(df_video) == 0) {
       msg("No video data could be retrieved.\n")
       return(net)
     }
 
     # downloaded video data
-    video_df <- video_df |> dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID))
+    df_video <- df_video |> dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID))
     ch_details <-
-      video_df |> dplyr::select(.data$id, .data$ChannelTitle, .data$ChannelID) |>
+      df_video |> dplyr::select(.data$id, .data$ChannelTitle, .data$ChannelID) |>
       dplyr::rename(
         video_author_title = .data$ChannelTitle,
         video_author_id = .data$ChannelID
@@ -177,7 +178,7 @@ AddVideoData.actor.youtube <-
 
     # add video title, description and publish time
     if (actorSubOnly == FALSE) {
-      net$edges <- net$edges |> dplyr::left_join(dplyr::select(video_df, dplyr::starts_with("Video")),
+      net$edges <- net$edges |> dplyr::left_join(dplyr::select(df_video, dplyr::starts_with("Video")),
                                       by = c("video_id" = "VideoID")) |>
         dplyr::rename(
           video_title = .data$VideoTitle,
@@ -224,7 +225,7 @@ GetVideoData <- function(youtubeAuth, videoIds) {
     video_data <- c(video_data, res$items)
   }
 
-  video_df <- lapply(video_data, function(x) {
+  df_video <- lapply(video_data, function(x) {
     data.frame(
       VideoID = x$id,
       VideoTitle = x$snippet$title,
@@ -236,5 +237,7 @@ GetVideoData <- function(youtubeAuth, videoIds) {
     )
   })
 
-  video_df <- tibble::as_tibble(do.call("rbind", video_df))
+  df_video <- tibble::as_tibble(do.call("rbind", df_video))
+
+  df_video
 }

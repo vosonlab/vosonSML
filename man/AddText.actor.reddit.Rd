@@ -27,8 +27,9 @@ Add columns containing text data to reddit actor network dataframes
 \dontrun{
 # add text to an actor network ignoring references to actors at the beginning of
 # comment text
-net_actor <- data_collect |>
-  Create("actor") |> AddText(data_collect)
+net_actor <- collect_rd |>
+  Create("actor") |>
+  AddText(collect_rd)
 
 # network
 net_actor$nodes

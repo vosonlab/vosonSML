@@ -2,7 +2,7 @@
 % Please edit documentation in R/utils.R
 \name{SetOutputCat}
 \alias{SetOutputCat}
-\title{Set function output to use the cat method instead of message}
+\title{Set function output to use the \code{\link{cat}} method instead of \code{\link{message}}}
 \usage{
 SetOutputCat(flag = TRUE)
 }
@@ -11,5 +11,5 @@ SetOutputCat(flag = TRUE)
 \code{TRUE}.}
 }
 \description{
-Set function output to use the cat method instead of message
+Set function output to use the \code{\link{cat}} method instead of \code{\link{message}}
 }

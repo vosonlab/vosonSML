@@ -212,6 +212,8 @@ rm_collect_cls <- function(cls_lst) {
   cls_lst[!cls_lst %in% c("datasource", "twitter", "youtube", "reddit", "web")]
 }
 
+# check packages and prompt to install if interactive
+# stop if not installed
 prompt_and_stop <- function(pkgs, f) {
   rlang::check_installed(pkgs, paste0("for ", f))
   stop_req_pkgs(pkgs, f)
@@ -247,7 +249,7 @@ escape_regex <- function(x) {
 
 ## -- output messaging
 
-#' @title Set function output to use the cat method instead of message
+#' @title Set function output to use the \code{\link{cat}} method instead of \code{\link{message}}
 #'
 #' @param flag Logical. Set the \code{voson.msg = "cat"} option. Set to \code{FALSE} or \code{NULL} to clear. Default is
 #'   \code{TRUE}.
@@ -370,6 +372,17 @@ check_num <-
 
     stop(paste0(param, " must be numeric."), call. = FALSE)
   }
+
+# check percentage
+check_perc <- function(x, param = "value") {
+  if (all(is.numeric(x))) {
+    if (all(x >= 0) & all(x <= 100)) {
+      return(round(x, digits = 0))
+    }
+  }
+
+  stop(paste0(param, " must be a number between 0 and 100."), call. = FALSE)
+}
 
 # extract value from dots parameter
 check_dots <- function(x, ...) {

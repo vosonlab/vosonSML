@@ -103,7 +103,10 @@ reference:
   - '`AddUserData.twomode.twitter`'
   - '`AddVideoData`'
   - '`AddVideoData.actor.youtube`'
+- title: Helpers
+  contents:
   - '`Graph`'
+  - '`ImportRtweet`'
 - title: Settings
   contents:
   - '`SetOutputCat`'

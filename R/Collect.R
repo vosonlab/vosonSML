@@ -40,8 +40,7 @@ Collect <- function(credential, ...) {
 
 #' @export
 Collect.default <- function(credential, ...) {
-  stop("Unknown credential social media or endpoint passed to collect.",
-       call. = FALSE)
+  stop("Unknown credential social media or endpoint passed to collect.", call. = FALSE)
 }
 
 #' @noRd
@@ -63,8 +62,7 @@ Collect.search <- function(credential, endpoint, ...) {
 #' @noRd
 #' @export
 Collect.search.default <- function(credential, endpoint, ...) {
-  stop("Unknown social media credential passed to collect search data",
-       call. = FALSE)
+  stop("Unknown social media credential passed to collect search data", call. = FALSE)
 }
 
 #' @title Collect timeline data
@@ -79,6 +77,5 @@ Collect.timeline <- function(credential, endpoint, ...) {
 #' @noRd
 #' @export
 Collect.timeline.default <- function(credential, endpoint, ...) {
-  stop("Unknown social media credential passed to collect timeline data",
-       call. = FALSE)
+  stop("Unknown social media credential passed to collect timeline data", call. = FALSE)
 }

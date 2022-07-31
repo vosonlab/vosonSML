@@ -39,8 +39,8 @@ beginning of comments and edges redirected to that actor instead if they differ 
 \examples{
 \dontrun{
 # add text to an activity network
-net_activity <- data_collect |>
-  Create("activity") |> AddText(data_collect)
+net_activity <- collect_yt |>
+  Create("activity") |> AddText(collect_yt)
 
 # network
 net_activity$nodes
@@ -48,10 +48,11 @@ net_activity$edges
 }
 
 \dontrun{
-# add text to an actor network ignoring references to actors at the beginning of
-# comment text
-net_actor <- data_collect |>
-  Create("actor") |> AddText(data_collect, repliesFromText = FALSE)
+# add text to an actor network ignoring references to actors at
+# the beginning of comment text
+net_actor <- collect_yt |>
+  Create("actor") |>
+  AddText(collect_yt, repliesFromText = FALSE)
 
 # network
 net_actor$nodes

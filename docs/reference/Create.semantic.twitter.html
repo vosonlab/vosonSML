@@ -241,19 +241,20 @@ occurring in tweet text with other top percentage frequency terms.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="co"># twitter semantic network creation additionally requires the tidyr, tidytext and stopwords packages</span></span></span>
-<span class="r-in"><span><span class="co"># for working with text data</span></span></span>
-<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tidyr"</span>, <span class="st">"tidytext"</span>, <span class="st">"stopwords"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># twitter semantic network creation additionally requires the tidytext</span></span></span>
+<span class="r-in"><span><span class="co"># and stopwords packages for working with text data</span></span></span>
+<span class="r-in"><span><span class="co"># install.packages(c("tidytext", "stopwords"))</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># create a twitter semantic network graph removing the hashtag '#auspol' and using the</span></span></span>
-<span class="r-in"><span><span class="co"># top 2% frequently occurring words and 10% most frequently occurring hashtags as nodes</span></span></span>
-<span class="r-in"><span><span class="va">semanticNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>                   <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"semantic"</span>, removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                          termFreq <span class="op">=</span> <span class="fl">2</span>, hashtagFreq <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># create a twitter semantic network graph removing the hashtag "#auspol"</span></span></span>
+<span class="r-in"><span><span class="co"># and using the top 2% frequently occurring words and 10% most frequently</span></span></span>
+<span class="r-in"><span><span class="co"># occurring hashtags as nodes</span></span></span>
+<span class="r-in"><span><span class="va">net_semantic</span> <span class="op">&lt;-</span> <span class="va">collect_tw</span> <span class="op">|&gt;</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"semantic"</span>, removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>         termFreq <span class="op">=</span> <span class="fl">2</span>, hashtagFreq <span class="op">=</span> <span class="fl">10</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># network</span></span></span>
-<span class="r-in"><span><span class="co"># semanticNetwork$nodes</span></span></span>
-<span class="r-in"><span><span class="co"># semanticNetwork$edges</span></span></span>
+<span class="r-in"><span><span class="co"># net_semantic$nodes</span></span></span>
+<span class="r-in"><span><span class="co"># net_semantic$edges</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

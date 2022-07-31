@@ -25,10 +25,7 @@
 Create.actor.youtube <- function(datasource, type, ...) {
   msg("Generating YouTube actor network...\n")
 
-  class(datasource) <- rm_collect_cls(class(datasource))
-
   # nodes are authors and videos, edges are comments and self-loops
-
   parent_authors <-
     datasource |> dplyr::select(.data$CommentID, .data$AuthorChannelID) |>
     dplyr::distinct(.data$CommentID, .keep_all = TRUE) |>
@@ -97,12 +94,9 @@ Create.actor.youtube <- function(datasource, type, ...) {
       dplyr::bind_rows(df_nodes, dplyr::anti_join(video_ids, df_nodes, by = "id"))
   }
 
-  func_output <- list("nodes" = df_nodes,
-                      "edges" = df_relations)
-
-  class(func_output) <-
-    append(class(func_output), c("network", "actor", "youtube"))
+  net <- list("nodes" = df_nodes, "edges" = df_relations)
+  class(net) <- append(class(net), c("network", "actor", "youtube"))
   msg("Done.\n")
 
-  func_output
+  net
 }

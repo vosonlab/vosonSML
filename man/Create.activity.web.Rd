@@ -4,12 +4,14 @@
 \alias{Create.activity.web}
 \title{Create web activity network}
 \usage{
-\method{Create}{activity.web}(datasource, type, verbose = TRUE, ...)
+\method{Create}{activity.web}(datasource, type, lcase = TRUE, verbose = TRUE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"web"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"activity"}.}
+
+\item{lcase}{Logical. Convert urls and page names to lowercase.}
 
 \item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
 
@@ -24,11 +26,11 @@ Creates a web page activity network from pages. Nodes are web pages.
 \examples{
 \dontrun{
 # create a web activity network graph
-activityNetwork <- webData |> Create("activity")
+net_activity <- data_collect |> Create("activity")
 
 # network
-# activityNetwork$nodes
-# activityNetwork$edges
+# net_activity$nodes
+# net_activity$edges
 }
 
 }

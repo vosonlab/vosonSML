@@ -20,8 +20,7 @@
 #' }
 #'
 #' @export
-Create.actor.web <-
-  function(datasource, type, verbose = TRUE, ...) {
+Create.actor.web <- function(datasource, type, verbose = TRUE, ...) {
     msg("Generating web actor network...\n")
 
     edges <- datasource |>
@@ -41,7 +40,6 @@ Create.actor.web <-
       dplyr::select(from = .data$from_id, to = .data$to_id, .data$link_id)
 
     net <- list("nodes" = nodes, "edges" = edges)
-
     class(net) <- append(class(net), c("network", "actor", "web"))
     msg("Done.\n")
 

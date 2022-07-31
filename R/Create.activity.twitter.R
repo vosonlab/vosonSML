@@ -176,10 +176,9 @@ Create.activity.twitter <-
     df_stats <- network_stats(df_stats, "edges", nrow(edges))
     msg(network_stats(df_stats, print = TRUE))
 
-    network <- list("nodes" = nodes, "edges" = edges)
-    class(network) <-
-      append(c("network", "activity", "twitter"), class(network))
+    net <- list("nodes" = nodes, "edges" = edges)
+    class(net) <- append(c("network", "activity", "twitter"), class(net))
     msg("Done.\n")
 
-    network
+    net
   }

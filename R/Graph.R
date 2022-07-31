@@ -19,8 +19,7 @@ Graph <- function(net,
 
   msg <- f_verbose(verbose)
 
-  rlang::check_installed("igraph", "for Graph")
-  stop_req_pkgs(c("igraph"), "Graph")
+  prompt_and_stop("igraph", "Graph")
 
   msg("Creating igraph network graph...\n")
 
@@ -34,10 +33,11 @@ Graph <- function(net,
 
   if (any(c("twitter", "youtube", "reddit", "web") %in% class(net)) &&
       any(c("activity", "actor", "twomode") %in% class(net))) {
-    g <-
-      igraph::graph_from_data_frame(d = net$edges,
-                                    directed = directed,
-                                    vertices = net$nodes)
+    g <- igraph::graph_from_data_frame(
+      d = net$edges,
+      directed = directed,
+      vertices = net$nodes
+    )
   }
 
   # searches the class list of net for matching method
@@ -248,11 +248,13 @@ Graph.semantic.twitter <-
            writeToFile = FALSE,
            verbose = FALSE,
            ...) {
+
     # create igraph object from dataframes
-    g <-
-      igraph::graph_from_data_frame(d = net$edges,
-                                    directed = directed,
-                                    vertices = net$nodes)
+    g <- igraph::graph_from_data_frame(
+      d = net$edges,
+      directed = directed,
+      vertices = net$nodes
+    )
 
     g <- igraph::set_graph_attr(g, "type", "twitter")
 

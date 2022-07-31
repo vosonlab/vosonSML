@@ -20,18 +20,17 @@
 #'
 #' @examples
 #' \dontrun{
-#' # twitter 2-mode network creation additionally requires the tidytext package
-#' # for working with text data
-#' install.packages("tidytext")
+#' # twitter 2-mode network creation additionally requires the tidytext
+#' # package for working with text data
+#' # install.packages("tidytext")
 #'
-#' # create a twitter 2-mode network graph with the hashtag '#auspol' removed
-#' twomodeNetwork <- twitterData |>
-#'   Create("twomode",
-#'          removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
+#' # create a twitter 2-mode network graph with the hashtag "#auspol" removed
+#' net_2mode <- collect_tw |>
+#'   Create("twomode", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
 #'
 #' # network
-#' # twomodeNetwork$nodes
-#' # twomodeNetwork$edges
+#' # net_2mode$nodes
+#' # net_2mode$edges
 #' }
 #'
 #' @export
@@ -55,8 +54,6 @@ Create.twomode.twitter <-
     df_stats <-
       network_stats(NULL, "collected tweets", nrow(datasource))
 
-    class(datasource) <- rm_collect_cls(class(datasource))
-
     datasource <-
       datasource |> dplyr::select(
         .data$status_id,
@@ -76,22 +73,24 @@ Create.twomode.twitter <-
 
     datasource$text <- textutils::HTMLdecode(datasource$full_text)
 
-    x <- suppressMessages(
+    invisible(suppressMessages(
       capture.output(
-        tokens_df <-
+        df_tokens <-
           datasource |>
           tidytext::unnest_tweets(
             .data$word,
             .data$text,
             strip_url = TRUE
           )
-        , type = "output"))
+        , type = "output"
+      )
+    ))
 
-    tokens_df <- tokens_df |>
+    df_tokens <- df_tokens |>
       dplyr::mutate(at_name = paste0("@", tolower(.data$screen_name)))
 
     # classification of tokens
-    tokens_df <- tokens_df |>
+    df_tokens <- df_tokens |>
       dplyr::mutate(
         type = dplyr::if_else(
           stringr::str_detect(.data$word, "^#.*"), "hashtag",
@@ -101,13 +100,13 @@ Create.twomode.twitter <-
 
     if (!is.null(removeTermsOrHashtags) && length(removeTermsOrHashtags) > 0) {
       removeTermsOrHashtags <- unlist(lapply(removeTermsOrHashtags, tolower))
-      token_count <- nrow(tokens_df)
+      token_count <- nrow(df_tokens)
 
       msg(paste0("Removing terms and hashtags: ",
         paste0(as.character(removeTermsOrHashtags), collapse = ", "),
         "\n"))
 
-      tokens_df <- tokens_df |> dplyr::filter(
+      df_tokens <- df_tokens |> dplyr::filter(
         !(.data$word %in% removeTermsOrHashtags) &
         !(.data$user_id %in% removeTermsOrHashtags) &
         !(.data$at_name %in% removeTermsOrHashtags)
@@ -115,25 +114,25 @@ Create.twomode.twitter <-
 
       df_stats <- network_stats(
         df_stats, "removed specified",
-        token_count - nrow(tokens_df),
+        token_count - nrow(df_tokens),
         FALSE
       )
     }
 
     df_stats <- network_stats(
       df_stats, "users",
-      nrow(tokens_df |> dplyr::filter(.data$type == "user")),
+      nrow(df_tokens |> dplyr::filter(.data$type == "user")),
       FALSE
     )
 
     df_stats <- network_stats(
       df_stats, "hashtags",
-      nrow(tokens_df |> dplyr::filter(.data$type == "hashtag")),
+      nrow(df_tokens |> dplyr::filter(.data$type == "hashtag")),
       FALSE
     )
 
     edges <-
-      tokens_df |> dplyr::mutate(from = .data$at_name, to = .data$word) |>
+      df_tokens |> dplyr::mutate(from = .data$at_name, to = .data$word) |>
       dplyr::select(
         .data$from,
         .data$to,
@@ -152,7 +151,7 @@ Create.twomode.twitter <-
     nodes <-
       dplyr::distinct(tibble::tibble(name = c(edges$to, edges$from))) |>
       dplyr::left_join(
-        tokens_df |> dplyr::select(.data$at_name, .data$user_id) |>
+        df_tokens |> dplyr::select(.data$at_name, .data$user_id) |>
           dplyr::distinct(),
         by = c("name" = "at_name")
       )
@@ -161,10 +160,9 @@ Create.twomode.twitter <-
     df_stats <- network_stats(df_stats, "edges", nrow(edges))
     msg(network_stats(df_stats, print = TRUE))
 
-    network <- list("nodes" = nodes, "edges" = edges)
-    class(network) <-
-      append(c("network", "twomode", "twitter"), class(network))
+    net <- list("nodes" = nodes, "edges" = edges)
+    class(net) <- append(c("network", "twomode", "twitter"), class(net))
     msg("Done.\n")
 
-    network
+    net
   }

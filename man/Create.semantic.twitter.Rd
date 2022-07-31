@@ -93,19 +93,20 @@ occurring in tweet text with other top percentage frequency terms.
 }
 \examples{
 \dontrun{
-# twitter semantic network creation additionally requires the tidyr, tidytext and stopwords packages
-# for working with text data
-install.packages(c("tidyr", "tidytext", "stopwords"))
+# twitter semantic network creation additionally requires the tidytext
+# and stopwords packages for working with text data
+# install.packages(c("tidytext", "stopwords"))
 
-# create a twitter semantic network graph removing the hashtag '#auspol' and using the
-# top 2\% frequently occurring words and 10\% most frequently occurring hashtags as nodes
-semanticNetwork <- twitterData |>
-                   Create("semantic", removeTermsOrHashtags = c("#auspol"),
-                          termFreq = 2, hashtagFreq = 10, verbose = TRUE)
+# create a twitter semantic network graph removing the hashtag "#auspol"
+# and using the top 2\% frequently occurring words and 10\% most frequently
+# occurring hashtags as nodes
+net_semantic <- collect_tw |>
+  Create("semantic", removeTermsOrHashtags = c("#auspol"),
+         termFreq = 2, hashtagFreq = 10, verbose = TRUE)
 
 # network
-# semanticNetwork$nodes
-# semanticNetwork$edges
+# net_semantic$nodes
+# net_semantic$edges
 }
 
 }

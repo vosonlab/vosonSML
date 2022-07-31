@@ -23,8 +23,6 @@
 Create.actor.reddit <- function(datasource, type, ...) {
   msg("Generating reddit actor network...\n")
 
-  class(datasource) <- rm_collect_cls(class(datasource))
-
   # modified from RedditExtractoR::user_network to include the df comment id, subreddit and thread id as edge
   # attributes to support post-processing. df_relations, df_nodes, and df_edges based on network by @ivan-rivera.
 
@@ -126,12 +124,9 @@ Create.actor.reddit <- function(datasource, type, ...) {
       .data$comm_id
     )
 
-  func_output <- list("nodes" = df_nodes,
-                      "edges" = df_relations)
-
-  class(func_output) <-
-    append(class(func_output), c("network", "actor", "reddit"))
+  net <- list("nodes" = df_nodes, "edges" = df_relations)
+  class(net) <- append(class(net), c("network", "actor", "reddit"))
   msg("Done.\n")
 
-  func_output
+  net
 }

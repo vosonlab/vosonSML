@@ -21,8 +21,6 @@ from the seed site.}
 \item{verbose}{Logical. Output additional information. Default is \code{FALSE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
-
-\item{endpoint}{API endpoint. Not used in this method.}
 }
 \value{
 A \code{data.frame} object with class names \code{"datasource"} and \code{"web"}.

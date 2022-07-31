@@ -41,18 +41,17 @@ function requires the additional installation of the \pkg{tidytext} package to a
 }
 \examples{
 \dontrun{
-# twitter 2-mode network creation additionally requires the tidytext package
-# for working with text data
-install.packages("tidytext")
+# twitter 2-mode network creation additionally requires the tidytext
+# package for working with text data
+# install.packages("tidytext")
 
-# create a twitter 2-mode network graph with the hashtag '#auspol' removed
-twomodeNetwork <- twitterData |>
-  Create("twomode",
-         removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
+# create a twitter 2-mode network graph with the hashtag "#auspol" removed
+net_2mode <- collect_tw |>
+  Create("twomode", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
 
 # network
-# twomodeNetwork$nodes
-# twomodeNetwork$edges
+# net_2mode$nodes
+# net_2mode$edges
 }
 
 }

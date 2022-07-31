@@ -37,7 +37,6 @@ Create.activity.web <-
       # dplyr::relocate(.data$id)
 
     net <- list("nodes" = nodes, "edges" = edges)
-
     class(net) <- append(class(net), c("network", "activity", "web"))
     msg("Done.\n")
 

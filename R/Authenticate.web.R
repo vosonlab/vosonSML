@@ -22,8 +22,7 @@
 Authenticate.web <- function(socialmedia, ...) {
   # no web authentication required in this version
   credential <- list(socialmedia = "web", auth = NULL)
-  class(credential) <-
-    append(class(credential), c("credential", "web"))
+  class(credential) <- append(class(credential), c("credential", "web"))
 
-  return(credential)
+  credential
 }
