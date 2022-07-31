@@ -6,7 +6,6 @@
 \usage{
 \method{Collect}{youtube}(
   credential,
-  endpoint,
   videoIDs = c(),
   verbose = FALSE,
   writeToFile = FALSE,
@@ -16,8 +15,6 @@
 }
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"youtube"}.}
-
-\item{endpoint}{API endpoint. Not used in this method.}
 
 \item{videoIDs}{Character vector. Specifies YouTube video URLs or IDs. For example, if the video URL is
 \code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use URL or ID \code{videoIDs = c("xxxxxxxxxxx")}.}

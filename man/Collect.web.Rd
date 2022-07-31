@@ -4,19 +4,10 @@
 \alias{Collect.web}
 \title{Collect hyperlinks from web pages}
 \usage{
-\method{Collect}{web}(
-  credential,
-  endpoint,
-  pages = data.frame(),
-  writeToFile = FALSE,
-  verbose = FALSE,
-  ...
-)
+\method{Collect}{web}(credential, pages = NULL, writeToFile = FALSE, verbose = FALSE, ...)
 }
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"web"}.}
-
-\item{endpoint}{API endpoint. Not used in this method.}
 
 \item{pages}{Dataframe. Dataframe of web pages to crawl. The dataframe must have the columns \code{page} (character),
 \code{type} (character) and \code{max_depth} (integer). Each row is a seed web page to crawl, with the \code{page}
@@ -30,6 +21,8 @@ from the seed site.}
 \item{verbose}{Logical. Output additional information. Default is \code{FALSE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
+
+\item{endpoint}{API endpoint. Not used in this method.}
 }
 \value{
 A \code{data.frame} object with class names \code{"datasource"} and \code{"web"}.

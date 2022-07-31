@@ -4,6 +4,7 @@
 #'
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"web"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.
+#' @param lcase Logical. Convert urls and page names to lowercase.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
@@ -12,39 +13,33 @@
 #' @examples
 #' \dontrun{
 #' # create a web activity network graph
-#' activityNetwork <- webData |> Create("activity")
+#' net_activity <- data_collect |> Create("activity")
 #'
 #' # network
-#' # activityNetwork$nodes
-#' # activityNetwork$edges
+#' # net_activity$nodes
+#' # net_activity$edges
 #' }
 #'
 #' @export
 Create.activity.web <-
-  function(datasource, type, verbose = TRUE, ...) {
+  function(datasource, type, lcase = TRUE, verbose = TRUE, ...) {
     msg("Generating web activity network...\n")
 
-    data <- datasource |>
-      dplyr::mutate(from = tolower(.data$page),
-                    to = tolower(.data$url)) |>
-      dplyr::group_by(.data$from, .data$to) |>
-      dplyr::summarise(weight = sum(.data$n), .groups = "drop") |>
-      dplyr::select(.data$from, .data$to, .data$weight)
+    edges <- datasource |>
+      dplyr::mutate(from = ifelse({{ lcase }}, tolower(.data$page), .data$page),
+                    to = ifelse({{ lcase }}, tolower(.data$url), .data$url)) |>
+      # dplyr::select(.data$from, .data$to) |>
+      dplyr::mutate(link_id = as.character(dplyr::row_number()))
 
-    nodes <- c(data$from, data$to)
-    nodes <- data.frame(id = unique(nodes))
-    nodes <-
-      nodes |> dplyr::arrange(.data$id) |> dplyr::mutate(link_id = dplyr::row_number())
+    nodes <- tibble::tibble(page = c(edges$from, edges$to)) |>
+      dplyr::distinct(.data$page) |>
+      dplyr::mutate(id = as.character(dplyr::row_number())) # |>
+      # dplyr::relocate(.data$id)
 
-    edges <-
-      data |> dplyr::select(.data$from, .data$to, .data$weight)
+    net <- list("nodes" = nodes, "edges" = edges)
 
-    func_output <- list("nodes" = nodes,
-                        "edges" = edges)
-
-    class(func_output) <-
-      append(class(func_output), c("network", "activity", "web"))
+    class(net) <- append(class(net), c("network", "activity", "web"))
     msg("Done.\n")
 
-    return(func_output)
+    net
   }

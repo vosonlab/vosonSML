@@ -8,13 +8,11 @@
 #'   \code{\link{Collect.youtube}}, \code{\link{Collect.reddit}} and \code{\link{Collect.web}} for parameters and usage.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate}.
-#' @param endpoint Character string. API endpoint. If \code{twitter} can be \code{"search"} or \code{"timeline"}.
-#'   Default is \code{NULL}.
 #' @param ... Optional parameters to pass to functions providied by supporting R packages that are used for social media
 #'   API collection.
 #'
 #' @export
-Collect <- function(credential, endpoint = NULL, ...) {
+Collect <- function(credential, ...) {
   msg <- f_verbose(check_dots("verbose", ...))
 
   # set the environment encoding to UTF-8 for data collection
@@ -30,6 +28,8 @@ Collect <- function(credential, endpoint = NULL, ...) {
   options(HTTPUserAgent = paste0("vosonSML v.", get_version(), " (R Package)"))
   Sys.setenv(TZ = "Etc/UTC")
 
+  endpoint <- check_dots("endpoint", ...)
+
   if (!is.null(endpoint)) {
     class(endpoint) <- append(class(endpoint), endpoint)
     UseMethod("Collect", endpoint)
@@ -39,7 +39,7 @@ Collect <- function(credential, endpoint = NULL, ...) {
 }
 
 #' @export
-Collect.default <- function(credential, endpoint, ...) {
+Collect.default <- function(credential, ...) {
   stop("Unknown credential social media or endpoint passed to collect.",
        call. = FALSE)
 }

@@ -6,7 +6,6 @@
 #' @note The reddit web endpoint used for collection has maximum limit of 500 comments per thread url.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.
-#' @param endpoint API endpoint. Not used in this method.
 #' @param threadUrls Character vector. Reddit thread urls to collect data from.
 #' @param waitTime Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
 #'   Minimum is 3 seconds. Default is \code{c(3, 10)} for a wait time chosen from between 3 and 10 seconds.
@@ -30,7 +29,6 @@
 #' @export
 Collect.reddit <-
   function(credential,
-           endpoint,
            threadUrls = c(),
            waitTime = c(3, 10),
            ua = getOption("HTTPUserAgent"),

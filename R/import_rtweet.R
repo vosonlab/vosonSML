@@ -1,9 +1,7 @@
 # modify rtweet v1.0 format tweet data
 import_rtweet <- function(data, rtweet_created_at = FALSE) {
 
-  if (is.null(data) ||
-      !is.data.frame(data) || nrow(data) < 1)
-    return(NULL)
+  if (check_df_n(data) < 1) return(NULL)
 
   # rename tweet id to status_id
   data <- data |>

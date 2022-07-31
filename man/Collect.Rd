@@ -4,13 +4,10 @@
 \alias{Collect}
 \title{Collect data from social media for generating networks}
 \usage{
-Collect(credential, endpoint = NULL, ...)
+Collect(credential, ...)
 }
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate}.}
-
-\item{endpoint}{Character string. API endpoint. If \code{twitter} can be \code{"search"} or \code{"timeline"}.
-Default is \code{NULL}.}
 
 \item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social media
 API collection.}

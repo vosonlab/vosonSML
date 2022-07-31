@@ -22,7 +22,6 @@
 #'   video and not the combined total of comments.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"youtube"}.
-#' @param endpoint API endpoint. Not used in this method.
 #' @param videoIDs Character vector. Specifies YouTube video URLs or IDs. For example, if the video URL is
 #'   \code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use URL or ID \code{videoIDs = c("xxxxxxxxxxx")}.
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{FALSE}.
@@ -49,7 +48,6 @@
 #' @export
 Collect.youtube <-
   function(credential,
-           endpoint,
            videoIDs = c(),
            verbose = FALSE,
            writeToFile = FALSE,

@@ -12,11 +12,11 @@
 #' @examples
 #' \dontrun{
 #' # create a web actor network graph
-#' activityNetwork <- webData |> Create("actor")
+#' net_activity <- data_collect |> Create("actor")
 #'
 #' # network
-#' # activityNetwork$nodes
-#' # activityNetwork$edges
+#' # net_activity$nodes
+#' # net_activity$edges
 #' }
 #'
 #' @export
@@ -24,28 +24,26 @@ Create.actor.web <-
   function(datasource, type, verbose = TRUE, ...) {
     msg("Generating web actor network...\n")
 
-    data <- datasource |>
+    edges <- datasource |>
+      dplyr::select(.data$page, .data$parse, .data$seed, .data$type, .data$depth) |>
       dplyr::mutate(from = urltools::domain(tolower(.data$page)),
-                    to = tolower(.data$parse$domain)) |>
-      dplyr::group_by(.data$from, .data$to) |>
-      dplyr::summarise(weight = sum(.data$n), .groups = "drop") |>
-      dplyr::select(.data$from, .data$to, .data$weight)
+                    to = tolower(.data$parse$domain))
 
-    nodes <- c(data$from, data$to)
-    nodes <- data.frame(id = unique(nodes))
-    nodes <- nodes |>
-      dplyr::arrange(.data$id) |>
-      dplyr::mutate(link_id = dplyr::row_number())
+    nodes <- tibble::tibble(domain = c(edges$from, edges$to)) |>
+      dplyr::distinct(.data$domain) |>
+      dplyr::mutate(id = as.character(dplyr::row_number())) |>
+      dplyr::relocate(.data$id)
 
-    edges <-
-      data |> dplyr::select(.data$from, .data$to, .data$weight)
+    edges <- edges |>
+      dplyr::mutate(link_id = as.character(dplyr::row_number())) |>
+      dplyr::left_join(nodes |> dplyr::rename(from_id = .data$id), by = c("from" = "domain")) |>
+      dplyr::left_join(nodes |> dplyr::rename(to_id = .data$id), by = c("to" = "domain")) |>
+      dplyr::select(from = .data$from_id, to = .data$to_id, .data$link_id)
 
-    func_output <- list("nodes" = nodes,
-                        "edges" = edges)
+    net <- list("nodes" = nodes, "edges" = edges)
 
-    class(func_output) <-
-      append(class(func_output), c("network", "actor", "web"))
+    class(net) <- append(class(net), c("network", "actor", "web"))
     msg("Done.\n")
 
-    return(func_output)
+    net
   }

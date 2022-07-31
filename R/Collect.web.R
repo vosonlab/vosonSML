@@ -4,7 +4,6 @@
 #'   \code{"datasource"} and \code{"web"}.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"web"}.
-#' @param endpoint API endpoint. Not used in this method.
 #' @param pages Dataframe. Dataframe of web pages to crawl. The dataframe must have the columns \code{page} (character),
 #'   \code{type} (character) and \code{max_depth} (integer). Each row is a seed web page to crawl, with the \code{page}
 #'   value being the page URL. The \code{type} value is type of crawl as either \code{"int"}, \code{"ext"} or
@@ -31,14 +30,12 @@
 #' @export
 Collect.web <-
   function(credential,
-           endpoint,
-           pages = data.frame(),
+           pages = NULL,
            writeToFile = FALSE,
            verbose = FALSE,
            ...) {
-    rlang::check_installed(c("robotstxt", "rvest", "urltools", "xml2"),
-                           "for Collect.web")
-    stop_req_pkgs(c("robotstxt", "rvest", "urltools", "xml2"), "Collect.web")
+
+    prompt_and_stop(c("robotstxt", "rvest", "urltools", "xml2"), "Collect.web")
 
     msg("Collecting web page hyperlinks...\n")
 
