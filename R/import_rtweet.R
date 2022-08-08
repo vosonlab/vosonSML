@@ -47,7 +47,7 @@ ImportRtweet <- function(data) {
 
   df <- tryCatch({
     switch(
-      type,
+      tolower(type),
       "rda" = load(file = data),
       "rds" = readRDS(file = data)
     )

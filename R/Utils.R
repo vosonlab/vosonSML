@@ -446,3 +446,97 @@ check_chr <-
 
     stop(paste0(param, " must be of character type."), call. = FALSE)
   }
+
+# mask vector of character strings
+# rx_match = ^@ for twitter users
+mask_chr <- function(x,
+                     rx.match = ".",
+                     len.max = NULL,
+                     preserve = 3,
+                     block = NULL,
+                     shuffle = TRUE,
+                     x.upper = NULL,
+                     x.lower = NULL,
+                     x.digit = NULL) {
+
+  if (!is.null(len.max)) x <- stringr::str_sub(x, end = len.max)
+
+  # shuffle chrs
+  shuffle_ <- function(y, m, p) {
+    # ifelse(
+    #   stringr::str_detect(y, m),
+    #   paste0(
+    #     stringr::str_sub(y, 1, p),
+    #
+    #     stringi::stri_rand_shuffle(stringr::str_sub(y, p + 1, nchar(y)))
+    #
+    #   ),
+    #   y
+    # )
+
+    # without stri
+    y <- ifelse(stringr::str_detect(y, m), stringr::str_split(y, ""), y)
+    y <- sapply(y, function(z) {
+      if (length(z) > 1) {
+        z <- paste0(
+          c(z[1:p], sample(z[(p + 1):length(z)])),
+          collapse = ""
+        )
+        z
+      } else {
+        z
+      }
+    })
+
+    y
+  }
+
+  # if block chrs
+  if (!is.null(block)) {
+    if (shuffle)
+      x <- shuffle_(x, rx.match, 1)
+
+    x <- ifelse(
+      stringr::str_detect(x, rx.match),
+      paste0(
+        stringr::str_sub(x, 1, preserve),
+        stringr::str_replace_all(
+          stringr::str_sub(x, preserve + 1, nchar(x) - preserve),
+          ".",
+          block
+        ),
+        stringr::str_sub(x, nchar(x) - (preserve - 1), nchar(x))
+      ),
+      x
+    )
+
+    return(x)
+  }
+
+  # replace chrs
+  l <- sample(letters, 20)
+  d <- round(runif(6, min = 0, max = 9))
+
+  rx_digit <- paste0("[", paste0(d, collapse = ""), "]")
+  rx_lower <- paste0("[", paste0(l[1:10], collapse = ""), "]")
+  rx_upper <- paste0("[", paste0(l[11:20], collapse = ""), "]")
+
+  if (shuffle) x <- shuffle_(x, rx.match, preserve)
+
+  repl_ <- function(y, m, p, rx, v) {
+    ifelse(
+      stringr::str_detect(y, m),
+      paste0(
+        stringr::str_sub(y, 1, p),
+        stringr::str_replace_all(stringr::str_sub(y, p + 1, nchar(y)), rx, v)
+      ),
+      y
+    )
+  }
+
+  if (!is.null(x.digit)) x <- repl_(x, rx.match, preserve, rx_digit, x.digit)
+  if (!is.null(x.lower)) x <- repl_(x, rx.match, preserve, rx_lower, x.lower)
+  if (!is.null(x.upper)) x <- repl_(x, rx.match, preserve, rx_upper, x.upper)
+
+  x
+}

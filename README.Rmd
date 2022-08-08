@@ -194,6 +194,16 @@ g_semantic
 
 Nodes are twitter `users` or `hashtags`. Edges represent the use of a `hashtag` or the reference to another `user` in a tweet. The `weighted` parameter will add a simple frequency weight column for `edges`.
 
+```{r, include=FALSE}
+# part mask graph user names
+mask <- function(g) {
+  igraph::V(g)$name <- vosonSML:::mask_chr(
+    igraph::V(g)$name, rx.match = "^@", preserve = 2, block = "x"
+  )
+  g
+}
+```
+
 ```{r, echo=TRUE}
 net_2mode <- collect_tw |>
   Create("twomode", 
@@ -205,7 +215,7 @@ net_2mode <- collect_tw |>
 ```{r, echo=TRUE}
 g_2mode <- net_2mode |> Graph(writeToFile = TRUE, verbose = TRUE)
 
-g_2mode
+mask(g_2mode)
 ```
 
 ### YouTube Usage
@@ -326,6 +336,8 @@ g_actor
 The `vosonSML` hyperlink collection functionality does not require authentication as it is not using any web API's, however an `Authenticate` object is still used to set up the collection and creation operations as part of the `vosonSML` workflow.
 
 The hyperlink `Collect` function accepts a dataframe of seed web pages, as well as corresponding `type` and `max_depth` parameters for each page.
+
+*Please note that this implementalion of hyperlink collection and networks is still in an experimental stage.*
 
 ``` r
 # specify seed web pages and parameters for hyperlink collection
