@@ -85,15 +85,15 @@ AddText.twomode.twitter <- function(net, data, hashtags = FALSE, ...) {
 # extract text from nested tweet fields
 extract_nested_tweet_text <- function(x, var, hashtags = FALSE) {
   df <- x |>
-    dplyr::select({{ var }}) |>
+    dplyr::select(parent_status_id = status_id, {{ var }}) |>
     tidyr::unnest(cols = c({{ var }}))
 
   if (ncol(df) == 1) return(NULL)
 
   df <- df |>
     dplyr::filter(!is.na(.data$id_str)) |>
-    dplyr::select(.data$id_str, .data$full_text, .data$entities) |>
-    dplyr::distinct(.data$id_str, .keep_all = TRUE)
+    dplyr::select(.data$parent_status_id, status_id = .data$id_str, .data$full_text, .data$entities) |>
+    dplyr::distinct(.data$parent_status_id, .keep_all = TRUE)
 
   if (hashtags) {
     df <- df |>
@@ -138,33 +138,103 @@ add_tweet_text <- function(objs, data, hashtags = FALSE) {
   objs <- objs |>
     dplyr::select(-.data$entities) |>
     dplyr::mutate(
-      t.full_text = ifelse(!is.na(.data$t.full_text), .data$t.full_text, NA_character_)
+      t.full_text = data.table::fifelse(!is.na(.data$t.full_text), .data$t.full_text, NA_character_)
     )
 
-  objs <- objs |> dplyr::mutate(vosonTxt_tweet = .data$t.full_text)
+  # objs <- objs |> dplyr::mutate(vosonTxt_tweet = .data$t.full_text)
+
+  # separate to simplify joins
+  # tweets are present in data and refs are referenced tweets derived from data
+  objs_tweets <- objs |>
+    dplyr::filter(!is.na(.data$t.is_retweet) & !is.na(.data$t.is_quote))
+
+  objs_refs <- objs |>
+    dplyr::filter(is.na(.data$t.is_retweet) & is.na(.data$t.is_quote))
 
   # nested quote tweets
   qs <- extract_nested_tweet_text(data, "qs", hashtags)
   if (!is.null(qs)) {
     qs <- qs |> dplyr::rename_with(function(x) paste0("t.quoted.", x))
-    objs <- objs |> dplyr::left_join(qs, by = c("status_id" = "t.quoted.id_str")) |>
-      dplyr::mutate(vosonTxt_tweet = ifelse(is.na(.data$vosonTxt_tweet),
-                                            .data$t.quoted.full_text, .data$vosonTxt_tweet))
+    # objs <- objs |> dplyr::left_join(qs, by = c("status_id" = "t.quoted.status_id"))
+
+    objs_tweets <- objs_tweets |>
+      dplyr::left_join(qs, by = c("status_id" = "t.quoted.parent_status_id"))
+
+    objs_refs <- objs_refs |>
+      dplyr::left_join(
+        qs |>
+          dplyr::select(-.data$t.quoted.parent_status_id) |>
+          dplyr::distinct(.data$t.quoted.status_id, .keep_all = TRUE),
+        by = c("status_id" = "t.quoted.status_id")
+      )
   }
 
   # nested retweets
   rts <- extract_nested_tweet_text(data, "rts", hashtags)
   if (!is.null(rts)) {
     rts <- rts |> dplyr::rename_with(function(x) paste0("t.retweeted.", x))
-    objs <- objs |> dplyr::left_join(rts, by = c("status_id" = "t.retweeted.id_str")) |>
-      dplyr::mutate(vosonTxt_tweet = ifelse(is.na(.data$vosonTxt_tweet),
-                                            .data$t.retweeted.full_text, .data$vosonTxt_tweet))
+    # objs <- objs |> dplyr::left_join(rts, by = c("status_id" = "t.retweeted.status_id"))
+
+    objs_tweets <- objs_tweets |>
+      dplyr::left_join(rts, by = c("status_id" = "t.retweeted.parent_status_id"))
+
+    objs_refs <- objs_refs |>
+      dplyr::left_join(
+        rts |>
+          dplyr::select(-.data$t.retweeted.parent_status_id) |>
+          dplyr::distinct(.data$t.retweeted.status_id, .keep_all = TRUE),
+        by = c("status_id" = "t.retweeted.status_id")
+      )
   }
+
+  objs <- dplyr::bind_rows(objs_tweets, objs_refs)
+
+  # set a default text
+  objs <- objs |> dplyr::mutate(
+    vosonTxt_tweet = data.table::fcase(
+      .data$t.is_retweet == TRUE,
+      .data$t.retweeted.full_text,
+      is.na(.data$t.full_text) & !is.na(.data$t.retweeted.full_text),
+      .data$t.retweeted.full_text,
+      is.na(.data$t.full_text) & !is.na(.data$t.quoted.full_text),
+      .data$t.quoted.full_text,
+      !is.na(.data$t.full_text),
+      .data$t.full_text,
+      default = NA_character_
+    )
+  )
 
   objs$vosonTxt_tweet <- textutils::HTMLdecode(objs$vosonTxt_tweet)
 
-  objs <- objs |> dplyr::relocate(.data$vosonTxt_tweet, .after = dplyr::last_col()) # |>
-    # dplyr::select(-.data$t.quoted.full_text, -.data$t.retweeted.full_text)
+  objs <- objs |> dplyr::relocate(.data$vosonTxt_tweet, .after = dplyr::last_col())
 
   objs
+}
+
+# retweet text header
+retweet_header_regex <- function() {
+  "^(RT\\s@[A-Za-z0-9_]+:)?\\s"
+}
+
+# replaces truncated retweet full_text with embedded entities full_text
+# extracts and prepends existing retweet header to tweet text
+retweet_full_text <- function(x) {
+  rts <- extract_nested_tweet_text(x, "rts", FALSE)
+
+  if (!is.null(rts)) {
+    rts <- rts |> dplyr::rename_with(function(x) paste0("t.retweeted.", x)) |>
+      dplyr::select(.data$t.retweeted.parent_status_id, .data$t.retweeted.full_text)
+
+    x <- x |>
+      dplyr::left_join(rts, by = c("status_id" = "t.retweeted.parent_status_id")) |>
+      dplyr::mutate(full_text = ifelse(.data$is_retweet == TRUE & !is.na(.data$t.retweeted.full_text),
+                                       paste(
+                                         stringr::str_match(.data$full_text, retweet_header_regex()),
+                                         .data$t.retweeted.full_text
+                                       ),
+                                       .data$full_text)) |>
+      dplyr::select(-.data$rts, -.data$t.retweeted.full_text)
+  }
+
+  x
 }

@@ -129,7 +129,8 @@ Create.semantic.twitter <-
         .data$created_at,
         .data$is_retweet,
         .data$is_quote,
-        .data$is_reply
+        .data$is_reply,
+        .data$rts
       )
 
     df_stats <- network_stats(NULL, "collected tweets", nrow(data))
@@ -137,7 +138,10 @@ Create.semantic.twitter <-
 
     if (removeRetweets) {
       data <- data |>
-        dplyr::filter(!.data$is_retweet)
+        dplyr::filter(!.data$is_retweet) |>
+        dplyr::select(-.data$rts)
+    } else {
+      data <- retweet_full_text(data)
     }
 
     data$text <- textutils::HTMLdecode(data$full_text)
@@ -194,13 +198,27 @@ Create.semantic.twitter <-
     # classification of tokens
     freq_df <- freq_df |>
       dplyr::mutate(
-        type = dplyr::if_else(
-          stringr::str_detect(.data$word, "^#.+$"), "hashtag",
-            dplyr::if_else(stringr::str_detect(.data$word, "^@.+$"), "user",
-              dplyr::if_else(stringr::str_detect(.data$word, "^\\d+$"), "number",
-                dplyr::if_else(stringr::str_detect(.data$word, "^http(s)?.+"), "url", "term")))
-        )
-      )
+        type = data.table::fcase(
+          stringr::str_detect(.data$word, "^#.+$"),
+          "hashtag",
+          stringr::str_detect(.data$word, "^@.+$"),
+          "user",
+          stringr::str_detect(.data$word, "^\\d+$"),
+          "number",
+          stringr::str_detect(.data$word, "^http(s)?.+"),
+          "url",
+          default = "term"
+        ))
+
+    # freq_df <- freq_df |>
+    #   dplyr::mutate(
+    #     type = dplyr::if_else(
+    #       stringr::str_detect(.data$word, "^#.+$"), "hashtag",
+    #         dplyr::if_else(stringr::str_detect(.data$word, "^@.+$"), "user",
+    #           dplyr::if_else(stringr::str_detect(.data$word, "^\\d+$"), "number",
+    #             dplyr::if_else(stringr::str_detect(.data$word, "^http(s)?.+"), "url", "term")))
+    #     )
+    #   )
 
     freq_type_df <- freq_df |> dplyr::group_by(.data$type) |> dplyr::tally(.data$n)
 

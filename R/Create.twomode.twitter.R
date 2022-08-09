@@ -63,12 +63,16 @@ Create.twomode.twitter <-
         .data$created_at,
         .data$is_retweet,
         .data$is_quote,
-        .data$is_reply
+        .data$is_reply,
+        .data$rts
       )
 
     if (rmRetweets) {
       datasource <- datasource |>
-        dplyr::filter(!.data$is_retweet)
+        dplyr::filter(!.data$is_retweet) |>
+        dplyr::select(-.data$rts)
+    } else {
+      datasource <- retweet_full_text(datasource)
     }
 
     datasource$text <- textutils::HTMLdecode(datasource$full_text)
@@ -92,10 +96,14 @@ Create.twomode.twitter <-
     # classification of tokens
     df_tokens <- df_tokens |>
       dplyr::mutate(
-        type = dplyr::if_else(
-          stringr::str_detect(.data$word, "^#.*"), "hashtag",
-            dplyr::if_else(stringr::str_detect(.data$word, "^@.*"), "user", "term")
-        )) |>
+        type = data.table::fcase(
+          stringr::str_detect(.data$word, "^#.*"),
+          "hashtag",
+          stringr::str_detect(.data$word, "^@.*"),
+          "user",
+          default = "term"
+        )
+      ) |>
       dplyr::filter(.data$type %in% c("hashtag", "user") & .data$at_name != .data$word)
 
     if (!is.null(removeTermsOrHashtags) && length(removeTermsOrHashtags) > 0) {
@@ -131,11 +139,13 @@ Create.twomode.twitter <-
       FALSE
     )
 
-    edges <-
-      df_tokens |> dplyr::mutate(from = .data$at_name, to = .data$word) |>
+    edges <- df_tokens |>
+      dplyr::mutate(from = .data$at_name, to = .data$word, type_from = "user") |>
       dplyr::select(
         .data$from,
         .data$to,
+        type_to = .data$type,
+        type_from,
         .data$status_id,
         .data$created_at,
         .data$is_retweet,
@@ -148,12 +158,24 @@ Create.twomode.twitter <-
       dplyr::mutate(weight = dplyr::n()) |>
       dplyr::ungroup()
 
-    nodes <-
-      dplyr::distinct(tibble::tibble(name = c(edges$to, edges$from))) |>
+    nodes <- dplyr::bind_rows(
+      edges |> dplyr::select(name = .data$from, type = .data$type_from),
+      edges |> dplyr::select(name = .data$to, type = .data$type_to)
+    ) |> dplyr::distinct()
+
+    edges <- edges |> dplyr::select(-.data$type_from, -.data$type_to)
+
+    nodes <- nodes |>
       dplyr::left_join(
-        df_tokens |> dplyr::select(.data$at_name, .data$user_id) |>
-          dplyr::distinct(),
+        df_tokens |> dplyr::select(.data$at_name, .data$user_id, .data$screen_name) |> dplyr::distinct(),
         by = c("name" = "at_name")
+      ) |>
+      dplyr::mutate(
+        screen_name = data.table::fifelse(
+          (.data$type == "user" & is.na(.data$screen_name)),
+          substring(.data$name, 2),
+          tolower(.data$screen_name)
+        )
       )
 
     df_stats <- network_stats(df_stats, "nodes", nrow(nodes))
