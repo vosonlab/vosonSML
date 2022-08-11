@@ -28,6 +28,18 @@ sys_time_filename <-
            name_ext)
   }
 
+data_path <- function(x = getOption("voson.data")) {
+  if (is.null(x)) return(NULL)
+
+  path <- gsub("\\\\", "/", x)
+  path <- sub("(\\/)+$", "", path)
+  path <- paste0(path, "/")
+
+  if (dir.exists(path)) return(path)
+
+  NULL
+}
+
 # write data to file in supported file format
 write_output_file <-
   function(data,
@@ -36,6 +48,12 @@ write_output_file <-
            datetime = TRUE,
            verbose = FALSE) {
     msg <- f_verbose(verbose)
+
+    set_path <- function(x) x
+    data_path <- data_path()
+    if (!is.null(data_path)) {
+      set_path <- function(x) paste0(data_path, x)
+    }
 
     supported_types <- c("graphml", "csv", "rds")
 
@@ -60,12 +78,12 @@ write_output_file <-
 
     if (type == "rds") {
       result <- tryCatch({
-        saveRDS(data, path)
+        saveRDS(data, set_path(path))
       }, error = function(e) {
-        msg(paste0("Error writing rds: ", path, "\n", e))
+        msg(paste0("Error writing rds: ", set_path(path), "\n", e))
       })
     } else {
-      con <- file(path, open = "wb", encoding = "native.enc")
+      con <- file(set_path(path), open = "wb", encoding = "native.enc")
       result <- tryCatch({
         switch(type,
                "graphml" = {
@@ -75,7 +93,7 @@ write_output_file <-
                  readr::write_csv(data, file = con)
                })
       }, error = function(e) {
-        msg(paste0("Error writing: ", path, "\n", e))
+        msg(paste0("Error writing: ", set_path(path), "\n", e))
       }, finally = {
 
       })
@@ -85,7 +103,7 @@ write_output_file <-
     if (length(result) == 0) {
       if (verbose) {
         msg(paste0(toupper(type), " file written: "))
-        msg(paste0(path, "\n"))
+        msg(paste0(set_path(path), "\n"))
       }
     } else {
       if (verbose) {
@@ -249,28 +267,6 @@ escape_regex <- function(x) {
 
 ## -- output messaging
 
-#' @title Set function output to use the \code{\link{cat}} method instead of \code{\link{message}}
-#'
-#' @param flag Logical. Set the \code{voson.msg = "cat"} option. Set to \code{FALSE} or \code{NULL} to clear. Default is
-#'   \code{TRUE}.
-#'
-#' @aliases SetOutputCat
-#' @name SetOutputCat
-#' @export
-SetOutputCat <- function(flag = TRUE) {
-  if (is.null(flag)) {
-    options(voson.msg = NULL)
-  }
-
-  if (is.logical(flag)) {
-    if (flag) {
-      options(voson.msg = "cat")
-    } else {
-      options(voson.msg = NULL)
-    }
-  }
-}
-
 # assign message function for verbose output
 f_verbose <- function(x) {
   opt_msg <- getOption("voson.msg")
@@ -279,8 +275,8 @@ f_verbose <- function(x) {
 
   # check if cat option set
   if (!is.null(opt_msg) && !is.na(opt_msg)) {
-    if (is.character(opt_msg)) {
-      if (tolower(opt_msg) == "cat") {
+    if (is.logical(opt_msg)) {
+      if (opt_msg == FALSE) {
         opt_f <- vsml_cat
       }
     }
@@ -447,7 +443,7 @@ check_chr <-
     stop(paste0(param, " must be of character type."), call. = FALSE)
   }
 
-# mask vector of character strings
+# prototype mask vector of character strings
 # rx_match = ^@ for twitter users
 mask_chr <- function(x,
                      rx.match = ".",

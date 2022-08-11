@@ -146,8 +146,6 @@ Create.semantic.twitter <-
 
     data$text <- textutils::HTMLdecode(data$full_text)
 
-    # --
-
     x <- suppressMessages(
       capture.output(
         tokens_df <-
@@ -191,8 +189,6 @@ Create.semantic.twitter <-
       )
     }
 
-    # --
-
     freq_df <- tokens_df |> dplyr::count(.data$word, sort = TRUE)
 
     # classification of tokens
@@ -209,16 +205,6 @@ Create.semantic.twitter <-
           "url",
           default = "term"
         ))
-
-    # freq_df <- freq_df |>
-    #   dplyr::mutate(
-    #     type = dplyr::if_else(
-    #       stringr::str_detect(.data$word, "^#.+$"), "hashtag",
-    #         dplyr::if_else(stringr::str_detect(.data$word, "^@.+$"), "user",
-    #           dplyr::if_else(stringr::str_detect(.data$word, "^\\d+$"), "number",
-    #             dplyr::if_else(stringr::str_detect(.data$word, "^http(s)?.+"), "url", "term")))
-    #     )
-    #   )
 
     freq_type_df <- freq_df |> dplyr::group_by(.data$type) |> dplyr::tally(.data$n)
 
@@ -280,6 +266,8 @@ Create.semantic.twitter <-
         dplyr::slice_tail(n = 1) |>
         dplyr::pull(.data$n)
 
+      if (length(floor_n) < 1) return(NULL)
+
       x <- x |> dplyr::filter(.data$n >= !!floor_n) |>
         dplyr::mutate(floor_n = !!floor_n)
 
@@ -308,8 +296,6 @@ Create.semantic.twitter <-
         FALSE
       )
     }
-
-    # --
 
     nodes <- tokens_df |> dplyr::left_join(freq_df, by = c("word" = "word")) |>
       dplyr::filter(!is.na(.data$type)) |>

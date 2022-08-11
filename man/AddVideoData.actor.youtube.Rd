@@ -17,9 +17,9 @@
 
 \item{youtubeAuth}{YouTube Authenticate object.}
 
-\item{videoIds}{List. Video ID's to download video information.}
+\item{videoIds}{List. Video id's for which to download video information.}
 
-\item{actorSubOnly}{Logical. Only substitute video ID's for their publishers channel ID. Don't add additional video
+\item{actorSubOnly}{Logical. Only substitute video id's for their publishers channel id. Don't add additional video
 data to edge list.}
 
 \item{...}{Additional parameters passed to function.}

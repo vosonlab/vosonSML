@@ -145,7 +145,7 @@ Create.twomode.twitter <-
         .data$from,
         .data$to,
         type_to = .data$type,
-        type_from,
+        .data$type_from,
         .data$status_id,
         .data$created_at,
         .data$is_retweet,
