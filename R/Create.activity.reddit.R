@@ -87,6 +87,7 @@ Create.activity.reddit <-
     df_nodes <-
       dplyr::bind_rows(df_nodes, dplyr::anti_join(thread_ids, df_nodes, by = c("id", "subreddit")))
 
+    df_stats <- network_stats(df_stats, "subreddits", df_nodes |> dplyr::distinct(.data$subreddit) |> nrow())
     df_stats <- network_stats(df_stats, "threads", nrow(thread_ids))
     df_stats <- network_stats(df_stats, "comments", nrow(datasource))
     df_stats <- network_stats(df_stats, "nodes", nrow(df_nodes))

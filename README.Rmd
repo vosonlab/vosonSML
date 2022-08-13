@@ -16,7 +16,10 @@ library(vosonSML)
 [![Last_Commit](https://img.shields.io/github/last-commit/vosonlab/`r pkg`.svg?&logo=github)](https://github.com/vosonlab/`r pkg`/commits/master)
 [![Build_Status](https://github.com/vosonlab/`r pkg`/workflows/R-CMD-check/badge.svg)](https://github.com/vosonlab/`r pkg`/actions)
 
-The `vosonSML` R package is a suite of easy to use functions for collecting and generating different types of networks from social media data. The package supports the collection of data from `twitter`, `youtube` and `reddit`, as well as `hyperlinks` from web sites. Networks in the form of node and edge lists can be generated from collected data, supplemented with additional metadata and used to create graphs for Social Network Analysis.
+The `vosonSML` R package is a suite of easy to use functions for collecting and generating different types of networks
+from social media data. The package supports the collection of data from `twitter`, `youtube` and `reddit`, as well as
+`hyperlinks` from web sites. Networks in the form of node and edge lists can be generated from collected data,
+supplemented with additional metadata and used to create graphs for Social Network Analysis.
 
 ## Installation Options
 
@@ -28,21 +31,29 @@ install.packages("`r pkg`")
 ```{r release, include=FALSE}
 dl_url <- NULL
 if (all(sapply(c("httr", "dplyr", "jsonlite", "tidyr"), require, character.only = TRUE))) {
-  rel_resp <- GET(paste0("https://api.github.com/repos/vosonlab/", pkg, "/releases"),
-                  add_headers(Accept = "application/vnd.github.v3+json"))
+  rel_resp <- GET(
+    paste0("https://api.github.com/repos/vosonlab/", pkg, "/releases"),
+    add_headers(Accept = "application/vnd.github.v3+json")
+  )
+  
   if (rel_resp$status_code == 200) {
     resp_content <- fromJSON(rawToChar(rel_resp$content))
+    
     if ("tag_name" %in% names(resp_content)) {
       meta <- select(slice_head(resp_content), tag_name, tarball_url, assets)
-      assets <- meta |> select(assets) |> unnest(cols = c(assets)) |>
+      
+      assets <- meta |>
+        select(assets) |>
+        unnest(cols = c(assets)) |>
         filter(grepl("tar\\.gz$", name))
+      
       dl_url <- assets |> pull(browser_download_url)
-      rel_inst <- paste0("Install the most recent release tag via GitHub:\n\n",
-                         "``` r\n",
-                         "install.packages(\n",
-                         "  \"", dl_url, "\",\n",
-                         "  repo = NULL, type = \"source\")\n",
-                         "```\n")
+      
+      rel_inst <- paste0(
+        "Install the most recent release tag via GitHub:\n\n",
+        "``` r\n", "install.packages(\n", "  \"", dl_url, "\",\n",
+        "  repo = NULL, type = \"source\")\n", "```\n"
+      )
     }
   }
 }
@@ -58,21 +69,47 @@ remotes::install_github("vosonlab/`r pkg`")
 
 ## Getting started
 
-The following usage examples will provide a quick start to using `vosonSML` functions. Additionally there is an [Introduction to vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html) vignette that is a practical and explanatory guide to collecting data and creating networks.
+The following usage examples will provide a quick start to using `vosonSML` functions. Additionally there is an
+[Introduction to vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html) vignette that is a
+practical and explanatory guide to collecting data and creating networks.
 
 ### General Usage
 
-The process of authentication, data collection and creating networks in `vosonSML` is expressed with the three functions: *Authenticate*, *Collect* and *Create*. The following are some examples of their usage for supported social media:
+The process of authentication, data collection and creating networks in `vosonSML` is expressed with the three
+functions: *Authenticate*, *Collect* and *Create*. The following are some examples of their usage for supported social
+media:
 
-[Twitter](#twitter-usage) | [YouTube](#youtube-usage) | [Reddit](#reddit-usage) | [Hyperlink](#hyperlink-usage) | [Supplemental Functions](#supplemental-functions)
+[Twitter](#twitter-usage) | [YouTube](#youtube-usage) | [Reddit](#reddit-usage) | [Hyperlink](#hyperlink-usage) |
+[Supplemental Functions](#supplemental-functions)
+
+### General Options
+
+- `verbose`: most `vosonSML` functions accept a verbosity parameter that is now set to `FALSE` by default. When `FALSE`
+  functions will run silently unless there is an error. If set to `TRUE` then progress and summary information for
+  the function will be printed to the console.
+
+The following environment options can also be used:
+
+- `voson.msg`: If set to `FALSE` then the verbose output of functions will be printed using the base `cat()` function
+  instead of the `message()` function. Set by entering `options(voson.msg = FALSE)`, and clear by assigning a value of
+  `NULL`.
+- `voson.data`: If set to an existing directory path the `writeToFile` output files will be written to that directory
+  instead of the working directory. Can be set using `options(voson.data = "~/vsml-data")` for example, and cleared by
+  assigning a value of `NULL`. Directory paths can be relative to the working directory or full paths.
 
 ### Authentication
 
-Authentication objects generally *only need to be created once* unless your credentials change. Save `twitter` and `youtube` authentication objects to file after creation and then load them in future sessions.
+Authentication objects generally *only need to be created once* unless your credentials change. Save `twitter` and
+`youtube` authentication objects to file after creation and then load them in future sessions.
 
-*Please note in the examples provided that the "~" notation in paths are short-hand for the system to use the users home directory, and the "." at the start of file names classifies it as a hidden file on some OS. You can name and save objects however you wish.*
+*Please note in the examples provided that the "~" notation in paths are short-hand for the system to use the users home
+directory, and the "." at the start of file names classifies it as a hidden file on some OS. You can name and save
+objects however you wish.*
 
 ``` r
+# youtube data api key
+auth_yt <- Authenticate("youtube", apiKey = "xxxxxxxxxx")
+
 # save the object after Authenticate
 saveRDS(auth_yt, file = "~/.auth_yt")
 
@@ -82,11 +119,23 @@ auth_yt <- readRDS("~/.auth_yt")
 
 ### Twitter Usage
 
-Please note that `vosonSML` only uses the `Twitter v1.0a API` through [rtweet](https://github.com/ropensci/rtweet) and does not support the `v2 API` at this stage. The VOSON Lab [voson.tcn](https://github.com/vosonlab/voson.tcn) package for Twitter Conversation Networks does use the `v2 API` but is limited to collecting conversation threads and tweets by URL or ID.
+Please note that `vosonSML` only accesses the Twitter `v1.1` API via [rtweet](https://github.com/ropensci/rtweet) and
+does not support the newer `v2` API at this time. Please refer to the VOSON Lab
+[voson.tcn](https://github.com/vosonlab/voson.tcn) package if you are interested in using the `v2` API to collect and
+analyse Twitter conversation networks. `voson.tcn` has features to collect tweets and conversation threads by url or
+id, and similarly to `vosonSML` produces `activity` and `actor` networks with additional metadata.
+
+`The Twitter features of this version of vosonSML requires rtweet v1.0 or later.`
+
+```{r, echo=TRUE}
+packageVersion("rtweet")
+```
 
 #### Authenticate with the Twitter API
 
-`Authenticate` is used to create an object that contains a Twitter OAuth 1.0a user token for accessing the twitter API. This can and should be re-used by saving it once to file after calling `Authenticate` and then by loading it again during future sessions.
+`Authenticate` is used to create an object that contains a Twitter token for accessing the Twitter API. This can and
+should be re-used by saving it once to file after calling `Authenticate` and then by loading it again during future
+sessions.
 
 ``` r
 library(vosonSML)
@@ -104,36 +153,46 @@ auth_tw_bearer <- readRDS("~/.auth_tw_bearer")
 
 #### Collect tweets using a search or from user timelines
 
-`Collect` can be used to perform a twitter search with a search term or collect tweets from timelines using user names. The following example collects 100 `recent` tweets for the hashtag `#auspol` and creates a dataframe with the collected tweet data.
+`Collect` can be used to perform a twitter search with a search term or collect tweets from timelines using user names.
+The following example collects 100 `recent` tweets for the hashtag `#auspol` and creates a dataframe with the collected
+tweet data.
 
 ```{r, echo=TRUE}
+# set output data directory
+options(voson.data = "./vsml-data")
+
 # collect 100 recent tweets for the hashtag #auspol
 collect_tw <- auth_tw_bearer |>
   Collect(searchTerm = "#auspol",
           searchType = "recent",
           numTweets = 100,
           includeRetweets = TRUE,
-          retryOnRateLimit = TRUE,
-          writeToFile = FALSE,
+          writeToFile = TRUE,
           verbose = TRUE)
 ```
 
-The next example collects the 100 most recents tweets from the `@vosonlab` twitter account. Note that this method requires the `endpoint = "timeline"` parameter.
+The next example collects the 100 most recent tweets from the `@vosonlab` and `@ANU_SOC` user timelines. Note that this
+method requires the `endpoint = "timeline"` parameter.
 
 ```{r, echo=TRUE}
-# collect 100 timeline tweets for @vosonlab
+# collect 100 timeline tweets for each specified user
 collect_tw_tl <- auth_tw_bearer |>
   Collect(endpoint = "timeline",
-          users = "vosonlab",
-          numTweets = 40,
+          users = c("vosonlab", "ANU_SOCY"),
+          numTweets = 100,
+          writeToFile = TRUE,
           verbose = TRUE)
 ```
 
-The output for these methods also lists the 2 earliest and 2 latest tweets collected as well as the number of tweets collected.
+The output for these methods also lists the earliest and most recent tweet as well as the number of tweets collected.
 
 #### Create twitter activity, actor, semantic and 2-mode network graphs
 
-The twitter `Create` function accepts the data from `Collect` and a type parameter of `activity`, `actor`, `semantic` or `twomode` that specifies the type of network to create from the collected data. `Create` produces two dataframes, one for network `nodes` and one for node relations or `edges` in the network. These can then undergo further processing as per the [supplemental functions](#supplemental-functions) section or be passed to the `Graph` function that creates an `igraph` object.
+The twitter `Create` function accepts the data from `Collect` and a type parameter of `activity`, `actor`, `semantic` or
+`twomode` that specifies the type of network to create from the collected data. `Create` produces two dataframes, one
+for network `nodes` and one for node relations or `edges` in the network. These can then undergo further processing as
+per the [supplemental functions](#supplemental-functions) section or be passed to the `Graph` function that creates an
+`igraph` object.
 
 ##### Activity network
 
@@ -151,7 +210,8 @@ g_activity
 
 ##### Actor network
 
-Nodes are twitter users and edges are the relationship to other users in the network such as `reply`, `mention`, `retweet` and `quote` tweets. Mentions can be excluded by setting the parameter `inclMentions` to `FALSE`.
+Nodes are twitter users and edges are the relationship to other users in the network such as `reply`, `mention`,
+`retweet` and `quote` tweets. Mentions can be excluded by setting the parameter `inclMentions` to `FALSE`.
 
 ```{r, echo=TRUE}
 net_actor <- collect_tw |>
@@ -166,7 +226,8 @@ g_actor
 
 ##### Semantic network
 
-Nodes are concepts represented as common `words` and `hashtags`. Edges represent the occurence of a particular word and a particular hashtag in the same tweet. The semantic network is `undirected`.
+Nodes are concepts represented as common `words` and `hashtags`. Edges represent the occurence of a particular word and
+a particular hashtag in the same tweet. The semantic network is `undirected`.
 
 ```{r, echo=TRUE}
 # install additional required packages
@@ -192,7 +253,8 @@ g_semantic
 
 ##### 2-mode network
 
-Nodes are twitter `users` or `hashtags`. Edges represent the use of a `hashtag` or the reference to another `user` in a tweet. The `weighted` parameter will add a simple frequency weight column for `edges`.
+Nodes are twitter `users` or `hashtags`. Edges represent the use of a `hashtag` or the reference to another `user` in a
+tweet. The `weighted` parameter will add a simple frequency weight column for `edges`.
 
 ```{r, include=FALSE}
 # part mask graph user names
@@ -222,7 +284,8 @@ mask(g_2mode)
 
 #### Authenticate and Collect comments from youtube videos
 
-YouTube uses an API key rather than an OAuth token and is simply set by calling `Authenticate` with the key as a parameter.
+YouTube uses an API key rather than an OAuth token and is simply set by calling `Authenticate` with the key as a
+parameter.
 
 ```{r, echo=TRUE}
 # youtube authentication sets the api key
@@ -234,7 +297,9 @@ auth_yt <- Authenticate("youtube", apiKey = "xxxxxxxxxxxxxx")
 auth_yt <- readRDS("~/.auth_yt")
 ```
 
-Once the key is set then `Collect` can be used to collect the comments from specified youtube videos. The following example collects a maximum of 100 top-level comments and all replies from each of the 2 specified video ID's. It produces a dataframe with the combined comment data.
+Once the key is set then `Collect` can be used to collect the comments from specified youtube videos. The following
+example collects a maximum of 100 top-level comments and all replies from each of the 2 specified video ID's. It
+produces a dataframe with the combined comment data.
 
 ```{r, echo=TRUE}
 video_url <- c("https://www.youtube.com/watch?v=AQzZNIyjyWM",
@@ -252,7 +317,8 @@ The youtube `Create` function accepts the data from `Collect` and a network type
 
 ##### Activity network
 
-Nodes are video comments and edges represent whether they were directed to the video as a top-level comment or to another comment as a reply comment.
+Nodes are video comments and edges represent whether they were directed to the video as a top-level comment or to
+another comment as a reply comment.
 
 ```{r, echo=TRUE}
 net_activity <- collect_yt |> Create("activity", verbose = TRUE)
@@ -282,26 +348,31 @@ g_actor
 
 #### Authenticate and Collect from reddit threads
 
-The reddit API end-point used by `vosonSML` does not require authentication but an `Authenticate` object is still used to set up the collection and creation operations as part of a reddit workflow. The reddit `Collect` function can then be used to collect comments from reddit threads specified by URL's.
+The reddit API end-point used by `vosonSML` does not require authentication but an `Authenticate` object is still used
+to set up the collection and creation operations as part of a reddit workflow. The reddit `Collect` function can then be
+used to collect comments from reddit threads specified by URL's.
 
 ```{r, echo=TRUE}
 # specify reddit threads to collect by url
-thread_url <-
-  c("https://www.reddit.com/r/datascience/comments/wcd8x5/",
-    "https://www.reddit.com/r/datascience/comments/wcni2g/")
+thread_url <- c(
+  "https://www.reddit.com/r/datascience/comments/wcd8x5/",
+  "https://www.reddit.com/r/datascience/comments/wcni2g/"
+)
 
 # authentication does not require credentials
 collect_rd <- Authenticate("reddit") |>
-  Collect(threadUrls = thread_url, verbose = TRUE)
+  Collect(threadUrls = thread_url, writeToFile = TRUE, verbose = TRUE)
 ```
 
-Please note that because of the API end-point used that `Collect` is limited to the first 500 comments per thread. It is therefore suited to collecting only smaller threads in their entirety.
+Please note that because of the API end-point used that `Collect` is limited to the first 500 comments per thread. It is
+therefore suited to collecting only smaller threads in their entirety.
 
 #### Create reddit activity and actor networks
 
 ##### Activity network
 
-Nodes are original thread posts and comments, edges are replies directed to the original post and to comments made by others.
+Nodes are original thread posts and comments, edges are replies directed to the original post and to comments made by
+others.
 
 ```{r, echo=TRUE}
 # create an activity network
@@ -333,9 +404,12 @@ g_actor
 
 #### Authenticate and Collect from web sites
 
-The `vosonSML` hyperlink collection functionality does not require authentication as it is not using any web API's, however an `Authenticate` object is still used to set up the collection and creation operations as part of the `vosonSML` workflow.
+The `vosonSML` hyperlink collection functionality does not require authentication as it is not using any web API's,
+however an `Authenticate` object is still used to set up the collection and creation operations as part of the
+`vosonSML` workflow.
 
-The hyperlink `Collect` function accepts a dataframe of seed web pages, as well as corresponding `type` and `max_depth` parameters for each page.
+The hyperlink `Collect` function accepts a dataframe of seed web pages, as well as corresponding `type` and `max_depth`
+parameters for each page.
 
 *Please note that this implementalion of hyperlink collection and networks is still in an experimental stage.*
 
@@ -377,14 +451,19 @@ net_actor <- collect_web |> Create("actor")
 
 #### AddText adds collected text data to networks as node or edge attributes
 
-The `AddText` function can be used following the creation of all networks for `twitter`, `youtube` and `reddit`. It will add an attribute starting with `vosonTxt_` to nodes of `activity` networks and to edges of `actor` networks. It requires a collected `datasource` from which to extract text data.
+The `AddText` function can be used following the creation of all networks for `twitter`, `youtube` and `reddit`. It will
+add an attribute starting with `vosonTxt_` to nodes of `activity` networks and to edges of `actor` networks. It requires
+a collected `datasource` from which to extract text data.
+
+An additional parameter `hashtags` is available for `twitter` networks that will add tweet hashtags as an attribute.
 
 ```{r, echo=TRUE}
 # create activity network
 net_activity <- collect_tw |> Create("activity")
 
 # activity network with text data added as node attribute
-net_activity <- net_activity |> AddText(collect_tw, verbose = TRUE)
+net_activity <- net_activity |>
+  AddText(collect_tw, hashtags = TRUE, verbose = TRUE)
 ```
 
 ```{r, echo=TRUE}
@@ -393,7 +472,9 @@ g_activity <- net_activity |> Graph()
 g_activity
 ```
 
-`AddText` will also redirect some edges in a youtube `actor` network by finding user references at the beginning of reply comments text using the `repliesFromText` parameter. In the following example an edge would be redirected from `UserC` to `UserB` by text reference as opposed to `UserA` who made the top-level comment both users are replying to.
+`AddText` will also redirect some edges in a youtube `actor` network by finding user references at the beginning of
+reply comments text using the `repliesFromText` parameter. In the following example an edge would be redirected from
+`UserC` to `UserB` by text reference as opposed to `UserA` who made the top-level comment both users are replying to.
 
 ``` r
 # video comments
@@ -417,29 +498,45 @@ net_actor <- net_actor |>
 
 #### AddUserData requests and adds user profile data to networks
 
-`AddUserData` adds user profile information from the `users` dataframe to as many users in a twitter `actor` and `2mode` network as possible. If the profile information is not available for referenced users in the collect data then the user id and name will be added to the `missing_users` dataframe and if required can be collected in a seperate operation.
+`AddUserData` adds user profile information from the `users` dataframe to as many users in a twitter `actor` and `2mode`
+network as possible. If the profile information is not available for referenced users in the collect data then the user
+id and name will be added to the `missing_users` dataframe. If the profile metadata is not available in the collect data
+and the `lookupUsers` parameter is set then additional twitter API requests will be made to retrieve the missing
+information.
 
 ```{r, echo=TRUE}
 # add additional twitter user profile info
-net_actor <- collect_tw |>
-  Create("actor") |>
-  AddUserData(collect_tw, verbose = TRUE)
+net_actor <- collect_tw |> Create("actor")
 
-names(net_actor)
-nrow(net_actor$missing_users)
+net_actor_meta <- net_actor |> AddUserData(collect_tw, verbose = TRUE)
+
+names(net_actor_meta)
+nrow(net_actor_meta$missing_users)
+
+# add additional twitter user profile info
+net_actor_lookupmeta <- net_actor |>
+  AddUserData(collect_tw,
+              lookupUsers = TRUE,
+              twitterAuth = auth_tw_bearer,
+              verbose = TRUE)
+
+names(net_actor_lookupmeta)
+
 ```
 
-For reference the `AddUserData` function will also add a new dataframe to the `actor_network` network list containing the retrieved user profiles called `users`.
+For reference the `AddUserData` function will also add a new dataframe to the `actor_network` network list containing
+the retrieved user metadata.
 
 ```{r, echo=TRUE}
-g_actor <- net_actor |> Graph()
+g_actor <- net_actor_meta |> Graph()
 
 g_actor
 ```
 
 #### AddVideoData requests and adds video data to networks
 
-`AddVideoData` adds video information as node attributes in youtube `actor` networks and replaces the video ID nodes with a user (channel owner or publisher). The `actorSubOnly` parameter can be used to only perform the ID substitution.
+`AddVideoData` adds video information as node attributes in youtube `actor` networks and replaces the video ID nodes
+with a user (channel owner or publisher). The `actorSubOnly` parameter can be used to only perform the ID substitution.
 
 ```{r, echo=TRUE}
 # replaces VIDEOID:xxxxxx references in actor network with their publishers
@@ -453,7 +550,8 @@ names(net_actor)
 nrow(net_actor$videos)
 ```
 
-`AddVideoData` function will also add a new dataframe to the `actor_network` network list containing the retrieved video information called `videos`.
+`AddVideoData` function will also add a new dataframe to the `actor_network` network list containing the retrieved video
+information called `videos`.
 
 ```{r, echo=TRUE}
 g_actor <- net_actor |> Graph()
@@ -463,16 +561,28 @@ g_actor
 
 ## Where to next?
 
-Continue working with the network graphs using the `igraph` package and check out some examples of plots in the [Introduction to vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html) vignette. The `graphml` files produced by `vosonSML` are also easily imported into software such as [Gephi](https://gephi.org/) for further visualization and exploration of networks.
+Continue working with the network graphs using the `igraph` package and check out some examples of plots in the
+[Introduction to vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html) vignette. The `graphml`
+files produced by `vosonSML` are also easily imported into software such as [Gephi](https://gephi.org/) for further
+visualization and exploration of networks.
 
-As an alternative to `vosonSML` using the R command-line interface we have also developed an R Shiny app called [VOSON Dash](https://vosonlab.github.io/VOSONDash/). It provides a user friendly GUI for the collection of data using `vosonSML` and has additional network visualization and analysis features.
+As an alternative to `vosonSML` using the R command-line interface we have also developed an R Shiny app called [VOSON
+Dash](https://vosonlab.github.io/VOSONDash/). It provides a user friendly GUI for the collection of data using
+`vosonSML` and has additional network visualization and analysis features.
 
-For more detailed information about functions and their parameters, please refer to the [Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
+For more detailed information about functions and their parameters, please refer to the
+[Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
 
 ## Special thanks
 
-This package would not be possible without key packages by other authors in the R community, particularly: [data.table](https://github.com/Rdatatable/data.table), [dplyr](https://github.com/tidyverse/dplyr), [httr](https://github.com/r-lib/httr), [igraph](https://github.com/igraph/rigraph), [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [rtweet](https://github.com/ropensci/rtweet) and [tidytext](https://github.com/juliasilge/tidytext).
+This package would not be possible without key packages by other authors in the R community, particularly:
+[data.table](https://github.com/Rdatatable/data.table), [dplyr](https://github.com/tidyverse/dplyr),
+[httr](https://github.com/r-lib/httr), [igraph](https://github.com/igraph/rigraph),
+[RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR), [rtweet](https://github.com/ropensci/rtweet) and
+[tidytext](https://github.com/juliasilge/tidytext).
 
 ## Code of Conduct
   
-Please note that the VOSON Lab projects are released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+Please note that the VOSON Lab projects are released with a [Contributor Code of
+Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree
+to abide by its terms.

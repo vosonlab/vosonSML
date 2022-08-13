@@ -156,9 +156,7 @@ Collect.search.twitter <-
     }
     msg(paste0("Collected ", n_tweets, " tweets.\n"))
 
-    if (writeToFile) {
-      write_output_file(df_tweets, "rds", "TwitterData", verbose = verbose)
-    }
+    if (writeToFile) write_output_file(df_tweets, "rds", "TwitterData", verbose = verbose)
 
     msg("Done.\n")
 

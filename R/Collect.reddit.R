@@ -8,7 +8,7 @@
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.
 #' @param threadUrls Character vector. Reddit thread urls to collect data from.
 #' @param waitTime Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
-#'   Minimum is 3 seconds. Default is \code{c(3, 10)} for a wait time chosen from between 3 and 10 seconds.
+#'   Minimum is 3 seconds. Default is \code{c(3, 5)} for a wait time chosen from between 3 and 5 seconds.
 #' @param ua Character string. Override User-Agent string to use in Reddit thread requests. Default is
 #'   \code{option("HTTPUserAgent")} value as set by vosonSML.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
@@ -30,7 +30,7 @@
 Collect.reddit <-
   function(credential,
            threadUrls,
-           waitTime = c(3, 10),
+           waitTime = c(3, 5),
            ua = getOption("HTTPUserAgent"),
            writeToFile = FALSE,
            verbose = FALSE,
@@ -76,7 +76,7 @@ Collect.reddit <-
     threads_df <- NULL
 
     tryCatch({
-      threads_df <- reddit_build_df(threadUrls, waitTime, ua, verbose)
+      threads_df <- reddit_build_df(threadUrls, waitTime, ua, verbose, msg = msg)
     }, error = function(e) {
       stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
     }, finally = {
@@ -122,7 +122,7 @@ Collect.reddit <-
     threads_df
   }
 
-reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
+reddit_build_df <- function(threadUrls, waitTime, ua, verbose, msg = msg) {
   threads <- lapply(threadUrls, function(x) {
     if (length(threadUrls) > 1 & (x != threadUrls[1])) {
       Sys.sleep(sample(waitTime, 1))
@@ -132,7 +132,8 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
       reddit_data(x,
                   wait_time = waitTime,
                   ua = ua,
-                  verbose = verbose)
+                  verbose = verbose,
+                  msg = msg)
     branch_df <- reddit_content_plus(thread_json, x)
 
     # loop protection
@@ -206,7 +207,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
     if (!is.null(branch_df) && nrow(branch_df) > 0) {
       branch_df$thread_id <-
         gsub(
-          "^(.*)?/comments/([0-9A-Za-z]{6})?/.*?(/)?$",
+          "^(.*)?/comments/([0-9A-Za-z]{6})?/{0,1}(.*)?/{0,1}$",
           "\\2",
           branch_df$url,
           ignore.case = TRUE,
@@ -234,7 +235,8 @@ reddit_data <-
            wait_time,
            ua,
            cont = NULL,
-           verbose = TRUE) {
+           verbose = TRUE,
+           msg = msg) {
 
     if (is.null(url) || length(url) == 0 || !is.character(url)) {
       stop("invalid URL parameter")

@@ -7,7 +7,7 @@
 \method{Collect}{reddit}(
   credential,
   threadUrls,
-  waitTime = c(3, 10),
+  waitTime = c(3, 5),
   ua = getOption("HTTPUserAgent"),
   writeToFile = FALSE,
   verbose = FALSE,
@@ -20,7 +20,7 @@
 \item{threadUrls}{Character vector. Reddit thread urls to collect data from.}
 
 \item{waitTime}{Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
-Minimum is 3 seconds. Default is \code{c(3, 10)} for a wait time chosen from between 3 and 10 seconds.}
+Minimum is 3 seconds. Default is \code{c(3, 5)} for a wait time chosen from between 3 and 5 seconds.}
 
 \item{ua}{Character string. Override User-Agent string to use in Reddit thread requests. Default is
 \code{option("HTTPUserAgent")} value as set by vosonSML.}

@@ -106,10 +106,9 @@ reference:
 - title: Helpers
   contents:
   - '`Graph`'
+  - '`Merge`'
+  - '`MergeFiles`'
   - '`ImportRtweet`'
-- title: Settings
-  contents:
-  - '`SetOutputCat`'
 
 toc:
   depth: 2
