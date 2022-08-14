@@ -105,6 +105,9 @@ reference:
   - '`AddVideoData.actor.youtube`'
 - title: Helpers
   contents:
+  - '`auth_twitter_app`'
+  - '`auth_twitter_dev`'
+  - '`auth_twitter_user`'
   - '`Graph`'
   - '`Merge`'
   - '`MergeFiles`'

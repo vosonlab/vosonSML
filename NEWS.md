@@ -1,31 +1,47 @@
-# vosonSML 0.32.5
+# vosonSML 0.32.6
 
 ## Major Changes
-- Re-wrote and modified `vosonSML` `twitter` functions to support major changes made in `rtweet` release version 1.0.2.
+- Re-wrote and modified `vosonSML` `Twitter` functions to support major changes made in `rtweet` release version 1.0.2.
 - Changed output message system. `vosonSML` functions are now silent by default. Using the `verbose` parameter will
   again print function output.
 - Changed output messages to use the `message()` function instead of the `cat()` function by default. Setting the global
-  option `option(voson.msg = FALSE)` will again redirect output to `cat()`.
-- The `twitter` `AddText` and `AddUserData` functions now work with most `twitter` network types.
-- `AddText` now adds columns for embedded tweet text and has a `hashtags` parameter to add a list of tweet hashtags as
+  option `option(voson.msg = FALSE)` will again redirect output to `cat()`. The option can be removed by assigning a
+  value of `NULL`.
+- Added the `voson.data` option allowing a directory path to be set for `writeToFile` output files. Files are output to
+  the current working directory by default, however a new directory can now be set with `option(voson.data = "my-data")`
+  for example. The directory path can be relative or a full path, but must be created beforehand or already exist. If
+  the path is invalid or does not exist it will continue with the default behaviour. This option can be removed by
+  assigning a value of `NULL`.
+  This will not effect other file write operations performed by the user.
+- The `Twitter` `AddText()` and `AddUserData()` functions now work with most `Twitter` network types.
+- `AddText()` now adds columns for embedded tweet text and has a `hashtags` parameter to add a list of tweet hashtags as
   a network attribute.
-- `AddUserData` now adds an additional dataframe for `missing_users`. It lists the ids and screen names of users that
+- `AddUserData()` now adds an additional dataframe for `missing_users`. It lists the ids and screen names of users that
   did not have metadata embedded in the collected data. Using the `lookupUsers` parameter will retrieve the metadata
-  using the twitter API.
+  using the twitter API. Additonally passing the `refresh = TRUE` parameter will now retrieve and update the metadata
+  for all users in the network.
 - Twitter data collection now returns a named list of two dataframes containing `tweets` and `users`.
-- Removed the `ImportData` function and replaced it with `ImportRtweet` for `rtweet` version 1.0 format data.
+- Removed the `ImportData` function and replaced it with `ImportRtweet()` for `rtweet` version 1.0 format data.
+- Added `Merge()` and `MergeFiles()` functions to support the merging of collected data from seperate operations. These
+  functions support input of multiple Collect objects or `.RDS` files, automatically detect the datasource type and
+  support the `writeToFile` parameter for file output of merged data. 
 
 ## Minor Changes
-- Re-wrote `youtube` id extraction from url function to be more robust and added support for shorts urls.
-- Removed stand-alone `GetYoutubeVideoIDs` function. The `youtube` collect function parameter `videoIDs` will now accept
+- Re-wrote `YouTube` id extraction from url function to be more robust and added support for `YouTube` shorts urls.
+- Removed stand-alone `GetYoutubeVideoIDs` function. The `YouTube` collect function parameter `videoIDs` will now accept
   video ids or video urls.
+- Added wrappers and aliases for some functions. Twitter auth objects can now be created with simplified
+  `auth_twitter_app()`, `auth_twitter_dev()` and `auth_twitter_user()` functions for each token type. The
+  `collect_reddit_threads()` and `collect_web_hyperlinks()` functions skip the unecessary `Authenticate` step for
+  `Reddit` and web data collection.
 
 # vosonSML 0.31.1
 
 ## Bug Fixes
 - Incorrectly ordered tweets by `status ID` to summarise collected tweet range. The `Min ID` and `Max ID` are not
-  necessarily the earliest and latest tweet in the tweets collected and therefore not ideal for subsequent collections.
-  Instead the two `Earliest Obs` and two `Latest Obs` tweets as returned by the `Twitter API` are now reported.
+  necessarily the earliest and latest tweet in the tweets collected and therefore not ideal for delimiting subsequent
+  collections. Instead the two `Earliest Obs` and two `Latest Obs` tweets as returned by the `Twitter API` are now
+  reported.
 
 ## Major Changes
 - Added `enpoint` parameter to `Collect`, allowing `search` or `timeline` to be specified for a `twitter` data

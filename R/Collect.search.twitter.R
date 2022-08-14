@@ -130,7 +130,7 @@ Collect.search.twitter <-
     tweets <- lapply(df_tweets, "[[", "statuses")
     df_tweets <- rtweet::tweets_with_users(tweets)
 
-    df_tweets <- df_tweets |> import_rtweet()
+    df_tweets <- df_tweets |> import_rtweet_()
 
     n_tweets <- check_df_n(df_tweets$tweets)
 

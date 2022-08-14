@@ -64,7 +64,7 @@ Merge <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose =
   merge_cls_list <- lapply(merge_dots, class)
 
   if (!identical(unname(merge_cls_list[-length(merge_cls_list)]), unname(merge_cls_list[-1]))) {
-    stop("Collect data must be of the same class.")
+    stop("Collect data must be of the same class.", call. = FALSE)
   }
 
   merge_cls_data <- unlist(merge_cls_list[1])

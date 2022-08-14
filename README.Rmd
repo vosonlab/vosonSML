@@ -186,6 +186,19 @@ collect_tw_tl <- auth_tw_bearer |>
 
 The output for these methods also lists the earliest and most recent tweet as well as the number of tweets collected.
 
+##### Importing tweets from rtweet
+
+Because `vosonSML` uses the `rtweet` package to access and collect tweets data, `rtweet` data is also able to be
+easily imported from dataframe or file and then transformed into a `Collect` object for further use.
+
+```{r, echo=TRUE}
+tweets <- rtweet::search_tweets("#auspol", n = 20)
+data_tw <- ImportRtweet(tweets)
+
+names(data_tw)
+class(data_tw)
+```
+
 #### Create twitter activity, actor, semantic and 2-mode network graphs
 
 The twitter `Create` function accepts the data from `Collect` and a type parameter of `activity`, `actor`, `semantic` or
@@ -448,6 +461,30 @@ net_actor <- collect_web |> Create("actor")
 ```
 
 ### <a name="supplemental-functions"></a>Supplemental Functions
+
+#### Merge collected data together
+
+The `Merge` and `MergeFiles` functions allow two or more `Collect` objects to be merged together provided they are of
+the same datasource type e.g `twitter`, `youtube`.
+
+``` r
+# collect data
+collect_tw_auspol <- auth_tw_bearer |>
+  Collect(searchTerm = "#auspol", writeToFile = TRUE)
+  
+collect_tw_springst <- auth_tw_bearer |>
+  Collect(searchTerm = "#springst", writeToFile = TRUE)
+
+# merge collect objects
+data_tw <- Merge(
+  collect_tw_auspol, collect_tw_springst, writeToFile = TRUE, verbose = TRUE
+)
+
+# merge files from a data directory
+data_tw <- MergeFiles(
+  "vsml-tw-data", pattern = "*TwitterData.rds", writeToFile = TRUE, verbose = TRUE
+)
+```
 
 #### AddText adds collected text data to networks as node or edge attributes
 

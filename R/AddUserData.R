@@ -99,7 +99,11 @@ AddUserData.actor.twitter <-
     net$missing_users <- res$missing_users
 
     if (lookupUsers) {
-      user_ids <- ifelse(refresh, net$nodes$user_id, net$missing_users$user_id)
+      if (refresh) {
+        user_ids <- net$nodes$user_id
+      } else {
+        user_ids <- net$missing_users$user_id
+      }
 
       df_users <- lookup_users(
         user_ids,
@@ -193,7 +197,11 @@ AddUserData.twomode.twitter <-
     net$missing_users <- res$missing_users
 
     if (lookupUsers) {
-      user_ids <- ifelse(refresh, net$nodes$screen_name, net$missing_users$screen_name)
+      if (refresh) {
+        user_ids <- net$nodes$screen_name
+      } else {
+        user_ids <- net$missing_users$screen_name
+      }
 
       df_users <- lookup_users(
         user_ids,

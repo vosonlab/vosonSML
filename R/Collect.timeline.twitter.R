@@ -125,7 +125,7 @@ Collect.timeline.twitter <-
 
     tl_tweets <- get_tls()
 
-    df_tweets <- tl_tweets |> import_rtweet(rtweet_created_at = TRUE)
+    df_tweets <- tl_tweets |> import_rtweet_(rtweet_created_at = TRUE)
     n_tweets <- check_df_n(df_tweets$tweets)
 
     # summary

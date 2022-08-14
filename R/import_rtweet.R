@@ -29,7 +29,7 @@ ImportRtweet <- function(data) {
     stop("Please provide file path or dataframe to import.", call. = FALSE)
   }
 
-  if (check_df_n(data) > 0) return(import_rtweet(data))
+  if (check_df_n(data) > 0) return(import_rtweet_(data))
 
   data <- check_chr(data, param = "data")
 
@@ -60,11 +60,11 @@ ImportRtweet <- function(data) {
     ), call. = FALSE)
   })
 
-  import_rtweet(df)
+  import_rtweet_(df)
 }
 
 # modify rtweet v1.0 format tweet data
-import_rtweet <- function(data, rtweet_created_at = FALSE) {
+import_rtweet_ <- function(data, rtweet_created_at = FALSE) {
 
   if (check_df_n(data) < 1) return(NULL)
 
