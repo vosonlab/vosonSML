@@ -26,7 +26,7 @@ from the seed site.}
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-A \code{data.frame} object with class names \code{"datasource"} and \code{"web"}.
+A \code{tibble} object with class names \code{"datasource"} and \code{"web"}.
 }
 \description{
 Collects hyperlinks from web pages and structures the data into a dataframe with the class names
@@ -34,10 +34,10 @@ Collects hyperlinks from web pages and structures the data into a dataframe with
 }
 \examples{
 \dontrun{
-pages <- data.frame(page = c("http://vosonlab.net",
-                             "https://rsss.cass.anu.edu.au"),
-                    type = c("int", "all"),
-                    max_depth = c(2, 2))
+pages <- tibble::tibble(page = c("http://vosonlab.net",
+                                 "https://rsss.cass.anu.edu.au"),
+                        type = c("int", "all"),
+                        max_depth = c(2, 2))
 
 webData <- webAuth |>
   Collect(pages, writeToFile = TRUE)

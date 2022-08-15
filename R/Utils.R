@@ -209,11 +209,10 @@ network_stats <-
 
     if (is.null(df)) {
       df  <-
-        data.frame(
+        tibble::tibble(
           "field" = character(0),
           "count" = character(0),
-          "edge_count" = character(0),
-          stringsAsFactors = FALSE
+          "edge_count" = character(0)
         )
     }
     rbind(df,

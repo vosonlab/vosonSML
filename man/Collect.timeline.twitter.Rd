@@ -55,7 +55,7 @@ failure modes like temporarily losing your internet connection.}
   }}
 }
 \value{
-A data.frame object with class names \code{"datasource"} and \code{"twitter"}.
+A tibble object with class names \code{"datasource"} and \code{"twitter"}.
 }
 \description{
 This function collects user timeline tweets and structures the data into a dataframe with the class

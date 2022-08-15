@@ -99,11 +99,9 @@ Create.actor.reddit <- function(datasource, type, ...) {
   df_relations <- dplyr::bind_rows(df_relations, authors)
 
   df_nodes <-
-    data.frame(user = with(df_relations, {
+    tibble::tibble(user = with(df_relations, {
       unique(c(sender, receiver))
-    }),
-    stringsAsFactors = FALSE) |>
-    tibble::as_tibble() |>
+    })) |>
     dplyr::mutate(id = as.integer(dplyr::row_number())) |>
     dplyr::select(.data$id, .data$user)
 

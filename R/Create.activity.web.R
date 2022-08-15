@@ -21,24 +21,23 @@
 #' }
 #'
 #' @export
-Create.activity.web <-
-  function(datasource, type, lcase = TRUE, verbose = TRUE, ...) {
-    msg("Generating web activity network...\n")
+Create.activity.web <- function(datasource, type, lcase = TRUE, verbose = TRUE, ...) {
+  msg("Generating web activity network...")
 
-    edges <- datasource |>
-      dplyr::mutate(from = ifelse({{ lcase }}, tolower(.data$page), .data$page),
-                    to = ifelse({{ lcase }}, tolower(.data$url), .data$url)) |>
-      # dplyr::select(.data$from, .data$to) |>
-      dplyr::mutate(link_id = as.character(dplyr::row_number()))
-
-    nodes <- tibble::tibble(page = c(edges$from, edges$to)) |>
-      dplyr::distinct(.data$page) |>
-      dplyr::mutate(id = as.character(dplyr::row_number())) # |>
-      # dplyr::relocate(.data$id)
-
-    net <- list("nodes" = nodes, "edges" = edges)
-    class(net) <- append(class(net), c("network", "activity", "web"))
-    msg("Done.\n")
-
-    net
+  if (lcase) {
+    data <- datasource |> dplyr::mutate(from = tolower(.data$page), to = tolower(.data$url))
+  } else {
+    data <- datasource |> dplyr::mutate(from = .data$page, to = .data$url)
   }
+
+  edges <- data |> dplyr::select(.data$from, .data$to)
+
+  nodes <- tibble::tibble(id = unique(c(edges$from, edges$to)))
+  nodes <- nodes |> dplyr::arrange(.data$id)
+
+  net <- list("nodes" = nodes, "edges" = edges)
+  class(net) <- append(class(net), c("network", "activity", "web"))
+  msg("Done.\n")
+
+  net
+}

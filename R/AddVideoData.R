@@ -226,18 +226,18 @@ GetVideoData <- function(youtubeAuth, videoIds) {
   }
 
   df_video <- lapply(video_data, function(x) {
-    data.frame(
+    tibble::tibble(
       VideoID = x$id,
       VideoTitle = x$snippet$title,
       VideoDescription = x$snippet$description,
       VideoPublishedAt = x$snippet$publishedAt,
       ChannelID = x$snippet$channelId,
-      ChannelTitle = x$snippet$channelTitle,
-      stringsAsFactors = FALSE
+      ChannelTitle = x$snippet$channelTitle
     )
   })
 
-  df_video <- tibble::as_tibble(do.call("rbind", df_video))
+  # df_video <- tibble::as_tibble(do.call("rbind", df_video))
+  df_video <- dplyr::bind_rows(df_video)
 
   df_video
 }

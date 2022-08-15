@@ -15,7 +15,7 @@
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{FALSE}.
 #' @inheritDotParams rtweet::get_timeline -token -user -n -max_id -home
 #'
-#' @return A data.frame object with class names \code{"datasource"} and \code{"twitter"}.
+#' @return A tibble object with class names \code{"datasource"} and \code{"twitter"}.
 #'
 #' @export
 Collect.timeline.twitter <-

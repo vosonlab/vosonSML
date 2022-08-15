@@ -7,7 +7,7 @@ get_domain_robots <- function(url, verbose = TRUE) {
       robotstxt::robotstxt(domain = url)
     }, error = function(e) {
       if (verbose) {
-        msg(paste0("get_domain_robots error: ", url, "\n", e, "\n"))
+        msg(paste0("get_domain_robots error: ", url, " - ", e$message, "\n"))
       }
       NULL
     })
@@ -94,4 +94,15 @@ get_ahrefs <- function(page) {
     rvest::html_attr("href")
 
   hrefs
+}
+
+# check format of url is valid
+check_valid_url <- function(x) {
+  any(grepl(
+    paste0("^(?:(?:http(?:s)?|ftp)://)(?:\\S+(?::(?:\\S)*)?@)?",
+           "(?:(?:[a-z0-9\u00a1-\uffff](?:-)*)*(?:[a-z0-9\u00a",
+           "1-\uffff])+)(?:\\.(?:[a-z0-9\u00a1-\uffff](?:-)*)*",
+           "(?:[a-z0-9\u00a1-\uffff])+)*(?:\\.(?:[a-z0-9\u00a1",
+           "-\uffff]){2,})(?::(?:\\d){2,5})?(?:/(?:\\S)*)?$"),
+    x))
 }

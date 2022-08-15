@@ -37,7 +37,7 @@
 #' @param verbose Logical. Output additional information. Default is \code{FALSE}.
 #' @inheritDotParams rtweet::search_tweets -token -q -n -type -include_rts -retryonratelimit -verbose
 #'
-#' @return A data.frame object with class names \code{"datasource"} and \code{"twitter"}.
+#' @return A tibble object with class names \code{"datasource"} and \code{"twitter"}.
 #'
 #' @examples
 #' \dontrun{

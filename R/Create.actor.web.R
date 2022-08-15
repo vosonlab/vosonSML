@@ -21,27 +21,19 @@
 #'
 #' @export
 Create.actor.web <- function(datasource, type, verbose = TRUE, ...) {
-    msg("Generating web actor network...\n")
+  msg("Generating web actor network...")
 
-    edges <- datasource |>
-      dplyr::select(.data$page, .data$parse, .data$seed, .data$type, .data$depth) |>
-      dplyr::mutate(from = urltools::domain(tolower(.data$page)),
-                    to = tolower(.data$parse$domain))
+  edges <- datasource |>
+    dplyr::mutate(from = urltools::domain(tolower(.data$page)),
+                  to = tolower(.data$parse$domain)) |>
+    dplyr::select(.data$from, .data$to)
 
-    nodes <- tibble::tibble(domain = c(edges$from, edges$to)) |>
-      dplyr::distinct(.data$domain) |>
-      dplyr::mutate(id = as.character(dplyr::row_number())) |>
-      dplyr::relocate(.data$id)
+  nodes <- tibble::tibble(id = unique(c(edges$from, edges$to)))
+  nodes <- nodes |> dplyr::arrange(.data$id)
 
-    edges <- edges |>
-      dplyr::mutate(link_id = as.character(dplyr::row_number())) |>
-      dplyr::left_join(nodes |> dplyr::rename(from_id = .data$id), by = c("from" = "domain")) |>
-      dplyr::left_join(nodes |> dplyr::rename(to_id = .data$id), by = c("to" = "domain")) |>
-      dplyr::select(from = .data$from_id, to = .data$to_id, .data$link_id)
+  net <- list("nodes" = nodes, "edges" = edges)
+  class(net) <- append(class(net), c("network", "actor", "web"))
+  msg("Done.\n")
 
-    net <- list("nodes" = nodes, "edges" = edges)
-    class(net) <- append(class(net), c("network", "actor", "web"))
-    msg("Done.\n")
-
-    net
-  }
+  net
+}

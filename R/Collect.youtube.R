@@ -80,7 +80,7 @@ Collect.youtube <-
 
     # Create a dataframe to iteratively store comments from all the videos that the user wants to scrape
     # (i.e. specified in videoIDs) uses 'dummy' data in first row (which is removed later)
-    dataCombined <- data.frame(
+    dataCombined <- tibble::tibble(
       Comment = "foo",
       AuthorDisplayName = "bar",
       AuthorProfileImageUrl = NA,
@@ -92,8 +92,7 @@ Collect.youtube <-
       UpdatedAt = "timestamp",
       CommentID = "99999999123456789",
       ParentID = "foobar",
-      VideoID = "foobarfoobar",
-      stringsAsFactors = FALSE
+      VideoID = "foobarfoobar"
     )
 
     # Iterate through the videos in video_ids, adding to dataCombined.
@@ -120,7 +119,7 @@ Collect.youtube <-
       msg(paste0("** Creating dataframe from threads of ", video_ids[k], ".\n"))
 
       tempData <- lapply(rObj$data, function(x) {
-        data.frame(
+        tibble::tibble(
           Comment = x$snippet$topLevelComment$snippet$textDisplay,
           AuthorDisplayName = x$snippet$topLevelComment$snippet$authorDisplayName,
           AuthorProfileImageUrl = x$snippet$topLevelComment$snippet$authorProfileImageUrl,
@@ -132,20 +131,20 @@ Collect.youtube <-
             "[NoChannelId]",
             x$snippet$topLevelComment$snippet$authorChannelId$value
           ),
-          ReplyCount = x$snippet$totalReplyCount,
-          LikeCount = x$snippet$topLevelComment$snippet$likeCount,
+          ReplyCount = as.character(x$snippet$totalReplyCount),
+          LikeCount = as.character(x$snippet$topLevelComment$snippet$likeCount),
           PublishedAt = x$snippet$topLevelComment$snippet$publishedAt,
           UpdatedAt = x$snippet$topLevelComment$snippet$updatedAt,
           CommentID = x$snippet$topLevelComment$id,
           ParentID = NA,
-          VideoID = video_ids[k],
+          VideoID = video_ids[k]
           # actual reference to API data is:
           # x$snippet$topLevelComment$snippet$video_ids[k]
-          stringsAsFactors = FALSE
         )
       })
 
-      core_df <- do.call("rbind", tempData)
+      # core_df <- do.call("rbind", tempData)
+      core_df <- dplyr::bind_rows(tempData)
 
       ############################## Collect comment replies #############################
 
@@ -153,7 +152,7 @@ Collect.youtube <-
 
       # only attempt to collect replies for comments we know have replies
       commentIDs_with_replies <-
-        core_df[which(core_df$ReplyCount > 0), ] # column 6
+        core_df[which(as.numeric(core_df$ReplyCount) > 0), ] # column 6
       commentIDs_with_replies <- commentIDs_with_replies$CommentID
 
       if (length(commentIDs_with_replies) > 0) {
@@ -168,7 +167,7 @@ Collect.youtube <-
         base_url <- "https://www.googleapis.com/youtube/v3/comments"
 
         # 'dummy' first row of dataframe, for DEBUG purposes (fix later..)
-        dataRepliesAll <- data.frame(
+        dataRepliesAll <- tibble::tibble(
           Comment = "foo",
           AuthorDisplayName = "bar",
           AuthorProfileImageUrl = NA,
@@ -180,9 +179,8 @@ Collect.youtube <-
           UpdatedAt = "timestamp",
           CommentID = "99999999123456789",
           ParentID = "foobar",
-          VideoID = video_ids[k],
+          VideoID = video_ids[k]
           # API DOESN'T SEEM TO RETURN HERE, no matter anyway
-          stringsAsFactors = FALSE
         )
 
         # for each thread
@@ -242,7 +240,7 @@ Collect.youtube <-
 
           tempDataReplies <-
             lapply(init_results$items, function(x) {
-              data.frame(
+              tibble::tibble(
                 Comment = x$snippet$textDisplay,
                 AuthorDisplayName = x$snippet$authorDisplayName,
                 AuthorProfileImageUrl = x$snippet$authorProfileImageUrl,
@@ -252,15 +250,14 @@ Collect.youtube <-
                   "[NoChannelId]",
                   x$snippet$authorChannelId$value
                 ),
-                ReplyCount = 0,
+                ReplyCount = "0",
                 # there is no ReplyCount returned for replies (API specs)
-                LikeCount = x$snippet$likeCount,
+                LikeCount = as.character(x$snippet$likeCount),
                 PublishedAt = x$snippet$publishedAt,
                 UpdatedAt = x$snippet$updatedAt,
                 CommentID = x$id,
                 ParentID = x$snippet$parentId,
-                VideoID = video_ids[k],
-                stringsAsFactors = FALSE
+                VideoID = video_ids[k]
               )
             })
 
@@ -293,14 +290,15 @@ Collect.youtube <-
         dataRepliesAll <- dataRepliesAll[-1, ]
 
         # combine the comments and replies dataframes
-        dataCombinedTemp <- rbind(core_df, dataRepliesAll)
+        # dataCombinedTemp <- rbind(core_df, dataRepliesAll)
+        dataCombinedTemp <- dplyr::bind_rows(core_df, dataRepliesAll)
 
-        dataCombined <- rbind(dataCombined, dataCombinedTemp)
+        dataCombined <- dplyr::bind_rows(dataCombined, dataCombinedTemp)
 
         # no threads with reply comments for video
       } else {
         total_api_cost <- total_api_cost + api_cost
-        dataCombined <- rbind(dataCombined, core_df)
+        dataCombined <- dplyr::bind_rows(dataCombined, core_df)
         msg("\n")
       }
 
@@ -376,7 +374,7 @@ yt_scraper <- setRefClass(
           trimws(nextPageToken) == "") {
         if (page_count >= 1) {
           if (verbose) {
-            message(paste0(
+            vsml_msg(paste0(
               "-- No nextPageToken. Returning. page_count is: ",
               page_count,
               "\n"
@@ -387,14 +385,14 @@ yt_scraper <- setRefClass(
           return(0)
         } else {
           if (verbose) {
-            message("-- First thread page. No pageToken.\n")
+            vsml_msg("-- First thread page. No pageToken.\n")
           }
         }
       } else {
         opts$pageToken <- trimws(nextPageToken)
 
         if (verbose) {
-          message(paste0("-- Value of pageToken: ", opts$pageToken, "\n"))
+          vsml_msg(paste0("-- Value of pageToken: ", opts$pageToken, "\n"))
         }
       }
 
@@ -407,14 +405,14 @@ yt_scraper <- setRefClass(
         api_error <<- TRUE
         nextPageToken <<- ""
         if (verbose) {
-          message(paste0(
+          vsml_msg(paste0(
             "\nThread error: ",
             res$error$code,
             "\nDetail: ",
             res$error$message,
             "\n"
           ))
-          message(paste0("videoId: ", opts$videoId, "\n\n"))
+          vsml_msg(paste0("videoId: ", opts$videoId, "\n\n"))
         }
         return(0)
       } else {
@@ -437,8 +435,8 @@ yt_scraper <- setRefClass(
     # collect all video threads until done or max comments reached
     scrape_all = function(maxComments) {
       if (verbose) {
-        message(paste0("** video Id: ", api_opts$videoId, "\n", sep = ""))
-        message(
+        vsml_msg(paste0("** video Id: ", api_opts$videoId, "\n", sep = ""))
+        vsml_msg(
           paste0(
             "   [results per page: ",
             api_opts$maxResults,
@@ -457,7 +455,7 @@ yt_scraper <- setRefClass(
         thread_count <- scrape()
 
         if (verbose) {
-          message(paste0("-- Collected threads from page: ", thread_count, "\n", sep = ""))
+          vsml_msg(paste0("-- Collected threads from page: ", thread_count, "\n", sep = ""))
         }
 
         if (thread_count == 0 |
@@ -467,7 +465,7 @@ yt_scraper <- setRefClass(
 
           if (length(data) > maxComments) {
             if (verbose) {
-              message(
+              vsml_msg(
                 paste0(
                   "-- API returned more than max comments. Results truncated to first ",
                   maxComments,
@@ -481,7 +479,7 @@ yt_scraper <- setRefClass(
           }
 
           if (verbose) {
-            message(paste0("-- Done collecting threads.\n", sep = ""))
+            vsml_msg(paste0("-- Done collecting threads.\n", sep = ""))
           }
 
           break
@@ -489,11 +487,11 @@ yt_scraper <- setRefClass(
       }
 
       if (verbose) {
-        message(paste0("** Results page count: ", page_count, "\n"))
+        vsml_msg(paste0("** Results page count: ", page_count, "\n"))
       }
       if (verbose) {
-        message(paste0("** Collected threads: ", length(data), "\n"))
-        message(paste0("(Threads API unit cost: ", api_cost, ")\n"))
+        vsml_msg(paste0("** Collected threads: ", length(data), "\n"))
+        vsml_msg(paste0("(Threads API unit cost: ", api_cost, ")\n"))
       }
     },
 
@@ -514,7 +512,7 @@ yt_scraper <- setRefClass(
       data <<- list()
       unique_count <<- 0
       done <<- FALSE
-      core_df <<- data.frame()
+      core_df <<- tibble::tibble()
       verbose <<- verbose
       api_cost <<- 0
       api_error <<- FALSE
@@ -526,7 +524,7 @@ yt_scraper <- setRefClass(
       nextPageToken <<- ""
       unique_count <<- 0
       done <<- FALSE
-      core_df <<- data.frame()
+      core_df <<- tibble::tibble()
       api_cost <<- 0
       api_error <<- FALSE
     },
@@ -534,7 +532,7 @@ yt_scraper <- setRefClass(
     cache_core_data = function() {
       if (nrow(core_df) < unique_count) {
         sub_data <- lapply(data, function(x) {
-          data.frame(
+          tibble::tibble(
             Comment = x$snippet$topLevelComment$snippet$textDisplay,
             AuthorDisplayName = x$snippet$topLevelComment$snippet$authorDisplayName,
             AuthorProfileImageUrl = x$snippet$topLevelComment$snippet$authorProfileImageUrl,
@@ -546,18 +544,17 @@ yt_scraper <- setRefClass(
               "[NoChannelId]",
               x$snippet$topLevelComment$snippet$authorChannelId$value
             ),
-            ReplyCount = x$snippet$totalReplyCount,
-            LikeCount = x$snippet$topLevelComment$snippet$likeCount,
+            ReplyCount = as.character(x$snippet$totalReplyCount),
+            LikeCount = as.character(x$snippet$topLevelComment$snippet$likeCount),
             PublishedAt = x$snippet$topLevelComment$snippet$publishedAt,
             UpdatedAt = x$snippet$topLevelComment$snippet$updatedAt,
-            CommentID = x$snippet$topLevelComment$id,
-            stringsAsFactors = FALSE
+            CommentID = x$snippet$topLevelComment$id
           )
         })
-        core_df <<- do.call("rbind", sub_data)
+        core_df <<- dplyr::bind_rows(sub_data) # do.call("rbind", sub_data)
       } else {
         if (verbose) {
-          message("core_df is already up to date.\n")
+          vsml_msg("core_df is already up to date.\n")
         }
       }
     }

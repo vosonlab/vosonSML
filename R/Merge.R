@@ -150,20 +150,20 @@ Merge.reddit <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, ve
   data
 }
 
-#' @noRd
-#' @method Merge web
-#' @export
-Merge.web <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = FALSE) {
-  merge_cls_data <- merge_cls_data
-
-  data <- dplyr::bind_rows(...)
-  class(data) <- merge_cls_data
-
-  if (writeToFile) write_output_file(data, "rds", "WebDataMerge", verbose = verbose)
-  msg("Done.\n")
-
-  data
-}
+# #' @noRd
+# #' @method Merge web
+# #' @export
+# Merge.web <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = FALSE) {
+#   merge_cls_data <- merge_cls_data
+#
+#   data <- dplyr::bind_rows(...)
+#   class(data) <- merge_cls_data
+#
+#   if (writeToFile) write_output_file(data, "rds", "WebDataMerge", verbose = verbose)
+#   msg("Done.\n")
+#
+#   data
+# }
 
 merge_twitter <- function(x, y) {
   list(tweets = dplyr::bind_rows(x$tweets, y$tweets),

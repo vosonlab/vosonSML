@@ -155,16 +155,16 @@ from the seed site.</p></dd>
     <h2>Value</h2>
     
 
-<p>A <code>data.frame</code> object with class names <code>"datasource"</code> and <code>"web"</code>.</p>
+<p>A <code>tibble</code> object with class names <code>"datasource"</code> and <code>"web"</code>.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="va">pages</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>page <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"http://vosonlab.net"</span>,</span></span>
-<span class="r-in"><span>                             <span class="st">"https://rsss.cass.anu.edu.au"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                    type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"int"</span>, <span class="st">"all"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>                    max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pages</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>page <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"http://vosonlab.net"</span>,</span></span>
+<span class="r-in"><span>                                 <span class="st">"https://rsss.cass.anu.edu.au"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                        type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"int"</span>, <span class="st">"all"</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>                        max_depth <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">webData</span> <span class="op">&lt;-</span> <span class="va">webAuth</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="Collect.html">Collect</a></span><span class="op">(</span><span class="va">pages</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>

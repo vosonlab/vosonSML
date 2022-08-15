@@ -15,7 +15,7 @@
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
-#' @return A \code{data.frame} object with class names \code{"datasource"} and \code{"reddit"}.
+#' @return A \code{tibble} object with class names \code{"datasource"} and \code{"reddit"}.
 #'
 #' @examples
 #' \dontrun{
@@ -134,7 +134,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose, msg = msg) {
                   ua = ua,
                   verbose = verbose,
                   msg = msg)
-    branch_df <- reddit_content_plus(thread_json, x)
+    branch_df <- reddit_content_plus(thread_json, x, msg = msg)
 
     # loop protection
     prev_value <- NULL
@@ -180,7 +180,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose, msg = msg) {
                     ua,
                     cont = cont_thread_id,
                     verbose = verbose)
-      cont_df <- reddit_content_plus(cont_json, x, depth = depth)
+      cont_df <- reddit_content_plus(cont_json, x, depth = depth, msg = msg)
 
       # if comments returned
       if (nrow(cont_df)) {
@@ -340,8 +340,8 @@ reddit_struct_list <- function(node, depth = 0) {
 }
 
 # based on method by @ivan-rivera RedditExtractoR
-reddit_content_plus <- function(raw_data, req_url, depth = 0) {
-  data_extract <- data.frame(
+reddit_content_plus <- function(raw_data, req_url, depth = 0, msg = msg) {
+  data_extract <- tibble::tibble(
     id = numeric(),
     structure = character(),
     post_date = character(),
@@ -378,7 +378,7 @@ reddit_content_plus <- function(raw_data, req_url, depth = 0) {
       reddit_struct_list(main_node[[x]], depth = ifelse(depth != 0, depth, x))
     }))
 
-    data <- data.frame(
+    data <- tibble::tibble(
       id               = NA,
       structure        = structures_list,
       post_date        = as.character(lubridate::as_datetime(
@@ -422,8 +422,7 @@ reddit_content_plus <- function(raw_data, req_url, depth = 0) {
       link             = meta_node$url,
       domain           = meta_node$domain,
       url              = req_url,
-      rm               = FALSE,
-      stringsAsFactors = FALSE
+      rm               = FALSE
     )
 
     data$id <- 1:nrow(data)

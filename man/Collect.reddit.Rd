@@ -42,7 +42,7 @@ Minimum is 3 seconds. Default is \code{c(3, 5)} for a wait time chosen from betw
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
-A \code{data.frame} object with class names \code{"datasource"} and \code{"reddit"}.
+A \code{tibble} object with class names \code{"datasource"} and \code{"reddit"}.
 }
 \description{
 Collects comments made by users on one or more specified subreddit conversation threads and structures

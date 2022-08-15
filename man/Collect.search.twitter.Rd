@@ -53,7 +53,7 @@ Twitter API.}
   }}
 }
 \value{
-A data.frame object with class names \code{"datasource"} and \code{"twitter"}.
+A tibble object with class names \code{"datasource"} and \code{"twitter"}.
 }
 \description{
 This function collects tweet data based on search terms and structures the data into a dataframe with
