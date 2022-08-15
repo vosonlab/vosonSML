@@ -1,5 +1,5 @@
 Package: vosonSML
-Version: 0.30.6
+Version: 0.32.6
 Title: Collecting Social Media Data and Generating Networks for Analysis
 Description: A suite of easy to use functions for collecting social media
     data and generating networks for analysis. Supports Twitter, Youtube,
@@ -8,13 +8,12 @@ Type: Package
 Imports:
     data.table,
     dplyr (>= 1.0),
-    httr,
+    httr (>= 1.3.0),
     jsonlite,
     lubridate,
-    magrittr,
     methods,
     purrr,
-    rlang (>= 0.3.0.1),
+    rlang (>= 1.0),
     stringr,
     textutils,
     tidyr,
@@ -26,15 +25,14 @@ Suggests:
     readr,
     rmarkdown,
     robotstxt,
-    rtweet (>= 0.6.8),
+    rtweet (>= 1.0.2),
     rvest,
     stopwords,
     testthat,
-    tictoc,
     tidytext,
     urltools,
     xml2
-Depends: R (>= 3.6)
+Depends: R (>= 4.1)
 Encoding: UTF-8
 Authors@R: c( 
     person("Bryan", "Gertzel",
@@ -52,7 +50,7 @@ Authors@R: c(
 Maintainer: Bryan Gertzel <bryan.gertzel@anu.edu.au>
 License: GPL (>= 3)
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.1
 NeedsCompilation: no
 VignetteBuilder: knitr
 URL: https://github.com/vosonlab/vosonSML

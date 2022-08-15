@@ -18,7 +18,7 @@ https://developers.google.com/youtube/v3/docs/."><!-- mathjax --><script src="ht
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.30.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.6</span>
       </span>
     </div>
 
@@ -44,7 +44,7 @@ https://developers.google.com/youtube/v3/docs/."><!-- mathjax --><script src="ht
   </a>
 </li>
 <li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     <span class="fa fa-book"></span>
      
     Articles
@@ -118,34 +118,41 @@ https://developers.google.com/youtube/v3/docs/."><!-- mathjax --><script src="ht
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for youtube</span>
-<span class="fu"><a href="Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="va">socialmedia</span>, <span class="va">apiKey</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for youtube</span></span>
+<span><span class="fu"><a href="Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="va">socialmedia</span>, <span class="va">apiKey</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>socialmedia</dt>
 <dd><p>Character string. Identifier for social media API to authenticate, set to <code>"youtube"</code>.</p></dd>
+
+
 <dt>apiKey</dt>
 <dd><p>Character string. Google developer API key to authenticate.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Additional parameters passed to function. Not used in this method.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A <code>credential</code> object containing an api key <code>$auth</code> and social media type descriptor
+    
+
+<p>A <code>credential</code> object containing an api key <code>$auth</code> and social media type descriptor
 <code>$socialmedia</code> set to <code>"youtube"</code>. Object has the class names <code>"credential"</code> and <code>"youtube"</code>.</p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in"><span class="co"># youtube authentication with google developer api key</span></span>
-<span class="r-in"><span class="va">myAPIKey</span> <span class="op">&lt;-</span> <span class="st">"xxxxxxxxxxxx"</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="va">youtubeAuth</span> <span class="op">&lt;-</span> <span class="fu"><a href="Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"youtube"</span>, apiKey <span class="op">=</span> <span class="va">myAPIKey</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span><span class="co"># youtube authentication with google developer api key</span></span></span>
+<span class="r-in"><span><span class="va">myAPIKey</span> <span class="op">&lt;-</span> <span class="st">"xxxxxxxxxxxx"</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">youtubeAuth</span> <span class="op">&lt;-</span> <span class="fu"><a href="Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"youtube"</span>, apiKey <span class="op">=</span> <span class="va">myAPIKey</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -160,7 +167,7 @@ https://developers.google.com/youtube/v3/docs/."><!-- mathjax --><script src="ht
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
       </footer></div>

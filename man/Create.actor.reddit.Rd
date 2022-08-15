@@ -23,7 +23,7 @@ are actor nodes and comment replies to each other are represented as directed ed
 \examples{
 \dontrun{
 # create a reddit actor network graph with comment text as edge attributes
-actorNetwork <- redditData \%>\% Create("actor")
+actorNetwork <- redditData |> Create("actor")
 
 # network
 # actorNetwork$nodes

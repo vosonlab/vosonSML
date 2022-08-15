@@ -19,13 +19,13 @@
 Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 }
 \description{
-Creates an activity network from collected YouTube video comment threads. Nodes are top-level
-comments, reply comments and videos. Edges are directed between the nodes and represent commenting activity.
+Creates an activity network from collected YouTube video comment threads. Nodes are top-level comments,
+reply comments and videos. Edges are directed between the nodes and represent commenting activity.
 }
 \examples{
 \dontrun{
 # create a YouTube activity network graph
-activityNetwork <- youtubeData \%>\% Create("activity")
+activityNetwork <- youtubeData |> Create("activity")
 
 # network
 # activityNetwork$nodes

@@ -28,7 +28,13 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/AddText.activity.reddit.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/AddText.activity.twitter.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/AddText.actor.reddit.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/AddText.actor.twitter.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/AddText.actor.youtube.html</loc>
@@ -37,10 +43,19 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/AddText.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/AddText.semantic.twitter.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/AddText.twomode.twitter.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/AddUserData.actor.twitter.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/AddUserData.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/AddUserData.twomode.twitter.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/AddVideoData.actor.youtube.html</loc>
@@ -58,16 +73,37 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.twitter.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.twitter2.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.web.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.youtube.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/auth_twitter_app.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/auth_twitter_dev.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/auth_twitter_user.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/auth_youtube_apikey.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.reddit.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Collect.search.twitter.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Collect.timeline.twitter.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.twitter.html</loc>
@@ -130,7 +166,19 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/ImportData.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/ImportRtweet.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/index.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Merge.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/MergeFiles.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/SetOutputCat.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/vosonSML-colon-colon-AddText.activity.reddit.html</loc>

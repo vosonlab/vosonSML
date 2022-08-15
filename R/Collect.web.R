@@ -1,44 +1,45 @@
 #' @title Collect hyperlinks from web pages
 #'
-#' @description Collects hyperlinks from web pages and structures the data into a dataframe with the
-#' class names \code{"datasource"} and \code{"web"}.
+#' @description Collects hyperlinks from web pages and structures the data into a dataframe with the class names
+#'   \code{"datasource"} and \code{"web"}.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"web"}.
 #' @param pages Dataframe. Dataframe of web pages to crawl. The dataframe must have the columns \code{page} (character),
-#' \code{type} (character) and \code{max_depth} (integer). Each row is a seed web page to crawl, with the \code{page}
-#' value being the page URL. The \code{type} value is type of crawl as either \code{"int"}, \code{"ext"} or
-#' \code{"all"}, directing the crawler to follow only internal links, follow only external links (different domain to
-#' the seed page) or follow all links.
-#' The \code{max_depth} value determines how many levels of hyperlinks to follow from the seed site.
+#'   \code{type} (character) and \code{max_depth} (integer). Each row is a seed web page to crawl, with the \code{page}
+#'   value being the page URL. The \code{type} value is type of crawl as either \code{"int"}, \code{"ext"} or
+#'   \code{"all"}, directing the crawler to follow only internal links, follow only external links (different domain to
+#'   the seed page) or follow all links. The \code{max_depth} value determines how many levels of hyperlinks to follow
+#'   from the seed site.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
-#' @param verbose Logical. Output additional information about the data collection. Default is \code{TRUE}.
+#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
-#' @return A \code{data.frame} object with class names \code{"datasource"} and \code{"web"}.
+#' @return A \code{tibble} object with class names \code{"datasource"} and \code{"web"}.
 #'
 #' @examples
 #' \dontrun{
-#' pages <- data.frame(page = c("http://vosonlab.net",
-#'                              "https://rsss.cass.anu.edu.au"),
-#'                     type = c("int", "all"),
-#'                     max_depth = c(2, 2))
+#' pages <- tibble::tibble(page = c("http://vosonlab.net",
+#'                                  "https://rsss.cass.anu.edu.au"),
+#'                         type = c("int", "all"),
+#'                         max_depth = c(2, 2))
 #'
-#' webData <- webAuth %>%
+#' webData <- webAuth |>
 #'   Collect(pages, writeToFile = TRUE)
 #' }
 #'
 #' @export
 Collect.web <-
   function(credential,
-           pages,
+           pages = NULL,
            writeToFile = FALSE,
-           verbose = TRUE,
+           verbose = FALSE,
            ...) {
-    rlang::check_installed(c("robotstxt", "rvest", "urltools", "xml2"),
-                           "for Collect.web")
-    stop_req_pkgs(c("robotstxt", "rvest", "urltools", "xml2"), "Collect.web")
 
-    cat("Collecting web page hyperlinks...\n")
+    prompt_and_stop(c("robotstxt", "rvest", "urltools", "xml2"), "Collect.web")
+
+    msg("Collecting web page hyperlinks...\n")
+
+    dbg <- lgl_debug(list(...)$debug)
 
     robots_opts <- getOption("robotstxt_warn")
     on.exit({
@@ -50,13 +51,16 @@ Collect.web <-
 
     for (i in 1:nrow(pages)) {
       seed <- dplyr::slice(pages, i)
+      msg(paste0(i, ". seed: ", seed$page, "\n"))
       df_results[[seed$page]] <-
         get_hyperlinks(seed$page,
                        1,
                        seed$max_depth,
                        seed$type,
                        seed$delay,
-                       verbose)
+                       verbose = verbose,
+                       msg = msg,
+                       dbg = dbg)
     }
 
     df_results <- purrr::map_dfr(df_results, dplyr::bind_rows)
@@ -64,43 +68,39 @@ Collect.web <-
     class(df_results) <-
       append(c("datasource", "web"), class(df_results))
     if (writeToFile) {
-      write_output_file(df_results, "rds", "WebData")
+      write_output_file(df_results, "rds", "WebData", verbose = verbose)
     }
 
-    cat("Done.\n")
+    msg("Done.\n")
 
     df_results
   }
 
-get_page_hrefs <- function(page, verbose = TRUE) {
+get_page_hrefs <- function(page, verbose = FALSE, msg = msg, dbg = dbg) {
   # ignore pdf files
   if (grepl(".*\\.pdf$", tolower(page))) {
     return(list())
   }
 
   urls <- tryCatch({
-    hrefs <- xml2::read_html(page, options = c("NOWARNING")) %>%
-      rvest::html_nodes("a") %>%
+    hrefs <- xml2::read_html(page, options = c("NOWARNING")) |>
+      rvest::html_nodes("a") |>
       rvest::html_attr("href")
 
-    hrefs <- urltools::url_decode(hrefs)
-
-    # hrefs <- hrefs[!grepl("^(mailto|tel|telnet|urn|ldap|news):.+", hrefs, ignore.case = TRUE)] # ignore othe uri hrefs
+    hrefs <- urltools::url_decode(trimws(hrefs))
 
     # if an internal link prepend page url to link to create full url
-    hrefs <- purrr::map_if(hrefs,
-                           ~ {
-                             !grepl("^(http|https)://.+", .x, ignore.case = TRUE)
-                           },
-                           ~ {
-                             local_to_full_url(page, .x)
-                           })
+    hrefs <- purrr::map_if(
+      hrefs,
+      ~ { !grepl("^(http|https)://.+", .x, ignore.case = TRUE) },
+      ~ { local_to_full_url(page, .x) }
+    )
     hrefs <- stringr::str_replace(hrefs, "/$", "")
+    # hrefs <- hrefs[check_valid_url(hrefs)]
+
     hrefs
   }, error = function(e) {
-    if (verbose) {
-      cat(paste0("- error: ", page, " (", trimws(e), ")", "\n"))
-    }
+    msg(paste0("- error: ", page, " - ", e$message, "\n")) #  " (", trimws(e), ")" "\n"
     list("error", trimws(e))
   })
 
@@ -113,19 +113,18 @@ get_hyperlinks <-
            max_depth,
            type,
            delay,
-           verbose = TRUE) {
-    robotstxt_list <-
-      list()    # keep a named list of robots.txt by domain
-    visited_urls <- list()      # keep a list of visited page urls
+           verbose = FALSE,
+           msg = msg,
+           dbg = dbg) {
+    robotstxt_list <- list() # keep a named list of robots.txt by domain
+    visited_urls <- list() # keep a list of visited page urls
 
     # single page request that returns a df of urls
-    process_page <- function(page_url, use_delay, verbose) {
+    process_page <- function(page_url, use_delay, verbose = FALSE) {
       df <- NULL
 
       if (!grepl("^(https|http)://.*$", page_url, ignore.case = TRUE)) {
-        if (verbose) {
-          cat("- skipping uri:", page_url, "\n")
-        }
+        if (dbg) msg(paste0("- skipping uri:", page_url, "\n"))
         return(df)
       }
 
@@ -137,14 +136,10 @@ get_hyperlinks <-
         robotstxt_obj <- get_domain_robots(base_url)
 
         if (!is.null(robotstxt_obj)) {
-          if (verbose) {
-            cat("* new domain:", base_url, "\n")
-          }
+          msg(paste0("* new domain: ", base_url, "\n"))
           robotstxt_list[[page_domain]] <<- robotstxt_obj
         } else {
-          if (verbose) {
-            cat("* no robots or error:", base_url, "\n")
-          }
+          msg(paste0("* no robots or error: ", base_url, "\n"))
         }
       }
 
@@ -154,28 +149,22 @@ get_hyperlinks <-
         # no robots.txt
         if (is.null(robotstxt_obj)) {
           delay <- get_crawl_delay(NULL, use_delay)
-          if (verbose) {
-            cat(paste0("+ ", page_url, " (", round(delay, 2), " secs)\n"))
-          }
+          if (dbg) msg(paste0("+ ", page_url, " (", round(delay, 2), " secs)\n"))
 
           # check if path allowed and get crawl delay
         } else if (robotstxt_obj$check(url_obj$path)) {
           delay <- get_crawl_delay(robotstxt_obj$crawl_delay, use_delay)
-          if (verbose) {
-            cat(paste0("+ ", page_url, " (", round(delay, 2), " secs)\n"))
-          }
+          if (dbg) msg(paste0("+ ", page_url, " (", round(delay, 2), " secs)\n"))
 
           # path disallowed
         } else {
-          if (verbose) {
-            cat("- disallowed:", page_url, "\n")
-          }
+          if (dbg) msg(paste0("- disallowed:", page_url, "\n"))
           return(df)
         }
 
         Sys.sleep(delay)
 
-        hrefs <- get_page_hrefs(page_url)
+        hrefs <- get_page_hrefs(page_url, verbose, msg = msg, dbg = dbg)
 
         is_err <- FALSE
         if (length(hrefs) == 2) {
@@ -195,19 +184,17 @@ get_hyperlinks <-
         if (!is_err) {
           if (length(hrefs) > 0) {
             df <-
-              tibble::tibble(url = as.character(hrefs)) %>% dplyr::count(.data$url)
+              tibble::tibble(url = as.character(hrefs)) |> dplyr::count(.data$url)
             df$page_err <- NA
           }
         }
       } else {
-        if (verbose) {
-          cat("- already done:", page_url, "\n")
-        }
+        if (dbg) msg(paste0("- already done:", page_url, "\n"))
       }
 
       if (!is.null(df)) {
         uu <- stringr::str_replace(page_url, "/$", "")
-        df <- df %>% dplyr::mutate(
+        df <- df |> dplyr::mutate(
           page = uu,
           depth = depth,
           max_depth = max_depth,
@@ -215,10 +202,9 @@ get_hyperlinks <-
         )
 
         # remove fragments or anchors
-        df <- df %>% dplyr::mutate(url = ifelse(
+        df <- df |> dplyr::mutate(url = ifelse(
           !is.na(.data$parse$fragment),
           stringr::str_replace(.data$url, paste0("#", .data$parse$fragment, "$"), ""),
-          # gsub(paste0("#", .data$parse$fragment, "$"), "", .data$url),
           .data$url
         ))
       }
@@ -227,11 +213,10 @@ get_hyperlinks <-
     } # end process_page
 
     # initial call and while loop for max depth
-    if (verbose) {
-      cat(paste0("*** initial call to get urls - ", url, "\n"))
-    }
+    if (dbg) msg(paste0("*** initial call to get urls - ", url, "\n"))
+
     url <- stringr::str_replace(url, "/$", "")
-    df_total <- purrr::map_dfr(url, process_page, delay, verbose)
+    df_total <- purrr::map_dfr(url, process_page, delay, verbose = verbose)
     df_total$seed <- url
     df_total$type <- type
 
@@ -251,19 +236,15 @@ get_hyperlinks <-
     urls <- na.omit(urls)
     urls <- stringr::str_replace(urls, "/$", "")
 
-    if (verbose) {
-      cat(paste0("*** end initial call", "\n"))
-    }
-    # sort sites into internal and external
+    if (dbg) msg(paste0("*** end initial call", "\n"))
 
-    while (length(urls) > 0 & depth < max_depth) {
-      if (verbose) {
-        cat(paste0("*** set depth: ", (depth + 1), "\n"))
-      }
+    # sort sites into internal and external
+    while (length(urls) > 0 && depth < max_depth) {
+      if (dbg) msg(paste0("*** set depth: ", (depth + 1), "\n"))
       depth <- depth + 1
 
-      if (verbose) {
-        cat(
+      if (dbg) {
+        msg(
           paste0(
             "*** loop call to get urls - nrow: ",
             length(urls),
@@ -275,6 +256,7 @@ get_hyperlinks <-
           )
         )
       }
+
       df <- purrr::map_dfr(urls, process_page, delay, verbose)
       df$seed <- url
       df$type <- type

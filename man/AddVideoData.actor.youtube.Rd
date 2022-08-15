@@ -17,31 +17,30 @@
 
 \item{youtubeAuth}{YouTube Authenticate object.}
 
-\item{videoIds}{List. Video ID's to download video information.}
+\item{videoIds}{List. Video id's for which to download video information.}
 
-\item{actorSubOnly}{Logical. Only substitute video ID's for their publishers channel ID. Don't add
-additional video data to edge list.}
+\item{actorSubOnly}{Logical. Only substitute video id's for their publishers channel id. Don't add additional video
+data to edge list.}
 
 \item{...}{Additional parameters passed to function.}
 }
 \value{
-Network as a named list of three dataframes containing \code{$nodes}, \code{$edges}
-and \code{$videos} nodes and edges include columns for additional video data.
+Network as a named list of three dataframes containing \code{$nodes}, \code{$edges} and \code{$videos} nodes
+and edges include columns for additional video data.
 }
 \description{
-YouTube actor network is supplemented with additional downloaded video information.
-Adds video id, title, description and publish time as edge attributes. Nodes or actor references
-to video id's in the network are substituted with the actor id (video channel id) retrieved from
-the video details.
+YouTube actor network is supplemented with additional downloaded video information. Adds video id,
+title, description and publish time as edge attributes. Nodes or actor references to video id's in the network are
+substituted with the actor id (video channel id) retrieved from the video details.
 }
 \examples{
 \dontrun{
 # replace video id references with actors and add video id, title, description and plublish time
 # to an actor network
-actorNetwork <- collectData \%>\% Create("actor") \%>\% AddVideoData(youtubeAuth)
+actorNetwork <- collectData |> Create("actor") |> AddVideoData(youtubeAuth)
 
 # only replace video id references with actors that published videos in network
-actorNetwork <- collectData \%>\% Create("actor") \%>\% AddVideoData(youtubeAuth, actorSubOnly = TRUE)
+actorNetwork <- collectData |> Create("actor") |> AddVideoData(youtubeAuth, actorSubOnly = TRUE)
 
 # network
 # actorNetwork$nodes

@@ -9,7 +9,7 @@
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.
 #' @param rmEdgeTypes Character vector. List of tweet edge types to remove from network. Options are \code{"tweet"},
 #'   \code{"retweet"}, \code{"reply"} and \code{"quote"}. Default is \code{NULL}.
-#' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
+#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
 #' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
@@ -17,7 +17,7 @@
 #' @examples
 #' \dontrun{
 #' # create a twitter activity network with retweets removed
-#' activity_net <- twitter_data %>%
+#' activity_net <- twitter_data |>
 #'   Create("activity", rmEdgeTypes = c("retweet"))
 #'
 #' # network nodes and edges
@@ -34,21 +34,20 @@ Create.activity.twitter <-
   function(datasource,
            type,
            rmEdgeTypes = NULL,
-           verbose = TRUE,
+           verbose = FALSE,
            ...) {
-    cat("Generating twitter activity network...")
-    if (verbose) {
-      cat("\n")
-    }
+
+    msg("Generating twitter activity network...\n")
+
+    datasource <- datasource$tweets
+
     df_stats <-
       network_stats(NULL, "collected tweets", nrow(datasource))
 
     # select data columns
-    datasource <- datasource %>%
+    datasource <- datasource |>
       dplyr::select(
         dplyr::ends_with("status_id"),
-        # .data$user_id,
-        # .data$screen_name,
         dplyr::ends_with("user_id"),
         dplyr::ends_with("screen_name"),
         dplyr::starts_with("is_"),
@@ -56,7 +55,7 @@ Create.activity.twitter <-
       )
 
     # classify edges
-    edges <- datasource %>%
+    edges <- datasource |>
       dplyr::mutate(
         type = data.table::fcase(
           .data$is_retweet == TRUE,
@@ -80,22 +79,20 @@ Create.activity.twitter <-
       rmEdgeTypes[trimws(tolower(rmEdgeTypes)) %in% types]
 
     if (length(rmEdgeTypes)) {
-      if (verbose) {
-        cat(paste0("Removing edge types: ",
-                   paste0(rmEdgeTypes, collapse = ", "),
-                   "\n"))
-      }
+      msg(paste0("Removing edge types: ",
+                 paste0(rmEdgeTypes, collapse = ", "),
+                 "\n"))
     }
 
-    edges <- edges %>%
-      tidyr::separate_rows(type, sep = ",", convert = FALSE) %>%
+    edges <- edges |>
+      tidyr::separate_rows(type, sep = ",", convert = FALSE) |>
       dplyr::filter(!(.data$type %in% rmEdgeTypes))
 
     # edge stats
     edge_stats <-
-      edges %>%
-      dplyr::group_by(.data$type) %>%
-      dplyr::tally() %>%
+      edges |>
+      dplyr::group_by(.data$type) |>
+      dplyr::tally() |>
       dplyr::arrange(dplyr::desc(.data$type))
 
     for (row in 1:nrow(edge_stats)) {
@@ -104,7 +101,7 @@ Create.activity.twitter <-
     }
 
     # reply to created_at and text not in data
-    edges <- edges %>%
+    edges <- edges |>
       dplyr::mutate(
         to = data.table::fcase(
           .data$type == "tweet",
@@ -150,22 +147,22 @@ Create.activity.twitter <-
       )
 
     nodes <- dplyr::bind_rows(
-      edges %>% dplyr::select(.data$status_id,
+      edges |> dplyr::select(.data$status_id,
         author_id = .data$user_id,
         author_screen_name = .data$screen_name,
         .data$created_at
       ),
-      edges %>% dplyr::select(
+      edges |> dplyr::select(
         status_id = .data$to,
         author_id = .data$to_user_id,
         author_screen_name = .data$to_screen_name,
         created_at = .data$to_created_at
       )
-    ) %>%
-      dplyr::arrange(.data$status_id, .data$created_at) %>%
+    ) |>
+      dplyr::arrange(.data$status_id, .data$created_at) |>
       dplyr::distinct(.data$status_id, .keep_all = TRUE)
 
-    edges <- edges %>%
+    edges <- edges |>
       dplyr::select(
         from = .data$status_id,
         .data$to,
@@ -175,16 +172,13 @@ Create.activity.twitter <-
         edge_type = .data$type
       )
 
-    # print stats
-    if (verbose) {
-      df_stats <- network_stats(df_stats, "nodes", nrow(nodes))
-      df_stats <- network_stats(df_stats, "edges", nrow(edges))
-      network_stats(df_stats, print = TRUE)
-    }
+    df_stats <- network_stats(df_stats, "nodes", nrow(nodes))
+    df_stats <- network_stats(df_stats, "edges", nrow(edges))
+    msg(network_stats(df_stats, print = TRUE))
 
-    network <- list("nodes" = nodes, "edges" = edges)
-    class(network) <-
-      append(c("network", "activity", "twitter"), class(network))
-    cat("Done.\n")
-    network
+    net <- list("nodes" = nodes, "edges" = edges)
+    class(net) <- append(c("network", "activity", "twitter"), class(net))
+    msg("Done.\n")
+
+    net
   }

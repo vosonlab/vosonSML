@@ -1,11 +1,13 @@
 # get site robots.txt file
 get_domain_robots <- function(url, verbose = TRUE) {
+  msg <- f_verbose(verbose)
+
   suppressMessages(suppressWarnings({
     r <- tryCatch({
       robotstxt::robotstxt(domain = url)
     }, error = function(e) {
       if (verbose) {
-        cat(paste0("get_domain_robots error: ", url, "\n", e, "\n"))
+        msg(paste0("get_domain_robots error: ", url, " - ", e$message, "\n"))
       }
       NULL
     })
@@ -87,7 +89,20 @@ local_to_full_url <- function(parent_page, link) {
 
 # read a web page and get a list of hyperlinks
 get_ahrefs <- function(page) {
-  hrefs <- xml2::read_html(page, options = c("NOWARNING")) %>%
-    rvest::html_nodes("a") %>%
+  hrefs <- xml2::read_html(page, options = c("NOWARNING")) |>
+    rvest::html_nodes("a") |>
     rvest::html_attr("href")
+
+  hrefs
+}
+
+# check format of url is valid
+check_valid_url <- function(x) {
+  any(grepl(
+    paste0("^(?:(?:http(?:s)?|ftp)://)(?:\\S+(?::(?:\\S)*)?@)?",
+           "(?:(?:[a-z0-9\u00a1-\uffff](?:-)*)*(?:[a-z0-9\u00a",
+           "1-\uffff])+)(?:\\.(?:[a-z0-9\u00a1-\uffff](?:-)*)*",
+           "(?:[a-z0-9\u00a1-\uffff])+)*(?:\\.(?:[a-z0-9\u00a1",
+           "-\uffff]){2,})(?::(?:\\d){2,5})?(?:/(?:\\S)*)?$"),
+    x))
 }

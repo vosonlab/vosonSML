@@ -19,9 +19,9 @@ A \code{credential} object containing a \code{$auth = NULL} value and social med
 Reddit does not require authentication in this version of vosonSML.
 }
 \note{
-Even though reddit does not require authentication in this version of vosonSML the \code{Authenticate}
-function must still be called to set the \code{socialmedia} identifier. This is used to route to the appropriate
-social media \code{Collect} function.
+Even though reddit does not require authentication in this version of vosonSML the \code{Authenticate} function
+must still be called to set the \code{socialmedia} identifier. This is used to route to the appropriate social
+media \code{Collect} function.
 }
 \examples{
 \dontrun{

@@ -6,7 +6,7 @@
 \usage{
 \method{Collect}{youtube}(
   credential,
-  videoIDs,
+  videoIDs = c(),
   verbose = FALSE,
   writeToFile = FALSE,
   maxComments = 1e+10,
@@ -16,15 +16,15 @@
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate} with class name \code{"youtube"}.}
 
-\item{videoIDs}{Character vector. Specifies one or more YouTube video IDs. For example, if the video URL is
-\code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use \code{videoIDs = c("xxxxxxxxxxx")}.}
+\item{videoIDs}{Character vector. Specifies YouTube video URLs or IDs. For example, if the video URL is
+\code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use URL or ID \code{videoIDs = c("xxxxxxxxxxx")}.}
 
 \item{verbose}{Logical. Output additional information about the data collection. Default is \code{FALSE}.}
 
 \item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
 
-\item{maxComments}{Numeric integer. Specifies how many top-level comments to collect from each video. This value
-does not consider replies to top-level comments. The total number of comments returned for a video will usually be
+\item{maxComments}{Numeric integer. Specifies how many top-level comments to collect from each video. This value does
+not consider replies to top-level comments. The total number of comments returned for a video will usually be
 greater than \code{maxComments} depending on the number of reply comments present.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
@@ -33,15 +33,15 @@ greater than \code{maxComments} depending on the number of reply comments presen
 A tibble object with class names \code{"datasource"} and \code{"youtube"}.
 }
 \description{
-This function collects public comments data for one or more YouTube videos using the YouTube Data API
-v3 and structures the data into a dataframe with the class names \code{"datasource"} and \code{"youtube"}.
+This function collects public comments data for one or more YouTube videos using the YouTube Data API v3
+and structures the data into a dataframe with the class names \code{"datasource"} and \code{"youtube"}.
 
 YouTube has a quota unit system as a rate limit with most developers having either 10,000 or 1,000,000 units per
 day. Many read operations cost a base of 1 unit such as retrieving individual comments, plus 1 or 2 units for text
 snippets. Retrieving threads or top-level comments with text costs 3 units per request (maximum 100 comments per
-request). Using this function a video with 250 top-level comments and 10 of those having reply comments of up to 100
-each, should cost (9 + 20) 29 quota units and return between 260 and 1260 total comments. There is currently a limit
-of 100 reply comments collected per top-level comment.
+request). Using this function a video with 250 top-level comments and 10 of those having reply comments of up to
+100 each, should cost (9 + 20) 29 quota units and return between 260 and 1260 total comments. There is currently a
+limit of 100 reply comments collected per top-level comment.
 
 More information about the YouTube Data API v3 can be found here:
 \url{https://developers.google.com/youtube/v3/getting-started}
@@ -54,20 +54,17 @@ greater than expected. For example, if \code{maxComments} is set to 10 and one o
 has 5 reply comments then the total number of comments collected will be 15 for that video. Comments data for
 multiple YouTube videos can be requested in a single operation, \code{maxComments} is applied to each individual
 video and not the combined total of comments.
-
-To help extract video ids for videos the function \code{\link{GetYoutubeVideoIDs}} can be used. It accepts input of
-a vector or file containing video urls and creates a chracter vector suitable as input for the \code{videoIDs}
-parameter.
 }
 \examples{
 \dontrun{
-# create a list of YouTube video ids to collect on
-videoIDs <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx",
-                                 "https://youtu.be/xxxxxxxx"))
+# list of YouTube video urls or ids to collect
+video_ids <- c("https://www.youtube.com/watch?v=xxxxxxxx",
+               "https://youtu.be/xxxxxxxx",
+               "xxxxxxx")
 
 # collect approximately 200 threads/comments for each YouTube video
-youtubeData <- youtubeAuth \%>\%
-  Collect(videoIDs = videoIDs, writeToFile = TRUE, verbose = FALSE, maxComments = 200)
+youtubeData <- youtubeAuth |>
+  Collect(videoIDs = video_ids, writeToFile = TRUE, verbose = FALSE, maxComments = 200)
 }
 
 }

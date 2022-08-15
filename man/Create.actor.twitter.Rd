@@ -10,7 +10,7 @@
   rmEdgeTypes = NULL,
   inclMentions = TRUE,
   inclRtMentions = FALSE,
-  verbose = TRUE,
+  verbose = FALSE,
   ...
 )
 }
@@ -28,7 +28,7 @@
 retweets the collected tweet author has created the mention, for retweets the original tweet author has created the
 mention not the retweeter. Default is \code{FALSE}.}
 
-\item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
+\item{verbose}{Logical. Output additional information about the network creation. Default is \code{FALSE}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 }
@@ -50,7 +50,7 @@ initially collected for them).
 \examples{
 \dontrun{
 # create a twitter actor network excluding retweet, quote tweets and mention edges
-actor_net <- twitter_data \%>\%
+actor_net <- twitter_data |>
   Create("actor", rmEdgeTypes = c("retweet", "quote"))
 
 # network nodes and edges

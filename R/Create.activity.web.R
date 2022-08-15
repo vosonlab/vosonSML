@@ -4,6 +4,7 @@
 #'
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"web"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.
+#' @param lcase Logical. Convert urls and page names to lowercase.
 #' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #'
@@ -12,42 +13,31 @@
 #' @examples
 #' \dontrun{
 #' # create a web activity network graph
-#' activityNetwork <- webData %>% Create("activity")
+#' net_activity <- data_collect |> Create("activity")
 #'
 #' # network
-#' # activityNetwork$nodes
-#' # activityNetwork$edges
+#' # net_activity$nodes
+#' # net_activity$edges
 #' }
 #'
 #' @export
-Create.activity.web <-
-  function(datasource, type, verbose = TRUE, ...) {
-    cat("Generating web activity network...")
-    if (verbose) {
-      cat("\n")
-    }
+Create.activity.web <- function(datasource, type, lcase = TRUE, verbose = TRUE, ...) {
+  msg("Generating web activity network...")
 
-    data <- datasource %>%
-      dplyr::mutate(from = tolower(.data$page),
-                    to = tolower(.data$url)) %>%
-      dplyr::group_by(.data$from, .data$to) %>%
-      dplyr::summarise(weight = sum(.data$n), .groups = "drop") %>%
-      dplyr::select(.data$from, .data$to, .data$weight)
-
-    nodes <- c(data$from, data$to)
-    nodes <- data.frame(id = unique(nodes))
-    nodes <-
-      nodes %>% dplyr::arrange(.data$id) %>% dplyr::mutate(link_id = dplyr::row_number())
-
-    edges <-
-      data %>% dplyr::select(.data$from, .data$to, .data$weight)
-
-    func_output <- list("nodes" = nodes,
-                        "edges" = edges)
-
-    class(func_output) <-
-      append(class(func_output), c("network", "activity", "web"))
-    cat("Done.\n")
-
-    return(func_output)
+  if (lcase) {
+    data <- datasource |> dplyr::mutate(from = tolower(.data$page), to = tolower(.data$url))
+  } else {
+    data <- datasource |> dplyr::mutate(from = .data$page, to = .data$url)
   }
+
+  edges <- data |> dplyr::select(.data$from, .data$to)
+
+  nodes <- tibble::tibble(id = unique(c(edges$from, edges$to)))
+  nodes <- nodes |> dplyr::arrange(.data$id)
+
+  net <- list("nodes" = nodes, "edges" = edges)
+  class(net) <- append(class(net), c("network", "activity", "web"))
+  msg("Done.\n")
+
+  net
+}

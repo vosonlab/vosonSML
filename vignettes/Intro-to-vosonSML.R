@@ -1,5 +1,4 @@
 ## ----eval=FALSE---------------------------------------------------------------
-#  library(magrittr)
 #  library(vosonSML)
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -27,7 +26,7 @@
 #  twitterAuth <- readRDS("twitter_auth")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  twitterData <- twitterAuth %>%
+#  twitterData <- twitterAuth |>
 #     Collect(
 #        searchTerm = "#auspol",
 #        numTweets = 1000,
@@ -59,8 +58,8 @@
 #  class(twitterData) <- append(c("datasource", "twitter"), class(twitterData))
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  actorNetwork <- twitterData %>% Create("actor", writeToFile = TRUE, verbose = TRUE)
-#  actorGraph <- actorNetwork %>% Graph(writeToFile = TRUE)
+#  actorNetwork <- twitterData |> Create("actor", writeToFile = TRUE, verbose = TRUE)
+#  actorGraph <- actorNetwork |> Graph(writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > actorNetwork
@@ -112,7 +111,7 @@
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  actorGraphWithText <- twitterData %>% Create("actor") %>% AddText(twitterData) %>% Graph()
+#  actorGraphWithText <- twitterData |> Create("actor") |> AddText(twitterData) |> Graph()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # get the index of nodes or users who tweeted the word "bushfire"
@@ -145,14 +144,14 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # create an actor network with user metadata
-#  actorGraphWithUserAttr <- actorNetwork %>%
-#    AddUserData(twitterData, lookupUsers = TRUE, twitterAuth = twitterAuth) %>%
+#  actorGraphWithUserAttr <- actorNetwork |>
+#    AddUserData(twitterData, lookupUsers = TRUE, twitterAuth = twitterAuth) |>
 #    Graph(writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # create an activity network with tweet text
-#  activityNetwork <- twitterData %>% Create("activity") %>% AddText(twitterData)
-#  activityGraph <- activityNetwork %>% Graph(writeToFile = TRUE)
+#  activityNetwork <- twitterData |> Create("activity") |> AddText(twitterData)
+#  activityGraph <- activityNetwork |> Graph(writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > activityNetwork
@@ -209,8 +208,8 @@
 #  install.packages("tidytext")
 #  
 #  # create a 2-mode network with the hashtag "#auspol" removed
-#  twomodeNetwork <- twitterData %>% Create("twomode", removeTermsOrHashtags = c("#auspol"))
-#  twomodeGraph <- twomodeNetwork %>% Graph()
+#  twomodeNetwork <- twitterData |> Create("twomode", removeTermsOrHashtags = c("#auspol"))
+#  twomodeGraph <- twomodeNetwork |> Graph()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > twomodeNetwork
@@ -280,14 +279,14 @@
 #  
 #  # create a semantic network with some common terms removed
 #  # include only the top 5% occurring terms in the network
-#  semanticNetwork <- twitterData %>% Create(
+#  semanticNetwork <- twitterData |> Create(
 #     "semantic",
 #     removeTermsOrHashtags = c("#auspol", "auspol", "australia"),
 #     termFreq = 5
 #  )
 #  
 #  # create an undirected graph
-#  semanticGraph <- semanticNetwork %>% Graph(directed = FALSE)
+#  semanticGraph <- semanticNetwork |> Graph(directed = FALSE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > semanticNetwork
@@ -365,7 +364,7 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  videoIDs <- GetYoutubeVideoIDs("https://www.youtube.com/watch?v=pJ_NyEYRkLQ")
-#  youtubeData <- youtubeAuth %>% Collect(videoIDs, maxComments = 500, writeToFile = TRUE)
+#  youtubeData <- youtubeAuth |> Collect(videoIDs, maxComments = 500, writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > str(youtubeData)
@@ -398,8 +397,8 @@
 #  class(twitterData) <- append(c("datasource", "youtube"), class(youtubeData))
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  actorNetwork <- youtubeData %>% Create("actor") %>% AddText(youtubeData)
-#  actorGraph <- actorNetwork %>% Graph(writeToFile = TRUE)
+#  actorNetwork <- youtubeData |> Create("actor") |> AddText(youtubeData)
+#  actorGraph <- actorNetwork |> Graph(writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > actorNetwork
@@ -425,7 +424,7 @@
 #  [1] "list"       "network"    "actor"      "youtube"    "voson_text"
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  actorGraph <- youtubeData %>% Create("actor") %>% AddText(youtubeData) %>% Graph()
+#  actorGraph <- youtubeData |> Create("actor") |> AddText(youtubeData) |> Graph()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > actorGraph
@@ -476,7 +475,7 @@
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  actorNetwork_withVideoInfo <- actorNetwork %>% AddVideoData(youtubeAuth)
+#  actorNetwork_withVideoInfo <- actorNetwork |> AddVideoData(youtubeAuth)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > actorNetwork_withVideoInfo
@@ -510,8 +509,8 @@
 #  [5] "voson_text"       "voson_video_data"
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  activityNetwork <- youtubeData %>% Create("activity") %>% AddText(youtubeData)
-#  activityGraph <- activityNetwork %>% Graph()
+#  activityNetwork <- youtubeData |> Create("activity") |> AddText(youtubeData)
+#  activityGraph <- activityNetwork |> Graph()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > activityNetwork
@@ -571,7 +570,7 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  myThreadUrls <- c("https://www.reddit.com/r/worldnews/comments/elcb9b/australias_leaders_deny_link_between_climate/")
-#  redditData <- Authenticate("reddit") %>%
+#  redditData <- Authenticate("reddit") |>
 #                Collect(threadUrls = myThreadUrls, writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -612,8 +611,8 @@
 #  class(redditData) <- append(c("datasource", "reddit"), class(redditData))
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  actorNetwork <- redditData %>% Create("actor") %>% AddText(redditData)
-#  actorGraph <- actorNetwork %>% Graph(writeToFile = TRUE)
+#  actorNetwork <- redditData |> Create("actor") |> AddText(redditData)
+#  actorGraph <- actorNetwork |> Graph(writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > actorNetwork
@@ -670,8 +669,8 @@
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  activityNetwork <- redditData %>% Create("activity") %>% AddText(redditData)
-#  activityGraph <- activityNetwork %>% Graph(writeToFile = TRUE)
+#  activityNetwork <- redditData |> Create("activity") |> AddText(redditData)
+#  activityGraph <- activityNetwork |> Graph(writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > activityNetwork
@@ -731,11 +730,11 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # collect twitter data for the #auspol hashtag
-#  auspolTwitterData <- twitterAuth %>%
+#  auspolTwitterData <- twitterAuth |>
 #    Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100)
 #  
 #  # collect twitter data for the #bushfire hashtag
-#  bushfireTwitterData <- twitterAuth %>%
+#  bushfireTwitterData <- twitterAuth |>
 #    Collect(searchTerm = "#bushfire", searchType = "popular", numTweets = 50)
 #  
 #  # combine the collected data for the different hashtags using rbind
@@ -743,7 +742,7 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # collect twitter data
-#  newTwitterData <- twitterAuth %>%
+#  newTwitterData <- twitterAuth |>
 #    Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100)
 #  
 #  # import data from file using ImportData
@@ -766,26 +765,26 @@
 #  library(dplyr)
 #  
 #  # combine the collected data using rbind and remove duplicates with distinct based on tweet status_id
-#  twitterData <- rbind(auspolTwitterData, bushfireTwitterData) %>% distinct(status_id, .keep_all = TRUE)
+#  twitterData <- rbind(auspolTwitterData, bushfireTwitterData) |> distinct(status_id, .keep_all = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # manually combine data sets in reverse chronological order and remove duplicates based on status_id
-#  twitterData <- rbind(bushfireTwitterData, auspolTwitterData) %>%
+#  twitterData <- rbind(bushfireTwitterData, auspolTwitterData) |>
 #    distinct(status_id, .keep_all = TRUE)
 #  
 #  # arrange combined youtube data by updated timestamp and remove duplicates, keeping the version of a
 #  # duplicate video comment that was most recently updated
-#  youtubeData <- youtubeData %>%
-#    arrange(desc(UpdatedAt)) %>% distinct(VideoID, CommentID, .keep_all = TRUE)
+#  youtubeData <- youtubeData |>
+#    arrange(desc(UpdatedAt)) |> distinct(VideoID, CommentID, .keep_all = TRUE)
 #  
 #  # arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of a
 #  # duplicate thread comment that was most recently updated
-#  redditData <- redditData %>%
-#    arrange(desc(comm_date_unix)) %>% distinct(thread_id, comm_id, .keep_all = TRUE)
+#  redditData <- redditData |>
+#    arrange(desc(comm_date_unix)) |> distinct(thread_id, comm_id, .keep_all = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # create an igraph of twitter actor network
-#  actorGraph <- twitterData %>% Create("actor") %>% Graph(writeToFile = TRUE)
+#  actorGraph <- twitterData |> Create("actor") |> Graph(writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  V(g3)$vosonCA_tweetedBushfires <- V(g3)$tweetedBushfires

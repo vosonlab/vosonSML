@@ -7,18 +7,19 @@
 Authenticate(socialmedia, ...)
 }
 \arguments{
-\item{socialmedia}{Character string. Identifier for social media API to authenticate with. Supported social media
-are \code{"twitter"}, \code{"youtube"} and \code{"reddit"}.}
+\item{socialmedia}{Character string. Identifier for social media API to authenticate with. Supported social media are
+\code{"twitter"}, \code{"youtube"}, \code{"reddit"} and \code{"web"}.}
 
 \item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social media
 API access.}
 }
 \description{
 \code{Authenticate} creates a \code{credential} object that enables R to make authenticated calls to
-social media APIs. A \code{credential} object is a S3 object containing authentication related information such as an
-access token or key, and a class name identifying the social media that grants authentication. \code{Authenticate} is
-the first step of the \code{Authenticate}, \code{\link{Collect}} and \code{\link{Create}} workflow.
+social media APIs. A \code{credential} object is a S3 object containing authentication related information such as
+an access token or key, and a class name identifying the social media that grants authentication.
+\code{Authenticate} is the first step of the \code{Authenticate}, \code{\link{Collect}} and \code{\link{Create}}
+workflow.
 
 Refer to \code{\link{Authenticate.twitter}}, \code{\link{Authenticate.youtube}} and
-\code{\link{Authenticate.reddit}} for parameters and usage.
+\code{\link{Authenticate.reddit}}, \code{\link{Authenticate.web}} for parameters and usage.
 }

@@ -70,7 +70,8 @@ reference:
 - title: Collect
   contents:
   - '`Collect`'
-  - '`Collect.twitter`'
+  - '`Collect.search.twitter`'
+  - '`Collect.timeline.twitter`'
   - '`Collect.youtube`'
   - '`Collect.reddit`'
   - '`Collect.web`'
@@ -87,19 +88,30 @@ reference:
   - '`Create.actor.web`'
   - '`Create.twomode.twitter`'
   - '`Create.semantic.twitter`'
-- title: Helpers
+- title: Supplemental
   contents:
   - '`AddText`'
+  - '`AddText.activity.twitter`'
+  - '`AddText.actor.twitter`'
+  - '`AddText.semantic.twitter`'
+  - '`AddText.twomode.twitter`'
   - '`AddText.actor.youtube`'
   - '`AddText.activity.reddit`'
   - '`AddText.actor.reddit`'
   - '`AddUserData`'
   - '`AddUserData.actor.twitter`'
+  - '`AddUserData.twomode.twitter`'
   - '`AddVideoData`'
   - '`AddVideoData.actor.youtube`'
+- title: Helpers
+  contents:
+  - '`auth_twitter_app`'
+  - '`auth_twitter_dev`'
+  - '`auth_twitter_user`'
   - '`Graph`'
-  - '`GetYoutubeVideoIDs`'
-  - '`ImportData`'
+  - '`Merge`'
+  - '`MergeFiles`'
+  - '`ImportRtweet`'
 
 toc:
   depth: 2

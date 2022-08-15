@@ -12,43 +12,28 @@
 #' @examples
 #' \dontrun{
 #' # create a web actor network graph
-#' activityNetwork <- webData %>% Create("actor")
+#' net_activity <- data_collect |> Create("actor")
 #'
 #' # network
-#' # activityNetwork$nodes
-#' # activityNetwork$edges
+#' # net_activity$nodes
+#' # net_activity$edges
 #' }
 #'
 #' @export
-Create.actor.web <-
-  function(datasource, type, verbose = TRUE, ...) {
-    cat("Generating web actor network...")
-    if (verbose) {
-      cat("\n")
-    }
+Create.actor.web <- function(datasource, type, verbose = TRUE, ...) {
+  msg("Generating web actor network...")
 
-    data <- datasource %>%
-      dplyr::mutate(from = urltools::domain(tolower(.data$page)),
-                    to = tolower(.data$parse$domain)) %>%
-      dplyr::group_by(.data$from, .data$to) %>%
-      dplyr::summarise(weight = sum(.data$n), .groups = "drop") %>%
-      dplyr::select(.data$from, .data$to, .data$weight)
+  edges <- datasource |>
+    dplyr::mutate(from = urltools::domain(tolower(.data$page)),
+                  to = tolower(.data$parse$domain)) |>
+    dplyr::select(.data$from, .data$to)
 
-    nodes <- c(data$from, data$to)
-    nodes <- data.frame(id = unique(nodes))
-    nodes <- nodes %>%
-      dplyr::arrange(.data$id) %>%
-      dplyr::mutate(link_id = dplyr::row_number())
+  nodes <- tibble::tibble(id = unique(c(edges$from, edges$to)))
+  nodes <- nodes |> dplyr::arrange(.data$id)
 
-    edges <-
-      data %>% dplyr::select(.data$from, .data$to, .data$weight)
+  net <- list("nodes" = nodes, "edges" = edges)
+  class(net) <- append(class(net), c("network", "actor", "web"))
+  msg("Done.\n")
 
-    func_output <- list("nodes" = nodes,
-                        "edges" = edges)
-
-    class(func_output) <-
-      append(class(func_output), c("network", "actor", "web"))
-    cat("Done.\n")
-
-    return(func_output)
-  }
+  net
+}
