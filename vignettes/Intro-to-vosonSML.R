@@ -2,22 +2,25 @@
 #  library(vosonSML)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  twitterAuth <-
-#     Authenticate(
-#        "twitter",
-#        appName = "My App",
-#        apiKey = "xxxxxxxx",
-#        apiSecret = "xxxxxxxx",
-#        accessToken = "xxxxxxxx",
-#        accessTokenSecret = "xxxxxxxx")
+#  twitterAuth <- Authenticate("twitter", bearerToken = "xxxxxxxxxxxx")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  twitterAuth <-
-#     Authenticate(
-#        "twitter",
-#        appName = "An App",
-#        apiKey = "xxxxxxxxxxxx",
-#        apiSecret = "xxxxxxxxxxxx")
+#  twitterAuth <- Authenticate(
+#    "twitter",
+#    appName = "My App",
+#    apiKey = "xxxxxxxx",
+#    apiSecret = "xxxxxxxx",
+#    accessToken = "xxxxxxxx",
+#    accessTokenSecret = "xxxxxxxx"
+#  )
+
+## ----eval=FALSE---------------------------------------------------------------
+#  twitterAuth <- Authenticate(
+#    "twitter",
+#    appName = "An App",
+#    apiKey = "xxxxxxxxxxxx",
+#    apiSecret = "xxxxxxxxxxxx"
+#  )
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  saveRDS(twitterAuth, file = "twitter_auth")
@@ -27,15 +30,16 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  twitterData <- twitterAuth |>
-#     Collect(
-#        searchTerm = "#auspol",
-#        numTweets = 1000,
-#        includeRetweets = FALSE,
-#        retryOnRateLimit = TRUE,
-#        writeToFile = TRUE)
+#    Collect(
+#      searchTerm = "#auspol",
+#      numTweets = 1000,
+#      includeRetweets = FALSE,
+#      writeToFile = TRUE,
+#      verbose = TRUE
+#    )
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  > twitterData
+#  > twitterData$tweets
 #  # A tibble: 999 x 90
 #     user_id status_id created_at          screen_name text  source
 #     <chr>   <chr>     <dttm>              <chr>       <chr> <chr>
@@ -50,16 +54,10 @@
 #  twitterData <- readRDS("2020-09-26_095354-TwitterData.rds")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # use import data
-#  twitterData <- ImportData("2020-09-26_095354-TwitterData.rds", "twitter")
+#  actorNetwork <- twitterData |>
+#    Create("actor", writeToFile = TRUE, verbose = TRUE)
 #  
-#  # or manually add class names to data
-#  twitterData <- readRDS("2020-09-26_095354-TwitterData.rds")
-#  class(twitterData) <- append(c("datasource", "twitter"), class(twitterData))
-
-## ----eval=FALSE---------------------------------------------------------------
-#  actorNetwork <- twitterData |> Create("actor", writeToFile = TRUE, verbose = TRUE)
-#  actorGraph <- actorNetwork |> Graph(writeToFile = TRUE)
+#  actorGraph <- actorNetwork |> Graph(writeToFile = TRUE, verbose = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > actorNetwork
@@ -67,8 +65,8 @@
 #  # A tibble: 1,725 x 5
 #     from             to              edge_type timestamp         status_id
 #     <fct>            <fct>           <fct>     <fct>             <fct>
-#   1 xxxxxxxx         xxxxxxxx        quote     2020-01-09 12:00… xxxxxxxxxxxxxxx…
-#   2 xxxxxxxx         xxxxxxxxx       quote     2020-01-09 09:37… xxxxxxxxxxxxxxx…
+#   1 xxxxxxxx         xxxxxxxx        quote     2020-01-09 12:00… xxxxxxxxxxxx…
+#   2 xxxxxxxx         xxxxxxxxx       quote     2020-01-09 09:37… xxxxxxxxxxxx…
 #  [snip]
 #  # … with 1,715 more rows
 #  
@@ -111,12 +109,15 @@
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  actorGraphWithText <- twitterData |> Create("actor") |> AddText(twitterData) |> Graph()
+#  actorGraphWithText <- twitterData |>
+#    Create("actor") |> AddText(twitterData) |> Graph()
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # get the index of nodes or users who tweeted the word "bushfire"
-#  ind <- tail_of(actorGraphWithText,
-#                 grep("bushfire", tolower(E(actorGraphWithText)$vosonTxt_tweet)))
+#  ind <- tail_of(
+#    actorGraphWithText,
+#    grep("bushfire", tolower(E(actorGraphWithText)$vosonTxt_tweet))
+#  )
 #  
 #  # set node attribute
 #  V(actorGraphWithText)$tweetedBushfires <- "no"
@@ -124,7 +125,9 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # remove edges that are not reply edges
-#  g3 <- delete.edges(actorGraphWithText, which(E(actorGraphWithText)$edge_type != "reply"))
+#  g3 <- delete.edges(
+#    actorGraphWithText, which(E(actorGraphWithText)$edge_type != "reply")
+#  )
 #  
 #  # get the giant component
 #  cc <- clusters(g3)
@@ -159,8 +162,8 @@
 #  # A tibble: 1,408 x 5
 #     status_id    user_id    screen_name created_at   vosonTxt_tweet
 #     <chr>        <chr>      <chr>       <chr>        <chr>
-#   1 xxxxxxxxxxx… xxxxxxxx   xxxx        2020-01-09 … "xxxxxxxxxxxxxxxxxxxxxxxxxx…
-#   2 xxxxxxxxxxx… xxxxxxxx   xxxxxxxxx   2020-01-09 … "xxxxxxxxxxxxxxxxxxxxxxxxxx…
+#   1 xxxxxxxxxxx… xxxxxxxx   xxxx        2020-01-09 … "xxxxxxxxxxxxxxxxxxxxx…
+#   2 xxxxxxxxxxx… xxxxxxxx   xxxxxxxxx   2020-01-09 … "xxxxxxxxxxxxxxxxxxxxx…
 #   [snip]
 #   # … with 1,398 more rows
 #  
@@ -190,8 +193,10 @@
 ## ----eval=FALSE---------------------------------------------------------------
 #  # create a subgraph containing nodes of components that have more than 5 nodes
 #  cc <- clusters(activityGraph)
-#  g4 <- induced_subgraph(activityGraph,
-#                         which(cc$membership %in% which(cc$csize > 5)))
+#  g4 <- induced_subgraph(
+#    activityGraph,
+#    which(cc$membership %in% which(cc$csize > 5))
+#  )
 #  
 #  # set node colour based on if tweet contains the word "bushfire"
 #  ind <- grep("bushfire", tolower(V(g4)$vosonTxt_tweet))
@@ -208,7 +213,8 @@
 #  install.packages("tidytext")
 #  
 #  # create a 2-mode network with the hashtag "#auspol" removed
-#  twomodeNetwork <- twitterData |> Create("twomode", removeTermsOrHashtags = c("#auspol"))
+#  twomodeNetwork <- twitterData |>
+#    Create("twomode", removeTermsOrHashtags = c("#auspol"))
 #  twomodeGraph <- twomodeNetwork |> Graph()
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -228,8 +234,8 @@
 #  # A tibble: 1,675 x 5
 #     from      to                      edge_type timestamp        status_id
 #     <fct>     <fct>                   <fct>     <fct>            <fct>
-#   1 xxxxxxxx  #auspol2020             hashtag   2020-01-09 12:0… xxxxxxxxxxxxxxx…
-#   2 xxxxxxxx  #australianbushfiredis… hashtag   2020-01-09 12:0… xxxxxxxxxxxxxxx…
+#   1 xxxxxxxx  #auspol2020             hashtag   2020-01-09 12:0… xxxxxxxxxxxx…
+#   2 xxxxxxxx  #australianbushfiredis… hashtag   2020-01-09 12:0… xxxxxxxxxxxx…
 #  [snip]
 #  # … with 1,665 more rows
 #  
@@ -249,14 +255,15 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # get index of nodes that are in the top 5 by highest in-degree
-#  # this is the top 5 used hashtags, as all users have 0 in-degree in this network
+#  # this is the top 5 used hashtags, as all users have 0 in-degree
+#  # in this network
 #  ind <- order(degree(twomodeGraph, mode = "in"), decreasing = TRUE)[1:5]
 #  
 #  # get index of nodes with an edge directed to the top 5 hashtags
 #  # this is users who have tweeted with these hashtags
-#  ind2 <- unlist(lapply(ind, function(x) {
-#     neighbors(twomodeGraph, x, mode = "in")
-#  }))
+#  ind2 <- unlist(
+#    lapply(ind, function(x) neighbors(twomodeGraph, x, mode = "in"))
+#  )
 #  
 #  # create a subgraph containing only the top 5 used hashtags and related users
 #  g5 <- induced_subgraph(twomodeGraph, c(ind, as.numeric(ind2)))
@@ -275,7 +282,7 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # additional required packages for tokenization and stopwords
-#  install.packages(c("tidyr", "tidytext", "stopwords"))
+#  install.packages(c("tidytext", "stopwords"))
 #  
 #  # create a semantic network with some common terms removed
 #  # include only the top 5% occurring terms in the network
@@ -359,42 +366,38 @@
 #  youtubeAuth <- Authenticate("youtube", apiKey = "xxxxxxxx")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  videoIDs <- GetYoutubeVideoIDs(c("https://www.youtube.com/watch?v=xxxxxxxx",
-#                                   "https://youtu.be/xxxxxxxx"))
+#  videoIDs <- c(
+#    "xxxxxx",
+#    "https://www.youtube.com/watch?v=xxxxxxxx",
+#    "https://youtu.be/xxxxxxxx")
+#  )
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  videoIDs <- GetYoutubeVideoIDs("https://www.youtube.com/watch?v=pJ_NyEYRkLQ")
-#  youtubeData <- youtubeAuth |> Collect(videoIDs, maxComments = 500, writeToFile = TRUE)
+#  videoID <- "https://www.youtube.com/watch?v=pJ_NyEYRkLQ"
+#  youtubeData <- youtubeAuth |>
+#    Collect(videoID, maxComments = 500, writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > str(youtubeData)
 #  Classes ‘dataource’, ‘youtube’ and 'data.frame':	603 obs. of  12 variables:
-#   $ Comment              : chr  "xxxxx" ...
-#   $ AuthorDisplayName    : chr  "xx" "xx" "xx" "xx" ...
-#   $ AuthorProfileImageUrl: chr  "https://xx" "https://xx" "https://xx" "https://xx" ...
-#   $ AuthorChannelUrl     : chr  "http://xx" "http://xx" "http://xx" "http://xx" ...
-#   $ AuthorChannelID      : chr  "xx" "xx" "xx" "xx" ...
-#   $ ReplyCount           : chr  "0" "0" "0" "0" ...
-#   $ LikeCount            : chr  "0" "0" "0" "0" ...
-#   $ PublishedAt          : chr  "2020-01-10T02:23:43.000Z" "2020-01-09T20:56:23.000Z"
-#                                 "2020-01-09T20:44:00.000Z" "2020-01-09T19:31:32.000Z" ...
-#   $ UpdatedAt            : chr  "2020-01-10T02:23:43.000Z" "2020-01-09T20:56:23.000Z"
-#                                 "2020-01-09T20:44:00.000Z" "2020-01-09T19:31:32.000Z" ...
-#   $ CommentID            : chr  "xx" "xx" "xx" "xx" ...
-#   $ ParentID             : chr  NA NA NA NA ...
-#   $ VideoID              : chr  "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" "pJ_NyEYRkLQ" ...
+#   $ Comment              : chr  "xxxxx"
+#   $ AuthorDisplayName    : chr  "xx" "xx" "xx" "xx"
+#   $ AuthorProfileImageUrl: chr  "https://xx" "https://xx" "https://xx"
+#   $ AuthorChannelUrl     : chr  "http://xx" "http://xx" "http://xx" "http://xx"
+#   $ AuthorChannelID      : chr  "xx" "xx" "xx" "xx"
+#   $ ReplyCount           : chr  "0" "0" "0" "0"
+#   $ LikeCount            : chr  "0" "0" "0" "0"
+#   $ PublishedAt          : chr  "2020-01-10T02:23:43" "2020-01-09T20:56:23"
+#                                 "2020-01-09T20:44:00" "2020-01-09T19:31:32"
+#   $ UpdatedAt            : chr  "2020-01-10T02:23:43" "2020-01-09T20:56:23"
+#                                 "2020-01-09T20:44:00" "2020-01-09T19:31:32"
+#   $ CommentID            : chr  "xx" "xx" "xx" "xx"
+#   $ ParentID             : chr  NA NA NA NA
+#   $ VideoID              : chr  "pJ_NyLQ" "pJ_NyLQ" "pJ_NyLQ" "pJ_NyLQ"
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # read dataframe from file
 #  youtubeData <- readRDS("2020-09-26_095354-YoutubeData.rds")
-
-## ----eval=FALSE---------------------------------------------------------------
-#  # use import data
-#  youtubeData <- ImportData("2020-09-26_095354-YoutubeData.rds", "youtube")
-#  
-#  # or manually add class names to data
-#  youtubeData <- readRDS("2020-09-26_095354-YoutubeData.rds")
-#  class(twitterData) <- append(c("datasource", "youtube"), class(youtubeData))
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  actorNetwork <- youtubeData |> Create("actor") |> AddText(youtubeData)
@@ -445,7 +448,9 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # change color of nodes with type video to red and others grey
-#  V(actorGraph)$color <- ifelse(V(actorGraph)$node_type == "video", "red", "grey")
+#  V(actorGraph)$color <- ifelse(
+#    V(actorGraph)$node_type == "video", "red", "grey"
+#  )
 #  
 #  # open and write plot to a png file
 #  png("youtube_actor.png", width = 600, height = 600)
@@ -454,7 +459,9 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # removed edges that are not of type reply-comment
-#  g2 <- delete.edges(actorGraph, which(E(actorGraph)$edge_type != "reply-comment"))
+#  g2 <- delete.edges(
+#    actorGraph, which(E(actorGraph)$edge_type != "reply-comment")
+#  )
 #  
 #  # check number of isolates
 #  > length(which(degree(g2) == 0))
@@ -463,10 +470,13 @@
 #  # remove isolates
 #  g2 <- delete.vertices(g2, which(degree(g2) == 0))
 #  
-#  # get node indexes for the tails of edges that have comments containing words of interest
-#  # change the indexed node colors to red and others grey
+#  # get node indexes for the tails of edges that have comments containing
+#  # words of interest change the indexed node colors to red and others grey
 #  V(g2)$color <- "grey"
-#  ind <- tail_of(actorGraph, grep("arson|backburn|climate change", tolower(E(g2)$vosonTxt_comment)))
+#  ind <- tail_of(
+#    actorGraph,
+#    grep("arson|backburn|climate change", tolower(E(g2)$vosonTxt_comment))
+#  )
 #  V(g2)$color[ind] <- "red"
 #  
 #  # open and write plot to a png file
@@ -500,8 +510,8 @@
 #  
 #  $videos
 #  # A tibble: 1 x 6
-#    VideoID  VideoTitle  VideoDescription  VideoPublishedAt ChannelID ChannelTitle
-#    <chr>    <chr>       <chr>             <chr>            <chr>     <chr>
+#   VideoID  VideoTitle  VideoDescription VideoPublishedAt ChannelID ChannelTitle
+#   <chr>    <chr>       <chr>            <chr>            <chr>     <chr>
 #  1 pJ_NyEY… Australia … "As Australia ba… 2020-01-05T12:3… UCknLrEd… DW News
 #  
 #  attr(,"class")
@@ -556,7 +566,9 @@
 #  
 #  # get node indexes of comments that contain terms of interest
 #  # set their node colors to blue
-#  ind <- grep("arson|backburn|climate change", tolower(V(activityGraph)$vosonTxt_comment))
+#  ind <- grep(
+#    "arson|backburn|climate change", tolower(V(activityGraph)$vosonTxt_comment)
+#  )
 #  V(activityGraph)$color[ind] <- "blue"
 #  
 #  # open and write plot to a png file
@@ -565,28 +577,31 @@
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  myThreadUrls <- c("https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/",
-#                    "https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/")
+#  myThreadUrls <- c(
+#    "https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/",
+#    "https://www.reddit.com/r/xxxxxx/comments/xxxxxx/x_xxxx_xxxxxxxxx/"
+#  )
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  myThreadUrls <- c("https://www.reddit.com/r/worldnews/comments/elcb9b/australias_leaders_deny_link_between_climate/")
+#  myThreadUrls <- "https://www.reddit.com/r/worldnews/comments/elcb9b/australias_leaders_deny_link_between_climate/"
 #  redditData <- Authenticate("reddit") |>
 #                Collect(threadUrls = myThreadUrls, writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  > str(redditData)
-#  Classes ‘tbl_df’, ‘tbl’, ‘datasource’, ‘reddit’ and 'data.frame':	767 obs. of  22 variables:
+#  Classes ‘tbl_df’, ‘tbl’, ‘datasource’, ‘reddit’ and 'data.frame':	
+#    767 obs. of  22 variables:
 #   $ id              : int  1 2 3 4 5 6 7 8 9 10 ...
-#   $ structure       : chr  "1" "4_1_1_1_1_1_1_1_1_1" "4_1_1_4_2_1_1_1_1_1" "4_1_1_4_3_1_1_1_3_1" ...
-#   $ post_date       : chr  "2020-01-07 14:34:58" "2020-01-07 14:34:58" "2020-01-07 14:34:58" "2020-01-07 14:34:58" ...
+#   $ structure       : chr  "1" "4_1_1_1_1_1_1_1_1_1" "4_1_1_4_2_1_1_1_1_1" ...
+#   $ post_date       : chr  "2020-01-07 14:34:58" "2020-01-07 14:34:58" ...
 #   $ post_date_unix  : num  1.58e+09 1.58e+09 1.58e+09 1.58e+09 1.58e+09 ...
 #   $ comm_id         : chr  "xxxx" "xxxx" "xxxx" "xxxx" ...
-#   $ comm_date       : chr  "2020-01-07 19:11:10" "2020-01-07 21:04:05" "2020-01-07 20:15:49" "2020-01-07 21:24:01" ...
+#   $ comm_date       : chr  "2020-01-07 19:11:10" "2020-01-07 21:04:05" ...
 #   $ comm_date_unix  : num  1.58e+09 1.58e+09 1.58e+09 1.58e+09 1.58e+09 ...
 #   $ num_comments    : int  4435 4435 4435 4435 4435 4435 4435 4435 4435 4435 ...
 #   $ subreddit       : chr  "worldnews" "worldnews" "worldnews" "worldnews" ...
 #   $ upvote_prop     : num  0.91 0.91 0.91 0.91 0.91 0.91 0.91 0.91 0.91 0.91 ...
-#   $ post_score      : int  45714 45714 45714 45712 45714 45710 45720 45712 45708 45711 ...
+#   $ post_score      : int  45714 45714 45714 45712 45714 45710 45720 45712 ..
 #   $ author          : chr  "xxxx" "xxxx" "xxxx" "xxxx" ...
 #   $ user            : chr  "xxxx" "xxxx" "xxxx" "xxxx" ...
 #   $ comment_score   : int  1904 136 17 13 9 9 125 4 6 12 ...
@@ -601,14 +616,6 @@
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  redditData <- readRDS("2020-09-26_095354-RedditData.rds")
-
-## ----eval=FALSE---------------------------------------------------------------
-#  # use import data
-#  redditData <- ImportData("2020-09-26_095354-RedditData.rds", "reddit")
-#  
-#  # or manually add class names to data
-#  redditData <- readRDS("2020-09-26_095354-RedditData.rds")
-#  class(redditData) <- append(c("datasource", "reddit"), class(redditData))
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  actorNetwork <- redditData |> Create("actor") |> AddText(redditData)
@@ -627,10 +634,10 @@
 #  
 #  $edges
 #  # A tibble: 768 x 8
-#      from    to subreddit thread_id comment_id comm_id vosonTxt_comment     title
-#     <int> <int> <chr>     <chr>          <dbl> <chr>   <chr>                <chr>
-#   1     1   439 worldnews elcb9b             1 xxxxxxx "xxxxxxxxxxxxxxxxxxx NA
-#   2     2    73 worldnews elcb9b             2 xxxxxxx "xxxxxxxxxxxxxxxxxxx NA
+#      from    to subreddit thread_id comment_id comm_id vosonTxt_comment   title
+#     <int> <int> <chr>     <chr>        <dbl> <chr>   <chr>                <chr>
+#   1     1   439 worldnews elcb9b           1 xxxxxxx "xxxxxxxxxxxxxxxxxxx NA
+#   2     2    73 worldnews elcb9b           2 xxxxxxx "xxxxxxxxxxxxxxxxxxx NA
 #  [snip]
 #  … with 758 more rows
 #  
@@ -653,14 +660,20 @@
 #  + ... omitted several edges
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # set node color of original post to red based on presence of title edge attribute
-#  # set other node colors to grey
+#  # set node color of original post to red based on presence of title edge
+#  # attribute set other node colors to grey
 #  V(actorGraph)$color <- "grey"
-#  V(actorGraph)$color[tail_of(actorGraph, which(!is.na(E(actorGraph)$title)))] <- "red"
+#  V(actorGraph)$color[tail_of(
+#    actorGraph, which(!is.na(E(actorGraph)$title))
+#  )] <- "red"
 #  
-#  # get node indexes for the tails of edges that have comments containing words of interest
-#  # set their node colors to blue
-#  ind <- tail_of(actorGraph, grep("arson|starting fires", tolower(E(actorGraph)$vosonTxt_comment)))
+#  # get node indexes for the tails of edges that have comments containing
+#  # words of interest set their node colors to blue
+#  ind <- tail_of(
+#    actorGraph,
+#    grep("arson|starting fires",
+#         tolower(E(actorGraph)$vosonTxt_comment))
+#  )
 #  V(actorGraph)$color[ind] <- "blue"
 #  
 #  # open and write plot to a png file
@@ -737,50 +750,13 @@
 #  bushfireTwitterData <- twitterAuth |>
 #    Collect(searchTerm = "#bushfire", searchType = "popular", numTweets = 50)
 #  
-#  # combine the collected data for the different hashtags using rbind
-#  twitterData <- rbind(auspolTwitterData, bushfireTwitterData)
+#  # combine the collected data for the different hashtags
+#  twitterData <- Merge(auspolTwitterData, bushfireTwitterData, writeToFile = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # collect twitter data
-#  newTwitterData <- twitterAuth |>
-#    Collect(searchTerm = "#auspol", searchType = "recent", numTweets = 100)
-#  
-#  # import data from file using ImportData
-#  prevTwitterData <- ImportData("2020-02-26_143505-TwitterData.rds", "twitter")
-#  
-#  # add to imported data the new data using rbind
-#  twitterData <- rbind(prevTwitterData, newTwitterData)
-
-## ----eval=FALSE---------------------------------------------------------------
-#  # vector of file names matching *TwitterData.rds to combine from directory
-#  importFiles <- list.files(path = "D:\\2019TwitterBushfireData",
-#                            pattern = "*TwitterData.rds",
-#                            full.names = TRUE)
-#  
-#  # combine imported data from files with apply and rbind
-#  twitterData <- do.call("rbind", lapply(importFiles, function(x) { ImportData(x, "twitter") }))
-
-## ----eval=FALSE---------------------------------------------------------------
-#  # load dplyr
-#  library(dplyr)
-#  
-#  # combine the collected data using rbind and remove duplicates with distinct based on tweet status_id
-#  twitterData <- rbind(auspolTwitterData, bushfireTwitterData) |> distinct(status_id, .keep_all = TRUE)
-
-## ----eval=FALSE---------------------------------------------------------------
-#  # manually combine data sets in reverse chronological order and remove duplicates based on status_id
-#  twitterData <- rbind(bushfireTwitterData, auspolTwitterData) |>
-#    distinct(status_id, .keep_all = TRUE)
-#  
-#  # arrange combined youtube data by updated timestamp and remove duplicates, keeping the version of a
-#  # duplicate video comment that was most recently updated
-#  youtubeData <- youtubeData |>
-#    arrange(desc(UpdatedAt)) |> distinct(VideoID, CommentID, .keep_all = TRUE)
-#  
-#  # arrange combined reddit data by comment timestamp and remove duplicates, keeping the version of a
-#  # duplicate thread comment that was most recently updated
-#  redditData <- redditData |>
-#    arrange(desc(comm_date_unix)) |> distinct(thread_id, comm_id, .keep_all = TRUE)
+#  twitterData <- MergeFiles(
+#    "2019TwitterBushfireData", pattern = "*TwitterData.rds"
+#  )
 
 ## ----eval=FALSE---------------------------------------------------------------
 #  # create an igraph of twitter actor network

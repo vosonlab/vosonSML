@@ -17,7 +17,7 @@
 #'   method for this package and data collection.
 #'
 #'   The twitter OAuth process is described here:
-#'   \url{https://developer.twitter.com/en/docs/basics/authentication/overview/oauth}.
+#'   \url{https://developer.twitter.com/en/docs/authentication/overview}.
 #'
 #' @note \pkg{vosonSML} uses the \pkg{rtweet} package for twitter data collection and also gratefully acknowledges the
 #'   techniques and code written by its authors reproduced in this package for creating twitter API access tokens.

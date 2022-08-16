@@ -97,9 +97,6 @@ auth_twitter_dev <-
 #'   developer). The authentication object with token produced from this method allows the user to access the API within
 #'   their own user-context and rate-limits.
 #'
-#'   The twitter OAuth process is described here:
-#'   \url{https://developer.twitter.com/en/docs/basics/authentication/overview/oauth}.
-#'
 #' @note \pkg{vosonSML} uses the \pkg{rtweet} package for twitter data collection and also gratefully acknowledges the
 #'   techniques and code written by its authors reproduced in this package for creating twitter API access tokens.
 #'

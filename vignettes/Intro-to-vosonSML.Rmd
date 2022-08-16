@@ -42,8 +42,6 @@ There are three steps involved in data collection and network creation using `vo
 
 # Twitter
 
-Twitter data are collected via [rtweet](https://cran.r-project.org/package=rtweet).
-
 ## Authenticating with the Twitter API
 
 The first step is to authorise access to the Twitter API. This requires completion of an application and approval for
@@ -166,8 +164,13 @@ twitterData <- readRDS("2020-09-26_095354-TwitterData.rds")
 As `vosonSML` uses `rtweet` for data collection you can also import `rtweet` tweet data from dataframe or `.RDS` file
 using `ImportRtweet()`:
 
-```{r eval=FALSE}
-twitterData <- ImportRtweet(readRDS("rtweet-tweets.rds"))
+``` r
+# from dataframe
+tweets <- rtweet::search_tweets("#auspol", n = 100)
+twitterData <- tweets |> ImportRtweet()
+
+# or from file
+twitterData <- ImportRtweet("rtweet_search_n100.rds")
 ```
 
 ## Creating Twitter Networks

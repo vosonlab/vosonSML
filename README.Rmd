@@ -19,7 +19,7 @@ library(vosonSML)
 The `vosonSML` R package is a suite of easy to use functions for collecting and generating different types of networks
 from social media data. The package supports the collection of data from `twitter`, `youtube` and `reddit`, as well as
 `hyperlinks` from web sites. Networks in the form of node and edge lists can be generated from collected data,
-supplemented with additional metadata and used to create graphs for Social Network Analysis.
+supplemented with additional metadata, and used to create graphs for Social Network Analysis.
 
 ## Installation Options
 

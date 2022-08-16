@@ -1,7 +1,10 @@
-# vosonSML 0.32.6
+# vosonSML 0.32.7
 
 ## Major Changes
 - Re-wrote and modified `vosonSML` `Twitter` functions to support major changes made in `rtweet` release version 1.0.2.
+- Added an `endpoint` parameter to the `Twitter` `Collect` function. It is set to `search` by default, which is the
+  usual collect behaviour, but can also now be set to `timeline` to collect user timelines instead. See
+  `Collect.timeline.twitter()` for parameters.
 - Changed output message system. `vosonSML` functions are now silent by default. Using the `verbose` parameter will
   again print function output.
 - Changed output messages to use the `message()` function instead of the `cat()` function by default. Setting the global
@@ -22,7 +25,7 @@
   for all users in the network.
 - Twitter data collection now returns a named list of two dataframes containing `tweets` and `users`.
 - Removed the `ImportData` function and replaced it with `ImportRtweet()` for `rtweet` version 1.0 format data.
-- Added `Merge()` and `MergeFiles()` functions to support the merging of collected data from seperate operations. These
+- Added `Merge()` and `MergeFiles()` functions to support the merging of collected data from separate operations. These
   functions support input of multiple Collect objects or `.RDS` files, automatically detect the datasource type and
   support the `writeToFile` parameter for file output of merged data. 
 

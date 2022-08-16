@@ -6,7 +6,7 @@ get_yt_video_ids <- function(x) {
   url_regex_2 <- paste0("^(?:https://)?(?:www\\.)?youtube\\.com/watch\\?v=(", id_regex, ")?/{0,1}$")
   url_regex_3 <- paste0("^(?:https://)?(?:www\\.)?youtube\\.com/shorts/(", id_regex, ")?/{0,1}$")
 
-  x <- stringr::str_remove(x, "t=[0-9]+?s$")
+  x <- stringr::str_remove(x, "&t=[0-9]+?s$")
 
   y <- stringr::str_match(
     as.character(x),

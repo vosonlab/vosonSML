@@ -7,7 +7,7 @@
 \alias{vosonSML}
 \title{vosonSML: Collecting Social Media Data and Generating Networks for Analysis}
 \description{
-A suite of easy to use functions for collecting social media data and generating networks for analysis. Supports Twitter, Youtube, Reddit and web site data sources.
+A suite of easy to use functions for collecting social media data and generating networks for analysis. Supports Twitter, YouTube, Reddit and web site data sources.
 }
 \seealso{
 Useful links:

@@ -57,7 +57,7 @@ with their app. This token allows read-only access to the API but higher rate-li
 method for this package and data collection.
 
 The twitter OAuth process is described here:
-\url{https://developer.twitter.com/en/docs/basics/authentication/overview/oauth}.
+\url{https://developer.twitter.com/en/docs/authentication/overview}.
 }
 \note{
 \pkg{vosonSML} uses the \pkg{rtweet} package for twitter data collection and also gratefully acknowledges the

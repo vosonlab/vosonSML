@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.7</span>
       </span>
     </div>
 
@@ -83,6 +83,13 @@
       </a>
     </li>
     <li>
+      <a href="https://vosonlab.github.io/posts/2022-06-05-egocentric-networks-from-twitter-timelines" class="external-link">
+        <span class="far fa-file-alt"></span>
+         
+        Egocentric Networks from Twitter timelines
+      </a>
+    </li>
+    <li>
       <a href="https://vosonlab.github.io/posts/2021-10-01-testing-bot-status-of-twitter-users" class="external-link">
         <span class="far fa-file-alt"></span>
          
@@ -94,13 +101,6 @@
         <span class="far fa-file-alt"></span>
          
         Hyperlink Networks with vosonSML
-      </a>
-    </li>
-    <li>
-      <a href="https://vosonlab.github.io/posts/2021-02-11_twitter_vosonsml_from_rtweet" class="external-link">
-        <span class="far fa-file-alt"></span>
-         
-        Creating Twitter Networks with vosonSML using rtweet Data
       </a>
     </li>
   </ul>
@@ -144,7 +144,7 @@ National University</h3>
                         <h4 data-toc-skip class="author">Robert Ackland,
 Bryan Gertzel, Francisca Borquez</h4>
             
-            <h4 data-toc-skip class="date">15 August, 2022</h4>
+            <h4 data-toc-skip class="date">16 August, 2022</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/HEAD/vignettes/Intro-to-vosonSML.Rmd" class="external-link"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
       <div class="hidden name"><code>Intro-to-vosonSML.Rmd</code></div>
@@ -183,7 +183,6 @@ creation using <code>vosonSML</code>. These are:</p>
 <div class="section level2">
 <h2 id="twitter">Twitter<a class="anchor" aria-label="anchor" href="#twitter"></a>
 </h2>
-<p>Twitter data are collected via <a href="https://cran.r-project.org/package=rtweet" class="external-link">rtweet</a>.</p>
 <div class="section level3">
 <h3 id="authenticating-with-the-twitter-api">Authenticating with the Twitter API<a class="anchor" aria-label="anchor" href="#authenticating-with-the-twitter-api"></a>
 </h3>
@@ -313,7 +312,12 @@ Twitter dataframe from disk, you simply need to use the
 you can also import <code>rtweet</code> tweet data from dataframe or
 <code>.RDS</code> file using <code><a href="../reference/ImportRtweet.html">ImportRtweet()</a></code>:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportRtweet.html">ImportRtweet</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"rtweet-tweets.rds"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># from dataframe</span></span>
+<span><span class="va">tweets</span> <span class="op">&lt;-</span> <span class="fu">rtweet</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/rtweet/reference/search_tweets.html" class="external-link">search_tweets</a></span><span class="op">(</span><span class="st">"#auspol"</span>, n <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="va">tweets</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/ImportRtweet.html">ImportRtweet</a></span><span class="op">(</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># or from file</span></span>
+<span><span class="va">twitterData</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/ImportRtweet.html">ImportRtweet</a></span><span class="op">(</span><span class="st">"rtweet_search_n100.rds"</span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">

@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.7</span>
       </span>
     </div>
 
@@ -58,6 +58,13 @@
       </a>
     </li>
     <li>
+      <a href="https://vosonlab.github.io/posts/2022-06-05-egocentric-networks-from-twitter-timelines" class="external-link">
+        <span class="far fa-file-alt"></span>
+         
+        Egocentric Networks from Twitter timelines
+      </a>
+    </li>
+    <li>
       <a href="https://vosonlab.github.io/posts/2021-10-01-testing-bot-status-of-twitter-users" class="external-link">
         <span class="far fa-file-alt"></span>
          
@@ -69,13 +76,6 @@
         <span class="far fa-file-alt"></span>
          
         Hyperlink Networks with vosonSML
-      </a>
-    </li>
-    <li>
-      <a href="https://vosonlab.github.io/posts/2021-02-11_twitter_vosonsml_from_rtweet" class="external-link">
-        <span class="far fa-file-alt"></span>
-         
-        Creating Twitter Networks with vosonSML using rtweet Data
       </a>
     </li>
   </ul></li>
@@ -111,10 +111,11 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.32.6" id="vosonsml-0326">vosonSML 0.32.6<a class="anchor" aria-label="anchor" href="#vosonsml-0326"></a></h2>
+<h2 class="page-header" data-toc-text="0.32.7" id="vosonsml-0327">vosonSML 0.32.7<a class="anchor" aria-label="anchor" href="#vosonsml-0327"></a></h2>
 <div class="section level3">
-<h3 id="major-changes-0-32-6">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-32-6"></a></h3>
+<h3 id="major-changes-0-32-7">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-32-7"></a></h3>
 <ul><li>Re-wrote and modified <code>vosonSML</code> <code>Twitter</code> functions to support major changes made in <code>rtweet</code> release version 1.0.2.</li>
+<li>Added an <code>endpoint</code> parameter to the <code>Twitter</code> <code>Collect</code> function. It is set to <code>search</code> by default, which is the usual collect behaviour, but can also now be set to <code>timeline</code> to collect user timelines instead. See <code><a href="../reference/Collect.timeline.twitter.html">Collect.timeline.twitter()</a></code> for parameters.</li>
 <li>Changed output message system. <code>vosonSML</code> functions are now silent by default. Using the <code>verbose</code> parameter will again print function output.</li>
 <li>Changed output messages to use the <code><a href="https://rdrr.io/r/base/message.html" class="external-link">message()</a></code> function instead of the <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code> function by default. Setting the global option <code>option(voson.msg = FALSE)</code> will again redirect output to <code><a href="https://rdrr.io/r/base/cat.html" class="external-link">cat()</a></code>. The option can be removed by assigning a value of <code>NULL</code>.</li>
 <li>Added the <code>voson.data</code> option allowing a directory path to be set for <code>writeToFile</code> output files. Files are output to the current working directory by default, however a new directory can now be set with <code>option(voson.data = "my-data")</code> for example. The directory path can be relative or a full path, but must be created beforehand or already exist. If the path is invalid or does not exist it will continue with the default behaviour. This option can be removed by assigning a value of <code>NULL</code>. This will not effect other file write operations performed by the user.</li>
@@ -125,10 +126,10 @@
 <code><a href="../reference/AddUserData.html">AddUserData()</a></code> now adds an additional dataframe for <code>missing_users</code>. It lists the ids and screen names of users that did not have metadata embedded in the collected data. Using the <code>lookupUsers</code> parameter will retrieve the metadata using the twitter API. Additonally passing the <code>refresh = TRUE</code> parameter will now retrieve and update the metadata for all users in the network.</li>
 <li>Twitter data collection now returns a named list of two dataframes containing <code>tweets</code> and <code>users</code>.</li>
 <li>Removed the <code>ImportData</code> function and replaced it with <code><a href="../reference/ImportRtweet.html">ImportRtweet()</a></code> for <code>rtweet</code> version 1.0 format data.</li>
-<li>Added <code><a href="../reference/Merge.html">Merge()</a></code> and <code><a href="../reference/MergeFiles.html">MergeFiles()</a></code> functions to support the merging of collected data from seperate operations. These functions support input of multiple Collect objects or <code>.RDS</code> files, automatically detect the datasource type and support the <code>writeToFile</code> parameter for file output of merged data.</li>
+<li>Added <code><a href="../reference/Merge.html">Merge()</a></code> and <code><a href="../reference/MergeFiles.html">MergeFiles()</a></code> functions to support the merging of collected data from separate operations. These functions support input of multiple Collect objects or <code>.RDS</code> files, automatically detect the datasource type and support the <code>writeToFile</code> parameter for file output of merged data.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-changes-0-32-6">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-32-6"></a></h3>
+<h3 id="minor-changes-0-32-7">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-32-7"></a></h3>
 <ul><li>Re-wrote <code>YouTube</code> id extraction from url function to be more robust and added support for <code>YouTube</code> shorts urls.</li>
 <li>Removed stand-alone <code>GetYoutubeVideoIDs</code> function. The <code>YouTube</code> collect function parameter <code>videoIDs</code> will now accept video ids or video urls.</li>
 <li>Added wrappers and aliases for some functions. Twitter auth objects can now be created with simplified <code><a href="../reference/auth_twitter_app.html">auth_twitter_app()</a></code>, <code><a href="../reference/auth_twitter_dev.html">auth_twitter_dev()</a></code> and <code><a href="../reference/auth_twitter_user.html">auth_twitter_user()</a></code> functions for each token type. The <code><a href="../reference/Collect.reddit.html">collect_reddit_threads()</a></code> and <code><a href="../reference/Collect.web.html">collect_web_hyperlinks()</a></code> functions skip the unecessary <code>Authenticate</code> step for <code>Reddit</code> and web data collection.</li>
