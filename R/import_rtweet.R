@@ -83,7 +83,12 @@ import_rtweet_ <- function(data, rtweet_created_at = FALSE) {
       dplyr::mutate(u.user_id = NA_character_,
                     u.screen_name = NA_character_)
   } else {
-    data <- data |> dplyr::bind_cols(
+    if (nrow(data) != nrow(df_users)) {
+      stop(paste0("Number of tweet observations does not match number of users. ",
+                  nrow(data), " != ", nrow(df_users)), call. = FALSE)
+    }
+    data <- data |>
+      dplyr::bind_cols(
         df_users |> dplyr::select(
           u.user_id = .data$id_str,
           u.screen_name = .data$screen_name
