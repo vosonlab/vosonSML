@@ -61,22 +61,12 @@ Collect.reddit <-
       waitTime <- waitTime[1]:waitTime[2]
     }
 
-    if (verbose) {
-      msg(
-        paste0(
-          "Waiting between ",
-          waitTime[1],
-          " and ",
-          waitTime[length(waitTime)],
-          " seconds per thread request.\n"
-        )
-      )
-    }
+    msg(paste0("Waiting between ", waitTime[1], " and ", waitTime[length(waitTime)], " seconds per thread request.\n"))
 
     threads_df <- NULL
 
     tryCatch({
-      threads_df <- reddit_build_df(threadUrls, waitTime, ua, verbose, msg = msg)
+      threads_df <- reddit_build_df(threadUrls, waitTime, ua, verbose)
     }, error = function(e) {
       stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
     }, finally = {
@@ -86,8 +76,7 @@ Collect.reddit <-
     if (!is.null(threads_df)) {
       if (nrow(threads_df) > 0) {
         msg("HTML decoding comments.\n")
-        threads_df$comment <-
-          textutils::HTMLdecode(threads_df$comment)
+        threads_df$comment <- textutils::HTMLdecode(threads_df$comment)
 
         # summary
         results_df <- threads_df |>
@@ -122,31 +111,29 @@ Collect.reddit <-
     threads_df
   }
 
-reddit_build_df <- function(threadUrls, waitTime, ua, verbose, msg = msg) {
-  threads <- lapply(threadUrls, function(x) {
-    if (length(threadUrls) > 1 & (x != threadUrls[1])) {
+reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
+  msg <- f_verbose(verbose)
+  
+  threads <- list()
+  for (thread_i in seq_along(threadUrls)) {
+    
+    url <- threadUrls[thread_i]
+    if (length(threadUrls) > 1 & (url != threadUrls[1])) {
       Sys.sleep(sample(waitTime, 1))
     }
 
-    thread_json <-
-      reddit_data(x,
-                  wait_time = waitTime,
-                  ua = ua,
-                  verbose = verbose,
-                  msg = msg)
-    branch_df <- reddit_content_plus(thread_json, x, msg = msg)
+    thread_json <- reddit_data(url, wait_time = waitTime, ua = ua, verbose = verbose)
+    branch_df <- reddit_content_plus(thread_json, url, verbose = verbose)
 
     # loop protection
     prev_value <- NULL
 
-    extra_threads <-
-      dplyr::filter(branch_df, grepl("Listing:", .data$comm_id))
+    extra_threads <- dplyr::filter(branch_df, grepl("Listing:", .data$comm_id))
     while (nrow(extra_threads) > 0) {
       row_i <- 1 # top row
 
       # loop protection
-      if (!is.null(prev_value) &&
-          extra_threads[row_i, "comm_id"] == prev_value) {
+      if (!is.null(prev_value) && extra_threads[row_i, "comm_id"] == prev_value) {
         msg("Loop protection following continue threads. Exiting.\n")
         break
       }
@@ -156,52 +143,44 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose, msg = msg) {
 
       # get continue thread comment position info
       cont_index <- as.numeric(extra_threads[row_i, "id"])
-      depth <-
-        as.numeric(gsub(".*_(\\d)_\\d$", "\\1", extra_threads[row_i, "structure"]))
-      struct <-
-        gsub("_\\d_\\d$", "", extra_threads[row_i, "structure"])
-      cont_thread_id <-
-        gsub("Listing:t1_", "", extra_threads[row_i, "comm_id"])
+      depth <- as.numeric(gsub(".*_(\\d)_\\d$", "\\1", extra_threads[row_i, "structure"]))
+      struct <- gsub("_\\d_\\d$", "", extra_threads[row_i, "structure"])
 
+      row_comm_id <- extra_threads[row_i, "comm_id"]
+      cont_thread_id <- gsub("Listing:t1_", "", row_comm_id)
+      
       # set continue thread comment rm flag to true
-      branch_df <- dplyr::mutate(branch_df,
-                                 rm = ifelse((
-                                   .data$comm_id == cont_thread_id |
-                                     .data$comm_id == extra_threads[row_i, "comm_id"]
-                                 ),
-                                 TRUE,
-                                 .data$rm
-                                 ))
+      branch_df <- branch_df |>
+        dplyr::mutate(
+          rm = ifelse(.data$comm_id %in% c(cont_thread_id, row_comm_id), TRUE, .data$rm)
+        )
 
       # get continue thread
-      cont_json <-
-        reddit_data(paste0(x, cont_thread_id),
-                    waitTime,
-                    ua,
-                    cont = cont_thread_id,
-                    verbose = verbose)
-      cont_df <- reddit_content_plus(cont_json, x, depth = depth, msg = msg)
+      cont_json <- reddit_data(
+        paste0(url, cont_thread_id),
+        waitTime,
+        ua,
+        cont = cont_thread_id,
+        verbose = verbose)
+      
+      cont_df <- reddit_content_plus(cont_json, url, depth = depth, verbose = verbose)
 
       # if comments returned
       if (nrow(cont_df)) {
-        cont_df <-
-          cont_df |> dplyr::mutate(structure = paste0(struct, "_", .data$structure)) # append structure
+        cont_df <- cont_df |> dplyr::mutate(structure = paste0(struct, "_", .data$structure)) # append structure
 
         # insert new comments into thread dataframe using position
         if (cont_index == 1) {
           branch_df <- dplyr::bind_rows(cont_df, branch_df)
         } else {
           pre_df <- dplyr::bind_rows(branch_df[1:cont_index - 1, ], cont_df)
-          branch_df <-
-            dplyr::bind_rows(pre_df, branch_df[cont_index:nrow(branch_df), ])
+          branch_df <- dplyr::bind_rows(pre_df, branch_df[cont_index:nrow(branch_df), ])
         }
       }
 
       extra_threads <- extra_threads[-row_i, ] # not needed
-      extra_threads <-
-        dplyr::filter(branch_df,
-                      grepl("Listing:", .data$comm_id),
-                      .data$rm == FALSE)
+      extra_threads <- dplyr::filter(branch_df, grepl("Listing:", .data$comm_id), .data$rm == FALSE)
+      
     } # end while
 
     if (!is.null(branch_df) && nrow(branch_df) > 0) {
@@ -214,6 +193,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose, msg = msg) {
           perl = TRUE,
           useBytes = TRUE
         ) # extract thread id
+      
       branch_df <- branch_df |>
         dplyr::filter(.data$rm == FALSE) |> # remove continue thread entries
         dplyr::arrange(.data$thread_id, .data$id)
@@ -221,10 +201,10 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose, msg = msg) {
       branch_df$id <- seq_along(branch_df$id) # re-index
     }
 
-    branch_df
-  })
-
-  threads_df <- dplyr::bind_rows(threads)
+    threads[[thread_i]] <- branch_df
+  }
+  
+  threads_df <- dplyr::bind_rows(threads) |> dplyr::select(-.data$rm)
 
   threads_df
 }
@@ -235,32 +215,29 @@ reddit_data <-
            wait_time,
            ua,
            cont = NULL,
-           verbose = TRUE,
-           msg = msg) {
+           verbose = FALSE) {
 
+    msg <- f_verbose(verbose)
+    
     if (is.null(url) || length(url) == 0 || !is.character(url)) {
       stop("invalid URL parameter")
     }
 
     if (!grepl("^https?://(.*)", url)) {
-      url <-
-        paste0("https://www.", gsub("^.*(reddit\\..*$)", "\\1", url))
+      url <- paste0("https://www.", gsub("^.*(reddit\\..*$)", "\\1", url))
     }
+    
     if (!grepl("\\?ref=search_posts$", url)) {
       url <- paste0(gsub("/$", "", url), "/?ref=search_posts")
     }
 
-    req_url <-
-      paste0(gsub("\\?ref=search_posts$", "", url),
-             ".json?limit=500&raw_json=1")
+    req_url <- paste0(gsub("\\?ref=search_posts$", "", url), ".json?limit=500&raw_json=1")
     req_tid <- get_thread_id(req_url, TRUE)
 
     if (is.null(cont)) {
       msg(paste0("Request thread: ", req_tid, "\n"))
     } else {
-      if (verbose) {
-        msg(paste0("Continue thread: ", req_tid, " - ", cont, "\n"))
-      }
+      msg(paste0("Continue thread: ", req_tid, " - ", cont, "\n"))
     }
 
     req_data <- get_json(req_url, ua) # ua
@@ -271,23 +248,14 @@ reddit_data <-
       if (is.null(cont)) {
         msg(paste0("Retry thread: ", req_tid, "\n"))
       } else {
-        if (verbose) {
-          msg(paste0("Retry continue thread: ", req_tid, " - ", cont, "\n"))
-        }
+        msg(paste0("Retry continue thread: ", req_tid, " - ", cont, "\n"))
       }
 
       req_data <- get_json(req_url, ua) # ua
     }
 
-    if (is.null(req_data$status) ||
-        as.numeric(req_data$status) != 200) {
-      msg(paste0("Failed: ", url,
-                 ifelse(
-                   is.null(req_data$status),
-                   "",
-                   paste0(" (", req_data$status, ")")
-                 ),
-                 "\n"))
+    if (is.null(req_data$status) || as.numeric(req_data$status) != 200) {
+      msg(paste0("Failed: ", url, ifelse(is.null(req_data$status), "", paste0(" (", req_data$status, ")")), "\n"))
     }
 
     req_data$data
@@ -296,51 +264,47 @@ reddit_data <-
 # based on method by @ivan-rivera RedditExtractoR
 reddit_values_list  <- function(node, feature) {
   attr <- node$data[[feature]]
-  if (is.null(attr)) {
-    attr <- NA
-  }
+  
+  if (is.null(attr)) attr <- NA
   if (feature == "id") {
     if (attr == "_") {
       attr <- paste0("Listing:", node$data$parent_id)
     }
   }
-  replies <- node$data$replies
+  
   reply_nodes <- NULL
-  if (is.list(replies)) {
-    reply_nodes <- replies$data$children
-  }
+  replies <- node$data$replies
+  if (is.list(replies)) reply_nodes <- replies$data$children
 
-  attrs <- list(attr,
-                lapply(reply_nodes, function(x) {
-                  reddit_values_list(x, feature)
-                }))
+  attrs <- list(attr, lapply(reply_nodes, function(x) reddit_values_list(x, feature)))
 
   attrs
 }
 
 # based on method by @ivan-rivera RedditExtractoR
 reddit_struct_list <- function(node, depth = 0) {
-  if (is.null(node)) {
-    return(list())
-  }
+  if (is.null(node)) return(list())
 
   reply_nodes <- NULL
   replies <- node$data$replies
-  if (is.list(replies)) {
-    reply_nodes <- replies$data$children
-  }
+  if (is.list(replies)) reply_nodes <- replies$data$children
 
   # depth is converted to char to prevent col type to integer with no-depth threads
-  structures <- list(as.character(depth),
-                     lapply(1:length(reply_nodes), function(x) {
-                       reddit_struct_list(reply_nodes[[x]], paste0(depth, "_", x))
-                     }))
+  structures <- list(
+    as.character(depth),
+    lapply(
+      1:length(reply_nodes),
+      function(x) reddit_struct_list(reply_nodes[[x]], paste0(depth, "_", x))
+    )
+  )
 
   structures
 }
 
 # based on method by @ivan-rivera RedditExtractoR
-reddit_content_plus <- function(raw_data, req_url, depth = 0, msg = msg) {
+reddit_content_plus <- function(raw_data, req_url, depth = 0, verbose = FALSE) {
+  msg <- f_verbose(verbose)
+  
   data_extract <- tibble::tibble(
     id = numeric(),
     structure = character(),
@@ -366,9 +330,7 @@ reddit_content_plus <- function(raw_data, req_url, depth = 0, msg = msg) {
     rm = logical()
   )
 
-  if (is.null(raw_data)) {
-    return(data_extract)
-  }
+  if (is.null(raw_data)) return(data_extract)
 
   meta_node <- raw_data[[1]]$data$children[[1]]$data
   main_node <- raw_data[[2]]$data$children

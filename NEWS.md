@@ -1,3 +1,8 @@
+# vosonSML 0.32.8
+
+## Bug Fixes
+- Fixed two issues that arose from the introduction of tibbles and verbose messaging in `Collect.reddit()`. 
+
 # vosonSML 0.32.7
 
 ## Major Changes
