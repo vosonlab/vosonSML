@@ -1,7 +1,8 @@
 # vosonSML 0.32.8
 
 ## Bug Fixes
-- Fixed two issues that arose from the introduction of tibbles and verbose messaging in `Collect.reddit()`. 
+- Fixed two issues that arose from the introduction of tibbles and verbose messaging in `Collect.reddit()`.
+- Fixed an error caused by unescaped regex parameters in hyperlinks processed by `Collect.web()` ([#49](https://github.com/vosonlab/vosonSML/issues/49)).
 
 # vosonSML 0.32.7
 

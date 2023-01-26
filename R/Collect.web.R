@@ -202,11 +202,13 @@ get_hyperlinks <-
         )
 
         # remove fragments or anchors
-        df <- df |> dplyr::mutate(url = ifelse(
-          !is.na(.data$parse$fragment),
-          stringr::str_replace(.data$url, paste0("#", .data$parse$fragment, "$"), ""),
-          .data$url
-        ))
+        df <- df |>
+          dplyr::mutate(url = ifelse(
+            !is.na(.data$parse$fragment),
+            stringr::str_replace(.data$url, paste0("#\\Q", .data$parse$fragment, "\\E$"), ""),
+            .data$url
+          )) |>
+          dplyr::mutate(url = stringr::str_replace(url, "/$", ""))
       }
 
       df

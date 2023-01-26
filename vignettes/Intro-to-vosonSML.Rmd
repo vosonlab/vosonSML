@@ -23,7 +23,7 @@ vignette: >
 The following guide provides an introduction to using [vosonSML](https://github.com/vosonlab/vosonSML), which is
 available both on GitHub and [CRAN](https://cran.r-project.org/package=vosonSML). More resources are available on the
 VOSON Lab website ([vosonSML](http://vosonlab.net/socialmedialab) and [training
-materials](http://vosonlab.net/training_workshops)). For a full list of functions, please refer to the [reference
+materials](http://vosonlab.net/resources_training)). For a full list of functions, please refer to the [reference
 page](https://vosonlab.github.io/vosonSML/reference/index.html). The companion package to `vosonSML` is [VOSON
 Dashboard](https://github.com/vosonlab/VOSONDash), which provides an R/Shiny graphical user interface for data
 collection (via `vosonSML`), network and text analysis.
