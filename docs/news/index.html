@@ -114,7 +114,7 @@
 <h2 class="page-header" data-toc-text="0.32.9" id="vosonsml-0329">vosonSML 0.32.9<a class="anchor" aria-label="anchor" href="#vosonsml-0329"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-32-9">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-32-9"></a></h3>
-<ul><li>Added twitter tokenization functions that were recently removed from the <code>tidytext</code> and <code>tokenizers</code> packages due to a change in the unicode ICU standard and the <code>stringi</code> package ([tokenizers issue <a href="https://github.com/vosonlab/vosonSML/issues/82" class="external-link">#82</a>] (<a href="https://github.com/ropensci/tokenizers/issues/82" class="external-link uri">https://github.com/ropensci/tokenizers/issues/82</a>)). This affects only the generation of <code>semantic</code> and <code>2mode</code> twitter networks and maintains their functionality until an alternative tweet tokenization method is implemented.</li>
+<ul><li>Added twitter tokenization functions that were recently removed from the <code>tidytext</code> and <code>tokenizers</code> packages due to a change in the ICU library unicode standard and the <code>stringi</code> package (<a href="https://github.com/ropensci/tokenizers/issues/82" class="external-link">tokenizers issue </a><a href="https://github.com/vosonlab/vosonSML/issues/82" class="external-link">#82</a>). This affects only the generation of <code>semantic</code> and <code>2mode</code> twitter networks and the fix maintains their functionality until an alternative tweet tokenization method is implemented. Unfortunately these two twitter network types are not supported on systems using ICU library versions &gt;= 72.0 at this time.</li>
 </ul></div>
 </div>
     <div class="section level2">
