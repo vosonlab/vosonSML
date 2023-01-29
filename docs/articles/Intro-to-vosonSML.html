@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.7</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.9</span>
       </span>
     </div>
 
@@ -144,7 +144,7 @@ National University</h3>
                         <h4 data-toc-skip class="author">Robert Ackland,
 Bryan Gertzel, Francisca Borquez</h4>
             
-            <h4 data-toc-skip class="date">16 August, 2022</h4>
+            <h4 data-toc-skip class="date">29 January, 2023</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/HEAD/vignettes/Intro-to-vosonSML.Rmd" class="external-link"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
       <div class="hidden name"><code>Intro-to-vosonSML.Rmd</code></div>
@@ -155,7 +155,7 @@ Bryan Gertzel, Francisca Borquez</h4>
     
 <p>The following guide provides an introduction to using <a href="https://github.com/vosonlab/vosonSML" class="external-link">vosonSML</a>, which is
 available both on GitHub and <a href="https://cran.r-project.org/package=vosonSML" class="external-link">CRAN</a>. More
-resources are available on the VOSON Lab website (<a href="http://vosonlab.net/socialmedialab" class="external-link">vosonSML</a> and <a href="http://vosonlab.net/training_workshops" class="external-link">training materials</a>).
+resources are available on the VOSON Lab website (<a href="http://vosonlab.net/socialmedialab" class="external-link">vosonSML</a> and <a href="http://vosonlab.net/resources_training" class="external-link">training materials</a>).
 For a full list of functions, please refer to the <a href="https://vosonlab.github.io/vosonSML/reference/index.html" class="external-link">reference
 page</a>. The companion package to <code>vosonSML</code> is <a href="https://github.com/vosonlab/VOSONDash" class="external-link">VOSON Dashboard</a>, which
 provides an R/Shiny graphical user interface for data collection (via
@@ -587,10 +587,7 @@ actors (Twitter users) and hashtags. There is an edge from user
 <em>i</em> to hashtag <em>j</em> if user <em>i</em> authored a tweet
 containing hashtag <em>j</em>.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># requires the tidytext package for tokenizing text</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidytext"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># create a 2-mode network with the hashtag "#auspol" removed</span></span>
+<code class="sourceCode R"><span><span class="co"># create a 2-mode network with the hashtag "#auspol" removed</span></span>
 <span><span class="va">twomodeNetwork</span> <span class="op">&lt;-</span> <span class="va">twitterData</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"twomode"</span>, removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">twomodeGraph</span> <span class="op">&lt;-</span> <span class="va">twomodeNetwork</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -681,8 +678,8 @@ extracted from the tweet text: common words, hashtags and usernames.
 Edges reflect co-occurrence i.e. there is an edge between entities
 <em>i</em> and <em>j</em> if they both occurred in the same tweet.</p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># additional required packages for tokenization and stopwords</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tidytext"</span>, <span class="st">"stopwords"</span><span class="op">)</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="co"># additional required packages for tokenization</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"stopwords"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># create a semantic network with some common terms removed</span></span>
 <span><span class="co"># include only the top 5% occurring terms in the network</span></span>
@@ -1562,7 +1559,7 @@ to documentation.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

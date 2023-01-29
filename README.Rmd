@@ -244,7 +244,7 @@ a particular hashtag in the same tweet. The semantic network is `undirected`.
 
 ```{r, echo=TRUE}
 # install additional required packages
-# install.packages(c("tidytext", "stopwords"))
+# install.packages("stopwords")
 
 # create a semantic network excluding the hashtag #auspol, include only the
 # top 10% most frequent words and 20% most frequent hashtags as nodes

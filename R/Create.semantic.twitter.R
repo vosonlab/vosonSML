@@ -5,9 +5,6 @@
 #'   hashtags extracted from the tweet text. Network edges are weighted and represent occurrence of words and hashtags
 #'   in the same tweets.
 #'
-#'   The creation of twitter semantic networks requires text processing and the tokenization of tweets. As such this
-#'   function requires the additional installation of the \pkg{tidyr} and \pkg{tidytext} packages to achieve this.
-#'
 #' @note The words and hashtags passed to the function in the \code{removeTermsOrHashtags} parameter are removed before
 #'   word frequencies are calculated and are therefore excluded from top percentage of most frequent terms completely
 #'   rather than simply filtered out of the final network.
@@ -55,9 +52,9 @@
 #'
 #' @examples
 #' \dontrun{
-#' # twitter semantic network creation additionally requires the tidytext
-#' # and stopwords packages for working with text data
-#' # install.packages(c("tidytext", "stopwords"))
+#' # twitter semantic network creation additionally requires the stopwords
+#' # package for working with text data
+#' # install.packages("stopwords")
 #'
 #' # create a twitter semantic network graph removing the hashtag "#auspol"
 #' # and using the top 2% frequently occurring words and 10% most frequently
@@ -88,8 +85,9 @@ Create.semantic.twitter <-
            verbose = TRUE,
            ...) {
 
-    prompt_and_stop(c("tidytext", "stopwords"), "Create.twomode.twitter")
-
+    prompt_and_stop(c("stringi", "vctrs", "stopwords"), "Create.twomode.twitter")
+    check_stri_icu_version()
+    
     msg("Generating twitter semantic network...\n")
 
     datasource <- datasource$tweets
@@ -146,14 +144,12 @@ Create.semantic.twitter <-
 
     data$text <- textutils::HTMLdecode(data$full_text)
 
-    x <- suppressMessages(
-      capture.output(
-        tokens_df <-
-          data |> tidytext::unnest_tweets(
-            .data$word,
-            .data$text
-          )
-        , type = "output"))
+    tokens_df <-
+      data |>
+      unnest_tweets(
+        .data$word,
+        .data$text
+      )
 
     df_stats <- network_stats(df_stats, "tokens", nrow(tokens_df), FALSE)
 
@@ -162,9 +158,11 @@ Create.semantic.twitter <-
 
     if (stopwords) {
       rlang::check_installed(c("stopwords"), "for Create.semantic.twitter")
-      stopwords_ <- tidytext::get_stopwords(
-        language = stopwordsLang, source = stopwordsSrc
+      stopwords_ <- tibble::tibble(
+        word = stopwords::stopwords(language = stopwordsLang, source = stopwordsSrc),
+        lexicon = stopwordsSrc
       )
+
       tokens_df <- tokens_df |>
         dplyr::anti_join(stopwords_, by = c("word" = "word"))
     }

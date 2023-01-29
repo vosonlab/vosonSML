@@ -209,9 +209,6 @@
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # requires the tidytext package for tokenizing text
-#  install.packages("tidytext")
-#  
 #  # create a 2-mode network with the hashtag "#auspol" removed
 #  twomodeNetwork <- twitterData |>
 #    Create("twomode", removeTermsOrHashtags = c("#auspol"))
@@ -281,8 +278,8 @@
 #  dev.off()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  # additional required packages for tokenization and stopwords
-#  install.packages(c("tidytext", "stopwords"))
+#  # additional required packages for tokenization
+#  install.packages("stopwords")
 #  
 #  # create a semantic network with some common terms removed
 #  # include only the top 5% occurring terms in the network

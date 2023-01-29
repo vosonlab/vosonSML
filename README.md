@@ -5,7 +5,7 @@
 [![CRAN_Monthly](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![CRAN_Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Github_Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github)](https://github.com/vosonlab/vosonSML/releases)
-[![Github_Dev](https://img.shields.io/static/v1?label=dev&message=v0.32.8&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Github_Dev](https://img.shields.io/static/v1?label=dev&message=v0.32.9&logo=github)](https://github.com/vosonlab/vosonSML)
 [![Last_Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 [![Build_Status](https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg)](https://github.com/vosonlab/vosonSML/actions)
 
@@ -61,24 +61,22 @@ for supported social media:
 
 ### General Options
 
--   `verbose`: most `vosonSML` functions accept a verbosity parameter
-    that is now set to `FALSE` by default. When `FALSE` functions will
-    run silently unless there is an error. If set to `TRUE` then
-    progress and summary information for the function will be printed to
-    the console.
+- `verbose`: most `vosonSML` functions accept a verbosity parameter that
+  is now set to `FALSE` by default. When `FALSE` functions will run
+  silently unless there is an error. If set to `TRUE` then progress and
+  summary information for the function will be printed to the console.
 
 The following environment options can also be used:
 
--   `voson.msg`: If set to `FALSE` then the verbose output of functions
-    will be printed using the base `cat()` function instead of the
-    `message()` function. Set by entering `options(voson.msg = FALSE)`,
-    and clear by assigning a value of `NULL`.
--   `voson.data`: If set to an existing directory path the `writeToFile`
-    output files will be written to that directory instead of the
-    working directory. Can be set using
-    `options(voson.data = "~/vsml-data")` for example, and cleared by
-    assigning a value of `NULL`. Directory paths can be relative to the
-    working directory or full paths.
+- `voson.msg`: If set to `FALSE` then the verbose output of functions
+  will be printed using the base `cat()` function instead of the
+  `message()` function. Set by entering `options(voson.msg = FALSE)`,
+  and clear by assigning a value of `NULL`.
+- `voson.data`: If set to an existing directory path the `writeToFile`
+  output files will be written to that directory instead of the working
+  directory. Can be set using `options(voson.data = "~/vsml-data")` for
+  example, and cleared by assigning a value of `NULL`. Directory paths
+  can be relative to the working directory or full paths.
 
 ### Authentication
 
@@ -163,15 +161,15 @@ collect_tw <- auth_tw_bearer |>
           verbose = TRUE)
 ## Collecting tweets for search query...
 ## Search term: #auspol
-## Requested 100 tweets of 45000 in this search rate limit.
-## Rate limit reset: 2022-08-16 02:51:42
+## Requested 100 tweets of 44700 in this search rate limit.
+## Rate limit reset: 2023-01-29 05:11:28
 ## 
 ## tweet        | status_id           | created            
 ## --------------------------------------------------------
-## Latest Obs   | 1559368518344200192 | 2022-08-16 02:36:41
-## Earliest Obs | 1559368223337746433 | 2022-08-16 02:35:30
+## Latest Obs   | 1619562204629704705 | 2023-01-29 05:04:54
+## Earliest Obs | 1619558790717898752 | 2023-01-29 04:51:20
 ## Collected 100 tweets.
-## RDS file written: ./vsml-data/2022-08-16_023645-TwitterData.rds
+## RDS file written: ./vsml-data/2023-01-29_050516-TwitterData.rds
 ## Done.
 ```
 
@@ -188,15 +186,15 @@ collect_tw_tl <- auth_tw_bearer |>
           writeToFile = TRUE,
           verbose = TRUE)
 ## Collecting timeline tweets for users...
-## Requested 200 tweets of 150000 in this search rate limit.
-## Rate limit reset: 2022-08-16 02:51:45
+## Requested 200 tweets of 149800 in this search rate limit.
+## Rate limit reset: 2023-01-29 05:11:31
 ## 
 ## tweet        | status_id           | created            
 ## --------------------------------------------------------
-## Latest Obs   | 1557524390534754304 | 2022-08-11 00:28:46
-## Earliest Obs | 1417705961137999873 | 2021-07-21 04:40:15
-## Collected 200 tweets.
-## RDS file written: ./vsml-data/2022-08-16_023648-TwitterData.rds
+## Latest Obs   | 1606093229413335040 | 2022-12-23 01:04:00
+## Earliest Obs | 1433650345398321152 | 2021-09-03 04:37:32
+## Collected 199 tweets.
+## RDS file written: ./vsml-data/2023-01-29_050521-TwitterData.rds
 ## Done.
 ```
 
@@ -240,11 +238,11 @@ net_activity <- collect_tw |> Create("activity", verbose = TRUE)
 ## Generating twitter activity network...
 ## -------------------------
 ## collected tweets | 100
-## tweet            | 15
-## retweet          | 75
-## reply            | 8 
-## quote            | 2 
-## nodes            | 170
+## tweet            | 7 
+## retweet          | 84
+## reply            | 6 
+## quote            | 3 
+## nodes            | 164
 ## edges            | 100
 ## -------------------------
 ## Done.
@@ -253,21 +251,21 @@ net_activity <- collect_tw |> Create("activity", verbose = TRUE)
 ``` r
 g_activity <- net_activity |> Graph(writeToFile = TRUE, verbose = TRUE)
 ## Creating igraph network graph...
-## GRAPHML file written: ./vsml-data/2022-08-16_123649-TwitterActivity.graphml
+## GRAPHML file written: ./vsml-data/2023-01-29_160522-TwitterActivity.graphml
 ## Done.
 
 g_activity
-## IGRAPH 4772699 DN-- 170 100 -- 
+## IGRAPH 8862fb3 DN-- 164 100 -- 
 ## + attr: type (g/c), name (v/c), author_id (v/c), author_screen_name
 ## | (v/c), created_at (v/c), user_id (e/c), screen_name (e/c), created_at
 ## | (e/c), edge_type (e/c)
-## + edges from 4772699 (vertex names):
-##  [1] 1559368518344200192->1559357520879431680
-##  [2] 1559368506218803200->1559353690158661632
-##  [3] 1559368500900048896->1559348039827193856
-##  [4] 1559368499884990470->1559362830876282880
-##  [5] 1559368496554938368->1559368496554938368
-##  [6] 1559368490439438336->1559317672424513537
+## + edges from 8862fb3 (vertex names):
+##  [1] 1619562204629704705->1619484994690494468
+##  [2] 1619562185692426242->1619556542935871489
+##  [3] 1619562115953725442->1619542689334296576
+##  [4] 1619562080633511941->1618852493043326976
+##  [5] 1619562043358736384->1619495260614430720
+##  [6] 1619562028947091459->1619515830030503939
 ## + ... omitted several edges
 ```
 
@@ -284,15 +282,13 @@ net_actor <- collect_tw |>
 ## Generating twitter actor network...
 ## -------------------------
 ## collected tweets | 100
-## tweet mention    | 7 
-## tweet            | 15
-## retweet          | 75
-## reply mention    | 12
-## reply            | 8 
-## quote mention    | 1 
-## quote            | 2 
-## nodes            | 160
-## edges            | 120
+## tweet mention    | 5 
+## tweet            | 7 
+## retweet          | 84
+## reply            | 6 
+## quote            | 3 
+## nodes            | 150
+## edges            | 105
 ## -------------------------
 ## Done.
 ```
@@ -300,21 +296,21 @@ net_actor <- collect_tw |>
 ``` r
 g_actor <- net_actor |> Graph(writeToFile = TRUE, verbose = TRUE)
 ## Creating igraph network graph...
-## GRAPHML file written: ./vsml-data/2022-08-16_123649-TwitterActor.graphml
+## GRAPHML file written: ./vsml-data/2023-01-29_160522-TwitterActor.graphml
 ## Done.
 
 g_actor
-## IGRAPH 47a7e9a DN-- 160 120 -- 
+## IGRAPH 88d23fc DN-- 150 105 -- 
 ## + attr: type (g/c), name (v/c), screen_name (v/c), status_id (e/c),
 ## | created_at (e/c), edge_type (e/c)
-## + edges from 47a7e9a (vertex names):
-##  [1] 1950356234         ->225762906         
-##  [2] 23557191           ->327347231         
-##  [3] 1469510327477805061->4265107032        
-##  [4] 723010310659956740 ->75961380          
-##  [5] 395042420          ->395042420         
-##  [6] 1132791264242307073->721940680038178816
-##  [7] 164178673          ->164178673         
+## + edges from 88d23fc (vertex names):
+##  [1] 125414395          ->2402755411         
+##  [2] 1537223222684332032->17682476           
+##  [3] 53751609           ->1238370241169616897
+##  [4] 166328555          ->2479226604         
+##  [5] 125414395          ->304871590          
+##  [6] 202127161          ->762470063261704192 
+##  [7] 750959971          ->926019424154349568 
 ## + ... omitted several edges
 ```
 
@@ -326,7 +322,7 @@ the same tweet. The semantic network is `undirected`.
 
 ``` r
 # install additional required packages
-# install.packages(c("tidytext", "stopwords"))
+# install.packages("stopwords")
 
 # create a semantic network excluding the hashtag #auspol, include only the
 # top 10% most frequent words and 20% most frequent hashtags as nodes
@@ -341,18 +337,18 @@ net_semantic <- collect_tw |>
 ## Generating twitter semantic network...
 ## Removing terms and hashtags: #auspol
 ## -------------------------
-## retweets                 | 75
-## tokens                   | 590
-## removed specified        | 25
-## removed users            | 27
-## hashtag count            | 14
-## hashtags unique          | 12
-## term count               | 240
-## terms unique             | 208
-## top 20% hashtags n (>=1) | 12
-## top 10% terms n (>=1)    | 208
-## nodes                    | 83
-## edges                    | 107
+## retweets                 | 84
+## tokens                   | 468
+## removed specified        | 16
+## removed users            | 11
+## hashtag count            | 20
+## hashtags unique          | 20
+## term count               | 185
+## terms unique             | 165
+## top 20% hashtags n (>=1) | 20
+## top 10% terms n (>=1)    | 165
+## nodes                    | 78
+## edges                    | 201
 ## -------------------------
 ## Done.
 ```
@@ -360,21 +356,21 @@ net_semantic <- collect_tw |>
 ``` r
 g_semantic <- net_semantic |> Graph(writeToFile = TRUE, verbose = TRUE)
 ## Creating igraph network graph...
-## GRAPHML file written: ./vsml-data/2022-08-16_123650-TwitterSemantic.graphml
+## GRAPHML file written: ./vsml-data/2023-01-29_160523-TwitterSemantic.graphml
 ## Done.
 
 g_semantic
-## IGRAPH 485fca7 UN-B 83 107 -- 
+## IGRAPH 892fc4e UN-B 78 201 -- 
 ## + attr: type (g/c), name (v/c), type (v/c), n (v/n), from.type (e/c),
 ## | to.type (e/c), status_id (e/c)
-## + edges from 485fca7 (vertex names):
-##  [1] surely --#hurley             #hurley--embarrassed        
-##  [3] #hurley--recognition         #hurley--disclosures        
-##  [5] #hurley--plastered           #hurley--national           
-##  [7] #hurley--international       #hurley--media              
-##  [9] #hurley--position            #hurley--untenable          
-## [11] #hurley--atm                 #hurley--resignation        
-## [13] #hurley--correct             #hurley--option             
+## + edges from 892fc4e (vertex names):
+##  [1] pm       --#australia pm       --#voteno    pm       --#laborlies
+##  [4] visits   --#australia visits   --#voteno    visits   --#laborlies
+##  [7] shops    --#australia shops    --#voteno    shops    --#laborlies
+## [10] dines    --#australia dines    --#voteno    dines    --#laborlies
+## [13] families --#australia families --#voteno    families --#laborlies
+## [16] melbourne--#australia melbourne--#voteno    melbourne--#laborlies
+## [19] visit    --#australia visit    --#voteno    visit    --#laborlies
 ## + ... omitted several edges
 ```
 
@@ -394,11 +390,11 @@ net_2mode <- collect_tw |>
 ## Removing terms and hashtags: #auspol
 ## -------------------------
 ## collected tweets  | 100
-## removed specified | 25
-## users             | 27
-## hashtags          | 14
-## nodes             | 53
-## edges             | 41
+## removed specified | 16
+## users             | 11
+## hashtags          | 20
+## nodes             | 41
+## edges             | 31
 ## -------------------------
 ## Done.
 ```
@@ -406,21 +402,21 @@ net_2mode <- collect_tw |>
 ``` r
 g_2mode <- net_2mode |> Graph(writeToFile = TRUE, verbose = TRUE)
 ## Creating igraph network graph...
-## GRAPHML file written: ./vsml-data/2022-08-16_123651-Twitter2mode.graphml
+## GRAPHML file written: ./vsml-data/2023-01-29_160523-Twitter2mode.graphml
 ## Done.
 
 mask(g_2mode)
-## IGRAPH 488041b DNWB 53 41 -- 
+## IGRAPH 89575fe DNWB 41 31 -- 
 ## + attr: type (g/c), name (v/c), type (v/c), user_id (v/c), screen_name
 ## | (v/c), status_id (e/c), created_at (e/c), is_retweet (e/l), is_quote
 ## | (e/l), is_reply (e/l), weight (e/n)
-## + edges from 488041b (vertex names):
-##  [1] @hxxxxxxxxxvo  ->@kxx5f              @hxxxxxxxxxvo  ->@pxxxxxkc          
-##  [3] @hxxxxxxxxxvo  ->#hurley             @exxxxxxxfe    ->@nxxxxxxxxea       
-##  [5] @exxxxxxxfe    ->@sxxxxxxay          @exxxxxxxfe    ->@bxxxxxxxbi        
-##  [7] @exxxxxxxfe    ->@oxxxpb             @fxxxxxxxxxsy  ->#lnpcorruptionparty
-##  [9] @wxxxxxxxxxxxaj->@uxxxxxxeg          @9xxxxxxxxxx75 ->@axxxxxnc          
-## [11] @9xxxxxxxxxx75 ->#morrisongate       @uxxxxxxae     ->#scomo             
+## + edges from 89575fe (vertex names):
+##  [1] @pxxxxxxxxxxxrl ->@qxxxxxxxxed     @nxxxxxxxxxxxxiu->@pxxxxxxxxxxpe  
+##  [3] @oxxxxxxxxx1d   ->#australia       @oxxxxxxxxx1d   ->#voteno         
+##  [5] @oxxxxxxxxx1d   ->#laborlies       @oxxxxxxxxx1d   ->@qxxxxxxxxou    
+##  [7] @cxxxxxay       ->@yxxxxxxse       @exxxxxxxwo     ->@txxxxxxxxxxxxtp
+##  [9] @exxxxxxxwo     ->@lxxxam          @exxxxxxxwo     ->@jxxxxxxxes     
+## [11] @exxxxxxxwo     ->@mxxxxxxxxxxxxha @kxxx9d         ->@cxxxxxxxxxxxxre
 ## + ... omitted several edges
 ```
 
@@ -463,12 +459,12 @@ collect_yt <- auth_yt |>
 ## ---------------------------------------------------------------
 ## ** Creating dataframe from threads of lY0YLDZhT88.
 ## ** Collecting replies for 1 threads with replies. Please be patient.
-## Comment replies 5 
-## ** Collected replies: 5
-## ** Total video comments: 13
+## Comment replies 6 
+## ** Collected replies: 6
+## ** Total video comments: 14
 ## (Video API unit cost: 5)
 ## ---------------------------------------------------------------
-## ** Total comments collected for all videos 24.
+## ** Total comments collected for all videos 25.
 ## (Estimated API unit cost: 10)
 ## Done.
 ```
@@ -488,12 +484,12 @@ comment.
 net_activity <- collect_yt |> Create("activity", verbose = TRUE)
 ## Generating youtube activity network...
 ## -------------------------
-## collected YouTube comments | 24
+## collected YouTube comments | 25
 ## top-level comments         | 18
-## reply comments             | 6
+## reply comments             | 7
 ## videos                     | 2
-## nodes                      | 26
-## edges                      | 24
+## nodes                      | 27
+## edges                      | 25
 ## -------------------------
 ## Done.
 ```
@@ -502,11 +498,11 @@ net_activity <- collect_yt |> Create("activity", verbose = TRUE)
 g_activity <- net_activity |> Graph()
 
 g_activity
-## IGRAPH 491270f DN-- 26 24 -- 
+## IGRAPH 89f9eb3 DN-- 27 25 -- 
 ## + attr: type (g/c), name (v/c), video_id (v/c), published_at (v/c),
 ## | updated_at (v/c), author_id (v/c), screen_name (v/c), node_type
 ## | (v/c), edge_type (e/c)
-## + edges from 491270f (vertex names):
+## + edges from 89f9eb3 (vertex names):
 ## [1] Ugw13lb0nCf4o4IKFb54AaABAg->VIDEOID:AQzZNIyjyWM
 ## [2] UgyJBlqZ64YnltQTOTt4AaABAg->VIDEOID:AQzZNIyjyWM
 ## [3] Ugysomx_apk24Pqrs1h4AaABAg->VIDEOID:AQzZNIyjyWM
@@ -531,10 +527,10 @@ net_actor <- collect_yt |> Create("actor", verbose = TRUE)
 g_actor <- net_actor |> Graph()
 
 g_actor
-## IGRAPH 491c9a1 DN-- 23 26 -- 
+## IGRAPH 8a09432 DN-- 24 27 -- 
 ## + attr: type (g/c), name (v/c), screen_name (v/c), node_type (v/c),
 ## | video_id (e/c), comment_id (e/c), edge_type (e/c)
-## + edges from 491c9a1 (vertex names):
+## + edges from 8a09432 (vertex names):
 ##  [1] UCb9ElH9tzEkG9OxDIiSYgdg->VIDEOID:AQzZNIyjyWM
 ##  [2] UC0DwaB_wHNzUh-LA9sWXKYQ->VIDEOID:AQzZNIyjyWM
 ##  [3] UCNHA8SkizJKauefYt1FHmjQ->VIDEOID:AQzZNIyjyWM
@@ -575,7 +571,7 @@ collect_rd <- Authenticate("reddit") |>
 ## wcd8x5    | what is the name of the job I do?       | datascience | 65   
 ## wcni2g    | Ops research analyst vs data scientist. | datascience | 2
 ## Collected 67 total comments.
-## RDS file written: ./vsml-data/2022-08-16_023656-RedditData.rds
+## RDS file written: ./vsml-data/2023-01-29_050530-RedditData.rds
 ## Done.
 ```
 
@@ -609,11 +605,11 @@ net_activity <- collect_rd |> Create("activity", verbose = TRUE)
 g_activity <- net_activity |> Graph()
 
 g_activity
-## IGRAPH 4bc8a3d DN-- 69 67 -- 
+## IGRAPH 8d544a0 DN-- 69 67 -- 
 ## + attr: type (g/c), name (v/c), thread_id (v/c), comm_id (v/c),
 ## | datetime (v/c), ts (v/n), subreddit (v/c), user (v/c), node_type
 ## | (v/c), edge_type (e/c)
-## + edges from 4bc8a3d (vertex names):
+## + edges from 8d544a0 (vertex names):
 ##  [1] wcd8x5.1          ->wcd8x5.0         wcd8x5.2          ->wcd8x5.0        
 ##  [3] wcd8x5.2_1        ->wcd8x5.2         wcd8x5.2_2        ->wcd8x5.2        
 ##  [5] wcd8x5.2_2_1      ->wcd8x5.2_2       wcd8x5.2_2_1_1    ->wcd8x5.2_2_1    
@@ -647,10 +643,10 @@ net_actor <- collect_rd |> Create("actor", verbose = TRUE)
 g_actor <- net_actor |> Graph()
 
 g_actor
-## IGRAPH 4bd3a8d DN-- 35 69 -- 
+## IGRAPH 8d6766d DN-- 35 69 -- 
 ## + attr: type (g/c), name (v/c), user (v/c), subreddit (e/c), thread_id
 ## | (e/c), comment_id (e/n), comm_id (e/c)
-## + edges from 4bd3a8d (vertex names):
+## + edges from 8d6766d (vertex names):
 ##  [1] 1 ->7  2 ->7  3 ->2  4 ->2  2 ->4  4 ->2  5 ->4  4 ->5  1 ->4  4 ->1 
 ## [11] 6 ->7  7 ->6  8 ->7  9 ->8  7 ->9  9 ->7  7 ->8  10->7  11->10 7 ->11
 ## [21] 12->7  7 ->12 13->11 14->13 9 ->13 13->9  9 ->13 15->7  7 ->15 16->7 
@@ -762,7 +758,7 @@ net_activity <- net_activity |>
 g_activity <- net_activity |> Graph()
 
 g_activity
-## IGRAPH 4c2b041 DN-- 170 100 -- 
+## IGRAPH 8dd2621 DN-- 164 100 -- 
 ## + attr: type (g/c), name (v/c), author_id (v/c), author_screen_name
 ## | (v/c), created_at (v/c), t.is_reply (v/l), t.is_quote (v/l),
 ## | t.is_retweet (v/l), t.full_text (v/c), t.hashtags (v/x),
@@ -771,8 +767,8 @@ g_activity
 ## | t.retweeted.hashtags (v/x), vosonTxt_tweet (v/c), vosonTxt_hashtags
 ## | (v/c), user_id (e/c), screen_name (e/c), created_at (e/c), edge_type
 ## | (e/c)
-## + edges from 4c2b041 (vertex names):
-## [1] 1559368518344200192->1559357520879431680
+## + edges from 8dd2621 (vertex names):
+## [1] 1619562204629704705->1619484994690494468
 ## + ... omitted several edges
 ```
 
@@ -823,7 +819,7 @@ net_actor_meta <- net_actor |> AddUserData(collect_tw, verbose = TRUE)
 names(net_actor_meta)
 ## [1] "edges"         "nodes"         "missing_users"
 nrow(net_actor_meta$missing_users)
-## [1] 22
+## [1] 8
 
 # add additional twitter user profile info
 net_actor_lookupmeta <- net_actor |>
@@ -845,7 +841,7 @@ metadata.
 g_actor <- net_actor_meta |> Graph()
 
 g_actor
-## IGRAPH 4cc4a96 DN-- 160 120 -- 
+## IGRAPH 8ea1eca DN-- 150 105 -- 
 ## + attr: type (g/c), name (v/c), screen_name (v/c), u.user_id (v/c),
 ## | u.name (v/c), u.screen_name (v/c), u.location (v/c), u.description
 ## | (v/c), u.url (v/c), u.protected (v/l), u.followers_count (v/n),
@@ -857,7 +853,7 @@ g_actor
 ## | u.time_zone (v/l), u.geo_enabled (v/l), u.lang (v/l),
 ## | u.has_extended_profile (v/l), status_id (e/c), created_at (e/c),
 ## | edge_type (e/c)
-## + edges from 4cc4a96 (vertex names):
+## + edges from 8ea1eca (vertex names):
 ```
 
 #### AddVideoData requests and adds video data to networks
@@ -889,11 +885,11 @@ called `videos`.
 g_actor <- net_actor |> Graph()
 
 g_actor
-## IGRAPH 4ce955d DN-- 22 26 -- 
+## IGRAPH 8ecba31 DN-- 23 27 -- 
 ## + attr: type (g/c), name (v/c), screen_name (v/c), node_type (v/c),
 ## | video_id (e/c), comment_id (e/c), edge_type (e/c), video_title (e/c),
 ## | video_description (e/c), video_published_at (e/c)
-## + edges from 4ce955d (vertex names):
+## + edges from 8ecba31 (vertex names):
 ## [1] UCb9ElH9tzEkG9OxDIiSYgdg->UCeiiqmVK07qhY-wvg3IZiZQ
 ## [2] UC0DwaB_wHNzUh-LA9sWXKYQ->UCeiiqmVK07qhY-wvg3IZiZQ
 ## [3] UCNHA8SkizJKauefYt1FHmjQ->UCeiiqmVK07qhY-wvg3IZiZQ

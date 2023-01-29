@@ -70,9 +70,6 @@ Creates a semantic network from tweets returned from the twitter search query. S
 describe the semantic relationships between concepts. In this network the concepts are significant words and
 hashtags extracted from the tweet text. Network edges are weighted and represent occurrence of words and hashtags
 in the same tweets.
-
-The creation of twitter semantic networks requires text processing and the tokenization of tweets. As such this
-function requires the additional installation of the \pkg{tidyr} and \pkg{tidytext} packages to achieve this.
 }
 \note{
 The words and hashtags passed to the function in the \code{removeTermsOrHashtags} parameter are removed before
@@ -93,9 +90,9 @@ occurring in tweet text with other top percentage frequency terms.
 }
 \examples{
 \dontrun{
-# twitter semantic network creation additionally requires the tidytext
-# and stopwords packages for working with text data
-# install.packages(c("tidytext", "stopwords"))
+# twitter semantic network creation additionally requires the stopwords
+# package for working with text data
+# install.packages("stopwords")
 
 # create a twitter semantic network graph removing the hashtag "#auspol"
 # and using the top 2\% frequently occurring words and 10\% most frequently

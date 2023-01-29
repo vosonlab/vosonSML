@@ -4,9 +4,6 @@
 #'   two types of nodes, twitter users who authored or were mentioned in collected tweets and hashtags found within
 #'   tweets. Network edges represent a users tweets that contain hashtags or mention users screen names.
 #'
-#'   The creation of twitter 2-mode networks requires text processing and the tokenization of tweets. As such this
-#'   function requires the additional installation of the \pkg{tidytext} package to achieve this.
-#'
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"twitter"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"twomode"}.
 #' @param removeTermsOrHashtags Character vector. Users or hashtags to remove from the twomode network. For example,
@@ -20,10 +17,6 @@
 #'
 #' @examples
 #' \dontrun{
-#' # twitter 2-mode network creation additionally requires the tidytext
-#' # package for working with text data
-#' # install.packages("tidytext")
-#'
 #' # create a twitter 2-mode network graph with the hashtag "#auspol" removed
 #' net_2mode <- collect_tw |>
 #'   Create("twomode", removeTermsOrHashtags = c("#auspol"), verbose = TRUE)
@@ -42,8 +35,9 @@ Create.twomode.twitter <-
            verbose = TRUE,
            ...) {
 
-    prompt_and_stop("tidytext", "Create.twomode.twitter")
-
+    prompt_and_stop(c("stringi", "vctrs"), "Create.twomode.twitter")
+    check_stri_icu_version()
+    
     msg("Generating twitter 2-mode network...\n")
 
     datasource <- datasource$tweets
@@ -77,18 +71,13 @@ Create.twomode.twitter <-
 
     datasource$text <- textutils::HTMLdecode(datasource$full_text)
 
-    invisible(suppressMessages(
-      capture.output(
-        df_tokens <-
-          datasource |>
-          tidytext::unnest_tweets(
-            .data$word,
-            .data$text,
-            strip_url = TRUE
-          )
-        , type = "output"
+    df_tokens <-
+      datasource |>
+      unnest_tweets(
+        .data$word,
+        .data$text,
+        strip_url = TRUE
       )
-    ))
 
     df_tokens <- df_tokens |>
       dplyr::mutate(at_name = paste0("@", tolower(.data$screen_name)))

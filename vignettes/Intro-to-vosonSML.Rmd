@@ -432,9 +432,6 @@ In the Twitter *2-mode network*, the two types of nodes are actors (Twitter user
 user *i* to hashtag *j* if user *i* authored a tweet containing hashtag *j*.
 
 ```{r eval=FALSE}
-# requires the tidytext package for tokenizing text
-install.packages("tidytext")
-
 # create a 2-mode network with the hashtag "#auspol" removed
 twomodeNetwork <- twitterData |>
   Create("twomode", removeTermsOrHashtags = c("#auspol"))
@@ -528,8 +525,8 @@ usernames. Edges reflect co-occurrence i.e. there is an edge between entities *i
 same tweet.
 
 ```{r eval=FALSE}
-# additional required packages for tokenization and stopwords
-install.packages(c("tidytext", "stopwords"))
+# additional required packages for tokenization
+install.packages("stopwords")
 
 # create a semantic network with some common terms removed
 # include only the top 5% occurring terms in the network
