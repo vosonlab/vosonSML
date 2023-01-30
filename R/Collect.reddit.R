@@ -186,7 +186,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
     if (!is.null(branch_df) && nrow(branch_df) > 0) {
       branch_df$thread_id <-
         gsub(
-          "^(.*)?/comments/([0-9A-Za-z]{6,})?/{0,1}(.*)?/{0,1}$",
+          "^(.*)?/comments/([0-9A-Za-z]{2,})?/{0,1}(.*)?/{0,1}$",
           "\\2",
           branch_df$url,
           ignore.case = TRUE,

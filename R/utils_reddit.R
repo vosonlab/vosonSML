@@ -6,7 +6,7 @@ get_thread_id <- function(url, desc = FALSE) {
     extract <- "\\3"
   }
   gsub(
-    "^(.*)?/(r/.+)/comments/([0-9A-Za-z]{6,})?/.*?(/)?$",
+    "^(.*)?/(r/.+)/comments/([0-9A-Za-z]{2,})?/.*?(/)?$",
     extract,
     url,
     ignore.case = TRUE,
