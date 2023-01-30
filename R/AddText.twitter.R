@@ -89,7 +89,9 @@ extract_nested_tweet_text <- function(x, var, hashtags = FALSE) {
     tidyr::unnest(cols = c({{ var }}))
 
   if (ncol(df) == 1) return(NULL)
-
+  
+  if (!"id_str" %in% colnames(df)) return(NULL) 
+  
   df <- df |>
     dplyr::filter(!is.na(.data$id_str)) |>
     dplyr::select(.data$parent_status_id, status_id = .data$id_str, .data$full_text, .data$entities) |>
@@ -143,9 +145,12 @@ add_tweet_text <- function(objs, data, hashtags = FALSE) {
 
   # separate to simplify joins
   # tweets are present in data and refs are referenced tweets derived from data
+  
+  # tweets with refs have either TRUE or FALSE value, not NA
   objs_tweets <- objs |>
     dplyr::filter(!is.na(.data$t.is_retweet) & !is.na(.data$t.is_quote))
 
+  # refs have NA for both values  
   objs_refs <- objs |>
     dplyr::filter(is.na(.data$t.is_retweet) & is.na(.data$t.is_quote))
 
@@ -186,6 +191,10 @@ add_tweet_text <- function(objs, data, hashtags = FALSE) {
   objs <- dplyr::bind_rows(objs_tweets, objs_refs)
 
   # set a default text
+  # not really interested in quoted text as it is contained within parent tweet
+  if (!"t.retweeted.full_text" %in% colnames(objs)) objs$t.retweeted.full_text <- NA_character_
+  if (!"t.quoted.full_text" %in% colnames(objs)) objs$t.quoted.full_text <- NA_character_
+    
   objs <- objs |> dplyr::mutate(
     vosonTxt_tweet = data.table::fcase(
       .data$t.is_retweet == TRUE, .data$t.retweeted.full_text,
@@ -198,6 +207,9 @@ add_tweet_text <- function(objs, data, hashtags = FALSE) {
 
   if (hashtags) {
     objs$t.hashtags <- lapply(objs$t.hashtags, null_to_na)
+    
+    if (!"t.retweeted.hashtags" %in% colnames(objs)) objs$t.retweeted.hashtags <- NA_character_
+    if (!"t.quoted.hashtags" %in% colnames(objs)) objs$t.quoted.hashtags <- NA_character_
     objs$t.quoted.hashtags <- lapply(objs$t.quoted.hashtags, null_to_na)
     objs$t.retweeted.hashtags <- lapply(objs$t.retweeted.hashtags, null_to_na)
 
