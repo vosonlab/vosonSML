@@ -186,7 +186,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
     if (!is.null(branch_df) && nrow(branch_df) > 0) {
       branch_df$thread_id <-
         gsub(
-          "^(.*)?/comments/([0-9A-Za-z]{6})?/{0,1}(.*)?/{0,1}$",
+          "^(.*)?/comments/([0-9A-Za-z]{6,})?/{0,1}(.*)?/{0,1}$",
           "\\2",
           branch_df$url,
           ignore.case = TRUE,
@@ -227,11 +227,7 @@ reddit_data <-
       url <- paste0("https://www.", gsub("^.*(reddit\\..*$)", "\\1", url))
     }
     
-    if (!grepl("\\?ref=search_posts$", url)) {
-      url <- paste0(gsub("/$", "", url), "/?ref=search_posts")
-    }
-
-    req_url <- paste0(gsub("\\?ref=search_posts$", "", url), ".json?limit=500&raw_json=1")
+    req_url <- paste0(url, ".json?limit=500&raw_json=1")
     req_tid <- get_thread_id(req_url, TRUE)
 
     if (is.null(cont)) {

@@ -117,6 +117,8 @@ Create.semantic.default <- function(datasource, type, ...) {
 #' @method Create twomode
 #' @export
 Create.twomode <- function(datasource, type, ...) {
+  msg <- f_verbose(check_dots("verbose", ...))
+  
   UseMethod("Create.twomode", datasource)
 }
 

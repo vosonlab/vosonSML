@@ -1,7 +1,9 @@
 # vosonSML 0.32.9
 
 ## Bug Fixes
-- Fixed an issue with adding text to twitter networks caused by missing columns in the data.
+- Fixed a bug in the regex for `Reddit` URL parsing in which thread ID's were limited to 6 characters.
+- Fixed verbose output for `2mode` networks to use option specified method.
+- Fixed an issue with adding text to `Twitter` networks caused by missing columns in the data.
 - Added twitter tokenization functions that were recently removed from the `tidytext` and `tokenizers` packages due to
   a change in the ICU library unicode standard and the `stringi` package
   ([tokenizers issue #82](https://github.com/ropensci/tokenizers/issues/82)). This affects only the generation of
