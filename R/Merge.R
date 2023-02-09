@@ -166,6 +166,10 @@ Merge.reddit <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, ve
 # }
 
 merge_twitter <- function(x, y) {
+  # sometimes these logical twitter data columns are found as lists
+  x$tweets <- x$tweets |> twitter_fix_col_types()
+  y$tweets <- y$tweets |> twitter_fix_col_types()
+  
   list(tweets = dplyr::bind_rows(x$tweets, y$tweets),
        users = dplyr::bind_rows(x$users, y$users))
 }

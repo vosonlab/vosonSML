@@ -29,3 +29,9 @@ remaining_num_tweets <- function(token) {
 twitter_api_dt_fmt <- function() {
   "%a %b %d %H:%M:%S +0000 %Y"
 }
+
+# fix column mismatches that will break bind rows
+twitter_fix_col_types <- function(x) {
+  x <- x |> dplyr::mutate_at("possibly_sensitive", as.logical)
+  x
+}

@@ -10,6 +10,7 @@
   `semantic` and `2mode` twitter networks and the fix maintains their functionality until an alternative tweet
   tokenization method is implemented. Unfortunately these two twitter network types are not supported on systems using
   ICU library versions >= 72.0 at this time.
+- Fixed an intermitant column mismatch error in `Twitter` caused by unexpected type when data merging.
 
 # vosonSML 0.32.8
 

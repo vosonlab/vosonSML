@@ -78,6 +78,9 @@ Collect.timeline.twitter <-
         df_tweets_i <- do.call(rtweet::get_timeline, f_params)
         df_users_i <- attr(df_tweets_i, "users", exact = TRUE)
 
+        # fix unexpected column types
+        df_tweets_i <- df_tweets_i |> twitter_fix_col_types()
+        
         if (!is.null(df_tweets)) {
           df_tweets <- df_tweets |> dplyr::bind_rows(df_tweets_i)
           df_users <- dplyr::bind_rows(

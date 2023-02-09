@@ -175,6 +175,8 @@ import_rtweet_ <- function(data, rtweet_created_at = FALSE) {
     dplyr::mutate_at(dplyr::vars(dplyr::contains("created_at")),
                      lubridate::as_datetime, tz = "UTC")
 
+  df_tweets <- df_tweets |> twitter_fix_col_types()
+  
   data <- list(tweets = df_tweets, users = df_users)
   class(data) <- append(c("datasource", "twitter"), class(data))
 
