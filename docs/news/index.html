@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.9</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.32.10</span>
       </span>
     </div>
 
@@ -111,13 +111,15 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.32.9" id="vosonsml-0329">vosonSML 0.32.9<a class="anchor" aria-label="anchor" href="#vosonsml-0329"></a></h2>
+<h2 class="page-header" data-toc-text="0.32.10" id="vosonsml-03210">vosonSML 0.32.10<a class="anchor" aria-label="anchor" href="#vosonsml-03210"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-32-9">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-32-9"></a></h3>
+<h3 id="bug-fixes-0-32-10">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-32-10"></a></h3>
 <ul><li>Fixed a bug in the regex for <code>Reddit</code> URL parsing in which thread ID’s were limited to 6 characters.</li>
 <li>Fixed verbose output for <code>2mode</code> networks to use option specified method.</li>
 <li>Fixed an issue with adding text to <code>Twitter</code> networks caused by missing columns in the data.</li>
 <li>Added twitter tokenization functions that were recently removed from the <code>tidytext</code> and <code>tokenizers</code> packages due to a change in the ICU library unicode standard and the <code>stringi</code> package (<a href="https://github.com/ropensci/tokenizers/issues/82" class="external-link">tokenizers issue </a><a href="https://github.com/vosonlab/vosonSML/issues/82" class="external-link">#82</a>). This affects only the generation of <code>semantic</code> and <code>2mode</code> twitter networks and the fix maintains their functionality until an alternative tweet tokenization method is implemented. Unfortunately these two twitter network types are not supported on systems using ICU library versions &gt;= 72.0 at this time.</li>
+<li>Fixed an intermitant column mismatch error in <code>Twitter</code> caused by unexpected type when data merging.</li>
+<li>Fixed the number of tweet observations does not match number of users error reported with <code>rtweet</code> v1.1.</li>
 </ul></div>
 </div>
     <div class="section level2">

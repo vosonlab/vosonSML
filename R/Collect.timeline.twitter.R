@@ -74,20 +74,23 @@ Collect.timeline.twitter <-
 
         f_params[["user"]] <- users[i]
         f_params[["n"]] <- numTweets[i]
-
+        f_params[["parse"]] <- FALSE
+        
         df_tweets_i <- do.call(rtweet::get_timeline, f_params)
+        
+        tweets <- lapply(df_tweets_i, "[[", 1)
+        df_tweets_i <- rtweet::tweets_with_users(tweets)
         df_users_i <- attr(df_tweets_i, "users", exact = TRUE)
-
-        # fix unexpected column types
-        df_tweets_i <- df_tweets_i |> twitter_fix_col_types()
         
         if (!is.null(df_tweets)) {
-          df_tweets <- df_tweets |> dplyr::bind_rows(df_tweets_i)
+          temp_users <- attr(df_tweets, "users", exact = TRUE)
+          
           df_users <- dplyr::bind_rows(
-            attr(df_tweets, "users", exact = TRUE),
-            df_users_i
+            temp_users, df_users_i
           )
           attr(df_tweets, "users") <- df_users
+          
+          df_tweets <- dplyr::bind_rows(df_tweets, df_tweets_i)
         } else {
           df_tweets <- df_tweets_i
         }
@@ -127,8 +130,8 @@ Collect.timeline.twitter <-
     }
 
     tl_tweets <- get_tls()
-
-    df_tweets <- tl_tweets |> import_rtweet_(rtweet_created_at = TRUE)
+    
+    df_tweets <- tl_tweets |> import_rtweet_(rtweet_created_at = FALSE)
     n_tweets <- check_df_n(df_tweets$tweets)
 
     # summary

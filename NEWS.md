@@ -1,4 +1,4 @@
-# vosonSML 0.32.9
+# vosonSML 0.32.10
 
 ## Bug Fixes
 - Fixed a bug in the regex for `Reddit` URL parsing in which thread ID's were limited to 6 characters.
@@ -11,6 +11,7 @@
   tokenization method is implemented. Unfortunately these two twitter network types are not supported on systems using
   ICU library versions >= 72.0 at this time.
 - Fixed an intermitant column mismatch error in `Twitter` caused by unexpected type when data merging.
+- Fixed the number of tweet observations does not match number of users error reported with `rtweet` v1.1.
 
 # vosonSML 0.32.8
 

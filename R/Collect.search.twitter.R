@@ -125,11 +125,10 @@ Collect.search.twitter <-
 
     df_tweets <- do.call(rtweet::search_tweets, search_params)
 
-    # modified parsing step
-    # so created_at is not converted to local time
+    # get tweets
     tweets <- lapply(df_tweets, "[[", "statuses")
+    
     df_tweets <- rtweet::tweets_with_users(tweets)
-
     df_tweets <- df_tweets |> import_rtweet_()
 
     n_tweets <- check_df_n(df_tweets$tweets)

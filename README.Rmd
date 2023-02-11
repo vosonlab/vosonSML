@@ -192,7 +192,9 @@ Because `vosonSML` uses the `rtweet` package to access and collect tweets data, 
 easily imported from dataframe or file and then transformed into a `Collect` object for further use.
 
 ```{r, echo=TRUE}
-tweets <- rtweet::search_tweets("#auspol", n = 20)
+tw_auth_rt <- readRDS("~/.rtweet_oauth1a")
+
+tweets <- rtweet::search_tweets("#auspol", n = 20, token = tw_auth_rt)
 data_tw <- ImportRtweet(tweets)
 
 names(data_tw)

@@ -65,16 +65,15 @@ ImportRtweet <- function(data) {
 
 # modify rtweet v1.0 format tweet data
 import_rtweet_ <- function(data, rtweet_created_at = FALSE) {
-
   if (check_df_n(data) < 1) return(NULL)
 
+  # get users dataframe
+  df_users <- attr(data, "users", exact = TRUE)
+  
   # rename tweet id to status_id
   data <- data |>
     dplyr::rename(status_id = .data$id_str) |>
     dplyr::relocate(.data$status_id)
-
-  # extract users
-  df_users <- attr(data, "users", exact = TRUE)
 
   # add author user_id and screen_name to tweets
   if (is.null(df_users) ||
