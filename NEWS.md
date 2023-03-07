@@ -1,4 +1,4 @@
-# vosonSML 0.32.10
+# vosonSML 0.32.11
 
 ## Bug Fixes
 - Fixed a bug in the regex for `Reddit` URL parsing in which thread ID's were limited to 6 characters.
@@ -12,6 +12,11 @@
   ICU library versions >= 72.0 at this time.
 - Fixed an intermitant column mismatch error in `Twitter` caused by unexpected type when data merging.
 - Fixed the number of tweet observations does not match number of users error reported with `rtweet` v1.1.
+- Fixed number of tweets requested count in verbose message for `Twitter` timeline collection.
+- Added simple log file output for `Collect` and `Merge` functions when `writeToFile = TRUE`. The log file is written in
+  the same location as the data file with the `.txt` extension appended.
+- Changed data output path option `option(voson.data = "my-data")` to now attempt to create the directory if it does
+  not exist.  
 
 # vosonSML 0.32.8
 

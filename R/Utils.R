@@ -35,8 +35,9 @@ data_path <- function(x = getOption("voson.data")) {
   path <- sub("(\\/)+$", "", path)
   path <- paste0(path, "/")
 
+  if (!dir.exists(path)) dir.create(path, showWarnings = TRUE)
   if (dir.exists(path)) return(path)
-
+  
   NULL
 }
 
@@ -46,7 +47,8 @@ write_output_file <-
            type = "rds",
            name = "File",
            datetime = TRUE,
-           verbose = FALSE) {
+           verbose = FALSE,
+           log = NULL) {
     msg <- f_verbose(verbose)
 
     set_path <- function(x) x
@@ -109,6 +111,18 @@ write_output_file <-
       if (verbose) {
         msg(paste0("File unable to be written.\n"))
       }
+    }
+    
+    # write a simple log file
+    if (!is.null(log)) {
+      log_path <- paste0(set_path(path), ".txt")
+      tryCatch({
+        con <- file(log_path)
+        writeLines(paste0(log, collapse = "\n"), con)
+        close(con)
+      }, error = function(e) {
+        msg(paste0("Error writing log file.\n", e))
+      })
     }
   }
 
@@ -343,29 +357,54 @@ check_num <-
            param = "value",
            double = FALSE,
            null.ok = FALSE,
-           na.ok = FALSE) {
+           na.ok = FALSE,
+           inf.ok = FALSE,
+           gte = NULL) {
 
-    if (all(!is.null(x))) {
-      if (all(!is.na(x))) {
-        if (all(is.numeric(x))) {
-          if (!all.equal(x, as.integer(x))) {
-            if (double) {
-              return(x)
-            } else {
-              stop(paste0(param, " must not be a double type."), call. = FALSE)
-            }
-          }
-
-          return(x)
-        }
-      } else {
-        if (na.ok) return(x)
+    if (null.ok == FALSE) {
+      if (any(is.null(x))) {
+        stop(paste0(param, " must be numeric with no NULL values."), call. = FALSE)
       }
-    } else {
-      if (null.ok) return(x)
+    }
+    
+    y <- x[!sapply(x, is.null)]
+    if (length(y) < 1) return(x)
+
+    if (na.ok == FALSE) {
+      if (any(is.na(y))) {
+        stop(paste0(param, " must be numeric with no NA values."), call. = FALSE)
+      }
+    }
+    
+    z <- y[!sapply(y, is.na)]
+    if (length(z) < 1) return(x)
+    
+    if (any(!is.numeric(z))) {
+      stop(paste0(param, " must be numeric."), call. = FALSE)
+    }
+    
+    if (inf.ok == FALSE) {
+      if (any(is.infinite(z))) {
+        stop(paste0(param, " must be numeric with no Inf values."), call. = FALSE)
+      }
     }
 
-    stop(paste0(param, " must be numeric."), call. = FALSE)
+    zz <- z[!sapply(z, is.infinite)]
+    if (length(zz) < 1) return(x)
+    
+    if (double == FALSE) {
+      if (!all.equal(zz, as.integer(zz))) {
+        stop(paste0(param, " must be numeric with no double type."), call. = FALSE)
+      }
+    }
+    
+    if (!is.null(gte)) {
+      if (any(zz < gte)) {
+        stop(paste0(param, " must be greater than or equal to ", gte, "."), call. = FALSE)
+      }
+    }
+    
+    return(x)
   }
 
 # check percentage

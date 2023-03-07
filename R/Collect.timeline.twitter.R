@@ -43,7 +43,7 @@ Collect.timeline.twitter <-
 
     invisible({
       check_chr(users, param = "users", min = 1)
-      check_num(numTweets, param = "numTweets")
+      check_num(numTweets, param = "numTweets", inf.ok = TRUE, gte = 1)
       check_lgl(retryOnRateLimit, param = "retryOnRateLimit")
       check_lgl(writeToFile, param = "writeToFile")
       check_lgl(verbose, param = "verbose")
@@ -55,6 +55,10 @@ Collect.timeline.twitter <-
     }
 
     if (length(numTweets) == 1) numTweets <- rep(numTweets, length(users))
+    
+    if (length(numTweets) != length(users)){
+      stop("numTweets vector should be of length 1 or length equal to the number of users.", call. = FALSE)
+    }
 
     f_params <- list()
     f_params[["token"]] <- auth_token
@@ -136,29 +140,35 @@ Collect.timeline.twitter <-
 
     # summary
     if (n_tweets > 0) {
-      tweet_first <- df_tweets$tweets |>
+      
+      first_tweet <- df_tweets$tweets |>
         dplyr::slice_head(n = 1) |>
         dplyr::mutate(tweet = "Latest Obs")
-
-      tweet_last <- df_tweets$tweets |>
+      
+      last_tweet <- df_tweets$tweets |>
         dplyr::slice_tail(n = 1) |>
         dplyr::mutate(tweet = "Earliest Obs")
-
-      df_summary <- dplyr::bind_rows(tweet_first, tweet_last) |>
+      
+      df_summary <- dplyr::bind_rows(first_tweet, last_tweet) |>
         dplyr::mutate(created = as.character(.data$created_at)) |>
-        dplyr::select(.data$tweet, .data$status_id, .data$created)
-
+        dplyr::select(.data$tweet,
+                      .data$status_id,
+                      .data$created)
+      
       msg("\n")
       msg(print_summary(df_summary))
     }
-
     msg(paste0("Collected ", n_tweets, " tweets.\n"))
-
-    if (writeToFile) {
-      write_output_file(df_tweets, "rds", "TwitterData", verbose = verbose)
-    }
-
+    
+    meta_log <- c(
+      collect_log, "",
+      ifelse(n_tweets > 0, print_summary(df_summary), ""),
+      "", paste0(format(Sys.time(), "%a %b %d %X %Y"))
+    )
+    
+    if (writeToFile) write_output_file(df_tweets, "rds", "TwitterData", verbose = verbose, log = meta_log)
+    
     msg("Done.\n")
-
+    
     df_tweets
   }

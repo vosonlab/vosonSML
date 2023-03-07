@@ -61,7 +61,7 @@ Collect.search.twitter <-
            ...) {
 
     prompt_and_stop("rtweet", "Collect.search.twitter")
-
+    
     msg("Collecting tweets for search query...\n")
 
     auth_token <- credential$auth
@@ -132,19 +132,19 @@ Collect.search.twitter <-
     df_tweets <- df_tweets |> import_rtweet_()
 
     n_tweets <- check_df_n(df_tweets$tweets)
-
+    
     # summary
     if (n_tweets > 0) {
 
-      first_tweets <- df_tweets$tweets |>
+      first_tweet <- df_tweets$tweets |>
         dplyr::slice_head(n = 1) |>
         dplyr::mutate(tweet = "Latest Obs")
 
-      last_tweets <- df_tweets$tweets |>
+      last_tweet <- df_tweets$tweets |>
         dplyr::slice_tail(n = 1) |>
         dplyr::mutate(tweet = "Earliest Obs")
 
-      df_summary <- dplyr::bind_rows(first_tweets, last_tweets) |>
+      df_summary <- dplyr::bind_rows(first_tweet, last_tweet) |>
         dplyr::mutate(created = as.character(.data$created_at)) |>
         dplyr::select(.data$tweet,
                       .data$status_id,
@@ -155,7 +155,13 @@ Collect.search.twitter <-
     }
     msg(paste0("Collected ", n_tweets, " tweets.\n"))
 
-    if (writeToFile) write_output_file(df_tweets, "rds", "TwitterData", verbose = verbose)
+    meta_log <- c(
+      collect_log, "",
+      ifelse(n_tweets > 0, print_summary(df_summary), ""),
+      "", paste0(format(Sys.time(), "%a %b %d %X %Y"))
+    )
+    
+    if (writeToFile) write_output_file(df_tweets, "rds", "TwitterData", verbose = verbose, log = meta_log)
 
     msg("Done.\n")
 

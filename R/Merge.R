@@ -23,6 +23,19 @@ MergeFiles <-
 
     msg <- f_verbose(verbose)
 
+    ts_ <- Sys.time()
+    merge_log <- c(
+      paste0("merge.files"),
+      paste0(format(ts_, "%a %b %d %X %Y")),
+      paste0(format(ts_, tz = "UTC", usetz = TRUE)), "",
+      paste0("path = ", path),
+      paste0("pattern = ", pattern),
+      paste0("unique = ", unique),
+      paste0("rev = ", rev),
+      paste0("writeToFile = ", writeToFile),
+      paste0("verbose = ", verbose), ""
+    )
+    
     msg("Merging collect files...\n")
 
     if (!dir.exists(path)) stop("Path does not exist.")
@@ -31,11 +44,15 @@ MergeFiles <-
 
     if (length(files) < 1) stop("No matching files found.")
 
+    merge_log <- append(merge_log, files)
+    
     msg(paste0("Matching files:\n", paste0(paste0("- ", files), collapse = "\n"), "\n"))
 
     data <- purrr::reduce(lapply(files, readRDS), .f = Merge)
 
-    if (writeToFile) write_output_file(data, "rds", "DataMergeFile", verbose = verbose)
+    merge_log <- c(merge_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
+    
+    if (writeToFile) write_output_file(data, "rds", "DataMergeFile", verbose = verbose, log = merge_log)
     msg("Done.\n")
 
     data
@@ -58,6 +75,18 @@ MergeFiles <-
 Merge <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = FALSE) {
   msg <- f_verbose(verbose)
 
+  ts_ <- Sys.time()
+  merge_log <- c(
+    paste0("merge.data"),
+    paste0("time: ", format(ts_, "%a %b %d %X %Y")),
+    paste0("utc:  ", format(ts_, tz = "UTC", usetz = TRUE)), "",
+    paste0("unique = ", unique),
+    paste0("rev = ", rev),
+    paste0("writeToFile = ", writeToFile),
+    paste0("verbose = ", verbose), "",
+    paste0(as.list(match.call()), collapse = "\n")
+  )
+  
   msg("Merging collect data...\n")
 
   merge_dots <- list(...)
@@ -102,7 +131,7 @@ Merge.twitter <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, v
     if (rev) data <- rev_twitter_df(data)
   }
 
-  if (writeToFile) write_output_file(data, "rds", "TwitterDataMerge", verbose = verbose)
+  if (writeToFile) write_output_file(data, "rds", "TwitterDataMerge", verbose = verbose, log = merge_log)
   msg("Done.\n")
 
   data
@@ -123,7 +152,7 @@ Merge.youtube <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, v
     if (rev) data <- rev_row_order(data)
   }
 
-  if (writeToFile) write_output_file(data, "rds", "YoutubeDataMerge", verbose = verbose)
+  if (writeToFile) write_output_file(data, "rds", "YoutubeDataMerge", verbose = verbose, log = merge_log)
   msg("Done.\n")
 
   data
@@ -144,7 +173,7 @@ Merge.reddit <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, ve
     if (rev) data <- rev_row_order(data)
   }
 
-  if (writeToFile) write_output_file(data, "rds", "RedditDataMerge", verbose = verbose)
+  if (writeToFile) write_output_file(data, "rds", "RedditDataMerge", verbose = verbose, log = merge_log)
   msg("Done.\n")
 
   data

@@ -14,7 +14,15 @@
 #' @export
 Collect <- function(credential, ...) {
   msg <- f_verbose(check_dots("verbose", ...))
-
+  
+  ts_ <- Sys.time()
+  collect_log <- c(
+    paste0("collect.", credential$socialmedia),
+    paste0(format(ts_, "%a %b %d %X %Y")),
+    paste0(format(ts_, tz = "UTC", usetz = TRUE)), "",
+    paste0(names(list(...)), " = ", unlist(list(...)), collapse = "\n")
+  )
+  
   # set the environment encoding to UTF-8 for data collection
   saved_enc <- getOption("encoding")
   saved_ua <- getOption("HTTPUserAgent")

@@ -65,11 +65,11 @@ Collect.web <-
 
     df_results <- purrr::map_dfr(df_results, dplyr::bind_rows)
 
-    class(df_results) <-
-      append(c("datasource", "web"), class(df_results))
-    if (writeToFile) {
-      write_output_file(df_results, "rds", "WebData", verbose = verbose)
-    }
+    class(df_results) <- append(c("datasource", "web"), class(df_results))
+    
+    meta_log <- c(collect_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
+    
+    if (writeToFile) write_output_file(df_results, "rds", "WebData", verbose = verbose, log = meta_log)
 
     msg("Done.\n")
 
