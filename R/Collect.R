@@ -5,7 +5,8 @@
 #'   \code{Collect}, and \code{\link{Create}} workflow.
 #'
 #'   Refer to \code{\link{Collect.search.twitter}}, \code{\link{Collect.timeline.twitter}},
-#'   \code{\link{Collect.youtube}}, \code{\link{Collect.reddit}} and \code{\link{Collect.web}} for parameters and usage.
+#'   \code{\link{Collect.youtube}}, \code{\link{Collect.thread.reddit}}, \code{\link{Collect.listing.reddit}} and
+#'   \code{\link{Collect.web}} for parameters and usage.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate}.
 #' @param ... Optional parameters to pass to functions providied by supporting R packages that are used for social media
@@ -20,7 +21,7 @@ Collect <- function(credential, ...) {
     paste0("collect.", credential$socialmedia),
     paste0(format(ts_, "%a %b %d %X %Y")),
     paste0(format(ts_, tz = "UTC", usetz = TRUE)), "",
-    paste0(names(list(...)), " = ", unlist(list(...)), collapse = "\n")
+    paste0(names(list(...)), " = ", as.character(list(...)), collapse = "\n")
   )
   
   # set the environment encoding to UTF-8 for data collection
@@ -86,4 +87,43 @@ Collect.timeline <- function(credential, endpoint, ...) {
 #' @export
 Collect.timeline.default <- function(credential, endpoint, ...) {
   stop("Unknown social media credential passed to collect timeline data", call. = FALSE)
+}
+
+# ----------
+
+#' @noRd
+#' @method Collect reddit
+#' @export
+Collect.reddit <- function(credential, endpoint, ...) {
+  UseMethod("Collect.thread", credential)
+}
+
+#' @title Collect thread data
+#'
+#' @noRd
+#' @method Collect thread
+#' @export
+Collect.thread <- function(credential, endpoint, ...) {
+  UseMethod("Collect.thread", credential)
+}
+
+#' @noRd
+#' @export
+Collect.thread.default <- function(credential, endpoint, ...) {
+  stop("Unknown social media credential passed to collect thread data", call. = FALSE)
+}
+
+#' @title Collect list data
+#'
+#' @noRd
+#' @method Collect listing
+#' @export
+Collect.listing <- function(credential, endpoint, ...) {
+  UseMethod("Collect.listing", credential)
+}
+
+#' @noRd
+#' @export
+Collect.listing.default <- function(credential, endpoint, ...) {
+  stop("Unknown social media credential passed to collect listing data", call. = FALSE)
 }

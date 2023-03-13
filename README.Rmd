@@ -361,22 +361,44 @@ g_actor
 
 ### Reddit Usage
 
-#### Authenticate and Collect from reddit threads
-
 The reddit API end-point used by `vosonSML` does not require authentication but an `Authenticate` object is still used
-to set up the collection and creation operations as part of a reddit workflow. The reddit `Collect` function can then be
-used to collect comments from reddit threads specified by URL's.
+to set up the collection and creation operations as part of a reddit workflow.
+
+#### Collect a thread listing from subreddit
+
+By using the `endpoint = "listing"` parameter and a vector of subreddit names, a list of comment threads and their
+metadata can be collected. The number of list results returned per subreddit can be coarsely specified within 25 items,
+by using the `max` parameter.
+
+```{r, echo=TRUE}
+# specify subreddit names
+subreddits <- c("datascience")
+
+# collect a listing of the 25 top threads of all time
+collect_rd_listing <- Authenticate("reddit") |>
+  Collect(endpoint = "listing", subreddits = subreddits,
+          sort = "top", top = "all", max = 25,
+          writeToFile = TRUE, verbose = TRUE)
+```
+
+#### Collect reddit threads
+
+The reddit `Collect` function can then be used to collect comments from reddit threads specified by URL's.
 
 ```{r, echo=TRUE}
 # specify reddit threads to collect by url
-thread_url <- c(
+thread_urls <- c(
   "https://www.reddit.com/r/datascience/comments/wcd8x5/",
   "https://www.reddit.com/r/datascience/comments/wcni2g/"
 )
 
-# authentication does not require credentials
+# or use permalinks from a previously collected listing
+thread_urls <- collect_rd_listing$permalink |> head(n = 3)
+
+# collect 2 comment threads with comments sorted by controversiality
 collect_rd <- Authenticate("reddit") |>
-  Collect(threadUrls = thread_url, writeToFile = TRUE, verbose = TRUE)
+  Collect(threadUrls = thread_urls,
+          sort = "controversial", writeToFile = TRUE, verbose = TRUE)
 ```
 
 Please note that because of the API end-point used that `Collect` is limited to the first 500 comments per thread. It is

@@ -1,4 +1,4 @@
-# vosonSML 0.32.11
+# vosonSML 0.33.0
 
 ## Bug Fixes
 - Fixed a bug in the regex for `Reddit` URL parsing in which thread ID's were limited to 6 characters.
@@ -13,10 +13,20 @@
 - Fixed an intermitant column mismatch error in `Twitter` caused by unexpected type when data merging.
 - Fixed the number of tweet observations does not match number of users error reported with `rtweet` v1.1.
 - Fixed number of tweets requested count in verbose message for `Twitter` timeline collection.
+
+## Major Changes
+- Added `sort` parameter to `Reddit` collection. As this collection method is limited, it may be useful to request
+  comments in sort order using the `Reddit` sort options `top`, `new`, `controversial`, `old`, `qa` and default `best`.
+- Added a `Collect.listing` function for subreddits on `Reddit`. This is not a search, however it allows complete
+  metadata for a specified number of subreddit threads to be collected in sorted order. The sort options are `hot`,
+  `top`, `new` and `rising`. There is a further time parameter for `top` that can be set to `hour`, `day`, `week`,
+  `month`, `year` or `all`.
+
+## Minor Changes
 - Added simple log file output for `Collect` and `Merge` functions when `writeToFile = TRUE`. The log file is written in
   the same location as the data file with the `.txt` extension appended.
 - Changed data output path option `option(voson.data = "my-data")` to now attempt to create the directory if it does
-  not exist.  
+  not exist.
 
 # vosonSML 0.32.8
 

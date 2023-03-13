@@ -22,7 +22,7 @@ MergeFiles <-
            verbose = FALSE) {
 
     msg <- f_verbose(verbose)
-
+    
     ts_ <- Sys.time()
     merge_log <- c(
       paste0("merge.files"),

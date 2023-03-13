@@ -133,18 +133,45 @@ auth_twitter_user <- function(api_key, api_secret, verbose = FALSE, ...) {
     ...)
 }
 
-#' @rdname Collect.reddit
+#' @rdname Collect.thread.reddit
 #' @export
 collect_reddit_threads <-
   function(threadUrls,
+           sort = "best",
            waitTime = c(3, 5),
-           ua = getOption("HTTPUserAgent"),
+           ua = paste0("vosonSML v.", get_version(), " (R Package)"),
            writeToFile = FALSE,
            verbose = FALSE,
            ...) {
     Collect(
       credential = Authenticate("reddit"),
+      endpoint = "thread",
       threadUrls = threadUrls,
+      waitTime = waitTime,
+      ua = ua,
+      writeToFile = writeToFile,
+      verbose = verbose,
+      ...
+    )
+  }
+
+#' @rdname Collect.listing.reddit
+#' @export
+collect_reddit_listings <-
+  function(subreddits,
+           sort = "new",
+           max = 25,
+           waitTime = c(3, 5),
+           ua = paste0("vosonSML v.", get_version(), " (R Package)"),
+           writeToFile = FALSE,
+           verbose = FALSE,
+           ...) {
+    Collect(
+      credential = Authenticate("reddit"),
+      endpoint = "listing",
+      subreddits = subreddits,
+      sort = sort,
+      max = max,
       waitTime = waitTime,
       ua = ua,
       writeToFile = writeToFile,
@@ -164,6 +191,10 @@ collect_web_hyperlinks <- function(pages = NULL, writeToFile = FALSE, verbose = 
       ...
     )
   }
+
+#' @rdname ImportRtweet
+#' @export
+import_rtweet <- ImportRtweet
 
 #' @rdname Merge
 #' @export

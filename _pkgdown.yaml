@@ -73,7 +73,8 @@ reference:
   - '`Collect.search.twitter`'
   - '`Collect.timeline.twitter`'
   - '`Collect.youtube`'
-  - '`Collect.reddit`'
+  - '`Collect.listing.reddit`'
+  - '`Collect.thread.reddit`'
   - '`Collect.web`'
 - title: Create
   contents:

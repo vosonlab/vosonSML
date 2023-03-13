@@ -97,10 +97,16 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Collect.listing.reddit.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.reddit.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.search.twitter.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Collect.thread.reddit.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.timeline.twitter.html</loc>

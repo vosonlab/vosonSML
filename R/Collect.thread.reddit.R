@@ -6,7 +6,10 @@
 #' @note The reddit web endpoint used for collection has maximum limit of 500 comments per thread url.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.
+#' @param endpoint API endpoint.
 #' @param threadUrls Character vector. Reddit thread urls to collect data from.
+#' @param sort Character vector. Reddit comment sort order. Options are \code{"best"}, \code{"top"}, \code{"new"},
+#'   \code{"controversial"}, \code{"old"}, and \code{"qa"}. Default is \code{"best"}.
 #' @param waitTime Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
 #'   Minimum is 3 seconds. Default is \code{c(3, 5)} for a wait time chosen from between 3 and 5 seconds.
 #' @param ua Character string. Override User-Agent string to use in Reddit thread requests. Default is
@@ -27,9 +30,11 @@
 #' }
 #'
 #' @export
-Collect.reddit <-
+Collect.thread.reddit <-
   function(credential,
+           endpoint,
            threadUrls,
+           sort = "best",
            waitTime = c(3, 5),
            ua = getOption("HTTPUserAgent"),
            writeToFile = FALSE,
@@ -44,29 +49,31 @@ Collect.reddit <-
 
     invisible(check_chr(threadUrls, param = "threadUrls"))
 
-    # some protection against spamming requests
-    def_wait <- list(min = 3, max = 10)
-    if (!is.numeric(waitTime)) {
+    if (!is.vector(sort) || !is.character(sort) || !length(sort) %in% c(1, length(threadUrls))) {
       stop(
-        "Please provide a numeric range as vector c(min, max) for reddit thread request waitTime parameter.",
+        "Please provide a sort parameter of type character that is length 1 or ", length(threadUrls), ".",
         call. = FALSE
       )
-    } else {
-      if (length(waitTime) == 1) waitTime <- c(def_wait$min, waitTime[1])
-      if (length(waitTime) != 2) waitTime <- c(waitTime[1], waitTime[2])
-
-      if (waitTime[1] < def_wait$min) waitTime[1] <- def_wait$min
-      if (waitTime[1] >= waitTime[2]) waitTime[2] <- waitTime[1] + 1
-
-      waitTime <- waitTime[1]:waitTime[2]
     }
+    
+    sort <- tolower(sort)
+    
+    sort_opts <- c("best", "top", "new", "controversial", "old", "qa")
+    if (!all(sort %in% sort_opts)) {
+      stop("Please provide sort values in ", paste0(sort_opts, collapse = ", ") , ".", call. = FALSE)
+    }
+    
+    if (length(sort) == 1) sort <- rep(sort, length(threadUrls))
+    
+    # some protection against spamming requests
+    waitTime <- check_wait_range_secs(waitTime, param = "waitTime", def_min = 3, def_max = 10)
 
     msg(paste0("Waiting between ", waitTime[1], " and ", waitTime[length(waitTime)], " seconds per thread request.\n"))
 
     threads_df <- NULL
 
     tryCatch({
-      threads_df <- reddit_build_df(threadUrls, waitTime, ua, verbose)
+      threads_df <- reddit_build_df(threadUrls, sort, waitTime, ua, verbose)
     }, error = function(e) {
       stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
     }, finally = {
@@ -112,18 +119,19 @@ Collect.reddit <-
     threads_df
   }
 
-reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
+reddit_build_df <- function(threadUrls, sort, waitTime, ua, verbose) {
   msg <- f_verbose(verbose)
   
   threads <- list()
   for (thread_i in seq_along(threadUrls)) {
     
     url <- threadUrls[thread_i]
+    url_sort <- sort[thread_i]
     if (length(threadUrls) > 1 & (url != threadUrls[1])) {
       Sys.sleep(sample(waitTime, 1))
     }
 
-    thread_json <- reddit_data(url, wait_time = waitTime, ua = ua, verbose = verbose)
+    thread_json <- reddit_data(url, url_sort, wait_time = waitTime, ua = ua, verbose = verbose)
     branch_df <- reddit_content_plus(thread_json, url, verbose = verbose)
 
     # loop protection
@@ -159,6 +167,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
       # get continue thread
       cont_json <- reddit_data(
         paste0(url, cont_thread_id),
+        url_sort,
         waitTime,
         ua,
         cont = cont_thread_id,
@@ -213,6 +222,7 @@ reddit_build_df <- function(threadUrls, waitTime, ua, verbose) {
 # based on method by @ivan-rivera RedditExtractoR
 reddit_data <-
   function(url,
+           url_sort,
            wait_time,
            ua,
            cont = NULL,
@@ -223,12 +233,9 @@ reddit_data <-
     if (is.null(url) || length(url) == 0 || !is.character(url)) {
       stop("invalid URL parameter")
     }
-
-    if (!grepl("^https?://(.*)", url)) {
-      url <- paste0("https://www.", gsub("^.*(reddit\\..*$)", "\\1", url))
-    }
     
-    req_url <- paste0(url, ".json?limit=500&raw_json=1")
+    req_url <- create_thread_url(url, url_sort)
+    
     req_tid <- get_thread_id(req_url, TRUE)
 
     if (is.null(cont)) {

@@ -15,20 +15,34 @@ get_thread_id <- function(url, desc = FALSE) {
   )
 }
 
-# get request json from url address
-get_json <- function(req_url, ua = NULL) {
-  res <- list(status = NULL,
-              msg = NULL,
-              data = NULL)
-  req_headers <- c("Accept-Charset" = "UTF-8",
-                   "Cache-Control" = "no-cache")
-
-  if (!is.null(ua)) {
-    req_headers <- append(req_headers, c("User-Agent" = ua))
+create_thread_url <- function(url, sort) {
+  # if /r/swtor/comments/11q6o9u/now_i_understand/
+  if (grepl("^/r/.+?/comments/.+?/.+?/$", url, ignore.case = TRUE)) {
+    url <- paste0("https://www.reddit.com", url)
   }
+  
+  if (!grepl("^https?://(.*)", url)) url <- paste0("https://www.", gsub("^.*(reddit\\..*$)", "\\1", url))
+  
+  if (sort == "best") sort <- "confidence"
+  
+  paste0(url, ".json?", paste0("sort=", sort), "&limit=500&raw_json=1")  
+}
 
-  resp <-
-    httr::GET(req_url, httr::add_headers(.headers = req_headers))
+create_listing_url <- function(subreddit, sort, top_time, qs = NULL) {
+  if (!is.null(top_time) & sort == "top") qs <- c(paste0("t=", top_time), qs)
+  if (!is.null(qs)) qs <- paste0("?", paste0(qs, collapse = "&"))
+  
+  url <- paste0("https://www.reddit.com/r/", trimws(subreddit), "/", sort, "/.json", qs)
+}
+
+# get request json from url address
+get_json <- function(req_url, ua = NULL, alt = FALSE) {
+  res <- list(status = NULL, msg = NULL, data = NULL)
+  req_headers <- c("Accept-Charset" = "UTF-8", "Cache-Control" = "no-cache")
+
+  if (!is.null(ua)) req_headers <- append(req_headers, c("User-Agent" = ua))
+
+  resp <- httr::GET(req_url, httr::add_headers(.headers = req_headers))
   res$status <- resp$status
 
   if (httr::http_error(resp) || as.numeric(resp$status) != 200) {
@@ -39,7 +53,11 @@ get_json <- function(req_url, ua = NULL) {
   if (httr::http_type(resp) == "application/json") {
     res$data <- tryCatch({
       res$msg <- "http response json"
-      jsonlite::fromJSON(httr::content(resp, as = "text"), simplifyVector = FALSE)
+      if (!alt) {
+        jsonlite::fromJSON(httr::content(resp, as = "text"), simplifyVector = FALSE)
+      } else {
+        jsonlite::fromJSON(rawToChar(resp$content))
+      }
     }, error = function(e) {
       res$msg <- e
       NULL
@@ -102,4 +120,19 @@ clean_full <- function(sentences) {
       perl = TRUE,
       useBytes = TRUE
     )
+}
+
+check_wait_range_secs <- function(x, param = "value", def_min = 3, def_max = 10) {
+  fail_msg <- paste0("Please provide a numeric range as vector c(min, max) for ", param, ".")
+  
+  if (!is.numeric(x)) stop(fail_msg, call. = FALSE)
+
+  x <- ceiling(x)
+  if (length(x) == 1) x <- c(def_min, x[1])
+  if (length(x) != 2) x <- c(x[1], x[2])
+  
+  if (x[1] < def_min) x[1] <- def_min
+  if (x[1] >= x[2]) x[2] <- x[1] + 1
+  
+  x[1]:x[2]
 }

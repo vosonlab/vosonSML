@@ -404,7 +404,7 @@ check_num <-
       }
     }
     
-    return(x)
+    x
   }
 
 # check percentage
