@@ -6,11 +6,11 @@
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"reddit"}.
 #' @param endpoint API endpoint.
-#' @param subreddits Character vector. Reddit subreddit names to collect thread listings from.
-#' @param sort Character vector. Reddit thread sort order. Options are \code{"hot"}, \code{"top"}, \code{"new"}, and
+#' @param subreddits Character vector. Subreddit names to collect thread listings from.
+#' @param sort Character vector. Listing thread sort order. Options are \code{"hot"}, \code{"top"}, \code{"new"}, and
 #'   \code{"rising"}. Default is \code{"hot"}.
-#' @param top Character vector. Reddit top threads by time. Only applicable to sort order by \code{"top"}. Options are
-#'   \code{"hour"}, \code{"day"}, \code{"week"}, \code{"month"}, \code{"year"} and \code{"all"}. Default is
+#' @param period Character vector. Listing top threads by time period. Only applicable to sort order by \code{"top"}.
+#'   Options are \code{"hour"}, \code{"day"}, \code{"week"}, \code{"month"}, \code{"year"} and \code{"all"}. Default is
 #'   \code{"all"}.
 #' @param max Numeric vector. Maximum number of threads in listing to return. Default is \code{25}.
 #' @param waitTime Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
@@ -38,7 +38,7 @@ Collect.listing.reddit <-
            endpoint,
            subreddits,
            sort = "hot",
-           top = "all",
+           period = "all",
            max = 25,
            waitTime = c(3, 5),
            ua = getOption("HTTPUserAgent"),
@@ -54,35 +54,21 @@ Collect.listing.reddit <-
 
     invisible(check_chr(subreddits, param = "subreddits"))
 
-    if (!is.vector(sort) || !is.character(sort) || !length(sort) %in% c(1, length(subreddits))) {
-      stop(
-        "Please provide a sort parameter of type character that is length 1 or ", length(subreddits), ".",
-        call. = FALSE
-      )
-    }
-    
-    sort <- tolower(sort)
-    
+    # check sort
     sort_opts <- c("hot", "top", "new", "rising")
-    if (!all(sort %in% sort_opts)) {
-      stop("Please provide sort values in ", paste0(sort_opts, collapse = ", ") , ".", call. = FALSE)
-    }
+    invisible(cmp_values(sort, sort_opts, param = "sort", n = length(subreddits)))
     
     if (length(sort) == 1) sort <- rep(sort, length(subreddits))
     
-    top_time <- NULL
-    if (sort == "top") {
-      top <- tolower(top)
+    # check period
+    if (sort == "top" && !is.null(period)) {
+      period_opts <- c("hour", "day", "week", "month", "year", "all")
+      invisible(cmp_values(period, period_opts, param = "period", n = length(subreddits)))
       
-      top_opts <- c("hour", "day", "week", "month", "year", "all")
-      if (!all(top %in% top_opts)) {
-        stop("Please provide top values in ", paste0(top_opts, collapse = ", ") , ".", call. = FALSE)
-      }
-      
-      if (length(top) == 1) top <- rep(top, length(subreddits))
-      top_time <- top
+      if (length(period) == 1) period <- rep(period, length(subreddits))
     }
     
+    # check max
     max <- check_num(max, param = "max", gte = 1)
     
     if (!length(max) %in% c(1, length(subreddits))) {
@@ -102,7 +88,7 @@ Collect.listing.reddit <-
     listing_df <- NULL
 
     tryCatch({
-      listing_df <- reddit_build_listing_df(subreddits, sort = sort, top_time = top_time, max = max,
+      listing_df <- reddit_build_listing_df(subreddits, sort = sort, period = period, max = max,
                                             wait_time = waitTime, ua = ua, verbose = verbose)
     }, error = function(e) {
       stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
@@ -138,7 +124,7 @@ Collect.listing.reddit <-
     listing_df
   }
 
-reddit_build_listing_df <- function(subreddits, sort, top_time, max, wait_time, ua, verbose) {
+reddit_build_listing_df <- function(subreddits, sort, period, max, wait_time, ua, verbose) {
   msg <- f_verbose(verbose)
   
   results <- NULL
@@ -146,7 +132,7 @@ reddit_build_listing_df <- function(subreddits, sort, top_time, max, wait_time, 
   for (i in seq_along(1:length(subreddits))) {
     subreddit_i <- subreddits[i]
     sort_i <- sort[i]
-    top_time_i <- top_time[i]
+    period_i <- period[i]
     max_i <- max[i]
     
     msg(paste0("Request subreddit listing: ", subreddit_i, " (max items: ", max_i, ")"))
@@ -157,7 +143,7 @@ reddit_build_listing_df <- function(subreddits, sort, top_time, max, wait_time, 
     
     for (j in seq_along(1:max_iter)) {
       msg(".")
-      url <- create_listing_url(subreddit_i, sort_i, top_time_i, qs)
+      url <- create_listing_url(subreddit_i, sort_i, period_i, qs)
       resp <- get_json(url, ua = ua, alt = TRUE)
       
       if (is.null(resp$status) || as.numeric(resp$status) != 200) {

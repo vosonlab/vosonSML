@@ -6,6 +6,11 @@ get_version <- function() {
   "_"
 }
 
+# get package ua
+vsml_ua <- function() {
+  paste0("vosonSML v.", get_version(), " (R Package)")
+}
+
 # return a file name with system time prefix
 sys_time_filename <-
   function(name_suffix,
@@ -430,6 +435,20 @@ check_df_n <- function(x) {
   }
 
   nrow(x)
+}
+
+# compare values
+cmp_values <- function(x, y, param = "value", n = NULL, lc = TRUE) {
+  if (!is.null(n)) {
+    if (!is.vector(x) || !length(x) %in% c(1, n)) {
+      stop(paste0("Please provide a ", param, " value that is length 1 or ", n, "."), call. = FALSE)
+    }
+  }
+  
+  if (lc) x <- tolower(x)
+  if (!all(x %in% y)) {
+    stop(paste0("Please provide ", param, " values in ", paste0(y, collapse = ", "), "."), call. = FALSE)
+  }
 }
 
 # check character input

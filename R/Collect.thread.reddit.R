@@ -49,22 +49,12 @@ Collect.thread.reddit <-
 
     invisible(check_chr(threadUrls, param = "threadUrls"))
 
-    if (!is.vector(sort) || !is.character(sort) || !length(sort) %in% c(1, length(threadUrls))) {
-      stop(
-        "Please provide a sort parameter of type character that is length 1 or ", length(threadUrls), ".",
-        call. = FALSE
-      )
-    }
-    
-    sort <- tolower(sort)
-    
+    # check sort
     sort_opts <- c("best", "top", "new", "controversial", "old", "qa")
-    if (!all(sort %in% sort_opts)) {
-      stop("Please provide sort values in ", paste0(sort_opts, collapse = ", ") , ".", call. = FALSE)
-    }
+    invisible(cmp_values(sort, sort_opts, param = "sort", n = length(threadUrls)))
     
     if (length(sort) == 1) sort <- rep(sort, length(threadUrls))
-    
+
     # some protection against spamming requests
     waitTime <- check_wait_range_secs(waitTime, param = "waitTime", def_min = 3, def_max = 10)
 

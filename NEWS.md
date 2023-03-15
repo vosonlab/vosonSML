@@ -19,8 +19,8 @@
   comments in sort order using the `Reddit` sort options `top`, `new`, `controversial`, `old`, `qa` and default `best`.
 - Added a `Collect.listing` function for subreddits on `Reddit`. This is not a search, however it allows complete
   metadata for a specified number of subreddit threads to be collected in sorted order. The sort options are `hot`,
-  `top`, `new` and `rising`. There is a further time parameter for `top` that can be set to `hour`, `day`, `week`,
-  `month`, `year` or `all`.
+  `top`, `new` and `rising`. There is a further time parameter `period` that can be set to `hour`, `day`, `week`,
+  `month`, `year` or `all` if `sort = top`, meaning for example, results sorted by top threads over the last week.
 
 ## Minor Changes
 - Added simple log file output for `Collect` and `Merge` functions when `writeToFile = TRUE`. The log file is written in

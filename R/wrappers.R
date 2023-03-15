@@ -139,7 +139,7 @@ collect_reddit_threads <-
   function(threadUrls,
            sort = "best",
            waitTime = c(3, 5),
-           ua = paste0("vosonSML v.", get_version(), " (R Package)"),
+           ua = vsml_ua(),
            writeToFile = FALSE,
            verbose = FALSE,
            ...) {
@@ -147,6 +147,7 @@ collect_reddit_threads <-
       credential = Authenticate("reddit"),
       endpoint = "thread",
       threadUrls = threadUrls,
+      sort = sort,
       waitTime = waitTime,
       ua = ua,
       writeToFile = writeToFile,
@@ -160,9 +161,10 @@ collect_reddit_threads <-
 collect_reddit_listings <-
   function(subreddits,
            sort = "new",
+           period = NULL,
            max = 25,
            waitTime = c(3, 5),
-           ua = paste0("vosonSML v.", get_version(), " (R Package)"),
+           ua = vsml_ua(),
            writeToFile = FALSE,
            verbose = FALSE,
            ...) {
@@ -171,6 +173,7 @@ collect_reddit_listings <-
       endpoint = "listing",
       subreddits = subreddits,
       sort = sort,
+      period = period,
       max = max,
       waitTime = waitTime,
       ua = ua,

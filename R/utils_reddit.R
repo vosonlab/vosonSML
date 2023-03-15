@@ -15,8 +15,9 @@ get_thread_id <- function(url, desc = FALSE) {
   )
 }
 
+# build a reddit comment thread url for json
 create_thread_url <- function(url, sort) {
-  # if /r/swtor/comments/11q6o9u/now_i_understand/
+  # format /r/xxxxx/comments/xxxxxxx/xxx_x_xxxxxx/
   if (grepl("^/r/.+?/comments/.+?/.+?/$", url, ignore.case = TRUE)) {
     url <- paste0("https://www.reddit.com", url)
   }
@@ -28,14 +29,15 @@ create_thread_url <- function(url, sort) {
   paste0(url, ".json?", paste0("sort=", sort), "&limit=500&raw_json=1")  
 }
 
-create_listing_url <- function(subreddit, sort, top_time, qs = NULL) {
-  if (!is.null(top_time) & sort == "top") qs <- c(paste0("t=", top_time), qs)
+# build a subreddit thread listing url for json
+create_listing_url <- function(subreddit, sort, period, qs = NULL) {
+  if (!is.null(period) & sort == "top") qs <- c(paste0("t=", period), qs)
   if (!is.null(qs)) qs <- paste0("?", paste0(qs, collapse = "&"))
   
-  url <- paste0("https://www.reddit.com/r/", trimws(subreddit), "/", sort, "/.json", qs)
+  paste0("https://www.reddit.com/r/", trimws(subreddit), "/", sort, "/.json", qs)
 }
 
-# get request json from url address
+# get request for json with url
 get_json <- function(req_url, ua = NULL, alt = FALSE) {
   res <- list(status = NULL, msg = NULL, data = NULL)
   req_headers <- c("Accept-Charset" = "UTF-8", "Cache-Control" = "no-cache")
@@ -122,6 +124,7 @@ clean_full <- function(sentences) {
     )
 }
 
+# build a wait time range in seconds for reddit data requests
 check_wait_range_secs <- function(x, param = "value", def_min = 3, def_max = 10) {
   fail_msg <- paste0("Please provide a numeric range as vector c(min, max) for ", param, ".")
   

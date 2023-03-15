@@ -374,10 +374,10 @@ by using the `max` parameter.
 # specify subreddit names
 subreddits <- c("datascience")
 
-# collect a listing of the 25 top threads of all time
+# collect a listing of the 25 top threads by upvote of all time
 collect_rd_listing <- Authenticate("reddit") |>
   Collect(endpoint = "listing", subreddits = subreddits,
-          sort = "top", top = "all", max = 25,
+          sort = "top", period = "all", max = 25,
           writeToFile = TRUE, verbose = TRUE)
 ```
 
@@ -395,14 +395,15 @@ thread_urls <- c(
 # or use permalinks from a previously collected listing
 thread_urls <- collect_rd_listing$permalink |> head(n = 3)
 
-# collect 2 comment threads with comments sorted by controversiality
+# collect comment threads with their comments sorted by best comments first
 collect_rd <- Authenticate("reddit") |>
   Collect(threadUrls = thread_urls,
-          sort = "controversial", writeToFile = TRUE, verbose = TRUE)
+          sort = "best", writeToFile = TRUE, verbose = TRUE)
 ```
 
-Please note that because of the API end-point used that `Collect` is limited to the first 500 comments per thread. It is
-therefore suited to collecting only smaller threads in their entirety.
+*Please note that because of the API end-point used that `Collect` is limited to the first 500 comments per thread (plus
+500 for each `continue thread` encountered). It is therefore suited to collecting only smaller threads in their
+entirety.*
 
 #### Create reddit activity and actor networks
 

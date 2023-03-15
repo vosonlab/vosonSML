@@ -34,7 +34,7 @@ Collect <- function(credential, ...) {
     Sys.setenv(TZ = saved_tz)
   }, add = TRUE)
   options(encoding = "UTF-8")
-  options(HTTPUserAgent = paste0("vosonSML v.", get_version(), " (R Package)"))
+  options(HTTPUserAgent = vsml_ua())
   Sys.setenv(TZ = "Etc/UTC")
 
   endpoint <- check_dots("endpoint", ...)

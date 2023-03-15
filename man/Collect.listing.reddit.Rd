@@ -10,7 +10,7 @@
   endpoint,
   subreddits,
   sort = "hot",
-  top = "all",
+  period = "all",
   max = 25,
   waitTime = c(3, 5),
   ua = getOption("HTTPUserAgent"),
@@ -22,9 +22,10 @@
 collect_reddit_listings(
   subreddits,
   sort = "new",
+  period = NULL,
   max = 25,
   waitTime = c(3, 5),
-  ua = paste0("vosonSML v.", get_version(), " (R Package)"),
+  ua = vsml_ua(),
   writeToFile = FALSE,
   verbose = FALSE,
   ...
@@ -35,13 +36,13 @@ collect_reddit_listings(
 
 \item{endpoint}{API endpoint.}
 
-\item{subreddits}{Character vector. Reddit subreddit names to collect thread listings from.}
+\item{subreddits}{Character vector. Subreddit names to collect thread listings from.}
 
-\item{sort}{Character vector. Reddit thread sort order. Options are \code{"hot"}, \code{"top"}, \code{"new"}, and
+\item{sort}{Character vector. Listing thread sort order. Options are \code{"hot"}, \code{"top"}, \code{"new"}, and
 \code{"rising"}. Default is \code{"hot"}.}
 
-\item{top}{Character vector. Reddit top threads by time. Only applicable to sort order by \code{"top"}. Options are
-\code{"hour"}, \code{"day"}, \code{"week"}, \code{"month"}, \code{"year"} and \code{"all"}. Default is
+\item{period}{Character vector. Listing top threads by time period. Only applicable to sort order by \code{"top"}.
+Options are \code{"hour"}, \code{"day"}, \code{"week"}, \code{"month"}, \code{"year"} and \code{"all"}. Default is
 \code{"all"}.}
 
 \item{max}{Numeric vector. Maximum number of threads in listing to return. Default is \code{25}.}

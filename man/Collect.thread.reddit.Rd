@@ -21,7 +21,7 @@ collect_reddit_threads(
   threadUrls,
   sort = "best",
   waitTime = c(3, 5),
-  ua = paste0("vosonSML v.", get_version(), " (R Package)"),
+  ua = vsml_ua(),
   writeToFile = FALSE,
   verbose = FALSE,
   ...
