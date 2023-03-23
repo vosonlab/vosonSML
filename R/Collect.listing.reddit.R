@@ -59,13 +59,18 @@ Collect.listing.reddit <-
     invisible(cmp_values(sort, sort_opts, param = "sort", n = length(subreddits)))
     
     if (length(sort) == 1) sort <- rep(sort, length(subreddits))
+    sort <- tolower(sort)
     
     # check period
-    if (sort == "top" && !is.null(period)) {
-      period_opts <- c("hour", "day", "week", "month", "year", "all")
-      invisible(cmp_values(period, period_opts, param = "period", n = length(subreddits)))
-      
+    if (any(sort == "top")) {
+      if (!length(period) %in% c(1, length(subreddits))) {
+        stop("Please provide a period parameter that is length 1 or ", length(subreddits), ".", call. = FALSE)
+      }
       if (length(period) == 1) period <- rep(period, length(subreddits))
+      period <- tolower(period)
+      
+      period_opts <- c("hour", "day", "week", "month", "year", "all")
+      invisible(cmp_values(period[which(sort == "top")], period_opts, param = "period"))
     }
     
     # check max
@@ -91,9 +96,10 @@ Collect.listing.reddit <-
       listing_df <- reddit_build_listing_df(subreddits, sort = sort, period = period, max = max,
                                             wait_time = waitTime, ua = ua, verbose = verbose)
     }, error = function(e) {
-      stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
+      # stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
+      msg(gsub("^Error:\\s", "", paste0(e)))
     })
-
+    
     if (!is.null(listing_df)) {
       if (nrow(listing_df) > 0) {
         # summary
@@ -153,6 +159,14 @@ reddit_build_listing_df <- function(subreddits, sort, period, max, wait_time, ua
       data <- resp$data$data
       
       df <- tibble::as_tibble(data$children$data)
+      
+      # nested_df <- df |> dplyr::select("id", dplyr::where(is.list))
+      # tryCatch({
+      #   nested_df <- nested_df |> tidyr::unnest_longer(col = dplyr::where(is.list), keep_empty = TRUE)
+      # }, error = function(e) { 
+      #   msg(paste0("Unable to flatten data. ", e, "\n"))  
+      # })
+      
       results_i <- dplyr::bind_rows(results_i, df)
 
       if (!is.null(data$after)) {

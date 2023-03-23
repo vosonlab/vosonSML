@@ -48,12 +48,13 @@ Collect.thread.reddit <-
     }
 
     invisible(check_chr(threadUrls, param = "threadUrls"))
-
+    
     # check sort
     sort_opts <- c("best", "top", "new", "controversial", "old", "qa")
     invisible(cmp_values(sort, sort_opts, param = "sort", n = length(threadUrls)))
     
     if (length(sort) == 1) sort <- rep(sort, length(threadUrls))
+    sort <- tolower(sort)
 
     # some protection against spamming requests
     waitTime <- check_wait_range_secs(waitTime, param = "waitTime", def_min = 3, def_max = 10)
@@ -65,7 +66,8 @@ Collect.thread.reddit <-
     tryCatch({
       threads_df <- reddit_build_df(threadUrls, sort, waitTime, ua, verbose)
     }, error = function(e) {
-      stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
+      # stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
+      msg(gsub("^Error:\\s", "", paste0(e)))
     }, finally = {
       threads_df <- tibble::as_tibble(threads_df)
     })

@@ -44,9 +44,16 @@ get_json <- function(req_url, ua = NULL, alt = FALSE) {
 
   if (!is.null(ua)) req_headers <- append(req_headers, c("User-Agent" = ua))
 
-  resp <- httr::GET(req_url, httr::add_headers(.headers = req_headers))
-  res$status <- resp$status
+  resp <- NULL
+  tryCatch({
+    resp <- httr::GET(req_url, httr::add_headers(.headers = req_headers))
+  }, error = function(e) {
+    res$msg <- e
+  })
 
+  if (is.null(resp)) return(res)
+  
+  res$status <- resp$status
   if (httr::http_error(resp) || as.numeric(resp$status) != 200) {
     res$msg <- "http request error"
     return(res)
