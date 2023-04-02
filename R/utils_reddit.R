@@ -16,7 +16,10 @@ get_thread_id <- function(url, desc = FALSE) {
 }
 
 # build a reddit comment thread url for json
-create_thread_url <- function(url, sort) {
+create_thread_url <- function(url, sort = NA) {
+  # trailing slash
+  if (!grepl("/$", url)) url <- paste0(url, "/")
+  
   # format /r/xxxxx/comments/xxxxxxx/xxx_x_xxxxxx/
   if (grepl("^/r/.+?/comments/.+?/.+?/$", url, ignore.case = TRUE)) {
     url <- paste0("https://www.reddit.com", url)
@@ -24,9 +27,16 @@ create_thread_url <- function(url, sort) {
   
   if (!grepl("^https?://(.*)", url)) url <- paste0("https://www.", gsub("^.*(reddit\\..*$)", "\\1", url))
   
-  if (sort == "best") sort <- "confidence"
+  if (!is.na(sort)) {
+    if (sort == "best") sort <- "confidence"
+    sort <- paste0("sort=", sort, "&")
+  } else {
+    sort <- ""
+  }
   
-  paste0(url, ".json?", paste0("sort=", sort), "&limit=500&raw_json=1")  
+  # message(paste0(url, ".json?", sort, "&limit=500&raw_json=1"))
+  
+  paste0(url, ".json?", sort, "&limit=500&raw_json=1")
 }
 
 # build a subreddit thread listing url for json

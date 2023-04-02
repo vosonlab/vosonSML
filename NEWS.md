@@ -1,4 +1,4 @@
-# vosonSML 0.33.0
+# vosonSML 0.33.2
 
 ## Bug Fixes
 - Fixed a bug in the regex for `Reddit` URL parsing in which thread ID's were limited to 6 characters.
@@ -13,10 +13,13 @@
 - Fixed an intermitant column mismatch error in `Twitter` caused by unexpected type when data merging.
 - Fixed the number of tweet observations does not match number of users error reported with `rtweet` v1.1.
 - Fixed number of tweets requested count in verbose message for `Twitter` timeline collection.
+- Fixed a bug in `Reddit` thread collection where URL's missing trailing slashes would trigger loop protection errors.
+- Changed the default `sort` parameter value for `Reddit` threaad collection to be `NA`. Default sort order on `Reddit`
+  is not a fixed value.
 
 ## Major Changes
 - Added `sort` parameter to `Reddit` collection. As this collection method is limited, it may be useful to request
-  comments in sort order using the `Reddit` sort options `top`, `new`, `controversial`, `old`, `qa` and default `best`.
+  comments in sort order using the `Reddit` sort options `top`, `new`, `controversial`, `old`, `qa` and `best`.
 - Added a `Collect.listing` function for subreddits on `Reddit`. This is not a search, however it allows complete
   metadata for a specified number of subreddit threads to be collected in sorted order. The sort options are `hot`,
   `top`, `new` and `rising`. There is a further time parameter `period` that can be set to `hour`, `day`, `week`,

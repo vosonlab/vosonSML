@@ -9,7 +9,7 @@
 #' @param endpoint API endpoint.
 #' @param threadUrls Character vector. Reddit thread urls to collect data from.
 #' @param sort Character vector. Reddit comment sort order. Options are \code{"best"}, \code{"top"}, \code{"new"},
-#'   \code{"controversial"}, \code{"old"}, and \code{"qa"}. Default is \code{"best"}.
+#'   \code{"controversial"}, \code{"old"}, and \code{"qa"}. Default is \code{NA}.
 #' @param waitTime Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
 #'   Minimum is 3 seconds. Default is \code{c(3, 5)} for a wait time chosen from between 3 and 5 seconds.
 #' @param ua Character string. Override User-Agent string to use in Reddit thread requests. Default is
@@ -34,7 +34,7 @@ Collect.thread.reddit <-
   function(credential,
            endpoint,
            threadUrls,
-           sort = "best",
+           sort = NA,
            waitTime = c(3, 5),
            ua = getOption("HTTPUserAgent"),
            writeToFile = FALSE,
@@ -50,7 +50,7 @@ Collect.thread.reddit <-
     invisible(check_chr(threadUrls, param = "threadUrls"))
     
     # check sort
-    sort_opts <- c("best", "top", "new", "controversial", "old", "qa")
+    sort_opts <- c("best", "top", "new", "controversial", "old", "qa", NA)
     invisible(cmp_values(sort, sort_opts, param = "sort", n = length(threadUrls)))
     
     if (length(sort) == 1) sort <- rep(sort, length(threadUrls))
@@ -122,7 +122,7 @@ reddit_build_df <- function(threadUrls, sort, waitTime, ua, verbose) {
     if (length(threadUrls) > 1 & (url != threadUrls[1])) {
       Sys.sleep(sample(waitTime, 1))
     }
-
+    
     thread_json <- reddit_data(url, url_sort, wait_time = waitTime, ua = ua, verbose = verbose)
     branch_df <- reddit_content_plus(thread_json, url, verbose = verbose)
 
@@ -156,6 +156,9 @@ reddit_build_df <- function(threadUrls, sort, waitTime, ua, verbose) {
           rm = ifelse(.data$comm_id %in% c(cont_thread_id, row_comm_id), TRUE, .data$rm)
         )
 
+      # if trailing slash missing from url
+      if (!grepl("/$", url)) url <- paste0(url, "/")
+      
       # get continue thread
       cont_json <- reddit_data(
         paste0(url, cont_thread_id),
@@ -227,11 +230,10 @@ reddit_data <-
     }
     
     req_url <- create_thread_url(url, url_sort)
-    
     req_tid <- get_thread_id(req_url, TRUE)
 
     if (is.null(cont)) {
-      msg(paste0("Request thread: ", req_tid, "\n"))
+      msg(paste0("Request thread: ", req_tid, " - sort: ", url_sort, "\n"))
     } else {
       msg(paste0("Continue thread: ", req_tid, " - ", cont, "\n"))
     }
