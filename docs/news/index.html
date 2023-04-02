@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.33.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.33.2</span>
       </span>
     </div>
 
@@ -111,9 +111,9 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.33.0" id="vosonsml-0330">vosonSML 0.33.0<a class="anchor" aria-label="anchor" href="#vosonsml-0330"></a></h2>
+<h2 class="page-header" data-toc-text="0.33.2" id="vosonsml-0332">vosonSML 0.33.2<a class="anchor" aria-label="anchor" href="#vosonsml-0332"></a></h2>
 <div class="section level3">
-<h3 id="bug-fixes-0-33-0">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-33-0"></a></h3>
+<h3 id="bug-fixes-0-33-2">Bug Fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-0-33-2"></a></h3>
 <ul><li>Fixed a bug in the regex for <code>Reddit</code> URL parsing in which thread ID’s were limited to 6 characters.</li>
 <li>Fixed verbose output for <code>2mode</code> networks to use option specified method.</li>
 <li>Fixed an issue with adding text to <code>Twitter</code> networks caused by missing columns in the data.</li>
@@ -121,14 +121,16 @@
 <li>Fixed an intermitant column mismatch error in <code>Twitter</code> caused by unexpected type when data merging.</li>
 <li>Fixed the number of tweet observations does not match number of users error reported with <code>rtweet</code> v1.1.</li>
 <li>Fixed number of tweets requested count in verbose message for <code>Twitter</code> timeline collection.</li>
+<li>Fixed a bug in <code>Reddit</code> thread collection where URL’s missing trailing slashes would trigger loop protection errors.</li>
+<li>Changed the default <code>sort</code> parameter value for <code>Reddit</code> threaad collection to be <code>NA</code>. Default sort order on <code>Reddit</code> is not a fixed value.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="major-changes-0-33-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-33-0"></a></h3>
-<ul><li>Added <code>sort</code> parameter to <code>Reddit</code> collection. As this collection method is limited, it may be useful to request comments in sort order using the <code>Reddit</code> sort options <code>top</code>, <code>new</code>, <code>controversial</code>, <code>old</code>, <code>qa</code> and default <code>best</code>.</li>
+<h3 id="major-changes-0-33-2">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-33-2"></a></h3>
+<ul><li>Added <code>sort</code> parameter to <code>Reddit</code> collection. As this collection method is limited, it may be useful to request comments in sort order using the <code>Reddit</code> sort options <code>top</code>, <code>new</code>, <code>controversial</code>, <code>old</code>, <code>qa</code> and <code>best</code>.</li>
 <li>Added a <code>Collect.listing</code> function for subreddits on <code>Reddit</code>. This is not a search, however it allows complete metadata for a specified number of subreddit threads to be collected in sorted order. The sort options are <code>hot</code>, <code>top</code>, <code>new</code> and <code>rising</code>. There is a further time parameter <code>period</code> that can be set to <code>hour</code>, <code>day</code>, <code>week</code>, <code>month</code>, <code>year</code> or <code>all</code> if <code>sort = top</code>, meaning for example, results sorted by top threads over the last week.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-changes-0-33-0">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-33-0"></a></h3>
+<h3 id="minor-changes-0-33-2">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-33-2"></a></h3>
 <ul><li>Added simple log file output for <code>Collect</code> and <code>Merge</code> functions when <code>writeToFile = TRUE</code>. The log file is written in the same location as the data file with the <code>.txt</code> extension appended.</li>
 <li>Changed data output path option <code>option(voson.data = "my-data")</code> to now attempt to create the directory if it does not exist.</li>
 </ul></div>
@@ -267,7 +269,7 @@
 <li>New parameters have been added to <code>Create.semantic.twitter</code>:
 <ul><li>Numbers and urls can be removed or included from the term list using <code>removeNumbers</code> and <code>removeUrls</code>, default value is <code>TRUE</code>.</li>
 <li>The <code>assoc</code> parameter has been added to choose which node associations or ties to include in the network. The default value is <code>"limited"</code> and includes only ties between most frequently occurring hashtags and terms in tweets. A value of <code>full</code> will also include ties between most frequently occurring hashtags and hashtags, and terms with terms creating a more densely connected network.</li>
-<li>Parameters to specify <code>stopwords</code> language e.g <code>stopwordsLang = "en"</code> and source e.g <code>stopwordsSrc = "smart"</code> have been added. These correspond to the <code>language</code> and <code>source</code> parameters of the <code><a href="https://rdrr.io/pkg/tidytext/man/get_stopwords.html" class="external-link">tidytext::get_stopwords</a></code> function. The <code>stopwords</code> default value is <code>TRUE</code>.</li>
+<li>Parameters to specify <code>stopwords</code> language e.g <code>stopwordsLang = "en"</code> and source e.g <code>stopwordsSrc = "smart"</code> have been added. These correspond to the <code>language</code> and <code>source</code> parameters of the <code>tidytext::get_stopwords</code> function. The <code>stopwords</code> default value is <code>TRUE</code>.</li>
 </ul></li>
 <li>The network produced by the <code>Create.twomode.twitter</code> function is weighted by default but can be disabled by setting the new <code>weighted</code> parameter to <code>FALSE</code>.</li>
 <li>Renamed the <code>replies_from_text</code> parameter to <code>repliesFromText</code> and <code>at_replies_only</code> to <code>atRepliesOnly</code> in the <code>AddText.actor.youtube</code> function for consistency.</li>

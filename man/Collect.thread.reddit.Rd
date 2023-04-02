@@ -9,7 +9,7 @@
   credential,
   endpoint,
   threadUrls,
-  sort = "best",
+  sort = NA,
   waitTime = c(3, 5),
   ua = getOption("HTTPUserAgent"),
   writeToFile = FALSE,
@@ -35,7 +35,7 @@ collect_reddit_threads(
 \item{threadUrls}{Character vector. Reddit thread urls to collect data from.}
 
 \item{sort}{Character vector. Reddit comment sort order. Options are \code{"best"}, \code{"top"}, \code{"new"},
-\code{"controversial"}, \code{"old"}, and \code{"qa"}. Default is \code{"best"}.}
+\code{"controversial"}, \code{"old"}, and \code{"qa"}. Default is \code{NA}.}
 
 \item{waitTime}{Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
 Minimum is 3 seconds. Default is \code{c(3, 5)} for a wait time chosen from between 3 and 5 seconds.}
