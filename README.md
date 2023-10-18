@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 78
----
-
 # vosonSML - Social Media Lab<img src="https://vosonlab.github.io/vosonSML/images/logo.png" width="140px" align="right"/>
 
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
