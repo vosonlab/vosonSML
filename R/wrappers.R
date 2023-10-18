@@ -138,7 +138,7 @@ auth_twitter_user <- function(api_key, api_secret, verbose = FALSE, ...) {
 collect_reddit_threads <-
   function(threadUrls,
            sort = "best",
-           waitTime = c(3, 5),
+           waitTime = c(6, 8),
            ua = vsml_ua(),
            writeToFile = FALSE,
            verbose = FALSE,
@@ -163,7 +163,7 @@ collect_reddit_listings <-
            sort = "new",
            period = NULL,
            max = 25,
-           waitTime = c(3, 5),
+           waitTime = c(6, 8),
            ua = vsml_ua(),
            writeToFile = FALSE,
            verbose = FALSE,
@@ -198,6 +198,10 @@ collect_web_hyperlinks <- function(pages = NULL, writeToFile = FALSE, verbose = 
 #' @rdname ImportRtweet
 #' @export
 import_rtweet <- ImportRtweet
+
+#' @rdname ImportRtoot
+#' @export
+import_rtoot <- ImportRtoot
 
 #' @rdname Merge
 #' @export

@@ -7,11 +7,11 @@
 #'   There are four types of networks that can be created from collected data: \code{activity}, \code{actor},
 #'   \code{twomode} or \code{semantic}.
 #'
-#'   For \code{activity} networks refer to \code{\link{Create.activity.twitter}}, \code{\link{Create.activity.youtube}}
-#'   and \code{\link{Create.activity.reddit}} for parameters and usage.
+#'   For \code{activity} networks refer to \code{\link{Create.activity.mastodon}}, \code{\link{Create.activity.youtube}}
+#'   \code{\link{Create.activity.reddit}} and \code{\link{Create.activity.twitter}} for parameters and usage.
 #'
-#'   For \code{actor} networks refer to \code{\link{Create.actor.twitter}}, \code{\link{Create.actor.youtube}} and
-#'   \code{\link{Create.actor.reddit}}.
+#'   For \code{actor} networks refer to \code{\link{Create.actor.mastodon}}, \code{\link{Create.actor.youtube}},
+#'   \code{\link{Create.actor.reddit}} and \code{\link{Create.actor.twitter}}.
 #'
 #'   For \code{twomode} and \code{semantic} networks refer to \code{\link{Create.twomode.twitter}} and
 #'   \code{\link{Create.semantic.twitter}} functions for parameters and usage respectively.
@@ -31,8 +31,9 @@ Create <- function(datasource, type, ...) {
 #' @export
 Create.default <- function(datasource, type, ...) {
   # check datasource
-  if (is.list(datasource) && ("tweets" %in% names(datasource))) {
-    if (check_df_n(datasource$tweets) < 1) {
+  if (is.list(datasource) & !is.data.frame(datasource)) {
+    if (check_df_n(datasource$tweets) < 1 &
+        check_df_n(datasource$posts) < 1) {
       stop("Datasource passed to Create is invalid or empty.", call. = FALSE)
     }
   } else {
@@ -40,6 +41,19 @@ Create.default <- function(datasource, type, ...) {
       stop("Datasource passed to Create is invalid or empty.", call. = FALSE)
     }
   }
+  # if (is.list(datasource) && ("tweets" %in% names(datasource))) {
+  #   if (check_df_n(datasource$tweets) < 1) {
+  #     stop("Datasource passed to Create is invalid or empty.", call. = FALSE)
+  #   }
+  # } else if (is.list(datasource) && ("posts" %in% names(datasource))) {
+  #   if (check_df_n(datasource$posts) < 1) {
+  #     stop("Datasource passed to Create is invalid or empty.", call. = FALSE)
+  #   }
+  # } else {
+  #   if (check_df_n(datasource) < 1) {
+  #     stop("Datasource passed to Create is invalid or empty.", call. = FALSE)
+  #   }
+  # }
 
   # check if network type is a character string
   if (!is.character(type)) {

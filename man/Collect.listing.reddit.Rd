@@ -12,7 +12,7 @@
   sort = "hot",
   period = "all",
   max = 25,
-  waitTime = c(3, 5),
+  waitTime = c(6, 8),
   ua = getOption("HTTPUserAgent"),
   writeToFile = FALSE,
   verbose = FALSE,
@@ -24,7 +24,7 @@ collect_reddit_listings(
   sort = "new",
   period = NULL,
   max = 25,
-  waitTime = c(3, 5),
+  waitTime = c(6, 8),
   ua = vsml_ua(),
   writeToFile = FALSE,
   verbose = FALSE,
@@ -48,7 +48,7 @@ Options are \code{"hour"}, \code{"day"}, \code{"week"}, \code{"month"}, \code{"y
 \item{max}{Numeric vector. Maximum number of threads in listing to return. Default is \code{25}.}
 
 \item{waitTime}{Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
-Minimum is 3 seconds. Default is \code{c(3, 5)} for a wait time chosen from between 3 and 5 seconds.}
+Minimum is 3 seconds. Default is \code{c(6, 8)} for a wait time chosen from between 6 and 8 seconds.}
 
 \item{ua}{Character string. Override User-Agent string to use in Reddit thread requests. Default is
 \code{option("HTTPUserAgent")} value as set by vosonSML.}

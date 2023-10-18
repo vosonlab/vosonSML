@@ -1,3 +1,19 @@
+# vosonSML 0.34
+
+## Major Changes
+- Added `Mastodon` authentication, collection and network creation. There are two options for `Mastodon` collection, a
+  hashtag search for global or local server timeline posts that is optionally authenticated: `Collect.search.mastodon()`,
+  and a public thread collection function using input URL's that is similar to `Reddit` thread collection that requires
+  no authentication: `Collect.thread.mastodon()`. To access these methods via `Collect` an `endpoint = "search"` or
+  `endpoint = "thread"` parameter should be passed to the functions.
+- The `Mastodon` authentication and collection uses the `rtoot` package and a function has been created for importing
+  `rtoot` data into `vosonSML` called `ImportRtoot`. Imported data can be passed as input to the `Create` network functions.
+  
+## Minor Changes
+- Changed default `Reddit` request wait time range from 3 to 5 seconds, to 6 to 8 seconds to avoid a proposed platform
+  rate limit of 10 requests per minute. This value can still be manually set using the `waitTime = c(min, max)` wait time
+  range parameter.
+
 # vosonSML 0.33.2
 
 ## Bug Fixes

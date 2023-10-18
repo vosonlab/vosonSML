@@ -4,8 +4,9 @@ social media APIs. A credential object is a S3 object containing authentication 
 an access token or key, and a class name identifying the social media that grants authentication.
 Authenticate is the first step of the Authenticate, Collect and Create
 workflow.
-Refer to Authenticate.twitter, Authenticate.youtube and
-Authenticate.reddit, Authenticate.web for parameters and usage."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
+Refer to Authenticate.mastodon, Authenticate.youtube,
+Authenticate.reddit, Authenticate.twitter and
+Authenticate.web for parameters and usage."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]--></head><body data-spy="scroll" data-target="#toc">
@@ -23,7 +24,7 @@ Authenticate.reddit, Authenticate.web for parameters and usage."><!-- mathjax --
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.33.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.34</span>
       </span>
     </div>
 
@@ -123,8 +124,9 @@ social media APIs. A <code>credential</code> object is a S3 object containing au
 an access token or key, and a class name identifying the social media that grants authentication.
 <code>Authenticate</code> is the first step of the <code>Authenticate</code>, <code><a href="Collect.html">Collect</a></code> and <code><a href="Create.html">Create</a></code>
 workflow.</p>
-<p>Refer to <code><a href="Authenticate.twitter.html">Authenticate.twitter</a></code>, <code><a href="Authenticate.youtube.html">Authenticate.youtube</a></code> and
-<code><a href="Authenticate.reddit.html">Authenticate.reddit</a></code>, <code><a href="Authenticate.web.html">Authenticate.web</a></code> for parameters and usage.</p>
+<p>Refer to <code><a href="Authenticate.mastodon.html">Authenticate.mastodon</a></code>, <code><a href="Authenticate.youtube.html">Authenticate.youtube</a></code>,
+<code><a href="Authenticate.reddit.html">Authenticate.reddit</a></code>, <code><a href="Authenticate.twitter.html">Authenticate.twitter</a></code> and
+<code><a href="Authenticate.web.html">Authenticate.web</a></code> for parameters and usage.</p>
     </div>
 
     <div id="ref-usage">
@@ -135,7 +137,7 @@ workflow.</p>
     <h2>Arguments</h2>
     <dl><dt>socialmedia</dt>
 <dd><p>Character string. Identifier for social media API to authenticate with. Supported social media are
-<code>"twitter"</code>, <code>"youtube"</code>, <code>"reddit"</code> and <code>"web"</code>.</p></dd>
+<code>"mastodon"</code>, <code>"youtube"</code>, <code>"reddit"</code>, <code>"twitter"</code> and <code>"web"</code>.</p></dd>
 
 
 <dt>...</dt>

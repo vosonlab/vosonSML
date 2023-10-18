@@ -66,21 +66,21 @@ twitter_init_oauth1.0 <- function (endpoint,
     b
 }
 
-keep_last <- function (...) {
+keep_last <- function(...) {
   x <- c(...)
   x[!duplicated(names(x), fromLast = TRUE)]
 }
 
-is_empty <- function (x)
+is_empty <- function(x)
   length(x) == 0
 
-compact <- function (x) {
+compact <- function(x) {
   empty <- vapply(x, is_empty, logical(1))
   x[!empty]
 }
 
 auth_request <-
-  function (method = NULL,
+  function(method = NULL,
             url = NULL,
             headers = NULL,
             fields = NULL,

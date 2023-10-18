@@ -25,10 +25,16 @@
     <loc>http://vosonlab.github.io/vosonSML/news/index.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/AddText.activity.mastodon.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/AddText.activity.reddit.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/AddText.activity.twitter.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/AddText.actor.mastodon.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/AddText.actor.reddit.html</loc>
@@ -67,6 +73,9 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.mastodon.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Authenticate.reddit.html</loc>
   </url>
   <url>
@@ -103,7 +112,13 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.reddit.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Collect.search.mastodon.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.search.twitter.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Collect.thread.mastodon.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.thread.reddit.html</loc>
@@ -121,6 +136,9 @@
     <loc>http://vosonlab.github.io/vosonSML/reference/Collect.youtube.html</loc>
   </url>
   <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Create.activity.mastodon.html</loc>
+  </url>
+  <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.activity.reddit.html</loc>
   </url>
   <url>
@@ -134,6 +152,9 @@
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.activity2.twitter.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/Create.actor.mastodon.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/Create.actor.reddit.html</loc>
@@ -170,6 +191,9 @@
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/ImportData.html</loc>
+  </url>
+  <url>
+    <loc>http://vosonlab.github.io/vosonSML/reference/ImportRtoot.html</loc>
   </url>
   <url>
     <loc>http://vosonlab.github.io/vosonSML/reference/ImportRtweet.html</loc>

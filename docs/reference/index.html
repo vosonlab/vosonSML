@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.33.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.34</span>
       </span>
     </div>
 
@@ -126,21 +126,25 @@
         </td>
         <td><p>Create a credential object to access social media APIs</p></td>
       </tr><tr><td>
-          <p><code><a href="Authenticate.reddit.html">Authenticate(<i>&lt;reddit&gt;</i>)</a></code> </p>
+          <p><code><a href="Authenticate.mastodon.html">Authenticate(<i>&lt;mastodon&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Reddit API authentication</p></td>
-      </tr><tr><td>
-          <p><code><a href="Authenticate.twitter.html">Authenticate(<i>&lt;twitter&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Twitter API authentication</p></td>
+        <td><p>Mastodon API authentication</p></td>
       </tr><tr><td>
           <p><code><a href="Authenticate.youtube.html">Authenticate(<i>&lt;youtube&gt;</i>)</a></code> </p>
         </td>
         <td><p>YouTube API authentication</p></td>
       </tr><tr><td>
+          <p><code><a href="Authenticate.reddit.html">Authenticate(<i>&lt;reddit&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Reddit API authentication</p></td>
+      </tr><tr><td>
           <p><code><a href="Authenticate.web.html">Authenticate(<i>&lt;web&gt;</i>)</a></code> </p>
         </td>
         <td><p>Web crawler authentication</p></td>
+      </tr><tr><td>
+          <p><code><a href="Authenticate.twitter.html">Authenticate(<i>&lt;twitter&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Twitter API authentication</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="collect">Collect <a href="#collect" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -150,13 +154,13 @@
         </td>
         <td><p>Collect data from social media for generating networks</p></td>
       </tr><tr><td>
-          <p><code><a href="Collect.search.twitter.html">Collect(<i>&lt;search.twitter&gt;</i>)</a></code> </p>
+          <p><code><a href="Collect.search.mastodon.html">Collect(<i>&lt;search.mastodon&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Collect tweet data from twitter search</p></td>
+        <td><p>Collect post data from mastodon search</p></td>
       </tr><tr><td>
-          <p><code><a href="Collect.timeline.twitter.html">Collect(<i>&lt;timeline.twitter&gt;</i>)</a></code> </p>
+          <p><code><a href="Collect.thread.mastodon.html">Collect(<i>&lt;thread.mastodon&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Collect tweet data from twitter timelines</p></td>
+        <td><p>Collect posts data from mastodon threads</p></td>
       </tr><tr><td>
           <p><code><a href="Collect.youtube.html">Collect(<i>&lt;youtube&gt;</i>)</a></code> </p>
         </td>
@@ -173,6 +177,14 @@
           <p><code><a href="Collect.web.html">Collect(<i>&lt;web&gt;</i>)</a></code> <code><a href="Collect.web.html">collect_web_hyperlinks()</a></code> </p>
         </td>
         <td><p>Collect hyperlinks from web pages</p></td>
+      </tr><tr><td>
+          <p><code><a href="Collect.search.twitter.html">Collect(<i>&lt;search.twitter&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Collect tweet data from twitter search</p></td>
+      </tr><tr><td>
+          <p><code><a href="Collect.timeline.twitter.html">Collect(<i>&lt;timeline.twitter&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Collect tweet data from twitter timelines</p></td>
       </tr></tbody><tbody><tr><th colspan="2">
           <h2 id="create">Create <a href="#create" class="anchor" aria-hidden="true"></a></h2>
           <p class="section-desc"></p>
@@ -182,9 +194,9 @@
         </td>
         <td><p>Create networks from social media data</p></td>
       </tr><tr><td>
-          <p><code><a href="Create.activity.twitter.html">Create(<i>&lt;activity.twitter&gt;</i>)</a></code> </p>
+          <p><code><a href="Create.activity.mastodon.html">Create(<i>&lt;activity.mastodon&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Create twitter activity network</p></td>
+        <td><p>Create mastodon activity network</p></td>
       </tr><tr><td>
           <p><code><a href="Create.activity.youtube.html">Create(<i>&lt;activity.youtube&gt;</i>)</a></code> </p>
         </td>
@@ -198,9 +210,13 @@
         </td>
         <td><p>Create web activity network</p></td>
       </tr><tr><td>
-          <p><code><a href="Create.actor.twitter.html">Create(<i>&lt;actor.twitter&gt;</i>)</a></code> </p>
+          <p><code><a href="Create.activity.twitter.html">Create(<i>&lt;activity.twitter&gt;</i>)</a></code> </p>
         </td>
-        <td><p>Create twitter actor network</p></td>
+        <td><p>Create twitter activity network</p></td>
+      </tr><tr><td>
+          <p><code><a href="Create.actor.mastodon.html">Create(<i>&lt;actor.mastodon&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Create mastodon actor network</p></td>
       </tr><tr><td>
           <p><code><a href="Create.actor.youtube.html">Create(<i>&lt;actor.youtube&gt;</i>)</a></code> </p>
         </td>
@@ -213,6 +229,10 @@
           <p><code><a href="Create.actor.web.html">Create(<i>&lt;actor.web&gt;</i>)</a></code> </p>
         </td>
         <td><p>Create web actor network</p></td>
+      </tr><tr><td>
+          <p><code><a href="Create.actor.twitter.html">Create(<i>&lt;actor.twitter&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Create twitter actor network</p></td>
       </tr><tr><td>
           <p><code><a href="Create.twomode.twitter.html">Create(<i>&lt;twomode.twitter&gt;</i>)</a></code> </p>
         </td>
@@ -230,6 +250,26 @@
         </td>
         <td><p>Add columns containing text data to network dataframes</p></td>
       </tr><tr><td>
+          <p><code><a href="AddText.activity.mastodon.html">AddText(<i>&lt;activity.mastodon&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Add columns containing text data to mastodon activity network dataframes</p></td>
+      </tr><tr><td>
+          <p><code><a href="AddText.actor.mastodon.html">AddText(<i>&lt;actor.mastodon&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Add columns containing text data to mastodon actor network dataframes</p></td>
+      </tr><tr><td>
+          <p><code><a href="AddText.actor.youtube.html">AddText(<i>&lt;activity.youtube&gt;</i>)</a></code> <code><a href="AddText.actor.youtube.html">AddText(<i>&lt;actor.youtube&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Add columns containing text data to YouTube activity network dataframes</p></td>
+      </tr><tr><td>
+          <p><code><a href="AddText.activity.reddit.html">AddText(<i>&lt;activity.reddit&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Add columns containing text data to reddit activity network dataframes</p></td>
+      </tr><tr><td>
+          <p><code><a href="AddText.actor.reddit.html">AddText(<i>&lt;actor.reddit&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Add columns containing text data to reddit actor network dataframes</p></td>
+      </tr><tr><td>
           <p><code><a href="AddText.activity.twitter.html">AddText(<i>&lt;activity.twitter&gt;</i>)</a></code> </p>
         </td>
         <td><p>Add columns containing text data to twitter activity network dataframes</p></td>
@@ -245,18 +285,6 @@
           <p><code><a href="AddText.twomode.twitter.html">AddText(<i>&lt;twomode.twitter&gt;</i>)</a></code> </p>
         </td>
         <td><p>Add columns containing text data to twitter 2mode network dataframes</p></td>
-      </tr><tr><td>
-          <p><code><a href="AddText.actor.youtube.html">AddText(<i>&lt;activity.youtube&gt;</i>)</a></code> <code><a href="AddText.actor.youtube.html">AddText(<i>&lt;actor.youtube&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Add columns containing text data to YouTube activity network dataframes</p></td>
-      </tr><tr><td>
-          <p><code><a href="AddText.activity.reddit.html">AddText(<i>&lt;activity.reddit&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Add columns containing text data to reddit activity network dataframes</p></td>
-      </tr><tr><td>
-          <p><code><a href="AddText.actor.reddit.html">AddText(<i>&lt;actor.reddit&gt;</i>)</a></code> </p>
-        </td>
-        <td><p>Add columns containing text data to reddit actor network dataframes</p></td>
       </tr><tr><td>
           <p><code><a href="AddUserData.html">AddUserData()</a></code> <code><a href="AddUserData.html">add_users()</a></code> </p>
         </td>
@@ -282,18 +310,6 @@
           <p class="section-desc"></p>
         </th>
       </tr></tbody><tbody><tr><td>
-          <p><code><a href="auth_twitter_app.html">auth_twitter_app()</a></code> </p>
-        </td>
-        <td><p>Twitter App API authentication</p></td>
-      </tr><tr><td>
-          <p><code><a href="auth_twitter_dev.html">auth_twitter_dev()</a></code> </p>
-        </td>
-        <td><p>Twitter Dev API authentication</p></td>
-      </tr><tr><td>
-          <p><code><a href="auth_twitter_user.html">auth_twitter_user()</a></code> </p>
-        </td>
-        <td><p>Twitter User API authentication</p></td>
-      </tr><tr><td>
           <p><code><a href="Graph.html">Graph()</a></code> </p>
         </td>
         <td><p>Create an igraph graph from network</p></td>
@@ -306,9 +322,25 @@
         </td>
         <td><p>Merge collected data files</p></td>
       </tr><tr><td>
+          <p><code><a href="ImportRtoot.html">ImportRtoot()</a></code> <code><a href="ImportRtoot.html">import_rtoot()</a></code> </p>
+        </td>
+        <td><p>Import rtoot collected data</p></td>
+      </tr><tr><td>
           <p><code><a href="ImportRtweet.html">ImportRtweet()</a></code> <code><a href="ImportRtweet.html">import_rtweet()</a></code> </p>
         </td>
         <td><p>Import rtweet collected data</p></td>
+      </tr><tr><td>
+          <p><code><a href="auth_twitter_app.html">auth_twitter_app()</a></code> </p>
+        </td>
+        <td><p>Twitter App API authentication</p></td>
+      </tr><tr><td>
+          <p><code><a href="auth_twitter_dev.html">auth_twitter_dev()</a></code> </p>
+        </td>
+        <td><p>Twitter Dev API authentication</p></td>
+      </tr><tr><td>
+          <p><code><a href="auth_twitter_user.html">auth_twitter_user()</a></code> </p>
+        </td>
+        <td><p>Twitter User API authentication</p></td>
       </tr></tbody></table></div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

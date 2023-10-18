@@ -23,11 +23,11 @@ workflow.
 There are four types of networks that can be created from collected data: \code{activity}, \code{actor},
 \code{twomode} or \code{semantic}.
 
-For \code{activity} networks refer to \code{\link{Create.activity.twitter}}, \code{\link{Create.activity.youtube}}
-and \code{\link{Create.activity.reddit}} for parameters and usage.
+For \code{activity} networks refer to \code{\link{Create.activity.mastodon}}, \code{\link{Create.activity.youtube}}
+\code{\link{Create.activity.reddit}} and \code{\link{Create.activity.twitter}} for parameters and usage.
 
-For \code{actor} networks refer to \code{\link{Create.actor.twitter}}, \code{\link{Create.actor.youtube}} and
-\code{\link{Create.actor.reddit}}.
+For \code{actor} networks refer to \code{\link{Create.actor.mastodon}}, \code{\link{Create.actor.youtube}},
+\code{\link{Create.actor.reddit}} and \code{\link{Create.actor.twitter}}.
 
 For \code{twomode} and \code{semantic} networks refer to \code{\link{Create.twomode.twitter}} and
 \code{\link{Create.semantic.twitter}} functions for parameters and usage respectively.

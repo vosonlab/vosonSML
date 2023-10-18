@@ -63,42 +63,49 @@ reference:
 - title: Authenticate
   contents:
   - '`Authenticate`'
-  - '`Authenticate.reddit`'
-  - '`Authenticate.twitter`'
+  - '`Authenticate.mastodon`'
   - '`Authenticate.youtube`'
+  - '`Authenticate.reddit`'
   - '`Authenticate.web`'
+  - '`Authenticate.twitter`'
 - title: Collect
   contents:
   - '`Collect`'
-  - '`Collect.search.twitter`'
-  - '`Collect.timeline.twitter`'
+  - '`Collect.search.mastodon`'
+  - '`Collect.thread.mastodon`'
   - '`Collect.youtube`'
   - '`Collect.listing.reddit`'
   - '`Collect.thread.reddit`'
   - '`Collect.web`'
+  - '`Collect.search.twitter`'
+  - '`Collect.timeline.twitter`'
 - title: Create
   contents:
   - '`Create`'
-  - '`Create.activity.twitter`'
+  - '`Create.activity.mastodon`'
   - '`Create.activity.youtube`'
   - '`Create.activity.reddit`'
   - '`Create.activity.web`'
-  - '`Create.actor.twitter`'
+  - '`Create.activity.twitter`'
+  - '`Create.actor.mastodon`'
   - '`Create.actor.youtube`'
   - '`Create.actor.reddit`'
   - '`Create.actor.web`'
+  - '`Create.actor.twitter`'
   - '`Create.twomode.twitter`'
   - '`Create.semantic.twitter`'
 - title: Supplemental
   contents:
   - '`AddText`'
+  - '`AddText.activity.mastodon`'
+  - '`AddText.actor.mastodon`'
+  - '`AddText.actor.youtube`'
+  - '`AddText.activity.reddit`'
+  - '`AddText.actor.reddit`'
   - '`AddText.activity.twitter`'
   - '`AddText.actor.twitter`'
   - '`AddText.semantic.twitter`'
   - '`AddText.twomode.twitter`'
-  - '`AddText.actor.youtube`'
-  - '`AddText.activity.reddit`'
-  - '`AddText.actor.reddit`'
   - '`AddUserData`'
   - '`AddUserData.actor.twitter`'
   - '`AddUserData.twomode.twitter`'
@@ -106,13 +113,14 @@ reference:
   - '`AddVideoData.actor.youtube`'
 - title: Helpers
   contents:
-  - '`auth_twitter_app`'
-  - '`auth_twitter_dev`'
-  - '`auth_twitter_user`'
   - '`Graph`'
   - '`Merge`'
   - '`MergeFiles`'
+  - '`ImportRtoot`'
   - '`ImportRtweet`'
+  - '`auth_twitter_app`'
+  - '`auth_twitter_dev`'
+  - '`auth_twitter_user`'
 
 toc:
   depth: 2

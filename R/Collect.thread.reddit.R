@@ -11,7 +11,7 @@
 #' @param sort Character vector. Reddit comment sort order. Options are \code{"best"}, \code{"top"}, \code{"new"},
 #'   \code{"controversial"}, \code{"old"}, and \code{"qa"}. Default is \code{NA}.
 #' @param waitTime Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
-#'   Minimum is 3 seconds. Default is \code{c(3, 5)} for a wait time chosen from between 3 and 5 seconds.
+#'   Minimum is 3 seconds. Default is \code{c(6, 8)} for a wait time chosen from between 6 and 8 seconds.
 #' @param ua Character string. Override User-Agent string to use in Reddit thread requests. Default is
 #'   \code{option("HTTPUserAgent")} value as set by vosonSML.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
@@ -35,7 +35,7 @@ Collect.thread.reddit <-
            endpoint,
            threadUrls,
            sort = NA,
-           waitTime = c(3, 5),
+           waitTime = c(6, 8),
            ua = getOption("HTTPUserAgent"),
            writeToFile = FALSE,
            verbose = FALSE,

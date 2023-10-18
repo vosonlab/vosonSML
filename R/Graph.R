@@ -26,12 +26,12 @@ Graph <- function(net,
   # igraph warning converting a dataframe with an POSIXct column to an igraph object
   # https://github.com/igraph/rigraph/pull/250
   # https://github.com/igraph/rigraph/issues/251
-  if (is.data.frame(net$nodes) && is.data.frame(net$edges)) {
-    net$nodes <- net$nodes |> dplyr::mutate_if(lubridate::is.POSIXt, as.character)
-    net$edges <- net$edges |> dplyr::mutate_if(lubridate::is.POSIXt, as.character)
-  }
+  # if (is.data.frame(net$nodes) && is.data.frame(net$edges)) {
+  #   net$nodes <- net$nodes |> dplyr::mutate_if(lubridate::is.POSIXt, as.character)
+  #   net$edges <- net$edges |> dplyr::mutate_if(lubridate::is.POSIXt, as.character)
+  # }
 
-  if (any(c("twitter", "youtube", "reddit", "web") %in% class(net)) &&
+  if (any(c("twitter", "youtube", "reddit", "web", "mastodon") %in% class(net)) &&
       any(c("activity", "actor", "twomode") %in% class(net))) {
     g <- igraph::graph_from_data_frame(
       d = net$edges,
@@ -137,6 +137,23 @@ Graph.activity.web <-
   }
 
 #' @noRd
+#' @export
+Graph.activity.mastodon <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           verbose = FALSE,
+           ...) {
+    
+    g <- igraph::set_graph_attr(g, "type", "mastodon")
+    
+    graphOutputFile(g, "graphml", writeToFile, "MastodonActivity", verbose = verbose)
+    msg("Done.\n")
+    
+    g
+  }
+
+#' @noRd
 #' @method Graph actor
 #' @export
 Graph.actor <-
@@ -219,6 +236,23 @@ Graph.actor.web <-
     graphOutputFile(g, "graphml", writeToFile, "WebActor", verbose = verbose)
     msg("Done.\n")
 
+    g
+  }
+
+#' @noRd
+#' @export
+Graph.actor.mastodon <-
+  function(net,
+           directed = TRUE,
+           writeToFile = FALSE,
+           verbose = FALSE,
+           ...) {
+    
+    g <- igraph::set_graph_attr(g, "type", "mastodon")
+    
+    graphOutputFile(g, "graphml", writeToFile, "MastodonActor", verbose = verbose)
+    msg("Done.\n")
+    
     g
   }
 

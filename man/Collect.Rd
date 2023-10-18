@@ -17,7 +17,8 @@ This function collects data from social media and structures it into a dataframe
 creating networks for further analysis. \code{Collect} is the second step of the \code{\link{Authenticate}},
 \code{Collect}, and \code{\link{Create}} workflow.
 
-Refer to \code{\link{Collect.search.twitter}}, \code{\link{Collect.timeline.twitter}},
-\code{\link{Collect.youtube}}, \code{\link{Collect.thread.reddit}}, \code{\link{Collect.listing.reddit}} and
+Refer to \code{\link{Collect.search.mastodon}}, \code{\link{Collect.thread.mastodon}},
+\code{\link{Collect.youtube}}, \code{\link{Collect.thread.reddit}}, \code{\link{Collect.listing.reddit}},
+\code{\link{Collect.search.twitter}}, \code{\link{Collect.timeline.twitter}} and
 \code{\link{Collect.web}} for parameters and usage.
 }

@@ -4,8 +4,9 @@
 #'   creating networks for further analysis. \code{Collect} is the second step of the \code{\link{Authenticate}},
 #'   \code{Collect}, and \code{\link{Create}} workflow.
 #'
-#'   Refer to \code{\link{Collect.search.twitter}}, \code{\link{Collect.timeline.twitter}},
-#'   \code{\link{Collect.youtube}}, \code{\link{Collect.thread.reddit}}, \code{\link{Collect.listing.reddit}} and
+#'   Refer to \code{\link{Collect.search.mastodon}}, \code{\link{Collect.thread.mastodon}},
+#'   \code{\link{Collect.youtube}}, \code{\link{Collect.thread.reddit}}, \code{\link{Collect.listing.reddit}},
+#'   \code{\link{Collect.search.twitter}}, \code{\link{Collect.timeline.twitter}} and
 #'   \code{\link{Collect.web}} for parameters and usage.
 #'
 #' @param credential A \code{credential} object generated from \code{Authenticate}.
@@ -126,4 +127,11 @@ Collect.listing <- function(credential, endpoint, ...) {
 #' @export
 Collect.listing.default <- function(credential, endpoint, ...) {
   stop("Unknown social media credential passed to collect listing data", call. = FALSE)
+}
+
+#' @noRd
+#' @method Collect mastodon
+#' @export
+Collect.mastodon <- function(credential, endpoint, ...) {
+  UseMethod("Collect.search", credential)
 }
