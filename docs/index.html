@@ -85,6 +85,20 @@
       </a>
     </li>
     <li>
+      <a href="https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml" class="external-link">
+        <span class="far fa-file-alt"></span>
+         
+        Hyperlink Networks with vosonSML
+      </a>
+    </li>
+    <li>
+      <a href="articles/Twitter-Usage.html">
+        <span class="far fa-file-alt"></span>
+         
+        Twitter Usage
+      </a>
+    </li>
+    <li>
       <a href="https://vosonlab.github.io/posts/2022-06-05-egocentric-networks-from-twitter-timelines" class="external-link">
         <span class="far fa-file-alt"></span>
          
@@ -96,13 +110,6 @@
         <span class="far fa-file-alt"></span>
          
         Testing the bot status of users in Twitter networks collected via vosonSML
-      </a>
-    </li>
-    <li>
-      <a href="https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml" class="external-link">
-        <span class="far fa-file-alt"></span>
-         
-        Hyperlink Networks with vosonSML
       </a>
     </li>
   </ul>
@@ -177,7 +184,7 @@
 <li>
 <code>verbose</code>: most <code>vosonSML</code> functions accept a verbosity parameter that is now set to <code>FALSE</code> by default. When <code>FALSE</code> functions will run silently unless there is an error. If set to <code>TRUE</code> then progress and summary information for the function will be printed to the console.</li>
 <li>
-<code>writeToFile</code>: <code>vosonSML</code> <code>Collect</code> functions accept a write to file parameter. When set <code>TRUE</code> the collected data will be saved to a file in either the working directory or if set the <code>voson.data</code> directory. The file will be saved as a RDS file with a datetime generated name in the following format: <code>YYYY-MM-DD_HHMMSS-XXXXXXData.rds</code>. A log file of same name but with a <code>.txt</code> extension will also be written containing collection parameters and results. <code>writeToFile</code> can also be used with the <code>Graph</code> function.</li>
+<code>writeToFile</code>: <code>vosonSML</code> <code><a href="reference/Collect.html">Collect()</a></code> functions accept a write to file parameter. When set <code>TRUE</code> the collected data will be saved to a file in either the working directory or if set the <code>voson.data</code> directory. The file will be saved as a RDS file with a datetime generated name in the following format: <code>YYYY-MM-DD_HHMMSS-XXXXXXData.rds</code>. A log file of same name but with a <code>.txt</code> extension will also be written containing collection parameters and results. <code>writeToFile</code> can also be used with the <code><a href="reference/Graph.html">Graph()</a></code> function.</li>
 </ul>
 <p>The following environment options can also be used:</p>
 <ul>
@@ -203,7 +210,8 @@
 <span><span class="va">auth_yt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"~/.auth_yt"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="mastodon-usage">Mastodon Usage<a class="anchor" aria-label="anchor" href="#mastodon-usage"></a>
+<h3 id="mastodon-usage">
+<a name="mastodon-usage"></a>Mastodon Usage<a class="anchor" aria-label="anchor" href="#mastodon-usage"></a>
 </h3>
 <p>This implementation of <code>mastodon</code> collection uses the <code>rtoot</code> package and is most suited to collecting public threads or posts.</p>
 <div class="section level4">
@@ -353,7 +361,8 @@
 </div>
 </div>
 <div class="section level3">
-<h3 id="youtube-usage">YouTube Usage<a class="anchor" aria-label="anchor" href="#youtube-usage"></a>
+<h3 id="youtube-usage">
+<a name="youtube-usage"></a>YouTube Usage<a class="anchor" aria-label="anchor" href="#youtube-usage"></a>
 </h3>
 <div class="section level4">
 <h4 id="authenticate-and-collect-comments-from-youtube-videos">Authenticate and Collect comments from youtube videos<a class="anchor" aria-label="anchor" href="#authenticate-and-collect-comments-from-youtube-videos"></a>
@@ -452,7 +461,8 @@
 </div>
 </div>
 <div class="section level3">
-<h3 id="reddit-usage">Reddit Usage<a class="anchor" aria-label="anchor" href="#reddit-usage"></a>
+<h3 id="reddit-usage">
+<a name="reddit-usage"></a>Reddit Usage<a class="anchor" aria-label="anchor" href="#reddit-usage"></a>
 </h3>
 <p>The reddit API end-point used by <code>vosonSML</code> does not require authentication but an <code>Authenticate</code> object is still used to set up the collection and creation operations as part of a reddit workflow.</p>
 <div class="section level4">
@@ -577,7 +587,8 @@
 </div>
 </div>
 <div class="section level3">
-<h3 id="hyperlink-usage">Hyperlink Usage<a class="anchor" aria-label="anchor" href="#hyperlink-usage"></a>
+<h3 id="hyperlink-usage">
+<a name="hyperlink-usage"></a>Hyperlink Usage<a class="anchor" aria-label="anchor" href="#hyperlink-usage"></a>
 </h3>
 <div class="section level4">
 <h4 id="authenticate-and-collect-from-web-sites">Authenticate and Collect from web sites<a class="anchor" aria-label="anchor" href="#authenticate-and-collect-from-web-sites"></a>
@@ -620,260 +631,14 @@
 </div>
 </div>
 <div class="section level3">
-<h3 id="twitter-usage">Twitter Usage<a class="anchor" aria-label="anchor" href="#twitter-usage"></a>
+<h3 id="twitter-usage">
+<a name="twitter-usage"></a>Twitter Usage<a class="anchor" aria-label="anchor" href="#twitter-usage"></a>
 </h3>
-<hr>
 <blockquote>
 <p><strong>Note</strong></p>
-<p>At this time we are unable to maintain the Twitter collection features of <code>vosonSML</code> and advise that the following functions may no longer work with recent updates to the Twitter API. If problems are encountered we suggest trying to collect data with the <code>rtweet</code> package and using the <code>vosonSML</code> function <a href="#twitter-import">ImportRtweet</a> to import data.</p>
+<p>At this time we are unable to maintain Twitter collection features and advise that the <code>vosonSML</code> Twitter functions may no longer work with recent updates to the Twitter API. If problems are encountered we suggest trying to collect data with the <code>rtweet</code> package and using the <code>vosonSML</code> function <a href="https://vosonlab.github.io/vosonSML/articles/Twitter-Usage.html#twitter-import" class="external-link">ImportRtweet</a> to import data.</p>
 </blockquote>
-<p>The Twitter features of this version of vosonSML require rtweet v1.1 or later.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/packageDescription.html" class="external-link">packageVersion</a></span><span class="op">(</span><span class="st">"rtweet"</span><span class="op">)</span></span>
-<span><span class="co">## [1] '1.1.0'</span></span></code></pre></div>
-<div class="section level4">
-<h4 id="authenticate-with-the-twitter-api">Authenticate with the Twitter API<a class="anchor" aria-label="anchor" href="#authenticate-with-the-twitter-api"></a>
-</h4>
-<p><code>Authenticate</code> is used to create an object that contains a Twitter token for accessing the Twitter API. This can and should be re-used by saving it once to file after calling <code>Authenticate</code> and then by loading it again during future sessions.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vosonlab/vosonSML" class="external-link">vosonSML</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># twitter authentication creates an access token as part of the auth object</span></span>
-<span><span class="va">auth_tw_bearer</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"twitter"</span>, bearerToken <span class="op">=</span> <span class="st">"xxxxxxxxxxxx"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># save the object to file after authenticate</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS</a></span><span class="op">(</span><span class="va">auth_tw_bearer</span>, file <span class="op">=</span> <span class="st">"~/.auth_tw_bearer"</span><span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># load a previously saved auth object for use in collect</span></span>
-<span><span class="va">auth_tw_bearer</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"~/.auth_tw_bearer"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level4">
-<h4 id="collect-tweets-using-a-search-or-from-user-timelines">Collect tweets using a search or from user timelines<a class="anchor" aria-label="anchor" href="#collect-tweets-using-a-search-or-from-user-timelines"></a>
-</h4>
-<p><code>Collect</code> can be used to perform a twitter search with a search term or collect tweets from timelines using user names. The following example collects 100 <code>recent</code> tweets for the hashtag <code>#auspol</code> and creates a dataframe with the collected tweet data.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># set output data directory</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>voson.data <span class="op">=</span> <span class="st">"./vsml-data"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># collect 100 recent tweets for the hashtag #auspol</span></span>
-<span><span class="va">collect_tw</span> <span class="op">&lt;-</span> <span class="va">auth_tw_bearer</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/Collect.html">Collect</a></span><span class="op">(</span>searchTerm <span class="op">=</span> <span class="st">"#auspol"</span>,</span>
-<span>          searchType <span class="op">=</span> <span class="st">"recent"</span>,</span>
-<span>          numTweets <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>          includeRetweets <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>          writeToFile <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>          verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">## Collecting tweets for search query...</span></span>
-<span><span class="co">## Search term: #auspol</span></span>
-<span><span class="co">## Requested 100 tweets of 44900 in this search rate limit.</span></span>
-<span><span class="co">## Rate limit reset: 2023-04-02 07:43:58</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## tweet        | status_id           | created            </span></span>
-<span><span class="co">## --------------------------------------------------------</span></span>
-<span><span class="co">## Latest Obs   | 1642429383460925441 | 2023-04-02 07:30:54</span></span>
-<span><span class="co">## Earliest Obs | 1642428234058039297 | 2023-04-02 07:26:20</span></span>
-<span><span class="co">## Collected 100 tweets.</span></span>
-<span><span class="co">## RDS file written: ./vsml-data/2023-04-02_073109-TwitterData.rds</span></span>
-<span><span class="co">## Done.</span></span></code></pre></div>
-<p>The next example collects the 100 most recent tweets from the <code>@vosonlab</code> and <code>@ANU_SOC</code> user timelines. Note that this method requires the <code>endpoint = "timeline"</code> parameter.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># collect 100 timeline tweets for each specified user</span></span>
-<span><span class="va">collect_tw_tl</span> <span class="op">&lt;-</span> <span class="va">auth_tw_bearer</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/Collect.html">Collect</a></span><span class="op">(</span>endpoint <span class="op">=</span> <span class="st">"timeline"</span>,</span>
-<span>          users <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"vosonlab"</span>, <span class="st">"ANU_SOCY"</span><span class="op">)</span>,</span>
-<span>          numTweets <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>          writeToFile <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>          verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">## Collecting timeline tweets for users...</span></span>
-<span><span class="co">## Requested 200 tweets of 149800 in this search rate limit.</span></span>
-<span><span class="co">## Rate limit reset: 2023-04-02 07:44:01</span></span>
-<span><span class="co">## </span></span>
-<span><span class="co">## tweet        | status_id           | created            </span></span>
-<span><span class="co">## --------------------------------------------------------</span></span>
-<span><span class="co">## Latest Obs   | 1641303253823680512 | 2023-03-30 04:56:04</span></span>
-<span><span class="co">## Earliest Obs | 1437995199636983808 | 2021-09-15 04:22:26</span></span>
-<span><span class="co">## Collected 200 tweets.</span></span>
-<span><span class="co">## RDS file written: ./vsml-data/2023-04-02_073113-TwitterData.rds</span></span>
-<span><span class="co">## Done.</span></span></code></pre></div>
-<p>The output for these methods also lists the earliest and most recent tweet as well as the number of tweets collected.</p>
-<div class="section level5">
-<h5 id="twitter-import">Importing tweets from rtweet<a class="anchor" aria-label="anchor" href="#twitter-import"></a>
-</h5>
-<p>Because <code>vosonSML</code> uses the <code>rtweet</code> package to access and collect tweets data, <code>rtweet</code> data is also able to be easily imported from dataframe or file and then transformed into a <code>Collect</code> object for further use.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">tw_auth_rt</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">readRDS</a></span><span class="op">(</span><span class="st">"~/.rtweet_oauth1a"</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">tweets</span> <span class="op">&lt;-</span> <span class="fu">rtweet</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/rtweet/reference/search_tweets.html" class="external-link">search_tweets</a></span><span class="op">(</span><span class="st">"#auspol"</span>, n <span class="op">=</span> <span class="fl">20</span>, token <span class="op">=</span> <span class="va">tw_auth_rt</span><span class="op">)</span></span>
-<span><span class="va">data_tw</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/ImportRtweet.html">ImportRtweet</a></span><span class="op">(</span><span class="va">tweets</span><span class="op">)</span></span>
-<span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">data_tw</span><span class="op">)</span></span>
-<span><span class="co">## [1] "tweets" "users"</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="va">data_tw</span><span class="op">)</span></span>
-<span><span class="co">## [1] "datasource" "twitter"    "list"</span></span></code></pre></div>
-</div>
-</div>
-<div class="section level4">
-<h4 id="create-twitter-activity-actor-semantic-and-2-mode-network-graphs">Create twitter activity, actor, semantic and 2-mode network graphs<a class="anchor" aria-label="anchor" href="#create-twitter-activity-actor-semantic-and-2-mode-network-graphs"></a>
-</h4>
-<p>The twitter <code>Create</code> function accepts the data from <code>Collect</code> and a type parameter of <code>activity</code>, <code>actor</code>, <code>semantic</code> or <code>twomode</code> that specifies the type of network to create from the collected data. <code>Create</code> produces two dataframes, one for network <code>nodes</code> and one for node relations or <code>edges</code> in the network. These can then undergo further processing as per the <a href="#supplemental-functions">supplemental functions</a> section or be passed to the <code>Graph</code> function that creates an <code>igraph</code> object.</p>
-<div class="section level5">
-<h5 id="activity-network-3">Activity network<a class="anchor" aria-label="anchor" href="#activity-network-3"></a>
-</h5>
-<p>Nodes are tweets and edges are the relationship to other tweets such as <code>reply</code>, <code>retweet</code> or <code>quote</code> tweets.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">net_activity</span> <span class="op">&lt;-</span> <span class="va">collect_tw</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">## Generating twitter activity network...</span></span>
-<span><span class="co">## -------------------------</span></span>
-<span><span class="co">## collected tweets | 100</span></span>
-<span><span class="co">## tweet            | 2 </span></span>
-<span><span class="co">## retweet          | 92</span></span>
-<span><span class="co">## reply            | 4 </span></span>
-<span><span class="co">## quote            | 2 </span></span>
-<span><span class="co">## nodes            | 167</span></span>
-<span><span class="co">## edges            | 100</span></span>
-<span><span class="co">## -------------------------</span></span>
-<span><span class="co">## Done.</span></span></code></pre></div>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">g_activity</span> <span class="op">&lt;-</span> <span class="va">net_activity</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">## Creating igraph network graph...</span></span>
-<span><span class="co">## GRAPHML file written: ./vsml-data/2023-04-02_173114-TwitterActivity.graphml</span></span>
-<span><span class="co">## Done.</span></span>
-<span></span>
-<span><span class="va">g_activity</span></span>
-<span><span class="co">## IGRAPH 5943f8d DN-- 167 100 -- </span></span>
-<span><span class="co">## + attr: type (g/c), name (v/c), author_id (v/c), author_screen_name</span></span>
-<span><span class="co">## | (v/c), created_at (v/c), user_id (e/c), screen_name (e/c), created_at</span></span>
-<span><span class="co">## | (e/c), edge_type (e/c)</span></span>
-<span><span class="co">## + edges from 5943f8d (vertex names):</span></span>
-<span><span class="co">##  [1] 1642429383460925441-&gt;1642343694660677632</span></span>
-<span><span class="co">##  [2] 1642429382257147904-&gt;1641392034991726592</span></span>
-<span><span class="co">## + ... omitted several edges</span></span></code></pre></div>
-</div>
-<div class="section level5">
-<h5 id="actor-network-3">Actor network<a class="anchor" aria-label="anchor" href="#actor-network-3"></a>
-</h5>
-<p>Nodes are twitter users and edges are the relationship to other users in the network such as <code>reply</code>, <code>mention</code>, <code>retweet</code> and <code>quote</code> tweets. Mentions can be excluded by setting the parameter <code>inclMentions</code> to <code>FALSE</code>.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">net_actor</span> <span class="op">&lt;-</span> <span class="va">collect_tw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span>, inclMentions <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">## Generating twitter actor network...</span></span>
-<span><span class="co">## -------------------------</span></span>
-<span><span class="co">## collected tweets | 100</span></span>
-<span><span class="co">## tweet            | 2 </span></span>
-<span><span class="co">## retweet          | 92</span></span>
-<span><span class="co">## reply mention    | 1 </span></span>
-<span><span class="co">## reply            | 4 </span></span>
-<span><span class="co">## quote mention    | 3 </span></span>
-<span><span class="co">## quote            | 2 </span></span>
-<span><span class="co">## nodes            | 125</span></span>
-<span><span class="co">## edges            | 104</span></span>
-<span><span class="co">## -------------------------</span></span>
-<span><span class="co">## Done.</span></span></code></pre></div>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">g_actor</span> <span class="op">&lt;-</span> <span class="va">net_actor</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">## Creating igraph network graph...</span></span>
-<span><span class="co">## GRAPHML file written: ./vsml-data/2023-04-02_173115-TwitterActor.graphml</span></span>
-<span><span class="co">## Done.</span></span>
-<span></span>
-<span><span class="va">g_actor</span></span>
-<span><span class="co">## IGRAPH 59a5dc7 DN-- 125 104 -- </span></span>
-<span><span class="co">## + attr: type (g/c), name (v/c), screen_name (v/c), status_id (e/c),</span></span>
-<span><span class="co">## | created_at (e/c), edge_type (e/c)</span></span>
-<span><span class="co">## + edges from 59a5dc7 (vertex names):</span></span>
-<span><span class="co">##  [1] 2849412290         -&gt;2882834947</span></span>
-<span><span class="co">##  [2] 141563430          -&gt;4168028659</span></span>
-<span><span class="co">## + ... omitted several edges</span></span></code></pre></div>
-</div>
-<div class="section level5">
-<h5 id="semantic-network">Semantic network<a class="anchor" aria-label="anchor" href="#semantic-network"></a>
-</h5>
-<p>Nodes are concepts represented as common <code>words</code> and <code>hashtags</code>. Edges represent the occurence of a particular word and a particular hashtag in the same tweet. The semantic network is <code>undirected</code>.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install additional required packages</span></span>
-<span><span class="co"># install.packages("stopwords")</span></span>
-<span></span>
-<span><span class="co"># create a semantic network excluding the hashtag #auspol, include only the</span></span>
-<span><span class="co"># top 10% most frequent words and 20% most frequent hashtags as nodes</span></span>
-<span><span class="va">net_semantic</span> <span class="op">&lt;-</span> <span class="va">collect_tw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span></span>
-<span>    <span class="st">"semantic"</span>,</span>
-<span>    removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span>,</span>
-<span>    termFreq <span class="op">=</span> <span class="fl">10</span>,</span>
-<span>    hashtagFreq <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>    verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">## Generating twitter semantic network...</span></span>
-<span><span class="co">## Removing terms and hashtags: #auspol</span></span>
-<span><span class="co">## -------------------------</span></span>
-<span><span class="co">## retweets                 | 92</span></span>
-<span><span class="co">## tokens                   | 231</span></span>
-<span><span class="co">## removed specified        | 8 </span></span>
-<span><span class="co">## removed users            | 7 </span></span>
-<span><span class="co">## hashtag count            | 9 </span></span>
-<span><span class="co">## hashtags unique          | 9 </span></span>
-<span><span class="co">## term count               | 89</span></span>
-<span><span class="co">## terms unique             | 85</span></span>
-<span><span class="co">## top 20% hashtags n (&gt;=1) | 9 </span></span>
-<span><span class="co">## top 10% terms n (&gt;=1)    | 85</span></span>
-<span><span class="co">## nodes                    | 41</span></span>
-<span><span class="co">## edges                    | 91</span></span>
-<span><span class="co">## -------------------------</span></span>
-<span><span class="co">## Done.</span></span></code></pre></div>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">g_semantic</span> <span class="op">&lt;-</span> <span class="va">net_semantic</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">## Creating igraph network graph...</span></span>
-<span><span class="co">## GRAPHML file written: ./vsml-data/2023-04-02_173115-TwitterSemantic.graphml</span></span>
-<span><span class="co">## Done.</span></span>
-<span></span>
-<span><span class="va">g_semantic</span></span>
-<span><span class="co">## IGRAPH 59de049 UN-B 41 91 -- </span></span>
-<span><span class="co">## + attr: type (g/c), name (v/c), type (v/c), n (v/n), from.type (e/c),</span></span>
-<span><span class="co">## | to.type (e/c), status_id (e/c)</span></span>
-<span><span class="co">## + edges from 59de049 (vertex names):</span></span>
-<span><span class="co">##  [1] immoral     --#assisteddy... immoral     --#vad</span></span>
-<span><span class="co">##  [3] immoral     --#endoflif...   immoral     --#humanrights</span></span>
-<span><span class="co">## + ... omitted several edges</span></span></code></pre></div>
-</div>
-<div class="section level5">
-<h5 id="id_2-mode-network">2-mode network<a class="anchor" aria-label="anchor" href="#id_2-mode-network"></a>
-</h5>
-<p>Nodes are twitter <code>users</code> or <code>hashtags</code>. Edges represent the use of a <code>hashtag</code> or the reference to another <code>user</code> in a tweet. The <code>weighted</code> parameter will add a simple frequency weight column for <code>edges</code>.</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">net_2mode</span> <span class="op">&lt;-</span> <span class="va">collect_tw</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"twomode"</span>, </span>
-<span>         removeTermsOrHashtags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#auspol"</span><span class="op">)</span>,</span>
-<span>         weighted <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>         verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">## Generating twitter 2-mode network...</span></span>
-<span><span class="co">## Removing terms and hashtags: #auspol</span></span>
-<span><span class="co">## -------------------------</span></span>
-<span><span class="co">## collected tweets  | 100</span></span>
-<span><span class="co">## removed specified | 8 </span></span>
-<span><span class="co">## users             | 7 </span></span>
-<span><span class="co">## hashtags          | 9 </span></span>
-<span><span class="co">## nodes             | 22</span></span>
-<span><span class="co">## edges             | 16</span></span>
-<span><span class="co">## -------------------------</span></span>
-<span><span class="co">## Done.</span></span></code></pre></div>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">g_2mode</span> <span class="op">&lt;-</span> <span class="va">net_2mode</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span>writeToFile <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">## Creating igraph network graph...</span></span>
-<span><span class="co">## GRAPHML file written: ./vsml-data/2023-04-02_173115-Twitter2mode.graphml</span></span>
-<span><span class="co">## Done.</span></span>
-<span></span>
-<span><span class="fu">mask</span><span class="op">(</span><span class="va">g_2mode</span><span class="op">)</span></span>
-<span><span class="co">## IGRAPH 59f5de1 DNWB 22 16 -- </span></span>
-<span><span class="co">## + attr: type (g/c), name (v/c), type (v/c), user_id (v/c), screen_name</span></span>
-<span><span class="co">## | (v/c), status_id (e/c), created_at (e/c), is_retweet (e/l), is_quote</span></span>
-<span><span class="co">## | (e/l), is_reply (e/l), weight (e/n)</span></span>
-<span><span class="co">## + edges from 59f5de1 (vertex names):</span></span>
-<span><span class="co">##  [1] @uxxxxxxxxxlg  -&gt;#assisteddy...   @uxxxxxxxxxlg  -&gt;#vad            </span></span>
-<span><span class="co">##  [3] @uxxxxxxxxxlg  -&gt;#endoflif...     @uxxxxxxxxxlg  -&gt;#humanrights    </span></span>
-<span><span class="co">##  [5] @axxxxdo       -&gt;#turnbull        @axxxxdo       -&gt;#murdoch        </span></span>
-<span><span class="co">##  [7] @axxxxdo       -&gt;#media           @cxxxxxxxxbc   -&gt;@cxxxxxxxxxnl</span></span>
-<span><span class="co">## + ... omitted several edges</span></span></code></pre></div>
-</div>
-</div>
+<p>For an overview of <code>vosonSML</code> Twitter functions please refer to the <a href="https://vosonlab.github.io/vosonSML/articles/Twitter-Usage.html" class="external-link">Twitter Usage</a> vignette.</p>
 </div>
 <div class="section level3">
 <h3 id="supplemental-functions">
@@ -883,7 +648,7 @@
 <h4 id="merge-collected-data-together">Merge collected data together<a class="anchor" aria-label="anchor" href="#merge-collected-data-together"></a>
 </h4>
 <p>The <code>Merge</code> and <code>MergeFiles</code> functions allow two or more <code>Collect</code> objects to be merged together provided they are of the same datasource type e.g <code>twitter</code>, <code>youtube</code>.</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># collect data</span></span>
 <span><span class="va">collect_tw_auspol</span> <span class="op">&lt;-</span> <span class="va">auth_tw_bearer</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/Collect.html">Collect</a></span><span class="op">(</span>searchTerm <span class="op">=</span> <span class="st">"#auspol"</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -906,7 +671,7 @@
 </h4>
 <p>The <code>AddText</code> function can be used following the creation of all networks for <code>mastodon</code>, <code>youtube</code>, <code>reddit</code> and <code>twitter</code>. It will add an attribute starting with <code>vosonTxt_</code> to nodes of <code>activity</code> networks and to edges of <code>actor</code> networks. It requires a collected <code>datasource</code> from which to extract text data.</p>
 <p>An additional parameter <code>hashtags</code> is available for <code>twitter</code> networks that will add tweet hashtags as an attribute.</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create activity network</span></span>
 <span><span class="va">net_activity</span> <span class="op">&lt;-</span> <span class="va">collect_tw</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span></span>
 <span></span>
@@ -914,7 +679,7 @@
 <span><span class="va">net_activity</span> <span class="op">&lt;-</span> <span class="va">net_activity</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">collect_tw</span>, hashtags <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## Adding text data to network...Done.</span></span></code></pre></div>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g_activity</span> <span class="op">&lt;-</span> <span class="va">net_activity</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g_activity</span></span>
@@ -931,13 +696,13 @@
 <span><span class="co">## [1] 1642429383460925441-&gt;1642343694660677632</span></span>
 <span><span class="co">## + ... omitted several edges</span></span></code></pre></div>
 <p><code>AddText</code> will also redirect some edges in a youtube <code>actor</code> network by finding user references at the beginning of reply comments text using the <code>repliesFromText</code> parameter. In the following example an edge would be redirected from <code>UserC</code> to <code>UserB</code> by text reference as opposed to <code>UserA</code> who made the top-level comment both users are replying to.</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># video comments</span></span>
 <span><span class="co"># UserA: Great tutorial.</span></span>
 <span><span class="co"># |- UserB: I agree, but it could have had more examples.</span></span>
 <span><span class="co"># |- UserC: @UserB I thought it probably had too many.</span></span></code></pre></div>
 <p>Redirect edge between user nodes <code>C -&gt; A</code> to <code>C -&gt; B</code>.</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create activity network</span></span>
 <span><span class="va">net_actor</span> <span class="op">&lt;-</span> <span class="va">collect_yt</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span></span>
 <span></span>
@@ -952,7 +717,7 @@
 <h4 id="adduserdata-requests-and-adds-user-profile-data-to-networks">AddUserData requests and adds user profile data to networks<a class="anchor" aria-label="anchor" href="#adduserdata-requests-and-adds-user-profile-data-to-networks"></a>
 </h4>
 <p><code>AddUserData</code> adds user profile information from the <code>users</code> dataframe to as many users in a twitter <code>actor</code> and <code>2mode</code> network as possible. If the profile information is not available for referenced users in the collect data then the user id and name will be added to the <code>missing_users</code> dataframe. If the profile metadata is not available in the collect data and the <code>lookupUsers</code> parameter is set then additional twitter API requests will be made to retrieve the missing information.</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add additional twitter user profile info</span></span>
 <span><span class="va">net_actor</span> <span class="op">&lt;-</span> <span class="va">collect_tw</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span></span>
 <span></span>
@@ -975,7 +740,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">net_actor_lookupmeta</span><span class="op">)</span></span>
 <span><span class="co">## [1] "edges"         "nodes"         "missing_users" "lookup_users"</span></span></code></pre></div>
 <p>For reference the <code>AddUserData</code> function will also add a new dataframe to the <code>actor_network</code> network list containing the retrieved user metadata.</p>
-<div class="sourceCode" id="cb44"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g_actor</span> <span class="op">&lt;-</span> <span class="va">net_actor_meta</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g_actor</span></span>
@@ -996,7 +761,7 @@
 <h4 id="addvideodata-requests-and-adds-video-data-to-networks">AddVideoData requests and adds video data to networks<a class="anchor" aria-label="anchor" href="#addvideodata-requests-and-adds-video-data-to-networks"></a>
 </h4>
 <p><code>AddVideoData</code> adds video information as node attributes in youtube <code>actor</code> networks and replaces the video ID nodes with a user (channel owner or publisher). The <code>actorSubOnly</code> parameter can be used to only perform the ID substitution.</p>
-<div class="sourceCode" id="cb45"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># replaces VIDEOID:xxxxxx references in actor network with their publishers</span></span>
 <span><span class="co"># user id (channel ID) and adds additional collected youtube video info to actor</span></span>
 <span><span class="co"># network graph as node attributes</span></span>
@@ -1009,7 +774,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">net_actor</span><span class="op">$</span><span class="va">videos</span><span class="op">)</span></span>
 <span><span class="co">## [1] 2</span></span></code></pre></div>
 <p><code>AddVideoData</code> function will also add a new dataframe to the <code>actor_network</code> network list containing the retrieved video information called <code>videos</code>.</p>
-<div class="sourceCode" id="cb46"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g_actor</span> <span class="op">&lt;-</span> <span class="va">net_actor</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g_actor</span></span>
@@ -1034,7 +799,7 @@
 <div class="section level2">
 <h2 id="special-thanks">Special thanks<a class="anchor" aria-label="anchor" href="#special-thanks"></a>
 </h2>
-<p>This package would not be possible without key packages by other authors in the R community, particularly: <a href="https://github.com/Rdatatable/data.table" class="external-link">data.table</a>, <a href="https://github.com/tidyverse/dplyr" class="external-link">dplyr</a>, <a href="https://github.com/r-lib/httr" class="external-link">httr</a>, <a href="https://github.com/igraph/rigraph" class="external-link">igraph</a>, <a href="https://github.com/ivan-rivera/RedditExtractoR" class="external-link">RedditExtractoR</a>, rtoot, <a href="https://github.com/ropensci/rtweet" class="external-link">rtweet</a> and <a href="https://github.com/juliasilge/tidytext" class="external-link">tidytext</a>.</p>
+<p>This package would not be possible without a number of excellent packages created by others in the R community, we would especially like to thank the authors of the <a href="https://github.com/Rdatatable/data.table" class="external-link">data.table</a>, <a href="https://github.com/tidyverse/dplyr" class="external-link">dplyr</a>, <a href="https://github.com/r-lib/httr" class="external-link">httr</a>, <a href="https://github.com/igraph/rigraph" class="external-link">igraph</a>, <a href="https://github.com/ivan-rivera/RedditExtractoR" class="external-link">RedditExtractoR</a>, <a href="https://gesistsa.github.io/rtoot/" class="external-link">rtoot</a>, <a href="https://github.com/ropensci/rtweet" class="external-link">rtweet</a> and <a href="https://github.com/juliasilge/tidytext" class="external-link">tidytext</a> packages.</p>
 </div>
 <div class="section level2">
 <h2 id="code-of-conduct">Code of Conduct<a class="anchor" aria-label="anchor" href="#code-of-conduct"></a>

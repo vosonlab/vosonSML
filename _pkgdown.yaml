@@ -36,14 +36,17 @@ navbar:
       - text: "Introduction to vosonSML"
         href: articles/Intro-to-vosonSML.html
         icon: far fa-file-alt
+      - text: "Hyperlink Networks with vosonSML"
+        href: https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml
+        icon: far fa-file-alt
+      - text: "Twitter Usage"
+        href: articles/Twitter-Usage.html
+        icon: far fa-file-alt
       - text: "Egocentric Networks from Twitter timelines"
         href: https://vosonlab.github.io/posts/2022-06-05-egocentric-networks-from-twitter-timelines
         icon: far fa-file-alt      
       - text: "Testing the bot status of users in Twitter networks collected via vosonSML"
         href: https://vosonlab.github.io/posts/2021-10-01-testing-bot-status-of-twitter-users
-        icon: far fa-file-alt
-      - text: "Hyperlink Networks with vosonSML"
-        href: https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml
         icon: far fa-file-alt
     vosonlab:
       icon: fa-flask fa-lg
