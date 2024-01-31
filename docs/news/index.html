@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.34</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.34.1</span>
       </span>
     </div>
 
@@ -118,14 +118,21 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.34" id="vosonsml-034">vosonSML 0.34<a class="anchor" aria-label="anchor" href="#vosonsml-034"></a></h2>
+<h2 class="page-header" data-toc-text="0.34.1" id="vosonsml-0341">vosonSML 0.34.1<a class="anchor" aria-label="anchor" href="#vosonsml-0341"></a></h2>
 <div class="section level3">
-<h3 id="major-changes-0-34">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-34"></a></h3>
+<h3 id="minor-changes-0-34-1">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-34-1"></a></h3>
+<ul><li>Added a parameter to <code>Mastodon</code> network <code><a href="../reference/Create.html">Create()</a></code> function named <code>subtype</code> for creating variations to the <code>activity</code> and <code>actor</code> networks. For the <code>activity</code> network a <code>subtype = tag</code> parameter can be used to create a <code>tag</code> network of post tags that are colocated. For the <code>actor</code> network a <code>subtype = server</code> parameter can be used to create a <code>server</code> network, which is an <code>actor</code> network reduced to server associations.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="page-header" data-toc-text="0.34.0" id="vosonsml-0340">vosonSML 0.34.0<a class="anchor" aria-label="anchor" href="#vosonsml-0340"></a></h2>
+<div class="section level3">
+<h3 id="major-changes-0-34-0">Major Changes<a class="anchor" aria-label="anchor" href="#major-changes-0-34-0"></a></h3>
 <ul><li>Added <code>Mastodon</code> authentication, collection and network creation. There are two options for <code>Mastodon</code> collection, a hashtag search for global or local server timeline posts that is optionally authenticated: <code><a href="../reference/Collect.search.mastodon.html">Collect.search.mastodon()</a></code>, and a public thread collection function using input URL’s that is similar to <code>Reddit</code> thread collection that requires no authentication: <code><a href="../reference/Collect.thread.mastodon.html">Collect.thread.mastodon()</a></code>. To access these methods via <code>Collect</code> an <code>endpoint = "search"</code> or <code>endpoint = "thread"</code> parameter should be passed to the functions.</li>
 <li>The <code>Mastodon</code> authentication and collection uses the <code>rtoot</code> package and a function has been created for importing <code>rtoot</code> data into <code>vosonSML</code> called <code>ImportRtoot</code>. Imported data can be passed as input to the <code>Create</code> network functions.</li>
 </ul></div>
 <div class="section level3">
-<h3 id="minor-changes-0-34">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-34"></a></h3>
+<h3 id="minor-changes-0-34-0">Minor Changes<a class="anchor" aria-label="anchor" href="#minor-changes-0-34-0"></a></h3>
 <ul><li>Changed default <code>Reddit</code> request wait time range from 3 to 5 seconds, to 6 to 8 seconds to avoid a proposed platform rate limit of 10 requests per minute. This value can still be manually set using the <code>waitTime = c(min, max)</code> wait time range parameter.</li>
 </ul></div>
 </div>
@@ -288,7 +295,7 @@
 <li>New parameters have been added to <code>Create.semantic.twitter</code>:
 <ul><li>Numbers and urls can be removed or included from the term list using <code>removeNumbers</code> and <code>removeUrls</code>, default value is <code>TRUE</code>.</li>
 <li>The <code>assoc</code> parameter has been added to choose which node associations or ties to include in the network. The default value is <code>"limited"</code> and includes only ties between most frequently occurring hashtags and terms in tweets. A value of <code>full</code> will also include ties between most frequently occurring hashtags and hashtags, and terms with terms creating a more densely connected network.</li>
-<li>Parameters to specify <code>stopwords</code> language e.g <code>stopwordsLang = "en"</code> and source e.g <code>stopwordsSrc = "smart"</code> have been added. These correspond to the <code>language</code> and <code>source</code> parameters of the <code><a href="https://rdrr.io/pkg/tidytext/man/get_stopwords.html" class="external-link">tidytext::get_stopwords</a></code> function. The <code>stopwords</code> default value is <code>TRUE</code>.</li>
+<li>Parameters to specify <code>stopwords</code> language e.g <code>stopwordsLang = "en"</code> and source e.g <code>stopwordsSrc = "smart"</code> have been added. These correspond to the <code>language</code> and <code>source</code> parameters of the <code>tidytext::get_stopwords</code> function. The <code>stopwords</code> default value is <code>TRUE</code>.</li>
 </ul></li>
 <li>The network produced by the <code>Create.twomode.twitter</code> function is weighted by default but can be disabled by setting the new <code>weighted</code> parameter to <code>FALSE</code>.</li>
 <li>Renamed the <code>replies_from_text</code> parameter to <code>repliesFromText</code> and <code>at_replies_only</code> to <code>atRepliesOnly</code> in the <code>AddText.actor.youtube</code> function for consistency.</li>

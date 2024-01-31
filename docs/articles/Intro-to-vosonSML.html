@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.34</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.34.1</span>
       </span>
     </div>
 
@@ -151,7 +151,7 @@ National University</h3>
                         <h4 data-toc-skip class="author">Robert Ackland,
 Bryan Gertzel, Francisca Borquez</h4>
             
-            <h4 data-toc-skip class="date">19 October, 2023</h4>
+            <h4 data-toc-skip class="date">01 February, 2024</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/vosonlab/vosonSML/blob/HEAD/vignettes/Intro-to-vosonSML.Rmd" class="external-link"><code>vignettes/Intro-to-vosonSML.Rmd</code></a></small>
       <div class="hidden name"><code>Intro-to-vosonSML.Rmd</code></div>
@@ -407,10 +407,10 @@ network.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r.igraph.org/" class="external-link">igraph</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># remove edges that are not reply edges</span></span>
-<span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/delete_edges.html" class="external-link">delete.edges</a></span><span class="op">(</span><span class="va">actorGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">edge_type</span> <span class="op">!=</span> <span class="st">"reply"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/delete.edges.html" class="external-link">delete.edges</a></span><span class="op">(</span><span class="va">actorGraph</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">actorGraph</span><span class="op">)</span><span class="op">$</span><span class="va">edge_type</span> <span class="op">!=</span> <span class="st">"reply"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># get the giant component</span></span>
-<span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/components.html" class="external-link">clusters</a></span><span class="op">(</span><span class="va">g2</span><span class="op">)</span></span>
+<span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/clusters.html" class="external-link">clusters</a></span><span class="op">(</span><span class="va">g2</span><span class="op">)</span></span>
 <span><span class="va">g2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/subgraph.html" class="external-link">induced_subgraph</a></span><span class="op">(</span><span class="va">g2</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">membership</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.max</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">csize</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># open and write plot to a png file</span></span>
@@ -452,12 +452,12 @@ network, with red nodes indicating those users who tweeted using the
 term “bushfire”.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># remove edges that are not reply edges</span></span>
-<span><span class="va">g3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/delete_edges.html" class="external-link">delete.edges</a></span><span class="op">(</span></span>
+<span><span class="va">g3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/delete.edges.html" class="external-link">delete.edges</a></span><span class="op">(</span></span>
 <span>  <span class="va">actorGraphWithText</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="fu"><a href="https://r.igraph.org/reference/E.html" class="external-link">E</a></span><span class="op">(</span><span class="va">actorGraphWithText</span><span class="op">)</span><span class="op">$</span><span class="va">edge_type</span> <span class="op">!=</span> <span class="st">"reply"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># get the giant component</span></span>
-<span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/components.html" class="external-link">clusters</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span></span>
+<span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/clusters.html" class="external-link">clusters</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span></span>
 <span><span class="va">g3</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/subgraph.html" class="external-link">induced_subgraph</a></span><span class="op">(</span><span class="va">g3</span>, <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">membership</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/which.min.html" class="external-link">which.max</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">csize</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># set node colour based on tweeted bushfires attribute value</span></span>
@@ -479,7 +479,7 @@ software such as <code>igraph</code>, <code>VOSON Dashboard</code> and
 <a href="https://gephi.org/" class="external-link">Gephi</a>:</p>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># save the graph as a graphml file</span></span>
-<span><span class="fu"><a href="https://r.igraph.org/reference/write_graph.html" class="external-link">write.graph</a></span><span class="op">(</span><span class="va">g3</span>, <span class="st">"twitter_reply_gc_bushfires.graphml"</span>, format <span class="op">=</span> <span class="st">"graphml"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://r.igraph.org/reference/write.graph.html" class="external-link">write.graph</a></span><span class="op">(</span><span class="va">g3</span>, <span class="st">"twitter_reply_gc_bushfires.graphml"</span>, format <span class="op">=</span> <span class="st">"graphml"</span><span class="op">)</span></span></code></pre></div>
 <p>Finally, the <code><a href="../reference/AddUserData.html">AddUserData()</a></code> function can be used to
 create additional node attributes from the Twitter profile, for example,
 number of followers and number of tweets authored by the user.</p>
@@ -560,7 +560,7 @@ edges. The following is a visualization of the network, where nodes are
 tweets and tweets mentioning bushfires are indicated in red.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create a subgraph containing nodes of components that have more than 5 nodes</span></span>
-<span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/components.html" class="external-link">clusters</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span></span>
+<span><span class="va">cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/clusters.html" class="external-link">clusters</a></span><span class="op">(</span><span class="va">activityGraph</span><span class="op">)</span></span>
 <span><span class="va">g4</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/subgraph.html" class="external-link">induced_subgraph</a></span><span class="op">(</span></span>
 <span>  <span class="va">activityGraph</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">membership</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/which.html" class="external-link">which</a></span><span class="op">(</span><span class="va">cc</span><span class="op">$</span><span class="va">csize</span> <span class="op">&gt;</span> <span class="fl">5</span><span class="op">)</span><span class="op">)</span></span>
@@ -1454,7 +1454,7 @@ using the <code>rbind</code> function.</p>
 <p>In the examples below or cases that involve large datasets, it can
 sometimes be more efficient or timely to substitute optimized functions
 such as <code><a href="https://dplyr.tidyverse.org/reference/bind_rows.html" class="external-link">dplyr::bind_rows</a></code> for <code>rbind</code> or
-<code><a href="https://Rdatatable.gitlab.io/data.table/reference/rbindlist.html" class="external-link">data.table::rbindlist</a></code> instead of
+<code><a href="https://rdatatable.gitlab.io/data.table/reference/rbindlist.html" class="external-link">data.table::rbindlist</a></code> instead of
 <code>do.call("rbind", list)</code>.</p>
 <div class="section level3">
 <h3 id="merging-from-multiple-collect-operations">Merging from multiple Collect operations<a class="anchor" aria-label="anchor" href="#merging-from-multiple-collect-operations"></a>
@@ -1521,7 +1521,7 @@ following code creates a new node attribute with this name, and sames
 the network as a graphml file:</p>
 <div class="sourceCode" id="cb65"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span><span class="op">$</span><span class="va">vosonCA_tweetedBushfires</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://r.igraph.org/reference/V.html" class="external-link">V</a></span><span class="op">(</span><span class="va">g3</span><span class="op">)</span><span class="op">$</span><span class="va">tweetedBushfires</span></span>
-<span><span class="fu"><a href="https://r.igraph.org/reference/write_graph.html" class="external-link">write.graph</a></span><span class="op">(</span><span class="va">g3</span>, <span class="st">"g3.graphml"</span>, format <span class="op">=</span> <span class="st">"graphml"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://r.igraph.org/reference/write.graph.html" class="external-link">write.graph</a></span><span class="op">(</span><span class="va">g3</span>, <span class="st">"g3.graphml"</span>, format <span class="op">=</span> <span class="st">"graphml"</span><span class="op">)</span></span></code></pre></div>
 <p>The following shows a screenshot of <code>VOSON Dashboard</code> with
 this network loaded and the “tweetedBushfires” attribute has been
 seleced to be reflected in the node colour.</p>

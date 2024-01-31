@@ -4,12 +4,22 @@
 \alias{Create.actor.mastodon}
 \title{Create mastodon actor network}
 \usage{
-\method{Create}{actor.mastodon}(datasource, type, inclMentions = TRUE, verbose = FALSE, ...)
+\method{Create}{actor.mastodon}(
+  datasource,
+  type,
+  subtype = NULL,
+  inclMentions = TRUE,
+  verbose = FALSE,
+  ...
+)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"mastodon"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"actor"}.}
+
+\item{subtype}{Character string. Subtype of actor network to be created. Can be set to \code{"server"}. Default is
+\code{NULL}.}
 
 \item{inclMentions}{Logical. Create edges for users mentioned or tagged in posts. Default is \code{TRUE}.}
 
@@ -28,6 +38,9 @@ created network is directed with edges representing replies.
 \dontrun{
 # create a mastodon actor network
 actor_net <- mastodon_data |> Create("actor")
+
+# create a mastodon server relations network
+actor_net <- mastodon_data |> Create("actor", "server")
 }
 
 }

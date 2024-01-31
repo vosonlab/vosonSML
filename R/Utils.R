@@ -73,13 +73,8 @@ write_output_file <-
       return(NULL)
     }
 
-    if (type == "csv") {
-      stop_req_pkgs(c("readr"))
-    }
-
-    if (datetime) {
-      name <- sys_time_filename(name, type)
-    }
+    if (type == "csv") stop_req_pkgs(c("readr"))
+    if (datetime) name <- sys_time_filename(name, type)
 
     path <- name
 
@@ -113,9 +108,7 @@ write_output_file <-
         msg(paste0(set_path(path), "\n"))
       }
     } else {
-      if (verbose) {
-        msg(paste0("File unable to be written.\n"))
-      }
+      if (verbose) msg(paste0("File unable to be written.\n"))
     }
     
     # write a simple log file
@@ -258,10 +251,8 @@ prompt_and_stop <- function(pkgs, f) {
 # check for required packages and stop with a message if missing
 stop_req_pkgs <- function(pkgs, from = "this function") {
   # load the namespace of pkgs loadedNamespaces()
-  req <-
-    sapply(pkgs, function(x) {
-      requireNamespace(x, quietly = TRUE)
-    })
+  req <- sapply(pkgs, function(x) requireNamespace(x, quietly = TRUE))
+  
   if (any(req == FALSE)) {
     stop(
       paste0(
@@ -347,9 +338,7 @@ lgl_debug <- function(x) {
 check_lgl <- function(x, param = "value") {
   if (!is.null(x)) {
     if (!is.na(x)) {
-      if (is.logical(x)) {
-        return(x)
-      }
+      if (is.logical(x)) return(x)
     }
   }
 
@@ -423,16 +412,14 @@ check_perc <- function(x, param = "value") {
   stop(paste0(param, " must be a number between 0 and 100."), call. = FALSE)
 }
 
-# extract value from dots parameter
+# extract a value from dots parameter
 check_dots <- function(x, ...) {
   as.list(match.call(expand.dots = TRUE))[[x]]
 }
 
 # check is dataframe and n rows
 check_df_n <- function(x) {
-  if (!inherits(x, "data.frame")) {
-    return(-1)
-  }
+  if (!inherits(x, "data.frame")) return(-1)
 
   nrow(x)
 }

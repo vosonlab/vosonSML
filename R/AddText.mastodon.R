@@ -24,8 +24,10 @@
 #' @export
 AddText.activity.mastodon <-
   function(net, data, ...) {
+    if ("tag" %in% class(net)) stop("Network subtype not supported by AddText.", call. = FALSE)
+    
     net$nodes <- net$nodes |>
-      dplyr::left_join(data$posts |> dplyr::select(.data$id, .data$content.text), by = c("id" = "id")) |>
+      dplyr::left_join(data$posts |> dplyr::select(.data$id, .data$content.text), by = c("post.id" = "id")) |>
       dplyr::rename("vosonTxt_post" = "content.text")
     
     class(net) <- union(class(net), c("voson.text"))
@@ -61,6 +63,8 @@ AddText.activity.mastodon <-
 #' @export
 AddText.actor.mastodon <-
   function(net, data, ...) {
+    if ("server" %in% class(net)) stop("Network subtype not supported by AddText.", call. = FALSE)
+    
     net$edges <- net$edges |>
       dplyr::left_join(data$posts |> dplyr::select(.data$id, .data$content.text), by = c("post.id" = "id")) |>
       dplyr::rename("vosonTxt_post" = "content.text")

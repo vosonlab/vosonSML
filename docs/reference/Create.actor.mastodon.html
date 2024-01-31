@@ -18,7 +18,7 @@ created network is directed with edges representing replies."><!-- mathjax --><s
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.34</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.34.1</span>
       </span>
     </div>
 
@@ -126,7 +126,14 @@ created network is directed with edges representing replies.</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for actor.mastodon</span></span>
-<span><span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="va">datasource</span>, <span class="va">type</span>, inclMentions <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span></span>
+<span>  <span class="va">datasource</span>,</span>
+<span>  <span class="va">type</span>,</span>
+<span>  subtype <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  inclMentions <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -137,6 +144,11 @@ created network is directed with edges representing replies.</p>
 
 <dt>type</dt>
 <dd><p>Character string. Type of network to be created, set to <code>"actor"</code>.</p></dd>
+
+
+<dt>subtype</dt>
+<dd><p>Character string. Subtype of actor network to be created. Can be set to <code>"server"</code>. Default is
+<code>NULL</code>.</p></dd>
 
 
 <dt>inclMentions</dt>
@@ -163,6 +175,9 @@ created network is directed with edges representing replies.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
 <span class="r-in"><span><span class="co"># create a mastodon actor network</span></span></span>
 <span class="r-in"><span><span class="va">actor_net</span> <span class="op">&lt;-</span> <span class="va">mastodon_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># create a mastodon server relations network</span></span></span>
+<span class="r-in"><span><span class="va">actor_net</span> <span class="op">&lt;-</span> <span class="va">mastodon_data</span> <span class="op">|&gt;</span> <span class="fu"><a href="Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span>, <span class="st">"server"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

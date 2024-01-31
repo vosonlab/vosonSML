@@ -82,13 +82,8 @@ Collect.search.mastodon <-
     # summary
     if (n_posts > 0) {
 
-      first_post <- df_posts$posts |>
-        dplyr::slice_head(n = 1) |>
-        dplyr::mutate(post = "Latest Obs")
-
-      last_post <- df_posts$posts |>
-        dplyr::slice_tail(n = 1) |>
-        dplyr::mutate(tweet = "Earliest Obs")
+      first_post <- df_posts$posts |> dplyr::slice_head(n = 1) |> dplyr::mutate(post = "Latest Obs")
+      last_post <- df_posts$posts |> dplyr::slice_tail(n = 1) |> dplyr::mutate(post = "Earliest Obs")
 
       df_summary <- dplyr::bind_rows(first_post, last_post) |>
         dplyr::mutate(created = as.character(.data$created_at)) |>

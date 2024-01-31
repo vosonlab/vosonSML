@@ -1,4 +1,12 @@
-# vosonSML 0.34
+# vosonSML 0.34.1
+
+## Minor Changes
+- Added a parameter to `Mastodon` network `Create()` function named `subtype` for creating variations to the
+  `activity` and `actor` networks. For the `activity` network a `subtype = tag` parameter can be used to create a `tag`
+  network of post tags that are colocated. For the `actor` network a `subtype = server` parameter can be used to create
+  a `server` network, which is an `actor` network reduced to server associations.
+  
+# vosonSML 0.34.0
 
 ## Major Changes
 - Added `Mastodon` authentication, collection and network creation. There are two options for `Mastodon` collection, a

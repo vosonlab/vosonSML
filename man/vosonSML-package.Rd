@@ -3,7 +3,6 @@
 \docType{package}
 \name{vosonSML-package}
 \alias{vosonSML-package}
-\alias{_PACKAGE}
 \alias{vosonSML}
 \title{vosonSML: Collecting Social Media Data and Generating Networks for Analysis}
 \description{

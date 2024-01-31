@@ -4,12 +4,15 @@
 \alias{Create.activity.mastodon}
 \title{Create mastodon activity network}
 \usage{
-\method{Create}{activity.mastodon}(datasource, type, verbose = FALSE, ...)
+\method{Create}{activity.mastodon}(datasource, type, subtype = NULL, verbose = FALSE, ...)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"mastodon"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"activity"}.}
+
+\item{subtype}{Character string. Subtype of activity network to be created. Can be set to \code{"tag"}. Default is
+\code{NULL}.}
 
 \item{verbose}{Logical. Output additional information. Default is \code{FALSE}.}
 
@@ -26,6 +29,9 @@ the relationship of posts to one another.
 \dontrun{
 # create a mastodon activity network
 activity_net <- mastodon_data |> Create("activity")
+
+# create a mastodon tag relations network
+activity_net <- mastodon_data |> Create("activity", "tag")
 }
 
 }

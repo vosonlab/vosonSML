@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vosonSML</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.34</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.34.1</span>
       </span>
     </div>
 
@@ -149,7 +149,7 @@
 <div class="section level1">
 <div class="page-header"><h1 id="vosonsml---social-media-lab">vosonSML - Social Media Lab<img src="https://vosonlab.github.io/vosonSML/images/logo.png" width="140px" align="right"><a class="anchor" aria-label="anchor" href="#vosonsml---social-media-lab"></a>
 </h1></div>
-<p><a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="CRAN_Monthly"></a> <a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/vosonSML" alt="CRAN_Total"></a> <a href="https://github.com/vosonlab/vosonSML/releases" class="external-link"><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github" alt="Github_Release"></a> <a href="https://github.com/vosonlab/vosonSML" class="external-link"><img src="https://img.shields.io/static/v1?label=dev&amp;message=v0.34&amp;logo=github" alt="Github_Dev"></a> <a href="https://github.com/vosonlab/vosonSML/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&amp;logo=github" alt="Last_Commit"></a> <a href="https://github.com/vosonlab/vosonSML/actions" class="external-link"><img src="https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg" alt="Build_Status"></a></p>
+<p><a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="CRAN_Monthly"></a> <a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/vosonSML" alt="CRAN_Total"></a> <a href="https://github.com/vosonlab/vosonSML/releases" class="external-link"><img src="https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github" alt="Github_Release"></a> <a href="https://github.com/vosonlab/vosonSML" class="external-link"><img src="https://img.shields.io/static/v1?label=dev&amp;message=v0.34.1&amp;logo=github" alt="Github_Dev"></a> <a href="https://github.com/vosonlab/vosonSML/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&amp;logo=github" alt="Last_Commit"></a> <a href="https://github.com/vosonlab/vosonSML/actions" class="external-link"><img src="https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg" alt="Build_Status"></a></p>
 <p>The <code>vosonSML</code> R package is a suite of easy to use functions for collecting and generating different types of networks from social media data. The package supports the collection of data from the <code>mastodon</code>, <code>youtube</code>, <code>reddit</code>, <code>twitter</code> platforms and <code>hyperlinks</code> from web sites. Networks in the form of node and edge lists can be generated from collected data, supplemented with additional metadata, and used to create graphs for Social Network Analysis.</p>
 <div class="section level2">
 <h2 id="installation-options">Installation Options<a class="anchor" aria-label="anchor" href="#installation-options"></a>
@@ -160,12 +160,12 @@
 <p>Install the most recent release tag via GitHub:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span></span>
-<span>  <span class="st">"https://github.com/vosonlab/vosonSML/releases/download/v0.34/vosonSML-0.34.tar.gz"</span>,</span>
+<span>  <span class="st">"https://github.com/vosonlab/vosonSML/releases/download/v0.34/vosonSML-0.34.1.tar.gz"</span>,</span>
 <span>  repo <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"source"</span><span class="op">)</span></span></code></pre></div>
 <p>Install the latest development version:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># library(remotes)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"vosonlab/vosonSML"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vosonlab/vosonSML"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
@@ -276,29 +276,28 @@
 <span><span class="co"># Collected 120 posts.</span></span>
 <span><span class="co"># Done.</span></span></code></pre></div>
 <p>The next example collects the most recent 100 posts from the <code>mastodon.social</code> server global timeline containing the hashtag <code>#rstats</code>. The global timeline includes posts made by users from <code>mastodon.social</code> as well as posts made by users on its affiliated servers. The global timeline is specified by setting <code>local = FALSE</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mast_data</span> <span class="op">&lt;-</span> <span class="va">mast_auth</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/Collect.html">Collect</a></span><span class="op">(</span></span>
-<span>    endpoint <span class="op">=</span> <span class="st">"search"</span>,</span>
-<span>    instance <span class="op">=</span> <span class="st">"mastodon.social"</span>,</span>
-<span>    local <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    hashtag <span class="op">=</span> <span class="st">"rstats"</span>,</span>
-<span>    numPosts <span class="op">=</span> <span class="fl">100</span>,</span>
-<span>    writeToFile <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>    verbose <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span>  <span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Collecting timeline posts...</span></span>
-<span><span class="co"># Hashtag: rstats</span></span>
-<span><span class="co"># Requested 100 posts</span></span>
-<span><span class="co">#</span></span>
-<span><span class="co"># id                 | created</span></span>
-<span><span class="co"># --------------------------------------------</span></span>
-<span><span class="co"># 111257687564078619 | 2023-10-18 19:33:04</span></span>
-<span><span class="co"># 111245846866572681 | 2023-10-16 17:21:51.425</span></span>
-<span><span class="co"># Collected 120 posts.</span></span>
-<span><span class="co"># RDS file written: ./mast-data/2023-10-18_201339-MastodonData.rds</span></span>
-<span><span class="co"># Done.</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>mast_data <span class="ot">&lt;-</span> mast_auth <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>  <span class="fu">Collect</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>    <span class="at">endpoint =</span> <span class="st">"search"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>    <span class="at">instance =</span> <span class="st">"mastodon.social"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>    <span class="at">local =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>    <span class="at">hashtag =</span> <span class="st">"rstats"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>    <span class="at">numPosts =</span> <span class="dv">100</span>,</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>    <span class="at">writeToFile =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>    <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a>  )</span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>Collecting timeline posts...</span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>Hashtag<span class="sc">:</span> rstats</span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a>Requested <span class="dv">100</span> posts</span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a>id                 <span class="sc">|</span> created            </span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="sc">----------------------------------------</span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="dv">111851761879684588</span> <span class="sc">|</span> <span class="dv">2024-01-31</span> <span class="dv">17</span><span class="sc">:</span><span class="dv">33</span><span class="sc">:</span><span class="dv">57</span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="dv">111839343172130565</span> <span class="sc">|</span> <span class="dv">2024-01-29</span> <span class="dv">12</span><span class="sc">:</span><span class="dv">55</span><span class="sc">:</span><span class="dv">38</span></span>
+<span id="cb7-20"><a href="#cb7-20" tabindex="-1"></a>Collected <span class="dv">120</span> posts.</span>
+<span id="cb7-21"><a href="#cb7-21" tabindex="-1"></a>RDS file written<span class="sc">:</span> <span class="dv">2024-01</span><span class="sc">-</span>31_190125<span class="sc">-</span>MastodonData.rds</span>
+<span id="cb7-22"><a href="#cb7-22" tabindex="-1"></a>Done.</span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="create-mastodon-activity-and-actor-network-graphs">Create mastodon activity and actor network graphs<a class="anchor" aria-label="anchor" href="#create-mastodon-activity-and-actor-network-graphs"></a>
@@ -308,55 +307,91 @@
 <h5 id="activity-network">Activity network<a class="anchor" aria-label="anchor" href="#activity-network"></a>
 </h5>
 <p>Nodes are <code>posts</code> and edges are the relationship to other posts. The only relationship type supported at this time is <code>reply</code> edge.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">net_activity</span> <span class="op">&lt;-</span> <span class="va">mast_data</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">mast_data</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Generating mastodon activity network...</span></span>
-<span><span class="co"># Done.</span></span>
-<span></span>
-<span><span class="co"># IGRAPH 7b1ed0b DN-- 128 13 --</span></span>
-<span><span class="co"># + attr: type (g/c), name (v/c), created_at (v/n), visibility (v/c),</span></span>
-<span><span class="co"># | account.id (v/c), account.username (v/c), account.acct (v/c),</span></span>
-<span><span class="co"># | account.displayname (v/c), tag (v/x), tag_url (v/x),</span></span>
-<span><span class="co"># | reblogs_count (v/n), favourites_count (v/n), replies_count (v/n),</span></span>
-<span><span class="co"># | url (v/c), node_type (v/c), absent (v/l), vosonTxt_post (v/c),</span></span>
-<span><span class="co"># | created_at (e/n), edge_type (e/c)</span></span>
-<span><span class="co"># + edges from 7b1ed0b (vertex names):</span></span>
-<span><span class="co">#  [1] 111257542118730043-&gt;111257406204910121</span></span>
-<span><span class="co">#  [2] 111257399598738707-&gt;111257301774432049</span></span>
-<span><span class="co">#  [3] 111256348652983199-&gt;111256322377193800</span></span>
-<span><span class="co"># + ... omitted several edges</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>net_activity <span class="ot">&lt;-</span> mast_data <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="fu">Create</span>(<span class="st">"activity"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="fu">AddText</span>(mast_data) <span class="sc">|&gt;</span></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>  <span class="fu">Graph</span>()</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># Generating mastodon activity network...</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a><span class="co"># Done.</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>IGRAPH 7cc21ba DN<span class="sc">--</span> <span class="dv">128</span> <span class="dv">12</span> <span class="sc">--</span> </span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">post.created_at</span> (v<span class="sc">/</span>n),</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a><span class="sc">|</span> <span class="fu">post.visibility</span> (v<span class="sc">/</span>c), <span class="fu">account.id</span> (v<span class="sc">/</span>c), account.username</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a><span class="sc">|</span> (v<span class="sc">/</span>c), <span class="fu">account.acct</span> (v<span class="sc">/</span>c), <span class="fu">account.displayname</span> (v<span class="sc">/</span>c),</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a><span class="sc">|</span> <span class="fu">user.avatar</span> (v<span class="sc">/</span>c), <span class="fu">post.tags</span> (v<span class="sc">/</span>x), <span class="fu">post.tags.urls</span> (v<span class="sc">/</span>x),</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="sc">|</span> <span class="fu">post.reblogs_count</span> (v<span class="sc">/</span>n), <span class="fu">post.favourites_count</span> (v<span class="sc">/</span>n),</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a><span class="sc">|</span> <span class="fu">post.replies_count</span> (v<span class="sc">/</span>n), <span class="fu">post.url</span> (v<span class="sc">/</span>c), <span class="fu">node_type</span> (v<span class="sc">/</span>c),</span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="sc">|</span> <span class="fu">absent</span> (v<span class="sc">/</span>l), <span class="fu">vosonTxt_post</span> (v<span class="sc">/</span>c), <span class="fu">created_at</span> (e<span class="sc">/</span>n), edge_type</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a><span class="sc">|</span> (e<span class="sc">/</span>c)</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a><span class="sc">+</span> edges from 7cc21ba (vertex names)<span class="sc">:</span></span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">111851737032132167</span><span class="ot">-&gt;</span><span class="dv">111846251799585000</span></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="sc">+</span> ... omitted several edges</span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="tag-network">Tag network<a class="anchor" aria-label="anchor" href="#tag-network"></a>
+</h5>
+<p>A variation on the mastodon <code>activity</code> network is the subtype <code>tag</code>. A tag network is a netork of tags (hashtags) found in posts, and their coocurrence with other tags within same posts used to create relations.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a>net_tag <span class="ot">&lt;-</span> mast_data <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>   <span class="fu">Create</span>(<span class="st">"activity"</span>, <span class="at">subtype =</span> <span class="st">"tag"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>   <span class="fu">Graph</span>()</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>   </span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a><span class="co"># Generating mastodon activity network...</span></span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a><span class="co"># Done.</span></span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>IGRAPH <span class="fl">23e6</span>e20 DN<span class="sc">--</span> <span class="dv">94</span> <span class="dv">624</span> <span class="sc">--</span> </span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">post.id</span> (e<span class="sc">/</span>c), <span class="fu">edge_type</span> (e<span class="sc">/</span>c)</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="sc">+</span> edges from <span class="fl">23e6</span><span class="fu">e20</span> (vertex names)<span class="sc">:</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a> [<span class="dv">1</span>] peerreviewed   <span class="ot">-&gt;</span>apackageaday    peerreviewed   <span class="ot">-&gt;</span>oss            </span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a> [<span class="dv">3</span>] peerreviewed   <span class="ot">-&gt;</span>rstats          apackageaday   <span class="ot">-&gt;</span>peerreviewed   </span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a> [<span class="dv">5</span>] apackageaday   <span class="ot">-&gt;</span>oss             apackageaday   <span class="ot">-&gt;</span>rstats         </span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a> [<span class="dv">7</span>] oss            <span class="ot">-&gt;</span>peerreviewed    oss            <span class="ot">-&gt;</span>apackageaday   </span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a> [<span class="dv">9</span>] oss            <span class="ot">-&gt;</span>rstats          rstats         <span class="ot">-&gt;</span>peerreviewed   </span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>[<span class="dv">11</span>] rstats         <span class="ot">-&gt;</span>apackageaday    rstats         <span class="ot">-&gt;</span>oss            </span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>[<span class="dv">13</span>] rstats         <span class="ot">-&gt;</span>reproducibility reproducibility<span class="ot">-&gt;</span>rstats         </span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>[<span class="dv">15</span>] rshiny         <span class="ot">-&gt;</span>rstats          rstats         <span class="ot">-&gt;</span>rshiny         </span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a><span class="sc">+</span> ... omitted several edges</span></code></pre></div>
 </div>
 <div class="section level5">
 <h5 id="actor-network">Actor network<a class="anchor" aria-label="anchor" href="#actor-network"></a>
 </h5>
 <p>Nodes are authors of collected posts and edges are their relationship to other authors. The only relationship types supported at this time are <code>reply</code> and <code>mention</code> edges.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">net_actor</span> <span class="op">&lt;-</span> <span class="va">mast_data</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span>, inclMentions <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">mast_data</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># Generating mastodon actor network...</span></span>
-<span><span class="co"># Done.</span></span>
-<span></span>
-<span><span class="co"># IGRAPH 7c9ffa7 DN-- 90 19 --</span></span>
-<span><span class="co"># + attr: type (g/c), name (v/c), username (v/c), acct (v/c),</span></span>
-<span><span class="co"># | display_name (v/c), locked (v/l), bot (v/l), discoverable (v/l),</span></span>
-<span><span class="co"># | group (v/l), created_at (v/n), note (v/c), url (v/c), avatar (v/c),</span></span>
-<span><span class="co"># | avatar_static (v/c), header (v/c), header_static (v/c),</span></span>
-<span><span class="co"># | followers_count (v/n), following_count (v/n), statuses_count (v/n),</span></span>
-<span><span class="co"># | last_status_at (v/n), fields (v/x), emojis (v/x), note.text (v/c),</span></span>
-<span><span class="co"># | node_type (v/c), absent (v/l), post.id (e/c), created_at (e/n),</span></span>
-<span><span class="co"># | edge_type (e/c), vosonTxt_post (e/c)</span></span>
-<span><span class="co"># + edges from 7c9ffa7 (vertex names):</span></span>
-<span><span class="co"># [1] 110627608153263800-&gt;109298362307469046</span></span>
-<span><span class="co"># [2] 109300072474546954-&gt;109259949279312293</span></span>
-<span><span class="co"># [3] 109297446967960427-&gt;109297446967960427</span></span>
-<span><span class="co"># + ... omitted several edges</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>net_actor <span class="ot">&lt;-</span> mast_data <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="fu">Create</span>(<span class="st">"actor"</span>, <span class="at">inclMentions =</span> <span class="cn">TRUE</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">AddText</span>(mast_data) <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">Graph</span>()</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a><span class="co"># Generating mastodon actor network...</span></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co"># Done.</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a></span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>IGRAPH c46e984 DN<span class="sc">-</span>B <span class="dv">82</span> <span class="dv">12</span> <span class="sc">--</span> </span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">user.acct</span> (v<span class="sc">/</span>c), user.username</span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="sc">|</span> (v<span class="sc">/</span>c), <span class="fu">user.displayname</span> (v<span class="sc">/</span>c), <span class="fu">user.url</span> (v<span class="sc">/</span>c), user.avatar</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="sc">|</span> (v<span class="sc">/</span>c), <span class="fu">type</span> (v<span class="sc">/</span>c), <span class="fu">absent</span> (v<span class="sc">/</span>l), <span class="fu">post.id</span> (e<span class="sc">/</span>c),</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="sc">|</span> <span class="fu">post.created_at</span> (e<span class="sc">/</span>n), <span class="fu">edge_type</span> (e<span class="sc">/</span>c), <span class="fu">vosonTxt_post</span> (e<span class="sc">/</span>c)</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a><span class="sc">+</span> edges from <span class="fu">c46e984</span> (vertex names)<span class="sc">:</span></span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>[<span class="dv">1</span>] <span class="dv">109610301164555149</span><span class="ot">-&gt;</span><span class="dv">109610301164555149</span></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="sc">+</span> ... omitted several edges</span></code></pre></div>
+</div>
+<div class="section level5">
+<h5 id="server-network">Server network<a class="anchor" aria-label="anchor" href="#server-network"></a>
+</h5>
+<p>A variation on the mastodon <code>actor</code> network is the subtype <code>server</code>. A server network simply groups the users into single actors as represented by their servers, and similarly combines their relations at the server level.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>net_server <span class="ot">&lt;-</span> mast_data <span class="sc">|&gt;</span></span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>   <span class="fu">Create</span>(<span class="st">"actor"</span>, <span class="at">subtype =</span> <span class="st">"server"</span>, <span class="at">verbose =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>   <span class="fu">Graph</span>()</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a><span class="co"># Generating mastodon actor network...</span></span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a><span class="co"># Done.</span></span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a></span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>IGRAPH 845c991 DN<span class="sc">--</span> <span class="dv">23</span> <span class="dv">10</span> <span class="sc">--</span> </span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a><span class="sc">+</span> attr<span class="sc">:</span> <span class="fu">type</span> (g<span class="sc">/</span>c), <span class="fu">name</span> (v<span class="sc">/</span>c), <span class="fu">n</span> (v<span class="sc">/</span>n), <span class="fu">edge_type</span> (e<span class="sc">/</span>c)</span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a><span class="sc">+</span> edges from 845c991 (vertex names)<span class="sc">:</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a> [<span class="dv">1</span>] fosstodon.org  <span class="ot">-&gt;</span>fosstodon.org   fosstodon.org  <span class="ot">-&gt;</span>fosstodon.org  </span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a> [<span class="dv">3</span>] aus.social     <span class="ot">-&gt;</span>aus.social      fosstodon.org  <span class="ot">-&gt;</span>fosstodon.org  </span>
+<span id="cb11-13"><a href="#cb11-13" tabindex="-1"></a> [<span class="dv">5</span>] mastodon.social<span class="ot">-&gt;</span>mastodon.social fosstodon.org  <span class="ot">-&gt;</span>fosstodon.org  </span>
+<span id="cb11-14"><a href="#cb11-14" tabindex="-1"></a> [<span class="dv">7</span>] fosstodon.org  <span class="ot">-&gt;</span>fosstodon.org   fosstodon.org  <span class="ot">-&gt;</span>fosstodon.org  </span>
+<span id="cb11-15"><a href="#cb11-15" tabindex="-1"></a> [<span class="dv">9</span>] mastodon.social<span class="ot">-&gt;</span>hachyderm.io    mstdn.social   <span class="ot">-&gt;</span>mstdn.social</span></code></pre></div>
 </div>
 </div>
 </div>
@@ -368,11 +403,11 @@
 <h4 id="authenticate-and-collect-comments-from-youtube-videos">Authenticate and Collect comments from youtube videos<a class="anchor" aria-label="anchor" href="#authenticate-and-collect-comments-from-youtube-videos"></a>
 </h4>
 <p>YouTube uses an API key rather than an OAuth token and is simply set by calling <code>Authenticate</code> with the key as a parameter.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># youtube authentication sets the api key</span></span>
 <span><span class="va">auth_yt</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"youtube"</span>, apiKey <span class="op">=</span> <span class="st">"xxxxxxxxxxxxxx"</span><span class="op">)</span></span></code></pre></div>
 <p>Once the key is set then <code>Collect</code> can be used to collect the comments from specified youtube videos. The following example collects a maximum of 100 top-level comments and all replies from each of the 2 specified video ID’s. It produces a dataframe with the combined comment data.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">video_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=AQzZNIyjyWM"</span>,</span>
 <span>               <span class="st">"https://www.youtube.com/watch?v=lY0YLDZhT88&amp;t=3152s"</span><span class="op">)</span></span>
 <span></span>
@@ -411,7 +446,7 @@
 <h5 id="activity-network-1">Activity network<a class="anchor" aria-label="anchor" href="#activity-network-1"></a>
 </h5>
 <p>Nodes are video comments and edges represent whether they were directed to the video as a top-level comment or to another comment as a reply comment.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">net_activity</span> <span class="op">&lt;-</span> <span class="va">collect_yt</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## Generating youtube activity network...</span></span>
 <span><span class="co">## -------------------------</span></span>
@@ -423,7 +458,7 @@
 <span><span class="co">## edges                      | 25</span></span>
 <span><span class="co">## -------------------------</span></span>
 <span><span class="co">## Done.</span></span></code></pre></div>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g_activity</span> <span class="op">&lt;-</span> <span class="va">net_activity</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g_activity</span></span>
@@ -441,11 +476,11 @@
 <h5 id="actor-network-1">Actor network<a class="anchor" aria-label="anchor" href="#actor-network-1"></a>
 </h5>
 <p>Nodes are users who have posted comments and the video publishers, edges represent comments directed at other users.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">net_actor</span> <span class="op">&lt;-</span> <span class="va">collect_yt</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## Generating YouTube actor network...</span></span>
 <span><span class="co">## Done.</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g_actor</span> <span class="op">&lt;-</span> <span class="va">net_actor</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g_actor</span></span>
@@ -469,7 +504,7 @@
 <h4 id="collect-a-thread-listing-from-subreddit">Collect a thread listing from subreddit<a class="anchor" aria-label="anchor" href="#collect-a-thread-listing-from-subreddit"></a>
 </h4>
 <p>By using the <code>endpoint = "listing"</code> parameter and a vector of subreddit names, a list of comment threads and their metadata can be collected. The number of list results returned per subreddit can be coarsely specified within 25 items, by using the <code>max</code> parameter.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># specify subreddit names</span></span>
 <span><span class="va">subreddits</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"datascience"</span><span class="op">)</span></span>
 <span></span>
@@ -492,7 +527,7 @@
 <h4 id="collect-reddit-threads">Collect reddit threads<a class="anchor" aria-label="anchor" href="#collect-reddit-threads"></a>
 </h4>
 <p>The reddit <code>Collect</code> function can then be used to collect comments from reddit threads specified by URL’s.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># specify reddit threads to collect by url</span></span>
 <span><span class="va">thread_urls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>  <span class="st">"https://www.reddit.com/r/datascience/comments/wcd8x5/"</span>,</span>
@@ -529,7 +564,7 @@
 <h5 id="activity-network-2">Activity network<a class="anchor" aria-label="anchor" href="#activity-network-2"></a>
 </h5>
 <p>Nodes are original thread posts and comments, edges are replies directed to the original post and to comments made by others.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create an activity network</span></span>
 <span><span class="va">net_activity</span> <span class="op">&lt;-</span> <span class="va">collect_rd</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## Generating reddit activity network...</span></span>
@@ -542,7 +577,7 @@
 <span><span class="co">## edges                     | 528</span></span>
 <span><span class="co">## -------------------------</span></span>
 <span><span class="co">## Done.</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g_activity</span> <span class="op">&lt;-</span> <span class="va">net_activity</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g_activity</span></span>
@@ -559,7 +594,7 @@
 <h5 id="actor-network-2">Actor network<a class="anchor" aria-label="anchor" href="#actor-network-2"></a>
 </h5>
 <p>Nodes are reddit users who have commented on threads and edges represent replies to other users.</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create an actor network</span></span>
 <span><span class="va">net_actor</span> <span class="op">&lt;-</span> <span class="va">collect_rd</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## Generating reddit actor network...</span></span>
@@ -572,7 +607,7 @@
 <span><span class="co">## edges                     | 531</span></span>
 <span><span class="co">## -------------------------</span></span>
 <span><span class="co">## Done.</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g_actor</span> <span class="op">&lt;-</span> <span class="va">net_actor</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g_actor</span></span>
@@ -596,7 +631,7 @@
 <p>The <code>vosonSML</code> hyperlink collection functionality does not require authentication as it is not using any web API’s, however an <code>Authenticate</code> object is still used to set up the collection and creation operations as part of the <code>vosonSML</code> workflow.</p>
 <p>The hyperlink <code>Collect</code> function accepts a dataframe of seed web pages, as well as corresponding <code>type</code> and <code>max_depth</code> parameters for each page.</p>
 <p><em>Please note that this implementalion of hyperlink collection and networks is still in an experimental stage.</em></p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># specify seed web pages and parameters for hyperlink collection</span></span>
 <span><span class="va">seed_pages</span> <span class="op">&lt;-</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>page <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"http://vosonlab.net"</span>,</span>
@@ -622,7 +657,7 @@
 <div class="section level4">
 <h4 id="create-activity-and-actor-networks">Create activity and actor networks<a class="anchor" aria-label="anchor" href="#create-activity-and-actor-networks"></a>
 </h4>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># generate a hyperlink activity network</span></span>
 <span><span class="va">net_activity</span> <span class="op">&lt;-</span> <span class="va">collect_web</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span></span>
 <span></span>
@@ -648,7 +683,7 @@
 <h4 id="merge-collected-data-together">Merge collected data together<a class="anchor" aria-label="anchor" href="#merge-collected-data-together"></a>
 </h4>
 <p>The <code>Merge</code> and <code>MergeFiles</code> functions allow two or more <code>Collect</code> objects to be merged together provided they are of the same datasource type e.g <code>twitter</code>, <code>youtube</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># collect data</span></span>
 <span><span class="va">collect_tw_auspol</span> <span class="op">&lt;-</span> <span class="va">auth_tw_bearer</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/Collect.html">Collect</a></span><span class="op">(</span>searchTerm <span class="op">=</span> <span class="st">"#auspol"</span>, writeToFile <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
@@ -671,7 +706,7 @@
 </h4>
 <p>The <code>AddText</code> function can be used following the creation of all networks for <code>mastodon</code>, <code>youtube</code>, <code>reddit</code> and <code>twitter</code>. It will add an attribute starting with <code>vosonTxt_</code> to nodes of <code>activity</code> networks and to edges of <code>actor</code> networks. It requires a collected <code>datasource</code> from which to extract text data.</p>
 <p>An additional parameter <code>hashtags</code> is available for <code>twitter</code> networks that will add tweet hashtags as an attribute.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create activity network</span></span>
 <span><span class="va">net_activity</span> <span class="op">&lt;-</span> <span class="va">collect_tw</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"activity"</span><span class="op">)</span></span>
 <span></span>
@@ -679,7 +714,7 @@
 <span><span class="va">net_activity</span> <span class="op">&lt;-</span> <span class="va">net_activity</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/AddText.html">AddText</a></span><span class="op">(</span><span class="va">collect_tw</span>, hashtags <span class="op">=</span> <span class="cn">TRUE</span>, verbose <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="co">## Adding text data to network...Done.</span></span></code></pre></div>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g_activity</span> <span class="op">&lt;-</span> <span class="va">net_activity</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g_activity</span></span>
@@ -696,13 +731,13 @@
 <span><span class="co">## [1] 1642429383460925441-&gt;1642343694660677632</span></span>
 <span><span class="co">## + ... omitted several edges</span></span></code></pre></div>
 <p><code>AddText</code> will also redirect some edges in a youtube <code>actor</code> network by finding user references at the beginning of reply comments text using the <code>repliesFromText</code> parameter. In the following example an edge would be redirected from <code>UserC</code> to <code>UserB</code> by text reference as opposed to <code>UserA</code> who made the top-level comment both users are replying to.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># video comments</span></span>
 <span><span class="co"># UserA: Great tutorial.</span></span>
 <span><span class="co"># |- UserB: I agree, but it could have had more examples.</span></span>
 <span><span class="co"># |- UserC: @UserB I thought it probably had too many.</span></span></code></pre></div>
 <p>Redirect edge between user nodes <code>C -&gt; A</code> to <code>C -&gt; B</code>.</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># create activity network</span></span>
 <span><span class="va">net_actor</span> <span class="op">&lt;-</span> <span class="va">collect_yt</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span></span>
 <span></span>
@@ -717,7 +752,7 @@
 <h4 id="adduserdata-requests-and-adds-user-profile-data-to-networks">AddUserData requests and adds user profile data to networks<a class="anchor" aria-label="anchor" href="#adduserdata-requests-and-adds-user-profile-data-to-networks"></a>
 </h4>
 <p><code>AddUserData</code> adds user profile information from the <code>users</code> dataframe to as many users in a twitter <code>actor</code> and <code>2mode</code> network as possible. If the profile information is not available for referenced users in the collect data then the user id and name will be added to the <code>missing_users</code> dataframe. If the profile metadata is not available in the collect data and the <code>lookupUsers</code> parameter is set then additional twitter API requests will be made to retrieve the missing information.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># add additional twitter user profile info</span></span>
 <span><span class="va">net_actor</span> <span class="op">&lt;-</span> <span class="va">collect_tw</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Create.html">Create</a></span><span class="op">(</span><span class="st">"actor"</span><span class="op">)</span></span>
 <span></span>
@@ -740,7 +775,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">net_actor_lookupmeta</span><span class="op">)</span></span>
 <span><span class="co">## [1] "edges"         "nodes"         "missing_users" "lookup_users"</span></span></code></pre></div>
 <p>For reference the <code>AddUserData</code> function will also add a new dataframe to the <code>actor_network</code> network list containing the retrieved user metadata.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g_actor</span> <span class="op">&lt;-</span> <span class="va">net_actor_meta</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g_actor</span></span>
@@ -761,7 +796,7 @@
 <h4 id="addvideodata-requests-and-adds-video-data-to-networks">AddVideoData requests and adds video data to networks<a class="anchor" aria-label="anchor" href="#addvideodata-requests-and-adds-video-data-to-networks"></a>
 </h4>
 <p><code>AddVideoData</code> adds video information as node attributes in youtube <code>actor</code> networks and replaces the video ID nodes with a user (channel owner or publisher). The <code>actorSubOnly</code> parameter can be used to only perform the ID substitution.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># replaces VIDEOID:xxxxxx references in actor network with their publishers</span></span>
 <span><span class="co"># user id (channel ID) and adds additional collected youtube video info to actor</span></span>
 <span><span class="co"># network graph as node attributes</span></span>
@@ -774,7 +809,7 @@
 <span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">net_actor</span><span class="op">$</span><span class="va">videos</span><span class="op">)</span></span>
 <span><span class="co">## [1] 2</span></span></code></pre></div>
 <p><code>AddVideoData</code> function will also add a new dataframe to the <code>actor_network</code> network list containing the retrieved video information called <code>videos</code>.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">g_actor</span> <span class="op">&lt;-</span> <span class="va">net_actor</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/Graph.html">Graph</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">g_actor</span></span>

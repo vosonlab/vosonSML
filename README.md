@@ -4,7 +4,7 @@
 [![CRAN_Monthly](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![CRAN_Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![Github_Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github)](https://github.com/vosonlab/vosonSML/releases)
-[![Github_Dev](https://img.shields.io/static/v1?label=dev&message=v0.34&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Github_Dev](https://img.shields.io/static/v1?label=dev&message=v0.34.1&logo=github)](https://github.com/vosonlab/vosonSML)
 [![Last_Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
 [![Build_Status](https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg)](https://github.com/vosonlab/vosonSML/actions)
 
@@ -27,7 +27,7 @@ Install the most recent release tag via GitHub:
 
 ``` r
 install.packages(
-  "https://github.com/vosonlab/vosonSML/releases/download/v0.34/vosonSML-0.34.tar.gz",
+  "https://github.com/vosonlab/vosonSML/releases/download/v0.34/vosonSML-0.34.1.tar.gz",
   repo = NULL, type = "source")
 ```
 
@@ -208,17 +208,17 @@ mast_data <- mast_auth |>
     verbose = TRUE
   )
 
-# Collecting timeline posts...
-# Hashtag: rstats
-# Requested 100 posts
-#
-# id                 | created
-# --------------------------------------------
-# 111257687564078619 | 2023-10-18 19:33:04
-# 111245846866572681 | 2023-10-16 17:21:51.425
-# Collected 120 posts.
-# RDS file written: ./mast-data/2023-10-18_201339-MastodonData.rds
-# Done.
+Collecting timeline posts...
+Hashtag: rstats
+Requested 100 posts
+
+id                 | created            
+----------------------------------------
+111851761879684588 | 2024-01-31 17:33:57
+111839343172130565 | 2024-01-29 12:55:38
+Collected 120 posts.
+RDS file written: 2024-01-31_190125-MastodonData.rds
+Done.
 ```
 
 #### Create mastodon activity and actor network graphs
@@ -243,18 +243,46 @@ net_activity <- mast_data |>
 # Generating mastodon activity network...
 # Done.
 
-# IGRAPH 7b1ed0b DN-- 128 13 --
-# + attr: type (g/c), name (v/c), created_at (v/n), visibility (v/c),
-# | account.id (v/c), account.username (v/c), account.acct (v/c),
-# | account.displayname (v/c), tag (v/x), tag_url (v/x),
-# | reblogs_count (v/n), favourites_count (v/n), replies_count (v/n),
-# | url (v/c), node_type (v/c), absent (v/l), vosonTxt_post (v/c),
-# | created_at (e/n), edge_type (e/c)
-# + edges from 7b1ed0b (vertex names):
-#  [1] 111257542118730043->111257406204910121
-#  [2] 111257399598738707->111257301774432049
-#  [3] 111256348652983199->111256322377193800
-# + ... omitted several edges
+IGRAPH 7cc21ba DN-- 128 12 -- 
++ attr: type (g/c), name (v/c), post.created_at (v/n),
+| post.visibility (v/c), account.id (v/c), account.username
+| (v/c), account.acct (v/c), account.displayname (v/c),
+| user.avatar (v/c), post.tags (v/x), post.tags.urls (v/x),
+| post.reblogs_count (v/n), post.favourites_count (v/n),
+| post.replies_count (v/n), post.url (v/c), node_type (v/c),
+| absent (v/l), vosonTxt_post (v/c), created_at (e/n), edge_type
+| (e/c)
++ edges from 7cc21ba (vertex names):
+[1] 111851737032132167->111846251799585000
++ ... omitted several edges
+```
+
+##### Tag network
+
+A variation on the mastodon `activity` network is the subtype `tag`. A
+tag network is a netork of tags (hashtags) found in posts, and their
+coocurrence with other tags within same posts used to create relations.
+
+```r
+net_tag <- mast_data |>
+   Create("activity", subtype = "tag", verbose = TRUE) |>
+   Graph()
+   
+# Generating mastodon activity network...
+# Done.
+
+IGRAPH 23e6e20 DN-- 94 624 -- 
++ attr: type (g/c), name (v/c), post.id (e/c), edge_type (e/c)
++ edges from 23e6e20 (vertex names):
+ [1] peerreviewed   ->apackageaday    peerreviewed   ->oss            
+ [3] peerreviewed   ->rstats          apackageaday   ->peerreviewed   
+ [5] apackageaday   ->oss             apackageaday   ->rstats         
+ [7] oss            ->peerreviewed    oss            ->apackageaday   
+ [9] oss            ->rstats          rstats         ->peerreviewed   
+[11] rstats         ->apackageaday    rstats         ->oss            
+[13] rstats         ->reproducibility reproducibility->rstats         
+[15] rshiny         ->rstats          rstats         ->rshiny         
++ ... omitted several edges
 ```
 
 ##### Actor network
@@ -272,20 +300,38 @@ net_actor <- mast_data |>
 # Generating mastodon actor network...
 # Done.
 
-# IGRAPH 7c9ffa7 DN-- 90 19 --
-# + attr: type (g/c), name (v/c), username (v/c), acct (v/c),
-# | display_name (v/c), locked (v/l), bot (v/l), discoverable (v/l),
-# | group (v/l), created_at (v/n), note (v/c), url (v/c), avatar (v/c),
-# | avatar_static (v/c), header (v/c), header_static (v/c),
-# | followers_count (v/n), following_count (v/n), statuses_count (v/n),
-# | last_status_at (v/n), fields (v/x), emojis (v/x), note.text (v/c),
-# | node_type (v/c), absent (v/l), post.id (e/c), created_at (e/n),
-# | edge_type (e/c), vosonTxt_post (e/c)
-# + edges from 7c9ffa7 (vertex names):
-# [1] 110627608153263800->109298362307469046
-# [2] 109300072474546954->109259949279312293
-# [3] 109297446967960427->109297446967960427
-# + ... omitted several edges
+IGRAPH c46e984 DN-B 82 12 -- 
++ attr: type (g/c), name (v/c), user.acct (v/c), user.username
+| (v/c), user.displayname (v/c), user.url (v/c), user.avatar
+| (v/c), type (v/c), absent (v/l), post.id (e/c),
+| post.created_at (e/n), edge_type (e/c), vosonTxt_post (e/c)
++ edges from c46e984 (vertex names):
+[1] 109610301164555149->109610301164555149
++ ... omitted several edges
+```
+
+##### Server network
+
+A variation on the mastodon `actor` network is the subtype `server`. A
+server network simply groups the users into single actors as represented by
+their servers, and similarly combines their relations at the server level.
+
+```r
+net_server <- mast_data |>
+   Create("actor", subtype = "server", verbose = TRUE) |>
+   Graph()
+
+# Generating mastodon actor network...
+# Done.
+
+IGRAPH 845c991 DN-- 23 10 -- 
++ attr: type (g/c), name (v/c), n (v/n), edge_type (e/c)
++ edges from 845c991 (vertex names):
+ [1] fosstodon.org  ->fosstodon.org   fosstodon.org  ->fosstodon.org  
+ [3] aus.social     ->aus.social      fosstodon.org  ->fosstodon.org  
+ [5] mastodon.social->mastodon.social fosstodon.org  ->fosstodon.org  
+ [7] fosstodon.org  ->fosstodon.org   fosstodon.org  ->fosstodon.org  
+ [9] mastodon.social->hachyderm.io    mstdn.social   ->mstdn.social
 ```
 
 ### <a name="youtube-usage"/>YouTube Usage

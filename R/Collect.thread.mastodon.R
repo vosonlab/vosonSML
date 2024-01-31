@@ -48,13 +48,8 @@ Collect.thread.mastodon <-
     # summary
     if (n_posts > 0) {
       
-      first_post <- threads_df$posts |>
-        dplyr::slice_head(n = 1) |>
-        dplyr::mutate(post = "Latest Obs")
-      
-      last_post <- threads_df$posts |>
-        dplyr::slice_tail(n = 1) |>
-        dplyr::mutate(tweet = "Earliest Obs")
+      first_post <- threads_df$posts |> dplyr::slice_head(n = 1) |> dplyr::mutate(post = "Latest Obs")
+      last_post <- threads_df$posts |> dplyr::slice_tail(n = 1) |> dplyr::mutate(post = "Earliest Obs")
       
       df_summary <- dplyr::bind_rows(first_post, last_post) |>
         dplyr::mutate(created = as.character(.data$created_at)) |>

@@ -41,19 +41,6 @@ Create.default <- function(datasource, type, ...) {
       stop("Datasource passed to Create is invalid or empty.", call. = FALSE)
     }
   }
-  # if (is.list(datasource) && ("tweets" %in% names(datasource))) {
-  #   if (check_df_n(datasource$tweets) < 1) {
-  #     stop("Datasource passed to Create is invalid or empty.", call. = FALSE)
-  #   }
-  # } else if (is.list(datasource) && ("posts" %in% names(datasource))) {
-  #   if (check_df_n(datasource$posts) < 1) {
-  #     stop("Datasource passed to Create is invalid or empty.", call. = FALSE)
-  #   }
-  # } else {
-  #   if (check_df_n(datasource) < 1) {
-  #     stop("Datasource passed to Create is invalid or empty.", call. = FALSE)
-  #   }
-  # }
 
   # check if network type is a character string
   if (!is.character(type)) {
