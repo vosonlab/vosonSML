@@ -208,17 +208,17 @@ mast_data <- mast_auth |>
     verbose = TRUE
   )
 
-Collecting timeline posts...
-Hashtag: rstats
-Requested 100 posts
-
-id                 | created            
-----------------------------------------
-111851761879684588 | 2024-01-31 17:33:57
-111839343172130565 | 2024-01-29 12:55:38
-Collected 120 posts.
-RDS file written: 2024-01-31_190125-MastodonData.rds
-Done.
+# Collecting timeline posts...
+# Hashtag: rstats
+# Requested 100 posts
+# 
+# id                 | created            
+# ----------------------------------------
+# 111851761879684588 | 2024-01-31 17:33:57
+# 111839343172130565 | 2024-01-29 12:55:38
+# Collected 120 posts.
+# RDS file written: 2024-01-31_190125-MastodonData.rds
+# Done.
 ```
 
 #### Create mastodon activity and actor network graphs
@@ -243,18 +243,18 @@ net_activity <- mast_data |>
 # Generating mastodon activity network...
 # Done.
 
-IGRAPH 7cc21ba DN-- 128 12 -- 
-+ attr: type (g/c), name (v/c), post.created_at (v/n),
-| post.visibility (v/c), account.id (v/c), account.username
-| (v/c), account.acct (v/c), account.displayname (v/c),
-| user.avatar (v/c), post.tags (v/x), post.tags.urls (v/x),
-| post.reblogs_count (v/n), post.favourites_count (v/n),
-| post.replies_count (v/n), post.url (v/c), node_type (v/c),
-| absent (v/l), vosonTxt_post (v/c), created_at (e/n), edge_type
-| (e/c)
-+ edges from 7cc21ba (vertex names):
-[1] 111851737032132167->111846251799585000
-+ ... omitted several edges
+# IGRAPH 7cc21ba DN-- 128 12 -- 
+# + attr: type (g/c), name (v/c), post.created_at (v/n),
+# | post.visibility (v/c), account.id (v/c), account.username
+# | (v/c), account.acct (v/c), account.displayname (v/c),
+# | user.avatar (v/c), post.tags (v/x), post.tags.urls (v/x),
+# | post.reblogs_count (v/n), post.favourites_count (v/n),
+# | post.replies_count (v/n), post.url (v/c), node_type (v/c),
+# | absent (v/l), vosonTxt_post (v/c), created_at (e/n), edge_type
+# | (e/c)
+# + edges from 7cc21ba (vertex names):
+# [1] 111851737032132167->111846251799585000
+# + ... omitted several edges
 ```
 
 ##### Tag network
@@ -271,18 +271,18 @@ net_tag <- mast_data |>
 # Generating mastodon activity network...
 # Done.
 
-IGRAPH 23e6e20 DN-- 94 624 -- 
-+ attr: type (g/c), name (v/c), post.id (e/c), edge_type (e/c)
-+ edges from 23e6e20 (vertex names):
- [1] peerreviewed   ->apackageaday    peerreviewed   ->oss            
- [3] peerreviewed   ->rstats          apackageaday   ->peerreviewed   
- [5] apackageaday   ->oss             apackageaday   ->rstats         
- [7] oss            ->peerreviewed    oss            ->apackageaday   
- [9] oss            ->rstats          rstats         ->peerreviewed   
-[11] rstats         ->apackageaday    rstats         ->oss            
-[13] rstats         ->reproducibility reproducibility->rstats         
-[15] rshiny         ->rstats          rstats         ->rshiny         
-+ ... omitted several edges
+# IGRAPH 23e6e20 DN-- 94 624 -- 
+# + attr: type (g/c), name (v/c), post.id (e/c), edge_type (e/c)
+# + edges from 23e6e20 (vertex names):
+#  [1] peerreviewed   ->apackageaday    peerreviewed   ->oss            
+#  [3] peerreviewed   ->rstats          apackageaday   ->peerreviewed   
+#  [5] apackageaday   ->oss             apackageaday   ->rstats         
+#  [7] oss            ->peerreviewed    oss            ->apackageaday   
+#  [9] oss            ->rstats          rstats         ->peerreviewed   
+# [11] rstats         ->apackageaday    rstats         ->oss            
+# [13] rstats         ->reproducibility reproducibility->rstats         
+# [15] rshiny         ->rstats          rstats         ->rshiny         
+# + ... omitted several edges
 ```
 
 ##### Actor network
@@ -300,14 +300,14 @@ net_actor <- mast_data |>
 # Generating mastodon actor network...
 # Done.
 
-IGRAPH c46e984 DN-B 82 12 -- 
-+ attr: type (g/c), name (v/c), user.acct (v/c), user.username
-| (v/c), user.displayname (v/c), user.url (v/c), user.avatar
-| (v/c), type (v/c), absent (v/l), post.id (e/c),
-| post.created_at (e/n), edge_type (e/c), vosonTxt_post (e/c)
-+ edges from c46e984 (vertex names):
-[1] 109610301164555149->109610301164555149
-+ ... omitted several edges
+# IGRAPH c46e984 DN-B 82 12 -- 
+# + attr: type (g/c), name (v/c), user.acct (v/c), user.username
+# | (v/c), user.displayname (v/c), user.url (v/c), user.avatar
+# | (v/c), type (v/c), absent (v/l), post.id (e/c),
+# | post.created_at (e/n), edge_type (e/c), vosonTxt_post (e/c)
+# + edges from c46e984 (vertex names):
+# [1] 109610301164555149->109610301164555149
+# + ... omitted several edges
 ```
 
 ##### Server network
@@ -324,14 +324,14 @@ net_server <- mast_data |>
 # Generating mastodon actor network...
 # Done.
 
-IGRAPH 845c991 DN-- 23 10 -- 
-+ attr: type (g/c), name (v/c), n (v/n), edge_type (e/c)
-+ edges from 845c991 (vertex names):
- [1] fosstodon.org  ->fosstodon.org   fosstodon.org  ->fosstodon.org  
- [3] aus.social     ->aus.social      fosstodon.org  ->fosstodon.org  
- [5] mastodon.social->mastodon.social fosstodon.org  ->fosstodon.org  
- [7] fosstodon.org  ->fosstodon.org   fosstodon.org  ->fosstodon.org  
- [9] mastodon.social->hachyderm.io    mstdn.social   ->mstdn.social
+# IGRAPH 845c991 DN-- 23 10 -- 
+# + attr: type (g/c), name (v/c), n (v/n), edge_type (e/c)
+# + edges from 845c991 (vertex names):
+#  [1] fosstodon.org  ->fosstodon.org   fosstodon.org  ->fosstodon.org  
+#  [3] aus.social     ->aus.social      fosstodon.org  ->fosstodon.org  
+#  [5] mastodon.social->mastodon.social fosstodon.org  ->fosstodon.org  
+#  [7] fosstodon.org  ->fosstodon.org   fosstodon.org  ->fosstodon.org  
+#  [9] mastodon.social->hachyderm.io    mstdn.social   ->mstdn.social
 ```
 
 ### <a name="youtube-usage"/>YouTube Usage

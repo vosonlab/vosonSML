@@ -1,3 +1,10 @@
+# vosonSML 0.34.2
+
+## Bug Fixes
+- Fixed a reddit data collection issue for threads that are specified using shorter URL's without the title part and
+  that contain `continue thread` links. These links were resolving to the main thread resulting in duplication of
+  comments and thread structures.
+  
 # vosonSML 0.34.1
 
 ## Minor Changes

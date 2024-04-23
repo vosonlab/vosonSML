@@ -133,12 +133,15 @@ reddit_build_df <- function(threadUrls, sort, waitTime, ua, verbose) {
     while (nrow(extra_threads) > 0) {
       row_i <- 1 # top row
 
+      row_comm_id <- extra_threads[row_i, "comm_id"] |> dplyr::pull()
+      cont_thread_id <- gsub("Listing:t1_", "", row_comm_id)
+      
       # loop protection
-      if (!is.null(prev_value) && extra_threads[row_i, "comm_id"] == prev_value) {
-        msg("Loop protection following continue threads. Exiting.\n")
+      if (!is.null(prev_value) && row_comm_id == prev_value) {
+        msg("Loop protection following continue threads. Breaking loop.\n")
         break
       }
-      prev_value <- extra_threads[row_i, "comm_id"]
+      prev_value <- row_comm_id
 
       Sys.sleep(sample(waitTime, 1))
 
@@ -147,21 +150,26 @@ reddit_build_df <- function(threadUrls, sort, waitTime, ua, verbose) {
       depth <- as.numeric(gsub(".*_(\\d)_\\d$", "\\1", extra_threads[row_i, "structure"]))
       struct <- gsub("_\\d_\\d$", "", extra_threads[row_i, "structure"])
 
-      row_comm_id <- extra_threads[row_i, "comm_id"]
-      cont_thread_id <- gsub("Listing:t1_", "", row_comm_id)
-      
       # set continue thread comment rm flag to true
       branch_df <- branch_df |>
         dplyr::mutate(
           rm = ifelse(.data$comm_id %in% c(cont_thread_id, row_comm_id), TRUE, .data$rm)
         )
-
+      
       # if trailing slash missing from url
       if (!grepl("/$", url)) url <- paste0(url, "/")
       
+      # if url without title part then add comment to the path
+      if (grepl(paste0("/comments/", get_thread_id(url), "/$"), url)) {
+        cont_url <- paste0(url, "comment/", cont_thread_id, "/")
+      } else {
+        cont_url <- paste0(url, cont_thread_id, "/")
+      }
+      
       # get continue thread
+      # added comment to path as prev url format no longer resolved to cont thread
       cont_json <- reddit_data(
-        paste0(url, cont_thread_id),
+        cont_url,
         url_sort,
         waitTime,
         ua,
@@ -183,9 +191,8 @@ reddit_build_df <- function(threadUrls, sort, waitTime, ua, verbose) {
         }
       }
 
-      extra_threads <- extra_threads[-row_i, ] # not needed
-      extra_threads <- dplyr::filter(branch_df, grepl("Listing:", .data$comm_id), .data$rm == FALSE)
-      
+      extra_threads <- extra_threads[-row_i, ] # redundant
+      extra_threads <- branch_df |> dplyr::filter(grepl("Listing:", .data$comm_id), .data$rm == FALSE)
     } # end while
 
     if (!is.null(branch_df) && nrow(branch_df) > 0) {
