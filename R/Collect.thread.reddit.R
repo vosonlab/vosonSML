@@ -102,7 +102,8 @@ Collect.thread.reddit <-
 
     class(threads_df) <- append(c("datasource", "reddit"), class(threads_df))
     
-    meta_log <- c(collect_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
+    # meta_log <- c(collect_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
+    meta_log <- NULL
     
     if (writeToFile) write_output_file(threads_df, "rds", "RedditData", verbose = verbose, log = meta_log)
 

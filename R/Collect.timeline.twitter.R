@@ -160,11 +160,12 @@ Collect.timeline.twitter <-
     }
     msg(paste0("Collected ", n_tweets, " tweets.\n"))
     
-    meta_log <- c(
-      collect_log, "",
-      ifelse(n_tweets > 0, print_summary(df_summary), ""),
-      "", paste0(format(Sys.time(), "%a %b %d %X %Y"))
-    )
+    # meta_log <- c(
+    #   collect_log, "",
+    #   ifelse(n_tweets > 0, print_summary(df_summary), ""),
+    #   "", paste0(format(Sys.time(), "%a %b %d %X %Y"))
+    # )
+    meta_log <- NULL
     
     if (writeToFile) write_output_file(df_tweets, "rds", "TwitterData", verbose = verbose, log = meta_log)
     

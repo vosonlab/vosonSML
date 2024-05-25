@@ -121,7 +121,8 @@ Collect.listing.reddit <-
 
     class(listing_df) <- append(c("listing", "reddit"), class(listing_df))
     
-    meta_log <- c(collect_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
+    # meta_log <- c(collect_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
+    meta_log <- NULL
     
     if (writeToFile) write_output_file(listing_df, "rds", "RedditListing", verbose = verbose, log = meta_log)
 

@@ -67,7 +67,8 @@ Collect.web <-
 
     class(df_results) <- append(c("datasource", "web"), class(df_results))
     
-    meta_log <- c(collect_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
+    # meta_log <- c(collect_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
+    meta_log <- NULL
     
     if (writeToFile) write_output_file(df_results, "rds", "WebData", verbose = verbose, log = meta_log)
 

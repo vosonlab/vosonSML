@@ -60,11 +60,12 @@ Collect.thread.mastodon <-
     }
     msg(paste0("Collected ", n_posts, " posts.\n"))
     
-    meta_log <- c(
-      collect_log, "",
-      ifelse(n_posts > 0, print_summary(df_summary), ""),
-      "", paste0(format(Sys.time(), "%a %b %d %X %Y"))
-    )
+    # meta_log <- c(
+    #   collect_log, "",
+    #   ifelse(n_posts > 0, print_summary(df_summary), ""),
+    #   "", paste0(format(Sys.time(), "%a %b %d %X %Y"))
+    # )
+    meta_log <- NULL
     
     if (writeToFile) write_output_file(threads_df, "rds", "MastodonData", verbose = verbose, log = meta_log)
     

@@ -1,3 +1,9 @@
+# vosonSML 0.34.3
+
+## Bug Fixes
+- Disabled metadata logging that occurs when the `writeToFile` parameter of `Collect` is used. This is due to a new
+  package issue with R version 4.4.
+  
 # vosonSML 0.34.2
 
 ## Bug Fixes

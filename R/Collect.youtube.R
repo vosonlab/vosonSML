@@ -336,7 +336,8 @@ Collect.youtube <-
     
     class(dataCombined) <- append(c("datasource", "youtube"), class(dataCombined))
     
-    meta_log <- c(collect_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
+    # meta_log <- c(collect_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
+    meta_log <- NULL
     
     if (writeToFile) write_output_file(dataCombined, "rds", "YoutubeData", verbose = verbose, log = meta_log)
 
