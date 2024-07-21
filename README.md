@@ -1,9 +1,3 @@
----
-editor_options: 
-  markdown: 
-    wrap: 72
----
-
 # vosonSML - Social Media Lab<img src="https://vosonlab.github.io/vosonSML/images/logo.png" width="140px" align="right"/>
 
 [![Github_Dev](https://img.shields.io/static/v1?label=dev&message=v0.35&logo=github)](https://github.com/vosonlab/vosonSML)
