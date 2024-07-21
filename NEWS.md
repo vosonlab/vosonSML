@@ -1,3 +1,19 @@
+# vosonSML 0.35.0
+
+## Bug Fixes
+- Changed reddit https collection method because of platform issues with the `httr` packages on Windows.
+- Removed failing S3 dispatch methods from the `Graph` function.
+- Replaced `httr` request methods with `httr2` versions.
+
+## Major Changes
+- Removed twitter functions from the package.
+
+## Minor Changes
+- Added `writeToFile` to all methods.
+- Added `Merge` support for mastodon.
+- Changed the `voson.msg` option to `voson.cat` for `cat` message output.
+- Changed `verbose` message technique and `verbose = TRUE` is now the default for most functions.
+
 # vosonSML 0.34.3
 
 ## Bug Fixes

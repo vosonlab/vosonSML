@@ -4,32 +4,22 @@
 #'   \code{Create} is the final step of the \code{\link{Authenticate}}, \code{\link{Collect}} and \code{Create}
 #'   workflow.
 #'
-#'   There are four types of networks that can be created from collected data: \code{activity}, \code{actor},
-#'   \code{twomode} or \code{semantic}.
-#'
-#'   For \code{activity} networks refer to \code{\link{Create.activity.mastodon}}, \code{\link{Create.activity.youtube}}
-#'   \code{\link{Create.activity.reddit}} and \code{\link{Create.activity.twitter}} for parameters and usage.
-#'
-#'   For \code{actor} networks refer to \code{\link{Create.actor.mastodon}}, \code{\link{Create.actor.youtube}},
-#'   \code{\link{Create.actor.reddit}} and \code{\link{Create.actor.twitter}}.
-#'
-#'   For \code{twomode} and \code{semantic} networks refer to \code{\link{Create.twomode.twitter}} and
-#'   \code{\link{Create.semantic.twitter}} functions for parameters and usage respectively.
-#'
 #' @param datasource Collected social media data of class \code{"datasource"} and \code{socialmedia}.
 #' @param type Character string. Type of network to be created, can be \code{"activity"}, \code{"actor"},
 #'   \code{"twomode"} or \code{"semantic"}.
 #' @param ... Optional parameters to pass to functions providied by supporting R packages that are used for social media
 #'   network creation.
+#' @param writeToFile Logical. Write data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @export
-Create <- function(datasource, type, ...) {
+Create <- function(datasource, type, ..., writeToFile = FALSE, verbose = TRUE) {
   # searches the class list of datasource for matching method
   UseMethod("Create", type)
 }
 
 #' @export
-Create.default <- function(datasource, type, ...) {
+Create.default <- function(datasource, type, ..., writeToFile = FALSE, verbose = TRUE) {
   # check datasource
   if (is.list(datasource) & !is.data.frame(datasource)) {
     if (check_df_n(datasource$tweets) < 1 &
@@ -58,7 +48,7 @@ Create.default <- function(datasource, type, ...) {
   class(type) <- append(class(type), type)
 
   # call create again
-  Create(datasource, type, ...)
+  Create(datasource, type, ..., writeToFile = writeToFile, verbose = verbose)
 }
 
 #' @title Create activity networks from social media data
@@ -66,15 +56,13 @@ Create.default <- function(datasource, type, ...) {
 #' @noRd
 #' @method Create activity
 #' @export
-Create.activity <- function(datasource, type, ...) {
-  msg <- f_verbose(check_dots("verbose", ...))
-
+Create.activity <- function(datasource, type, ..., writeToFile = FALSE, verbose = TRUE) {
   UseMethod("Create.activity", datasource)
 }
 
 #' @noRd
 #' @export
-Create.activity.default <- function(datasource, type, ...) {
+Create.activity.default <- function(datasource, type, ..., writeToFile = FALSE, verbose = TRUE) {
   stop("Unknown datasource passed to create activity network.", call. = FALSE)
 }
 
@@ -83,48 +71,12 @@ Create.activity.default <- function(datasource, type, ...) {
 #' @noRd
 #' @method Create actor
 #' @export
-Create.actor <- function(datasource, type, ...) {
-  msg <- f_verbose(check_dots("verbose", ...))
-
+Create.actor <- function(datasource, type, ..., writeToFile = FALSE, verbose = TRUE) {
   UseMethod("Create.actor", datasource)
 }
 
 #' @noRd
 #' @export
-Create.actor.default <- function(datasource, type, ...) {
+Create.actor.default <- function(datasource, type, ..., writeToFile = FALSE, verbose = TRUE) {
   stop("Unknown datasource passed to create.", call. = FALSE)
-}
-
-#' @title Creates a semantic network from social media data
-#'
-#' @noRd
-#' @method Create semantic
-#' @export
-Create.semantic <- function(datasource, type, ...) {
-  msg <- f_verbose(check_dots("verbose", ...))
-
-  UseMethod("Create.semantic", datasource)
-}
-
-#' @noRd
-#' @export
-Create.semantic.default <- function(datasource, type, ...) {
-  stop("Unknown datasource passed to create semantic network.", call. = FALSE)
-}
-
-#' @title Create 2-mode networks from social media data
-#'
-#' @noRd
-#' @method Create twomode
-#' @export
-Create.twomode <- function(datasource, type, ...) {
-  msg <- f_verbose(check_dots("verbose", ...))
-  
-  UseMethod("Create.twomode", datasource)
-}
-
-#' @noRd
-#' @export
-Create.twomode.default <- function(datasource, type, ...) {
-  stop("Unknown datasource passed to create twomode network.", call. = FALSE)
 }

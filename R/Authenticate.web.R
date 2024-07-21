@@ -8,7 +8,8 @@
 #'
 #' @param socialmedia Character string. Identifier for social media API to authenticate, set to \code{"web"}.
 #' @param ... Additional parameters passed to function. Not used in this method.
-#'
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
+#' 
 #' @return A \code{credential} object containing a \code{$auth = NULL} value and social media type descriptor
 #'   \code{$socialmedia} set to \code{"web"}. Object has the class names \code{"credential"} and \code{"web"}.
 #'
@@ -19,7 +20,7 @@
 #' }
 #'
 #' @export
-Authenticate.web <- function(socialmedia, ...) {
+Authenticate.web <- function(socialmedia, ..., verbose = TRUE) {
   # no web authentication required in this version
   credential <- list(socialmedia = "web", auth = NULL)
   class(credential) <- append(class(credential), c("credential", "web"))

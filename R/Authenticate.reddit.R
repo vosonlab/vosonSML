@@ -8,7 +8,8 @@
 #'
 #' @param socialmedia Character string. Identifier for social media API to authenticate, set to \code{"reddit"}.
 #' @param ... Additional parameters passed to function. Not used in this method.
-#'
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
+#' 
 #' @return A \code{credential} object containing a \code{$auth = NULL} value and social media type descriptor
 #'   \code{$socialmedia} set to \code{"reddit"}. Object has the class names \code{"credential"} and \code{"reddit"}.
 #'
@@ -19,7 +20,7 @@
 #' }
 #'
 #' @export
-Authenticate.reddit <- function(socialmedia, ...) {
+Authenticate.reddit <- function(socialmedia, ..., verbose = TRUE) {
   # no reddit authentication required in this version
   credential <- list(socialmedia = "reddit", auth = NULL)
   class(credential) <- append(class(credential), c("credential", "reddit"))

@@ -1,12 +1,32 @@
-title: vosonSML
-url: http://vosonlab.github.io/vosonSML
+home:
+  title: vosonSML - Social Media Lab
+  description: Collect social media data and generate networks for analysis.
 
-# authors:
-#   Bryan Gertzel:
-#     href: "https://vosonlab.net"
-#     html: "<span>VOSON Lab</span>"
+url: https://vosonlab.github.io/vosonSML
+
+authors:
+  Bryan Gertzel:
+    href: "https://vosonlab.net"
+    html: "<span>VOSON Lab</span>"
+  footer:
+    roles: [cre]
+  sidebar:
+    roles: [cre]
+
+template:
+  bootstrap: 5
+  light-switch: true
+  opengraph:
+    image:
+      src: https://vosonlab.github.io/vosonSML/images/logo.png
+      alt: "vosonSML - Social Media Lab"
+    twitter:
+      creator: "@vosonlab"
+      site: "@vosonlab"
+      card: summary_large_image
 
 navbar:
+  bg: primary
   structure:
     left:
     - home
@@ -39,9 +59,6 @@ navbar:
       - text: "Hyperlink Networks with vosonSML"
         href: https://vosonlab.github.io/posts/2021-03-15-hyperlink-networks-with-vosonsml
         icon: far fa-file-alt
-      - text: "Twitter Usage"
-        href: articles/Twitter-Usage.html
-        icon: far fa-file-alt
       - text: "Egocentric Networks from Twitter timelines"
         href: https://vosonlab.github.io/posts/2022-06-05-egocentric-networks-from-twitter-timelines
         icon: far fa-file-alt      
@@ -70,7 +87,6 @@ reference:
   - '`Authenticate.youtube`'
   - '`Authenticate.reddit`'
   - '`Authenticate.web`'
-  - '`Authenticate.twitter`'
 - title: Collect
   contents:
   - '`Collect`'
@@ -80,8 +96,6 @@ reference:
   - '`Collect.listing.reddit`'
   - '`Collect.thread.reddit`'
   - '`Collect.web`'
-  - '`Collect.search.twitter`'
-  - '`Collect.timeline.twitter`'
 - title: Create
   contents:
   - '`Create`'
@@ -89,14 +103,10 @@ reference:
   - '`Create.activity.youtube`'
   - '`Create.activity.reddit`'
   - '`Create.activity.web`'
-  - '`Create.activity.twitter`'
   - '`Create.actor.mastodon`'
   - '`Create.actor.youtube`'
   - '`Create.actor.reddit`'
   - '`Create.actor.web`'
-  - '`Create.actor.twitter`'
-  - '`Create.twomode.twitter`'
-  - '`Create.semantic.twitter`'
 - title: Supplemental
   contents:
   - '`AddText`'
@@ -105,13 +115,6 @@ reference:
   - '`AddText.actor.youtube`'
   - '`AddText.activity.reddit`'
   - '`AddText.actor.reddit`'
-  - '`AddText.activity.twitter`'
-  - '`AddText.actor.twitter`'
-  - '`AddText.semantic.twitter`'
-  - '`AddText.twomode.twitter`'
-  - '`AddUserData`'
-  - '`AddUserData.actor.twitter`'
-  - '`AddUserData.twomode.twitter`'
   - '`AddVideoData`'
   - '`AddVideoData.actor.youtube`'
 - title: Helpers
@@ -120,10 +123,6 @@ reference:
   - '`Merge`'
   - '`MergeFiles`'
   - '`ImportRtoot`'
-  - '`ImportRtweet`'
-  - '`auth_twitter_app`'
-  - '`auth_twitter_dev`'
-  - '`auth_twitter_user`'
 
 toc:
   depth: 2

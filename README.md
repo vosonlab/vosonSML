@@ -1,129 +1,130 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
 # vosonSML - Social Media Lab<img src="https://vosonlab.github.io/vosonSML/images/logo.png" width="140px" align="right"/>
 
+[![Github_Dev](https://img.shields.io/static/v1?label=dev&message=v0.35&logo=github)](https://github.com/vosonlab/vosonSML)
+[![Last_Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
+[![Build_Status](https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg)](https://github.com/vosonlab/vosonSML/actions)
 [![CRAN_Status_Badge](https://www.r-pkg.org/badges/version/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![CRAN_Monthly](https://cranlogs.r-pkg.org/badges/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
 [![CRAN_Total](https://cranlogs.r-pkg.org/badges/grand-total/vosonSML)](https://CRAN.R-project.org/package=vosonSML)
-[![Github_Release](https://img.shields.io/github/release-pre/vosonlab/vosonSML.svg?logo=github)](https://github.com/vosonlab/vosonSML/releases)
-[![Github_Dev](https://img.shields.io/static/v1?label=dev&message=v0.34.3&logo=github)](https://github.com/vosonlab/vosonSML)
-[![Last_Commit](https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&logo=github)](https://github.com/vosonlab/vosonSML/commits/master)
-[![Build_Status](https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg)](https://github.com/vosonlab/vosonSML/actions)
 
-The `vosonSML` R package is a suite of easy to use functions for collecting
-and generating different types of networks from social media data. The package
-supports the collection of data from the `mastodon`, `youtube`, `reddit`,
-`twitter` platforms and `hyperlinks` from web sites. Networks in the form of
-node and edge lists can be generated from collected data, supplemented with
-additional metadata, and used to create graphs for Social Network Analysis.
+The `vosonSML` R package is a suite of easy to use functions for
+collecting and generating different types of networks from social media
+data. The package supports the collection of data from the `mastodon`,
+`reddit`, `youtube` platforms and `hyperlinks` from web sites. Networks
+in the form of node and edge lists can be generated from collected data,
+supplemented with additional metadata, and used to create graphs for
+Social Network Analysis.
 
 ## Installation Options
 
-Install the most recent CRAN release:
+Installing the github version is recommended at this time as CRAN
+releases may occur less frequently.
 
-``` r
-install.packages("vosonSML")
-```
-
-Install the most recent release tag via GitHub:
-
-``` r
-install.packages(
-  "https://github.com/vosonlab/vosonSML/releases/download/v0.34/vosonSML-0.34.1.tar.gz",
-  repo = NULL, type = "source")
-```
-
-Install the latest development version:
+1.  Install the latest github version:
 
 ``` r
 # library(remotes)
 remotes::install_github("vosonlab/vosonSML")
 ```
 
+2.  Install the CRAN release version:
+
+``` r
+install.packages("vosonSML")
+```
+
 ## Getting started
 
-The following usage examples will provide a quick start to using `vosonSML`
-functions. Additionally there is an [Introduction to
+The following usage examples will provide a quick start to using
+`vosonSML` functions. Additionally there is an [Introduction to
 vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html)
-vignette that is a practical and explanatory guide to collecting data and
-creating networks.
+vignette that is a practical and explanatory guide to collecting data
+and creating networks.
 
 ### General Usage
 
 The process of authentication, data collection and creating networks in
-`vosonSML` is expressed with the three functions: *Authenticate*, *Collect*
-and *Create*. The following are some examples of their usage for supported
-social media:
+`vosonSML` is expressed with the three functions: *Authenticate*,
+*Collect* and *Create*. The following are some examples of their usage
+for supported social media:
 
-[Mastodon](#mastodon-usage) \| [YouTube](#youtube-usage) \|
-[Reddit](#reddit-usage) \| [Hyperlink](#hyperlink-usage) \|
-[Twitter](#twitter-usage) \| [Supplemental Functions](#supplemental-functions)
+[Mastodon](#mastodon-usage) \| [Reddit](#reddit-usage) \|
+[YouTube](#youtube-usage) \| [Hyperlink](#hyperlink-usage) \|
+[Supplemental Functions](#supplemental-functions)
 
 ### General Options
 
--   `verbose`: most `vosonSML` functions accept a verbosity parameter that is
-    now set to `FALSE` by default. When `FALSE` functions will run silently
-    unless there is an error. If set to `TRUE` then progress and summary
-    information for the function will be printed to the console.
--   `writeToFile`: `vosonSML` `Collect()` functions accept a write to file
-    parameter. When set `TRUE` the collected data will be saved to a file in
-    either the working directory or if set the `voson.data` directory. The
-    file will be saved as a RDS file with a datetime generated name in the
-    following format: `YYYY-MM-DD_HHMMSS-XXXXXXData.rds`. A log file of same
-    name but with a `.txt` extension will also be written containing
-    collection parameters and results.
-    `writeToFile` can also be used with the `Graph()` function.
+-   `verbose`: most `vosonSML` functions accept a verbosity parameter
+    that is now set to `TRUE` by default. When `FALSE` functions will
+    run silently unless there is a warning or error. If set to `TRUE`
+    then progress and summary information for the function will be
+    printed to the console.
+-   `writeToFile`: `vosonSML` functions accept a write to file
+    parameter. When set `TRUE` the collected data will be saved to a
+    file in either the working directory or a directory set by the
+    `voson.data` option. The file will be saved as a RDS file with a
+    datetime generated name in the following format:
+    `YYYY-MM-DD_HHMMSS-XXXXXX` as a `rds` or `graphml` file.
 
 The following environment options can also be used:
 
 -   `voson.data`: If set to an existing directory path the `writeToFile`
-    output files will be written to that directory instead of the working
-    directory. Can be set using `options(voson.data = "~/vsml-data")` for
-    example, and cleared by assigning a value of `NULL`. Directory paths can
-    be relative to the working directory or full paths.
--   `voson.msg`: If set to `FALSE` then the verbose output of functions will
-    be printed using the base `cat()` function instead of the `message()`
-    function. Set by entering `options(voson.msg = FALSE)`, and clear by
-    assigning a value of `NULL`.
+    output files will be written to that directory instead of the
+    working directory. Can be set using
+    `options(voson.data = "~/vsml-data")` for example, and is cleared by
+    assigning a value of `NULL`. Directory paths can be relative to the
+    working directory e.g. `./data` or full paths.
+-   `voson.cat`: If set to `TRUE` then the verbose output of functions
+    will be printed using the base `cat()` function instead of the
+    `message()` function. Set by entering `options(voson.cat = TRUE)`,
+    and clear by assigning a value of `NULL`.
 
 ### Authentication
 
-Authentication objects generally *only need to be created once* unless your
-credentials change. It is recommended to save your `mastodon`, `youtube` and
-`twitter` authentication objects to file after creation and then load them in
-future sessions.
+Authentication objects generally *only need to be created once* unless
+your credentials change. It is recommended to save your `mastodon` and
+`youtube` authentication objects to file after creation and then load
+them in future sessions.
 
-*Please note in the examples provided that the "\~" notation in paths are
-short-hand for the system to use the users home directory, and the "." at the
-start of file names signifies it as a hidden file on some OS. You can name and
-save objects however you wish.*
+*Please note in the examples provided that the "\~" notation in paths
+are short-hand for the system to use the users home directory, and the
+"." at the start of file names signifies it as a hidden file on some OS.
+You can name and save objects however you wish.*
 
 ``` r
 # youtube data api key
-auth_yt <- Authenticate("youtube", apiKey = "xxxxxxxxxx")
+youtube_auth <- Authenticate("youtube", apiKey = "xxxxxxxxxx")
 
 # save the object after Authenticate
-saveRDS(auth_yt, file = "~/.auth_yt")
+saveRDS(youtube_auth, file = "~/.auth_yt")
 
 # load a previously saved authentication object for use in Collect
-auth_yt <- readRDS("~/.auth_yt")
+youtube_auth <- readRDS("~/.auth_yt")
 ```
 
-### <a name="mastodon-usage"/>Mastodon Usage
+### <a name="mastodon-usage"/>Mastodon Usage {#mastodon-usage}
 
-This implementation of `mastodon` collection uses the `rtoot` package and is
-most suited to collecting public threads or posts.
+This implementation of `mastodon` collection uses the `rtoot` package
+and is most suited to collecting public posts.
 
 #### Collect threads or search for posts from server timelines
 
 `Collect` can be used to collect threads by setting the parameter
-`endpoint = thread` and providing the URL's for the starting post
-of each thread to be collected. A mastodon server does not need to be
+`endpoint = thread` and providing the URL's for the starting post of
+each thread to be collected. A mastodon server does not need to be
 specified, as the function will collect the thread posts from the server
 referenced in each URL.
 
-The following example collects and combines all of the posts from the
-3 threads provided. The result is a named list of two dataframes,
-one containing `posts` and one with the metadata for referenced
-`users` in the collection.
+The following example collects and combines all of the posts from the 3
+threads provided. The result is a named list of two dataframes, one
+containing `posts` and one with the metadata for referenced `users` in
+the collection.
 
 ``` r
 library(vosonSML)
@@ -142,8 +143,7 @@ mast_data <- mast_auth |>
       "https://mastodon.social/@arstechnica/111257425856847171",
       "https://mastodon.social/@arstechnica/111257193332540480"
     ),
-    writeToFile = TRUE,
-    verbose = TRUE
+    writeToFile = TRUE
   )
 
 # Collecting post threads for mastodon urls...
@@ -160,8 +160,8 @@ mast_data <- mast_auth |>
 #### Collect posts or search and collect posts from server timelines
 
 `Collect` with the parameter `endpoint = search` can be used to collect
-a number of the most recent posts, or the most recent posts containing
-a hashtag from server timelines. This function requires a server to be
+a number of the most recent posts, or the most recent posts containing a
+hashtag from server timelines. This function requires a server to be
 specified using the `instance` parameter.
 
 The following example collect the most recent 100 posts made to the
@@ -174,9 +174,7 @@ mast_data <- mast_auth |>
     endpoint = "search",
     instance = "mastodon.social",
     local = TRUE,
-    numPosts = 100,
-    writeToFile = FALSE,
-    verbose = TRUE
+    numPosts = 100
   )
 
 # Collecting timeline posts...
@@ -191,10 +189,10 @@ mast_data <- mast_auth |>
 ```
 
 The next example collects the most recent 100 posts from the
-`mastodon.social` server global timeline containing the hashtag `#rstats`.
-The global timeline includes posts made by users from `mastodon.social` as
-well as posts made by users on its affiliated servers. The global
-timeline is specified by setting `local = FALSE`.
+`mastodon.social` server global timeline containing the hashtag
+`#rstats`. The global timeline includes posts made by users from
+`mastodon.social` as well as posts made by users on its affiliated
+servers. The global timeline is specified by setting `local = FALSE`.
 
 ``` r
 mast_data <- mast_auth |>
@@ -204,8 +202,7 @@ mast_data <- mast_auth |>
     local = FALSE,
     hashtag = "rstats",
     numPosts = 100,
-    writeToFile = TRUE,
-    verbose = TRUE
+    writeToFile = TRUE
   )
 
 # Collecting timeline posts...
@@ -223,20 +220,21 @@ mast_data <- mast_auth |>
 
 #### Create mastodon activity and actor network graphs
 
-The mastodon `Create` function accepts the data from `Collect` and a type
-parameter of `activity` or `actor` that specifies the type of network to
-create from the collected data. `Create` produces two dataframes, one for
-network `nodes` and one for node relations or `edges`. These can then be
-passed to the `Graph` function to produce an `igraph` object.
+The mastodon `Create` function accepts the data from `Collect` and a
+type parameter of `activity` or `actor` that specifies the type of
+network to create from the collected data. `Create` produces two
+dataframes, one for network `nodes` and one for node relations or
+`edges`. These can then be passed to the `Graph` function to produce an
+`igraph` object.
 
 ##### Activity network
 
-Nodes are `posts` and edges are the relationship to other posts. The only
-relationship type supported at this time is `reply` edge.
+Nodes are `posts` and edges are the relationship to other posts. The
+only relationship type supported at this time is `reply` edge.
 
 ``` r
 net_activity <- mast_data |>
-  Create("activity", verbose = TRUE) |>
+  Create("activity") |>
   AddText(mast_data) |>
   Graph()
 
@@ -263,9 +261,9 @@ A variation on the mastodon `activity` network is the subtype `tag`. A
 tag network is a netork of tags (hashtags) found in posts, and their
 coocurrence with other tags within same posts used to create relations.
 
-```r
+``` r
 net_tag <- mast_data |>
-   Create("activity", subtype = "tag", verbose = TRUE) |>
+   Create("activity", subtype = "tag") |>
    Graph()
    
 # Generating mastodon activity network...
@@ -288,12 +286,12 @@ net_tag <- mast_data |>
 ##### Actor network
 
 Nodes are authors of collected posts and edges are their relationship to
-other authors. The only relationship types supported at this time
-are `reply` and `mention` edges.
+other authors. The only relationship types supported at this time are
+`reply` and `mention` edges.
 
 ``` r
 net_actor <- mast_data |>
-  Create("actor", inclMentions = TRUE, verbose = TRUE) |>
+  Create("actor", inclMentions = TRUE) |>
   AddText(mast_data) |>
   Graph()
 
@@ -313,12 +311,13 @@ net_actor <- mast_data |>
 ##### Server network
 
 A variation on the mastodon `actor` network is the subtype `server`. A
-server network simply groups the users into single actors as represented by
-their servers, and similarly combines their relations at the server level.
+server network simply groups the users into single actors as represented
+by their servers, and similarly combines their relations at the server
+level.
 
-```r
+``` r
 net_server <- mast_data |>
-   Create("actor", subtype = "server", verbose = TRUE) |>
+   Create("actor", subtype = "server") |>
    Graph()
 
 # Generating mastodon actor network...
@@ -334,7 +333,7 @@ net_server <- mast_data |>
 #  [9] mastodon.social->hachyderm.io    mstdn.social   ->mstdn.social
 ```
 
-### <a name="youtube-usage"/>YouTube Usage
+### <a name="youtube-usage"/>YouTube Usage {#youtube-usage}
 
 #### Authenticate and Collect comments from youtube videos
 
@@ -346,10 +345,10 @@ calling `Authenticate` with the key as a parameter.
 auth_yt <- Authenticate("youtube", apiKey = "xxxxxxxxxxxxxx")
 ```
 
-Once the key is set then `Collect` can be used to collect the comments from
-specified youtube videos. The following example collects a maximum of 100
-top-level comments and all replies from each of the 2 specified video ID's. It
-produces a dataframe with the combined comment data.
+Once the key is set then `Collect` can be used to collect the comments
+from specified youtube videos. The following example collects a maximum
+of 100 top-level comments and all replies from each of the 2 specified
+video ID's. It produces a dataframe with the combined comment data.
 
 ``` r
 video_url <- c("https://www.youtube.com/watch?v=AQzZNIyjyWM",
@@ -357,8 +356,8 @@ video_url <- c("https://www.youtube.com/watch?v=AQzZNIyjyWM",
 
 collect_yt <- auth_yt |>
   Collect(videoIDs = video_url,
-          maxComments = 100,
-          verbose = TRUE)
+          maxComments = 100)
+          
 ## Collecting comment threads for YouTube videos...
 ## Video 1 of 2
 ## ---------------------------------------------------------------
@@ -385,16 +384,18 @@ collect_yt <- auth_yt |>
 
 #### Create youtube activity and actor network graphs
 
-The youtube `Create` function accepts the data from `Collect` and a network
-type parameter of `activity` or `actor`.
+The youtube `Create` function accepts the data from `Collect` and a
+network type parameter of `activity` or `actor`.
 
 ##### Activity network
 
-Nodes are video comments and edges represent whether they were directed to the
-video as a top-level comment or to another comment as a reply comment.
+Nodes are video comments and edges represent whether they were directed
+to the video as a top-level comment or to another comment as a reply
+comment.
 
 ``` r
-net_activity <- collect_yt |> Create("activity", verbose = TRUE)
+net_activity <- collect_yt |> Create("activity")
+
 ## Generating youtube activity network...
 ## -------------------------
 ## collected YouTube comments | 25
@@ -411,6 +412,7 @@ net_activity <- collect_yt |> Create("activity", verbose = TRUE)
 g_activity <- net_activity |> Graph()
 
 g_activity
+
 ## IGRAPH 5a9fb56 DN-- 27 25 -- 
 ## + attr: type (g/c), name (v/c), video_id (v/c), published_at (v/c),
 ## | updated_at (v/c), author_id (v/c), screen_name (v/c), node_type
@@ -428,7 +430,8 @@ Nodes are users who have posted comments and the video publishers, edges
 represent comments directed at other users.
 
 ``` r
-net_actor <- collect_yt |> Create("actor", verbose = TRUE)
+net_actor <- collect_yt |> Create("actor")
+
 ## Generating YouTube actor network...
 ## Done.
 ```
@@ -437,6 +440,7 @@ net_actor <- collect_yt |> Create("actor", verbose = TRUE)
 g_actor <- net_actor |> Graph()
 
 g_actor
+
 ## IGRAPH 5aad4c4 DN-- 24 27 -- 
 ## + attr: type (g/c), name (v/c), screen_name (v/c), node_type (v/c),
 ## | video_id (e/c), comment_id (e/c), edge_type (e/c)
@@ -447,18 +451,18 @@ g_actor
 ## + ... omitted several edges
 ```
 
-### <a name="reddit-usage"/>Reddit Usage
+### <a name="reddit-usage"/>Reddit Usage {#reddit-usage}
 
-The reddit API end-point used by `vosonSML` does not require authentication
-but an `Authenticate` object is still used to set up the collection and
-creation operations as part of a reddit workflow.
+The reddit API end-point used by `vosonSML` does not require
+authentication but an `Authenticate` object is still used to set up the
+collection and creation operations as part of a reddit workflow.
 
 #### Collect a thread listing from subreddit
 
-By using the `endpoint = "listing"` parameter and a vector of subreddit names,
-a list of comment threads and their metadata can be collected. The number of
-list results returned per subreddit can be coarsely specified within 25 items,
-by using the `max` parameter.
+By using the `endpoint = "listing"` parameter and a vector of subreddit
+names, a list of comment threads and their metadata can be collected.
+The number of list results returned per subreddit can be coarsely
+specified within 25 items, by using the `max` parameter.
 
 ``` r
 # specify subreddit names
@@ -469,6 +473,7 @@ collect_rd_listing <- Authenticate("reddit") |>
   Collect(endpoint = "listing", subreddits = subreddits,
           sort = "top", period = "all", max = 25,
           writeToFile = TRUE, verbose = TRUE)
+
 ## Collecting thread listing for subreddits...
 ## Waiting between 3 and 5 seconds per request.
 ## Request subreddit listing: datascience (max items: 25).
@@ -482,8 +487,8 @@ collect_rd_listing <- Authenticate("reddit") |>
 
 #### Collect reddit threads
 
-The reddit `Collect` function can then be used to collect comments from reddit
-threads specified by URL's.
+The reddit `Collect` function can then be used to collect comments from
+reddit threads specified by URL's.
 
 ``` r
 # specify reddit threads to collect by url
@@ -499,6 +504,7 @@ thread_urls <- collect_rd_listing$permalink |> head(n = 3)
 collect_rd <- Authenticate("reddit") |>
   Collect(threadUrls = thread_urls,
           sort = "best", writeToFile = TRUE, verbose = TRUE)
+
 ## Collecting comment threads for reddit urls...
 ## Waiting between 3 and 5 seconds per thread request.
 ## Request thread: r/datascience (k8nyf8) - sort: best
@@ -515,21 +521,22 @@ collect_rd <- Authenticate("reddit") |>
 ## Done.
 ```
 
-*Please note that because of the API end-point used that `Collect` is limited
-to the first 500 comments per thread (plus 500 for each `continue thread`
-encountered). It is therefore suited to collecting only smaller threads in
-their entirety.*
+*Please note that because of the API end-point used that `Collect` is
+limited to the first 500 comments per thread (plus 500 for each
+`continue thread` encountered). It is therefore suited to collecting
+only smaller threads in their entirety.*
 
 #### Create reddit activity and actor networks
 
 ##### Activity network
 
-Nodes are original thread posts and comments, edges are replies directed to
-the original post and to comments made by others.
+Nodes are original thread posts and comments, edges are replies directed
+to the original post and to comments made by others.
 
 ``` r
 # create an activity network
 net_activity <- collect_rd |> Create("activity", verbose = TRUE)
+
 ## Generating reddit activity network...
 ## -------------------------
 ## collected reddit comments | 528
@@ -546,6 +553,7 @@ net_activity <- collect_rd |> Create("activity", verbose = TRUE)
 g_activity <- net_activity |> Graph()
 
 g_activity
+
 ## IGRAPH 62e8305 DN-- 531 528 -- 
 ## + attr: type (g/c), name (v/c), thread_id (v/c), comm_id (v/c),
 ## | datetime (v/c), ts (v/n), subreddit (v/c), user (v/c), node_type
@@ -564,6 +572,7 @@ replies to other users.
 ``` r
 # create an actor network
 net_actor <- collect_rd |> Create("actor", verbose = TRUE)
+
 ## Generating reddit actor network...
 ## -------------------------
 ## collected reddit comments | 528
@@ -580,6 +589,7 @@ net_actor <- collect_rd |> Create("actor", verbose = TRUE)
 g_actor <- net_actor |> Graph()
 
 g_actor
+
 ## IGRAPH 62fa45c DN-- 321 531 -- 
 ## + attr: type (g/c), name (v/c), user (v/c), subreddit (e/c), thread_id
 ## | (e/c), comment_id (e/n), comm_id (e/c)
@@ -589,41 +599,50 @@ g_actor
 ## + ... omitted several edges
 ```
 
-### <a name="hyperlink-usage"/>Hyperlink Usage
+### <a name="hyperlink-usage"/>Hyperlink Usage {#hyperlink-usage}
 
 #### Authenticate and Collect from web sites
 
 The `vosonSML` hyperlink collection functionality does not require
-authentication as it is not using any web API's, however an `Authenticate`
-object is still used to set up the collection and creation operations as part
-of the `vosonSML` workflow.
+authentication as it is not using any web API's, however an
+`Authenticate` object is still used to set up the collection and
+creation operations as part of the `vosonSML` workflow.
 
-The hyperlink `Collect` function accepts a dataframe of seed web pages, as
-well as corresponding `type` and `max_depth` parameters for each page.
+The hyperlink `Collect` function accepts a dataframe of seed web pages,
+as well as corresponding `type` and `max_depth` parameters for each
+page.
 
-*Please note that this implementalion of hyperlink collection and networks is
-still in an experimental stage.*
+*Please note that this implementalion of hyperlink collection and
+networks is still in an experimental stage.*
 
 ``` r
 # specify seed web pages and parameters for hyperlink collection
 seed_pages <-
-  data.frame(page = c("http://vosonlab.net",
-                      "https://www.oii.ox.ac.uk",
-                      "https://sonic.northwestern.edu"),
-             type = c("ext", "ext", "ext"),
-             max_depth = c(2, 2, 2))
+   tibble::tribble(
+     ~page, ~type, ~max_depth,
+     "http://vosonlab.net", "ext", 2,
+     "https://www.oii.ox.ac.uk", "ext", 2,
+     "https://sonic.northwestern.edu", "ext", 2
+   )
+
+#  A tibble: 3 × 3
+#   page                           type  max_depth
+#   <chr>                          <chr>     <dbl>
+# 1 http://vosonlab.net            ext           2
+# 2 https://www.oii.ox.ac.uk       ext           2
+# 3 https://sonic.northwestern.edu ext           2
 
 collect_web <- Authenticate("web") |>
   Collect(pages = seed_pages, verbose = TRUE)
 
 # Collecting web page hyperlinks...
 # *** initial call to get urls - http://vosonlab.net
-# * new domain: http://vosonlab.net 
+# * new domain: http://vosonlab.net
 # + http://vosonlab.net (10 secs)
 # *** end initial call
 # *** set depth: 2
 # *** loop call to get urls - nrow: 6 depth: 2 max_depth: 2
-# * new domain: http://rsss.anu.edu.au 
+# * new domain: http://rsss.anu.edu.au
 # + http://rsss.anu.edu.au (0.96 secs)
 # ...
 ```
@@ -638,90 +657,85 @@ net_activity <- collect_web |> Create("activity")
 net_actor <- collect_web |> Create("actor")
 ```
 
-### <a name="twitter-usage"/>Twitter Usage
-
-> **Note**
->
-> At this time we are unable to maintain Twitter collection features
-> and advise that the `vosonSML` Twitter functions may no longer
-> work with recent updates to the Twitter API. If problems are encountered we
-> suggest trying to collect data with the `rtweet` package and using the
-> `vosonSML` function [ImportRtweet](https://vosonlab.github.io/vosonSML/articles/Twitter-Usage.html#twitter-import) to import data.
-
-For an overview of `vosonSML` Twitter functions please refer to the 
-[Twitter Usage](https://vosonlab.github.io/vosonSML/articles/Twitter-Usage.html) vignette.
-
-### <a name="supplemental-functions"/>Supplemental Functions
+### <a name="supplemental-functions"/>Supplemental Functions {#supplemental-functions}
 
 #### Merge collected data together
 
-The `Merge` and `MergeFiles` functions allow two or more `Collect` objects to
-be merged together provided they are of the same datasource type e.g
-`twitter`, `youtube`.
+The `Merge` and `MergeFiles` functions allow two or more `Collect`
+objects to be merged together provided they are of the same datasource
+type e.g `mastodon`.
 
 ``` r
+get_hashtag_data <- function(tag) {
+  Authenticate("mastodon") |>
+    Collect(
+      endpoint = "search",
+      instance = "mastodon.social",
+      local = FALSE,
+      hashtag = tag,
+      numPosts = 100,
+      writeToFile = TRUE
+    )
+}
+
+library(vosonSML)
+options(voson.data = "./mast-data")
+
 # collect data
-collect_tw_auspol <- auth_tw_bearer |>
-  Collect(searchTerm = "#auspol", writeToFile = TRUE)
-  
-collect_tw_springst <- auth_tw_bearer |>
-  Collect(searchTerm = "#springst", writeToFile = TRUE)
+mast_rstats <- get_hashtag_data("rstats")
+mast_python <- get_hashtag_data("python")
 
 # merge collect objects
-data_tw <- Merge(
-  collect_tw_auspol, collect_tw_springst, writeToFile = TRUE, verbose = TRUE
-)
+data <- Merge(mast_rstats, mast_python, writeToFile = TRUE)
+
+# Merging collect data...
+# RDS file written: ./mast-data/2024-07-21_150353-MastodonDataMerge.rds
+# Done.
 
 # merge files from a data directory
-data_tw <- MergeFiles(
-  "vsml-tw-data", pattern = "*TwitterData.rds", writeToFile = TRUE, verbose = TRUE
+data <- MergeFiles(
+  "./mast-data", pattern = "*MastodonData.rds", writeToFile = TRUE
 )
+
+# Merging collect files...
+# Matching files:
+# - ./mast-data/2024-07-21_035919-MastodonData.rds
+# - ./mast-data/2024-07-21_035925-MastodonData.rds
+# Merging collect data...
+# RDS file written: ./mast-data/2024-07-21_150544-DataMergeFile.rds
+# Done.
 ```
 
 #### AddText adds collected text data to networks as node or edge attributes
 
-The `AddText` function can be used following the creation of all networks for
-`mastodon`, `youtube`, `reddit` and `twitter`. It will add an attribute
-starting with `vosonTxt_` to nodes of `activity` networks and to edges of
-`actor` networks. It requires a collected `datasource` from which to extract
-text data.
-
-An additional parameter `hashtags` is available for `twitter` networks that
-will add tweet hashtags as an attribute.
+The `AddText` function can be used following the creation of all
+networks for `mastodon`, `youtube` and `reddit`. It will add an
+attribute starting with `vosonTxt_` to nodes of `activity` networks and
+to edges of `actor` networks. It requires a collected `datasource` from
+which to extract text data.
 
 ``` r
 # create activity network
-net_activity <- collect_tw |> Create("activity")
+net_activity <- data |> Create("activity")
 
 # activity network with text data added as node attribute
-net_activity <- net_activity |>
-  AddText(collect_tw, hashtags = TRUE, verbose = TRUE)
+net_activity <- net_activity |> AddText(data)
+  
 ## Adding text data to network...Done.
 ```
 
 ``` r
-g_activity <- net_activity |> Graph()
-
-g_activity
-## IGRAPH 635ad2d DN-- 167 100 -- 
-## + attr: type (g/c), name (v/c), author_id (v/c), author_screen_name
-## | (v/c), created_at (v/c), t.is_reply (v/l), t.is_quote (v/l),
-## | t.is_retweet (v/l), t.full_text (v/c), t.hashtags (v/x),
-## | t.quoted.status_id (v/c), t.quoted.full_text (v/c), t.quoted.hashtags
-## | (v/x), t.retweeted.status_id (v/c), t.retweeted.full_text (v/c),
-## | t.retweeted.hashtags (v/x), vosonTxt_tweet (v/c), vosonTxt_hashtags
-## | (v/c), user_id (e/c), screen_name (e/c), created_at (e/c), edge_type
-## | (e/c)
-## + edges from 635ad2d (vertex names):
-## [1] 1642429383460925441->1642343694660677632
-## + ... omitted several edges
+names(net_activity)
+#  [1] "post.id"               "post.created_at"      
+# ..             
+# [17] "vosonTxt_post"
 ```
 
 `AddText` will also redirect some edges in a youtube `actor` network by
-finding user references at the beginning of reply comments text using the
-`repliesFromText` parameter. In the following example an edge would be
-redirected from `UserC` to `UserB` by text reference as opposed to `UserA` who
-made the top-level comment both users are replying to.
+finding user references at the beginning of reply comments text using
+the `repliesFromText` parameter. In the following example an edge would
+be redirected from `UserC` to `UserB` by text reference as opposed to
+`UserA` who made the top-level comment both users are replying to.
 
 ``` r
 # video comments
@@ -738,73 +752,17 @@ net_actor <- collect_yt |> Create("actor")
 
 # detects replies to users in text
 net_actor <- net_actor |>
-  AddText(collect_yt,
-          repliesFromText = TRUE,
-          verbose = TRUE)
+  AddText(collect_yt, repliesFromText = TRUE)
+
 ## Adding text data to network...Done.
-```
-
-#### AddUserData requests and adds user profile data to networks
-
-`AddUserData` adds user profile information from the `users` dataframe to as
-many users in a twitter `actor` and `2mode` network as possible. If the
-profile information is not available for referenced users in the collect data
-then the user id and name will be added to the `missing_users` dataframe. If
-the profile metadata is not available in the collect data and the
-`lookupUsers` parameter is set then additional twitter API requests will be
-made to retrieve the missing information.
-
-``` r
-# add additional twitter user profile info
-net_actor <- collect_tw |> Create("actor")
-
-net_actor_meta <- net_actor |> AddUserData(collect_tw, verbose = TRUE)
-## Adding user data to network...Done.
-
-names(net_actor_meta)
-## [1] "edges"         "nodes"         "missing_users"
-nrow(net_actor_meta$missing_users)
-## [1] 7
-
-# add additional twitter user profile info
-net_actor_lookupmeta <- net_actor |>
-  AddUserData(collect_tw,
-              lookupUsers = TRUE,
-              twitterAuth = auth_tw_bearer,
-              verbose = TRUE)
-## Adding user data to network...Done.
-
-names(net_actor_lookupmeta)
-## [1] "edges"         "nodes"         "missing_users" "lookup_users"
-```
-
-For reference the `AddUserData` function will also add a new dataframe to the
-`actor_network` network list containing the retrieved user metadata.
-
-``` r
-g_actor <- net_actor_meta |> Graph()
-
-g_actor
-## IGRAPH 642546e DN-- 125 104 -- 
-## + attr: type (g/c), name (v/c), screen_name (v/c), u.user_id (v/c),
-## | u.name (v/c), u.screen_name (v/c), u.location (v/c), u.derived (v/x),
-## | u.url (v/c), u.description (v/c), u.protected (v/l), u.verified
-## | (v/l), u.followers_count (v/n), u.friends_count (v/n), u.listed_count
-## | (v/n), u.favourites_count (v/n), u.statuses_count (v/n), u.created_at
-## | (v/c), u.profile_banner_url (v/c), u.default_profile (v/l),
-## | u.default_profile_image (v/l), u.withheld_in_countries (v/x),
-## | u.withheld_scope (v/l), u.utc_offset (v/l), u.time_zone (v/l),
-## | u.geo_enabled (v/l), u.lang (v/l), u.has_extended_profile (v/l),
-## | status_id (e/c), created_at (e/c), edge_type (e/c)
-## + edges from 642546e (vertex names):
 ```
 
 #### AddVideoData requests and adds video data to networks
 
-`AddVideoData` adds video information as node attributes in youtube `actor`
-networks and replaces the video ID nodes with a user (channel owner or
-publisher). The `actorSubOnly` parameter can be used to only perform the ID
-substitution.
+`AddVideoData` adds video information as node attributes in youtube
+`actor` networks and replaces the video ID nodes with a user (channel
+owner or publisher). The `actorSubOnly` parameter can be used to only
+perform the ID substitution.
 
 ``` r
 # replaces VIDEOID:xxxxxx references in actor network with their publishers
@@ -820,13 +778,13 @@ nrow(net_actor$videos)
 ## [1] 2
 ```
 
-`AddVideoData` function will also add a new dataframe to the `actor_network`
-network list containing the retrieved video information called `videos`.
+`AddVideoData` function will also add a new dataframe to the
+`actor_network` network list containing the retrieved video information
+called `videos`.
 
 ``` r
 g_actor <- net_actor |> Graph()
 
-g_actor
 ## IGRAPH 644cb17 DN-- 23 27 -- 
 ## + attr: type (g/c), name (v/c), screen_name (v/c), node_type (v/c),
 ## | video_id (e/c), comment_id (e/c), edge_type (e/c), video_title (e/c),
@@ -839,40 +797,37 @@ g_actor
 
 ## Where to next?
 
-Continue working with the network graphs using the `igraph` package and check
-out some examples of plots in the [Introduction to
+Continue working with the network graphs using the `igraph` package and
+check out some examples of plots in the [Introduction to
 vosonSML](https://vosonlab.github.io/vosonSML/articles/Intro-to-vosonSML.html)
-vignette. The `graphml` files produced by `vosonSML` are also easily imported
-into software such as [Gephi](https://gephi.org/) for further visualization
-and exploration of networks.
+vignette. The `graphml` files produced by `vosonSML` are also easily
+imported into software such as [Gephi](https://gephi.org/) for further
+visualization and exploration of networks.
 
-As an alternative to `vosonSML` using the R command-line interface we have
-also developed an R Shiny app called [VOSON
-Dash](https://vosonlab.github.io/VOSONDash/). It provides a user friendly GUI
-for the collection of data using `vosonSML` and has additional network
-visualization and analysis features.
+As an alternative to `vosonSML` using the R command-line interface we
+have also developed an R Shiny app called [VOSON
+Dash](https://vosonlab.github.io/VOSONDash/). It provides a user
+friendly GUI for the collection of data using `vosonSML` and has
+additional network visualization and analysis features.
 
-For more detailed information about functions and their parameters, please
-refer to the
-[Reference](https://vosonlab.github.io/vosonSML/reference/index.html) page.
+For more detailed information about functions and their parameters,
+please refer to the
+[Reference](https://vosonlab.github.io/vosonSML/reference/index.html)
+page.
 
 ## Special thanks
 
-This package would not be possible without a number of excellent packages
-created by others in the R community, we would especially like to thank
-the authors of the
-[data.table](https://github.com/Rdatatable/data.table),
-[dplyr](https://github.com/tidyverse/dplyr),
-[httr](https://github.com/r-lib/httr),
+This package would not be possible without a number of excellent
+packages created by others in the R community, we would especially like
+to thank the authors of the [dplyr](https://github.com/tidyverse/dplyr),
+[httr2](https://github.com/r-lib/httr2),
 [igraph](https://github.com/igraph/rigraph),
 [RedditExtractoR](https://github.com/ivan-rivera/RedditExtractoR),
-[rtoot](https://gesistsa.github.io/rtoot/),
-[rtweet](https://github.com/ropensci/rtweet) and
-[tidytext](https://github.com/juliasilge/tidytext) packages.
+[rtoot](https://gesistsa.github.io/rtoot/)
 
 ## Code of Conduct
 
-Please note that the VOSON Lab projects are released with a [Contributor Code
-of
+Please note that the VOSON Lab projects are released with a [Contributor
+Code of
 Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html).
 By contributing to this project, you agree to abide by its terms.

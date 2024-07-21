@@ -20,7 +20,6 @@
 ^_pkgdown\.yaml$
 
 ^\.httr-oauth$
-^\.twitter-oauth$
 ^((?!vignette).)*\.rds$
 ^.*\.graphml$
 ^.*\.csv$

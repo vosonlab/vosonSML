@@ -7,8 +7,8 @@
 #' @param socialmedia Character string. Identifier for social media API to authenticate, set to \code{"mastodon"}.
 #' @param instance Character string. Server to authenticate against and create token.
 #' @param type Character string. Type of access, can be \code{"public"} or \code{"user"}. Default is \code{"public"}.
-#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @return A \code{credential} object containing an access token \code{$auth} and social media type descriptor
 #'   \code{$socialmedia} set to \code{"mastodon"}. Object has the class names \code{"credential"} and \code{"mastodon"}.
@@ -37,16 +37,15 @@ Authenticate.mastodon <-
   function(socialmedia,
            instance = NULL,
            type = "public",
-           verbose = FALSE,
-           ...) {
+           ...,
+           verbose = TRUE) {
 
     prompt_and_stop("rtoot", "Authenticate.mastodon")
     
     msg("Creating mastodon token...\n")
 
     credential <- list(socialmedia = "mastodon", token = NULL)
-    class(credential) <-
-      append(class(credential), c("credential", "mastodon"))
+    class(credential) <- append(class(credential), c("credential", "mastodon"))
 
     if (is.null(instance)) {
       msg("No instance specified, setting public auth.\n")

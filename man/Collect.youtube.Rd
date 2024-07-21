@@ -7,10 +7,10 @@
 \method{Collect}{youtube}(
   credential,
   videoIDs = c(),
-  verbose = FALSE,
-  writeToFile = FALSE,
   maxComments = 1e+10,
-  ...
+  ...,
+  writeToFile = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -19,15 +19,15 @@
 \item{videoIDs}{Character vector. Specifies YouTube video URLs or IDs. For example, if the video URL is
 \code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use URL or ID \code{videoIDs = c("xxxxxxxxxxx")}.}
 
-\item{verbose}{Logical. Output additional information about the data collection. Default is \code{FALSE}.}
-
-\item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
-
 \item{maxComments}{Numeric integer. Specifies how many top-level comments to collect from each video. This value does
 not consider replies to top-level comments. The total number of comments returned for a video will usually be
 greater than \code{maxComments} depending on the number of reply comments present.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
+
+\item{writeToFile}{Logical. Write data to file. Default is \code{FALSE}.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \value{
 A tibble object with class names \code{"datasource"} and \code{"youtube"}.
@@ -62,9 +62,9 @@ video_ids <- c("https://www.youtube.com/watch?v=xxxxxxxx",
                "https://youtu.be/xxxxxxxx",
                "xxxxxxx")
 
-# collect approximately 200 threads/comments for each YouTube video
+# collect approximately 200 comments for each YouTube video
 youtubeData <- youtubeAuth |>
-  Collect(videoIDs = video_ids, writeToFile = TRUE, verbose = FALSE, maxComments = 200)
+  Collect(videoIDs = video_ids, maxComments = 200)
 }
 
 }

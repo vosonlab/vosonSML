@@ -4,7 +4,7 @@
 \alias{Create}
 \title{Create networks from social media data}
 \usage{
-Create(datasource, type, ...)
+Create(datasource, type, ..., writeToFile = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{datasource}{Collected social media data of class \code{"datasource"} and \code{socialmedia}.}
@@ -14,21 +14,13 @@ Create(datasource, type, ...)
 
 \item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social media
 network creation.}
+
+\item{writeToFile}{Logical. Write data to file. Default is \code{FALSE}.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \description{
 This function creates networks from social media data as produced from \code{\link{Collect}}.
 \code{Create} is the final step of the \code{\link{Authenticate}}, \code{\link{Collect}} and \code{Create}
 workflow.
-
-There are four types of networks that can be created from collected data: \code{activity}, \code{actor},
-\code{twomode} or \code{semantic}.
-
-For \code{activity} networks refer to \code{\link{Create.activity.mastodon}}, \code{\link{Create.activity.youtube}}
-\code{\link{Create.activity.reddit}} and \code{\link{Create.activity.twitter}} for parameters and usage.
-
-For \code{actor} networks refer to \code{\link{Create.actor.mastodon}}, \code{\link{Create.actor.youtube}},
-\code{\link{Create.actor.reddit}} and \code{\link{Create.actor.twitter}}.
-
-For \code{twomode} and \code{semantic} networks refer to \code{\link{Create.twomode.twitter}} and
-\code{\link{Create.semantic.twitter}} functions for parameters and usage respectively.
 }

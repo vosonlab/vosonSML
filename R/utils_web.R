@@ -1,7 +1,5 @@
 # get site robots.txt file
 get_domain_robots <- function(url, verbose = TRUE) {
-  msg <- f_verbose(verbose)
-
   suppressMessages(suppressWarnings({
     r <- tryCatch({
       robotstxt::robotstxt(domain = url)

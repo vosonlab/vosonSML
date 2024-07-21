@@ -4,14 +4,16 @@
 \alias{Authenticate}
 \title{Create a credential object to access social media APIs}
 \usage{
-Authenticate(socialmedia, ...)
+Authenticate(socialmedia, ..., verbose = TRUE)
 }
 \arguments{
 \item{socialmedia}{Character string. Identifier for social media API to authenticate with. Supported social media are
-\code{"mastodon"}, \code{"youtube"}, \code{"reddit"}, \code{"twitter"} and \code{"web"}.}
+\code{"mastodon"}, \code{"youtube"}, \code{"reddit"} and \code{"web"}.}
 
 \item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social media
 API access.}
+
+\item{verbose}{Logical. Print messages to console. Default is \code{TRUE}.}
 }
 \description{
 \code{Authenticate} creates a \code{credential} object that enables R to make authenticated calls to
@@ -21,6 +23,5 @@ an access token or key, and a class name identifying the social media that grant
 workflow.
 
 Refer to \code{\link{Authenticate.mastodon}}, \code{\link{Authenticate.youtube}},
-\code{\link{Authenticate.reddit}}, \code{\link{Authenticate.twitter}} and
-\code{\link{Authenticate.web}} for parameters and usage.
+\code{\link{Authenticate.reddit}} and \code{\link{Authenticate.web}} for parameters and usage.
 }

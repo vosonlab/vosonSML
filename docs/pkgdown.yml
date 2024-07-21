@@ -1,11 +1,9 @@
 pandoc: 3.1.11
-pkgdown: 2.0.9
+pkgdown: 2.1.0
 pkgdown_sha: ~
 articles:
   Intro-to-vosonSML: Intro-to-vosonSML.html
-  Twitter-Usage: Twitter-Usage.html
-last_built: 2024-05-25T07:33Z
+last_built: 2024-07-21T08:29Z
 urls:
-  reference: http://vosonlab.github.io/vosonSML/reference
-  article: http://vosonlab.github.io/vosonSML/articles
-
+  reference: https://vosonlab.github.io/vosonSML/reference
+  article: https://vosonlab.github.io/vosonSML/articles

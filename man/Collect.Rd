@@ -4,21 +4,20 @@
 \alias{Collect}
 \title{Collect data from social media for generating networks}
 \usage{
-Collect(credential, ...)
+Collect(credential, ..., writeToFile = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{credential}{A \code{credential} object generated from \code{Authenticate}.}
 
 \item{...}{Optional parameters to pass to functions providied by supporting R packages that are used for social media
 API collection.}
+
+\item{writeToFile}{Logical. Write data to file. Default is \code{FALSE}.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \description{
 This function collects data from social media and structures it into a dataframe that can be used for
 creating networks for further analysis. \code{Collect} is the second step of the \code{\link{Authenticate}},
 \code{Collect}, and \code{\link{Create}} workflow.
-
-Refer to \code{\link{Collect.search.mastodon}}, \code{\link{Collect.thread.mastodon}},
-\code{\link{Collect.youtube}}, \code{\link{Collect.thread.reddit}}, \code{\link{Collect.listing.reddit}},
-\code{\link{Collect.search.twitter}}, \code{\link{Collect.timeline.twitter}} and
-\code{\link{Collect.web}} for parameters and usage.
 }

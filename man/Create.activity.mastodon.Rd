@@ -4,7 +4,14 @@
 \alias{Create.activity.mastodon}
 \title{Create mastodon activity network}
 \usage{
-\method{Create}{activity.mastodon}(datasource, type, subtype = NULL, verbose = FALSE, ...)
+\method{Create}{activity.mastodon}(
+  datasource,
+  type,
+  subtype = NULL,
+  ...,
+  writeToFile = FALSE,
+  verbose = TRUE
+)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"mastodon"} class names.}
@@ -14,9 +21,11 @@
 \item{subtype}{Character string. Subtype of activity network to be created. Can be set to \code{"tag"}. Default is
 \code{NULL}.}
 
-\item{verbose}{Logical. Output additional information. Default is \code{FALSE}.}
-
 \item{...}{Additional parameters passed to function. Not used in this method.}
+
+\item{writeToFile}{Logical. Write data to file. Default is \code{FALSE}.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \value{
 Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.

@@ -4,7 +4,7 @@
 \alias{Authenticate.youtube}
 \title{YouTube API authentication}
 \usage{
-\method{Authenticate}{youtube}(socialmedia, apiKey, ...)
+\method{Authenticate}{youtube}(socialmedia, apiKey, ..., verbose = TRUE)
 }
 \arguments{
 \item{socialmedia}{Character string. Identifier for social media API to authenticate, set to \code{"youtube"}.}
@@ -12,6 +12,8 @@
 \item{apiKey}{Character string. Google developer API key to authenticate.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \value{
 A \code{credential} object containing an api key \code{$auth} and social media type descriptor

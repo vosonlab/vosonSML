@@ -6,6 +6,8 @@
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"reddit"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"actor"}.
 #' @param ... Additional parameters passed to function. Not used in this method.
+#' @param writeToFile Logical. Write data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #'
@@ -20,7 +22,7 @@
 #' }
 #'
 #' @export
-Create.actor.reddit <- function(datasource, type, ...) {
+Create.actor.reddit <- function(datasource, type, ..., writeToFile = FALSE, verbose = TRUE) {
   msg("Generating reddit actor network...\n")
 
   df_stats <- network_stats(NULL, "collected reddit comments", nrow(datasource))
@@ -135,6 +137,9 @@ Create.actor.reddit <- function(datasource, type, ...) {
 
   net <- list("nodes" = df_nodes, "edges" = df_relations)
   class(net) <- append(class(net), c("network", "actor", "reddit"))
+  
+  if (writeToFile) write_output_file(net, "rds", "RedditActorNet", verbose = verbose)
+  
   msg("Done.\n")
 
   net

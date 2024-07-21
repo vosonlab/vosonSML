@@ -8,9 +8,9 @@
   credential,
   endpoint,
   threadUrls,
+  ...,
   writeToFile = FALSE,
-  verbose = FALSE,
-  ...
+  verbose = TRUE
 )
 }
 \arguments{
@@ -20,11 +20,11 @@
 
 \item{threadUrls}{Character vector. Mastodon thread post urls to collect data from.}
 
+\item{...}{Additional parameters passed to function. Not used in this method.}
+
 \item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
 
 \item{verbose}{Logical. Output additional information about the data collection. Default is \code{TRUE}.}
-
-\item{...}{Additional parameters passed to function. Not used in this method.}
 }
 \value{
 A \code{tibble} object with class names \code{"datasource"} and \code{"mastodon"}.

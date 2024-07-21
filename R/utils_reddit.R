@@ -50,41 +50,42 @@ create_listing_url <- function(subreddit, sort, period, qs = NULL) {
 # get request for json with url
 get_json <- function(req_url, ua = NULL, alt = FALSE) {
   res <- list(status = NULL, msg = NULL, data = NULL)
-  req_headers <- c("Accept-Charset" = "UTF-8", "Cache-Control" = "no-cache")
-
-  if (!is.null(ua)) req_headers <- append(req_headers, c("User-Agent" = ua))
-
-  resp <- NULL
-  tryCatch({
-    resp <- httr::GET(req_url, httr::add_headers(.headers = req_headers))
-  }, error = function(e) {
-    res$msg <- e
-  })
-
-  if (is.null(resp)) return(res)
   
-  res$status <- resp$status
-  if (httr::http_error(resp) || as.numeric(resp$status) != 200) {
-    res$msg <- "http request error"
-    return(res)
+  req_headers <- c(
+    "Accept-Charset" = "UTF-8",
+    "Cache-Control" = "no-cache",
+    "Accept" = "application/json, text/*, */*"
+  )
+  
+  if (!is.null(ua)) req_headers <- append(req_headers, c("User-Agent" = ua))
+  
+  url_conn <- tryCatch({
+    base::url(req_url, headers = req_headers)
+  }, error = function(e) {
+    list(url_conn_error = e)
+  })
+  
+  if (inherits(url_conn, "list") && !is.null(url_conn$url_conn_error)) {
+    return(list(status = -1, msg = url_conn$url_conn_error, data = NULL))
   }
-
-  if (httr::http_type(resp) == "application/json") {
-    res$data <- tryCatch({
-      res$msg <- "http response json"
-      if (!alt) {
-        jsonlite::fromJSON(httr::content(resp, as = "text"), simplifyVector = FALSE)
-      } else {
-        jsonlite::fromJSON(rawToChar(resp$content))
-      }
-    }, error = function(e) {
-      res$msg <- e
-      NULL
-    })
-  } else {
-    res$msg <- "http response not json"
+  
+  read_data <- tryCatch({
+    if (!alt) {
+      jsonlite::fromJSON(url_conn, simplifyVector = FALSE)
+    } else {
+      jsonlite::fromJSON(url_conn)
+    }
+  }, error = function(e) {
+    list(read_data_error = e)
+  })
+  
+  if (inherits(read_data, "list") && !is.null(read_data$read_data_error)) {
+    return(list(status = -1, msg = read_data$read_data_error, data = NULL))
   }
-
+  
+  res$status <- 1
+  res$data <- read_data
+  
   res
 }
 
@@ -96,7 +97,7 @@ xml_clean_reddit <- function(comments) {
   # [\x00-\x1F] ^\xE000-\xFFFD^\x10000-\x10FFFF
   # [^\x09^\x0A^\x0D^\x20-\xD7FF^\xE000-\xFFFD]
   # [\u0000-\u0008,\u000B,\u000C,\u000E-\u001F]
-
+  
   # take care of a few known encoding issues
   comments <-
     gsub("([\u0019])",
@@ -116,7 +117,7 @@ xml_clean_reddit <- function(comments) {
          comments,
          perl = TRUE,
          useBytes = TRUE)
-
+  
   # replace chars outside of allowed xml 1.0 spec
   comments <-
     gsub(
@@ -142,12 +143,16 @@ clean_full <- function(sentences) {
 }
 
 # build a wait time range in seconds for reddit data requests
-check_wait_range_secs <- function(x, param = "value", def_min = 3, def_max = 10) {
-  fail_msg <- paste0("Please provide a numeric range as vector c(min, max) for ", param, ".")
+# reddit rate-limit is 10 requests per minute
+check_wait_range_secs <- function(x, param = "value", def_min = 6, def_max = 10) {
+  fail_msg <- paste0("Please provide a numeric range as vector c(min, max) for ", param, ". Min must be >= 6 secs.")
   
   if (!is.numeric(x)) stop(fail_msg, call. = FALSE)
 
   x <- ceiling(x)
+  
+  if (min(x) < 6) stop(fail_msg, call. = FALSE)
+  
   if (length(x) == 1) x <- c(def_min, x[1])
   if (length(x) != 2) x <- c(x[1], x[2])
   

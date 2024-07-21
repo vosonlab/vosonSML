@@ -13,9 +13,9 @@
   numPosts = 100,
   anonymous = TRUE,
   retryOnRateLimit = TRUE,
+  ...,
   writeToFile = FALSE,
-  verbose = FALSE,
-  ...
+  verbose = TRUE
 )
 }
 \arguments{
@@ -35,16 +35,16 @@
 
 \item{retryOnRateLimit}{Logical. When the API rate-limit is reached should the collection wait and resume when it resets. Default is \code{TRUE}.}
 
-\item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
-
-\item{verbose}{Logical. Output additional information. Default is \code{FALSE}.}
-
 \item{...}{
   Arguments passed on to \code{\link[rtoot:get_timeline_hashtag]{rtoot::get_timeline_hashtag}}
   \describe{
     \item{\code{only_media}}{logical, Show only statuses with media attached?}
     \item{\code{min_id}}{character, Return results immediately newer than this id}
   }}
+
+\item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \value{
 A tibble object with class names \code{"datasource"} and \code{"mastodon"}.

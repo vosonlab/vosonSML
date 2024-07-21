@@ -6,12 +6,12 @@
 \alias{vosonSML}
 \title{vosonSML: Collecting Social Media Data and Generating Networks for Analysis}
 \description{
-A suite of easy to use functions for collecting social media data and generating networks for analysis. Supports Mastodon, YouTube, Reddit, Twitter and web site data sources.
+A suite of easy to use functions for collecting social media data and generating networks for analysis. Supports Mastodon, YouTube, Reddit and Web 1.0 data sources.
 }
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/vosonlab/vosonSML}
+  \item \url{https://vosonlab.github.io/vosonSML}
   \item Report bugs at \url{https://github.com/vosonlab/vosonSML/issues}
 }
 

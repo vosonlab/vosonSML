@@ -11,9 +11,9 @@
 #' @param numPosts Numeric. Specifies how many tweets to be collected. Default is \code{100}.
 #' @param anonymous Logical. Collect public posts without authenticating. Default is \code{TRUE}.
 #' @param retryOnRateLimit Logical. When the API rate-limit is reached should the collection wait and resume when it resets. Default is \code{TRUE}.
-#' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
-#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
 #' @inheritDotParams rtoot::get_timeline_hashtag -hashtag -local -max_id -since_id -limit -instance -token -anonymous -parse -retryonratelimit -verbose
+#' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @return A tibble object with class names \code{"datasource"} and \code{"mastodon"}.
 #'
@@ -27,11 +27,16 @@ Collect.search.mastodon <-
            numPosts = 100,
            anonymous = TRUE,
            retryOnRateLimit = TRUE,
+           ...,
            writeToFile = FALSE,
-           verbose = FALSE,
-           ...) {
+           verbose = TRUE) {
 
     prompt_and_stop("rtoot", "Collect.search.mastodon")
+
+    # set opts for data collection
+    opts <- get_env_opts()
+    on.exit(set_collect_opts(opts), add = TRUE)
+    set_collect_opts()
     
     msg("Collecting timeline posts...\n")
 
@@ -94,14 +99,7 @@ Collect.search.mastodon <-
     }
     msg(paste0("Collected ", n_posts, " posts.\n"))
 
-    # meta_log <- c(
-    #   collect_log, "",
-    #   ifelse(n_posts > 0, print_summary(df_summary), ""),
-    #   "", paste0(format(Sys.time(), "%a %b %d %X %Y"))
-    # )
-    meta_log <- NULL
-    
-    if (writeToFile) write_output_file(df_posts, "rds", "MastodonData", verbose = verbose, log = meta_log)
+    if (writeToFile) write_output_file(df_posts, "rds", "MastodonData", verbose = verbose)
 
     msg("Done.\n")
 

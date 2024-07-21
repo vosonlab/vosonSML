@@ -7,9 +7,10 @@
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.
 #' @param subtype Character string. Subtype of activity network to be created. Can be set to \code{"tag"}. Default is
 #'   \code{NULL}.
-#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
-#'
+#' @param writeToFile Logical. Write data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
+#' 
 #' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #'
 #' @examples
@@ -26,14 +27,13 @@ Create.activity.mastodon <-
   function(datasource,
            type,
            subtype = NULL,
-           verbose = FALSE,
-           ...) {
+           ...,
+           writeToFile = FALSE,
+           verbose = TRUE) {
     
     msg("Generating mastodon activity network...\n")
     
-    if (check_df_n(datasource$posts) < 1) {
-      stop("Datasource invalid or empty.", call. = FALSE)
-    }
+    if (check_df_n(datasource$posts) < 1) stop("Datasource invalid or empty.", call. = FALSE)
     
     check_chr(subtype, param = "subtype", accept = "tag", null.ok = TRUE)
     
@@ -47,10 +47,11 @@ Create.activity.mastodon <-
     
     # tag network
     if (!is.null(subtype)) {
-      tags <- datasource$posts |>
-        dplyr::select(post.id = "id", "tags") |>
-        tidyr::unnest(cols = "tags") |>
-        dplyr::rename(tag = "name")
+      tags <- datasource$posts |> dplyr::select(post.id = "id", "tags")
+      
+      # replace null value lists before unnest
+      tags <- tags |> dplyr::mutate(tags = replace(.data$tags, lengths(.data$tags) == 0, NA))
+      tags <- tags |> tidyr::unnest(cols = "tags") |> dplyr::rename(tag = "name")
       
       edges <- tags |>
         get_tag_relations(id = "post.id") |>
@@ -103,6 +104,8 @@ Create.activity.mastodon <-
       net <- list("nodes" = nodes, "edges" = edges)
       class(net) <- append(c("network", "activity", "mastodon"), class(net))
     }
+    
+    if (writeToFile) write_output_file(net, "rds", "MastodonActivityNet", verbose = verbose)
 
     msg("Done.\n")
     
@@ -114,8 +117,7 @@ get_tag_relations <- function(tags_table, id) {
   tags_table |>
     dplyr::select({{ id }}, "tag") |>
     dplyr::left_join(
-      tags_table |>
-        dplyr::select({{ id }}, "tag"), by = {{ id }}, relationship = "many-to-many"
+      tags_table |> dplyr::select({{ id }}, "tag"), by = {{ id }}, relationship = "many-to-many"
     ) |>
     dplyr::group_by(.data[[id]]) |>
     dplyr::filter(.data$tag.x != .data$tag.y) |>

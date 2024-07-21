@@ -6,7 +6,7 @@
 #' @param rev Logical. Reverses order of observations before removing duplicates. If collect data is provided
 #'   chronologically then this should ensure the most recent copy of a duplicate is kept. Default is \code{TRUE}.
 #' @param writeToFile Logical. Save data to a file in the current working directory. Default is \code{FALSE}.
-#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @return A merged Collect object.
 #'
@@ -19,29 +19,16 @@ MergeFiles <-
            unique = TRUE,
            rev = TRUE,
            writeToFile = FALSE,
-           verbose = FALSE) {
-
-    msg <- f_verbose(verbose)
+           verbose = TRUE) {
     
-    ts_ <- Sys.time()
-    merge_log <- c(
-      paste0("merge.files"),
-      paste0(format(ts_, "%a %b %d %X %Y")),
-      paste0(format(ts_, tz = "UTC", usetz = TRUE)), "",
-      paste0("path = ", path),
-      paste0("pattern = ", pattern),
-      paste0("unique = ", unique),
-      paste0("rev = ", rev),
-      paste0("writeToFile = ", writeToFile),
-      paste0("verbose = ", verbose), ""
-    )
+    merge_log <- init_merge_log(
+      path = path, pattern = pattern, unique = unique, rev = rev, writeToFile = writeToFile, verbose = verbose)
     
     msg("Merging collect files...\n")
 
     if (!dir.exists(path)) stop("Path does not exist.")
 
     files <- list.files(path = path, pattern = pattern, full.names = TRUE)
-
     if (length(files) < 1) stop("No matching files found.")
 
     merge_log <- append(merge_log, files)
@@ -65,27 +52,14 @@ MergeFiles <-
 #' @param rev Logical. Reverses order of observations before removing duplicates. If collect data is provided
 #'   chronologically then this should ensure the most recent copy of a duplicate is kept. Default is \code{TRUE}.
 #' @param writeToFile Logical. Save data to a file in the current working directory. Default is \code{FALSE}.
-#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @return A merged Collect object.
 #'
 #' @aliases Merge
 #' @name Merge
 #' @export
-Merge <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = FALSE) {
-  msg <- f_verbose(verbose)
-
-  ts_ <- Sys.time()
-  merge_log <- c(
-    paste0("merge.data"),
-    paste0("time: ", format(ts_, "%a %b %d %X %Y")),
-    paste0("utc:  ", format(ts_, tz = "UTC", usetz = TRUE)), "",
-    paste0("unique = ", unique),
-    paste0("rev = ", rev),
-    paste0("writeToFile = ", writeToFile),
-    paste0("verbose = ", verbose), "",
-    paste0(as.list(match.call()), collapse = "\n")
-  )
+Merge <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = TRUE) {
   
   msg("Merging collect data...\n")
 
@@ -104,45 +78,61 @@ Merge <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose =
 
 #' @noRd
 #' @export
-Merge.default <- function(...) {
+Merge.default <- function(..., writeToFile = FALSE, verbose = TRUE) {
   stop("Unknown data type passed to merge.", call. = FALSE)
 }
 
 #' @noRd
-#' @method Merge twitter
+#' @method Merge mastodon
 #' @export
-Merge.twitter <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = FALSE) {
-  merge_dots <- merge_dots
-  merge_cls_data <- merge_cls_data
-
-  data <- purrr::reduce(merge_dots, .f = merge_twitter)
-  class(data) <- merge_cls_data
-
-  rev_twitter_df <- function(x) {
-    x$tweets <- rev_row_order(x$tweets)
-    x$users <- rev_row_order(x$users)
-    x
-  }
-
+Merge.mastodon <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = TRUE) {
+  merge_log <- init_merge_log(
+    path = NULL, pattern = NULL, params = paste0(as.list(match.call()), collapse = "\n"),
+    unique = unique, rev = rev, writeToFile = writeToFile, verbose = verbose)
+  
+  merge_dots <- list(...)
+  merge_cls_list <- lapply(merge_dots, class)
+  merge_cls_data <- unlist(merge_cls_list[1])
+  
+  posts_data <- purrr::map_dfr(merge_dots, \(x) x$posts)
+  users_data <- purrr::map_dfr(merge_dots, \(x) x$users)
+  
   if (unique) {
-    if (rev) data <- rev_twitter_df(data)
-    data$tweets <- data$tweets |> dplyr::distinct(.data$status_id, .keep_all = TRUE)
-    data$users <- data$users |> dplyr::distinct(.data$id_str, .keep_all = TRUE)
-    if (rev) data <- rev_twitter_df(data)
+    if (rev) {
+      posts_data <- rev_row_order(posts_data)
+      users_data <- rev_row_order(users_data)
+    }
+    
+    posts_data <- posts_data |> dplyr::distinct(.data$id, .keep_all = TRUE)
+    users_data <- users_data |> dplyr::distinct(.data$id, .keep_all = TRUE)
+    
+    if (rev) {
+      posts_data <- rev_row_order(posts_data)
+      users_data <- rev_row_order(users_data)
+    }
   }
-
-  if (writeToFile) write_output_file(data, "rds", "TwitterDataMerge", verbose = verbose, log = merge_log)
+  
+  data <- list(posts = posts_data, users = users_data)
+  class(data) <- merge_cls_data
+  
+  if (writeToFile) write_output_file(data, "rds", "MastodonDataMerge", verbose = verbose, log = merge_log)
   msg("Done.\n")
-
+  
   data
 }
 
 #' @noRd
 #' @method Merge youtube
 #' @export
-Merge.youtube <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = FALSE) {
-  merge_cls_data <- merge_cls_data
-
+Merge.youtube <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = TRUE) {
+  merge_log <- init_merge_log(
+    path = NULL, pattern = NULL, params = paste0(as.list(match.call()), collapse = "\n"),
+    unique = unique, rev = rev, writeToFile = writeToFile, verbose = verbose)
+  
+  merge_dots <- list(...)
+  merge_cls_list <- lapply(merge_dots, class)
+  merge_cls_data <- unlist(merge_cls_list[1])
+  
   data <- dplyr::bind_rows(...)
   class(data) <- merge_cls_data
 
@@ -161,8 +151,14 @@ Merge.youtube <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, v
 #' @noRd
 #' @method Merge reddit
 #' @export
-Merge.reddit <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = FALSE) {
-  merge_cls_data <- merge_cls_data
+Merge.reddit <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = TRUE) {
+  merge_log <- init_merge_log(
+    path = NULL, pattern = NULL, params = paste0(as.list(match.call()), collapse = "\n"),
+    unique = unique, rev = rev, writeToFile = writeToFile, verbose = verbose)
+  
+  merge_dots <- list(...)
+  merge_cls_list <- lapply(merge_dots, class)
+  merge_cls_data <- unlist(merge_cls_list[1])
 
   data <- dplyr::bind_rows(...)
   class(data) <- merge_cls_data
@@ -179,30 +175,36 @@ Merge.reddit <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, ve
   data
 }
 
-# #' @noRd
-# #' @method Merge web
-# #' @export
-# Merge.web <- function(..., unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = FALSE) {
-#   merge_cls_data <- merge_cls_data
-#
-#   data <- dplyr::bind_rows(...)
-#   class(data) <- merge_cls_data
-#
-#   if (writeToFile) write_output_file(data, "rds", "WebDataMerge", verbose = verbose)
-#   msg("Done.\n")
-#
-#   data
-# }
-
-merge_twitter <- function(x, y) {
-  # sometimes these logical twitter data columns are found as lists
-  x$tweets <- x$tweets |> twitter_fix_col_types()
-  y$tweets <- y$tweets |> twitter_fix_col_types()
+init_merge_log <- function(
+    path = NULL, pattern = NULL, params = NULL, unique = TRUE, rev = TRUE, writeToFile = FALSE, verbose = TRUE) {
   
-  list(tweets = dplyr::bind_rows(x$tweets, y$tweets),
-       users = dplyr::bind_rows(x$users, y$users))
-}
-
-rev_row_order <- function(x) {
-  x[nrow(x):1, ]
+  ts_ <- Sys.time()
+  
+  merge_log <- c(
+    paste0("unique = ", unique),
+    paste0("rev = ", rev),
+    paste0("writeToFile = ", writeToFile),
+    paste0("verbose = ", verbose), ""
+  )
+  
+  if (is.null(path) | is.null(pattern)) {
+    merge_log <- c(
+      paste0("merge.files"),
+      paste0(format(ts_, "%a %b %d %X %Y")),
+      paste0(format(ts_, tz = "UTC", usetz = TRUE)), "",
+      paste0("path = ", path),
+      paste0("pattern = ", pattern),
+      merge_log
+    )
+  } else {
+    merge_log <- c(
+      paste0("merge.data"),
+      paste0("time: ", format(ts_, "%a %b %d %X %Y")),
+      paste0("utc:  ", format(ts_, tz = "UTC", usetz = TRUE)), "",
+      merge_log,
+      params
+    )
+  }
+  
+  merge_log
 }

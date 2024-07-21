@@ -8,6 +8,8 @@
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"youtube"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"actor"}.
 #' @param ... Additional parameters passed to function. Not used in this method.
+#' @param writeToFile Logical. Write data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #'
@@ -22,15 +24,14 @@
 #' }
 #'
 #' @export
-Create.actor.youtube <- function(datasource, type, ...) {
+Create.actor.youtube <- function(datasource, type, ..., writeToFile = FALSE, verbose = TRUE) {
   msg("Generating YouTube actor network...\n")
 
   # nodes are authors and videos, edges are comments and self-loops
   parent_authors <-
     datasource |> dplyr::select(.data$CommentID, .data$AuthorChannelID) |>
     dplyr::distinct(.data$CommentID, .keep_all = TRUE) |>
-    dplyr::rename("ParentID" = .data$CommentID,
-                  "ParentAuthorID" = .data$AuthorChannelID)
+    dplyr::rename("ParentID" = .data$CommentID, "ParentAuthorID" = .data$AuthorChannelID)
 
   df_relations <- datasource |>
     dplyr::left_join(parent_authors, by = c("ParentID")) |>
@@ -69,8 +70,7 @@ Create.actor.youtube <- function(datasource, type, ...) {
     datasource |> dplyr::select(.data$AuthorChannelID, .data$AuthorDisplayName) |>
     dplyr::distinct(.data$AuthorChannelID, .keep_all = TRUE) |>
     dplyr::mutate(node_type = "actor") |>
-    dplyr::rename("id" = .data$AuthorChannelID,
-                  "screen_name" = .data$AuthorDisplayName)
+    dplyr::rename("id" = .data$AuthorChannelID, "screen_name" = .data$AuthorDisplayName)
 
   video_ids <-
     datasource |> dplyr::distinct(.data$VideoID) |> dplyr::mutate(id = paste0("VIDEOID:", .data$VideoID)) |>
@@ -78,7 +78,8 @@ Create.actor.youtube <- function(datasource, type, ...) {
 
   df_relations <- dplyr::bind_rows(
     df_relations,
-    video_ids |> dplyr::mutate(
+    video_ids |>
+      dplyr::mutate(
       from = .data$id,
       to = .data$id,
       edge_type = "self-loop",
@@ -90,12 +91,14 @@ Create.actor.youtube <- function(datasource, type, ...) {
 
   if (nrow(video_ids)) {
     video_ids <- video_ids |> dplyr::mutate(node_type = "video")
-    df_nodes <-
-      dplyr::bind_rows(df_nodes, dplyr::anti_join(video_ids, df_nodes, by = "id"))
+    df_nodes <- dplyr::bind_rows(df_nodes, dplyr::anti_join(video_ids, df_nodes, by = "id"))
   }
 
   net <- list("nodes" = df_nodes, "edges" = df_relations)
   class(net) <- append(class(net), c("network", "actor", "youtube"))
+  
+  if (writeToFile) write_output_file(net, "rds", "YoutubeActorNet", verbose = verbose)
+  
   msg("Done.\n")
 
   net

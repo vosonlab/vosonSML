@@ -4,12 +4,14 @@
 \alias{Authenticate.reddit}
 \title{Reddit API authentication}
 \usage{
-\method{Authenticate}{reddit}(socialmedia, ...)
+\method{Authenticate}{reddit}(socialmedia, ..., verbose = TRUE)
 }
 \arguments{
 \item{socialmedia}{Character string. Identifier for social media API to authenticate, set to \code{"reddit"}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \value{
 A \code{credential} object containing a \code{$auth = NULL} value and social media type descriptor

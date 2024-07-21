@@ -4,16 +4,18 @@
 \alias{Create.activity.youtube}
 \title{Create YouTube activity network}
 \usage{
-\method{Create}{activity.youtube}(datasource, type, verbose = TRUE, ...)
+\method{Create}{activity.youtube}(datasource, type, ..., writeToFile = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"youtube"} class names.}
 
 \item{type}{Character string. Type of network to be created, set to \code{"activity"}.}
 
-\item{verbose}{Logical. Output additional information about the network creation. Default is \code{TRUE}.}
-
 \item{...}{Additional parameters passed to function. Not used in this method.}
+
+\item{writeToFile}{Logical. Write data to file. Default is \code{FALSE}.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \value{
 Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.

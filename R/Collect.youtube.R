@@ -24,12 +24,12 @@
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"youtube"}.
 #' @param videoIDs Character vector. Specifies YouTube video URLs or IDs. For example, if the video URL is
 #'   \code{https://www.youtube.com/watch?v=xxxxxxxxxxx} then use URL or ID \code{videoIDs = c("xxxxxxxxxxx")}.
-#' @param verbose Logical. Output additional information about the data collection. Default is \code{FALSE}.
-#' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
 #' @param maxComments Numeric integer. Specifies how many top-level comments to collect from each video. This value does
 #'   not consider replies to top-level comments. The total number of comments returned for a video will usually be
 #'   greater than \code{maxComments} depending on the number of reply comments present.
 #' @param ... Additional parameters passed to function. Not used in this method.
+#' @param writeToFile Logical. Write data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @return A tibble object with class names \code{"datasource"} and \code{"youtube"}.
 #'
@@ -40,39 +40,39 @@
 #'                "https://youtu.be/xxxxxxxx",
 #'                "xxxxxxx")
 #'
-#' # collect approximately 200 threads/comments for each YouTube video
+#' # collect approximately 200 comments for each YouTube video
 #' youtubeData <- youtubeAuth |>
-#'   Collect(videoIDs = video_ids, writeToFile = TRUE, verbose = FALSE, maxComments = 200)
+#'   Collect(videoIDs = video_ids, maxComments = 200)
 #' }
 #'
 #' @export
 Collect.youtube <-
   function(credential,
            videoIDs = c(),
-           verbose = FALSE,
-           writeToFile = FALSE,
            maxComments = 1e10,
-           ...) {
+           ...,
+           writeToFile = FALSE,
+           verbose = TRUE) {
 
     dbg <- lgl_debug(list(...)$debug)
 
+    # set opts for data collection
+    opts <- get_env_opts()
+    on.exit(set_collect_opts(opts), add = TRUE)
+    set_collect_opts()
+    
     msg("Collecting comment threads for YouTube videos...\n")
 
     apiKey <- credential$auth
-    if (is.null(apiKey) || nchar(apiKey) < 1) {
-      stop("Please provide a valid YouTube api key.", call. = FALSE)
-    }
+    if (is.null(apiKey) || nchar(apiKey) < 1) stop("Please provide a valid YouTube api key.", call. = FALSE)
 
     if (!is.vector(videoIDs) || length(videoIDs) < 1) {
-      stop("Please provide a vector of YouTube video urls or ids.",
-           call. = FALSE)
+      stop("Please provide a vector of YouTube video urls or ids.", call. = FALSE)
     }
 
     video_ids <- get_yt_video_ids(videoIDs)
 
-    if (length(video_ids) < 1) {
-      stop("Failed to extract any YouTube video ids.", call. = FALSE)
-    }
+    if (length(video_ids) < 1) stop("Failed to extract any YouTube video ids.", call. = FALSE)
 
     api_cost <- total_api_cost <- 0
 
@@ -202,18 +202,26 @@ Collect.youtube <-
           # init_results <- httr::content(httr::GET(base_url, query = api_opts))
           # TODO: should die when there is error
 
-          req <- httr::GET(base_url, query = api_opts)
-          init_results <- httr::content(req)
+          # req <- httr::GET(base_url, query = api_opts)
+          # init_results <- httr::content(req)
 
+          req <- httr2::request(base_url) |>
+            httr2::req_user_agent(vsml_ua()) |>
+            httr2::req_url_query(!!!api_opts)
+          
+          init_results <- req |>
+            httr2::req_error(is_error = \(init_results) FALSE) |>
+            httr2::req_perform()
+          
           err <- FALSE
-          if (req$status_code != 200) {
+          if (httr2::resp_is_error(init_results)) {
             err <- TRUE
             msg(
               paste0(
                 "\nComment error: ",
-                init_results$error$code,
+                httr2::resp_status(init_results),
                 "\nDetail: ",
-                init_results$error$message,
+                httr2::resp_status_desc(init_results),
                 "\n"
               )
             )
@@ -222,6 +230,8 @@ Collect.youtube <-
             api_cost <- api_cost + 2
           }
 
+          init_results <- init_results |> httr2::resp_body_json()
+          
           num_items <- length(init_results$items)
 
           if (verbose) {
@@ -336,10 +346,7 @@ Collect.youtube <-
     
     class(dataCombined) <- append(c("datasource", "youtube"), class(dataCombined))
     
-    # meta_log <- c(collect_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
-    meta_log <- NULL
-    
-    if (writeToFile) write_output_file(dataCombined, "rds", "YoutubeData", verbose = verbose, log = meta_log)
+    if (writeToFile) write_output_file(dataCombined, "rds", "YoutubeData", verbose = verbose)
 
     msg("Done.\n")
 
@@ -376,7 +383,7 @@ yt_scraper <- setRefClass(
           trimws(nextPageToken) == "") {
         if (page_count >= 1) {
           if (verbose) {
-            vsml_msg(paste0(
+            msg(paste0(
               "-- No nextPageToken. Returning. page_count is: ",
               page_count,
               "\n"
@@ -387,40 +394,47 @@ yt_scraper <- setRefClass(
           return(0)
         } else {
           if (verbose) {
-            vsml_msg("-- First thread page. No pageToken.\n")
+            msg("-- First thread page. No pageToken.\n")
           }
         }
       } else {
         opts$pageToken <- trimws(nextPageToken)
 
         if (verbose) {
-          vsml_msg(paste0("-- Value of pageToken: ", opts$pageToken, "\n"))
+          msg(paste0("-- Value of pageToken: ", opts$pageToken, "\n"))
         }
       }
 
       page_count <<- page_count + 1
 
-      req <- httr::GET(base_url, query = opts)
-      res <- httr::content(req)
-
-      if (req$status_code != 200) {
+      req <- httr2::request(base_url) |>
+        httr2::req_user_agent(vsml_ua()) |>
+        httr2::req_url_query(!!!opts)
+      
+      resp <- req |>
+        httr2::req_error(is_error = \(resp) FALSE) |>
+        httr2::req_perform()
+      
+      if (httr2::resp_is_error(resp)) {
         api_error <<- TRUE
         nextPageToken <<- ""
         if (verbose) {
-          vsml_msg(paste0(
+          msg(paste0(
             "\nThread error: ",
-            res$error$code,
+            httr2::resp_status(resp),
             "\nDetail: ",
-            res$error$message,
+            httr2::resp_status_desc(resp),
             "\n"
           ))
-          vsml_msg(paste0("videoId: ", opts$videoId, "\n\n"))
+          msg(paste0("videoId: ", opts$videoId, "\n\n"))
         }
         return(0)
       } else {
         api_cost <<- api_cost + 3
       }
 
+      res <- resp |> httr2::resp_body_json()
+      
       if (is.null(res$nextPageToken)) {
         nextPageToken <<- ""
       } else {
@@ -437,8 +451,8 @@ yt_scraper <- setRefClass(
     # collect all video threads until done or max comments reached
     scrape_all = function(maxComments) {
       if (verbose) {
-        vsml_msg(paste0("** video Id: ", api_opts$videoId, "\n", sep = ""))
-        vsml_msg(
+        msg(paste0("** video Id: ", api_opts$videoId, "\n", sep = ""))
+        msg(
           paste0(
             "   [results per page: ",
             api_opts$maxResults,
@@ -457,7 +471,7 @@ yt_scraper <- setRefClass(
         thread_count <- scrape()
 
         if (verbose) {
-          vsml_msg(paste0("-- Collected threads from page: ", thread_count, "\n", sep = ""))
+          msg(paste0("-- Collected threads from page: ", thread_count, "\n", sep = ""))
         }
 
         if (thread_count == 0 |
@@ -467,7 +481,7 @@ yt_scraper <- setRefClass(
 
           if (length(data) > maxComments) {
             if (verbose) {
-              vsml_msg(
+              msg(
                 paste0(
                   "-- API returned more than max comments. Results truncated to first ",
                   maxComments,
@@ -481,7 +495,7 @@ yt_scraper <- setRefClass(
           }
 
           if (verbose) {
-            vsml_msg(paste0("-- Done collecting threads.\n", sep = ""))
+            msg(paste0("-- Done collecting threads.\n", sep = ""))
           }
 
           break
@@ -489,11 +503,11 @@ yt_scraper <- setRefClass(
       }
 
       if (verbose) {
-        vsml_msg(paste0("** Results page count: ", page_count, "\n"))
+        msg(paste0("** Results page count: ", page_count, "\n"))
       }
       if (verbose) {
-        vsml_msg(paste0("** Collected threads: ", length(data), "\n"))
-        vsml_msg(paste0("(Threads API unit cost: ", api_cost, ")\n"))
+        msg(paste0("** Collected threads: ", length(data), "\n"))
+        msg(paste0("(Threads API unit cost: ", api_cost, ")\n"))
       }
     },
 
@@ -556,7 +570,7 @@ yt_scraper <- setRefClass(
         core_df <<- dplyr::bind_rows(sub_data) # do.call("rbind", sub_data)
       } else {
         if (verbose) {
-          vsml_msg("core_df is already up to date.\n")
+          msg("core_df is already up to date.\n")
         }
       }
     }

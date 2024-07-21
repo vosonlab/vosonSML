@@ -8,8 +8,8 @@
   socialmedia,
   instance = NULL,
   type = "public",
-  verbose = FALSE,
-  ...
+  ...,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -19,9 +19,9 @@
 
 \item{type}{Character string. Type of access, can be \code{"public"} or \code{"user"}. Default is \code{"public"}.}
 
-\item{verbose}{Logical. Output additional information. Default is \code{FALSE}.}
-
 \item{...}{Additional parameters passed to function. Not used in this method.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \value{
 A \code{credential} object containing an access token \code{$auth} and social media type descriptor

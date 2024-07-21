@@ -4,12 +4,14 @@
 \alias{Authenticate.web}
 \title{Web crawler authentication}
 \usage{
-\method{Authenticate}{web}(socialmedia, ...)
+\method{Authenticate}{web}(socialmedia, ..., verbose = TRUE)
 }
 \arguments{
 \item{socialmedia}{Character string. Identifier for social media API to authenticate, set to \code{"web"}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \value{
 A \code{credential} object containing a \code{$auth = NULL} value and social media type descriptor

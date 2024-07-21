@@ -9,7 +9,9 @@
   youtubeAuth = NULL,
   videoIds = NULL,
   actorSubOnly = FALSE,
-  ...
+  ...,
+  writeToFile = FALSE,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -23,6 +25,10 @@
 data to edge list.}
 
 \item{...}{Additional parameters passed to function.}
+
+\item{writeToFile}{Logical. Write data to file. Default is \code{FALSE}.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \value{
 Network as a named list of three dataframes containing \code{$nodes}, \code{$edges} and \code{$videos} nodes

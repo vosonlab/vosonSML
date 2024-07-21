@@ -6,9 +6,9 @@
 #' @param credential A \code{credential} object generated from \code{Authenticate} with class name \code{"mastodon"}.
 #' @param endpoint API endpoint.
 #' @param threadUrls Character vector. Mastodon thread post urls to collect data from.
+#' @param ... Additional parameters passed to function. Not used in this method.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{TRUE}.
-#' @param ... Additional parameters passed to function. Not used in this method.
 #'
 #' @return A \code{tibble} object with class names \code{"datasource"} and \code{"mastodon"}.
 #'
@@ -26,11 +26,16 @@ Collect.thread.mastodon <-
   function(credential,
            endpoint,
            threadUrls,
+           ...,
            writeToFile = FALSE,
-           verbose = FALSE,
-           ...) {
+           verbose = TRUE) {
 
     prompt_and_stop("rtoot", "Collect.thread.mastodon")
+    
+    # set opts for data collection
+    opts <- get_env_opts()
+    on.exit(set_collect_opts(opts), add = TRUE)
+    set_collect_opts()
     
     msg("Collecting post threads for mastodon urls...\n")
 
@@ -60,14 +65,7 @@ Collect.thread.mastodon <-
     }
     msg(paste0("Collected ", n_posts, " posts.\n"))
     
-    # meta_log <- c(
-    #   collect_log, "",
-    #   ifelse(n_posts > 0, print_summary(df_summary), ""),
-    #   "", paste0(format(Sys.time(), "%a %b %d %X %Y"))
-    # )
-    meta_log <- NULL
-    
-    if (writeToFile) write_output_file(threads_df, "rds", "MastodonData", verbose = verbose, log = meta_log)
+    if (writeToFile) write_output_file(threads_df, "rds", "MastodonData", verbose = verbose)
     
     msg("Done.\n")
     
@@ -76,8 +74,8 @@ Collect.thread.mastodon <-
 
 # collect a mastodon post by url and its thread
 get_thread <- function(url, ...) {
-  post_server <- httr::parse_url(url)$hostname
-  post_id <- basename(httr::parse_url(url)$path)
+  post_server <- httr2::url_parse(url)$hostname
+  post_id <- basename(httr2::url_parse(url)$path)
   
   # get post and its thread
   post <- rtoot::get_status(post_id, instance = post_server, ...)

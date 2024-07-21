@@ -8,8 +8,9 @@
 #' @param subtype Character string. Subtype of actor network to be created. Can be set to \code{"server"}. Default is
 #'   \code{NULL}.
 #' @param inclMentions Logical. Create edges for users mentioned or tagged in posts. Default is \code{TRUE}.
-#' @param verbose Logical. Output additional information about the network creation. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
+#' @param writeToFile Logical. Write data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #'
@@ -28,14 +29,13 @@ Create.actor.mastodon <-
            type,
            subtype = NULL,
            inclMentions = TRUE,
-           verbose = FALSE,
-           ...) {
+           ...,
+           writeToFile = FALSE,
+           verbose = TRUE) {
     
     msg("Generating mastodon actor network...\n")
     
-    if (check_df_n(datasource$posts) < 1) {
-      stop("Datasource invalid or empty.", call. = FALSE)
-    }
+    if (check_df_n(datasource$posts) < 1) stop("Datasource invalid or empty.", call. = FALSE)
     
     check_chr(subtype, param = "subtype", accept = "server", null.ok = TRUE)
     
@@ -121,9 +121,8 @@ Create.actor.mastodon <-
     if (!is.null(subtype)) {
       servers <- nodes |>
         dplyr::select("user.id", "user.url") |>
-        dplyr::rowwise() |>
-        dplyr::mutate(user.server = list(httr::parse_url(.data$user.url)$hostname)) |>
-        dplyr::ungroup()
+        dplyr::filter(!is.na(.data$user.url)) |>
+        dplyr::mutate(user.server = purrr::map_chr(.data$user.url, .f = function(.x) httr2::url_parse(.x)$hostname))
       
       edges <- edges |>
         dplyr::left_join(servers |> dplyr::select("user.id", from.server = "user.server"), by = c("from" = "user.id")) |>
@@ -140,6 +139,9 @@ Create.actor.mastodon <-
     
     net <- list("edges" = edges, "nodes" = nodes)
     class(net) <- append(c("network", "actor", switch(!is.null(subtype), "server", NULL), "mastodon"), class(net))
+    
+    if (writeToFile) write_output_file(net, "rds", "MastodonActorNet", verbose = verbose)
+    
     msg("Done.\n")
     
     net

@@ -4,7 +4,7 @@
 \alias{Create.actor.reddit}
 \title{Create reddit actor network}
 \usage{
-\method{Create}{actor.reddit}(datasource, type, ...)
+\method{Create}{actor.reddit}(datasource, type, ..., writeToFile = FALSE, verbose = TRUE)
 }
 \arguments{
 \item{datasource}{Collected social media data with \code{"datasource"} and \code{"reddit"} class names.}
@@ -12,6 +12,10 @@
 \item{type}{Character string. Type of network to be created, set to \code{"actor"}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
+
+\item{writeToFile}{Logical. Write data to file. Default is \code{FALSE}.}
+
+\item{verbose}{Logical. Output additional information. Default is \code{TRUE}.}
 }
 \value{
 Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.

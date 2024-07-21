@@ -5,8 +5,9 @@
 #' @param datasource Collected social media data with \code{"datasource"} and \code{"web"} class names.
 #' @param type Character string. Type of network to be created, set to \code{"activity"}.
 #' @param lcase Logical. Convert urls and page names to lowercase.
-#' @param verbose Logical. Output additional information about the network creation. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
+#' @param writeToFile Logical. Write data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @return Network as a named list of two dataframes containing \code{$nodes} and \code{$edges}.
 #'
@@ -21,7 +22,7 @@
 #' }
 #'
 #' @export
-Create.activity.web <- function(datasource, type, lcase = TRUE, verbose = TRUE, ...) {
+Create.activity.web <- function(datasource, type, lcase = TRUE, ..., writeToFile = FALSE, verbose = TRUE) {
   msg("Generating web activity network...")
 
   if (lcase) {
@@ -37,6 +38,9 @@ Create.activity.web <- function(datasource, type, lcase = TRUE, verbose = TRUE, 
 
   net <- list("nodes" = nodes, "edges" = edges)
   class(net) <- append(class(net), c("network", "activity", "web"))
+  
+  if (writeToFile) write_output_file(net, "rds", "WebActivityNet", verbose = verbose)
+  
   msg("Done.\n")
 
   net

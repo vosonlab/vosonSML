@@ -8,5 +8,4 @@
 #' @importFrom rlang .data check_installed
 #' @importFrom stats na.omit runif setNames
 #' @importFrom utils capture.output flush.console read.table tail
-utils::globalVariables(c("collect_log", "merge_log"))
 NULL

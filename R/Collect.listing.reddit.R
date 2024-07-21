@@ -17,9 +17,9 @@
 #'   Minimum is 3 seconds. Default is \code{c(6, 8)} for a wait time chosen from between 6 and 8 seconds.
 #' @param ua Character string. Override User-Agent string to use in Reddit thread requests. Default is
 #'   \code{option("HTTPUserAgent")} value as set by vosonSML.
-#' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
-#' @param verbose Logical. Output additional information about the data collection. Default is \code{TRUE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
+#' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @return A \code{tibble} object with class names \code{"listing"} and \code{"reddit"}.
 #'
@@ -42,15 +42,18 @@ Collect.listing.reddit <-
            max = 25,
            waitTime = c(6, 8),
            ua = getOption("HTTPUserAgent"),
+           ...,
            writeToFile = FALSE,
-           verbose = FALSE,
-           ...) {
+           verbose = TRUE) {
 
+    # set opts for data collection
+    opts <- get_env_opts()
+    on.exit(set_collect_opts(opts), add = TRUE)
+    set_collect_opts()
+    
     msg("Collecting thread listing for subreddits...\n")
 
-    if (missing(subreddits)) {
-      stop("Please provide a vector of one or more subreddit names.", call. = FALSE)
-    }
+    if (missing(subreddits)) stop("Please provide a vector of one or more subreddit names.", call. = FALSE)
 
     invisible(check_chr(subreddits, param = "subreddits"))
 
@@ -86,7 +89,7 @@ Collect.listing.reddit <-
     if (length(max) == 1) max <- rep(max, length(subreddits))
     
     # some protection against spamming requests
-    waitTime <- check_wait_range_secs(waitTime, param = "waitTime", def_min = 3, def_max = 10)
+    waitTime <- check_wait_range_secs(waitTime, param = "waitTime", def_min = 6, def_max = 10)
 
     msg(paste0("Waiting between ", waitTime[1], " and ", waitTime[length(waitTime)], " seconds per request.\n"))
 
@@ -96,7 +99,6 @@ Collect.listing.reddit <-
       listing_df <- reddit_build_listing_df(subreddits, sort = sort, period = period, max = max,
                                             wait_time = waitTime, ua = ua, verbose = verbose)
     }, error = function(e) {
-      # stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
       msg(gsub("^Error:\\s", "", paste0(e)))
     })
     
@@ -131,9 +133,7 @@ Collect.listing.reddit <-
     listing_df
   }
 
-reddit_build_listing_df <- function(subreddits, sort, period, max, wait_time, ua, verbose) {
-  msg <- f_verbose(verbose)
-  
+reddit_build_listing_df <- function(subreddits, sort, period, max, wait_time, ua, verbose = TRUE) {
   results <- NULL
   
   for (i in seq_along(1:length(subreddits))) {
@@ -153,20 +153,15 @@ reddit_build_listing_df <- function(subreddits, sort, period, max, wait_time, ua
       url <- create_listing_url(subreddit_i, sort_i, period_i, qs)
       resp <- get_json(url, ua = ua, alt = TRUE)
       
-      if (is.null(resp$status) || as.numeric(resp$status) != 200) {
-        msg(paste0("Failed: ", url, ifelse(is.null(resp$status), "", paste0(" (", resp$status, ")")), "\n"))
-      }
+      # if (is.null(resp$status) || as.numeric(resp$status) != 200) {
+      #   msg(paste0("Failed: ", url, ifelse(is.null(resp$status), "", paste0(" (", resp$status, ")")), "\n"))
+      # }
+      
+      if (resp$status == -1) msg(gum("Failed: {url} {ifelse(!is.null(resp$msg), resp$msg, '')}."), .x = "warning")
       
       data <- resp$data$data
       
       df <- tibble::as_tibble(data$children$data)
-      
-      # nested_df <- df |> dplyr::select("id", dplyr::where(is.list))
-      # tryCatch({
-      #   nested_df <- nested_df |> tidyr::unnest_longer(col = dplyr::where(is.list), keep_empty = TRUE)
-      # }, error = function(e) { 
-      #   msg(paste0("Unable to flatten data. ", e, "\n"))  
-      # })
       
       results_i <- dplyr::bind_rows(results_i, df)
 

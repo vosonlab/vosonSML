@@ -10,9 +10,9 @@
 #'   \code{"all"}, directing the crawler to follow only internal links, follow only external links (different domain to
 #'   the seed page) or follow all links. The \code{max_depth} value determines how many levels of hyperlinks to follow
 #'   from the seed site.
-#' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
-#' @param verbose Logical. Output additional information. Default is \code{FALSE}.
 #' @param ... Additional parameters passed to function. Not used in this method.
+#' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
+#' @param verbose Logical. Output additional information. Default is \code{TRUE}.
 #'
 #' @return A \code{tibble} object with class names \code{"datasource"} and \code{"web"}.
 #'
@@ -31,21 +31,25 @@
 Collect.web <-
   function(credential,
            pages = NULL,
+           ...,
            writeToFile = FALSE,
-           verbose = FALSE,
-           ...) {
+           verbose = TRUE) {
 
     prompt_and_stop(c("robotstxt", "rvest", "urltools", "xml2"), "Collect.web")
 
+    # set opts for data collection
+    opts <- get_env_opts()
+    robots_opts <- getOption("robotstxt_warn")
+    on.exit({
+      set_collect_opts(opts)
+      options(robotstxt_warn = robots_opts)
+    }, add = TRUE)
+    set_collect_opts()
+    options(robotstxt_warn = FALSE)
+    
     msg("Collecting web page hyperlinks...\n")
 
     dbg <- lgl_debug(list(...)$debug)
-
-    robots_opts <- getOption("robotstxt_warn")
-    on.exit({
-      options(robotstxt_warn = robots_opts)
-    }, add = TRUE)
-    options(robotstxt_warn = FALSE)
 
     df_results <- list()
 

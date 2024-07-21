@@ -14,9 +14,9 @@
 #'   Minimum is 3 seconds. Default is \code{c(6, 8)} for a wait time chosen from between 6 and 8 seconds.
 #' @param ua Character string. Override User-Agent string to use in Reddit thread requests. Default is
 #'   \code{option("HTTPUserAgent")} value as set by vosonSML.
+#' @param ... Additional parameters passed to function. Not used in this method.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{TRUE}.
-#' @param ... Additional parameters passed to function. Not used in this method.
 #'
 #' @return A \code{tibble} object with class names \code{"datasource"} and \code{"reddit"}.
 #'
@@ -37,10 +37,15 @@ Collect.thread.reddit <-
            sort = NA,
            waitTime = c(6, 8),
            ua = getOption("HTTPUserAgent"),
+           ...,
            writeToFile = FALSE,
-           verbose = FALSE,
-           ...) {
+           verbose = TRUE) {
 
+    # set opts for data collection
+    opts <- get_env_opts()
+    on.exit(set_collect_opts(opts), add = TRUE)
+    set_collect_opts()
+    
     msg("Collecting comment threads for reddit urls...\n")
 
     if (missing(threadUrls)) {
@@ -63,14 +68,8 @@ Collect.thread.reddit <-
 
     threads_df <- NULL
 
-    tryCatch({
-      threads_df <- reddit_build_df(threadUrls, sort, waitTime, ua, verbose)
-    }, error = function(e) {
-      # stop(gsub("^Error:\\s", "", paste0(e)), call. = FALSE)
-      msg(gsub("^Error:\\s", "", paste0(e)))
-    }, finally = {
-      threads_df <- tibble::as_tibble(threads_df)
-    })
+    # get threads
+    threads_df <- get_reddit_threads(threadUrls, sort, waitTime, ua, verbose = verbose)
 
     if (!is.null(threads_df)) {
       if (nrow(threads_df) > 0) {
@@ -102,27 +101,20 @@ Collect.thread.reddit <-
 
     class(threads_df) <- append(c("datasource", "reddit"), class(threads_df))
     
-    # meta_log <- c(collect_log, paste0(format(Sys.time(), "%a %b %d %X %Y")))
-    meta_log <- NULL
-    
-    if (writeToFile) write_output_file(threads_df, "rds", "RedditData", verbose = verbose, log = meta_log)
+    if (writeToFile) write_output_file(threads_df, "rds", "RedditData", verbose = verbose)
 
     msg("Done.\n")
 
     threads_df
   }
 
-reddit_build_df <- function(threadUrls, sort, waitTime, ua, verbose) {
-  msg <- f_verbose(verbose)
-  
+get_reddit_threads <- function(threadUrls, sort, waitTime, ua, verbose = TRUE) {
   threads <- list()
   for (thread_i in seq_along(threadUrls)) {
     
     url <- threadUrls[thread_i]
     url_sort <- sort[thread_i]
-    if (length(threadUrls) > 1 & (url != threadUrls[1])) {
-      Sys.sleep(sample(waitTime, 1))
-    }
+    if (length(threadUrls) > 1 & (url != threadUrls[1])) Sys.sleep(sample(waitTime, 1))
     
     thread_json <- reddit_data(url, url_sort, wait_time = waitTime, ua = ua, verbose = verbose)
     branch_df <- reddit_content_plus(thread_json, url, verbose = verbose)
@@ -229,13 +221,9 @@ reddit_data <-
            wait_time,
            ua,
            cont = NULL,
-           verbose = FALSE) {
-
-    msg <- f_verbose(verbose)
+           verbose = TRUE) {
     
-    if (is.null(url) || length(url) == 0 || !is.character(url)) {
-      stop("invalid URL parameter")
-    }
+    if (is.null(url) || length(url) == 0 || !is.character(url)) stop("invalid URL parameter")
     
     req_url <- create_thread_url(url, url_sort)
     req_tid <- get_thread_id(req_url, TRUE)
@@ -246,7 +234,7 @@ reddit_data <-
       msg(paste0("Continue thread: ", req_tid, " - ", cont, "\n"))
     }
 
-    req_data <- get_json(req_url, ua) # ua
+    req_data <- get_json(req_url, ua = ua) # ua
 
     if (is.null(req_data$data)) {
       Sys.sleep(sample(wait_time, 1))
@@ -257,12 +245,16 @@ reddit_data <-
         msg(paste0("Retry continue thread: ", req_tid, " - ", cont, "\n"))
       }
 
-      req_data <- get_json(req_url, ua) # ua
+      req_data <- get_json(req_url, ua = ua) # ua
     }
 
-    if (is.null(req_data$status) || as.numeric(req_data$status) != 200) {
-      msg(paste0("Failed: ", url, ifelse(is.null(req_data$status), "", paste0(" (", req_data$status, ")")), "\n"))
+    if (req_data$status == -1) {
+      msg(gum("Failed: {url} {ifelse(!is.null(req_data$msg), req_data$msg, '')}."), .x = "warning")
     }
+    
+    # if (is.null(req_data$status) || as.numeric(req_data$status) != 200) {
+    #   msg(paste0("Failed: ", url, ifelse(is.null(req_data$status), "", paste0(" (", req_data$status, ")")), "\n"))
+    # }
 
     req_data$data
   }
@@ -273,9 +265,7 @@ reddit_values_list  <- function(node, feature) {
   
   if (is.null(attr)) attr <- NA
   if (feature == "id") {
-    if (attr == "_") {
-      attr <- paste0("Listing:", node$data$parent_id)
-    }
+    if (attr == "_") attr <- paste0("Listing:", node$data$parent_id)
   }
   
   reply_nodes <- NULL
@@ -307,100 +297,63 @@ reddit_struct_list <- function(node, depth = 0) {
   structures
 }
 
-# based on method by @ivan-rivera RedditExtractoR
-reddit_content_plus <- function(raw_data, req_url, depth = 0, verbose = FALSE) {
-  msg <- f_verbose(verbose)
-  
-  data_extract <- tibble::tibble(
-    id = numeric(),
-    structure = character(),
-    post_date = character(),
-    post_date_unix = numeric(),
-    comm_id = character(),
-    comm_date = character(),
-    comm_date_unix = numeric(),
-    num_comments = numeric(),
-    subreddit = character(),
-    upvote_prop = numeric(),
-    post_score = numeric(),
-    author = character(),
-    user = character(),
-    comment_score = numeric(),
-    controversiality = numeric(),
-    comment = character(),
-    title = character(),
-    post_text = character(),
-    link = character(),
-    domain = character(),
-    url = character(),
-    rm = logical()
-  )
+# get vector of values from data
+pull_node_values <- function(node, .x) {
+  unlist(lapply(node, function(x) {
+    reddit_values_list(x, .x)
+  }))  
+}
 
-  if (is.null(raw_data)) return(data_extract)
+# based on method by @ivan-rivera RedditExtractoR
+reddit_content_plus <- function(raw_data, req_url, depth = 0, verbose = TRUE) {
+
+  if (is.null(raw_data)) return(NULL) # data_extract
 
   meta_node <- raw_data[[1]]$data$children[[1]]$data
   main_node <- raw_data[[2]]$data$children
 
+  data <- NULL
+  
   if (min(length(meta_node), length(main_node)) > 0) {
-    structures_list <- unlist(lapply(1:length(main_node), function(x) {
-      reddit_struct_list(main_node[[x]], depth = ifelse(depth != 0, depth, x))
-    }))
+    # numeric post thread structure  
+    structures_list <- unlist(
+      lapply(1:length(main_node),
+        function(x) {
+          reddit_struct_list(main_node[[x]], depth = ifelse(depth != 0, depth, x))
+        }
+      )
+    )
 
     data <- tibble::tibble(
-      id               = NA,
-      structure        = structures_list,
-      post_date        = as.character(lubridate::as_datetime(
-        as.numeric(meta_node$created_utc), tz = "UTC"
-      )),
-      post_date_unix   = as.numeric(meta_node$created_utc),
-      comm_id          = unlist(lapply(main_node, function(x) {
-        reddit_values_list(x, "id")
-      })),
-      comm_date        = as.character(lubridate::as_datetime(as.numeric(
-        unlist(lapply(main_node, function(x) {
-          reddit_values_list(x, "created_utc")
-        }))
-      ), tz = "UTC")),
-      comm_date_unix   = as.numeric(unlist(lapply(main_node, function(x) {
-        reddit_values_list(x, "created_utc")
-      }))),
-      num_comments     = meta_node$num_comments,
-      subreddit        = ifelse(
-        is.null(meta_node$subreddit),
-        "UNKNOWN",
-        meta_node$subreddit
-      ),
-      upvote_prop      = meta_node$upvote_ratio,
-      post_score       = meta_node$score,
-      author           = meta_node$author,
-      user             = unlist(lapply(main_node, function(x) {
-        reddit_values_list(x, "author")
-      })),
-      comment_score    = unlist(lapply(main_node, function(x) {
-        reddit_values_list(x, "score")
-      })),
-      controversiality = unlist(lapply(main_node, function(x) {
-        reddit_values_list(x, "controversiality")
-      })),
-      comment          = unlist(lapply(main_node, function(x) {
-        reddit_values_list(x, "body")
-      })),
-      title            = meta_node$title,
-      post_text        = meta_node$selftext,
-      link             = meta_node$url,
-      domain           = meta_node$domain,
-      url              = req_url,
-      rm               = FALSE
+      id = NA,
+      structure = structures_list,
+      
+      post_date = as.character(lubridate::as_datetime(as.numeric(meta_node$created_utc), tz = "UTC")),
+      post_date_unix = as.numeric(meta_node$created_utc),
+      
+      comm_id = pull_node_values(main_node, "id"),
+      comm_date = as.character(
+        lubridate::as_datetime(as.numeric(pull_node_values(main_node, "created_utc")), tz = "UTC")),
+      comm_date_unix = pull_node_values(main_node, "created_utc"),
+      num_comments = meta_node$num_comments,
+      subreddit = ifelse(is.null(meta_node$subreddit), "UNKNOWN", meta_node$subreddit),
+      upvote_prop = meta_node$upvote_ratio,
+      post_score = meta_node$score,
+      author = meta_node$author,
+      user = pull_node_values(main_node, "author"),
+      comment_score = pull_node_values(main_node, "score"),
+      controversiality = pull_node_values(main_node, "controversiality"),
+      comment = pull_node_values(main_node, "body"),
+      title = meta_node$title,
+      post_text = meta_node$selftext,
+      link = meta_node$url,
+      domain = meta_node$domain,
+      url = req_url,
+      rm = FALSE
     )
 
     data$id <- 1:nrow(data)
-
-    if (dim(data)[1] > 0 && dim(data)[2] > 0) {
-      data_extract <- rbind(data, data_extract)
-    } else {
-      msg(paste0("No data: ", req_url, "\n"))
-    }
   }
 
-  data_extract
+  data
 }
