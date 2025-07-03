@@ -15,6 +15,8 @@ authors:
 
 template:
   bootstrap: 5
+  bslib:
+    danger: "#A6081A"
   light-switch: true
   opengraph:
     image:
@@ -41,6 +43,7 @@ navbar:
     home:
       icon: fa-home fa-lg
       href: index.html
+      aria-label: Home
     news:
       icon: fa-newspaper
       text: "Changelog"
@@ -68,12 +71,15 @@ navbar:
     vosonlab:
       icon: fa-flask fa-lg
       href: http://vosonlab.net/
+      aria-label: VOSON Lab Web Site
     twitter:
       icon: fab fa-twitter-square fa-lg
-      href: https://twitter.com/vosonlab
+      href: https://x.com/vosonlab
+      aria-label: VOSON Lab on X
     github:
       icon: fab fa-github fa-lg
       href: https://github.com/vosonlab/vosonSML
+      aria-label: vosonSML Package on Github
 
 reference:
 - title: Function Reference

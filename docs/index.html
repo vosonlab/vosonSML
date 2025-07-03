@@ -6,16 +6,15 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>vosonSML - Social Media Lab • vosonSML</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="icon" sizes="any" href="favicon.ico">
+<link rel="manifest" href="site.webmanifest">
 <script src="lightswitch.js"></script><script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.4.2/css/all.min.css" rel="stylesheet">
-<link href="deps/font-awesome-6.4.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="deps/headroom-0.11.0/headroom.min.js"></script><script src="deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="deps/search-1.0.0/fuse.min.js"></script><script src="deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="pkgdown.js"></script><link href="extra.css" rel="stylesheet">
 <meta property="og:title" content="vosonSML - Social Media Lab">
 <meta name="description" content="Collect social media data and generate networks for analysis.">
@@ -34,7 +33,7 @@
 
     <a class="navbar-brand me-2" href="index.html">vosonSML</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.35.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.35.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,7 +42,7 @@
 
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
-<li class="active nav-item"><a class="nav-link" href="index.html"><span class="fa fa-home fa-lg"></span></a></li>
+<li class="active nav-item"><a class="nav-link" href="index.html" aria-label="Home"><span class="fa fa-home fa-lg"></span></a></li>
 <li class="nav-item"><a class="nav-link" href="news/index.html"><span class="fa fa-newspaper"></span> Changelog</a></li>
 <li class="nav-item"><a class="nav-link" href="reference/index.html"><span class="fa fa-cubes fa-lg"></span> Reference</a></li>
 <li class="nav-item dropdown">
@@ -57,9 +56,9 @@
 </li>
       </ul>
 <ul class="navbar-nav">
-<li class="nav-item"><a class="external-link nav-link" href="http://vosonlab.net/"><span class="fa fa-flask fa-lg"></span></a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://twitter.com/vosonlab"><span class="fa fab fa-twitter-square fa-lg"></span></a></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/vosonlab/vosonSML"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="http://vosonlab.net/" aria-label="VOSON Lab Web Site"><span class="fa fa-flask fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://x.com/vosonlab" aria-label="VOSON Lab on X"><span class="fa fab fa-twitter-square fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/vosonlab/vosonSML" aria-label="vosonSML Package on Github"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -68,9 +67,9 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="vosonsml---social-media-lab">vosonSML - Social Media Lab<img src="https://vosonlab.github.io/vosonSML/images/logo.png" width="140px" align="right"><a class="anchor" aria-label="anchor" href="#vosonsml---social-media-lab"></a>
+<div class="page-header"><h1 id="vosonsml---social-media-lab">vosonSML - Social Media Lab<img src="https://vosonlab.github.io/vosonSML/images/logo.png" alt="vosonSML logo" width="140px" align="right"><a class="anchor" aria-label="anchor" href="#vosonsml---social-media-lab"></a>
 </h1></div>
-<p><a href="https://github.com/vosonlab/vosonSML" class="external-link"><img src="https://img.shields.io/static/v1?label=dev&amp;message=v0.35&amp;logo=github" alt="Github_Dev"></a> <a href="https://github.com/vosonlab/vosonSML/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&amp;logo=github" alt="Last_Commit"></a> <a href="https://github.com/vosonlab/vosonSML/actions" class="external-link"><img src="https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg" alt="Build_Status"></a> <a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="CRAN_Monthly"></a> <a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/vosonSML" alt="CRAN_Total"></a></p>
+<p><a href="https://github.com/vosonlab/vosonSML" class="external-link"><img src="https://img.shields.io/static/v1?label=dev&amp;message=v0.35.1&amp;logo=github" alt="Github_Dev"></a> <a href="https://github.com/vosonlab/vosonSML/commits/master" class="external-link"><img src="https://img.shields.io/github/last-commit/vosonlab/vosonSML.svg?&amp;logo=github" alt="Last_Commit"></a> <a href="https://github.com/vosonlab/vosonSML/actions" class="external-link"><img src="https://github.com/vosonlab/vosonSML/workflows/R-CMD-check/badge.svg" alt="Build_Status"></a> <a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://www.r-pkg.org/badges/version/vosonSML" alt="CRAN_Status_Badge"></a> <a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/vosonSML" alt="CRAN_Monthly"></a> <a href="https://CRAN.R-project.org/package=vosonSML" class="external-link"><img src="https://cranlogs.r-pkg.org/badges/grand-total/vosonSML" alt="CRAN_Total"></a></p>
 <p>The <code>vosonSML</code> R package is a suite of easy to use functions for collecting and generating different types of networks from social media data. The package supports the collection of data from the <code>mastodon</code>, <code>reddit</code>, <code>youtube</code> platforms and <code>hyperlinks</code> from web sites. Networks in the form of node and edge lists can be generated from collected data, supplemented with additional metadata, and used to create graphs for Social Network Analysis.</p>
 <div class="section level2">
 <h2 id="installation-options">Installation Options<a class="anchor" aria-label="anchor" href="#installation-options"></a>
@@ -81,7 +80,7 @@
 </ol>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># library(remotes)</span></span>
-<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vosonlab/vosonSML"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"vosonlab/vosonSML"</span><span class="op">)</span></span></code></pre></div>
 <ol start="2" style="list-style-type: decimal">
 <li>Install the CRAN release version:</li>
 </ol>
@@ -141,7 +140,7 @@
 <p><code>Collect</code> can be used to collect threads by setting the parameter <code>endpoint = thread</code> and providing the URL’s for the starting post of each thread to be collected. A mastodon server does not need to be specified, as the function will collect the thread posts from the server referenced in each URL.</p>
 <p>The following example collects and combines all of the posts from the 3 threads provided. The result is a named list of two dataframes, one containing <code>posts</code> and one with the metadata for referenced <code>users</code> in the collection.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vosonlab.github.io/vosonSML">vosonSML</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vosonlab.github.io/vosonSML/">vosonSML</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>voson.data <span class="op">=</span> <span class="st">"./mast-data"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">mast_auth</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"mastodon"</span><span class="op">)</span></span>
@@ -626,7 +625,7 @@
 <span>    <span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vosonlab.github.io/vosonSML">vosonSML</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://vosonlab.github.io/vosonSML/">vosonSML</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>voson.data <span class="op">=</span> <span class="st">"./mast-data"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># collect data</span></span>
@@ -741,7 +740,7 @@
 <ul class="list-unstyled">
 <li><a href="https://cloud.r-project.org/package=vosonSML" class="external-link">View on CRAN</a></li>
 <li><a href="https://github.com/vosonlab/vosonSML/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/vosonlab/vosonSML/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/vosonlab/vosonSML/issues/" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -770,7 +769,7 @@
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>
-<a href="https://vosonlab.net" class="external-link"><span>VOSON Lab</span></a> <br><small class="roles"> Author, maintainer </small>  </li>
+<a href="https://vosonlab.net" class="external-link"><span>VOSON Lab</span></a> <br><small class="roles"> Author, maintainer </small>   </li>
 <li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
@@ -786,7 +785,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer>

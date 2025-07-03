@@ -26,7 +26,7 @@ Create.activity.youtube <- function(datasource, type, ..., writeToFile = FALSE, 
     msg("Generating youtube activity network...\n")
 
     df_stats <- network_stats(NULL, "collected YouTube comments", nrow(datasource))
-
+    
     # edges
     df_relations <-
       datasource |> dplyr::select(.data$CommentID, .data$ParentID, .data$VideoID) |>

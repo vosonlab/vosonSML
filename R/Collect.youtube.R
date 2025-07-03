@@ -344,7 +344,16 @@ Collect.youtube <-
     dataCombined <-
       tibble::as_tibble(dataCombined) # convert type to tibble for package consistency
     
+    # detect and extract duplicates
+    ids <- dataCombined |> dplyr::pull("CommentID")
+    dupes_idx <- ids |> duplicated()
+    dupes_ids <- ids[dupes_idx]
+    dupes_df <- dataCombined |> dplyr::filter(.data$CommentID %in% dupes_ids)
+    
+    dataCombined <- dataCombined |> dplyr::distinct(.data$CommentID, .keep_all = TRUE)
+    
     class(dataCombined) <- append(c("datasource", "youtube"), class(dataCombined))
+    attr(dataCombined, "duplicated") <- dupes_df
     
     if (writeToFile) write_output_file(dataCombined, "rds", "YoutubeData", verbose = verbose)
 

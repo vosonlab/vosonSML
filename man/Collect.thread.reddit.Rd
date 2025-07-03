@@ -11,7 +11,7 @@
   threadUrls,
   sort = NA,
   waitTime = c(6, 8),
-  ua = getOption("HTTPUserAgent"),
+  ua = NULL,
   ...,
   writeToFile = FALSE,
   verbose = TRUE
@@ -40,8 +40,7 @@ collect_reddit_threads(
 \item{waitTime}{Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
 Minimum is 3 seconds. Default is \code{c(6, 8)} for a wait time chosen from between 6 and 8 seconds.}
 
-\item{ua}{Character string. Override User-Agent string to use in Reddit thread requests. Default is
-\code{option("HTTPUserAgent")} value as set by vosonSML.}
+\item{ua}{Character string. Override User-Agent string to use in Reddit thread requests. Default is \code{NULL}.}
 
 \item{...}{Additional parameters passed to function. Not used in this method.}
 

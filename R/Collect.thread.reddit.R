@@ -12,8 +12,7 @@
 #'   \code{"controversial"}, \code{"old"}, and \code{"qa"}. Default is \code{NA}.
 #' @param waitTime Numeric vector. Time range in seconds to select random wait from in-between url collection requests.
 #'   Minimum is 3 seconds. Default is \code{c(6, 8)} for a wait time chosen from between 6 and 8 seconds.
-#' @param ua Character string. Override User-Agent string to use in Reddit thread requests. Default is
-#'   \code{option("HTTPUserAgent")} value as set by vosonSML.
+#' @param ua Character string. Override User-Agent string to use in Reddit thread requests. Default is \code{NULL}.
 #' @param ... Additional parameters passed to function. Not used in this method.
 #' @param writeToFile Logical. Write collected data to file. Default is \code{FALSE}.
 #' @param verbose Logical. Output additional information about the data collection. Default is \code{TRUE}.
@@ -36,7 +35,7 @@ Collect.thread.reddit <-
            threadUrls,
            sort = NA,
            waitTime = c(6, 8),
-           ua = getOption("HTTPUserAgent"),
+           ua = NULL,
            ...,
            writeToFile = FALSE,
            verbose = TRUE) {

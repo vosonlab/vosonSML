@@ -202,7 +202,7 @@ network_stats <-
           lc <-
             ifelse(nchar(df$count[i]) > lc, nchar(df$count[i]), lc)
         }
-
+        
         for (i in 1:nrow(df)) {
           lfm <- lf
           if (nchar(df$field[i]) != lf) {
@@ -216,10 +216,10 @@ network_stats <-
         }
         out <- paste0(out, "-------------------------\n")
       }
-
+      
       return(out)
     }
-
+    
     if (is.null(df)) {
       df  <-
         tibble::tibble(
@@ -272,7 +272,7 @@ escape_regex <- function(x) {
 
 ## -- output messaging
 
-# shorter glue
+# shorter glue for brevity
 gum <- stringr::str_glue
 gum_data <- stringr::str_glue_data
 
@@ -284,7 +284,7 @@ msg_check_opts <- function(opt = "voson.cat", default = FALSE) {
 
 # check voson.cat options
 msg_use_cat <- function() {
-  opt_msg <- msg_check_opts(opt = "voson.msg") # previous
+  opt_msg <- msg_check_opts(opt = "voson.msg") # previous opt, is now voson.cat
   opt_cat <- msg_check_opts(opt = "voson.cat")
   
   if (opt_msg == FALSE & opt_cat == TRUE) return(TRUE)

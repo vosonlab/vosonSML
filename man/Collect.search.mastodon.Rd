@@ -39,7 +39,7 @@
   Arguments passed on to \code{\link[rtoot:get_timeline_hashtag]{rtoot::get_timeline_hashtag}}
   \describe{
     \item{\code{only_media}}{logical, Show only statuses with media attached?}
-    \item{\code{min_id}}{character, Return results immediately newer than this id}
+    \item{\code{min_id}}{character or \code{POSIXct} (date time), Return results immediately newer than this id}
   }}
 
 \item{writeToFile}{Logical. Write collected data to file. Default is \code{FALSE}.}

@@ -1,5 +1,5 @@
 Package: vosonSML
-Version: 0.35.0
+Version: 0.35.1
 Title: Collecting Social Media Data and Generating Networks for Analysis
 Description: A suite of easy to use functions for collecting social media
     data and generating networks for analysis. Supports Mastodon, YouTube,
@@ -7,20 +7,20 @@ Description: A suite of easy to use functions for collecting social media
 Type: Package
 Imports:
     data.table,
-    dplyr (>= 1.0),
+    dplyr,
     httr2,
     jsonlite,
     lubridate,
     methods,
     purrr,
-    rlang (>= 1.0),
+    rlang,
     stringr,
     textutils,
     tidyr,
     tibble
 Suggests:
     glue,
-    igraph (>= 1.2.2),
+    igraph,
     knitr,
     readr,
     rmarkdown,
@@ -53,5 +53,5 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 NeedsCompilation: no
 VignetteBuilder: knitr
-URL: https://vosonlab.github.io/vosonSML
-BugReports: https://github.com/vosonlab/vosonSML/issues
+URL: https://vosonlab.github.io/vosonSML/
+BugReports: https://github.com/vosonlab/vosonSML/issues/

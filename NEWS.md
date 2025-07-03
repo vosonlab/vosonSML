@@ -1,3 +1,14 @@
+# vosonSML 0.35.1
+
+## Bug Fixes
+- Updated reddit user-agent parameters as default to NULL. If NULL, requests use the `HTTPUserAgent` option value,
+  which is set by default to the internal package user-agent by function `vsml_ua()` during collection.
+- Automatically removed duplicate comments from youtube `Collect` data based on `CommentID`, these records can be found
+  in an attribute of the object named `duplicated`. Access using `attributes(youtube_data)$duplicated`.
+
+## Minor Changes
+- Removed the twitter section from the package vignette.
+
 # vosonSML 0.35.0
 
 ## Bug Fixes

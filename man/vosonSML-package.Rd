@@ -11,8 +11,8 @@ A suite of easy to use functions for collecting social media data and generating
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://vosonlab.github.io/vosonSML}
-  \item Report bugs at \url{https://github.com/vosonlab/vosonSML/issues}
+  \item \url{https://vosonlab.github.io/vosonSML/}
+  \item Report bugs at \url{https://github.com/vosonlab/vosonSML/issues/}
 }
 
 }
