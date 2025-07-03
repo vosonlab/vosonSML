@@ -1,16 +1,15 @@
-if (!exists("meta") || is.null(meta)) meta <- packageDescription("vosonSML")
-note <- paste("R package version", meta$Version)
-year <- sub("-.*", "", meta$Date)
-if (is.null(meta$Date)) year <- sub("-.*", "", packageDate("vosonSML"))
-
-bibentry(bibtype = "Manual",
-         header = "To cite package 'vosonSML' in publications use:",
-         title = "vosonSML: Collecting Social Media Data and Generating Networks for Analysis",
-         author = c(person("Bryan", "Gertzel"),
-                    person("Francisca", "Borquez"),
-                    person("Timothy", "Graham"),
-                    person("Robert", "Ackland")),
-         organization = "VOSON Lab, Virtual Observatory for the Study of Online Networks",
-         year = year,
-         note = note,
-         url = "https://github.com/vosonlab/vosonSML")
+bibentry(
+  bibtype = "Manual",
+  header = "To cite package 'vosonSML' in publications use:",
+  title = "vosonSML: Collecting Social Media Data and Generating Networks for Analysis",
+  author = c(
+    person("Bryan", "Gertzel"),
+    person("Francisca", "Borquez"),
+    person("Timothy", "Graham"),
+    person("Robert", "Ackland")
+  ),
+  organization = "VOSON Lab, Virtual Observatory for the Study of Online Networks",
+  year = "2025",
+  note = "R package version 0.35.1",
+  url = "https://github.com/vosonlab/vosonSML"
+)

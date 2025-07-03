@@ -133,9 +133,9 @@ mast_data <- mast_auth |>
   Collect(
     endpoint = "thread",
     threadUrls = c(
-      "https://mastodon.social/@arstechnica/111257471648143532",
-      "https://mastodon.social/@arstechnica/111257425856847171",
-      "https://mastodon.social/@arstechnica/111257193332540480"
+      "https://mastodon.social/@xxxxxxxxxxx/111257xxxx48143532",
+      "https://mastodon.social/@xxxxxxxxxxx/111257xxxx56847171",
+      "https://mastodon.social/@xxxxxxxxxxx/111257xxxx32540480"
     ),
     writeToFile = TRUE
   )
@@ -144,8 +144,8 @@ mast_data <- mast_auth |>
 #
 # id                 | created
 # --------------------------------------------
-# 111257471648143532 | 2023-10-18 18:38:11.509
-# 111257731042879692 | 2023-10-18 19:44:08
+# 111257xxxx48143532 | 2023-10-18 18:38:11.509
+# 111257xxxx42879692 | 2023-10-18 19:44:08
 # Collected 36 posts.
 # RDS file written: ./mast-data/2023-10-18_201254-MastodonData.rds
 # Done.
@@ -176,8 +176,8 @@ mast_data <- mast_auth |>
 #
 # id                 | created
 # --------------------------------------------
-# 111257854695457456 | 2023-10-18 20:15:36.349
-# 111257844442617952 | 2023-10-18 20:12:59.92
+# 111257xxxx95457456 | 2023-10-18 20:15:36.349
+# 111257xxxx42617952 | 2023-10-18 20:12:59.92
 # Collected 120 posts.
 # Done.
 ```
@@ -205,8 +205,8 @@ mast_data <- mast_auth |>
 # 
 # id                 | created            
 # ----------------------------------------
-# 111851761879684588 | 2024-01-31 17:33:57
-# 111839343172130565 | 2024-01-29 12:55:38
+# 111851xxxx79684588 | 2024-01-31 17:33:57
+# 111839xxxx72130565 | 2024-01-29 12:55:38
 # Collected 120 posts.
 # RDS file written: 2024-01-31_190125-MastodonData.rds
 # Done.
@@ -245,7 +245,7 @@ net_activity <- mast_data |>
 # | absent (v/l), vosonTxt_post (v/c), created_at (e/n), edge_type
 # | (e/c)
 # + edges from 7cc21ba (vertex names):
-# [1] 111851737032132167->111846251799585000
+# [1] 111851xxxx32132167->111846xxxx99585000
 # + ... omitted several edges
 ```
 
@@ -298,7 +298,7 @@ net_actor <- mast_data |>
 # | (v/c), type (v/c), absent (v/l), post.id (e/c),
 # | post.created_at (e/n), edge_type (e/c), vosonTxt_post (e/c)
 # + edges from c46e984 (vertex names):
-# [1] 109610301164555149->109610301164555149
+# [1] 1096103xxxx4555149->10961030xxxx555149
 # + ... omitted several edges
 ```
 
@@ -345,8 +345,8 @@ of 100 top-level comments and all replies from each of the 2 specified
 video ID's. It produces a dataframe with the combined comment data.
 
 ``` r
-video_url <- c("https://www.youtube.com/watch?v=AQzZNIyjyWM",
-               "https://www.youtube.com/watch?v=lY0YLDZhT88&t=3152s")
+video_url <- c("https://www.youtube.com/watch?v=AQzZ....yWM",
+               "https://www.youtube.com/watch?v=lY0Y....T88&t=3152s")
 
 collect_yt <- auth_yt |>
   Collect(videoIDs = video_url,
@@ -355,7 +355,7 @@ collect_yt <- auth_yt |>
 ## Collecting comment threads for YouTube videos...
 ## Video 1 of 2
 ## ---------------------------------------------------------------
-## ** Creating dataframe from threads of AQzZNIyjyWM.
+## ** Creating dataframe from threads of AQzZ....yWM.
 ## ** Collecting replies for 1 threads with replies. Please be patient.
 ## Comment replies 1 
 ## ** Collected replies: 1
@@ -364,7 +364,7 @@ collect_yt <- auth_yt |>
 ## ---------------------------------------------------------------
 ## Video 2 of 2
 ## ---------------------------------------------------------------
-## ** Creating dataframe from threads of lY0YLDZhT88.
+## ** Creating dataframe from threads of lY0Y....T88.
 ## ** Collecting replies for 1 threads with replies. Please be patient.
 ## Comment replies 6 
 ## ** Collected replies: 6
@@ -412,9 +412,9 @@ g_activity
 ## | updated_at (v/c), author_id (v/c), screen_name (v/c), node_type
 ## | (v/c), edge_type (e/c)
 ## + edges from 5a9fb56 (vertex names):
-## [1] Ugw13lb0nCf4o4IKFb54AaABAg->VIDEOID:AQzZNIyjyWM
-## [2] UgyJBlqZ64YnltQTOTt4AaABAg->VIDEOID:AQzZNIyjyWM
-## [3] Ugysomx_apk24Pqrs1h4AaABAg->VIDEOID:AQzZNIyjyWM
+## [1] Ugw13lb0....o4IKFb54AaABAg->VIDEOID:AQzZ....yWM
+## [2] UgyJBlqZ....ltQTOTt4AaABAg->VIDEOID:AQzZ....yWM
+## [3] Ugysomx_....4Pqrs1h4AaABAg->VIDEOID:AQzZ....yWM
 ## + ... omitted several edges
 ```
 
@@ -439,9 +439,9 @@ g_actor
 ## + attr: type (g/c), name (v/c), screen_name (v/c), node_type (v/c),
 ## | video_id (e/c), comment_id (e/c), edge_type (e/c)
 ## + edges from 5aad4c4 (vertex names):
-##  [1] UCb9ElH9tzEkG9OxDIiSYgdg->VIDEOID:AQzZNIyjyWM
-##  [2] UC0DwaB_wHNzUh-LA9sWXKYQ->VIDEOID:AQzZNIyjyWM
-##  [3] UCNHA8SkizJKauefYt1FHmjQ->VIDEOID:AQzZNIyjyWM
+##  [1] UCb9ElH....G9OxDIiSYgdg->VIDEOID:AQzZ....yWM
+##  [2] UC0DwaB....zUh-LA9sWXKYQ->VIDEOID:AQzZ....yWM
+##  [3] UCNHA8S....KauefYt1FHmjQ->UC0DwaB....zUh-LA9sWXKYQ
 ## + ... omitted several edges
 ```
 
@@ -487,8 +487,8 @@ reddit threads specified by URL's.
 ``` r
 # specify reddit threads to collect by url
 thread_urls <- c(
-  "https://www.reddit.com/r/datascience/comments/wcd8x5/",
-  "https://www.reddit.com/r/datascience/comments/wcni2g/"
+  "https://www.reddit.com/r/datascience/comments/wc...5/",
+  "https://www.reddit.com/r/datascience/comments/wc...g/"
 )
 
 # or use permalinks from a previously collected listing
@@ -501,15 +501,15 @@ collect_rd <- Authenticate("reddit") |>
 
 ## Collecting comment threads for reddit urls...
 ## Waiting between 3 and 5 seconds per thread request.
-## Request thread: r/datascience (k8nyf8) - sort: best
-## Request thread: r/datascience (oeg6nl) - sort: best
-## Request thread: r/datascience (hohvgq) - sort: best
+## Request thread: r/datascience (k8..f8) - sort: best
+## Request thread: r/datascience (oe..nl) - sort: best
+## Request thread: r/datascience (ho..gq) - sort: best
 ## HTML decoding comments.
 ## thread_id | title                                         | subreddit   | count
 ## -------------------------------------------------------------------------------
-## hohvgq    | Shout Out to All the Mediocre Data Scienti... | datascience | 272  
-## k8nyf8    | data siens                                    | datascience | 77   
-## oeg6nl    | The pain and excitement                       | datascience | 179
+## ho..gq    | xxxx xxx xx xxx xxx xxxxxxxx xxxx xxxxxxxx... | datascience | 272  
+## k8..f8    | xxxx xxxxx                                    | datascience | 77   
+## oe..nl    | xxx xxxx xxx xxxxxxxxxx                       | datascience | 179
 ## Collected 528 total comments.
 ## RDS file written: ./vsml-data/2023-04-02_073130-RedditData.rds
 ## Done.
@@ -553,8 +553,8 @@ g_activity
 ## | datetime (v/c), ts (v/n), subreddit (v/c), user (v/c), node_type
 ## | (v/c), edge_type (e/c)
 ## + edges from 62e8305 (vertex names):
-##  [1] k8nyf8.1      ->k8nyf8.0     k8nyf8.1_1    ->k8nyf8.1    
-##  [3] k8nyf8.1_2    ->k8nyf8.1     k8nyf8.1_2_1  ->k8nyf8.1_2  
+##  [1] k8..f8.1      ->k8..f8.0     k8..f8.1_1    ->k8..f8.1    
+##  [3] k8..f8.1_2    ->k8..f8.1     k8..f8.1_2_1  ->k8..f8.1_2  
 ## + ... omitted several edges
 ```
 
@@ -784,8 +784,8 @@ g_actor <- net_actor |> Graph()
 ## | video_id (e/c), comment_id (e/c), edge_type (e/c), video_title (e/c),
 ## | video_description (e/c), video_published_at (e/c)
 ## + edges from 644cb17 (vertex names):
-## [1] UCb9ElH9tzEkG9OxDIiSYgdg->UCeiiqmVK07qhY-wvg3IZiZQ
-## [2] UC0DwaB_wHNzUh-LA9sWXKYQ->UCeiiqmVK07qhY-wvg3IZiZQ
+## [1] UCb9ElH9...G9OxDIiSYgdg->UCeiiqmVK07...-wvg3IZiZQ
+## [2] UC0DwaB_...zUh-LA9sWXKYQ->UCeiiqmVK07...-wvg3IZiZQ
 ## + ... omitted several edges
 ```
 

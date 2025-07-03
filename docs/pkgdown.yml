@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   Intro-to-vosonSML: Intro-to-vosonSML.html
-last_built: 2025-07-03T09:44Z
+last_built: 2025-07-03T23:18Z
 urls:
   reference: https://vosonlab.github.io/vosonSML/reference
   article: https://vosonlab.github.io/vosonSML/articles

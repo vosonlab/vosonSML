@@ -5,8 +5,3 @@
 
 ## R CMD check results
 0 errors | 0 warnings | 0 notes
-
-## Winbuilder notes
-* Problems when reading CITATION file: no package 'vosonSML' was found
-### R-oldrelease (4.4.3 2025-02-28 ucrt):
-* Author field differs from that derived from Authors@R

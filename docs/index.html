@@ -152,9 +152,9 @@
 <span>  <span class="fu"><a href="reference/Collect.html">Collect</a></span><span class="op">(</span></span>
 <span>    endpoint <span class="op">=</span> <span class="st">"thread"</span>,</span>
 <span>    threadUrls <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>      <span class="st">"https://mastodon.social/@arstechnica/111257471648143532"</span>,</span>
-<span>      <span class="st">"https://mastodon.social/@arstechnica/111257425856847171"</span>,</span>
-<span>      <span class="st">"https://mastodon.social/@arstechnica/111257193332540480"</span></span>
+<span>      <span class="st">"https://mastodon.social/@xxxxxxxxxxx/111257xxxx48143532"</span>,</span>
+<span>      <span class="st">"https://mastodon.social/@xxxxxxxxxxx/111257xxxx56847171"</span>,</span>
+<span>      <span class="st">"https://mastodon.social/@xxxxxxxxxxx/111257xxxx32540480"</span></span>
 <span>    <span class="op">)</span>,</span>
 <span>    writeToFile <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span></span>
@@ -163,8 +163,8 @@
 <span><span class="co">#</span></span>
 <span><span class="co"># id                 | created</span></span>
 <span><span class="co"># --------------------------------------------</span></span>
-<span><span class="co"># 111257471648143532 | 2023-10-18 18:38:11.509</span></span>
-<span><span class="co"># 111257731042879692 | 2023-10-18 19:44:08</span></span>
+<span><span class="co"># 111257xxxx48143532 | 2023-10-18 18:38:11.509</span></span>
+<span><span class="co"># 111257xxxx42879692 | 2023-10-18 19:44:08</span></span>
 <span><span class="co"># Collected 36 posts.</span></span>
 <span><span class="co"># RDS file written: ./mast-data/2023-10-18_201254-MastodonData.rds</span></span>
 <span><span class="co"># Done.</span></span></code></pre></div>
@@ -188,8 +188,8 @@
 <span><span class="co">#</span></span>
 <span><span class="co"># id                 | created</span></span>
 <span><span class="co"># --------------------------------------------</span></span>
-<span><span class="co"># 111257854695457456 | 2023-10-18 20:15:36.349</span></span>
-<span><span class="co"># 111257844442617952 | 2023-10-18 20:12:59.92</span></span>
+<span><span class="co"># 111257xxxx95457456 | 2023-10-18 20:15:36.349</span></span>
+<span><span class="co"># 111257xxxx42617952 | 2023-10-18 20:12:59.92</span></span>
 <span><span class="co"># Collected 120 posts.</span></span>
 <span><span class="co"># Done.</span></span></code></pre></div>
 <p>The next example collects the most recent 100 posts from the <code>mastodon.social</code> server global timeline containing the hashtag <code>#rstats</code>. The global timeline includes posts made by users from <code>mastodon.social</code> as well as posts made by users on its affiliated servers. The global timeline is specified by setting <code>local = FALSE</code>.</p>
@@ -210,8 +210,8 @@
 <span><span class="co"># </span></span>
 <span><span class="co"># id                 | created            </span></span>
 <span><span class="co"># ----------------------------------------</span></span>
-<span><span class="co"># 111851761879684588 | 2024-01-31 17:33:57</span></span>
-<span><span class="co"># 111839343172130565 | 2024-01-29 12:55:38</span></span>
+<span><span class="co"># 111851xxxx79684588 | 2024-01-31 17:33:57</span></span>
+<span><span class="co"># 111839xxxx72130565 | 2024-01-29 12:55:38</span></span>
 <span><span class="co"># Collected 120 posts.</span></span>
 <span><span class="co"># RDS file written: 2024-01-31_190125-MastodonData.rds</span></span>
 <span><span class="co"># Done.</span></span></code></pre></div>
@@ -243,7 +243,7 @@
 <span><span class="co"># | absent (v/l), vosonTxt_post (v/c), created_at (e/n), edge_type</span></span>
 <span><span class="co"># | (e/c)</span></span>
 <span><span class="co"># + edges from 7cc21ba (vertex names):</span></span>
-<span><span class="co"># [1] 111851737032132167-&gt;111846251799585000</span></span>
+<span><span class="co"># [1] 111851xxxx32132167-&gt;111846xxxx99585000</span></span>
 <span><span class="co"># + ... omitted several edges</span></span></code></pre></div>
 </div>
 <div class="section level5">
@@ -290,7 +290,7 @@
 <span><span class="co"># | (v/c), type (v/c), absent (v/l), post.id (e/c),</span></span>
 <span><span class="co"># | post.created_at (e/n), edge_type (e/c), vosonTxt_post (e/c)</span></span>
 <span><span class="co"># + edges from c46e984 (vertex names):</span></span>
-<span><span class="co"># [1] 109610301164555149-&gt;109610301164555149</span></span>
+<span><span class="co"># [1] 1096103xxxx4555149-&gt;10961030xxxx555149</span></span>
 <span><span class="co"># + ... omitted several edges</span></span></code></pre></div>
 </div>
 <div class="section level5">
@@ -329,8 +329,8 @@
 <span><span class="va">auth_yt</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/Authenticate.html">Authenticate</a></span><span class="op">(</span><span class="st">"youtube"</span>, apiKey <span class="op">=</span> <span class="st">"xxxxxxxxxxxxxx"</span><span class="op">)</span></span></code></pre></div>
 <p>Once the key is set then <code>Collect</code> can be used to collect the comments from specified youtube videos. The following example collects a maximum of 100 top-level comments and all replies from each of the 2 specified video ID’s. It produces a dataframe with the combined comment data.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">video_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=AQzZNIyjyWM"</span>,</span>
-<span>               <span class="st">"https://www.youtube.com/watch?v=lY0YLDZhT88&amp;t=3152s"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">video_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"https://www.youtube.com/watch?v=AQzZ....yWM"</span>,</span>
+<span>               <span class="st">"https://www.youtube.com/watch?v=lY0Y....T88&amp;t=3152s"</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">collect_yt</span> <span class="op">&lt;-</span> <span class="va">auth_yt</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="reference/Collect.html">Collect</a></span><span class="op">(</span>videoIDs <span class="op">=</span> <span class="va">video_url</span>,</span>
@@ -339,7 +339,7 @@
 <span><span class="co">## Collecting comment threads for YouTube videos...</span></span>
 <span><span class="co">## Video 1 of 2</span></span>
 <span><span class="co">## ---------------------------------------------------------------</span></span>
-<span><span class="co">## ** Creating dataframe from threads of AQzZNIyjyWM.</span></span>
+<span><span class="co">## ** Creating dataframe from threads of AQzZ....yWM.</span></span>
 <span><span class="co">## ** Collecting replies for 1 threads with replies. Please be patient.</span></span>
 <span><span class="co">## Comment replies 1 </span></span>
 <span><span class="co">## ** Collected replies: 1</span></span>
@@ -348,7 +348,7 @@
 <span><span class="co">## ---------------------------------------------------------------</span></span>
 <span><span class="co">## Video 2 of 2</span></span>
 <span><span class="co">## ---------------------------------------------------------------</span></span>
-<span><span class="co">## ** Creating dataframe from threads of lY0YLDZhT88.</span></span>
+<span><span class="co">## ** Creating dataframe from threads of lY0Y....T88.</span></span>
 <span><span class="co">## ** Collecting replies for 1 threads with replies. Please be patient.</span></span>
 <span><span class="co">## Comment replies 6 </span></span>
 <span><span class="co">## ** Collected replies: 6</span></span>
@@ -390,9 +390,9 @@
 <span><span class="co">## | updated_at (v/c), author_id (v/c), screen_name (v/c), node_type</span></span>
 <span><span class="co">## | (v/c), edge_type (e/c)</span></span>
 <span><span class="co">## + edges from 5a9fb56 (vertex names):</span></span>
-<span><span class="co">## [1] Ugw13lb0nCf4o4IKFb54AaABAg-&gt;VIDEOID:AQzZNIyjyWM</span></span>
-<span><span class="co">## [2] UgyJBlqZ64YnltQTOTt4AaABAg-&gt;VIDEOID:AQzZNIyjyWM</span></span>
-<span><span class="co">## [3] Ugysomx_apk24Pqrs1h4AaABAg-&gt;VIDEOID:AQzZNIyjyWM</span></span>
+<span><span class="co">## [1] Ugw13lb0....o4IKFb54AaABAg-&gt;VIDEOID:AQzZ....yWM</span></span>
+<span><span class="co">## [2] UgyJBlqZ....ltQTOTt4AaABAg-&gt;VIDEOID:AQzZ....yWM</span></span>
+<span><span class="co">## [3] Ugysomx_....4Pqrs1h4AaABAg-&gt;VIDEOID:AQzZ....yWM</span></span>
 <span><span class="co">## + ... omitted several edges</span></span></code></pre></div>
 </div>
 <div class="section level5">
@@ -413,9 +413,9 @@
 <span><span class="co">## + attr: type (g/c), name (v/c), screen_name (v/c), node_type (v/c),</span></span>
 <span><span class="co">## | video_id (e/c), comment_id (e/c), edge_type (e/c)</span></span>
 <span><span class="co">## + edges from 5aad4c4 (vertex names):</span></span>
-<span><span class="co">##  [1] UCb9ElH9tzEkG9OxDIiSYgdg-&gt;VIDEOID:AQzZNIyjyWM</span></span>
-<span><span class="co">##  [2] UC0DwaB_wHNzUh-LA9sWXKYQ-&gt;VIDEOID:AQzZNIyjyWM</span></span>
-<span><span class="co">##  [3] UCNHA8SkizJKauefYt1FHmjQ-&gt;VIDEOID:AQzZNIyjyWM</span></span>
+<span><span class="co">##  [1] UCb9ElH....G9OxDIiSYgdg-&gt;VIDEOID:AQzZ....yWM</span></span>
+<span><span class="co">##  [2] UC0DwaB....zUh-LA9sWXKYQ-&gt;VIDEOID:AQzZ....yWM</span></span>
+<span><span class="co">##  [3] UCNHA8S....KauefYt1FHmjQ-&gt;UC0DwaB....zUh-LA9sWXKYQ</span></span>
 <span><span class="co">## + ... omitted several edges</span></span></code></pre></div>
 </div>
 </div>
@@ -456,8 +456,8 @@
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># specify reddit threads to collect by url</span></span>
 <span><span class="va">thread_urls</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
-<span>  <span class="st">"https://www.reddit.com/r/datascience/comments/wcd8x5/"</span>,</span>
-<span>  <span class="st">"https://www.reddit.com/r/datascience/comments/wcni2g/"</span></span>
+<span>  <span class="st">"https://www.reddit.com/r/datascience/comments/wc...5/"</span>,</span>
+<span>  <span class="st">"https://www.reddit.com/r/datascience/comments/wc...g/"</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># or use permalinks from a previously collected listing</span></span>
@@ -470,15 +470,15 @@
 <span></span>
 <span><span class="co">## Collecting comment threads for reddit urls...</span></span>
 <span><span class="co">## Waiting between 3 and 5 seconds per thread request.</span></span>
-<span><span class="co">## Request thread: r/datascience (k8nyf8) - sort: best</span></span>
-<span><span class="co">## Request thread: r/datascience (oeg6nl) - sort: best</span></span>
-<span><span class="co">## Request thread: r/datascience (hohvgq) - sort: best</span></span>
+<span><span class="co">## Request thread: r/datascience (k8..f8) - sort: best</span></span>
+<span><span class="co">## Request thread: r/datascience (oe..nl) - sort: best</span></span>
+<span><span class="co">## Request thread: r/datascience (ho..gq) - sort: best</span></span>
 <span><span class="co">## HTML decoding comments.</span></span>
 <span><span class="co">## thread_id | title                                         | subreddit   | count</span></span>
 <span><span class="co">## -------------------------------------------------------------------------------</span></span>
-<span><span class="co">## hohvgq    | Shout Out to All the Mediocre Data Scienti... | datascience | 272  </span></span>
-<span><span class="co">## k8nyf8    | data siens                                    | datascience | 77   </span></span>
-<span><span class="co">## oeg6nl    | The pain and excitement                       | datascience | 179</span></span>
+<span><span class="co">## ho..gq    | xxxx xxx xx xxx xxx xxxxxxxx xxxx xxxxxxxx... | datascience | 272  </span></span>
+<span><span class="co">## k8..f8    | xxxx xxxxx                                    | datascience | 77   </span></span>
+<span><span class="co">## oe..nl    | xxx xxxx xxx xxxxxxxxxx                       | datascience | 179</span></span>
 <span><span class="co">## Collected 528 total comments.</span></span>
 <span><span class="co">## RDS file written: ./vsml-data/2023-04-02_073130-RedditData.rds</span></span>
 <span><span class="co">## Done.</span></span></code></pre></div>
@@ -515,8 +515,8 @@
 <span><span class="co">## | datetime (v/c), ts (v/n), subreddit (v/c), user (v/c), node_type</span></span>
 <span><span class="co">## | (v/c), edge_type (e/c)</span></span>
 <span><span class="co">## + edges from 62e8305 (vertex names):</span></span>
-<span><span class="co">##  [1] k8nyf8.1      -&gt;k8nyf8.0     k8nyf8.1_1    -&gt;k8nyf8.1    </span></span>
-<span><span class="co">##  [3] k8nyf8.1_2    -&gt;k8nyf8.1     k8nyf8.1_2_1  -&gt;k8nyf8.1_2  </span></span>
+<span><span class="co">##  [1] k8..f8.1      -&gt;k8..f8.0     k8..f8.1_1    -&gt;k8..f8.1    </span></span>
+<span><span class="co">##  [3] k8..f8.1_2    -&gt;k8..f8.1     k8..f8.1_2_1  -&gt;k8..f8.1_2  </span></span>
 <span><span class="co">## + ... omitted several edges</span></span></code></pre></div>
 </div>
 <div class="section level5">
@@ -711,8 +711,8 @@
 <span><span class="co">## | video_id (e/c), comment_id (e/c), edge_type (e/c), video_title (e/c),</span></span>
 <span><span class="co">## | video_description (e/c), video_published_at (e/c)</span></span>
 <span><span class="co">## + edges from 644cb17 (vertex names):</span></span>
-<span><span class="co">## [1] UCb9ElH9tzEkG9OxDIiSYgdg-&gt;UCeiiqmVK07qhY-wvg3IZiZQ</span></span>
-<span><span class="co">## [2] UC0DwaB_wHNzUh-LA9sWXKYQ-&gt;UCeiiqmVK07qhY-wvg3IZiZQ</span></span>
+<span><span class="co">## [1] UCb9ElH9...G9OxDIiSYgdg-&gt;UCeiiqmVK07...-wvg3IZiZQ</span></span>
+<span><span class="co">## [2] UC0DwaB_...zUh-LA9sWXKYQ-&gt;UCeiiqmVK07...-wvg3IZiZQ</span></span>
 <span><span class="co">## + ... omitted several edges</span></span></code></pre></div>
 </div>
 </div>
